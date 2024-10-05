@@ -1,0 +1,145 @@
+@media (max-width: 1080px) and (max-height: 1440px) {
+    *
+    {
+      -webkit-tap-highlight-color : transparent;
+      user-select: none;
+    }
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 100%;
+      width: 450px;
+      transition: 0.5s;
+      opacity: 1;
+      overflow: hidden;
+      justify-content: center;
+      background: #0fb6b6;
+      background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+  
+    }
+    .backgroundClipPath
+    {
+     display: none;
+    }
+    .vgGirl
+    {
+        left: 0%;
+        top: 0%;
+        transform:scale(1);
+        background-image: url(IMAGES/vrGirlPortrait.jpg);
+    }
+    .form_login
+    {
+        left: 40%;
+        transform-origin: center;
+        transform: scale(0.8) translateX(-50%) translateY(-50%);
+    }
+    .form_register
+    {
+        left: 40%;
+        transform-origin: center;
+        transform: scale(0.8) translateX(-50%) translateY(-50%);
+    }
+    .form_logout
+    {
+        left: 40%;
+        transform-origin: center;
+        transform: scale(0.8) translateX(-50%) translateY(-50%);
+    }
+    .appName
+    {
+        left: 25%;
+    }
+    .logo
+    {
+        left: 15%;
+    }
+    #readDocs
+    {
+        position: absolute;
+        top: 95%;
+        left: 35%;
+        color: #00a2ff;
+        font-size: 2em;
+        cursor: pointer;    
+        z-index: 10;
+
+    }
+
+#visitGallery
+{
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    color: #f3fb02;
+    font-size: 2em;
+    cursor: pointer;    
+    z-index: 10;
+
+}
+
+.terminal-header {
+    height: 20%;
+    padding: 0 0.1em;
+   
+}
+
+.headerText
+{
+    font-size: 0.8em;
+    top: 0;
+}
+.control
+{
+    left: 90%;
+    width: 0.6em;
+    height: 0.6em;
+}
+.initializeText:nth-child(2)
+{
+    top: 25%;
+}
+.initializeText:nth-child(1)
+{
+    top: 40%;
+}
+.initializeText:nth-child(3)
+{
+    top: 32%;
+}
+.initializeText:nth-child(4)
+{
+    top: 45%;
+    flex-wrap: wrap;
+    line-height: 2px;
+    display: flex;
+    font-size: 1em;
+}
+.initializeText:nth-child(4) #initializeText4_message
+{
+    display: none;
+}
+.initializeText:nth-child(6)
+{
+    top: 60%;
+    font-size: 0.8em;
+}
+
+.initializeText:nth-child(7)
+{
+    top: 65%;
+    font-size: 0.6em;
+}
+
+.usernameGuestInput
+{
+    top: 51%;
+    font-size: 20px;
+}
+.usernameGuestInput::placeholder
+{
+    font-size: 20px
+}
+}

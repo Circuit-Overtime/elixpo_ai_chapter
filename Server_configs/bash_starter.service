@@ -1,0 +1,13 @@
+[Unit]
+Description=Running the nodejs appliation to access the server endpoints
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/pi/elixpo_ai_starter.sh
+Restart=always
+RestartSec=8
+User=pi
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Salsa&family=Source+Code+Pro&display=swap");
+body{
+    overflow: hidden;
+    background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+}
+.container
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 730px;
+    width: 1519px;
+    transition: 0.5s;
+    opacity: 1;
+    overflow: hidden;
+}
+
+
+.logo
+{
+    position: absolute;
+    top: 3%;
+    left: 87%;
+    height: 40px;
+    width: 40px;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+    background-size: cover;
+}
+.appName
+{
+    position: absolute;
+    top: 1%;
+    left: 90%;
+    font-family: 'Source Code Pro', monospace;
+    color: #fff;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+
+
+.backgroundMask
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+}
+.backgroundTile
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #151717;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    box-sizing: border-box;
+    z-index: -1;
+
+}
+.backgroundClipPath
+{
+    position: absolute;
+    height: 100%;
+    width: 42%;
+    top: 0;
+    left: 0;
+    background: #151717;
+    clip-path: polygon(0 2%, 100% 0%, 26% 100%, 0% 100%);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    box-sizing: border-box;
+}
+
+.backgroundClipPath .tile
+{
+    position: relative;
+    left: 2%;
+    margin-bottom: 5px;
+    height: 150px;
+    width: 150px;
+    border-radius: 12px;
+    background: transparent;
+    overflow: hidden;
+    
+}
+
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.15;
+        filter: blur(2px);
+    }
+}
+
+.backgroundClipPath .tile.flash {
+    animation: flash 1s linear infinite;
+}
+
+
+.backgroundClipPath .tile img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.backgroundClipPath .tile img.blur
+{
+    filter: blur(2px);
+}
+
+.vgGirl {
+    position: absolute;
+    height: 100%;
+    filter: blur(2px);
+    left: 10%;
+    width: 100%; /* Adjust width to your preference */
+    background-size: contain;
+    background-image: url(IMAGES/vrglassGirl.png);
+    opacity: 0.25;
+    object-fit: cover;
+    pointer-events: none;
+    background-repeat: no-repeat;
+}
+
+
+.signInUpText
+{
+    position: absolute;
+    top: 0;
+    left: 58%;
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 5em;
+}
+
+
+#readDocs
+{
+    position: absolute;
+    top: 45%;
+    left: 95%;
+    color: #00a2ff;
+    font-size: 2em;
+    cursor: pointer;    
+    z-index: 10;
+
+}
+
+#visitGallery
+{
+    position: absolute;
+    top: 55%;
+    left: 95%;
+    color: #f3fb02;
+    font-size: 2em;
+    cursor: pointer;    
+    z-index: 10;
+
+}
+
+
+.savedMsg {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8) translateY(-250px);
+    cursor: pointer;
+    font-size: 1.6rem;
+    border-radius: 16px;
+    border: none;
+    padding: 2px;
+    background: radial-gradient(circle 80px at 80% -10%, #ffffff, #181b1b);
+    transition: 0.5s;
+    z-index: 100;
+    
+  }
+  .savedMsg.display 
+  {
+    transform: translateX(-50%) scale(1) translateY(0px);
+    z-index: 2000;
+  }
+  .savedMsg::after {
+    content: "";
+    position: absolute;
+    width: 65%;
+    height: 60%;
+    border-radius: 120px;
+    top: 0;
+    right: 0;
+    box-shadow: 0 0 20px #ffffff38;
+    z-index: -1;
+  }
+  
+  .blob1 {
+    position: absolute;
+    width: 70px;
+    height: 100%;
+    border-radius: 16px;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(
+      circle 60px at 0% 100%,
+      #3fe9ff,
+      #0000ff80,
+      transparent
+    );
+    box-shadow: -10px 10px 30px #0051ff2d;
+  }
+  
+  .inner {
+    padding: 14px 25px;
+    border-radius: 14px;
+    color: #fff;
+    z-index: 3;
+    position: relative;
+    background: radial-gradient(circle 80px at 80% -50%, #777777, #0f1111);
+    font-weight: 400;
+    font-family: 'Source Code Pro', monospace;
+    text-align: center;
+  }
+  .inner::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 14px;
+    background: radial-gradient(
+      circle 60px at 0% 100%,
+      #00e1ff1a,
+      #0000ff11,
+      transparent
+    );
+    position: absolute;
+  }

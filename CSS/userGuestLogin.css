@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=VT323&display=swap');
+.userNameGuest
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #0000007a;
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    white-space: normal;
+    overflow: hidden;
+    width: 100%;
+    /* display: none; */
+}
+.userNameGuest.hidden
+{
+  display: none;
+}
+
+.terminal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2em;
+    background-color: #333;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 0 0.4em;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+}
+
+.headerText {
+    position: absolute;
+    left: 3%;
+    color: #696969;
+    font-family: "VT323", monospace;
+    font-weight: 700;
+    font-size: 1em;
+    letter-spacing: 2px;
+    text-align: left;
+}
+  .terminal-body {
+    position: absolute;
+    top: 1.5em;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1em;
+    padding: 0.4em;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  .terminal-body::-webkit-scrollbar {
+    width: 0.5em;
+  }
+  .terminal-body::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 4px;
+  }
+  .terminal-body::-webkit-scrollbar-track {
+    background-color: #000;
+  }
+  .terminal-body::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  .terminal-body::-webkit-scrollbar-thumb:active {
+    background-color: #777;
+  }
+  .terminal-body p {
+    margin: 0;
+  }
+  .terminal-body p + p {
+    margin-top: 0.4em;
+  }
+  .terminal-body p:last-child {
+    margin-bottom: 0;
+  }
+  .terminal-input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2em;
+    background-color: #333;
+    padding: 0 0.4em;
+    box-sizing: border-box;
+  }
+  .terminal-input input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    color: #fff;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1em;
+    border: none;
+    outline: none;
+  }
+  .terminal-input input::placeholder {
+    color: #777;
+  }
+  .terminal-input input:focus::placeholder {
+    color: transparent;
+  }
+  .terminal-input input::-webkit-input-placeholder {
+    color: #777;
+  }
+
+  .control {
+    position: absolute;
+    top: 20%;
+    left: 95%;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 0.4em;
+    border-radius: 50%;
+    background-color: #777;
+  }
+  
+  .control.close {
+    background-color: #e33;
+    cursor: pointer;
+  }
+  
+  .control.minimize {
+    background-color: #ee0;
+    display: none;
+  }
+  
+  .control.maximize {
+    background-color: #0b0;
+    display: none;
+  }
+ 
+  
+
+  .terminal-loader {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    border: 0.1em solid #333;
+    background-color: #1a1a1a;
+    color: #0f0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1em;
+    height: 50%;
+    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transform: scale(1.2) translateX(-50%) translateY(-50%);
+    display: flex;
+    transform-origin: center;
+}
+.forgotUserMessage
+{
+  position: absolute;
+}
+.initializeText {
+    position: absolute; /* Absolute positioning */
+    top: 33%; /* Adjust positioning based on your needs */
+    left: 15%;
+    z-index: 10;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Ensure items are aligned in the center */
+    font-family: "VT323", monospace;
+}
+.initializeText:nth-child(2)
+{
+    top: 18%;
+}
+.initializeText:nth-child(3)
+{
+    top: 22%;
+}
+.initializeText:nth-child(3) p
+{
+    color: rgb(225, 0, 255);
+}
+.initializeText:nth-child(1)
+{
+    top: 27%;
+}
+.initializeText:nth-child(4)
+{
+    top: 32%;
+}
+.initializeText:nth-child(4) p:nth-child(2)
+{
+    color: #0f0;
+    text-decoration: none;
+}
+.initializeText:nth-child(4) p:nth-child(3)
+{
+    color: rgb(39, 118, 214);
+    text-decoration: none;
+}
+.initializeText:nth-child(6)
+{
+    top: 45%;
+}
+.initializeText:nth-child(6) p
+{
+    color: rgb(237, 237, 237);
+}
+.initializeText:nth-child(7)
+{
+    top: 65%;
+}
+.initializeText:nth-child(7) p
+{
+    color: rgb(237, 237, 237);
+}
+
+.initializeText span,
+.initializeText p {
+    position: relative;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-right: 10px; /* Add some space between span and p */
+    letter-spacing: 2px;
+}
+
+.initializeText p {
+    color: rgb(114, 114, 114);
+    font-weight: normal; /* Reset font-weight for p if needed */
+}
+.usernameGuestInput
+{
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    height: 30px;
+    width: 60%;
+    background: transparent;
+    border: none;
+    color: #dbce7b;
+    font-weight: 100;
+    font-size: 1.5em;
+    font-family: "VT323", monospace;
+    letter-spacing: 2px;
+    outline: none;
+    caret-color: #1b97f0;
+    z-index: 10;
+    pointer-events: none;
+}
+.usernameGuestInput::placeholder
+{
+    color: #1b97f0;
+    opacity: 0.3;
+    font-weight: 700;
+    font-size: 1em;
+    font-family: "VT323", monospace;
+}

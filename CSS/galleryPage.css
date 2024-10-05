@@ -1,0 +1,392 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=VT323&display=swap');
+
+* {
+    user-select: none;
+
+}
+
+body {
+    overflow: hidden;
+    padding: 0;
+    background: #222;
+}
+
+.logo {
+    position: relative;
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: 40px;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+    background-size: cover;
+}
+
+.appName {
+    position: absolute;
+    top: 12px;
+    right: 65px;
+    transform: translate(50%, -50%);
+    color: #fff;
+    font-size: 1.5em;
+    font-family: "VT323", monospace;
+}
+
+.userLogo {
+    position: absolute;
+    transform: translate(-50%) translateY(-50%);
+    top: 50%;
+    left: 95%;
+    height: 40px;
+    width: 40px;
+    background-size: cover;
+    cursor: pointer;
+    padding: 5px 5px;
+    border-radius: 50%;
+    border: 2px dashed #ffaad3;
+}
+
+.mainHeading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #00ff62;
+    font-size: 2.5em;
+    font-family: "VT323", monospace;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 730px;
+    width: 1519px;
+    transition: 0.5s;
+    opacity: 1;
+    overflow: hidden;
+    background: #494a4a;
+    background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+}
+
+.aiArtCreate {
+    position: absolute;
+    top: 50%;
+    width: 180px;
+    height: 60px;
+    background: url("/CSS/IMAGES/spaceBg.jpg");
+    background-size: cover;
+    border-radius: 15px;
+    border: 2px solid #fff;
+    left: 85%;
+    transform: translateX(-50%) translateY(-50%) scale(0.8);
+    overflow: hidden;
+    /* Ensure the inner element doesn't overflow */
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.aiArtCreateText {
+    position: absolute;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    font-size: 1.2em;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.navbar {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 70px;
+    display: flex;
+    width: 100%;
+    background-color: #101010;
+    overflow: hidden;
+
+}
+
+.aiArtDocs {
+    position: relative;
+    top: 50%;
+    left: 80%;
+    width: 180px;
+    height: 60px;
+    background: transparent;
+    border: 2px solid #a079e9;
+    border-radius: 15px;
+    transform: translateX(0%) translateY(-50%) scale(0.8);
+    overflow: hidden;
+    /* Ensure the inner element doesn't overflow */
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.25s;
+
+}
+
+.aiArtDocsText {
+    position: relative;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    font-size: 2em;
+    width: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Source Code Pro', monospace;
+}
+
+
+.masonry {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    width: 90%;
+    height: 74%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
+    /* Adjusted column width */
+    grid-auto-rows: 10px;
+    /* Base row height remains */
+    gap: 10px;
+    /* Consistent 10px gap on all sides */
+    grid-auto-flow: dense;
+    /* Helps in filling gaps */
+    transition: 0.5s;
+    background: transparent;
+}
+
+.masonry::-webkit-scrollbar {
+    display: none;
+}
+
+.masonry-item {
+    background-color: #a079e9;
+    border-radius: 25px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1em;
+    text-align: center;
+    aspect-ratio: 1 / 1;
+    /* Default aspect ratio */
+    transform-origin: center;
+    transform: scale(1);
+    /* No scaling by default */
+    opacity: 0;
+    /* Hidden initially */
+    transition: opacity 0.8s ease-in-out;
+    /* Smooth fade-in on appearance */
+}
+
+
+.masonry-item.expanded.aspect-9-16 {
+    grid-row: span 25;
+    aspect-ratio: 9 / 16;
+}
+
+
+.masonry-item.expanded.aspect-4-3 {
+    grid-row: span 11;
+    aspect-ratio: 4 / 3;
+}
+
+
+.masonry-item.expanded.aspect-16-9 {
+    grid-row: span 8;
+    aspect-ratio: 16 / 9;
+}
+
+
+.masonry-item.expanded.aspect-3-2 {
+    grid-row: span 10;
+    aspect-ratio: 3 / 2;
+}
+
+
+.masonry-item.expanded.aspect-1-1 {
+    grid-row: span 14;
+    aspect-ratio: 1 / 1;
+}
+
+
+
+
+.masonry-item.contracted.aspect-9-16 {
+    grid-row: span 34;
+    aspect-ratio: 9 / 16;
+}
+
+
+.masonry-item.contracted.aspect-4-3 {
+    grid-row: span 15;
+    aspect-ratio: 4 / 3;
+}
+
+
+.masonry-item.contracted.aspect-16-9 {
+    grid-row: span 11;
+    aspect-ratio: 16 / 9;
+}
+
+
+.masonry-item.contracted.aspect-3-2 {
+    grid-row: span 13;
+    aspect-ratio: 3 / 2;
+}
+
+
+.masonry-item.contracted.aspect-1-1 {
+    grid-row: span 20;
+    aspect-ratio: 1 / 1;
+}
+
+.masonry-item canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    transition: 0.25s;
+    background: transparent;
+}
+
+.masonry-item img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    /* Hidden until image is loaded */
+    transition: opacity 0.3s ease-in-out;
+    /* Smooth fade-in for the image */
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 10;
+}
+
+.masonry-item.loading {
+    opacity: 1;
+}
+
+.masonry-item.loading img {
+    opacity: 0;
+    /* While loading */
+}
+
+.masonry-item.loaded img {
+    opacity: 1;
+    /* Fade in image when loaded */
+    animation: appear 0.08s linear forwards;
+}
+
+/* No blur effect, just smooth fade */
+.masonry-item.loading {
+    opacity: 1;
+    /* Container hidden initially */
+
+}
+
+.masonry-item.loaded {
+    opacity: 1;
+    /* Container fully visible after load */
+}
+
+
+.savedMsg {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8) translateY(-250px);
+    cursor: pointer;
+    font-size: 1.6rem;
+    border-radius: 16px;
+    border: none;
+    padding: 2px;
+    background: radial-gradient(circle 80px at 80% -10%, #ffffff, #181b1b);
+    transition: 0.5s;
+
+}
+
+.savedMsg.display {
+    transform: translateX(-50%) scale(1) translateY(0px);
+    z-index: 2000;
+    transition: 0.5s;
+}
+
+.savedMsg::after {
+    content: "";
+    position: absolute;
+    width: 65%;
+    height: 60%;
+    border-radius: 120px;
+    top: 0;
+    right: 0;
+    box-shadow: 0 0 20px #ffffff38;
+    z-index: -1;
+}
+
+.blob1 {
+    position: absolute;
+    width: 70px;
+    height: 100%;
+    border-radius: 16px;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(circle 60px at 0% 100%,
+            #3fe9ff,
+            #0000ff80,
+            transparent);
+    box-shadow: -10px 10px 30px #0051ff2d;
+}
+
+.inner {
+    padding: 14px 25px;
+    border-radius: 14px;
+    color: #fff;
+    z-index: 3;
+    position: relative;
+    background: radial-gradient(circle 80px at 80% -50%, #777777, #0f1111);
+    font-weight: 400;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.inner::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 14px;
+    background: radial-gradient(circle 60px at 0% 100%,
+            #00e1ff1a,
+            #0000ff11,
+            transparent);
+    position: absolute;
+}
+
+
+@keyframes appear {
+    0% {
+        filter: blur(5px);
+    }
+
+    100% {
+        filter: blur(0px);
+    }
+}

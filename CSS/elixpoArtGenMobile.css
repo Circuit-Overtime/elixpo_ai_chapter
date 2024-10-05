@@ -1,0 +1,281 @@
+@media (max-width: 768px) { 
+    * {
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+    .container
+    {
+        width: 450px;
+    
+    }
+    .appName
+    {
+        display: none;
+    }
+    .logo
+    {
+        top: 6%;
+        left: 10%;
+        opacity: .75;
+    }
+    .userLogo
+    {
+        left: 75%;
+        top: 6%;
+        transform: scale(0.8);
+    }
+    .GalleryImageIcon
+    {
+        top: 6%;
+        left: 60%;
+        transform: scale(0.8);
+    }
+    .serverStatus
+    {
+        top: 6%;
+        left: 50%;
+        transform: scale(0.8);
+    }
+    .isoImageType
+    {
+        display: none;
+    }
+    .isoAIEnhancement
+    {
+        display: none;
+    }
+    .isoImageRatio
+    {
+        display: none;
+    }
+    .typeOfImageTile {
+        position: relative;
+        width: 95%; /* Use full width for mobile screens */
+        left: 2.5%; /* Center the container horizontally */
+        top: 10%;
+        transform: scale(0.75);
+      }
+    
+      .typeOfImageTile span {
+        width: 30%; /* 4 items per row */
+        height: 80px; /* Adjust height as needed for mobile */
+        margin-bottom: 5px; /* Space between items */
+        margin-right: 2px;
+      }
+      .aspectRatioControls
+      {
+        top: 60%;
+        left: 10%;
+      }
+      .aspectRatioTile {
+        margin: 0 30px; /* Add horizontal spacing between tiles */
+      }
+      .enhanceButton {
+        transform: scale(0.75);
+        top: 73%;
+      }
+      .privateResultSection {
+        transform: scale(0.75);
+        top: 73%;
+        left: 17%;
+      }
+      .aiEnhancementDesc
+      {
+        display: none;
+      }
+      .privatePublicResultDesc
+      {
+        display: none;
+      }
+      #OneImage
+      {
+        transform: scale(0.75) translateY(-50%);
+        left: 4.5%;
+      }
+      .samplePrompt
+      {
+        max-height: 72px;
+      }
+      .samplePrompt .promptTextInput
+      {
+        font-size: 0.7em;
+        left: 15%;
+        width: 250px;
+        max-height: 60px;
+      }
+      .samplePrompt.generating .promptTextInput
+      {
+        font-size: 0.7em;
+      }
+      .samplePrompt.generating
+      {
+        top: 80%;
+      }
+      .samplePrompt.generating .searchButtonText
+      {
+        display: none;
+      }
+      .samplePrompt.generating .stopGeneration
+      {
+        left: 95%;
+      }
+      .searchBtn
+      {
+        left: -10%;
+      }
+      .searchBtn .text 
+      {
+        display: none;
+      }
+      .savedMsg.display 
+      {
+        transform: translateX(-50%) scale(0.8) translateY(0px);
+        z-index: 2000;
+      }
+      .savedMsg {
+        top: 6%;
+      }
+      .inner
+      {
+        font-size: 0.7em;
+        text-align: center;
+      }
+      .imageTiles
+      {
+        position: absolute;
+        top: 6%;
+        left: 12%;
+        height: 75%;
+        width: 100%;
+        background: transparent;
+        box-sizing: border-box;
+        transform: scale(0.8);
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+      }
+      .imageTiles::-webkit-scrollbar
+      {
+        display: none;
+      }
+      .imageTiles .maskImageTile1
+      {
+        position: absolute;
+        flex: 1;
+        top: 0%;
+        left: 10%;
+        height: 450px;
+        width: 250px;
+        background: transparent;
+        transition: 0.5s;
+        transition-delay: 0.7s;
+        transform: scale(0.8);
+    
+      }
+      .imageTiles .maskImageTile2
+      {
+        position: absolute;
+        top: 63%;
+        left: 10%;
+        height: 450px;
+        width: 250px;
+        background: transparent;
+        transition: 0.5s;
+        transition-delay: 0.8s;
+        flex: 1;
+        transform: scale(0.8);
+    
+      }
+      .imageTiles .maskImageTile3
+      {
+        position: absolute;
+        top: 140%;
+        left: 10%;
+        height: 450px;
+        width: 250px;
+        background: transparent;
+        transition: 0.5s;
+        transition-delay: 0.9s;
+        flex: 1;
+        transform: scale(0.8);
+       
+      }
+      .imageTiles .maskImageTile4
+      {
+        position: absolute;
+        top: 205%;
+        left: 10%;
+        height: 450px;
+        width: 250px;
+        background: transparent;
+        transition: 0.5s;
+        transition-delay: 1s;
+        flex: 1;
+        transform: scale(0.8);
+    
+      }
+      .showImage
+  {
+    position: absolute;
+    top: 15%;
+    height: 80%;
+    left: 0%;
+    width: 100%;
+    background: rgba(24, 24, 24, 0.79);
+    backdrop-filter: blur(10px);
+    z-index: 200;
+    opacity: 1;
+    overflow: hidden;
+    transform: translateY(0);
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+    transition: 0.5s;
+
+  }
+  .showImage .copyZone
+  {
+    left: 15%;
+    top: 90%;
+  }
+  .showImage .backButton
+  {
+    top: 91%;
+    left: 75%;
+  }
+  .showImage .imageContainer
+  {
+    width: 60%;
+    height: 65%;
+  }
+  .enhancingMessage
+  {
+    display: none;
+  }
+  .acceptBtn
+  {
+    top: 72%;
+    left: 15%;
+    transform: scale(0.75);
+  }
+  .rejectBtn
+  {
+    top: 72%;
+    left: 60%;
+    transform: scale(0.75);
+  }
+  .logoutPopUp
+  {
+    width: 200px;
+    left: 60%;
+    top: 10%;
+    z-index: 50;
+    scale: 0.7;
+  }
+  .logoutPopUp .logoutPopUpUsername
+  {
+    font-size: 1.3em;
+    top: 8%;
+  }
+}

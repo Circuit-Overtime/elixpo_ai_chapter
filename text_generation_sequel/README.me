@@ -1,0 +1,53 @@
+# Elixpo.ai Text Generation
+
+This repository contains the source code for the Elixpo.ai Text Generation API, a powerful and flexible service for generating text using various language models.
+
+## Features
+
+- Support for multiple language models (OpenAI, Mistral, Llama, Claude)
+- GET and POST request handling
+- JSON mode for structured output
+- Seed support for reproducible results
+- Temperature control for output randomness
+- System prompt support
+- Request caching for improved performance
+- Rate limiting to prevent abuse
+
+## Installation
+
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/Circuit-Overtime/elixpo_ai_chapter.git
+    ```
+
+2. Install dependencies:
+    ```bash
+    cd elixpo_ai_chapter
+    npm install
+    ```
+
+3. Set up environment variables (API keys, etc.) in a `.env` file.
+
+4. Start the server:
+    ```bash
+    npm start
+    ```
+
+
+## Rate Limiting
+
+The API implements rate limiting to prevent abuse. By default, each IP address is limited to 20 requests per minute. Cached responses do not count towards this limit.
+
+## Caching
+
+Responses are cached to improve performance and reduce unnecessary API calls. The cache is persisted to disk and loaded on server start.
+
+## Contributing
+
+We welcome contributions to the Elixpo.ai Text Generation API! Please feel free to submit issues, fork the repository and send pull requests.
+
+## License
+
+[MIT License](LICENSE)
+
+---

@@ -1,0 +1,204 @@
+@media (max-width: 1080px) and (max-height: 1440px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 375px;
+    transition: 0.5s;
+    opacity: 1;
+    overflow: hidden;
+    justify-content: center;
+    background: #0fb6b6;
+    background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+
+  }
+
+  .appName {
+    display: none;
+  }
+
+  .masonry {
+    gap: 14.4px;
+    grid-auto-rows: 10px;
+    grid-auto-flow: dense;
+    transition: 0.5s;
+    background: transparent;
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: grid;
+  }
+
+  .MaskdisplayImage {
+    justify-content: center;
+    align-items: center;
+    height: 88%;
+    width: 90%;
+    position: relative;
+    top: 55%;
+    transform: translateY(-50%);
+    left: 5%;
+    background: transparent;
+    z-index: 5;
+  }
+
+  .imageShowCase.square {
+    width: 95%;
+    height: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  .aspectRatioTile {
+    position: absolute;
+    top: 66.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 17%;
+    height: 6%;
+  }
+
+  .userCredits {
+    top: 75%;
+  }
+
+  .downloadGalleryImage {
+    width: 55%;
+    height: 7.7%;
+    font-size: 25px;
+  }
+
+  .promtEngineeringSection {
+    font-size: 13.3px;
+    text-wrap: nowrap;
+  }
+
+  .imageSectionBackButton {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #888;
+    font-family: "VT323", monospace;
+  }
+
+  .custom-loader.progressShow {
+    opacity: 1;
+    z-index: 3;
+    transition: 0.5s;
+  }
+
+  .postShare {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transition: .3s;
+    top: 5%;
+    left: 88%;
+    font-size: 0.5em;
+    color: #fff;
+    ;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .themeViewer span {
+    font-size: 3em;
+    color: #fff;
+    font-family: "VT323", monospace;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .generationQuality {
+    font-size: 2em;
+  }
+
+  .generationAspectRatio {
+    font-size: 2em;
+  }
+
+  .savedMsg {
+    transform: translateX(-50%) scale(0.2) translateY(-250px);
+
+  }
+
+  .savedMsg.display {
+    transform: translateX(-50%) scale(0.8) translateY(0px);
+  }
+
+  .inner {
+    text-align: center;
+  }
+
+
+  .loadMoreBtn {
+    position: absolute;
+    top: 91%;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    border-radius: 8px;
+    background: #212121d5;
+    border: 2px solid #01e7ad;
+    font-family: "VT323", monospace;
+    font-size: 1.3em;
+    font-weight: 100;
+    opacity: 0;
+    transition: 0.5s;
+    z-index: -1;
+    display: block;
+  }
+
+  .loadMoreBtn.visible {
+    left: 50%;
+    transform-origin: center;
+    transform: scale(1) translateX(-50%);
+  }
+
+  .masonry-item.expanded.aspect-9-16 {
+    grid-row: span 25;
+    aspect-ratio: 9 / 16;
+  }
+
+
+  .masonry-item.expanded.aspect-4-3 {
+    grid-row: span 11;
+    aspect-ratio: 4 / 3;
+  }
+
+
+  .masonry-item.expanded.aspect-16-9 {
+    grid-row: span 8;
+    aspect-ratio: 16 / 9;
+  }
+
+
+  .masonry-item.expanded.aspect-3-2 {
+    grid-row: span 10;
+    aspect-ratio: 3 / 2;
+  }
+
+
+  .masonry-item.expanded.aspect-1-1 {
+    grid-row: span 14;
+    aspect-ratio: 1 / 1;
+  }
+
+
+}

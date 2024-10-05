@@ -1,0 +1,219 @@
+
+
+
+/* LOGIN FORM STYLING BEGINS FROM HERE  */
+*
+{
+    user-select: none;
+}
+.form_login {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translateX(-50%) translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #2E2E2E; /* Dark background */
+    padding: 30px;
+    width: 350px;
+    border-radius: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: 2px solid #2d79f3;
+    transition: 0.25s;
+}
+.form_login.hidden
+{
+    transform: translateY(100%) translateX(-50%);
+    opacity: 0;
+    transition: 0.25s;
+    pointer-events: none;
+
+}
+.form_login.hidden ~ .signInUpText
+{
+    display: none;
+}
+::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #B0B0B0; /* Lighter placeholder color */
+}
+
+.form_login button {
+    align-self: flex-end;
+}
+
+.form_login .flex-column > label {
+    color: #E0E0E0; /* Light text color */
+    font-weight: 600;
+}
+
+.form_login .inputForm {
+    border: none; /* Remove border */
+    border-radius: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    transition: 0.2s ease-in-out;
+    background: #2E2E2E; /* Match form background */
+    box-shadow: inset 3px 3px 5px #1E1E1E, inset -3px -3px 5px #3E3E3E; /* Neumorphic inner shadow */
+}
+
+.form_login .input {
+    margin-left: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 85%;
+    height: 100%;
+    background: transparent; /* Match form background */
+    color: #E0E0E0; /* Light text color */
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.2em;
+}
+
+.form_login .input:focus {
+    outline: none;
+}
+
+.form_login .inputForm:focus-within {
+    box-shadow: inset 3px 3px 5px #1E1E1E, inset -3px -3px 5px #3E3E3E, 0 0 0 2px #2d79f3; /* Neumorphic inner shadow with focus outline */
+}
+
+
+.form_login .inputForm .passwordShowHide
+{
+     position: absolute;
+     left: 85%;
+     color: #fff;
+     cursor: pointer;
+}
+.form_login .inputForm .emailIcon
+{
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+.form_login .inputForm .passwordIcon
+{
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+.form_login .inputForm .usernameIcon
+{
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+.form_login .flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.form_login .flex-row > div > label {
+    font-size: 14px;
+    color: #E0E0E0; /* Light text color */
+    font-weight: 400;
+}
+
+.form_login .span {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #2d79f3;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.form_login .button-submit {
+    margin: 20px 0 10px 0;
+    background-color: #2d79f3;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #1E1E1E;
+    transition: 0.25s;
+}
+
+.form_login .button-submit:hover {
+    background-color: #1c4485;
+    transition: 0.25s;
+}
+
+.form_login .p {
+    text-align: center;
+    color: #E0E0E0; /* Light text color */
+    font-size: 14px;
+    margin: 5px 0;
+    user-select: none;
+}
+
+.form_login .btn {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    gap: 5px;
+    border: 1px solid #151717; /* Remove border */
+    background-color: #2E2E2E; /* Match form background */
+    color: #E0E0E0; /* Light text color */
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #1E1E1E;
+    transition: 0.2s ease-in-out;
+    font-size: 1.5em;
+}
+
+.form_login .btn:hover {
+    box-shadow: 5px 5px 10px #1E1E1E, -5px -5px 10px #3E3E3E, 0 0 0 2px #2d79f3; /* Neumorphic shadow with focus outline */
+}
+
+.form_login .btn.google ion-icon
+{
+    color: #ffc400;
+}
+.form_login .btn.github ion-icon
+{
+    color: #00ff95;
+}
+.form_login .btn.guest ion-icon
+{
+    color: #0073ff;
+}
+#LoginError
+{
+    position: absolute;
+    color: #00ff95;
+    width: 100%;
+    left: 50%;
+    top: 92%;
+    font-size: 20px;
+    transform: translateX(-50%);
+    font-family: 'Source Code Pro', monospace;
+}
+
+
+#RegisterError
+{
+    margin-top: 20px;
+    position: absolute;
+    color: #00ff95;
+    width: 100%;
+    left: 50%;
+    top: 92%;
+    font-size: 20px;
+    transform: translateX(-50%);
+    font-family: 'Source Code Pro', monospace;
+}

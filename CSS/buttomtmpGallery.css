@@ -1,0 +1,582 @@
+:root {
+    --transition: 0.25s;
+    --spark: 1.8s;
+    --cut: 0.1em;
+    --active: 0;
+}
+
+.searchButtonText {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translateY(-50%);
+}
+
+.searchBtn {
+    --bg: radial-gradient(
+            40% 50% at center 100%,
+            hsl(270 calc(var(--active) * 97%) 72% / var(--active)),
+            transparent
+        ),
+        radial-gradient(
+            80% 100% at center 120%,
+            hsl(260 calc(var(--active) * 97%) 70% / var(--active)),
+            transparent
+        ),
+        hsl(260 calc(var(--active) * 97%) calc((var(--active) * 44%) + 12%));
+    background: var(--bg);
+    font-size: 2rem;
+    font-weight: 500;
+    border: 0;
+    cursor: pointer;
+    padding: 0.9em 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+    white-space: nowrap;
+    border-radius: 25px;
+    transition: box-shadow var(--transition), scale var(--transition), background var(--transition);
+	position: relative;
+	transform: scale(0.5);
+}
+
+.searchBtn:active {
+    scale: 1;
+}
+
+.searchBtn:is(:hover, :focus-visible) path {
+    animation-name: bounce;
+}
+
+.sparkle path {
+	color: hsl(0 0% calc((var(--active, 0) * 70%) + var(--base)));
+	transform-box: fill-box;
+	transform-origin: center;
+	fill: currentColor;
+	stroke: currentColor;
+	animation-delay: calc((var(--transition) * 1.5) + (var(--delay) * 1s));
+	animation-duration: 0.6s;
+	transition: color var(--transition);
+}
+
+.searchBtn:is(:hover, :focus-visible) path {
+	animation-name: bounce;
+}
+
+@keyframes bounce {
+	35%, 65% {
+		scale: var(--scale);
+	}
+}
+.sparkle path:nth-of-type(1) {
+	--scale: 0.5;
+	--delay: 0.1;
+	--base: 40%;
+}
+
+.sparkle path:nth-of-type(2) {
+	--scale: 1.5;
+	--delay: 0.2;
+	--base: 20%;
+}
+
+.sparkle path:nth-of-type(3) {
+	--scale: 2.5;
+	--delay: 0.35;
+	--base: 30%;
+}
+
+.spark {
+    position: absolute;
+    inset: 0;
+    border-radius: 100px;
+    rotate: 0deg;
+    overflow: hidden;
+    mask: linear-gradient(white, transparent 50%);
+    animation: flip calc(var(--spark) * 2) infinite steps(2, end);
+}
+
+@keyframes flip {
+    to {
+        rotate: 360deg;
+    }
+}
+
+.searchBtn:before {
+    content: "";
+    position: absolute;
+    inset: -0.25em;
+    z-index: -1;
+    border: 0.25em solid hsl(260 97% 50% / 0.5);
+    border-radius: 100px;
+    opacity: var(--active, 0);
+    transition: opacity var(--transition);
+}
+
+.spark:before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    aspect-ratio: 1;
+    top: 0%;
+    left: 50%;
+    z-index: -1;
+    translate: -50% -15%;
+    rotate: 0;
+    transform: rotate(-90deg);
+    opacity: calc((var(--active)) + 0.4);
+    background: conic-gradient(
+        from 0deg,
+        transparent 0 340deg,
+        white 360deg
+    );
+    transition: opacity var(--transition);
+    animation: rotate var(--spark) linear infinite both;
+}
+
+.spark:after {
+    content: "";
+    position: absolute;
+    inset: var(--cut);
+    border-radius: 100px;
+}
+
+.backdrop {
+    position: absolute;
+    inset: var(--cut);
+    background: var(--bg);
+    border-radius: 100px;
+    transition: background var(--transition);
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(90deg);
+    }
+}
+
+@supports(selector(:has(:is(+ *)))) {
+    body:has(button:is(:hover, :focus-visible)) {
+        --active: 1;
+        --play-state: running;
+    }
+
+    .bodydrop {
+        display: none;
+    }
+}
+
+.searchBtn:is(:hover, :focus-visible) ~ :is(.bodydrop, .particle-pen) {
+    --active: 1;
+    --play-state: running;
+}
+
+button:is(:hover, :focus-visible) {
+    --active: 1;
+    --play-state: running;
+}
+
+
+.particle-pen {
+    position: absolute;
+    width: 200%;
+    aspect-ratio: 1;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    -webkit-mask: radial-gradient(white, transparent 65%);
+    z-index: -1;
+    opacity: var(--active, 0);
+    transition: opacity var(--transition);
+}
+
+.text {
+    translate: 2% -6%;
+    letter-spacing: 0.01ch;
+    background: #fff;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background var(--transition);
+}
+
+button svg {
+    inline-size: 1.25em;
+    translate: -25% -5%;
+}
+
+.samplePrompt {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    top: 90%;
+    height: 60px;
+    padding-top: 15px;
+    padding-left: 60px;
+    resize: none;
+    max-height: 100px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    outline: none;
+    border: 1px solid rgba(224, 60, 224, 0.533);
+    background: #131212;
+    border-radius: 15px;
+    font-size: 24px;
+    transition: 0.25s;
+    z-index: 10;
+    transform: translateX(-50%);
+    display: none;
+}
+.samplePrompt.contracted
+{
+    left: 5%;
+    transform: translateX(0%);
+}
+.samplePrompt i 
+{
+    color: #fff;
+    position: absolute;
+    left: 3%;
+}
+.samplePrompt .stopGeneration.hidden {
+    position: absolute;
+    top: 50%;
+    left: 98%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.samplePrompt .stopGeneration {
+    position: absolute;
+    top: 50%;
+    left: 97%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    opacity: 1;
+    pointer-events: none;
+
+}
+
+.samplePrompt .promptTextInput {
+    position: absolute;
+    height: 45px;
+    width: 500px;
+    top: 6%;
+    left:8%;
+
+    font-size: 1em;
+    border: none;
+    outline: none;
+    color: #d87bfd;
+    background: #fff;
+    box-sizing: border-box;
+    max-height: 88px;
+    resize: none;
+    padding-top: 10px;
+    background: transparent;
+}
+
+.samplePrompt .promptTextInput::-webkit-scrollbar {
+    display: none;
+}
+
+.searchButton {
+    position: absolute;
+    width: 100px;
+    height: 45px;
+    border-radius: 15px;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 68%;
+    border: 1px solid #4e4e4e;
+    background: #181818;
+    font-family: 'Source Code Pro', monospace;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 100;
+}
+
+
+
+.particle-pen {
+	position: absolute;
+	width: 200%;
+	aspect-ratio: 1;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	-webkit-mask: radial-gradient(white, transparent 65%);
+	z-index: -1;
+	opacity: var(--active, 0);
+	transition: opacity var(--transition);
+}
+
+
+
+.text {
+	translate: 2% -6%;
+	letter-spacing: 0.01ch;
+	background: #fff;
+	-webkit-background-clip: text;
+	color: transparent;
+	transition: background var(--transition);
+}
+
+button svg {
+	inline-size: 1.25em;
+	translate: -25% -5%;
+	fill: #fff;
+}
+
+.PromptDisplay {
+    position: absolute;
+    height: 150px;
+    text-align: justify;
+    color: rgb(246, 246, 134);
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 80px;
+    width: 70%;
+    background: #2d2d2d;
+    user-select: none;
+    font-size: 0.8em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100px;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    resize: none;
+    box-sizing: border-box;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 8px;
+    outline: none;
+    border: 0.25px solid #777;
+    user-select: none;
+    display: flex;
+  }
+.PromptDisplay::-webkit-scrollbar
+{
+  display: none;
+}
+
+
+.PromptDisplay pre {
+  background-color: transparent;
+  position: absolute;
+  top: -10%;
+  color: #f8f8f2;
+  font-size: 1.3em;
+  width: 88%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Style the code content */
+.PromptDisplay code {
+position: relative;
+top: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 1em;
+  color: #66d9ef;
+}
+
+/* Style keywords differently for syntax highlighting */
+/* Style keywords differently for syntax highlighting */
+.PromptDisplay .keyword {
+color: #f92672; /* Bright pink */
+font-weight: bold;
+background-color: #3e3e3e; /* Darker background for keywords */
+padding: 2px 4px;
+border-radius: 4px;
+transition: background-color 0.3s ease;
+}
+
+/* Hover effect for keywords */
+.PromptDisplay .keyword:hover {
+background-color: #f92672; /* Bright pink background on hover */
+color: #2d2d2d; /* Dark text color for contrast */
+}
+
+/* Additional styles for markdown-like elements */
+
+.PromptDisplay  {
+color: #66d9ef; /* Light blue for italic text */
+font-size: 1.1em;
+padding: 8px 10px;
+}
+
+
+
+
+.generationTimeMask {
+    position: absolute;
+    height: 60px;
+    width: 50%;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    background: #161616;
+    border-radius: 12px;
+    border: 1px solid #b941ff;
+}
+
+
+.generationTimeMask::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  right: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.1); /* Light shade */
+  border-radius: 0 12px 12px 0; /* Match the border radius of the parent */
+}
+.generationQuality
+{
+    position: absolute;
+    left: 25%;
+    transform: translateX(-50%) ; 
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 3em; 
+}
+
+.generationAspectRatio
+{
+    position: absolute;
+    left: 75%;
+    transform: translateX(-50%) ; 
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 3em; 
+}
+
+.generationTheme
+{
+  position: absolute;
+  top: 80%;
+  left: 45%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1em;
+
+}
+
+
+
+/* Container holding the tags */
+.tagsHolder {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 25%;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: transparent;
+    border-radius: 8px;
+    justify-content: center; /* Center tags horizontally */
+    align-items: center; /* Center tags vertically */
+    overflow-x: hidden; /* Hide overflow tags */
+    overflow-y: auto;
+    box-shadow: inset 2px -20px 40px #2e270c;
+}
+.tagsHolder::-webkit-scrollbar {
+    display: none;
+}
+/* Style for individual tags */
+.tag {
+    position: relative;
+    width: 100%;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    justify-content: center; /* Center text within each tag */
+    align-items: center; /* Center text vertically */
+    padding: 8px 12px; /* Added padding to each tag */
+    gap: 10px; /* Space between text items in each tag */
+}
+
+/* Style for the text inside the tag */
+.tag span {
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #1f1f1f;
+    color: white;
+    padding: 8px 22px;
+    font-size: 24px;
+    font-family: "VT323", monospace;
+}
+
+.themeViewer
+{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 10%;
+    background: url("");
+    background-size: cover;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px 5px #000;
+    z-index: 100;
+}
+.themeViewer span 
+{
+    font-size: 4em;
+    color: #fff;
+    font-family: "VT323", monospace;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.promptSectionBackButton
+{
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+}
+.imageSectionBackButton
+{
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+}

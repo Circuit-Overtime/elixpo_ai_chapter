@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400&family=Orbitron:wght@500&family=Sevillana&family=Style+Script&display=swap');
+
+body 
+{
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.loadingOverlay
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    opacity: 1;
+    display: none;
+    background-color: #18181B;
+}
+
+.loaderOne {
+    position: absolute;
+    display: flex;
+    top: 5%;
+    transform-origin: center;
+    left: 5%;
+    transform: translateX(-50%)  scale(0.8);
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 6rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+  .loaderOne:before,
+  .loaderOne:after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    animation: pulsOut 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 1rem rgba(111, 52, 212, 0.781));
+  }
+  .loaderOne:before {
+    width: 100%;
+    padding-bottom: 100%;
+    box-shadow: inset 0 0 0 1rem #6F34D4;
+    animation-name: pulsIn;
+  }
+  .loaderOne:after {
+    width: calc(100% - 2rem);
+    padding-bottom: calc(100% - 2rem);
+    box-shadow: 0 0 0 0 #6F34D4;
+  }
+
+  /* ======================================================= ANIMATIONS ========================================================== */
+  @keyframes pulsIn {
+    0% {
+      box-shadow: inset 0 0 0 1rem #6F34D4;
+      opacity: 1;
+    }
+    50%, 100% {
+      box-shadow: inset 0 0 0 0 #6F34D4;
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulsOut {
+    0%, 50% {
+      box-shadow: 0 0 0 0 #6F34D4;
+      opacity: 0;
+    }
+    100% {
+      box-shadow: 0 0 0 1rem #6F34D4;
+      opacity: 1;
+    }
+  }
+      
+
+
+  /* ================================================== STATIC IMAGES ============================================================= */
+  #image-track {
+    display: flex;
+    gap: 4vmin;
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translate(0%, -50%); 
+    user-select: none; /* -- Prevent image highlighting -- */
+    z-index: -1;
+    opacity: 0.2;
+  }
+  
+  #image-track > .StaticImageLoading {
+    width: 40vmin;
+    height: 56vmin;
+    object-fit: cover;
+    object-position: 100% center;
+  }
+
+  spline-viewer
+  {
+    position: absolute;
+    z-index: -5;
+    display: block;
+    opacity: 0.4;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  spline-viewer #logo
+  {
+    display:  none;
+  }
+
+#videoLizeThree
+{
+    display: block;
+    transition: 0.5s;
+    height: 600px;
+    opacity: 0;
+    top: 170px;
+    left: 400px;
+    transform: scale(1.2) translateZ(75px);
+    transform-style: preserve-3d;
+    z-index: 5;
+    filter: brightness(100%) opacity(1);
+
+}
+
+
+.loadingText
+{
+    position: absolute;
+    top: 8.5%;
+    text-shadow: 0 0 12px #ffc;
+    left: 10%;
+    font-size: 2em;
+    font-family: "Orbitron", sans-serif;
+    color: #ffc;
+}  
+
+
+.timeLine
+{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/timeLineLoading.png?alt=media&token=b19fb93c-9262-49cd-b949-2ed7746dd3a7);
+    background-size: cover;
+    opacity: 0.7;
+    border-radius: 75px;
+    height: 120px;
+    width: 770px;
+}
+.timeLineSeek
+{
+    position: absolute;
+    top: 0;
+    left: 70px;/*70 730*/
+    transition: 0.5s;
+    transform: translateX(-50%);
+    background: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/seekLoading.png?alt=media&token=a04d8592-2b0f-444f-ad33-d7b708a43118);
+    background-size: cover;
+    opacity: 1;
+    filter: drop-shadow( 0 0 2px #5d00ff);
+    border-radius: 75px;
+    height: 120px;
+    width: 40px;
+}
+.iconsRelay
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #18181bcb;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+}
+#loadingAnimationIcons
+{
+    color: rgb(0, 255, 106);
+    font-size: 11em;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);    
+}

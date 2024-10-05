@@ -1,0 +1,75 @@
+/* From Uiverse.io by cohencoo */ 
+.custom-loader {
+    position: absolute;
+    top: 93%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 22px;
+    border-radius: 3px;
+    color: #009bf4;
+    border: 2px solid;
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
+    transition: 0.5s;
+  }
+  .custom-loader.contracted
+  {
+    left: 35%;
+    width: 30%;
+    transition: 0.5s;
+  }
+  .custom-loader.progressShow
+  {
+    opacity: 1;
+    z-index: 10;
+    transition: 0.5s;
+  }
+
+  .custom-loader.contracted.custom-loader.progressShow
+  {
+    left: 30%;
+    width: 30%;
+    opacity: 1;
+    z-index: 10;
+    transition: 0.5s;
+  }
+
+
+.loader {
+  position: absolute;
+  top: 10%; /* Center vertically */
+  width: 0%;
+  height: 80%; /* Added height property */
+  left: 0.2%;
+  background: transparent;
+  border-radius: inherit;
+  transition: 0.25s;
+  overflow: hidden;
+  image-rendering: pixelated; /* For most browsers */
+}
+
+.noise {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 22px;
+  background: 
+    linear-gradient(80deg, rgb(34, 139, 34), transparent), /* Minecraft grass color */
+    url(https://grainy-gradients.vercel.app/noise.svg); /* Minecraft achievement background */
+  transform: scale(10);
+  filter: contrast(500%) brightness(100%);
+}
+
+.overlay {
+  background: rgb(34, 139, 34); /* Minecraft grass color */
+  mix-blend-mode: multiply;
+}
+
+@keyframes movePixels {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-10%); } /* Move the background */
+}
+

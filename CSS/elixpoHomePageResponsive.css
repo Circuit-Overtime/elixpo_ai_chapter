@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@media (max-width: 1080px) and (max-height: 1440px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 100%;
+        width: 375px;
+        transition: 0.5s;
+        opacity: 1;
+        overflow: hidden;
+        justify-content: center;
+        background: #0fb6b6;
+        background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+    
+      }
+      .sitecontent
+      {
+        height: 500%;
+      }
+      .appName {
+        display: none;
+      }
+      .logo
+      {
+        position: relative;
+        left: 5%;
+        top: 3%;
+      }
+.mainName {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.4em;
+    /* Smaller font size for mobile */
+    justify-content: center;
+    align-items: center;
+    left: 0%;
+    top: 13%;
+  }
+
+
+
+  .desc {
+    position: relative;
+    text-align: center;
+    display: flex;
+    /* flex-wrap:wrap ; */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    top: 12%;
+    left: 40%;
+    transform: translateX(-50%);
+    font-family: 'Source Code Pro', monospace;
+    opacity: 1;
+  }
+.desc span 
+{
+  font-size:1em;
+  margin: 2%;
+}
+
+.aiArtCreate.navbar
+{
+    left: 56%;
+    top: 10%;
+    scale: 0.8;
+}
+  .samplePrompt {
+    position: relative;
+    width: 65%;
+    left: 0%;
+    top: 13%;
+    height: 180px;
+    max-height: 300px;
+    padding-top: 0px;
+    padding-left: 60px;
+    resize: none;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    overflow: hidden;
+    outline: none;
+    border: 1px solid rgba(224, 60, 224, 0.533);
+    background: #131212;
+    border-radius: 10px;
+    font-size: 24px;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #iconSearchText {
+    position: absolute;
+    color: #fff;
+    font-size: 30px;
+    left: 3%;
+    top: 5%;
+  }
+
+  .searchText {
+    position: absolute;
+    width: 90%;
+    left: 0;
+    height: auto; /* To grow as text increases */
+    background: transparent;
+    overflow: hidden;
+    white-space: normal; /* Text will wrap to the next line */
+    word-wrap: break-word; /* Forces words to break at the boundary */
+    font-size: 1em;
+    padding: 20px; /* Optional padding for better text appearance */
+    text-align: center;
+  }
+  
+
+.searchButton
+{
+  display: none;
+}
+
+.aiArtCreate {
+  position: relative;
+  top: 30%;
+  width: 180px;
+  height: 60px;
+  background: #fff;
+  border-radius: 15px;
+  left: 25%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  /* Ensure the inner element doesn't overflow */
+  cursor: pointer;
+  transition: 0.25s;
+  z-index: 10;
+}
+.elixpoOfficialLogoBacklit
+{
+    position: relative;
+    top: 10%;
+}
+.elixpoOfficialLogoMask
+{
+    position: relative;
+    top: 14.3%;
+    left: 21%;
+}
+.sampleImage
+{
+    position: absolute;
+    top: 61%;
+}
+.offeringDescMask
+{
+    position: relative;
+    top: 26%;
+    left: 25%;
+}
+  .offeringDescText
+  {
+    position: relative;
+    top: 27%;
+    left: 50%;
+    font-size: 2em;
+    overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .offerings 
+  {
+    position: absolute;
+    top: 80%; 
+    height: 155%;  
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: transparent;
+  }
+  .offeringsTile1
+  {
+    position: relative;
+    top: 0%;
+    width: 300px;
+    left: 40%;
+    transform: translateX(-55%);
+    word-break: break-all;
+  }
+  .offeringOneText
+  {
+    display: none;
+  }
+   .offeringsTile1 .headingText
+  {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 1.5em;
+    padding-right: 10px;
+  }
+  .offeringsTile1 #wandVisuMagicOne
+  {
+    display: none;
+  }
+  .tile
+  {
+    scale: 1;
+  }
+  .tile:nth-child(1) {
+    position: absolute;
+    rotate: 3deg;
+    z-index: 3;
+    scale: 1.2;
+    top: 46%;
+    left: 20%;
+  }
+  .tile:nth-child(1) > img
+  {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  .tile:nth-child(2) {
+    position: absolute;
+    rotate: -2deg;
+    z-index: 2;
+    top: 60%;
+    left: 65%;
+  
+  }
+  .tile:nth-child(2) > img
+  {
+    filter: blur(01px);
+    opacity: 1;
+  }
+  
+  .tile:nth-child(3) {
+    position: absolute;
+    rotate: 5deg;
+    z-index: 1;
+    top: 65%;
+    left: 5%;
+    scale: 0.7;
+    rotate: -25deg;
+  }
+  
+  .tile:nth-child(3) > img
+  {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  .offeringTwoTextHeading
+  {
+    display: none;
+  }
+  .offeringTwoTextDescription
+  {
+    display: none;
+  }
+  .offeringTile2Layout
+  {
+    position: relative;
+    top: 0%;
+    width: 300px;
+    left: 40%;
+    transform: translateX(-55%);
+    word-break: break-all;
+  }
+  .offeringTile2Layout .tileforPSBacklit,
+  .offeringTile2Layout .tileforPSBacklitParticles
+  {
+    display: none;
+  }
+  .offeringTile2Layout .tileforPS .layer1,
+  .offeringTile2Layout .tileforPS .layer2,
+  .offeringTile2Layout .tileforPS .layer3,
+  .offeringTile2Layout .tileforPS .layer4
+  {
+    font-size: 17px;
+    left: 2%;
+  }
+  .offeringTile2Layout .tileforPS .layer3
+  {
+   left: 1%;
+   top: 48%;
+   font-size: 17px;
+   width: 260px;
+  }
+  
+  .offeringTile2Layout .tileforPS .layer4
+  {
+   left: 5%;
+   top: 70%;
+   font-size: 17px;
+  }
+  .offeringThreeTextHeading,
+  .offeringThreeTextDescription
+  {
+    display: none;
+  }
+  .offeringTile3Layout
+  {
+    position: relative;
+    top: 0%;
+    width: 300px;
+    left: 40%;
+    transform: translateX(-55%);
+    word-break: break-all;
+    box-sizing: border-box;
+    margin-right: 20px;
+    padding-left: 10px;
+    white-space: normal;
+  }
+  .aspectRatioControls {
+    top: 45%; 
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap; 
+  }
+  .aspectRatioControls::-webkit-scrollbar
+  {
+    display: none;
+  }
+  .aspectRatioTile {
+    width: 100px; /* Wider width for each tile */
+    height: 100px; /* Adjust height accordingly */
+    margin: 0 10px; /* Keep gap between the tiles */
+    font-size: 1.5em; /* Font size adjusted for tile */
+    transition: transform 0.3s ease; /* Smooth scaling */
+    transform: scale(1); /* Default scale */
+    border-radius: 10px; /* Slight rounding for aesthetics */
+    padding: 0 50px;
+  }
+
+  .aspectRatioTile:hover {
+    transform: scale(1.1); /* Scale up slightly on hover */
+  }
+
+  .aspectRatioTile ion-icon {
+    font-size: 2.2em; /* Adjust icon size for visibility */
+  }
+.offeringTile4Layout
+{
+    position: relative;
+    top: 0%;
+  width: 300px;
+  left: 40%;
+  transform: translateX(-55%);
+  word-break: break-all;
+  box-sizing: border-box;
+  margin-right: 20px;
+  padding-left: 10px;
+  white-space: normal;
+}
+
+.offeringTile5Layout
+{
+    position: relative;
+    top: 0%;
+  width: 300px;
+  left: 40%;
+  transform: translateX(-55%);
+  word-break: break-all;
+  box-sizing: border-box;
+  margin-right: 20px;
+  padding-left: 10px;
+  white-space: normal;
+}
+
+.offeringTile6Layout
+{
+    position: relative;
+    top: 0%;
+  width: 300px;
+  left: 40%;
+  transform: translateX(-55%);
+  word-break: break-all;
+  box-sizing: border-box;
+  margin-right: 20px;
+  padding-left: 10px;
+  white-space: normal;
+}
+.offeringTile7Layout
+{
+    position: relative;
+    top: 0%;
+  width: 300px;
+  left: 40%;
+  transform: translateX(-55%);
+  word-break: break-all;
+  box-sizing: border-box;
+  margin-right: 20px;
+  padding-left: 10px;
+  white-space: normal;
+}
+.offeringTile8Layout
+{
+    position: relative;
+    top: 0%;
+  width: 300px;
+  left: 40%;
+  transform: translateX(-55%);
+  word-break: break-all;
+  box-sizing: border-box;
+  margin-right: 20px;
+  padding-left: 10px;
+  white-space: normal;
+}
+.offeringTile9Layout
+{
+    position: relative;
+    top: 0%;
+    width: 300px;
+    left: 40%;
+    transform: translateX(-55%);
+    word-break: break-all;
+    box-sizing: border-box;
+    margin-right: 20px;
+    padding-left: 10px;
+    white-space: normal;
+}
+.offeringTile10Layout
+{
+    display: none;
+}
+.pricingZone{
+    display: none;
+}
+.pricingDescMask
+{
+    display: none;
+}
+.pricingDescText
+{
+    display: none;
+}
+.socialMediaPage
+{
+    position: relative;
+    top: 125%;
+}
+.socialMediaContainer .socialMediaDesc
+{
+    position: absolute;
+    font-size: 1.5em;
+    width: 100%;
+    top: 5%;
+}
+.socialMediaContainer .socialMediaDescText
+{
+    position: absolute;
+    font-size: 1em;
+    width: 100%;
+    top: 25%;
+}
+}
