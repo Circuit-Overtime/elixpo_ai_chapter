@@ -1,12 +1,11 @@
- firebaseConfig = {
-    apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
-    authDomain: "elixpoai.firebaseapp.com",
-    projectId: "elixpoai",
-    storageBucket: "elixpoai.appspot.com",
-    messagingSenderId: "718153866206",
-    appId: "1:718153866206:web:671c00aba47368b19cdb4f"
-};
-
+const firebaseConfig = {
+    apiKey: "AIzaSyAlwbv2cZbPOr6xxxxxxx",
+    authDomain: "elixpoaixxxxxxx.firebase.com",
+    projectId: "elixpxxxx",
+    storageBucket: "elixpoai.xxxxxx",
+    messagingSenderId: "xxxxxxxxxxxx",
+    appId: "xxxxxxxxxxxx"
+  };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
