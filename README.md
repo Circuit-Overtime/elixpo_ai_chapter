@@ -14,6 +14,7 @@ This project is an AI-powered art generator that combines a robust backend with 
 * **Firebase Integration:**  Leverages Firebase services for authentication, storage, and database management.
 * **Dataset Management:**  Includes tools for building and refining datasets used for training AI models.
 * **Server Network:**  A network of servers facilitates efficient image processing and delivery.
+* **ServerSide-Tracking:** All the requests are tracked by the server and has dependencies alongisde where a csv file is being made to process further LLM improvements
 
 ## Installation
 
