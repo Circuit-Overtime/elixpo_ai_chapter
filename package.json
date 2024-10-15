@@ -5,7 +5,7 @@
     "buffer": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "firebase-admin": "^12.3.0",
     "fs": "^0.0.1-security",
     "groq-sdk": "^0.5.0",
