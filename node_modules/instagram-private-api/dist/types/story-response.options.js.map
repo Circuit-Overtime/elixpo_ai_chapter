@@ -1,1 +1,0 @@
-{"version":3,"file":"story-response.options.js","sourceRoot":"","sources":["../../src/types/story-response.options.ts"],"names":[],"mappings":""}

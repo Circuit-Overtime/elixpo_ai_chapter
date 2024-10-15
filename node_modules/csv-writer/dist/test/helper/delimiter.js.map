@@ -1,1 +1,0 @@
-{"version":3,"file":"delimiter.js","sourceRoot":"","sources":["../../../src/test/helper/delimiter.ts"],"names":[],"mappings":";;AACa,QAAA,oBAAoB,GAAG,UAAC,IAAa;IAC9C,IAAI,IAAI,KAAK,GAAG,IAAI,IAAI,KAAK,GAAG;QAAE,OAAO,IAAI,CAAC;IAC9C,IAAI,OAAO,IAAI,KAAK,WAAW;QAAE,OAAO,GAAG,CAAC;IAC5C,MAAM,IAAI,KAAK,CAAC,yBAAyB,CAAC,CAAC;AAC/C,CAAC,CAAC"}

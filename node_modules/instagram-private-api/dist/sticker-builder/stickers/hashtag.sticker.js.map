@@ -1,1 +1,0 @@
-{"version":3,"file":"hashtag.sticker.js","sourceRoot":"","sources":["../../../src/sticker-builder/stickers/hashtag.sticker.ts"],"names":[],"mappings":";;;AAAA,mDAA+C;AAE/C,MAAa,cAAe,SAAQ,4BAAY;IAAhD;;QAEE,UAAK,GAAG,IAAI,CAAC;QACb,WAAM,GAAG,IAAI,CAAC;IAShB,CAAC;IAPC,IAAI,EAAE;QACJ,OAAO,yBAAyB,CAAC;IACnC,CAAC;IAED,IAAI,GAAG;QACL,OAAO,gBAAgB,CAAC;IAC1B,CAAC;CACF;AAZD,wCAYC"}

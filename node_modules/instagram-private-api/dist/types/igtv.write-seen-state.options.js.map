@@ -1,1 +1,0 @@
-{"version":3,"file":"igtv.write-seen-state.options.js","sourceRoot":"","sources":["../../src/types/igtv.write-seen-state.options.ts"],"names":[],"mappings":""}
