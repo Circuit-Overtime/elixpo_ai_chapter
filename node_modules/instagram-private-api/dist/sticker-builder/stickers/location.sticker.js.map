@@ -1,0 +1,1 @@
+{"version":3,"file":"location.sticker.js","sourceRoot":"","sources":["../../../src/sticker-builder/stickers/location.sticker.ts"],"names":[],"mappings":";;;AAAA,mDAA+C;AAE/C,MAAa,eAAgB,SAAQ,4BAAY;IAAjD;;QAEE,UAAK,GAAG,IAAI,CAAC;QACb,WAAM,GAAG,KAAK,CAAC;IASjB,CAAC;IAPC,IAAI,EAAE;QACJ,OAAO,0BAA0B,CAAC;IACpC,CAAC;IAED,IAAI,GAAG;QACL,OAAO,iBAAiB,CAAC;IAC3B,CAAC;CACF;AAZD,0CAYC"}

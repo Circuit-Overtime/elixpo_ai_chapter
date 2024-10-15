@@ -1,0 +1,1 @@
+{"version":3,"file":"live.add-post-live-to-igtv.response.js","sourceRoot":"","sources":["../../src/responses/live.add-post-live-to-igtv.response.ts"],"names":[],"mappings":""}

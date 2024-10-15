@@ -1,0 +1,1 @@
+{"version":3,"file":"story-quiz-participants.feed.response.js","sourceRoot":"","sources":["../../src/responses/story-quiz-participants.feed.response.ts"],"names":[],"mappings":""}

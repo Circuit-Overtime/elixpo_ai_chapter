@@ -1,0 +1,1 @@
+{"version":3,"file":"igtv.browse.feed.response.js","sourceRoot":"","sources":["../../src/responses/igtv.browse.feed.response.ts"],"names":[],"mappings":""}

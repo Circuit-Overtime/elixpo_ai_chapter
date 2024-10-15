@@ -1,0 +1,1 @@
+{"version":3,"file":"media.configure-to-igtv.options.js","sourceRoot":"","sources":["../../src/types/media.configure-to-igtv.options.ts"],"names":[],"mappings":""}
