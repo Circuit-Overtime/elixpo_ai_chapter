@@ -1,0 +1,1 @@
+{"version":3,"file":"story-poll-voters.feed.response.js","sourceRoot":"","sources":["../../src/responses/story-poll-voters.feed.response.ts"],"names":[],"mappings":""}

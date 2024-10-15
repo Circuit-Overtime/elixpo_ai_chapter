@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/sticker-builder/stickers/index.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,uDAAqC;AACrC,kDAAgC;AAChC,iDAA+B;AAC/B,sDAAoC;AACpC,oDAAkC;AAClC,qDAAmC;AACnC,oDAAkC;AAClC,iDAA+B;AAC/B,iDAA+B;AAC/B,qDAAmC;AACnC,mDAAiC"}

@@ -1,0 +1,79 @@
+{
+  "name": "@lifeomic/attempt",
+  "version": "3.1.0",
+  "description": "Library that can be used to retry functions that return promise",
+  "main": "./dist/src/",
+  "module": "./dist/es6/src/",
+  "jsnext:main": "./dist/esnext/src/",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "compile-src-cjs": "tsc --declaration --declarationDir ./dist -p tsconfig-src-cjs.json",
+    "compile-src-es6": "tsc -p tsconfig-src-es6.json",
+    "compile-src-esnext": "tsc -p tsconfig-src-esnext.json",
+    "precompile-src": "rm -rf ./work/dist",
+    "compile-src": "yarn compile-src-cjs && yarn compile-src-es6 && yarn compile-src-esnext",
+    "transpile-test-js": "BABEL_ENV=test babel work/dist-test --out-dir work/dist-test --source-maps",
+    "precompile-test": "rm -rf ./work/dist-test",
+    "compile-test": "tsc -p tsconfig-test.json && yarn transpile-test-js",
+    "lint": "tslint --format codeFrame --project tsconfig.json 'src/**/*.ts' 'test/**/*.ts'",
+    "pretest": "yarn lint && yarn compile-test",
+    "test": "BABEL_ENV=test nyc ava 'work/dist-test/test/**/*.test.js'",
+    "coverage": "nyc report --reporter=text-lcov > ./.nyc_output/lcov.info",
+    "build": "yarn compile-src",
+    "prepare": "yarn build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeomic/attempt.git"
+  },
+  "keywords": [
+    "attempt",
+    "try",
+    "retry",
+    "backoff",
+    "delay",
+    "jitter",
+    "promise",
+    "async",
+    "await",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lifeomic/attempt/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.11.7",
+    "ava": "^0.25.0",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-istanbul": "^4.1.5",
+    "chalk": "^2.3.0",
+    "conventional-changelog-conventionalcommits": "^4.6.1",
+    "coveralls": "^3.0.0",
+    "inquirer": "^6.2.0",
+    "nyc": "^12.0.1",
+    "semantic-release": "^19.0.3",
+    "source-map-support": "^0.5.3",
+    "tslint": "^5.9.1",
+    "tslint-config-semistandard": "^7.0.0",
+    "typescript": "^4.6.3"
+  },
+  "homepage": "https://github.com/lifeomic/attempt#readme",
+  "ava": {
+    "require": [
+      "source-map-support/register"
+    ]
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  }
+}

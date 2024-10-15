@@ -1,0 +1,1 @@
+{"version":3,"file":"story-slider-voters.feed.response.response.js","sourceRoot":"","sources":["../../src/responses/story-slider-voters.feed.response.response.ts"],"names":[],"mappings":""}

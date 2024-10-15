@@ -1,0 +1,1 @@
+{"version":3,"file":"posting.igtv.options.js","sourceRoot":"","sources":["../../src/types/posting.igtv.options.ts"],"names":[],"mappings":""}

@@ -1,0 +1,1 @@
+{"version":3,"file":"igtv.search.response.js","sourceRoot":"","sources":["../../src/responses/igtv.search.response.ts"],"names":[],"mappings":""}

@@ -1,0 +1,1 @@
+{"version":3,"file":"igtv.channel.feed.response.js","sourceRoot":"","sources":["../../src/responses/igtv.channel.feed.response.ts"],"names":[],"mappings":""}

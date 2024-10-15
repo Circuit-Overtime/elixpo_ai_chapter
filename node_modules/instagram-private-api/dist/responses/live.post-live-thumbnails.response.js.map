@@ -1,0 +1,1 @@
+{"version":3,"file":"live.post-live-thumbnails.response.js","sourceRoot":"","sources":["../../src/responses/live.post-live-thumbnails.response.ts"],"names":[],"mappings":""}
