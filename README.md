@@ -84,8 +84,8 @@ We are planning to enhance our presence on Kaggle by creating and sharing variou
 https://www.kaggle.com/code/circuitovertime/elixpo-ai-platform-testing-beta/edit/run/199734513
 ```
 
-# Added the kaggle research begind the backend of a low level model for prompt classification
-# Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
+- Added the kaggle research begind the backend of a low level model for prompt classification
+- Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
 
 ### Discord and Minecraft Bots
 
