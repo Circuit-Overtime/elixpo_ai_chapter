@@ -78,6 +78,11 @@ We can include a query parameter `id` to help share specific images by their ima
 ### Kaggle and Data Science Builds
 
 We are planning to enhance our presence on Kaggle by creating and sharing various data science writings and scripts. These builds will focus on optimizing the dataset for our AI models and providing insights into data processing techniques. Our goal is to foster a community around data science practices and encourage collaboration on Kaggle.
+
+# Added the kaggle research begind the backend of a low level model for prompt classification
+
+# Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
+
 ### Discord and Minecraft Bots
 
 In the future, we aim to expand the functionality of our Discord bot to offer more interactive features for users, such as real-time image generation requests and community-driven art challenges. Additionally, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
