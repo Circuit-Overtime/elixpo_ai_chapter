@@ -93,7 +93,7 @@ https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-
 
 - Added the kaggle research begind the backend of a low level model for prompt classification
 - Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
-- Custom Dataset made especially for the low level model
+- Custom dataset made especially for the low level model
 
 ### Discord and Minecraft Bots
 
