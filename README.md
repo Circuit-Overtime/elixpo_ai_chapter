@@ -80,16 +80,18 @@ We can include a query parameter `id` to help share specific images by their ima
 We are planning to enhance our presence on Kaggle by creating and sharing various data science writings and scripts. These builds will focus on optimizing the dataset for our AI models and providing insights into data processing techniques. Our goal is to foster a community around data science practices and encourage collaboration on Kaggle.
 
 - [15/10/2024]
+- Code from Kaggle!
 ```bash
 https://www.kaggle.com/code/circuitovertime/elixpo-ai-platform-testing-beta/edit/run/199734513
+```
+- Code from Google Colab!
 ```bash
 https://colab.research.google.com/drive/1jfJKeganPiY2i2T-vR_TlPQuMKEq8SC_?usp=sharing
-'''bash
+```
+- A custom made prompt_collection for further research work
+```bash
 https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-gen/data?select=prompts_collection.csv
-'''
-
-
-
+```
 
 - Added the kaggle research begind the backend of a low level model for prompt classification
 - Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
