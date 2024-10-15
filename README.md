@@ -82,10 +82,18 @@ We are planning to enhance our presence on Kaggle by creating and sharing variou
 - [15/10/2024]
 ```bash
 https://www.kaggle.com/code/circuitovertime/elixpo-ai-platform-testing-beta/edit/run/199734513
-```
+```bash
+https://colab.research.google.com/drive/1jfJKeganPiY2i2T-vR_TlPQuMKEq8SC_?usp=sharing
+'''bash
+https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-gen/data?select=prompts_collection.csv
+'''
+
+
+
 
 - Added the kaggle research begind the backend of a low level model for prompt classification
 - Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
+- Added a custom dataset made especially for the low level model
 
 ### Discord and Minecraft Bots
 
