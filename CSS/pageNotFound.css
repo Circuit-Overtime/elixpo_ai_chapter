@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background-color: #080808;
+  color: white;
+  overflow: hidden;
+}
+
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#wrapper {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.error-image {
+  width: 100%;
+  max-width: 24rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  object-fit: contain;
+  object-position: center;
+}
+
+.error-title {
+  font-size: 3.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #d1d5db;
+}
+
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background-image: linear-gradient(to right, #8b5cf6, #ec4899);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.home-button:hover {
+  background-image: linear-gradient(to right, #7c3aed, #db2777);
+}
+
+.home-icon {
+  margin-right: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .error-image {
+    width: 24rem;
+    height: 24rem;
+  }
+}
