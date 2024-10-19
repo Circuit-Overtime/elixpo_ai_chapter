@@ -1118,4 +1118,3 @@ document.getElementById("GalleryImageIcon").addEventListener("click", () => {
         location.replace("elixpo_homepage.html");
     }
 });
-
