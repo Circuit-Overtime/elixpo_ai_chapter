@@ -92,6 +92,10 @@ https://colab.research.google.com/drive/1jfJKeganPiY2i2T-vR_TlPQuMKEq8SC_?usp=sh
 ```bash
 https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-gen/data?select=prompts_collection.csv
 ```
+- A custom made prompt pimper using `gokaygokay/Flux-Prompt-Enhance` model of hugging-face
+```bash
+https://www.kaggle.com/code/circuitovertime/flux-prompt-enhancement
+```
 
 - Added the kaggle research begind the backend of a low level model for prompt classification
 - Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
