@@ -105,6 +105,8 @@ https://www.kaggle.com/code/circuitovertime/flux-prompt-enhancement
 
 In the future, we aim to expand the functionality of our Discord bot to offer more interactive features for users, such as real-time image generation requests and community-driven art challenges. Additionally, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
 
+## Minecraft Mod Under Development
+
 ## License
 
 This software is made available under the terms of *either* of the licenses
