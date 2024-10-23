@@ -69,3 +69,8 @@ Thumbs.db
 # Other
 .pnpm-debug.log
 *.tgz
+
+#lock files
+
+*.lock
+elixpo-minecraft-mod/.gradle
