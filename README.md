@@ -114,3 +114,4 @@ found in LICENSE.APACHE or LICENSE.BSD. Contributions to uritemplate are
 made under the terms of *both* these licenses. 
 
 
+removed all comments
