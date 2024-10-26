@@ -90,6 +90,14 @@ async def loop(interaction: discord.Interaction):
 async def clear_queue(interaction: discord.Interaction):
     await interaction.response.send_message("Clearing the entire queue")
 
+@bot.tree.command(name='disconnect', description="Disconnect from the voice channel")
+async def disconnect(interaction: discord.Interaction):
+    if interaction.guild.voice_client:
+        await interaction.guild.voice_client.disconnect()
+        await interaction.response.send_message("Disconnected from the voice channel")
+    else:
+        await interaction.response.send_message("I'm not connected to any voice channel")
+
 @bot.tree.command(name='remove', description="Remove a track by index from the queue")
 async def remove(interaction: discord.Interaction, index: int):
     await interaction.response.send_message(f"Removing track at position {index} from the queue")
