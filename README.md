@@ -105,13 +105,13 @@ https://www.kaggle.com/code/circuitovertime/flux-prompt-enhancement
 
 In the future, we aim to expand the functionality of our Discord bot to offer more interactive features for users, such as real-time image generation requests and community-driven art challenges. Additionally, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
 
-## Minecraft Mod Under Development
+- A custom made discord bot for generating images using `discord.js` and `Discord API` implementation.
+```bash
+https://discord.com/oauth2/authorize?client_id=1214916249222643752
+```
 
 ## License
 
 This software is made available under the terms of *either* of the licenses
 found in LICENSE.APACHE or LICENSE.BSD. Contributions to uritemplate are
 made under the terms of *both* these licenses. 
-
-
-removed all comments
