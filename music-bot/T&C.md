@@ -39,3 +39,4 @@ For questions or concerns regarding these Terms and Conditions, please contact u
 ---
 
 Thank you for using elixpo-vibe!
+
