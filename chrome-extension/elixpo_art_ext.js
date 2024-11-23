@@ -139,46 +139,59 @@ async function createDOMStructure() {
   return generatingHolder;
 }
 
-// Retry Fetch Logic
-async function retryFetch(url, options, retries = retryLimit, delay = 1000) {
+async function retryFetch(url, options, retries = retryLimit, delay = 1000, signal) {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, { ...options, signal });
       if (response.ok) return response;
     } catch (error) {
+      if (signal.aborted) {
+        console.warn("Fetch request aborted.");
+        throw new Error("Aborted by user.");
+      }
       console.error(`Attempt ${attempt + 1} failed:`, error);
     }
     await new Promise((resolve) => setTimeout(resolve, delay * (attempt + 1))); // Exponential backoff
   }
   console.warn("Max retries reached for fetching.");
+  throw new Error("Failed to fetch after retries.");
 }
 
-// Generate Image
-async function generateImage(imageUrl, downloadUrl) {
+async function generateImage(imageUrl, downloadUrl, signal) {
   try {
-    const response = await retryFetch(`${downloadUrl}/download-image`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await retryFetch(
+      `${downloadUrl}/download-image`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageUrl }),
       },
-      body: JSON.stringify({ imageUrl }),
-    });
+      retryLimit,
+      1000,
+      signal // Pass the signal
+    );
 
     const data = await response.json();
     const base64 = data.base64;
     const url = `data:image/png;base64,${base64}`;
-    const blob = await fetch(url).then((res) => res.blob());
+    const blob = await fetch(url, { signal }).then((res) => res.blob()); // Add signal to blob fetch
     blobs.push(blob);
     return blobs;
   } catch (error) {
-    console.error("Error generating image:", error);
+    if (signal.aborted) {
+      console.warn("Image generation request aborted.");
+    } else {
+      console.error("Error generating image:", error);
+    }
     throw error;
   }
 }
 
-// Reset Extension State
+
 function resetExtension() {
-  if (abortController) abortController.abort()
+  if (abortController) abortController.abort(); // Abort ongoing requests
   blobs = [];
   isGenerating = false;
   document.getElementById("imageLoadingAnimation").classList.add("hidden");
@@ -217,33 +230,41 @@ document.addEventListener("mouseup", async (event) => {
     // Handle Star Icon Click
     const starIcon = document.getElementById("star-icon");
     starIcon.addEventListener("click", async () => {
-      if (isGenerating) return;
-      isGenerating = true;
-      abortController = new AbortController();
-      document.getElementById("imageLoadingAnimation").classList.remove("hidden");
-      document.getElementById("imageGenerationHolder").classList.remove("hidden");
+  if (isGenerating) return;
+  isGenerating = true;
+  abortController = new AbortController(); // Create a new AbortController
+  const signal = abortController.signal; // Get the signal from AbortController
+  document.getElementById("imageLoadingAnimation").classList.remove("hidden");
+  document.getElementById("imageGenerationHolder").classList.remove("hidden");
 
-      const model = Math.random() < 0.5 ? "flux" : "boltning";
-      const seed = Math.floor(Math.random() * (1000000 - 1000 + 1)) + 1000;
-      const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(sanitizedText)}?width=1024&height=768&seed=${seed}&model=${model}&nologo=1&enhance=false&private=false`;
+  const model = Math.random() < 0.5 ? "flux" : "boltning";
+  const seed = Math.floor(Math.random() * (1000000 - 1000 + 1)) + 1000;
+  const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(
+    selectedText
+  )}?width=1024&height=768&seed=${seed}&model=${model}&nologo=1&enhance=false&private=false`;
 
-      const downloadUrl = sessionStorage.getItem("imageDownloadLink") || (await fetchLinksFromFirestore("servers"));
+  const downloadUrl =
+    sessionStorage.getItem("imageDownloadLink") || (await fetchLinksFromFirestore("servers"));
 
-      try {
-        const blobs = await generateImage(imageUrl, downloadUrl);
-        const blobUrl = URL.createObjectURL(blobs[0]);
-        const displayedImage = document.getElementById("displayedImage");
-        displayedImage.src = blobUrl;
-        displayedImage.onload = () => URL.revokeObjectURL(blobUrl);
-      } catch (error) {
-        const fallbackImage = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
-        const displayedImage = document.getElementById("displayedImage");
-        displayedImage.src = fallbackImage;
-        displayedImage.onload = () => document.getElementById("imageLoadingAnimation").classList.add("hidden");
-      } finally {
-        document.getElementById("imageLoadingAnimation").classList.add("hidden");
-      }
-    });
+  try {
+    const blobs = await generateImage(imageUrl, downloadUrl, signal); // Pass the signal
+    const blobUrl = URL.createObjectURL(blobs[0]);
+    const displayedImage = document.getElementById("displayedImage");
+    displayedImage.src = blobUrl;
+    displayedImage.onload = () => URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    if (!signal.aborted) {
+      const fallbackImage = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+      const displayedImage = document.getElementById("displayedImage");
+      displayedImage.src = fallbackImage;
+      displayedImage.onload = () => document.getElementById("imageLoadingAnimation").classList.add("hidden");
+    }
+  } finally {
+    if (!signal.aborted) {
+      document.getElementById("imageLoadingAnimation").classList.add("hidden");
+    }
+  }
+});
   }
   else 
   {

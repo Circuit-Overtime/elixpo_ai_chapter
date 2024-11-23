@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Elixpo Art: Select Text and Transform to a Picture",
-  "version": "4.39",
+  "name": "Elixpo Art: Select Text and Transform to Picture",
+  "version": "4.5",
   "description": "Converts Text to Your Imaginary Picture - Powered by Elixpo",
   "icons": {
     "16": "shines.png",

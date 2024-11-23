@@ -21,9 +21,10 @@
     cursor: pointer;
     z-index: 9999;
     overflow: hidden;
-    height: 20px;
+    height: 10%;
+    width: 12%;
     transform: scale(0.8);
-    width: 30px;
+  
     border-radius: 14px;
     background: linear-gradient(145deg, #1a3d2f, #0f1020);
     transition: transform 0.2s;
@@ -38,13 +39,15 @@
   #star-icon img {
     display: block;
     position: absolute;
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     object-fit: cover;
     background-repeat: no-repeat;
     background-size: cover;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
   }
   
   #star-icon:hover {
