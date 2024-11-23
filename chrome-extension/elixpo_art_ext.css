@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Itim&family=VT323&display=swap');
+
+.generatingHolder 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 450px;
+    /* background: #ffffff; */
+    overflow: hidden;
+    background: transparent;
+    display: flex;
+    z-index: 9999;
+}
+#star-icon {
+    position: relative;
+    top: 5%;
+    left: 10%;
+    padding: 8px;
+    cursor: pointer;
+    z-index: 9999;
+    overflow: hidden;
+    height: 20px;
+    transform: scale(0.8);
+    width: 30px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #1a3d2f, #0f1020);
+    transition: transform 0.2s;
+    border: 2px solid #e6b20b;
+    overflow: hidden;
+    background-size: cover;
+    box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.4), 
+    inset -5px -5px 15px rgba(255, 255, 255, 0.1)
+    0 0 40px rgb(137, 137, 231);
+  }
+  
+  #star-icon img {
+    display: block;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  #star-icon:hover {
+    transform: scale(0.9);
+    box-sizing: 0 0 40px rgb(137, 137, 231);
+  }
+  
+  .imageGenerationHolder
+   {
+    position: relative;
+    top:  -8%;
+    left: 20%;
+    height: 85%;
+    width: 75%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: linear-gradient(145deg, #281a46c1, #0f1020c1);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    transform-origin: 2% 2%;
+    border: 2px dashed #e6b20b;
+    transition: 0.5s;
+   }
+   .imageGenerationHolder.hidden 
+   {
+    top: 0;
+    left: 0;
+    scale: 0;
+    transform-origin: 2% 2%;
+    transition: 0.5s;
+   }
+   .imageHolder
+   {
+    position: relative;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 65%;
+    /* background: #0f1020; */
+    overflow: hidden;
+    border-radius: 25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background: transparent;
+   }
+   .imageHolder > img 
+   {
+    position: absolute;
+    left: 50%;
+    height: auto;
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+    transform: translateX(-50%);
+   }
+   
+
+   .imageHolder > .imageLoadingAnimation {
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #281a46c1, #0f1020c1),
+                radial-gradient(circle at 30% 40%, #e027e3, transparent 50%),
+                radial-gradient(circle at 70% 20%, #ffb74d, transparent 50%),
+                radial-gradient(circle at 40% 80%, #64b5f6, transparent 50%),
+                radial-gradient(circle at 80% 70%, #aed581, transparent 50%);
+    background-blend-mode: overlay, normal;
+    animation: liquidFlowSmooth 12s infinite ease-in-out;
+    transform-origin: center;
+    filter: blur(15px);
+    transition: 0.5s;
+}
+.imageHolder > .imageLoadingAnimation.hidden
+ {
+  opacity: 0;
+  transition: 0.5s;
+ }
+@keyframes liquidFlowSmooth {
+  0%, 100% {
+      background-size: 100% 100%;
+      background-position: 0% 0%;
+      transform: scale(1) rotate(0deg);
+      transform-origin: center;
+  }
+  25% {
+      background-size: 250% 250%;
+      background-position: 50% 50%;
+      transform: scale(1.8) rotate(15deg);
+      transform-origin: center;
+  }
+  50% {
+      background-size: 200% 200%;
+      background-position: 100% 100%;
+      transform: scale(1.6) rotate(30deg);
+      transform-origin: center;
+  }
+  75% {
+      background-size: 250% 250%;
+      background-position: 50% 50%;
+      transform: scale(1.8) rotate(15deg);
+      transform-origin: center;
+  }
+}
+
+
+
+   .selectedText
+
+   {
+    position: relative;
+    top: 1%;
+    left: 7.5%;
+    width: 85%;
+    height: 10%;
+    text-align: center;
+    text-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: "Edu AU VIC WA NT Pre", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    color: #80bfef;
+    line-height: 17px;
+   }
+   .downloadButton {
+    position: relative;
+    left: 17%;
+    font-size: 17px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgb(80, 40, 0) 0%, rgb(60, 30, 0) 66%, rgb(50, 25, 0) 100%);
+    color: rgb(255, 200, 150);
+    border: none;
+    padding: 2px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.downloadButton span {
+    border-radius: 10px;
+    padding: 0.8em 1.3em;
+    padding-right: 1.2em;
+    text-shadow: 0px 0px 20px rgba(255, 140, 0, 0.3);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: inherit;
+    transition: all 0.3s;
+    background-color: rgb(70, 35, 10);
+    background-image: radial-gradient(at 95% 89%, rgb(100, 50, 20) 0px, transparent 50%), 
+                      radial-gradient(at 0% 100%, rgb(90, 45, 15) 0px, transparent 50%), 
+                      radial-gradient(at 0% 0%, rgb(80, 40, 10) 0px, transparent 50%);
+}
+
+.downloadButton:hover span {
+    background-color: rgb(90, 45, 15);
+}
+
+.downloadButton-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-conic-gradient(rgba(255, 140, 0, 0.1) 0.0000001%, rgba(255, 120, 0, 0.1) 0.000104%) 60% 60%/600% 600%;
+    filter: opacity(15%) contrast(120%);
+    -webkit-filter: opacity(15%) contrast(120%);
+}
+
+
+
+
+.closeButton {
+  position: relative;
+  left: 17%;
+  font-size: 17px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(56, 56, 56) 0%, rgb(36, 36, 36) 66%, rgb(41, 41, 41) 100%);
+  color: rgb(218, 218, 218);
+  border: none;
+  padding: 2px;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.closeButton span {
+  border-radius: 10px;
+  padding: 0.8em 1.3em;
+  padding-right: 1.2em;
+  text-shadow: 0px 0px 20px #4b4b4b;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  transition: all 0.3s;
+  background-color: rgb(29, 29, 29);  
+  background-image: radial-gradient(at 95% 89%, rgb(15, 15, 15) 0px, transparent 50%), radial-gradient(at 0% 100%, rgb(17, 17, 17) 0px, transparent 50%), radial-gradient(at 0% 0%, rgb(29, 29, 29) 0px, transparent 50%);
+}
+
+.closeButton:hover span {
+  background-color: rgb(26, 25, 25);
+}
+
+.closeButton-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-conic-gradient(rgb(48, 47, 47) 0.0000001%, rgb(51, 51, 51) 0.000104%) 60% 60%/600% 600%;
+  filter: opacity(10%) contrast(105%);
+  filter: opacity(15%) contrast(120%);
+  -webkit-filter: opacity(15%) contrast(120%);
+}
+
+.reTry 
+{
+  position: relative;
+  left: 28%;
+  top: 5%;
+  font-weight: 700;
+  font-size: 1.2em;
+  color: #fff;
+  cursor: pointer;
+}
