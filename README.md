@@ -6,7 +6,6 @@
 - 🆓 **_Free to use_**
 - 🔑 No signup or API keys
 - 🖼️ **Embed like any normal image or text**
-- 🌍 Over **50,000 active users** and > **_8 million images generated per month_**
 - 🤝 Used by various **open-source LLMs**, **bots**, and **communities**
 
 
