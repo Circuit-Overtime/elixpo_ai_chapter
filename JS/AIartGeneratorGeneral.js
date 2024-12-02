@@ -66,7 +66,7 @@ window.onload = function() {
     document.getElementById("promptTextInput").focus();
     setInterval(() => {
         if (localStorage.getItem("ElixpoAIUser") == null) {
-            location.href = "elixpo_homepage.html";
+            redirectTo(""); //root hompage redirect
         } else {
             document.querySelector(".patternContainer").classList.add("hidden");
         }
@@ -1142,12 +1142,12 @@ document.getElementById('copyPrompt').addEventListener('click', copyTextFromDiv)
 document.getElementById("GalleryImageIcon").addEventListener("click", () => {
     if (generating) {
         alert("Image generating alredy, progress will  be lost")
-        redirectTo("src/homepage");
+        redirectTo("");
             
     }
     else 
     {
-        redirectTo("src/homepage");
+        redirectTo("");
     }
 });
 
