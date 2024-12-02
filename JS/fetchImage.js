@@ -1,11 +1,12 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyAlwbv2cZbPOr6xxxxxxx",
-    authDomain: "elixpoaixxxxxxx.firebase.com",
-    projectId: "elixpxxxx",
-    storageBucket: "elixpoai.xxxxxx",
-    messagingSenderId: "xxxxxxxxxxxx",
-    appId: "xxxxxxxxxxxx"
-  };
+ firebaseConfig = {
+    apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
+    authDomain: "elixpoai.firebaseapp.com",
+    projectId: "elixpoai",
+    storageBucket: "elixpoai.appspot.com",
+    messagingSenderId: "718153866206",
+    appId: "1:718153866206:web:671c00aba47368b19cdb4f"
+};
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -460,7 +461,7 @@ async function imageDetailsParameters(ratio, theme, formatted_prompt, user, link
     const majorityColor = await applyDominantColor(link);
     
     // Batch DOM updates to prevent layout thrashing
-    tagElement.innerHTML = hashtags.map(tag => `<span>${tag}</span>`).join('');
+    // tagElement.innerHTML = hashtags.map(tag => `<span>${tag}</span>`).join('');
     generationAspectRatio.innerHTML = ratio;
     aspectRatioTileText.innerHTML = ratio;
     promptDisplay.innerHTML = marked.parse(formatted_prompt); // Be careful with `marked.parse` to avoid XSS

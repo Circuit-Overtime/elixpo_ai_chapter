@@ -16,10 +16,10 @@ document.getElementById("signin_with_github").addEventListener("click", () => {
                 if(doc.data().isDev == "DEV")
                     {
                         notify("Login Successful!");
-                        localStorage.setItem("--key for the username goes here", usernameSignIn);
+                        localStorage.setItem("ElixpoAIUser", usernameSignIn);
                         setTimeout(() => {
                             localStorage.setItem("guestLogin", "false");
-                            location.replace("elixpoArtGenerator.html");
+                            redirectTo("src/create");
                         }, 2000);
                     }
                     else 
@@ -44,9 +44,9 @@ document.getElementById("signin_with_github").addEventListener("click", () => {
                     user_logo: user.photoURL,
                 }).then(() => {
                     RemovetileFlash();
-                    localStorage.setItem("--key for the username goes here", user.displayName);
-                    localStorage.setItem("--key detection for guest login", "false");
-                    location.replace("elixpoArtGenerator.html");
+                    localStorage.setItem("ElixpoAIUser", user.displayName);
+                    localStorage.setItem("guestLogin", "false");
+                    redirectTo("src/create");
                 })
                 .catch((err) => {
                     RemovetileFlash();

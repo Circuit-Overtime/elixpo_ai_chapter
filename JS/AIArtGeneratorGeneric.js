@@ -23,10 +23,8 @@ document.getElementById('enhanceSwitch').addEventListener('change', function() {
 document.getElementById('privateSwitch').addEventListener('change', function() {
     if (this.checked) {
         document.getElementById("privatePublicResultDesc").innerText = "The Image you Generate will be Displayed in the Server Gallery (Public)";
-        //HIDDEN AS OF NOW
     } else {
         document.getElementById("privatePublicResultDesc").innerText = "The Image you Generate will not be Displayed in the Server Gallery (Private)";
-        //HIDDEN AS OF NOW
     }
 });
 
@@ -52,7 +50,7 @@ promptTextInput.addEventListener("input", function() {
 
 document.getElementById("logouBtn").addEventListener("click", function() {
     document.getElementById("logoutPopUp").classList.add("hidden");
-    location.replace("log_in_out.html");
+    redirectTo("src/auth");
 });
   const wrapper = document.getElementById("wrapper");
 
@@ -104,7 +102,10 @@ function scaleContainer() {
 }
 
 
+
+
+
+
+
 window.addEventListener('resize', scaleContainer);
 window.addEventListener('load', scaleContainer);
-
-//lasy scaler for the document to be scaled when page is in landscape mode

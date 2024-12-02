@@ -15,10 +15,10 @@ document.getElementById("signin_with_google").addEventListener("click", () => {
             if (doc.exists) {
                 tileFlash();
                         notify("Login Successful!");
-                        localStorage.setItem("--key for the username goes here", usernameSignIn);
+                        localStorage.setItem("ElixpoAIUser", usernameSignIn);
                         setTimeout(() => {
-                            localStorage.setItem("--key for detecting guest login", "false");
-                            location.replace("elixpoArtGenerator.html");
+                            localStorage.setItem("guestLogin", "false");
+                            redirectTo("src/create");
                         }, 2000);
 
             } else {
@@ -38,9 +38,9 @@ document.getElementById("signin_with_google").addEventListener("click", () => {
                     user_logo: user.photoURL,
                 }).then(() => {
                     RemovetileFlash();
-                    localStorage.setItem("--key for the username goes here", user.displayName);
+                    localStorage.setItem("ElixpoAIUser", user.displayName);
                     localStorage.setItem("guestLogin", "false");
-                    location.replace("elixpoArtGenerator.html");
+                    redirectTo("src/create");
                 })
                 .catch((err) => {
                     RemovetileFlash();
