@@ -69,70 +69,68 @@ function registerUser() {
     ConfpasswordSignUp = document.getElementById("signupPsswdConf").value;
     userSignUp = document.getElementById("signupName").value;
     docRef = db.collection("users").doc(userSignUp.toLowerCase());
-    
-    // Check if the username already exists
     docRef.get().then((doc) => {
-        if(doc.exists) {
+        if(doc.exists)
+        {
             notify("Username Already Exists!");
         }
     })
-
     document.getElementById("form_register").style.pointerEvents = "none";
-
     var today  = new Date();
-    var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear(); // Get the current date
-
-    // Firebase sign up process
+    var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() ; //gives the  current date to the system
     firebase.auth().createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
     .then(function(userCredential) {
-        var user = userCredential.user; // Contains the user credentials
+        var user = userCredential.user //contains the user credentials
+                tileFlash();
+                db.collection('users').doc(userSignUp.toLowerCase()).set({
+                    username: userSignUp.toLowerCase(),
+                    email: emailSignUp,
+                    uid: user.uid,
+                    displayName: userSignUp,
+                    dateCreated: date,
+                    isDev: "NotDev",
+                    provider: "Firebase",
+                    plan : "lix",
+                    coins : 1000000,
+                    user_logo: "https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/officialDisplayImages%2FCoverPageSlidingImages%2F18_18_11zon.png?alt=media&token=2ae8d56e-6a51-4c1b-bfb1-7f291abfd655",
+                    password : passwordSignUp
+                }).then(() => {
+                    RemovetileFlash();
+                    localStorage.setItem("ElixpoAIUser", userSignUp.toLowerCase());
+                    notify("Account Created Successfully!");
+                    setTimeout(() => {
+                        resetRegisterForm();
+                        document.getElementById("form_register").classList.add("hidden");
+                        document.getElementById("form_login").classList.remove("hidden");
 
-        tileFlash();
-
-        // Store user data in the Firestore database
-        db.collection('users').doc(userSignUp.toLowerCase()).set({
-            xxxuser: "[ENCRYPTED USERNAME]", // Placeholder for username (should be encrypted)
-            xxxemail: "[ENCRYPTED EMAIL]", // Placeholder for email (should be encrypted)
-            xxxuid: user.uid, // UID remains the same
-            xxxdisplayName: userSignUp, // Display name (same as username)
-            xxxdateCreated: date, // Date of account creation
-            xxxisDev: "NotDev", // Flag indicating developer status
-            xxxprovider: "Firebase", // Provider info
-            xxxplan: "lix", // User plan
-            xxxcoins: 1000000, // Default coin balance
-            xxxuserLogo: "https://example.com/user-logo.png", // Placeholder for user logo URL
-            xxxpassword: "[ENCRYPTED PASSWORD]" // Placeholder for password (should be encrypted)
-        }).then(() => {
-            RemovetileFlash();
-            localStorage.setItem("--key for the username goes here", userSignUp.toLowerCase());
-            notify("Account Created Successfully!");
-            setTimeout(() => {
-                resetRegisterForm();
-                document.getElementById("form_register").classList.add("hidden");
-                document.getElementById("form_login").classList.remove("hidden");
-
-                document.getElementById("form_register").style.pointerEvents = "all";
-                notify("Please Re Login!");
-                RemovetileFlash();
-            }, 2200);
-        })
-        .catch((err) => {
-            RemovetileFlash();
-            console.error("Error adding document: ", err);
-            RegisterError("Some Error Occurred!");
-            setTimeout(() => {
-                RemovetileFlash();
-            }, 500);
-        });
+                        document.getElementById("form_register").style.pointerEvents = "all";
+                        notify("Please Re Login!");
+                        RemovetileFlash();
+                    }, 2200);
+                    
+                })
+                .catch((err) => {
+                    RemovetileFlash();
+                    console.error("Error adding document: ", err);
+                    RegisterError("Some Error Occured!");
+                    setTimeout(() => {
+                        RemovetileFlash();
+                    }, 500);
+                });
+    
     })
+    
     .catch((err) => {
         console.error("Error during signInWithPopup:", err.message);
         tileFlash();
-        if(err.message == "The email address is already in use by another account.") {
+        if(err.message == "The email address is already in use by another account.")
+        {
             RegisterError("Email already registered");
             RemovetileFlash();
-        } else {
-            RegisterError("Some Error Occurred!");
+        }
+        else 
+        {
+            RegisterError("Some Error Occured!");
             RemovetileFlash();
         }
         RemovetileFlash();
@@ -152,10 +150,10 @@ function loginUser() {
             console.log(usernameSignIn, emailSignIn, passwordSignIn);   
             if (doc.data().username == usernameSignIn && doc.data().email == emailSignIn && doc.data().password == passwordSignIn) {
                     notify("Login Successful!");
-                    localStorage.setItem("--key for the username goes here", usernameSignIn);
+                    localStorage.setItem("ElixpoAIUser", usernameSignIn);
                     setTimeout(() => {
-                        localStorage.setItem("key to detect the guest login", "false");
-                        location.replace("elixpoArtGenerator.html");
+                        localStorage.setItem("guestLogin", "false");
+                        redirectTo("src/create");
                         
                     }, 2000);
                 

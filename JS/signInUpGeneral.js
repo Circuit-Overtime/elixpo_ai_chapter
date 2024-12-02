@@ -1,11 +1,11 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyAlwbv2cZbPOr6xxxxxxx",
-    authDomain: "elixpoaixxxxxxx.firebase.com",
-    projectId: "elixpxxxx",
-    storageBucket: "elixpoai.xxxxxx",
-    messagingSenderId: "xxxxxxxxxxxx",
-    appId: "xxxxxxxxxxxx"
-  };
+   apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
+   authDomain: "elixpoai.firebaseapp.com",
+   projectId: "elixpoai",
+   storageBucket: "elixpoai.appspot.com",
+   messagingSenderId: "718153866206",
+   appId: "1:718153866206:web:671c00aba47368b19cdb4f"
+ };
 
  // Initialize Firebase
  firebase.initializeApp(firebaseConfig);
@@ -32,7 +32,7 @@ const firebaseConfig = {
 }
 
  window.onload = () => {
-      if(localStorage.getItem("--key for the username goes here") !== null) {
+      if(localStorage.getItem("ElixpoAIUser") !== null) {
          document.getElementById("form_logout").classList.remove("hidden");
          document.getElementById("form_login").classList.add("hidden");
          document.getElementById("form_register").classList.add("hidden");
@@ -77,7 +77,7 @@ document.getElementById("signInFormBtn").addEventListener("click", () => {
 
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
-   localStorage.removeItem("--key for the username goes here");
+   localStorage.removeItem("ElixpoAIUser");
    localStorage.removeItem("metadataCache");
    localStorage.removeItem("currWidth");
    localStorage.removeItem("guestLogin");
@@ -88,11 +88,14 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 })
 
 document.getElementById("readDocs").addEventListener("click", () => {
-   location.replace("elixpo_homepage.html");
+   redirectTo("src/homepage");
 });
 
+document.getElementById("visitGallery").addEventListener("click", () => {
+    redirectTo("src/gallery");
+});
 document.getElementById("reDirectPage").addEventListener("click", () => {
-   location.replace("elixpoArtGenerator.html");
+    redirectTo("src/create");
 });
 
 
@@ -177,7 +180,7 @@ document.getElementById("usernameGuestInput").addEventListener("keypress", funct
                 date: date
             })
             .then(() => {
-                localStorage.setItem("--key for the username goes here", this.value);
+                localStorage.setItem("ElixpoAIUser", this.value);
                 localStorage.setItem("guestLogin", "true");
                 var nameSelected = "[" + this.value + "]";
                 typeWriterHTML("userSavedName", nameSelected, 50, function() {
@@ -188,7 +191,7 @@ document.getElementById("usernameGuestInput").addEventListener("keypress", funct
                 });
                 document.getElementById("userNameGuest").style.display = "none";
                 document.getElementById("usernameGuestInput").style.pointerEvents = "none";
-                 location.replace("elixpoArtGenerator.html");
+                 redirectTo("src/create");
             })
            
         }

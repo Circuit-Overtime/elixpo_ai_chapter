@@ -1,11 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 const firebaseConfig = {
-    apiKey: "AIzaSyAlwbv2cZbPOr6xxxxxxx",
-    authDomain: "elixpoaixxxxxxx.firebase.com",
-    projectId: "elixpxxxx",
-    storageBucket: "elixpoai.xxxxxx",
-    messagingSenderId: "xxxxxxxxxxxx",
-    appId: "xxxxxxxxxxxx"
+    apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
+    authDomain: "elixpoai.firebaseapp.com",
+    projectId: "elixpoai",
+    storageBucket: "elixpoai.appspot.com",
+    messagingSenderId: "718153866206",
+    appId: "1:718153866206:web:671c00aba47368b19cdb4f"
   };
 
   // Initialize Firebase
@@ -24,6 +24,10 @@ const firebaseConfig = {
   let ai_enhanced_prompt = '';
   let suffixPrompt = "";
   let serverReturnStatus = true;
+
+  
+let originalTitle = document.title;
+let timeoutId;
 
   const randomLogos = 
   [
@@ -52,68 +56,16 @@ window.onload = function() {
     globalThis.websiteStaticMode = "Static";
     globalThis.controller;
     globalThis.blobs = [];
+    // localStorage.setItem("ElixpoAIUser", "circuit overtime");
     globalThis.imgProg = 0;
     globalThis.fileName = "ElixpoAI-Generated-Image.jpeg";
     globalThis.specialDir = "";
-    document.getElementById("logoutPopUpUsername").innerText = //the username goes here from the database (stored via indexedDB)
-    
-    (() => {
-        const imageVarType = "Fantasy";
-        const RatioValue = "1:1";
-        const width = 2048;
-        const height = 2048;
-        const fileName = "ElixpoAI-Generated-Image.jpeg";
-        const specialDir = "";
-        let encodedPrompt = "";
-        let currentIndex = 0;
-        let websiteStaticMode = "Static";
-        let controller;
-        let blobs = [];
-        let imgProg = 0;
-    
-        const imageTiles = document.getElementById("imageTiles");
-        if (imageTiles.classList.contains("hidden")) {
-            document.querySelector("." + imageVarType).style.opacity = "1";
-        } else {
-            document.querySelector("." + imageVarType).style.opacity = "0";
-        }
-    
-        const logoutPopUpUsername = document.getElementById("logoutPopUpUsername");
-        // Ensure username is properly sanitized and validated before setting it
-        // logoutPopUpUsername.innerText = sanitizedUsername;
-    
-        document.getElementById("promptTextInput").focus();
-        setInterval(() => {
-            if (localStorage.getItem("--key for the username goes here") == null) {
-                location.href = "elixpo_homepage.html";
-            } else {
-                document.querySelector(".patternContainer").classList.add("hidden");
-            }
-        }, 1000);
-    
-        const serverRef = db.collection('Server').doc('servers');
-    
-        async function getServerURLs() {
-            try {
-                const doc = await serverRef.get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    const downloadUrl = data.download_image;
-                    const pingUrl = data.get_ping;
-                    // Use the URLs securely
-                }
-            } catch (error) {
-                console.error("Error getting server URLs:", error);
-            }
-        }
-    
-        getServerURLs();
-    })();
+    document.getElementById("logoutPopUpUsername").innerText = localStorage.getItem("ElixpoAIUser");
 
 
     document.getElementById("promptTextInput").focus();
     setInterval(() => {
-        if (localStorage.getItem("--key for the username goes here") == null) {
+        if (localStorage.getItem("ElixpoAIUser") == null) {
             location.href = "elixpo_homepage.html";
         } else {
             document.querySelector(".patternContainer").classList.add("hidden");
@@ -124,25 +76,26 @@ window.onload = function() {
     
     globalThis.serverRef = db.collection('Server').doc('servers');
 
-async function getServerURLs() {
-    try {
-        const doc = await serverRef.get();
-        if (doc.exists) {
-            downloadUrl = doc.data().downloxxxxx; //field for the image
-            pingUrl = doc.data().getxxxx; //field for the ping
+   
+ function getServerURLs() {
+        serverRef.get().then(async (doc) => {
+            if (doc.exists) {
+                downloadUrl = await doc.data().download_image;
+                pingUrl = await doc.data().get_ping;
 
-            console.log(`Server1 URL: ${downloadUrl}`);
-            console.log(`Server3 URL: ${pingUrl}`);
 
-            // Schedule pingServer after URLs are retrieved
-            checkNetwork();
-            setInterval(() => checkNetwork(), 5000);
-        } else {
-            console.log("No such document!");
-        }
-    } catch (error) {
-        console.error("Error getting document:", error);
-    }
+                console.log(`Server1 URL: ${downloadUrl}`);
+                console.log(`Server3 URL: ${pingUrl}`);
+
+                // Schedule pingServer after URLs are retrieved
+                checkNetwork();
+                setInterval(() => checkNetwork(), 5000);
+            } else {
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
 }
 
 function checkNetwork()
@@ -154,30 +107,51 @@ function checkNetwork()
       }
 }
 
+async function pingServer() {
+    try {
+        const response = await fetch(`${pingUrl}/ping`, {
+            method: "POST", // Use POST if you prefer to simulate heartbeat requests
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: 'heartbeat' }) // Send a heartbeat signal
+        });
+
+        if (response.ok) {
+            console.log(`${pingUrl} is up`);
+            document.getElementById("serverStatus").classList.remove("offline");
+        } else {
+            console.log(`${pingUrl} is down`);
+            document.getElementById("serverStatus").classList.add("offline");
+        }
+    } catch (error) {
+        console.log(`${pingUrl} is down`);
+        document.getElementById("serverStatus").classList.add("offline");
+    }
+}
+
     getServerURLs();
     setInterval(getServerURLs, 30000);
 };
 
-if (localStorage.getItem("guestLogin") === "true") {
-    const userKey = localStorage.getItem("key-to-the-name");
-    //const userKey -->//retrived from localstorage
-    if (userKey) {
-        db.collection("users").doc(userKey.toLowerCase()).get().then((doc) => {
-            if (doc.exists) {
-                document.getElementById("userLogo").style.backgroundImage = `url(${doc.data().user_logo})`;
-            } else {
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            location.reload();
-        });
-    } else {
-        console.log("User key not found in local storage.");
-    }
-} else {
-    const randomIndex = Math.floor(Math.random() * randomLogos.length);
-    const randomLogo = randomLogos[randomIndex];
-    document.getElementById("userLogo").style.backgroundImage = `url(${randomLogo})`;
+if(localStorage.getItem("guestLogin") == true)
+{
+    db.collection("users").doc(localStorage.getItem("ElixpoAIUser").toLowerCase()).get().then((doc) => {
+        if (doc.exists) {
+            // console.log("Document data:", doc.data());
+            document.getElementById("userLogo").style.backgroundImage = `url(${doc.data().user_logo})`;
+        } else {
+           console.log("No such document!");
+        }
+    }).catch((error) => {
+       location.reload();
+    });
+}
+else 
+{
+const randomIndex = Math.floor(Math.random() * randomLogos.length);
+const randomLogo = randomLogos[randomIndex];
+document.getElementById("userLogo").style.backgroundImage = `url(${randomLogo})`;
 }
 
 
@@ -198,17 +172,17 @@ let controller;
             
             if(enhanceSwitch.checked)
             {
-                //request to the backend-api-python file with the LLM active
+                imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}&nologo=1&enhance=true&private=${privateImage}`;
             }
             else 
             {
-               //request to the backend-api-python file with the LLM inactive
+                imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}&nologo=1&enhance=false&private=${privateImage}`;
             }
             
          //x
             const imageTile = document.querySelector(".imageTile" + genNumber);
             imageTile.classList.add("generating");
-            specialDir = localStorage.getItem("--key for the username goes here") + "_" + Date.now();
+            specialDir = localStorage.getItem("ElixpoAIUser") + "_" + Date.now();
             document.getElementById("generationTimeMask" + genNumber).style.animation = "loadingFlash 2s linear infinite";
             document.getElementById("generatedSeedIcon" + genNumber).style.animation = "loadingFlash 2s linear infinite";
             document.getElementById("generatedSeedIcon" + genNumber).style.color = "#00ff73";
@@ -216,7 +190,7 @@ let controller;
             const startTime = Date.now();
         
             try {
-                return new Promise(async (resolve, reject) => {
+                return new Promise(async (resolve, reject) => { 
                     const imgElement = document.getElementById("imageRecieve" + genNumber);
         
                     if (!imgElement) {
@@ -262,7 +236,7 @@ let controller;
                             document.getElementById("generationAspectRatio" + genNumber).innerText = `${aspectRatio}`;
                             document.getElementById("generatedSeed" + genNumber).innerText = seed;
                             document.getElementById("generationTheme" + genNumber).innerText = theme;
-                            const encodedData = url + "###" + prompt + "###" + localStorage.getItem("--key for the username goes here") + "###" + genNumber;
+                            const encodedData = url + "###" + prompt + "###" + localStorage.getItem("ElixpoAIUser") + "###" + genNumber;
                             document.getElementById("maskImageTile" + genNumber).setAttribute("data-id", encodedData);
         
                             if (imageTile) {
@@ -472,7 +446,36 @@ async function gettotalGenOnServer() {
     return totalGen;
 }
 
+// async function fetchFormattedPrompt(prompt) {
+//      formatted_prompt = "";
+//      hashtags = "";
+//      tags = "";
+//     try {
+//         const response = await fetch(`${tagUrl}/tag_gen`, { //python endpoint -- tags generator
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ prompt: prompt }),
+//         });
+  
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+  
+//         const data = await response.json();
+//         formatted_prompt = data.formatted_prompt;
+//         hashtags = data.hashtags
+//         tags = data.tags;
+//         console.log(formatted_prompt, hashtags, tags);
 
+//         return [data.formatted_prompt, data.hashtags, data.tags];  // Return the markdown formatted prompt
+//     } catch (error) {
+//         console.error("Error fetching formatted prompt:", error);
+//         return "";
+//     }
+    
+// }
 
 
 function generateUniqueId(inputString) {
@@ -502,25 +505,23 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, specialDir
     document.getElementById("acceptBtn").classList.add("hidden");
     document.getElementById("rejectBtn").classList.add("hidden");
     document.getElementById("hqlqcontainer").classList.add("hidden");
+    
     var currentTotalImageOnServer = await gettotalGenOnServer();
     console.log("Current Total Image on Server:", currentTotalImageOnServer);
     var nextImageNumber = currentTotalImageOnServer + 1;
     console.log("Next Image Number:", nextImageNumber);
+    
     return new Promise(async (resolve, reject) => {
         try {
-
-            // const [formatted_prompt, hashtags, tags] = await fetchFormattedPrompt(promptTextInput.value);
-            // console.log("Updated with" + formatted_prompt, hashtags, tags);
-            const imageGenId = generateUniqueId(localStorage.getItem("--key for the username goes here").toLowerCase());
+            const imageGenId = generateUniqueId(localStorage.getItem("ElixpoAIUser").toLowerCase());
             const storageRef = firebase.storage().ref();
             const timestamp = Date.now();
             const uploadPromises = [];
+            let imageUrls = [];  // To store image URLs for Instagram upload
 
-            if(enhanceSwitch.checked)
-            {
+            if (enhanceSwitch.checked) {
                 ai_enhanced_prompt = document.getElementById("enhancedPrompt").innerText;
             }
-            
 
             // Prepare upload tasks for each blob
             blobs.forEach((blob, index) => {
@@ -530,42 +531,39 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, specialDir
                 // Track upload progress
                 uploadTask.on('state_changed',
                     (snapshot) => {
-                        // Upload progress
                         const currentProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         console.log(`Image ${index + 1} upload is ${currentProgress}% done`);
                     },
                     (error) => {
-                        // Handle unsuccessful uploads
                         console.error(`Error during upload of image ${index + 1}:`, error);
                         reject(error);
                     },
                     async () => {
-                        // Handle successful uploads
                         try {
                             const url = await imageRef.getDownloadURL();
                             console.log(`Download URL for image ${index + 1}:`, url);
+                            imageUrls.push(url);  // Add URL to array for Instagram upload
                             
                             // Update Firestore with image metadata
                             await db.collection("ImageGen").doc(specialDir).set({
                                 theme: imgTheme,
                                 timestamp: timestamp,
-                                user: localStorage.getItem("--key for the username goes here"),
+                                user: localStorage.getItem("ElixpoAIUser"),
                                 prompt: promptTextInput.value,
                                 ratio: RatioValue,
                                 ai_enhanced: enhanceSwitch.checked,
                                 likes: 0,
                                 total_gen_number: blobs.length,
-                                genNum : nextImageNumber,
-                                hq : document.getElementById("hqlqParent").checked,
+                                genNum: nextImageNumber,
+                                hq: document.getElementById("hqlqParent").checked,
                                 formatted_prompt: "",
-                                tags: "",       
+                                tags: "",
                                 hashtags: "",
-                                imgId : imageGenId
+                                imgId: imageGenId
                             });
                             await db.collection("ImageGen").doc(specialDir).update({
                                 [`Imgurl${index}`]: url,
-                            })
-
+                            });
 
                             progress += 1;
                             let prog = Math.round((progress / imageNumber) * 100);
@@ -573,29 +571,61 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, specialDir
 
                             // Check if all uploads are complete
                             if (progress === blobs.length) {
-                                resolve(uploadPromises);
                                 console.log("All images uploaded successfully.");
                                 generating = false;
                                 setTimeout(() => {
-                                    document.getElementById("savedMsg").classList.remove("display");
-                                    document.getElementById("NotifTxt").innerText = "Greetings";
+                                    document.getElementById("NotifTxt").innerText = "Uploading to Instagram @elixpo_ai";
                                 }, 1500);
                                 document.getElementById("progressBarAccept").style.width = 0 + "%";
                                 document.getElementById("savedMsg").classList.add("display");
+
+                                // Update total generated images on server
                                 await db.collection("Server").doc("totalGen").update({
                                     value: nextImageNumber,
-                                })
+                                });
+
+                                // Trigger static mode without waiting for Instagram upload
                                 handleStaticMode(imageNumber);
+
+                                // Send images to the Instagram upload sequence in background
+                                fetch(`${downloadUrl}/instagram-upload`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        imageUrls: imageUrls,
+                                        caption: `✨Read More for Details✨\n 💬Prompt: ${promptTextInput.value}\n 🖼️Theme: ${imgTheme}\n 📐Ratio: ${RatioValue}\n 🧪AI Enhanced: ${enhanceSwitch.checked ? 'Yes' : 'No'}\n 🤝Generated by: ${localStorage.getItem("ElixpoAIUser")}\n\n ⭐Generated by Elixpo.ai - The AI Art Generator dated ${new Date().toDateString()}`
+                                    })
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        return response.text();
+                                    } else {
+                                        throw new Error('Failed to send Instagram upload request.');
+                                    }
+                                })
+                                .then(responseData => {
+                                    console.log('Instagram upload request sent successfully.', responseData);
+                                    document.getElementById("NotifTxt").innerText = "Greetings!";
+                                    document.getElementById("progressBarAccept").style.width = 0 + "%";
+                                    document.getElementById("savedMsg").classList.remove("display");
+                                })
+                                .catch(err => {
+                                    console.error('Error sending request to Instagram:', err);
+                                });
+
+                                resolve(uploadPromises);
                             }
                         } catch (error) {
                             console.error(`Error getting download URL or updating database for image ${index + 1}:`, error);
                             document.getElementById("NotifTxt").innerText = "Upload Failed!";
-                            document.getElementById("savedMsg").classList.add("display"); 
+                            document.getElementById("savedMsg").classList.add("display");
                             setTimeout(() => {
-                            document.getElementById("savedMsg").classList.remove("display"); 
-                        }, 1500);
+                                document.getElementById("savedMsg").classList.remove("display");
+                            }, 1500);
                             document.getElementById("NotifTxt").innerText = "Greetings";
-                            handleStaticMode(currentIndex+1);
+                            handleStaticMode(currentIndex + 1);
                             reject(error);
                         }
                     }
@@ -607,13 +637,15 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, specialDir
 
             // Wait for all upload tasks to complete
             await Promise.all(uploadPromises.map(task => task));
-            
+
         } catch (error) {
             console.error("Error uploading images:", error);
             reject(error);
         }
     });
 }
+
+
 
 function handleStaticModeExclusive(numberOfImages) {
     blobs = [];
@@ -986,7 +1018,7 @@ function expandImage(enc) {
 
 document.getElementById("downloadBox").addEventListener("click", (e) => {
     const downloadUrl = document.getElementById("downloadBox").getAttribute("data-id");
-    downloadBlob(downloadUrl, fileName);
+    downloadBlobWatermark(downloadUrl, fileName);
 })
 
 
@@ -1004,8 +1036,8 @@ function downloadBlob(blob, fileName) {
         document.getElementById("savedMsg").classList.remove("display");
     }, 1500);
 }
-
-function uploadBlob(blob, fileName) {
+//added the change to allow watermarkes here
+function downloadBlobWatermark(blob) {
     const watermarkImage = new Image();
     const watermarkImageInverted = new Image();
     watermarkImage.crossOrigin = "Anonymous";
@@ -1062,7 +1094,7 @@ function uploadBlob(blob, fileName) {
                 const downloadUrl = URL.createObjectURL(modifiedBlob);
                 const a = document.createElement('a');
                 a.href = downloadUrl;
-                a.download = fileName;
+                a.download = "elixpo-ai-generated-image.jpg"; // Set the file name to "elixpo-ai-generated-image.jpg"
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -1110,11 +1142,23 @@ document.getElementById('copyPrompt').addEventListener('click', copyTextFromDiv)
 document.getElementById("GalleryImageIcon").addEventListener("click", () => {
     if (generating) {
         alert("Image generating alredy, progress will  be lost")
-        location.replace("elixpo_homepage.html");
+        redirectTo("src/homepage");
             
     }
     else 
     {
-        location.replace("elixpo_homepage.html");
+        redirectTo("src/homepage");
+    }
+});
+
+
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        timeoutId = setTimeout(() => {
+            document.title = "We miss you! Come back soon!";
+        }, 800);
+    } else {
+        clearTimeout(timeoutId);
+        document.title = originalTitle;
     }
 });

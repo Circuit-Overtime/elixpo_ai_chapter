@@ -44,4 +44,4 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-//[collapsed] gemini api instructions to generate a custom pimped prompt from the user input
+

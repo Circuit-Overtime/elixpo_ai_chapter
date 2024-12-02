@@ -34,11 +34,11 @@ setInterval(() => {
 document.getElementById("aiArtCreate").addEventListener("click", function() {
   
   if(localStorage.getItem("ElixpoAIUser") !== null) {
-      location.replace("elixpoArtGenerator.html");
+      redirectTo("src/create");
   }
   else 
   {
-      location.replace("log_in_out.html");
+      redirectTo("src/auth");
   }
   
 });
@@ -48,11 +48,11 @@ document.getElementById("aiArtCreate").addEventListener("click", function() {
 document.getElementById("aiArtCreateNavBar").addEventListener("click", function() {
   
   if(localStorage.getItem("ElixpoAIUser") !== null) {
-      location.replace("elixpoArtGenerator.html");
+      redirectTo("src/create");
   }
   else 
   {
-      location.replace("log_in_out.html");
+      redirectTo("src/auth");
   }
   
 });
