@@ -101,14 +101,22 @@ https://www.kaggle.com/code/circuitovertime/flux-prompt-enhancement
 - Added files under the /kaggle_workflows mentioning the ipnyb files of Kaggle and Google Colab!
 - Added a custom dataset made especially for the low level model
 
-### Discord and Minecraft Bots
+### Chrome Extension
+- A Custom Built Chrome Extension in Javascript which is approved by Google!
+```bash
+https://chromewebstore.google.com/detail/elixpo-art-select-text-an/hcjdeknbbbllfllddkbacfgehddpnhdh
+```
 
-In the future, we aim to expand the functionality of our Discord bot to offer more interactive features for users, such as real-time image generation requests and community-driven art challenges. Additionally, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
-
+### Discord Bot 
 - A custom made discord bot for generating images using `discord.js` and `Discord API` implementation.
 ```bash
 https://discord.com/oauth2/authorize?client_id=1214916249222643752
 ```
+
+### Minecraft Bots
+
+In the future, we aim to expand the functionality  to, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
+
 
 ## License
 
