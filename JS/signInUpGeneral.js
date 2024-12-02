@@ -88,7 +88,7 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 })
 
 document.getElementById("readDocs").addEventListener("click", () => {
-   redirectTo("src/homepage");
+   redirectTo("");
 });
 
 document.getElementById("visitGallery").addEventListener("click", () => {
