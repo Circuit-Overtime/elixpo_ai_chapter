@@ -58,6 +58,39 @@ This project is an AI-powered art generator that combines a robust backend with 
    Follow the prompts and instructions on the website to create your AI art.
 
 
+
+## Architecture
+```mermaid
+graph LR
+    Q[Bots - Discord, Chrome Extension] --> L1
+    
+    N[30+ Mobile and Web Apps] --> L1
+    N --> L2
+    
+    A[elixpo-art Web Frontend] --> L1
+    A --> L2
+    
+    R[AI Agents - Qwen, Sillytavern, ...] --> L1
+    
+    L1[Image CDN] --> B
+    L2[Text CDN] --> C
+    
+    B[image.pollinations - AWS EC2 CPU] --> F[groqCloud - Prompt Enhancing]
+    B --> S[Safety Checker]
+    B --> M[llmplayground.net - Custom FLUX models]
+    F --> E[Translation Service - 1 GPU VM]
+    E --> D[FLUX image generation model - 2-6 GPU VMs on AWS]
+    
+    C[text.pollinations - AWS EC2 CPU] --> P[karma.yt - Realtime News]
+    C --> G[Azure-hosted Serverless LLMs]
+    G  --> H[OpenAI]
+    G --> I[Mistral]
+    G --> J[Llama]
+    G --> K[Claude]
+
+```
+
+
 ## Development Note
 
 The website is being built in a private repository, but updates are being made in the open-source version to keep track of changes and ensure security. This project is part of Hacktoberfest, and we welcome contributions from open-source developers.
