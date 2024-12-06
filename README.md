@@ -1,5 +1,9 @@
-# ElixpoAI Art Generator
+# [Elixpo-art](https://circuit-overtime.github.io/Elixpo_ai_pollinations/)
 
+![image](https://github.com/user-attachments/assets/26dd6299-29c1-4149-889d-d590f34312e0)
+
+
+*Your Engine for Personalized Synthetic Media*
 ## 🚀 Key Features
 
 - 🔓 **100% Open Source**
