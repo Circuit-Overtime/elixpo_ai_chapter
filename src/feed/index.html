@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="../../CSS/feedPage.css">
+    <link rel="stylesheet" href="../../CSS/feedContent.css">
+    <link rel="stylesheet" href="../../CSS/welcomeScreen.css">
+    <link rel="stylesheet" href="../../CSS/feedpreLoader.css">
+    <link rel="stylesheet" href="../../CSS/feedLoader.css">
+    <link rel="icon" type="image/x-icon" href="../../CSS/IMAGES/LOGOS/logo3.jpeg">
+    <title>Elixpo.art - Feed</title>
+
+</head>
+<body>
+    <div class="ParticleContainer" id="bg">  </div>
+    <div class="blob1Background"></div>
+    <div class="blob2Background"></div>
+    <div class="welcomeScreen" id="welcomeScreen">
+      <div id="green-filter"></div>
+      <div id="top-gradient" class="gradient"></div>
+      <div id="bottom-gradient" class="gradient"></div>
+      <div id="logo-wrapper">
+      <div id="logo">
+          <div id="logo-border" class="absolute-centered"></div>
+          <div id="logo-border-inner" class="absolute-centered"></div>
+          <div id="logo-text">
+          <div id="hulu-text" class="zen-dots-font">Elixpo - art </div>
+          <div id="originals-text" class="jakarta-sans-font"></div>
+          </div>
+      </div>
+      </div>
+  </div>
+
+    <div class="mainContainer" id="mainContainer">
+   
+    
+    
+
+    <div class="patternContainer hidden" id="patternContainer">
+        <div id="wrapper" data-configuration="1" data-roundness="1">
+          <div class="shape"></div>
+          <div class="shape"></div>
+          <div class="shape"></div>
+          <div class="shape"></div>
+          <div class="shape"></div>
+          <div class="shape"></div>
+          <div class="shape"></div>
+        </div>
+      </div>
+
+    <div class="preLoader hidden" id="preLoader">
+            <div class="card-groups">
+              <div class="card-group" data-index="0" data-status="active">
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+              </div>
+              <div class="card-group" data-index="1" data-status="unknown">
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+              </div>
+              <div class="card-group" data-index="2" data-status="unknown">
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+                <div class="little-card card">
+          
+                </div>
+                <div class="big-card card">
+          
+                </div>
+              </div>
+            </div>
+            <div class="feedStart" id="feedStart" >
+                Visit Feed
+                <div class="liquid"></div>
+                <div class="bubbles">
+                  <div class="bubble"></div>
+                  <div class="bubble"></div>
+                  <div class="bubble"></div>
+                  <div class="bubble"></div>
+                  <div class="bubble"></div>
+                  <div class="bubble"></div>
+                </div>
+              </div>
+              <div class="warning">
+                ⚠️ Contains NSFW Contents! ⚠️
+              </div>
+    </div>
+
+
+      <div class="container hidden" id="container">
+      <div class="feedImageWrapper" id="feedImageWrapper">
+      </div>
+      </div> 
+
+      <div class="controls hidden" id="controls">
+        <div class="logo"></div><p class="appName"> Elixpo.art </p>
+        <button class="loadMore" id="loadMore">
+          <span class="text">Load More</span>
+        </button>
+        <ion-icon name="rocket" class="closeStream" id="closeStream"></ion-icon>
+        <ion-icon name="color-palette" class="createArt" id="createArt"></ion-icon>
+        <ion-icon name="images" class="visitGallery" id="visitGallery"></ion-icon>
+        <ion-icon name="home" class="homePage" id="homePage"></ion-icon>
+      </div>
+
+      </div>
+      
+  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.js"></script>
+    <script src="../../JS/masonry.pkgd.min.js"></script>
+    <script src="../../JS/SplitText3.min.js"></script>
+    <script src="../../JS/particles.min.js"></script>
+    <script src="../../JS/feedParticleEffect.js"></script>
+    <script src="../../JS/feedFooterParticleEffect.js"></script>
+
+    
+    <script src="../../JS/linkRedirect.js"></script>
+    <script src="../../JS/feedLoader.js"></script>  
+    <script src="../../JS/feedGeneral.js"></script> 
+    <script src="../../JS/pageLoader.js"></script>
+    <script src="../../JS/PatchContextMenu.js"></script>
+    
+</body>
+</html>

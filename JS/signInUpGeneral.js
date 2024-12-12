@@ -31,7 +31,28 @@ const firebaseConfig = {
    type(); // Start the typing effect
 }
 
+
+
+function notify(msg) {
+    document.getElementById("savedMsg").classList.add("display");
+    document.getElementById("NotifTxt").innerText = msg;
+    setTimeout(() => {
+        document.getElementById("savedMsg").classList.remove("display");
+        document.getElementById("NotifTxt").innerText = "";
+    }, 3500);
+}
+
+
+
+
  window.onload = () => {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('notify') === "true") {
+        notify("Sign-in as Guest/GitHub/Google to Continue!");
+    }
+
+
       if(localStorage.getItem("ElixpoAIUser") !== null) {
          document.getElementById("form_logout").classList.remove("hidden");
          document.getElementById("form_login").classList.add("hidden");

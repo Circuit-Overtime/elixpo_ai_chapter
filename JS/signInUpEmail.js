@@ -193,16 +193,6 @@ function resetRegisterForm() {
     document.getElementById("signupName").value = "";
 }
 
-function notify(msg) {
-    document.getElementById("savedMsg").classList.add("display");
-    document.getElementById("NotifTxt").innerText = msg;
-    setTimeout(() => {
-        document.getElementById("savedMsg").classList.remove("display");
-        document.getElementById("NotifTxt").innerText = "";
-    }, 3500);
-}
-
-
 
 function tileFlash() {
 

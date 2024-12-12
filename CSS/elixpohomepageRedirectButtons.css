@@ -1,0 +1,467 @@
+.aiArtCreate {
+    position: absolute;
+    top: 80%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 36px;
+    border: 4px solid;
+    border-color: transparent;
+    font-size: 16px;
+    background-color: inherit;
+    border-radius: 100px;
+    font-weight: 600;
+    color: greenyellow;
+    box-shadow: 0 0 0 2px greenyellow;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 0 0 4px greenyellow;
+  }
+  
+
+  .aiArtCreate > ion-icon 
+  {
+    position: absolute;
+    left: 75%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    margin-left: 12px;
+    color: #212121;
+  }
+  
+  
+  .aiArtCreate svg {
+    position: absolute;
+    width: 24px;
+    fill: greenyellow;
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .aiArtCreate .arr-1 {
+    right: 16px;
+  }
+  
+  .aiArtCreate .arr-2 {
+    left: -25%;
+  }
+  
+  .aiArtCreate .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: greenyellow;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .aiArtCreate .text {
+    position: relative;
+    left: 40%;
+    z-index: 1;
+    font-size: 1.5em;
+    transform: translateX(-50%);
+    color: #212121;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .aiArtCreate:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: #212121;
+    border-radius: 12px;
+  }
+  
+  .aiArtCreate:hover > ion-icon {
+    opacity: 0;
+  }
+  
+  .aiArtCreate:hover .text
+  {
+    left: 50%;
+  }
+  
+  
+  .aiArtCreate:hover .arr-1 {
+    right: -25%;
+  }
+  
+  .aiArtCreate:hover .arr-2 {
+    left: 16px;
+  }
+  
+  
+  
+  .aiArtCreate:hover svg {
+    fill: #212121;
+  }
+ 
+  
+  .aiArtCreate .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+  }
+  
+  .aiArtCreate.blur {
+    filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+
+/* CODE FOR THE NAVBAR ART CREATE BUTTON  */
+
+
+.aiArtCreateNavbar {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  transform: translateY(-50%) scale(0.8);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  background-color: inherit;
+  border-radius: 100px;
+  font-weight: 600;
+  color: greenyellow;
+  box-shadow: 0 0 0 2px greenyellow;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 0 0 4px greenyellow;
+}
+
+
+.aiArtCreateNavbar > ion-icon 
+{
+  position: absolute;
+  left: 75%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  margin-left: 12px;
+  color: #212121;
+}
+
+
+.aiArtCreateNavbar svg {
+  position: absolute;
+  width: 24px;
+  fill: greenyellow;
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aiArtCreateNavbar .arr-1 {
+  right: 16px;
+}
+
+.aiArtCreateNavbar .arr-2 {
+  left: -25%;
+}
+
+.aiArtCreateNavbar .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aiArtCreateNavbar .text {
+  position: relative;
+  left: 40%;
+  z-index: 1;
+  font-size: 1.5em;
+  transform: translateX(-50%);
+  color: #212121;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aiArtCreateNavbar:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #212121;
+  border-radius: 12px;
+}
+
+.aiArtCreateNavbar:hover > ion-icon {
+  opacity: 0;
+}
+
+.aiArtCreateNavbar:hover .text
+{
+  left: 50%;
+}
+
+
+.aiArtCreateNavbar:hover .arr-1 {
+  right: -25%;
+}
+
+.aiArtCreateNavbar:hover .arr-2 {
+  left: 16px;
+}
+
+
+
+.aiArtCreateNavbar:hover svg {
+  fill: #212121;
+}
+
+.aiArtCreateNavbar:active {
+  scale: 0.95;
+  
+}
+
+.aiArtCreateNavbar .circle {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+
+
+
+
+
+  /* THE CODE FOR THE GALLERY BUTTON  */
+
+
+
+  .galleryVisit {
+    position: absolute;
+    top: 80%;
+    left: 20%;
+    scale: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 36px;
+    border: 4px solid;
+    border-color: transparent;
+    font-size: 16px;
+    background-color: inherit;
+    border-radius: 100px;
+    font-weight: 600;
+    color: rgb(47, 165, 255);
+    box-shadow: 0 0 0 2px rgb(47, 165, 255);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+
+
+  .galleryVisit svg {
+    position: absolute;
+    width: 24px;
+    fill: rgb(47, 165, 255);
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .galleryVisit .arr-1 {
+    right: 16px;
+  }
+  
+  .galleryVisit .arr-2 {
+    left: -25%;
+  }
+  
+  .galleryVisit .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: rgb(47, 165, 255);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .galleryVisit .text {
+    position: relative;
+    left: 50%;
+    z-index: 1;
+    font-size: 1.5em;
+    transform: translateX(-50%);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .galleryVisit:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: #212121;
+    border-radius: 12px;
+  }
+  
+  .galleryVisit:hover > ion-icon {
+    opacity: 0;
+  }
+  
+  .galleryVisit:hover .text
+  {
+    left: 50%;
+    color: #fff;
+  }
+  
+  
+  .galleryVisit:hover .arr-1 {
+    right: -25%;
+  }
+  
+  .galleryVisit:hover .arr-2 {
+    left: 16px;
+  }
+  
+  
+  
+  .galleryVisit:hover svg {
+    fill: #212121;
+  }
+  
+  .galleryVisit:active {
+    scale: 0.95;
+    box-shadow: 0 0 0 4px rgb(47, 165, 255);
+  }
+  
+  .galleryVisit:hover .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+  }
+  
+  .galleryVisit.blur {
+    filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+
+  /* CODE TO VISIT THE FEED  */
+
+
+  .feedVisit {
+    position: absolute;
+    top: 80%;
+    left: 65%;
+    scale: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 36px;
+    border: 4px solid;
+    border-color: transparent;
+    font-size: 16px;
+    background-color: inherit;
+    border-radius: 100px;
+    font-weight: 600;
+    color: rgb(238, 195, 23);
+    box-shadow: 0 0 0 2px rgb(238, 195, 23);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+
+
+  .feedVisit svg {
+    position: absolute;
+    width: 24px;
+    fill: rgb(238, 195, 23);
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .feedVisit .arr-1 {
+    right: 16px;
+  }
+  
+  .feedVisit .arr-2 {
+    left: -25%;
+  }
+  
+  .feedVisit .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: rgb(238, 195, 23);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .feedVisit .text {
+    position: relative;
+    left: 50%;
+    z-index: 1;
+    font-size: 1.5em;
+    transform: translateX(-50%);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .feedVisit:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: #212121;
+    border-radius: 12px;
+  }
+  
+  .feedVisit:hover > ion-icon {
+    opacity: 0;
+  }
+  
+  .feedVisit:hover .text
+  {
+    left: 50%;
+    color: #fff;
+  }
+  
+  
+  .feedVisit:hover .arr-1 {
+    right: -25%;
+  }
+  
+  .feedVisit:hover .arr-2 {
+    left: 16px;
+  }
+  
+  
+  
+  .feedVisit:hover svg {
+    fill: #212121;
+  }
+  
+  .feedVisit:active {
+    scale: 0.95;
+    box-shadow: 0 0 0 4px rgb(238, 195, 23);
+  }
+  
+  .feedVisit:hover .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+  }
+  
+  .feedVisit.blur {
+    filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+  }

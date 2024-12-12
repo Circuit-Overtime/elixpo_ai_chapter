@@ -598,7 +598,7 @@ function downloadBlob(url) {
 
 document.getElementById("postShare").addEventListener("click", () => {
     const id = document.getElementById("postShare").getAttribute("data-id");
-    let fullLink = (`https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html?id=${id}`);
+    let fullLink = (`https://circuit-overtime.github.io/Elixpo_ai_pollinations/src/gallery?id=${id}`);
     navigator.clipboard.writeText(fullLink).then(() => {
         console.log('Link copied to clipboard:', fullLink);
     }).catch(err => {

@@ -1,0 +1,426 @@
+.container {
+    position: absolute;
+    height: 85%;
+    width: 85%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    z-index: 100;
+    box-sizing: border-box;
+    overflow: hidden;
+    transform-origin: center;
+}
+
+.container.hidden {
+    opacity: 0;
+    scale: 0;
+    transform: translateY(100%);
+}
+
+.feedImageWrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.feedImageWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.feedContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
+    background: #111;
+    padding: 10px 10px;
+    border-radius: 20px;
+}
+
+.feedImageWrapper img {
+    width: 100%;
+    height: 200px;
+    /* Adjusted fixed height for images */
+    object-fit: cover;
+    display: block;
+    border-radius: 15px;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.feedImageWrapper img.loaded {
+    opacity: 1;
+}
+
+.prompt {
+    margin-top: 10px;
+    font-size: 0.9em;
+    line-height: 1.4;
+    color: #fff;
+    overflow-y: auto;
+    max-height: 100px;
+    font-family: "salsa", sans-serif;
+    text-align: center;
+    padding: 5px;
+    background: transparent;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.prompt::-webkit-scrollbar {
+    width: 8px;
+}
+
+.prompt::-webkit-scrollbar-thumb {
+    background: #d1a803;
+    border-radius: 4px;
+}
+
+.prompt::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.loading {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.loadMore.hidden {
+    opacity: 0;
+    scale: 0;
+    pointer-events: none;
+    transition: 0.5s;
+    transform-origin: center;
+}
+
+.loadMore {
+    position: absolute;
+    top: 50%;
+    border: none;
+    outline: none;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 1em;
+    padding: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    transform-origin: center;
+}
+
+.loadMore span {
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+    font-family: "salsa", sans-serif;
+    font-size: 1.3em;
+}
+
+.loadMore:hover span {
+    background: none;
+}
+
+.loadMore:active {
+    transform: scale(0.9) translate(-50%, -50%);
+    transform-origin: center;
+}
+
+.controls {
+    position: absolute;
+    top: 90%;
+    width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    height: 10%;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: #11111195;
+    backdrop-filter: blur(10px);
+    transition: 0.5s;
+    overflow: hidden;
+    scale: 1;
+    opacity: 1;
+}
+
+.controls.hidden {
+    opacity: 0;
+    scale: 0;
+    transition: 0.5s;
+}
+
+
+.logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 2%;
+    height: 40px;
+    width: 40px;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+    background-size: cover;
+    user-select: none;
+}
+
+.appName {
+    position: absolute;
+    top: 10%;
+    transform: translateY(-50%);
+    left: 5%;
+    font-family: 'Salsa', monospace;
+    color: #fff;
+    margin-left: 10px;
+    font-size: 2em;
+    user-select: none;
+    cursor: pointer;
+}
+
+.closeStream {
+    position: absolute;
+    top: 53%;
+    left: 95%;
+    transform: translateY(-50%);
+    color: #c97dff;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.createArt {
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    transform: translateY(-50%);
+    color: #f2ff7d;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.visitGallery {
+    position: absolute;
+    top: 50%;
+    left: 85%;
+    transform: translateY(-50%);
+    color: #ff7d7d;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.homePage {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translateY(-50%);
+    color: #7dff7d;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 798px) {
+    .container
+    {
+        width: 50%;
+    }
+    .logo {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 25%;
+        height: 40px;
+        width: 40px;
+        background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+        background-size: cover;
+        user-select: none;
+        /* display: none; */
+    }
+
+    .appName {
+        position: absolute;
+        top: 10%;
+        transform: translateY(-50%);
+        left: 28%;
+        font-family: 'Salsa', monospace;
+        color: #fff;
+        margin-left: 10px;
+        font-size: 2em;
+        user-select: none;
+        cursor: pointer;
+        /* display: none; */
+    }
+
+    .closeStream {
+        position: absolute;
+        top: 53%;
+        left: 60%;
+        transform: translateY(-50%);
+        color: #c97dff;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .createArt {
+        position: absolute;
+        top: 50%;
+        left: 64%;
+        transform: translateY(-50%);
+        color: #f2ff7d;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .visitGallery {
+        position: absolute;
+        top: 50%;
+        left: 68%;
+        transform: translateY(-50%);
+        color: #ff7d7d;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .homePage {
+        position: absolute;
+        top: 50%;
+        left: 72%;
+        transform: translateY(-50%);
+        color: #7dff7d;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    .container 
+    {
+        width: 25%;
+    }
+    .logo {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 35%;
+        height: 40px;
+        width: 40px;
+        background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+        background-size: cover;
+        user-select: none;
+        display: none;
+    }
+
+    .appName {
+        position: absolute;
+        top: 10%;
+        transform: translateY(-50%);
+        left: 37%;
+        font-family: 'Salsa', monospace;
+        color: #fff;
+        margin-left: 10px;
+        font-size: 1.8em;
+        user-select: none;
+        cursor: pointer;
+        visibility: hidden;
+        display: none;
+    }
+
+    .closeStream {
+        position: absolute;
+        top: 53%;
+        left: 53%;
+        transform: translateY(-50%);
+        color: #c97dff;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .createArt {
+        position: absolute;
+        top: 50%;
+        left: 56%;
+        transform: translateY(-50%);
+        color: #f2ff7d;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .visitGallery {
+        position: absolute;
+        top: 50%;
+        left: 60%;
+        transform: translateY(-50%);
+        color: #ff7d7d;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .homePage {
+        position: absolute;
+        top: 50%;
+        left: 64%;
+        transform: translateY(-50%);
+        color: #7dff7d;
+        font-size: 2em;
+        cursor: pointer;
+    }
+    .loadMore {
+        position: absolute;
+        top: 50%;
+        border: none;
+        outline: none;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        align-items: center;
+        background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+        border-radius: 8px;
+        box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+        box-sizing: border-box;
+        color: #ffffff;
+        display: flex;
+        font-size: 18px;
+        justify-content: center;
+        line-height: 1em;
+        padding: 3px;
+        cursor: pointer;
+        transition: all 0.3s;
+        transform-origin: center;
+    }
+    
+    .loadMore span {
+        background-color: rgb(5, 6, 45);
+        padding: 8px 12px;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+        transition: 300ms;
+        font-family: "salsa", sans-serif;
+        font-size: 1.2em;
+    }
+    
+    .loadMore:hover span {
+        background: none;
+    }
+    
+    .loadMore:active {
+        transform: scale(0.9) translate(-50%, -50%);
+        transform-origin: center;
+    }
+
+}

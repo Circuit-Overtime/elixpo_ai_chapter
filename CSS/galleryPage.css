@@ -25,7 +25,7 @@ body {
 .appName {
     position: absolute;
     top: 12px;
-    right: 65px;
+    left: 55px;
     transform: translate(50%, -50%);
     color: #fff;
     font-size: 1.5em;
@@ -70,36 +70,7 @@ body {
     background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
 }
 
-.aiArtCreate {
-    position: absolute;
-    top: 50%;
-    width: 180px;
-    height: 60px;
-    background: url("/CSS/IMAGES/spaceBg.jpg");
-    background-size: cover;
-    border-radius: 15px;
-    border: 2px solid #fff;
-    left: 85%;
-    transform: translateX(-50%) translateY(-50%) scale(0.8);
-    overflow: hidden;
-    /* Ensure the inner element doesn't overflow */
-    cursor: pointer;
-    transition: 0.25s;
-}
 
-.aiArtCreateText {
-    position: absolute;
-    transform: translateX(-50%) translateY(-50%);
-    color: #fff;
-    font-size: 1.2em;
-    top: 50%;
-    left: 50%;
-    text-align: center;
-    font-size: 1.6em;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: 'Source Code Pro', monospace;
-}
 
 .navbar {
     position: absolute;
@@ -113,38 +84,36 @@ body {
 
 }
 
-.aiArtDocs {
-    position: relative;
+.createArt 
+{
+    position: absolute;
     top: 50%;
-    left: 80%;
-    width: 180px;
-    height: 60px;
-    background: transparent;
-    border: 2px solid #a079e9;
-    border-radius: 15px;
-    transform: translateX(0%) translateY(-50%) scale(0.8);
-    overflow: hidden;
-    /* Ensure the inner element doesn't overflow */
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.25s;
-
-}
-
-.aiArtDocsText {
-    position: relative;
-    color: #fff;
-    left: 50%;
-    top: 50%;
+    transform: translateY(-50%);
+    left: 95%;
     font-size: 2em;
-    width: 100%;
-    transform: translateX(-50%) translateY(-50%);
-    font-weight: 500;
+    color: rgb(213, 213, 10);
     cursor: pointer;
-    text-align: center;
-    font-family: 'Source Code Pro', monospace;
 }
 
+.visitFeed {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 90%;
+    font-size: 2em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.visitHome {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 85%;
+    font-size: 2em;
+    color: #cd9405;
+    cursor: pointer;
+}
 
 .masonry {
     position: absolute;
