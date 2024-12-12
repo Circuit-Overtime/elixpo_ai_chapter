@@ -2,14 +2,17 @@
 .upperNavBar {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     align-items: center;
     justify-content: start; /* Aligns children to the start horizontally */
     height: 80px;
-    width: 100%;
+    width: 90%;
     display: flex;
     z-index: 50;
-    background: #00000070;
+    background: #000000ae;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
     backdrop-filter: blur(10px);
     overflow: hidden;
     padding-left: 2%; /* Adds some padding on the left to position the logo and app name nicely */
@@ -18,7 +21,7 @@
 
 .upperNavBar.hidden
 {
-    transform: translateY(-100%);
+    transform: translateY(-100%) translateX(-50%);
     opacity: 0;
     transition: 0.5s;
 
@@ -39,7 +42,7 @@
 
 .aiArtCreate.navbar
 {
-    position: relative;
+    position: absolute;
     width: 180px;
     height: 60px;
     background: transparent;

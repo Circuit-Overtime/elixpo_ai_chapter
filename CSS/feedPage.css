@@ -1,0 +1,84 @@
+html 
+{
+    overflow: hidden;
+}
+body 
+{
+    background: #18191E;
+}
+.mainContainer 
+{
+position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 730px;
+  width: 1519px;
+  transition: 0.5s;
+  opacity: 1;
+  overflow: hidden;
+}
+
+
+.ParticleContainer
+{
+  background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+  filter: brightness(80%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+.ParticleContainer.hidden 
+{
+    background: #18191E;
+    opacity: 0;
+}
+.blob1Background
+{
+    position: absolute;
+    height: 450px;
+    top: -55px;
+    left: -45px;
+    width: 450px;
+    background: #235881;
+    opacity: 0.8;
+    filter: blur(55px);
+    animation: slowRotate 40s linear infinite;
+    border-radius: 40% 20px 75% 10px;
+}
+.blob2Background
+{
+    position: absolute;
+    height: 450px;
+    top: 60%;
+    left: 70%;
+    width: 450px;
+    background: #3c2381;
+    opacity: 0.8;
+    filter: blur(55px);
+    animation: slowRotate 40s linear infinite;
+    border-radius: 40% 20px 75% 10px;
+}
+
+
+@keyframes slowRotate {
+    0%
+    {
+        transform: rotate(0deg);
+    }
+    50%
+    {
+        transform: rotate(360deg);
+    }
+    100%
+    {
+        transform: rotate(0deg);
+    }
+}
+

@@ -66,7 +66,7 @@ window.onload = function() {
     document.getElementById("promptTextInput").focus();
     setInterval(() => {
         if (localStorage.getItem("ElixpoAIUser") == null) {
-            redirectTo(""); //root hompage redirect
+            redirectTo("src/auth/?notify=true"); //root hompage redirect
         } else {
             document.querySelector(".patternContainer").classList.add("hidden");
         }
@@ -1018,11 +1018,11 @@ function expandImage(enc) {
 
 document.getElementById("downloadBox").addEventListener("click", (e) => {
     const downloadUrl = document.getElementById("downloadBox").getAttribute("data-id");
-    downloadBlobWatermark(downloadUrl, fileName);
+    downloadBlob(downloadUrl);
 })
 
 
-function downloadBlob(blob, fileName) {
+function downloadBlob(blob) {
     const url = blob;
     const a = document.createElement('a');
     a.href = url;

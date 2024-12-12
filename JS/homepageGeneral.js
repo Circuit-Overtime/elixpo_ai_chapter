@@ -38,6 +38,53 @@ window.addEventListener('load', scaleContainer);
 
 
 
+document.getElementById("aiArtCreate").addEventListener("click", function() {
+    console.log("hello")
+    if(localStorage.getItem("ElixpoAIUser") != null || localStorage.getItem("ElixpoAIUser") != undefined) {
+        redirectTo("src/create");
+    }
+    else if((localStorage.getItem("ElixpoAIUser") == undefined) || localStorage.getItem("ElixpoAIUser") == null) 
+    {
+        redirectTo("src/auth");
+    }
+    else 
+    {
+        redirectTo("src/auth"); 
+    }
+});
+  
+document.getElementById("galleryVisit").addEventListener("click", function() {
+  
+    redirectTo("src/gallery");
+});
+
+document.getElementById("feedVisit").addEventListener("click", function() {
+  
+    redirectTo("src/feed");
+});
+
+
+  
+  
+  document.getElementById("aiArtCreateNavbar").addEventListener("click", function() {
+    
+    if(localStorage.getItem("ElixpoAIUser") !== null) {
+        redirectTo("src/create");
+    }
+    else 
+    {
+        redirectTo("src/auth");
+    }
+    
+  });
+  
+  document.getElementById("followWhatsapp").addEventListener("click", () => {
+  
+  location.href = "https://www.instagram.com/elixpo_ai/";
+  })
+
+
+
 function typeWriterEffect(text, i, callback) {
     if (i < text.length) {
         typewriterElement.innerHTML = text.substring(0, i + 1);
@@ -65,19 +112,26 @@ document.getElementById("sitecontent").scrollTop = 0;
 document.getElementById("sitecontent").addEventListener("scroll", function() {
     scrollAmt = document.getElementById("sitecontent").scrollTop;
     // console.log(scrollAmt)
-    if(scrollAmt >= 472)
+    if(scrollAmt >= 442)
     {
             document.getElementById("upperNavBar").classList.remove("hidden");
+
             document.getElementById("aiArtCreate").classList.add("blur");
-            document.getElementById("aiArtDocs").classList.add("blur");
+            document.getElementById("galleryVisit").classList.add("blur");
+            document.getElementById("feedVisit").classList.add("blur");
+
+            
             document.getElementById("elixpoOfficialLogoBacklit").classList.remove("hidden");
             document.getElementById("elixpoOfficialLogoMask").classList.remove("hidden");
     }
     else if(scrollAmt <= 472)
     {
         document.getElementById("upperNavBar").classList.add("hidden");
-        document.getElementById("aiArtCreate").classList.remove("blur");
-        document.getElementById("aiArtDocs").classList.remove("blur");
+
+            document.getElementById("aiArtCreate").classList.remove("blur");
+            document.getElementById("galleryVisit").classList.remove("blur");
+            document.getElementById("feedVisit").classList.remove("blur");
+
         document.getElementById("elixpoOfficialLogoBacklit").classList.add("hidden");
         document.getElementById("elixpoOfficialLogoMask").classList.add("hidden");
     }
@@ -154,3 +208,5 @@ function scaleContainer() {
     }
  }
 
+
+ 

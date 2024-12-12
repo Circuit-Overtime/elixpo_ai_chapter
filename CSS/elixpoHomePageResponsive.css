@@ -136,13 +136,71 @@
   background: #fff;
   border-radius: 15px;
   left: 25%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.9);
   overflow: hidden;
   /* Ensure the inner element doesn't overflow */
   cursor: pointer;
   transition: 0.25s;
   z-index: 10;
 }
+
+.aiArtCreate ion-icon 
+{
+  display: none;
+}
+.aiArtCreate .text 
+{
+  font-size: 1.1em;
+  left: 50%;
+  width: 100%;
+}
+
+.aiArtCreateNavbar
+{
+  scale: 0.8;
+  left: 35%;
+  top: 40%;
+}
+
+.galleryVisit {
+  position: absolute;
+  top: 59%;
+  width: 180px;
+  height: 60px;
+  background: #fff;
+  border-radius: 15px;
+  left: 21%;
+  transform: translateX(-50%) scale(0.9);
+  overflow: hidden;
+  /* Ensure the inner element doesn't overflow */
+  cursor: pointer;
+  transition: 0.25s;
+  z-index: 10;
+}
+.galleryVisit .text,
+.feedVisit .text
+{
+  color: #18191E;
+  font-size: 0.8em;
+}
+.feedVisit {
+  position: absolute;
+  top: 59%;
+  width: 180px;
+  height: 60px;
+  background: #fff;
+  border-radius: 15px;
+  left: 70%;
+  transform: translateX(-50%) scale(0.9);
+  overflow: hidden;
+  /* Ensure the inner element doesn't overflow */
+  cursor: pointer;
+  transition: 0.25s;
+  z-index: 10;
+}
+
+
+
 .elixpoOfficialLogoBacklit
 {
     position: relative;

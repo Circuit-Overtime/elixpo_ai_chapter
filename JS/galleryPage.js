@@ -109,6 +109,15 @@ window.addEventListener("keydown", pressEsc)
 
 
 
-// document.getElementById("aiArtCreate").addEventListener("click", () => {
-//     location.replace("elixpoArtGenerator.html");
-// });
+document.getElementById("createArt").addEventListener("click", () => {
+    redirectTo("src/create/")
+});
+
+document.getElementById("visitFeed").addEventListener("click", () => {
+    redirectTo("src/feed")
+});
+
+
+document.getElementById("visitHome").addEventListener("click", () => {
+    redirectTo("")
+});

@@ -60,7 +60,50 @@ body {
   transform: translateX(-50%) translateY(-50%);
 }
 
+.blob1Background
+{
+    position: absolute;
+    height: 450px;
+    top: -55px;
+    left: -45px;
+    width: 450px;
+    background: #235881;
+    opacity: 0.8;
+    filter: blur(55px);
+    animation: slowRotate 40s linear infinite;
+    border-radius: 40% 20px 75% 10px;
+    z-index: -1;
+}
+.blob2Background
+{
+    position: absolute;
+    height: 450px;
+    top: 60%;
+    left: 70%;
+    width: 450px;
+    background: #3c2381;
+    opacity: 0.8;
+    filter: blur(55px);
+    animation: slowRotate 40s linear infinite;
+    border-radius: 40% 20px 75% 10px;
+    z-index: -1;
+}
 
+
+@keyframes slowRotate {
+    0%
+    {
+        transform: rotate(0deg);
+    }
+    50%
+    {
+        transform: rotate(360deg);
+    }
+    100%
+    {
+        transform: rotate(0deg);
+    }
+}
 
 .mainContainer::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -82,7 +125,7 @@ body {
 }
 
 .ParticleContainer {
-  background: #080808;
+  background: #111;
   position: absolute;
   top: 0;
   left: 0;
@@ -234,81 +277,6 @@ body {
   text-align: left;
 }
 
-.aiArtCreate {
-  position: absolute;
-  top: 80%;
-  width: 180px;
-  height: 60px;
-  background: #fff;
-  border-radius: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  overflow: hidden;
-  /* Ensure the inner element doesn't overflow */
-  cursor: pointer;
-  transition: 0.25s;
-  z-index: 10;
-}
-
-.aiArtCreate.blur {
-  filter: blur(5px);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.aiArtCreateText {
-  position: relative;
-  color: #000000;
-  font-size: 1.2em;
-  width: 100%;
-  top: 27%;
-  left: 15%;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
-}
-
-
-.aiArtDocs {
-  position: absolute;
-  top: 80%;
-  width: 180px;
-  height: 60px;
-  background: transparent;
-  border: 2px solid #a079e9;
-  border-radius: 15px;
-  left: 60%;
-  transform: translateX(-50%);
-  overflow: hidden;
-  /* Ensure the inner element doesn't overflow */
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.25s;
-  display: none;
-}
-
-.aiArtDocs.blur {
-  filter: blur(5px);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.25s;
-
-}
-
-.aiArtDocsText {
-  position: relative;
-  color: #fff;
-  left: 10%;
-  top: 20%;
-  font-size: 1.2em;
-  width: 100%;
-  top: 27%;
-  left: 20%;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: center;
-  font-family: 'Source Code Pro', monospace;
-}
 
 .elixpoOfficialLogoMask {
   position: absolute;

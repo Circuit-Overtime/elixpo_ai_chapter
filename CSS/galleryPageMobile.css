@@ -20,8 +20,46 @@
 
   }
 
+
+  .createArt 
+{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 75%;
+    font-size: 1.5em;
+    color: #ffea00;
+}
+
+.visitFeed {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 85%;
+  font-size: 1.5em;
+  color: #fff;
+
+}
+
+.visitHome {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 65%;
+  font-size: 1.5em;
+  color: #cd9405;
+  cursor: pointer;
+}
+
+
   .appName {
     display: none;
+  }
+
+  .mainHeading {
+    position: absolute;
+    top: 50%;
+    left: 30%;
   }
 
   .masonry {
