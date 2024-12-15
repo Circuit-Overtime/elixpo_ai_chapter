@@ -193,7 +193,7 @@ We're committed to developing AI technology that serves humanity while respectin
 
 ### Stargazers
 
-<p align="center">
+<p align="left">
   <a href="https://reporoster.com/stars/dark/Circuit-Overtime/elixpo_ai_chapter">
     <img src="https://reporoster.com/stars/dark/Circuit-Overtime/elixpo_ai_chapter" alt="Stargazers">
   </a>
