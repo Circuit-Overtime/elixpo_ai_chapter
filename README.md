@@ -174,7 +174,7 @@ In the future, we aim to expand the functionality  to, our Minecraft mod will be
 - [Azure (MS for Startups)](https://azure.microsoft.com/): OpenAI credits
 - [Outlier Ventures](https://outlierventures.io/): Startup Accelerator
 
-- 
+
 ## 🌍 Our Vision
 
 Elixpo-ai-chapter envisions a future where AI technology is:
