@@ -162,6 +162,19 @@ https://discord.com/oauth2/authorize?client_id=1214916249222643752
 
 In the future, we aim to expand the functionality  to, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
 
+
+## 🏢 Supported By
+
+- [LLMPlayground.net](https://llmplayground.net/): Hosting Custom Flux Models
+- [Karma.YT](https://karma.yt): Social media integrations
+- [AWS Activate](https://aws.amazon.com/): GPU Cloud Credits
+- [Google Cloud for Startups](https://cloud.google.com/): GPU Cloud Credits
+- [OVH Cloud](https://www.ovhcloud.com/): GPU Cloud credits
+- [NVIDIA Inception](https://www.nvidia.com/en-us/deep-learning-ai/startups/): AI startup support
+- [Azure (MS for Startups)](https://azure.microsoft.com/): OpenAI credits
+- [Outlier Ventures](https://outlierventures.io/): Startup Accelerator
+
+- 
 ## 🌍 Our Vision
 
 Elixpo-ai-chapter envisions a future where AI technology is:
@@ -178,8 +191,21 @@ Elixpo-ai-chapter envisions a future where AI technology is:
 
 We're committed to developing AI technology that serves humanity while respecting ethical boundaries and promoting responsible innovation. Join us in shaping the future of AI.
 
+### Stargazers
+
+<p align="center">
+  <a href="https://reporoster.com/stars/dark/Circuit-Overtime/elixpo_ai_chapter">
+    <img src="https://reporoster.com/stars/dark/Circuit-Overtime/elixpo_ai_chapter" alt="Stargazers">
+  </a>
+</p>
+
+
 ## License
 
 This software is made available under the terms of *either* of the licenses
 found in LICENSE.APACHE or LICENSE.BSD. Contributions to uritemplate are
 made under the terms of *both* these licenses. 
+
+---
+
+Made with ❤️ by Ayushman Bhattacharya & Collabs!
