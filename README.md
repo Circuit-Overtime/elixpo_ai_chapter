@@ -26,6 +26,16 @@ Join us in making a positive impact in the open-source ecosystem this Hacktoberf
 
 This project is an AI-powered art generator that combines a robust backend with a user-friendly frontend. The generator utilizes various machine learning models and algorithms to create unique and captivating artwork based on user input.
 
+
+<a href="https://star-history.com/#Circuit-Overtime/elixpo_ai_chapter&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Circuit-Overtime/elixpo_ai_chapter&type=Date&theme=dark" width="600" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Circuit-Overtime/elixpo_ai_chapter&type=Date" width="600" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Circuit-Overtime/elixpo_ai_chapter&type=Date" width="600" />
+  </picture>
+</a>
+
+
 ## Features
 
 * **AI Art Generation:**  Generates diverse art styles using advanced machine learning models.
