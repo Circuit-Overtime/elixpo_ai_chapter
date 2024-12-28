@@ -42,7 +42,33 @@ let timeoutId;
     "https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/Guest%20Logos%2F9.jpeg?alt=media&token=47923f1f-516a-4263-a613-d144e3ef6eb9",
     "https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/Guest%20Logos%2F10.jpeg?alt=media&token=88686e4f-c02c-4937-af00-3a471b7cf574"
   ]
-//new commit
+
+
+async function pingServer(downloadUrl) {
+    try {
+        const response = await fetch(`${downloadUrl}/ping`, {
+            method: "POST", // Use POST if you prefer to simulate heartbeat requests
+
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log(response)
+
+        if (response.ok) {
+            // console.log(`${pingUrl} is up`);
+            document.getElementById("serverStatus").classList.remove("offline");
+        } else {
+            // console.log(`${pingUrl} is down`);
+            document.getElementById("serverStatus").classList.add("offline");
+        }
+    } catch (error) {
+        // console.log(`${pingUrl} is down`);
+        console.log(error);
+        document.getElementById("serverStatus").classList.add("offline");
+    }
+}
+
 
 window.onload = function() {
     document.querySelector(".patternContainer").classList.remove("hidden");
@@ -61,8 +87,8 @@ window.onload = function() {
     globalThis.fileName = "ElixpoAI-Generated-Image.jpeg";
     globalThis.specialDir = "";
     document.getElementById("logoutPopUpUsername").innerText = localStorage.getItem("ElixpoAIUser");
-
-
+    downloadUrl = "https://direct-enhanced-glider.ngrok-free.app";
+    // pingServer(downloadUrl);
     document.getElementById("promptTextInput").focus();
     setInterval(() => {
         if (localStorage.getItem("ElixpoAIUser") == null) {
@@ -72,66 +98,10 @@ window.onload = function() {
         }
     }, 1000);
 
+    setInterval(() => {
+        // pingServer(downloadUrl);
+    }, 20000);
 
-    
-    globalThis.serverRef = db.collection('Server').doc('servers');
-
-   
- function getServerURLs() {
-        serverRef.get().then(async (doc) => {
-            if (doc.exists) {
-                downloadUrl = await doc.data().download_image;
-                pingUrl = await doc.data().get_ping;
-
-
-                console.log(`Server1 URL: ${downloadUrl}`);
-                console.log(`Server3 URL: ${pingUrl}`);
-
-                // Schedule pingServer after URLs are retrieved
-                checkNetwork();
-                setInterval(() => checkNetwork(), 5000);
-            } else {
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-}
-
-function checkNetwork()
-{
-    if (navigator.onLine) {
-        document.getElementById("serverStatus").classList.remove("offline");
-      } else {
-        document.getElementById("serverStatus").classList.add("offline");
-      }
-}
-
-async function pingServer() {
-    try {
-        const response = await fetch(`${pingUrl}/ping`, {
-            method: "POST", // Use POST if you prefer to simulate heartbeat requests
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: 'heartbeat' }) // Send a heartbeat signal
-        });
-
-        if (response.ok) {
-            console.log(`${pingUrl} is up`);
-            document.getElementById("serverStatus").classList.remove("offline");
-        } else {
-            console.log(`${pingUrl} is down`);
-            document.getElementById("serverStatus").classList.add("offline");
-        }
-    } catch (error) {
-        console.log(`${pingUrl} is down`);
-        document.getElementById("serverStatus").classList.add("offline");
-    }
-}
-
-    getServerURLs();
-    setInterval(getServerURLs, 30000);
 };
 
 if(localStorage.getItem("guestLogin") == true)
@@ -153,8 +123,6 @@ const randomIndex = Math.floor(Math.random() * randomLogos.length);
 const randomLogo = randomLogos[randomIndex];
 document.getElementById("userLogo").style.backgroundImage = `url(${randomLogo})`;
 }
-
-
 
 
 
