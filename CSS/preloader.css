@@ -3,6 +3,11 @@ html
 {
     overflow: hidden;
 }
+*
+{
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
 .preLoader {
     user-select: none;
     position: absolute;
