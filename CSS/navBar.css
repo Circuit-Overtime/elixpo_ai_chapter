@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Itim&family=Parkinsans:wght@300..800&family=Salsa&family=Sixtyfour&family=VT323&display=swap');
+.loginNavBar 
+{
+    position: absolute;
+    top: 0%;
+    left: 1%;
+    height: 10%;
+    width: 98%;
+    background: #18181ba1;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    border: 2px solid #6a6a74;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+    z-index: 50;
+    transition: 1s;
+}
+
+.loginNavBar.hidden 
+{
+    width: 0;
+    left: 150%;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.closeAccountNavBar 
+{
+  position: absolute;
+  top: 50%;
+  left: 1%;
+  color : #fff;
+  transform: translateY(-50%);
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.navBarGitHub
+{
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.serverStatus
+{
+    position: absolute;
+    top: 50%;
+    left: 82%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #00cb73;
+    cursor: pointer;
+}
+
+.serverStatus.offline 
+{
+  color: #ff0000;
+}
+
+.navBarDocs
+{
+    position: absolute;
+    top: 50%;
+    left: 72%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #df27ca;
+    cursor: pointer;
+}
+
+.loginNavBar > .pixelsHolder
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(100, 1fr); /* Divide into columns */
+    grid-template-rows: repeat(100, 1fr); /* Divide into rows */
+    gap: 1px; /* Add spacing between pixels */
+    overflow: hidden;
+}
+
+.pixel {
+    background-color: #4b4b4b; 
+    width:  15px;
+    height: 15px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    filter: brightness(50%);
+    border-radius: 2px;
+
+  }
+  .pixel:nth-child(2n+8)
+  {
+    background-color: #61056f;
+  }
+  .pixel:nth-child(7n+9)
+  {
+    background-color: #807e7e;
+    border: 1px solid #1edb76;
+  }
+  .pixel:nth-child(3n+2)
+  {
+    background-color: #113c5e;
+    border: 1px solid #6a6a74;
+  }
+ 
+
+  .accountMode
+  {
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    left: 23%;
+    transform: translate(-50%, -50%);
+    font-family: "Sixtyfour", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    color: #1edb76;
+    margin-left: 10px;
+    font-size: 20px;
+    font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0;
+  }
+
+.redirectHome
+{
+    position: absolute;
+    top: 50%;
+    transform: translateY( -50%);
+    left: 78%;
+    color: #7d1edb;
+    font-size:2.2em ;
+    cursor: pointer;
+}
+
+
+  
+  .userSettings 
+  {
+    position: absolute;
+    top: 50%;
+    left: 96.5%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: #dbbf1e;
+    cursor: pointer;
+  }
+  .userSettings.hidden 
+  {
+    display: none;
+  }
+
+
+  .loginButton {
+    position: absolute;
+    top: 50%;
+    left: 87%;
+    transform: translateY(-50%);
+    padding: 10px 50px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #02180f;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    border-radius: 50px;
+    overflow: hidden;
+    scale: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .loginButton:before,
+  .loginButton:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+  }
+  
+  .loginButton:before {
+    left: -100%;
+    clip-path: polygon(10% 0, 70% 0, 90% 100%, 30% 100%);
+  }
+  
+  .loginButton:after {
+    right: -100%;
+    clip-path: polygon(30% 0, 90% 0, 70% 100%, 10% 100%);
+  }
+  
+  .loginButton:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 10px 30px rgba(39, 174, 96, 0.6);
+  }
+  
+  .loginButton:hover:before {
+    left: 100%;
+    transition: all 0.7s ease;
+  }
+  
+  .loginButton:hover:after {
+    right: 100%;
+    transition: all 0.7s ease;
+  }
+  
+  .loginButton .liquid {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #287d4b, #26df76);
+    transition: all 0.5s ease;
+  }
+  
+  .loginButton .liquid:before,
+  .loginButton .liquid:after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -75%);
+  }
+  
+  .loginButton .liquid:before {
+    border-radius: 45%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: loginButton-rotate 10s linear infinite;
+  }
+  
+  .loginButton .liquid:after {
+    border-radius: 40%;
+    background: rgba(255, 255, 255, 0.15);
+    animation: loginButton-rotate 15s linear infinite;
+  }
+  
+  .loginButton:hover .liquid {
+    top: -100%;
+  }
+  
+  .loginButton:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  
+  @keyframes loginButton-rotate {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+  
+  .loginButton .bubbles {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .loginButton:hover .bubbles {
+    opacity: 1;
+  }
+  
+  .loginButton .bubble {
+    position: absolute;
+    bottom: -20px;
+    background: rgba(46, 204, 113, 0.3);
+    border-radius: 50%;
+    animation: loginButton-rise 4s infinite ease-in;
+  }
+  
+  .loginButton .bubble:nth-child(1) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-duration: 3s;
+  }
+  .loginButton .bubble:nth-child(2) {
+    left: 20%;
+    width: 25px;
+    height: 25px;
+    animation-duration: 4s;
+    animation-delay: 0.5s;
+  }
+  .loginButton .bubble:nth-child(3) {
+    left: 35%;
+    width: 15px;
+    height: 15px;
+    animation-duration: 3.5s;
+    animation-delay: 1s;
+  }
+  .loginButton .bubble:nth-child(4) {
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    animation-duration: 4.5s;
+    animation-delay: 1.5s;
+  }
+  .loginButton .bubble:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-duration: 3.5s;
+    animation-delay: 0.5s;
+  }
+  .loginButton .bubble:nth-child(6) {
+    left: 80%;
+    width: 25px;
+    height: 25px;
+    animation-duration: 4s;
+    animation-delay: 1s;
+  }
+  
+  @keyframes loginButton-rise {
+    0% {
+      bottom: -20px;
+      transform: translateX(0);
+    }
+    50% {
+      transform: translate(10px, -50px);
+    }
+    100% {
+      bottom: 120%;
+      transform: translateX(-20px);
+    }
+  }
+  

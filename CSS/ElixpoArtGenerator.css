@@ -28,13 +28,16 @@ body
     width: 40px;
     background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
     background-size: cover;
+    display: none;
 }
 
 .userLogo
 {
   position: absolute;
-  top: 3%;
-  left: 95%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  left: 3%;
   height: 40px;
   width: 40px;
   background-size: cover;
@@ -85,28 +88,7 @@ body
   font-size: 1.2em;
   margin-left: 8px; /* Add this line */
 }
-.serverStatus
-{
-  position: absolute;
-  top: 3%;
-  left: 85%;
-  height: 40px;
-  width: 80px;
-  background-size: cover;
-  cursor: pointer;
-  padding: 5px 5px;
-  border-radius: 10px;
-  display: flex;
-  overflow: hidden;
-  color: #03ff92;
-  justify-content: center;
-  align-items: center;
- transition: 0.25s;
-}
-.serverStatus.offline 
-{
-  color: #ff0000;
-}
+
 
 .GalleryImageIcon
 {
@@ -136,6 +118,7 @@ body
     color: #fff;
     margin-left: 10px;
     font-size: 20px;
+    display: none;
 }
 
 .container 
@@ -196,8 +179,8 @@ overflow-x: hidden;
 
 .ParticleContainer
 {
-  background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
-  filter: brightness(80%);
+  background: linear-gradient(105deg, #01473b 10%, #172a4f 20%, #1e343f 80%, #4a0e4d 100%);
+  filter: brightness(50%);
   position: absolute;
   top: 0;
   left: 0;
@@ -334,42 +317,44 @@ overflow-x: hidden;
   }
 
 
-
   .typeOfImageTile {
     position: absolute;
-    top: 10%;
-    width: 40%;
+    top: 15%;
+    width: 25%;
     left: 30%;
-    height: 200px;
+    max-height: 300px; /* Set a maximum height */
     background-color: transparent;
     display: flex;
     flex-wrap: wrap; /* Enable wrapping of the flex items */
-    justify-content: space-between; /* Distribute space evenly between items */
+    justify-content: flex-start; /* Align items to the start */
+    gap: 20px; /* Add consistent spacing between items */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
     z-index: 10;
 }
-.typeOfImageTile > * 
-{
-  opacity: .25;
+.typeOfImageTile::-webkit-scrollbar {
+  display: none;
 }
+
+.typeOfImageTile > * {
+    opacity: 0.25;
+}
+
 .typeOfImageTile span {
     position: relative;
     height: 100px;
     width: 100px;
     border-radius: 15px;
     background: #202020;
-    margin-bottom: 10px; /* Add space between rows */
-    margin-right: calc((100% - (5 * 100px)) / 4); /* Calculate space between items */
     cursor: pointer;
 }
+
 .typeOfImageTile.hidden 
 {
   z-index: -1;
   opacity: 0;
 }
 
-.typeOfImageTile span:nth-child(5n) {
-    margin-right: 0; /* Remove margin-right for the last item in each row */
-}
+
 
 .typeOfImageTile span p {
   position: absolute; /* Change to absolute positioning */
@@ -387,7 +372,7 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(1)
 {
-  background: url(IMAGES/THEMES/fantasy.jpeg);
+  background: url(./IMAGES/THEMES/fantasy.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.0s;
@@ -396,7 +381,7 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(2)
 {
-  background: url(IMAGES/THEMES/halloween.jpeg);
+  background: url(./IMAGES/THEMES/halloween.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.1s;
@@ -405,28 +390,28 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(3)
 {
-  background: url(IMAGES/THEMES/structure.jpeg);
+  background: url(./IMAGES/THEMES/structure.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.2s;
 }
 .typeOfImageTile span:nth-child(4)
 {
-  background: url(IMAGES/THEMES/crayon.jpeg);
+  background: url(./IMAGES/THEMES/crayon.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.3s;
 }
 .typeOfImageTile span:nth-child(5)
 {
-  background: url(IMAGES/THEMES/space.jpeg);
+  background: url(./IMAGES/THEMES/space.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
 }
 .typeOfImageTile span:nth-child(6)
 {
-  background: url(IMAGES/THEMES/chromatic.jpeg);
+  background: url(./IMAGES/THEMES/chromatic.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.0s;
@@ -434,28 +419,28 @@ overflow-x: hidden;
 }
 .typeOfImageTile span:nth-child(7)
 {
-  background: url(IMAGES/THEMES/cyberpunk.jpeg);
+  background: url(./IMAGES/THEMES/cyberpunk.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.1s;
 }
 .typeOfImageTile span:nth-child(8)
 {
-  background: url(IMAGES/THEMES/anime.jpeg);
+  background: url(./IMAGES/THEMES/anime.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.2s;
 }
 .typeOfImageTile span:nth-child(9)
 {
-  background: url(IMAGES/THEMES/landscape.jpeg);
+  background: url(./IMAGES/THEMES/landscape.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.3s;
 }
 .typeOfImageTile span:nth-child(10)
 {
-  background: url(IMAGES/THEMES/samurai.jpeg);
+  background: url(./IMAGES/THEMES/samurai.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
@@ -463,7 +448,7 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(11)
 {
-  background: url(IMAGES/THEMES/wpap.jpeg);
+  background: url(./IMAGES/THEMES/wpap.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
@@ -471,7 +456,7 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(12)
 {
-  background: url(IMAGES/THEMES/vintage.jpeg);
+  background: url(./IMAGES/THEMES/vintage.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
@@ -480,7 +465,7 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(13)
 {
-  background: url(IMAGES/THEMES/Pixel.jpeg);
+  background: url(./IMAGES/THEMES/Pixel.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
@@ -489,7 +474,7 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(14)
 {
-  background: url(IMAGES/THEMES/normal.jpeg);
+  background: url(./IMAGES/THEMES/normal.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
@@ -498,20 +483,16 @@ overflow-x: hidden;
 
 .typeOfImageTile span:nth-child(15)
 {
-  background: url(IMAGES/THEMES/Synthwave.jpeg);
+  background: url(./IMAGES/THEMES/Synthwave.jpeg);
   background-size: cover;
   transition: 0.5s;
   transition-delay: 0.4s;
 }
 
 
-
-
-
-
 .typeOfImageTile.hidden span:nth-child(1)
 {
-  background: url(IMAGES/THEMES/fantasy.jpeg);
+  background: url(./IMAGES/THEMES/fantasy.jpeg);
   background-size: cover;
   transform: translateX(-370px) scale(0.7) translateY(20px);
   z-index: -1;
@@ -520,7 +501,7 @@ overflow-x: hidden;
 
 .typeOfImageTile.hidden span:nth-child(2)
 {
-  background: url(IMAGES/THEMES/halloween.jpeg);
+  background: url(./IMAGES/THEMES/halloween.jpeg);
   background-size: cover;
   transform: translateX(-470px) scale(0.7) translateY(20px);
   z-index: -1;
@@ -529,7 +510,7 @@ overflow-x: hidden;
 
 .typeOfImageTile.hidden span:nth-child(3)
 {
-  background: url(IMAGES/THEMES/structure.jpeg);
+  background: url(./IMAGES/THEMES/structure.jpeg);
   background-size: cover;
   transform: translateX(-570px) scale(0.7) translateY(20px);
   z-index: -1;
@@ -538,7 +519,7 @@ overflow-x: hidden;
 
 .typeOfImageTile.hidden span:nth-child(4)
 {
-  background: url(IMAGES/THEMES/crayon.jpeg);
+  background: url(./IMAGES/THEMES/crayon.jpeg);
   background-size: cover;
   transform: translateX(-680px) scale(0.7) translateY(20px);
   z-index: -1;
@@ -547,7 +528,7 @@ overflow-x: hidden;
 
 .typeOfImageTile.hidden span:nth-child(5)
 {
-  background: url(IMAGES/THEMES/space.jpeg);
+  background: url(./IMAGES/THEMES/space.jpeg);
   background-size: cover;
   transform: translateX(-790px) scale(0.7) translateY(20px);
   z-index: -1;
@@ -556,7 +537,7 @@ overflow-x: hidden;
 
 .typeOfImageTile.hidden span:nth-child(6)
 {
-  background: url(IMAGES/THEMES/chromatic.png);
+  background: url(./IMAGES/THEMES/chromatic.png);
   background-size: cover;
   transform: translateX(-370px) scale(0.7) translateY(-130px);
   z-index: -1;
@@ -564,7 +545,7 @@ overflow-x: hidden;
 }
 .typeOfImageTile.hidden span:nth-child(7)
 {
-  background: url(IMAGES/THEMES/cyberpunk.jpeg);
+  background: url(./IMAGES/THEMES/cyberpunk.jpeg);
   background-size: cover;
   transform: translateX(-470px) scale(0.7) translateY(-130px);
   z-index: -1;
@@ -572,7 +553,7 @@ overflow-x: hidden;
 }
 .typeOfImageTile.hidden span:nth-child(8)
 {
-  background: url(IMAGES/THEMES/anime.jpeg);
+  background: url(./IMAGES/THEMES/anime.jpeg);
   background-size: cover;
   transform: translateX(-580px) scale(0.7) translateY(-130px);
   z-index: -1;
@@ -580,7 +561,7 @@ overflow-x: hidden;
 }
 .typeOfImageTile.hidden span:nth-child(9)
 {
-  background: url(IMAGES/THEMES/landscape.jpeg);
+  background: url(./IMAGES/THEMES/landscape.jpeg);
   background-size: cover;
   transform: translateX(-690px) scale(0.7) translateY(-130px);
   z-index: -1;
@@ -588,12 +569,86 @@ overflow-x: hidden;
 }
 .typeOfImageTile.hidden span:nth-child(10)
 {
-  background: url(IMAGES/THEMES/samurai.jpeg);
+  background: url(./IMAGES/THEMES/samurai.jpeg);
   background-size: cover;
   transform: translateX(-820px) scale(0.7) translateY(-130px);
   z-index: -1;
    opacity: 0;
 }
+
+
+
+.typeOfModelTile {
+
+  position: absolute;
+  top: 15%;
+  padding: 0;
+  width: 20%;
+  left: 55%;
+  max-height: 300px; /* Set a maximum height */
+  background-color: transparent;
+  display: flex;
+  flex-wrap: wrap; /* Enable wrapping of the flex items */
+  justify-content: flex-start; /* Align items to the start */
+  gap: 10px; /* Add consistent spacing between items */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  z-index: 10;
+}
+.typeOfModelTile::-webkit-scrollbar {
+  display: none;
+}
+
+.typeOfModelTile.hidden 
+{
+  z-index: -1;
+  opacity: 0;
+}
+
+.typeOfModelTile > * {
+  opacity: 0.25;
+}
+
+.typeOfModelTile span {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  border-radius: 12px;
+  font-size: 13px;
+  background: #202020;
+  cursor: pointer;
+}
+
+.typeOfModelTile.hidden {
+  z-index: -1;
+  opacity: 0;
+}
+
+.typeOfModelTile span p {
+  position: absolute; /* Change to absolute positioning */
+  bottom: 5px; /* Position at the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust for horizontal centering */
+  margin: 0; /* Reset margin */
+  color: white;
+  background: #f9f9f900;
+  font-size: 1em;
+  width: 100%;
+  backdrop-filter: blur(2px); /* Add a backdrop filter */
+  font-family: 'Source Code Pro', monospace;
+}
+
+.typeOfModelTile span i 
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2em;
+  color: #fff;
+  transform: translate(-50%, -50%);
+}
+
+
 
 .aspectRatioControls {
   position: absolute;
@@ -2609,130 +2664,5 @@ body {
   border: solid rgb(255, 255, 255);
   border-width: 0 0.15em 0.15em 0;
   transform: rotate(45deg);
-}
-
-.logoutPopUp
-{
-  position: absolute;
-  height: 30%;
-  width: 15%;
-  top: 12%;
-  left: 84%;
-  background-color: #2d414d76;
-  backdrop-filter: blur(5px);
-  border-radius: 25px;
-  box-shadow: inset 5px 0 5px #636f69;
-  opacity: 1;
-  z-index: 10;
-  transition: 0.5s;
-  overflow: hidden;
-}
-
-.maskBackground
-{
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0.35;
-  filter: blur(2px) brightness(0.5);
-  background: url(../CSS/IMAGES/abstract\ art.jpeg);
-}
-
-.logoutPopUp.hidden 
-{
-  left: 120%;
-  opacity: 0;
-  z-index: -1;
-  transition: 0.5s;
-}
-
-.logoutPopUp .logoutPopUpUsername
-{
-  position: absolute;
-  top: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5em;
-  white-space: normal;
-  flex-wrap: wrap;
-  word-break: break-all;
-  text-align: center;
-  color: #fff;
-  font-family: 'Source Code Pro', monospace;
-}
-
-.logouBtn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) scale(1.2);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 45px;
-  height: 45px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition-duration: .3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: rgb(255, 65, 65);
-}
-
-
-/* plus sign */
-.sign {
-  left: -3%;
-  width: 100%;
-  transition-duration: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sign svg {
-  width: 17px;
-}
-
-.sign svg path {
-  fill: white;
-}
-/* text */
-.logoutText {
-  position: absolute;
-  left: 30%;
-  width: 0%;
-  opacity: 0;
-  color: white;
-  font-size: 1.2em;
-  font-weight: 600;
-  transition-duration: .3s;
-}
-/* hover effect on button width */
-.logouBtn:hover {
-  width: 125px;
-  border-radius: 40px;
-  transition-duration: .3s;
-}
-
-.logouBtn:hover .sign {
-  width: 30%;
-  transition-duration: .3s;
-  padding-left: 20px;
-}
-/* hover effect button's text */
-.logouBtn:hover .logoutText {
-  opacity: 1;
-  width: 70%;
-  transition-duration: .3s;
-  padding-right: 10px;
-}
-/* button click effect*/
-.logouBtn:active {
-  transform: translate(2px ,2px) translateX(-50%) scale(1);
 }
 
