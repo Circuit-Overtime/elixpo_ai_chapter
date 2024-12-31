@@ -168,6 +168,11 @@ https://chromewebstore.google.com/detail/elixpo-art-select-text-an/hcjdeknbbbllf
 https://discord.com/oauth2/authorize?client_id=1214916249222643752
 ```
 
+### Blogs Release 
+- Released a detailed analysis blog for Elixpo_Art Service
+```bash
+  https://circuit-overtime.github.io/Elixpo_ai_pollinations/src/blogs/elixpo_art/
+```
 ### Minecraft Bots
 
 In the future, we aim to expand the functionality  to, our Minecraft mod will be enhanced to support more complex interactions, allowing players to generate and manipulate images directly within the game. We envision these tools becoming integral parts of our ecosystem, enhancing user engagement and creativity.
