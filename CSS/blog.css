@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap');
+::selection {
 
-*
-{
+    background-color: rgb(204, 109, 251);
+  
+    color: rgb(42, 4, 76);
+  
+  }
+* {
     -webkit-tap-highlight-color: transparent;
 }
+
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
@@ -19,6 +25,67 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: #625f64e5;
+    border-radius: 10px;
+}
+
+pre {
+    background-color: #ECECEC;
+    padding: 0px;
+    border-radius: 10px;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+code {
+    position: relative;
+    left: 0px;
+    font-family: 'Consolas';
+    color: #000000;
+}
+code.shortCode 
+{
+    padding-left: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin-right: 5px;
+    justify-content: center;
+    text-align: center;
+    color: #000000;
+    border-radius: 5px;
+    background-color: #ebdcdc;
+    font-family: 'Consolas';
+    letter-spacing: 1px;
+}
+code.hljs  
+{
+    position: relative;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    top: -50px;
+}
+code.hljs::-webkit-scrollbar
+{
+    display: none;
+}
+pre > i
+{
+    position: sticky;
+    top: 20px;
+    left: 95%;
+    cursor: pointer;
+    font-size: 20px;
+}
+pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #bdbdbde5;
     border-radius: 10px;
 }
 
@@ -97,12 +164,39 @@ h3::before {
 p {
     margin-bottom: 20px;
 }
-a 
-{
+
+a {
     text-decoration: none;
     color: #5569c3;
     font-weight: 700;
 }
+
+
+.intro {
+    position: relative;
+    text-decoration: none;
+    color: #5569c3;
+    font-weight: 700;
+}
+
+.intro::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    display: block;
+    right: 50%;
+    background: #6565bc;
+    transition: width 0.3s ease, right 0.3s ease;
+}
+
+.intro:hover::after {
+    width: 100%;
+    right: 0;
+}
+
+
+
 ul,
 ol {
     padding-left: 20px;
@@ -145,12 +239,15 @@ strong {
     font-weight: 600;
     margin-bottom: 10px;
     transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+    z-index: 50;
 }
 
 .cta-button:hover {
     background-color: #e3e3e3;
     color: #1d1d1d;
-    transform: scale(1.01);
+    transform: scale(1.11);
 }
 
 .floating-navbar {
@@ -272,6 +369,7 @@ strong {
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
+    cursor: pointer;
 
 }
 
@@ -302,7 +400,25 @@ strong {
     color: #000;
 }
 
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: -60px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #000;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    transition: right 0.3s, background-color 0.3s, color 0.3s;
+}
 
+#back-to-top:hover {
+    background-color: #a6a6a6;
+    color: #000;
+}
 
 @media (max-width: 798px) {
     .container {
@@ -395,5 +511,3 @@ strong {
         font-size: 1.3rem;
     }
 }
-
-

@@ -5,22 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elixpo Art - Blog</title>
-    <link rel="stylesheet" href="../../../CSS/blog.css">
+    
     <link rel="icon" type="image/x-icon" href="../../../CSS/IMAGES/THEMES/pixel.jpeg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.0.0/dist/locomotive-scroll.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+
+    <link rel="stylesheet" href="../../../CSS/blog.css">
 </head>
 
 <body>
     <div class="floating-navbar">
-        <a href="https://www.instagram.com" target="_blank" class="nav-icon-instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.instagram.com" target="_blank" class="nav-icon-instagram"><i
+                class="bi bi-instagram"></i></a>
         <a href="https://www.youtube.com" target="_blank" class="nav-icon-youtube"><i class="bi bi-youtube"></i></a>
         <a href="https://www.linkedin.com" target="_blank" class="nav-icon-linkedin"><i class="bi bi-linkedin"></i></a>
         <a href="https://medium.com" target="_blank" class="nav-icon-medium"><i class="bi bi-medium"></i></a>
         <button id="comment-icon" class="nav-icon-comment"><i class="bi bi-chat-left-text"></i></button>
-        <a href="https://circuit-overtime.github.io/Elixpo_ai_pollinations/" target="_blank"
-                            class="cta-buttonnav">Try AI Now</a>
+        <div class="cta-buttonnav" id="elixpoArtRedirect">Try Elixpo Art Now</div>
     </div>
 
     <div class="container">
@@ -39,9 +42,15 @@
             <section>
                 <h2>Introduction: Starting of Creativity</h2>
                 <p>
-                    Being presented by the accomodative collaboration of <b> <a href="https://www.linkedin.com/in/ezvivek/"> Vivek Yadav </a> </b> and <b> <a href="https://www.linkedin.com/in/ishita-majumdar-0059671b3/">Ishita Majumdar </a></b>
-                    to bring together the collaborative repository of Elixpo-art into life, a big thanks to them from <b> <a href="https://www.linkedin.com/in/ayushman-bhattacharya-a00baa229/"> Ayushman Bhattacharya</b></a> , 
-                    for joining me in the journey! Make sure that you visit our <a href="https://github.com/Circuit-Overtime/elixpo_ai_chapter">GitHub Open Source Repository</a> and do give us a ⭐.
+                    Being presented by the accomodative collaboration of <b> <a class="intro"
+                            href="https://www.linkedin.com/in/ezvivek/"> Vivek Yadav </a> </b> and <b> <a class="intro"
+                            href="https://www.linkedin.com/in/ishita-majumdar-0059671b3/">Ishita Majumdar </a></b>
+                    to bring together the collaborative repository of Elixpo-art into life, a big thanks to them from
+                    <b> <a class="intro" href="https://www.linkedin.com/in/ayushman-bhattacharya-a00baa229/"> Ayushman
+                            Bhattacharya</b></a> ,
+                    for joining me in the journey! Make sure that you visit our <a class="intro"
+                        href="https://github.com/Circuit-Overtime/elixpo_ai_chapter">GitHub Open Source Repository</a>
+                    and do give us a ⭐.
                 </p>
                 <p>
                     Imagine turning your ideas into stunning visuals with just a few words. That's exactly what my
@@ -189,6 +198,112 @@
                     not only powerful and efficient but also scalable and future-proof.
                 </p>
             </section>
+            <section>
+                <h2>Datasets:</h2>
+                <p>
+                    The development of our AI model required carefully curated datasets. Here is an overview of how the
+                    data on which our model was trained, was cleaned and preprocessed:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Dataset 1:</strong> Contained gibberish text labeled as <strong>0</strong>.
+                    </li>
+                    <li>
+                        <strong>Dataset 2:</strong> Included meaningful text labeled as <strong>1</strong>.
+                    </li>
+                    <li>
+                        <strong>Final Dataset:</strong> Both datasets were merged, resulting in a an integrated vast
+                        collection of gibberish and meaningful texts. The final dataset included two columns:
+                        <ul>
+                            <li><strong>Response:</strong> Containing gibberish and meaningful entries.</li>
+                            <li><strong>Labels:</strong> Where gibberish was labeled as <strong>0</strong> and
+                                meaningful text as <strong>1</strong>.</li>
+                        </ul>
+                        <br>
+                        <strong>Data Cleaning:</strong> After combining, the dataset underwent a thorough cleaning
+                        process. Duplicates were removed, text formats were normalized, and irrelevant symbols were
+                        eliminated to ensure consistency and prepare the data for model training.
+                    </li>
+                </ul>
+                <p>
+                    The final dataset is publicly accessible and can be found here:
+                    <a href="https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-gen/data?select=prompts_collection.csv"
+                        target="_blank">
+                        Final Dataset on Kaggle
+                    </a>.
+                </p>
+            </section>
+
+            <section>
+                <h2>Model Training:</h2>
+                <p>
+                    To guarantee optimal efficiency and accuracy, the model was trained using a number of well designed
+                    methods. A breakdown of the model training process has been given below:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Data Splitting:</strong> The final cleaned dataset was split into three subsets:
+                        <ul>
+                            <li><strong>Training Set:</strong> was used for model learning.</li>
+                            <li><strong>Validation Set:</strong> was used to tune hyperparameters and prevent
+                                overfitting.</li>
+                            <li><strong>Testing Set:</strong> was used to evaluate the final performance of the model.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Pipeline Creation:</strong> A pipeline was developed for efficient preprocessing and
+                        model training. It consisted of:
+                        <ul>
+                            <li><strong>Tfidf Vectorizer:</strong> Transformed text data into numerical representations
+                                by computing Term Frequency-Inverse Document Frequency (TF-IDF) values.</li>
+                            <li><strong>Multinomial Naive Bayes (MultinomialNB):</strong> An algorithm for supervised
+                                learning that is particularly suitable for text classification tasks is used to classify
+                                text into readable or nonsense categories. It efficiently manages word counts and their
+                                distributions.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Hyperparameter Tuning:</strong> The model was trained using
+                        <strong>GridSearchCV</strong>, which methodically examined several hyperparameter combinations
+                        to determine the configuration that produced optimal performance.
+                    </li>
+                </ul>
+                <p>
+                    This methodical strategy guaranteed that the model was well optimized and proficient at
+                    distinguishing gibberish from meaningful content.
+                </p>
+            </section>
+
+            <section>
+                <h2>Server API: Catch Glimpses of AI Magic</h2>
+                <p>
+                    To enhance the functionality of our AI text-to-image generator, we've developed a custom API that
+                    handles image generation requests efficiently. Below is a snippet of the server API code that powers
+                    the back-end operations:
+                </p>
+    <pre>
+        <i class="bi bi-clipboard copyCode" onclick="copy(this)"></i>
+    <code class="python">
+    import requests
+
+    def download_image(prompt):
+        url = f"https://elixpo-art/p/{prompt}"  # URL isn't valid yet
+        response = requests.get(url)
+        with open('generated_image.jpg', 'wb') as file:
+            file.write(response.content)
+        print('Image downloaded!')
+
+        download_image("conceptual_isometric_world_of_pollinations_ai_surreal_hyperrealistic_digital_garden")
+    </code>
+    </pre>
+                <p>
+                    This code snippet demonstrates how to use the API to download an image based on a given prompt.
+                    While the URL is not valid yet, the function sends a GET request to fetch the image and saves it
+                    locally as <code class="shortCode"> generated_image.jpg.</code> Which will be in jpg format.
+                </p>
+            </section>
+
 
             <section>
                 <h2>Challenges and Solutions: </h2>
@@ -249,8 +364,7 @@
                 <h2>Ready to Transform Your Ideas into Images?</h2>
                 <ul>
                     <li>
-                        <a href="https://circuit-overtime.github.io/Elixpo_ai_pollinations/" target="_blank"
-                            class="cta-button">Try Elixpo Art Now</a>
+                        <div class="cta-button" id="elixpoArtRedirect">Try Elixpo Art Now</div>
                     </li>
                 </ul>
             </section>
@@ -258,7 +372,7 @@
     </div>
 
     <button id="back-to-top" title="Back to Top"><i class="bi bi-arrow-up"></i></button>
-
+    <script src="../../../JS/linkRedirect.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.0.0/dist/locomotive-scroll.min.js"></script>
     <script src="../../../JS/blog.js"></script>
     <script src="../../../JS/PatchContextMenu.js"></script>

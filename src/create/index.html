@@ -15,11 +15,13 @@
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
     <link rel="stylesheet" type="text/css" href="../../CSS/ElixpoArtGenerator.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/buttomtmp.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/pageloadingPattern.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/imageDispSection.css">
+    <link rel="stylesheet" type="text/css" href="../../CSS/navBar.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/elixpoArtGenMobile.css">
     <link rel="icon" type="image/x-icon" href="../../CSS/IMAGES/LOGOS/logo2.jpeg">
     
@@ -30,7 +32,7 @@
   <canvas id="canvas" style="display:none;"></canvas>
 
     <div class="ParticleContainer" id="bg">  </div>
-    <div class="patternContainer">
+    <div class="patternContainer hidden">
     <div id="wrapper" data-configuration="1" data-roundness="1">
       <div class="shape"></div>
       <div class="shape"></div>
@@ -43,21 +45,35 @@
   </div>
 
     <div class="container">
-        <div class="logo"></div><p class="appName"> Elixpo.art </p>
-        <div class="logoutPopUp hidden" id="logoutPopUp">
-          <div class="maskBackground"></div>
-          <p class="logoutPopUpUsername" id="logoutPopUpUsername"> </p>
-          <button class="logouBtn" type="button" id="logouBtn">
-  
-            <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-            
-            <div class="logoutText">Logout</div>
-          </button>
-        </div>
+
+
+      <div class="loginNavBar" id="loginNavBar">
         <div class="userLogo" id="userLogo"></div>
-        <div class="tokens"> <p class="tokenValue" id="tokenValue"></p> <ion-icon name="sparkles"></ion-icon> </div>
+        <div class="pixelsHolder" id="pixelsHolder"></div>
+        <span class="accountMode" id="accountMode">Hi, Annonymous User xD </span>
         <ion-icon name="wifi" class="serverStatus" id="serverStatus"></ion-icon>
-        <ion-icon name="document-text" class="GalleryImageIcon" id="GalleryImageIcon"></ion-icon>
+        <ion-icon name="logo-github" class="navBarGitHub" id="navBarGitHub"></ion-icon>
+        <ion-icon name="document-text" class="navBarDocs" id="navBarDocs"></ion-icon>
+        <ion-icon name="home" class="redirectHome" id="redirectHome"></ion-icon>
+        <div class="loginButton" id="loginButton" >
+            Account
+            <div class="liquid"></div>
+            <div class="bubbles">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+          </div>
+    </div>
+
+
+
+        <div class="logo"></div><p class="appName"> Elixpo.art </p>
+        
+        <div class="tokens"> <p class="tokenValue" id="tokenValue"></p> <ion-icon name="sparkles"></ion-icon> </div>
         <div class="savedMsg" id="savedMsg">
             <div class="blob1"></div>
             <div class="blob2"></div>
@@ -92,6 +108,17 @@
             <span id="imagePixel" class="Pixel"><p>Pixel</p></span>
             <span id="imageNormal" class="Normal"><p>Normal</p></span>
             <span id="imageSynthwave" class="Synthwave"><p>Synthwave</p></span>
+        </div>
+
+        <div class="typeOfModelTile" id="typeOfModelTile">
+            <span id="model1" class="Flux-Core"><i class="bi bi-gear"></i><p>Flux-Core</p></span>
+            <span id="model2" class="Flux-Realism"><i class="bi bi-eye"></i><p>Flux-Realism</p></span>
+            <span id="model3" class="Flux-Cablyai"><i class="bi bi-apple"></i><p>Flux-Cablyai</p></span>
+            <span id="model4" class="Flux-Anime"><i class="bi bi-award-fill"></i><p>Flux-Anime</p></span>
+            <span id="model5" class="Flux-3d"><i class="bi bi-box"></i><p>Flux-3d</p></span>
+            <span id="model6" class="Any-Dark"><i class="bi bi-moon-stars-fill"></i><p>Any-Dark</p></span>
+            <span id="model7" class="Flux-Pro"><i class="bi bi-stars"></i><p>Flux-Pro</p></span>
+            <span id="model8" class="Turbo"><i class="bi bi-lightning"></i><p>Turbo</p></span>
         </div>
 
         <div class="aspectRatioControls" id="aspectRatioControls">
@@ -361,8 +388,9 @@
         <script src="../../JS/particles.min.js"></script>
         <script src="../../JS/isoImagetypeParticle.js"></script>`
         <script src="../../JS/AIImageEnhancementEffect.js"> </script> 
+        <script src="../../JS/navBar.js"></script>
 
-<!--         <script src="../../JS/PatchContextMenu.js"></script> -->
+        <script src="../../JS/PatchContextMenu.js"></script>
         
 </body>
 </html>

@@ -44,17 +44,15 @@ promptTextInput.addEventListener("input", function() {
   }, 1200);
 
 
-  document.getElementById("userLogo").addEventListener("click", function() {    
-    document.getElementById("logoutPopUp").classList.toggle("hidden");
-  });
 
-document.getElementById("logouBtn").addEventListener("click", function() {
-    document.getElementById("logoutPopUp").classList.add("hidden");
-    redirectTo("src/auth");
-});
   const wrapper = document.getElementById("wrapper");
 
-
+  document.getElementById("loginButton").addEventListener("click", function() {
+    redirectTo("src/auth");
+  });
+  document.getElementById("navBarDocs").addEventListener("click", function() {
+    redirectTo("src/blogs/elixpo_art");
+  });
 
 const uniqueRand = (min, max, prev) => {
   let next = prev;

@@ -20,9 +20,9 @@
     }
     .userLogo
     {
-        left: 75%;
-        top: 6%;
-        transform: scale(0.8);
+        left: 80%;
+        top: 50%;
+        transform: scale(0.8) translateY(-50%);
     }
     .GalleryImageIcon
     {
@@ -30,12 +30,7 @@
         left: 60%;
         transform: scale(0.8);
     }
-    .serverStatus
-    {
-        top: 6%;
-        left: 50%;
-        transform: scale(0.8);
-    }
+   
     .isoImageType
     {
         display: none;
@@ -49,13 +44,22 @@
         display: none;
     }
     .typeOfImageTile {
-        position: relative;
-        width: 95%; /* Use full width for mobile screens */
-        left: 2.5%; /* Center the container horizontally */
-        top: 10%;
-        transform: scale(0.75);
+
+        position: absolute;
+        top: 18%;
+        width: 55%;
+        left: 15%;
+        max-height: 300px; /* Set a maximum height */
       }
     
+      .typeOfModelTile 
+      {
+        position: absolute;
+        top: 18%;
+        padding: 0;
+        width: 40%;
+        left: 60%;
+      }
       .typeOfImageTile span {
         width: 30%; /* 4 items per row */
         height: 80px; /* Adjust height as needed for mobile */
@@ -277,5 +281,46 @@
   {
     font-size: 1.3em;
     top: 8%;
+  }
+  .loginNavBar 
+  {
+    width: 90%;
+    top: 3%;
+  }
+  .accountMode 
+  {
+    font-size: 12px;
+    left: 40px;
+    transform: translateY(0);
+    top: 15%;
+    width: 100%;
+  }
+  .loginButton 
+  {
+    top: 60%;
+    left: 5%;
+    transform: scale(0.8) translateY(-50%);
+  }
+  .serverStatus
+  {
+      top: 50%;
+      left: 70%;
+      transform: scale(0.8) translateY(-50%);
+  }
+  .navBarDocs
+  {
+      top: 50%;
+      left: 60%;
+      transform: scale(0.8) translateY(-50%);
+  }
+  .navBarGitHub
+  {
+    display: none;
+  }
+  .redirectHome 
+  {
+    top: 50%;
+    left: 50%;
+    transform: scale(0.8) translateY(-50%);
   }
 }

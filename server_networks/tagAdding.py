@@ -49,9 +49,9 @@ async def process_prompt(prompt):
         formatted_prompt = format_matching_hashtags(prompt, new_tags)
         
         return {
-            "taxxx": new_tags,
-            "forxxx": formatted_prompt,
-            "haxxxxxts": formatted_hashtags
+            "tags": new_tags,
+            "formatted_prompt": formatted_prompt,
+            "hashtags": formatted_hashtags
         }
 
     except Exception as e:
