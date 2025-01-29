@@ -1,11 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 const firebaseConfig = {
-    apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
-    authDomain: "elixpoai.firebaseapp.com",
-    projectId: "elixpoai",
-    storageBucket: "elixpoai.appspot.com",
-    messagingSenderId: "718153866206",
-    appId: "1:718153866206:web:671c00aba47368b19cdb4f"
+    apiKey: "AIzaSyAlwbxxxxxxxxx",
+    authDomain: "elixxxxxxx",
+    projectId: "elixpxxxx",
+    storageBucket: "elixpxxxxxx",
+    messagingSenderId: "718153xxxxxxx",
+    appId: "1:71815386620xxxx"
   };
 
   // Initialize Firebase
@@ -58,19 +58,19 @@ window.onload = function() {
     globalThis.websiteStaticMode = "Static";
     globalThis.controller;
     globalThis.blobs = [];
-    // localStorage.setItem("ElixpoAIUser", "circuit overtime");
+    // localStorage.setItem("Elixxxxxx", "circuit overtime");
     globalThis.imgProg = 0;
     globalThis.fileName = "ElixpoAI-Generated-Image.jpeg";
     globalThis.specialDir = "";
-    // document.getElementById("logoutPopUpUsername").innerText = localStorage.getItem("ElixpoAIUser");
-    document.getElementById("accountMode").innerText = `Hi, ${localStorage.getItem("ElixpoAIUser").slice(0,1).toUpperCase() + localStorage.getItem("ElixpoAIUser").slice(1,20).slice(0,20)+"..."}`;
+    // document.getElementById("logoutPopUpUsername").innerText = localStorage.getItem("Elixxxxxx");
+    document.getElementById("accountMode").innerText = `Hi, ${localStorage.getItem("Elixxxxxx").slice(0,1).toUpperCase() + localStorage.getItem("Elixxxxxx").slice(1,20).slice(0,20)+"..."}`;
     downloadUrl = "https://elixpo-art-node.serveo.net";
     pingUrl = "https://elixpo-art-node.serveo.net";
 
 
     document.getElementById("promptTextInput").focus();
     setInterval(() => {
-        if (localStorage.getItem("ElixpoAIUser") == null) {
+        if (localStorage.getItem("Elixxxxxx") == null) {
             redirectTo("src/auth/?notify=true"); //root hompage redirect
         } else {
             document.querySelector(".patternContainer").classList.add("hidden");
@@ -114,9 +114,9 @@ async function pingServer() {
     // setInterval(getServerURLs, 30000);
 };
 
-if(localStorage.getItem("guestLogin") == true)
+if(localStorage.getItem("guesxxxx") == true)
 {
-    db.collection("users").doc(localStorage.getItem("ElixpoAIUser").toLowerCase()).get().then((doc) => {
+    db.collection("users").doc(localStorage.getItem("Elixxxx").toLowerCase()).get().then((doc) => {
         if (doc.exists) {
             // console.log("Document data:", doc.data());
             document.getElementById("userLogo").style.backgroundImage = `url(${doc.data().user_logo})`;
@@ -152,16 +152,16 @@ let controller;
             
             if(enhanceSwitch.checked)
             {
-                imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}&nologo=1&enhance=true&private=${privateImage}`;
+                imageUrl = `https://imgelixpo.vercel.app/c/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}&nologo=1&enhance=true&private=${privateImage}`;
             }
             else 
             {
-                imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}&nologo=1&enhance=false&private=${privateImage}`;
+                imageUrl = `https://imgelixpo.vercel.app/c/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}&nologo=1&enhance=false&private=${privateImage}`;
             }
             
             const imageTile = document.querySelector(".imageTile" + genNumber);
             imageTile.classList.add("generating");
-            specialDir = localStorage.getItem("ElixpoAIUser") + "_" + Date.now();
+            specialDir = localStorage.getItem("Elixxxxxx") + "_" + Date.now();
             document.getElementById("generationTimeMask" + genNumber).style.animation = "loadingFlash 2s linear infinite";
             document.getElementById("generatedSeedIcon" + genNumber).style.animation = "loadingFlash 2s linear infinite";
             document.getElementById("generatedSeedIcon" + genNumber).style.color = "#00ff73";
@@ -216,7 +216,7 @@ let controller;
                             document.getElementById("generationAspectRatio" + genNumber).innerText = `${aspectRatio}`;
                             document.getElementById("generatedSeed" + genNumber).innerText = seed;
                             document.getElementById("generationTheme" + genNumber).innerText = theme;
-                            const encodedData = url + "###" + prompt + "###" + localStorage.getItem("ElixpoAIUser") + "###" + genNumber;
+                            const encodedData = url + "###" + prompt + "###" + localStorage.getItem("Elixxxxxx") + "###" + genNumber;
                             document.getElementById("maskImageTile" + genNumber).setAttribute("data-id", encodedData);
         
                             if (imageTile) {
@@ -464,7 +464,7 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, model, spe
     
     return new Promise(async (resolve, reject) => {
         try {
-            const imageGenId = generateUniqueId(localStorage.getItem("ElixpoAIUser").toLowerCase());
+            const imageGenId = generateUniqueId(localStorage.getItem("Elixxxxxx").toLowerCase());
             const storageRef = firebase.storage().ref();
             const timestamp = Date.now();
             const uploadPromises = [];
@@ -500,7 +500,7 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, model, spe
                                 theme: imgTheme,
                                 model : model,
                                 timestamp: timestamp,
-                                user: localStorage.getItem("ElixpoAIUser"),
+                                user: localStorage.getItem("Elixxxxxx"),
                                 prompt: promptTextInput.value,
                                 ratio: RatioValue,
                                 ai_enhanced: enhanceSwitch.checked,
@@ -547,7 +547,7 @@ async function handleStaticServerUpload(blobs, imageNumber, imgTheme, model, spe
                                 //     },
                                 //     body: JSON.stringify({
                                 //         imageUrls: imageUrls,
-                                //         caption: `✨Read More for Details✨\n 💬Prompt: ${promptTextInput.value}\n 🖼️Theme: ${imgTheme}\n 📐Ratio: ${RatioValue}\n 🧪AI Enhanced: ${enhanceSwitch.checked ? 'Yes' : 'No'}\n 🤝Generated by: ${localStorage.getItem("ElixpoAIUser")}\n\n ⭐Generated by Elixpo.ai - The AI Art Generator dated ${new Date().toDateString()}`
+                                //         caption: `✨Read More for Details✨\n 💬Prompt: ${promptTextInput.value}\n 🖼️Theme: ${imgTheme}\n 📐Ratio: ${RatioValue}\n 🧪AI Enhanced: ${enhanceSwitch.checked ? 'Yes' : 'No'}\n 🤝Generated by: ${localStorage.getItem("Elixxxxxx")}\n\n ⭐Generated by Elixpo.ai - The AI Art Generator dated ${new Date().toDateString()}`
                                 //     }),
                                 //     mode : "cors"
                                 // })
