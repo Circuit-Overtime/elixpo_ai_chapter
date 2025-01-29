@@ -4,7 +4,6 @@ import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { Client, AttachmentBuilder, EmbedBuilder } from 'discord.js';
 import dotenv from 'dotenv';
-import { createCanvas, loadImage } from 'canvas';
 
 dotenv.config();
 
@@ -23,7 +22,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-let downloadUrl = '';
 let suffixPrompt = '';
 let queue = [];
 let isProcessing = false;
@@ -33,22 +31,9 @@ const client = new Client({
 
 // On bot ready
 client.on('ready', async () => {
-client.user.seActivity("Generating Images for You ", {type: "WATCHING" });
+client.user.setActivity("Generating Images for You", { type: "WATCHING" });
   console.log('Bot is online and ready!');
 
-  // Fetch the download_image URL from Firestore
-  try {
-    const docRef = doc(db, 'Server', 'servers'); // Specify the correct document ID
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      downloadUrl = docSnap.data().download_image;
-      console.log('Fetched download URL:', downloadUrl);
-    } else {
-      console.log('No document found.');
-    }
-  } catch (error) {
-    console.error('Error fetching or downloading image:', error);
-  }
 });
 
 // Event listener: Handle slash command interactions
@@ -97,15 +82,15 @@ client.on('interactionCreate', async interaction => {
     const helpMessage = `
     **Elixpo Discord Bot Commands:**
 
-- **\`/generate\`** - Generate images based on a prompt.
+  - **\`/generate\`** - Generate images based on a prompt.
 
-  **Options:**
-  - **Theme:** Choose from \`normal\`, \`fantasy\`, \`halloween\`, \`space\`, \`chromatic\`, \`anime\`, \`samurai\`, \`crayon\`, \`cyberpunk\`, \`landscape\`, \`wpap\`, \`vintage\`, \`pixel\`, \`synthwave\`.
-  - **Model:** Choose from \`flux\`, \`boltning\`.
-  - **Aspect Ratio:** Choose from \`16:9\`, \`9:16\`, \`1:1\`, \`4:3\`, \`3:2\`.
-  - **Enhancement:** \`true\` or \`false\`.
+    **Options:**
+    - **Theme:** Choose from \`normal\`, \`fantasy\`, \`halloween\`, \`space\`, \`chromatic\`, \`anime\`, \`samurai\`, \`crayon\`, \`cyberpunk\`, \`landscape\`, \`wpap\`, \`vintage\`, \`pixel\`, \`synthwave\`.
+    - **Model:** Choose from \`flux\`, \`flux-realism\`, \`flux-cablyai\`, \`flux-anime\`, \`flux-3d\`, \`any-dark\`, \`flux-pro\`, \`turbo\`.
+    - **Aspect Ratio:** Choose from \`16:9\`, \`9:16\`, \`1:1\`, \`4:3\`, \`3:2\`.
+    - **Enhancement:** \`true\` or \`false\`.
 
-- **\`/help\`** - Display this help message.
+  - **\`/help\`** - Display this help message.
     `;
     await interaction.reply(helpMessage);
   }
@@ -122,28 +107,7 @@ async function gettotalGenOnServer() {
   return totalGen;
 }
 
-
-async function addToQueue(interaction) {
-  // Add the request to the queue
-  queue.push(interaction);
-  
-  const positionInQueue = queue.length;
-  const estimatedWaitTime = positionInQueue > 1 ? (positionInQueue - 1) * 20 : 0; // 20s for each additional request
-  
-  // Defer the interaction immediately
-  await interaction.deferReply();
-
-  // Notify the user of their position in the queue
-  await interaction.followUp(`🕒 Your request has been added to the queue. You are number ${positionInQueue} in the queue. Estimated wait time: ${Math.ceil(estimatedWaitTime)} seconds.`);
-
-  // Start processing if not already processing
-  if (!isProcessing) {
-    processQueue();
-  }
-}
-
-// Process queue
-async function processQueue() {
+async function processQueueDiscord() {
   if (queue.length === 0) {
     isProcessing = false;
     return;
@@ -152,17 +116,41 @@ async function processQueue() {
   isProcessing = true;
   const interaction = queue[0];
 
-  // Notify that processing is starting
-  await interaction.followUp('✨ Your request is now being processed...');
-  
-  // Generate image and wait for completion
-  await generateImage(interaction);
-  
-  // Remove the processed interaction from the queue
-  queue.shift();
-  
-  // Process the next request in the queue
-  processQueue();
+  try {
+    // Check if the interaction has been replied to
+    if (!interaction.replied && !interaction.deferred) {
+      await interaction.deferReply(); // Defer the reply if not already done
+    }
+
+    // Initial message: Let the user know the request is being processed
+    await interaction.editReply('✨ Your request is now being processed...');
+
+    // Generate the image
+    const imageUrl = await generateImage(interaction); // Assuming this function returns the image URL
+    await interaction.editReply("✨ I've painted the image for you. Thank you for your patience!");
+
+  } catch (error) {
+    console.error('Error processing queue:', error);
+    if (!interaction.replied && !interaction.deferred) {
+      await interaction.deferReply(); // Defer the reply if not already done
+    }
+    // Update the message to notify the user of the error
+    await interaction.editReply('⚠️ Something went wrong while processing your request. Please try again later.');
+  } finally {
+    // Remove the processed interaction and process the next
+    queue.shift();
+    setImmediate(processQueueDiscord); // Avoid blocking the event loop
+  }
+}
+
+
+
+
+function addToQueue(interaction) {
+  queue.push(interaction);
+  if (!isProcessing) {
+    processQueueDiscord(); // Start processing if not already in progress
+  }
 }
 
 // Generate image
@@ -172,7 +160,7 @@ async function generateImage(interaction) {
   const aspectRatio = interaction.options.getString("aspect_ratio") || "3:2";
   const theme = interaction.options.getString("theme") || "normal";
   const enhancement = interaction.options.getBoolean("enhancement") || false;
-  const model = interaction.options.getString("model") || "flux";
+  const model = interaction.options.getString("model") || "flux-core";
   let width = 1024, height = 683;
 
   var currentTotalImageOnServer = await gettotalGenOnServer();
@@ -269,11 +257,9 @@ async function generateImage(interaction) {
       const arrayBuffer = await response.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       
-      // Apply watermark
-      const modifiedBlob = await applyWatermark(buffer);
-      const attachment = new AttachmentBuilder(modifiedBlob, { name: `image${i + 1}.jpg` });
+      const attachment = new AttachmentBuilder(buffer, { name: `image${i + 1}.jpg` });
       images.push(attachment);
-      blobs.push(modifiedBlob);
+      blobs.push(buffer);
     }
 
     const embed = new EmbedBuilder()
@@ -281,7 +267,9 @@ async function generateImage(interaction) {
       .setDescription(`**Prompt:** ${prompt}\n` +
         `**Theme:** ${theme}\n` +
         `**Aspect Ratio:** ${aspectRatio}\n` +
-        `**Enhanced:** ${enhancement ? 'Yes' : 'No'}`)
+        `**Enhanced:** ${enhancement ? 'Yes' : 'No'} \n` +
+        `**Model:** ${model}\n` +
+        `**Number of Images:** ${numberOfImages}\n`)
       .setColor('#0099ff')
       .setFooter({ text: `Prompted by ${interaction.user.tag} | Created by Jackey`, iconURL: interaction.user.avatarURL({ dynamic: true }) });
 
@@ -346,55 +334,13 @@ async function generateImage(interaction) {
     await updateDoc(doc(db, 'Server', 'totalGen'), { 
       value: nextImageNumber,
     });
-    const galleryUrl = `https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html?id=${imageGenId}`;
-    await interaction.channel.send(`${interaction.user} has created image(s) for the Elixpo-AI gallery! View it here: ${galleryUrl}`);
+    // const galleryUrl = `https://circuit-overtime.github.io/Elixpo_ai_pollinations/src/gallery?id=${imageGenId}`;
+    // await interaction.channel.send(`${interaction.user} has created image(s) for the Elixpo-AI gallery! View it here: ${galleryUrl}`);
 
   } catch (error) {
     console.error('Error fetching image:', error);
     await interaction.followUp('Error fetching image. Please try again later.');
   }
-}
-
-// Function to apply watermark
-async function applyWatermark(blob) {
-  const watermarkImage = await loadImage("https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/officialDisplayImages%2FOfficial%20Asset%20Store%2Fwatermark%20final.png?alt=media&token=4bdf46cb-c851-4638-a0ea-a2723c8d4038");
-  const watermarkImageInverted = await loadImage("https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/officialDisplayImages%2FOfficial%20Asset%20Store%2Fwatermark%20inverted%20final.png?alt=media&token=4a7b007d-e5dc-4b56-aa7f-acc6446b1bbe");
-  const mainImage = await loadImage(blob);
-  
-  const canvas = createCanvas(mainImage.width, mainImage.height);
-  const ctx = canvas.getContext('2d');
-
-  // Draw the main image onto the canvas
-  ctx.drawImage(mainImage, 0, 0);
-
-  // Detect brightness in the bottom left corner
-  const sampleSize = 10; // Size of the sample area
-  const imageData = ctx.getImageData(0, canvas.height - sampleSize, sampleSize, sampleSize);
-  let totalBrightness = 0;
-  for (let i = 0; i < imageData.data.length; i += 4) {
-    const r = imageData.data[i];
-    const g = imageData.data[i + 1];
-    const b = imageData.data[i + 2];
-    // Calculate brightness using the formula
-    totalBrightness += 0.299 * r + 0.587 * g + 0.114 * b;
-  }
-  const averageBrightness = totalBrightness / (imageData.data.length / 4);
-
-  // Choose the watermark based on the brightness
-  const selectedWatermark = averageBrightness < 128 ? watermarkImageInverted : watermarkImage;
-
-  // Define the position for the watermark
-  const watermarkX = 10;
-  const watermarkY = canvas.height - selectedWatermark.height - 10;
-  const watermarkX_right = canvas.width - selectedWatermark.width - 10;
-  const watermarkY_right = 10;
-
-  // Draw the watermark onto the canvas
-  ctx.drawImage(selectedWatermark, watermarkX, watermarkY);
-  ctx.drawImage(selectedWatermark, watermarkX_right, watermarkY_right);
-
-  // Convert the canvas to a Blob
-  return canvas.toBuffer('image/jpeg'); // Return the modified image as a buffer
 }
 
 // Helper function to generate a unique ID

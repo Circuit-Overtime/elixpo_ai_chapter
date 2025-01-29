@@ -1,10 +1,10 @@
 const firebaseConfig = {
-   apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
-   authDomain: "elixpoai.firebaseapp.com",
-   projectId: "elixpoai",
-   storageBucket: "elixpoai.appspot.com",
-   messagingSenderId: "718153866206",
-   appId: "1:718153866206:web:671c00aba47368b19cdb4f"
+   apiKey: "AIzaSyAlwbv2cZbxxxxxxxxxxxxxx",
+   authDomain: "elixpoxxxxxx",
+   projectId: "elixpxxxx",
+   storageBucket: "elixpoaixxxxxxx",
+   messagingSenderId: "7181538xxxxxxx",
+   appId: "1:71815386xxxxxxxxxxxxxxxxxxxxxxxxx"
  };
 
  // Initialize Firebase
@@ -53,7 +53,7 @@ function notify(msg) {
     }
 
 
-      if(localStorage.getItem("ElixpoAIUser") !== null) {
+      if(localStorage.getItem("Elixpoxxxxx") !== null) {
          document.getElementById("form_logout").classList.remove("hidden");
          document.getElementById("form_login").classList.add("hidden");
          document.getElementById("form_register").classList.add("hidden");
@@ -98,10 +98,10 @@ document.getElementById("signInFormBtn").addEventListener("click", () => {
 
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
-   localStorage.removeItem("ElixpoAIUser");
-   localStorage.removeItem("metadataCache");
-   localStorage.removeItem("currWidth");
-   localStorage.removeItem("guestLogin");
+   localStorage.removeItem("Elixpoxxxxx");
+   localStorage.removeItem("metadxxxxx");
+   localStorage.removeItem("currWxxxx");
+   localStorage.removeItem("guestxxxx");
    
    document.getElementById("form_logout").classList.add("hidden");
    document.getElementById("form_register").classList.add("hidden");
@@ -201,8 +201,8 @@ document.getElementById("usernameGuestInput").addEventListener("keypress", funct
                 date: date
             })
             .then(() => {
-                localStorage.setItem("ElixpoAIUser", this.value);
-                localStorage.setItem("guestLogin", "true");
+                localStorage.setItem("Elixpoxxxxx", this.value);
+                localStorage.setItem("guestxxxx", "true");
                 var nameSelected = "[" + this.value + "]";
                 typeWriterHTML("userSavedName", nameSelected, 50, function() {
                     console.log("fifth typing complete!");

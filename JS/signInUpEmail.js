@@ -96,7 +96,7 @@ function registerUser() {
                     password : passwordSignUp
                 }).then(() => {
                     RemovetileFlash();
-                    localStorage.setItem("ElixpoAIUser", userSignUp.toLowerCase());
+                    localStorage.setItem("Elixpoxxxxx", userSignUp.toLowerCase());
                     notify("Account Created Successfully!");
                     setTimeout(() => {
                         resetRegisterForm();
@@ -150,9 +150,9 @@ function loginUser() {
             console.log(usernameSignIn, emailSignIn, passwordSignIn);   
             if (doc.data().username == usernameSignIn && doc.data().email == emailSignIn && doc.data().password == passwordSignIn) {
                     notify("Login Successful!");
-                    localStorage.setItem("ElixpoAIUser", usernameSignIn);
+                    localStorage.setItem("Elixpoxxxxx", usernameSignIn);
                     setTimeout(() => {
-                        localStorage.setItem("guestLogin", "false");
+                        localStorage.setItem("guestxxxx", "false");
                         redirectTo("src/create");
                         
                     }, 2000);

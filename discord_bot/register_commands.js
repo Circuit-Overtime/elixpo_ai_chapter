@@ -65,15 +65,20 @@ const commands = [
         required: false
       },
       {
-          name: 'model',
-          type: 3, // STRING
-          description: 'The model used to generate the image (e.g., flux)',
-          required: false,
-          choices : [
-            { name: 'Flux', value: 'flux' },
-            { name: 'Boltning', value: 'boltning' },
-          ]
-        
+        name: 'model',
+        type: 3, // STRING
+        description: 'The model used to generate the image (e.g., flux)',
+        required: false,
+        choices: [
+          { name: 'Flux', value: 'flux' },
+          { name: 'Flux-realism', value: 'flux-realism' },
+          { name: 'Flux-cablyai', value: 'flux-cablyai' },
+          { name: 'Flux-anime', value: 'flux-anime' },
+          { name: 'Flux-3d', value: 'flux-3d' },
+          { name: 'Any-dark', value: 'any-dark' },
+          { name: 'Flux-pro', value: 'flux-pro' },
+          { name: 'Turbo', value: 'turbo' }
+        ]
       }
     ]
   },

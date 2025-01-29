@@ -13,12 +13,12 @@ document.getElementById("signin_with_github").addEventListener("click", () => {
         docRef.get().then((doc) => { // gets the whole data against the entered email address
             if (doc.exists) {
                 tileFlash();
-                if(doc.data().isDev == "DEV")
+                if(doc.data().isDev == "xxxxx")
                     {
                         notify("Login Successful!");
-                        localStorage.setItem("ElixpoAIUser", usernameSignIn);
+                        localStorage.setItem("Elixpoxxxxx", usernameSignIn);
                         setTimeout(() => {
-                            localStorage.setItem("guestLogin", "false");
+                            localStorage.setItem("guestxxxx", "false");
                             redirectTo("src/create");
                         }, 2000);
                     }
@@ -44,8 +44,8 @@ document.getElementById("signin_with_github").addEventListener("click", () => {
                     user_logo: user.photoURL,
                 }).then(() => {
                     RemovetileFlash();
-                    localStorage.setItem("ElixpoAIUser", user.displayName);
-                    localStorage.setItem("guestLogin", "false");
+                    localStorage.setItem("Elixpoxxxxx", user.displayName);
+                    localStorage.setItem("guestxxxx", "false");
                     redirectTo("src/create");
                 })
                 .catch((err) => {
