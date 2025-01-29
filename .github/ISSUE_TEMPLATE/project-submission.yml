@@ -1,0 +1,55 @@
+name: Project Submission
+description: Submit your project for review and inclusion in the Pollinations showcase
+labels: project submission
+assignees: ''
+
+inputs:
+  project_name:
+    description: 'What is the name of your project?'
+    required: true
+    default: ''
+  
+  project_description:
+    description: 'Describe what your project does and how it integrates with Pollinations.'
+    required: true
+    default: ''
+  
+  project_url:
+    description: 'Link to your project (if public)'
+    required: false
+    default: ''
+  
+  discord_username:
+    description: 'Provide your Discord username or a link to another social profile online'
+    required: true
+    default: ''
+  
+  github_repository_url:
+    description: 'Provide a link to your GitHub repository'
+    required: false
+    default: ''
+  
+  project_category:
+    description: 'Select the category under which your project should be posted'
+    required: true
+    options:
+      - 'AI Art'
+      - 'Web Development'
+      - 'AI Tools'
+      - 'Data Science'
+      - 'Machine Learning'
+  
+  additional_information:
+    description: 'Any other details you want to share about your project?'
+    required: false
+    default: ''
+  
+  contact_information:
+    description: 'How can we reach you if we have questions?'
+    required: true
+    default: ''
+  
+  implementation_instructions:
+    description: 'Instructions for implementing this issue'
+    required: true
+    default: 'Add the new project to the top of the appropriate section in README.md and pollinations.ai/src/config/projectList.js. Add a new UTF-8 icon to the title or where appropriate.'
