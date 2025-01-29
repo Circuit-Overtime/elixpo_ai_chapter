@@ -15,9 +15,9 @@ document.getElementById("signin_with_google").addEventListener("click", () => {
             if (doc.exists) {
                 tileFlash();
                         notify("Login Successful!");
-                        localStorage.setItem("ElixpoAIUser", usernameSignIn);
+                        localStorage.setItem("Elixpoxxxxx", usernameSignIn);
                         setTimeout(() => {
-                            localStorage.setItem("guestLogin", "false");
+                            localStorage.setItem("guestxxxx", "false");
                             redirectTo("src/create");
                         }, 2000);
 
@@ -38,8 +38,8 @@ document.getElementById("signin_with_google").addEventListener("click", () => {
                     user_logo: user.photoURL,
                 }).then(() => {
                     RemovetileFlash();
-                    localStorage.setItem("ElixpoAIUser", user.displayName);
-                    localStorage.setItem("guestLogin", "false");
+                    localStorage.setItem("Elixpoxxxxx", user.displayName);
+                    localStorage.setItem("guestxxxx", "false");
                     redirectTo("src/create");
                 })
                 .catch((err) => {
