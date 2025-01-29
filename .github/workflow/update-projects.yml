@@ -1,13 +1,16 @@
-name: Update Project List on PR Merge
+name: Update Project List on Issue Close
 
 on:
-  pull_request:
+  issues:
     types: [closed]
 
 jobs:
   update-project-list:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  
+      issues: read    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -15,13 +18,7 @@ jobs:
       - name: Extract project details from issue
         id: extract_issue
         run: |
-          ISSUE_URL=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH" | grep -o 'https://github.com/.*/issues/[0-9]*' || echo "")
-          if [ -z "$ISSUE_URL" ]; then
-            echo "No linked issue found. Skipping update."
-            exit 0
-          fi
-
-          ISSUE_NUMBER=$(basename "$ISSUE_URL")
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
           echo "Fetching issue #$ISSUE_NUMBER"
 
           ISSUE_JSON=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
@@ -30,7 +27,7 @@ jobs:
 
           PROJECT_NAME=$(echo "$ISSUE_JSON" | jq -r '.title' | sed 's/\[Project Submission\]: //')
           PROJECT_DESC=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -A100 '### Project Description' | tail -n +2 | sed '/^### /Q')
-          PROJECT_URL=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -o 'https://[^\s"]*' | head -1)
+          PROJECT_URL=$(echo "$ISSUE_JSON" | jq -o 'https://[^\s"]*' | head -1)
           CONTACT=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -A100 '### Contact Information' | tail -n +2 | sed '/^### /Q')
 
           if [ -z "$PROJECT_NAME" ] || [ -z "$PROJECT_DESC" ]; then
@@ -48,12 +45,20 @@ jobs:
 
           echo "$NEW_ENTRY" > new_project.json
 
+      - name: Ensure projects.json exists
+        run: |
+          if [ ! -f projects.json ]; then
+            echo "[]"> projects.json
+          fi
+
       - name: Update projects.json
         run: |
-          jq --slurpfile new projects.json '.[0] + $new' new_project.json > temp.json &&
+          jq --slurpfile new new_project.json '. + $new' projects.json > temp.json && mv temp.json projects.json
 
-
-permissions:
-  contents: write  
-  issues: read    
-  pull-requests: read  
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+          git add projects.json
+          git commit -m "Updated projects list from issue #${{ github.event.issue.number }}" || echo "No changes to commit"
+          git push
