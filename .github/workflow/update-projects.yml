@@ -1,3 +1,58 @@
+name: Update Project List on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  update-project-list:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract project details from issue
+        id: extract_issue
+        run: |
+          ISSUE_URL=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH" | grep -o 'https://github.com/.*/issues/[0-9]*' || echo "")
+          if [ -z "$ISSUE_URL" ]; then
+            echo "No linked issue found. Skipping update."
+            exit 0
+          fi
+
+          ISSUE_NUMBER=$(basename "$ISSUE_URL")
+          echo "Fetching issue #$ISSUE_NUMBER"
+
+          ISSUE_JSON=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER")
+
+          PROJECT_NAME=$(echo "$ISSUE_JSON" | jq -r '.title' | sed 's/\[Project Submission\]: //')
+          PROJECT_DESC=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -A100 '### Project Description' | tail -n +2 | sed '/^### /Q')
+          PROJECT_URL=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -o 'https://[^\s"]*' | head -1)
+          CONTACT=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -A100 '### Contact Information' | tail -n +2 | sed '/^### /Q')
+
+          if [ -z "$PROJECT_NAME" ] || [ -z "$PROJECT_DESC" ]; then
+            echo "Error extracting project details. Skipping."
+            exit 1
+          fi
+
+          echo "Project Name: $PROJECT_NAME"
+          echo "Project Description: $PROJECT_DESC"
+          echo "Project URL: $PROJECT_URL"
+          echo "Contact: $CONTACT"
+
+          NEW_ENTRY=$(jq -n --arg name "$PROJECT_NAME" --arg desc "$PROJECT_DESC" --arg url "$PROJECT_URL" --arg contact "$CONTACT" \
+            '{name: $name, description: $desc, url: $url, contact: $contact}')
+
+          echo "$NEW_ENTRY" > new_project.json
+
+      - name: Update projects.json
+        run: |
+          jq --slurpfile new projects.json '.[0] + $new' new_project.json > temp.json &&
+
+
 permissions:
   contents: write  
   issues: read    
