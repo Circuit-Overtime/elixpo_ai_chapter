@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Example Project",
+    "description": "A sample project using Elixpo-Art.",
+    "url": "https://example.com",
+    "github": "https://github.com/example",
+    "contact": "@username",
+    "additional_info": "Exciting AI art project!"
+  }
+]
