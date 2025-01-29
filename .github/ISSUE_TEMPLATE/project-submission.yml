@@ -1,19 +1,19 @@
 name: Project Submission
-description: Submit your project to be featured on Pollinations
-title: "[Project Submission]: "
+description: Submit your project to be featured on Elixpo-Art
+title: "[New Project Title]: "
 labels: ["project-submission"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to submit your project! Please fill out the information below to help us understand and showcase your project.
+       Thanks for integrating witb Elixpo-Art and for sharing with us! We will be more than happy to feature your projects!
         
   - type: input
     id: project-name
     attributes:
       label: Project Name
       description: What is the name of your project?
-      placeholder: "e.g., AI Art Gallery"
+      placeholder: "e.g., AI Image Generator"
     validations:
       required: true
 
@@ -22,7 +22,7 @@ body:
     attributes:
       label: Project Description
       description: Please provide a brief description of your project and how it uses Pollinations
-      placeholder: "Describe what your project does and how it integrates with Pollinations..."
+      placeholder: "Describe what your project does and how it integrates with Elixpo-Art..."
     validations:
       required: true
 
@@ -31,7 +31,7 @@ body:
     attributes:
       label: Project URL
       description: Link to your project (if public)
-      placeholder: "https://example.com"
+      placeholder: "Example --> https://xyz.vercel.app"
 
   - type: input
     id: discord-username
