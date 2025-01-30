@@ -1,7 +1,6 @@
 name: Process Issue
 on: 
-  issues: 
-
+  issues:
     types: [opened, edited]
 
 jobs:
