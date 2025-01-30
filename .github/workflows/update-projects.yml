@@ -21,31 +21,68 @@ jobs:
           ISSUE_NUMBER="${{ github.event.issue.number }}"
           echo "Fetching issue #$ISSUE_NUMBER"
 
-            ISSUE_JSON=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          ISSUE_JSON=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER")
         
-          PROJECT_NAME=$(echo "$ISSUE_JSON" | jq -r '.title' | sed 's/\[Project Submission\]: //')
-          PROJECT_DESC=$(echo "$ISSUE_JSON" | jq -r '.body' | awk '/### Project Description/{flag=1;next} /^### /{flag=0} flag')
-          PROJECT_URL=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -Eo 'https?://[^ ]+' | head -1)
-          CONTACT=$(echo "$ISSUE_JSON" | jq -r '.body' | awk '/### Contact Information/{flag=1;next} /^### /{flag=0} flag')
-        
-          if [ -z "$PROJECT_NAME" ] || [ -z "$PROJECT_DESC" ]; then
-            echo "Error extracting project details. Skipping."
+          PROJECT_BODY=$(echo "$ISSUE_JSON" | jq -r '.body')
+          
+          # Extract project name
+          PROJECT_NAME=$(echo "$ISSUE_JSON" | jq -r '.title' | sed 's/\[New Project Title\]: //')
+
+          # Function to extract content between specific headers
+          extract_content() {
+            local header="$1"
+            local next_header="$2"
+            echo "$PROJECT_BODY" | sed -n "/### $header/,/### $next_header/p" | sed '1d;$d' | tr -d '\n' | sed 's/^[ \t]*//;s/[ \t]*$//'
+          }
+
+          # Extract fields using extract_content function
+          PROJECT_DESC=$(extract_content "Project Description" "Project URL")
+          PROJECT_URL=$(extract_content "Project URL" "Discord Username or Social Profile Link")
+          DISCORD_USERNAME=$(extract_content "Discord Username or Social Profile Link" "GitHub Repository URL")
+          GITHUB_REPO=$(extract_content "GitHub Repository URL" "Additional Information")
+          ADDITIONAL_INFO=$(extract_content "Additional Information" "Contact Information")
+          CONTACT=$(extract_content "Contact Information" "")
+
+
+          # Check for empty values before assigning them
+          if [ -z "$PROJECT_NAME" ]; then
+            echo "Error: Project Name is empty. Aborting."
             exit 1
           fi
-        
+          if [ -z "$PROJECT_DESC" ]; then
+            echo "Error: Project Description is empty. Aborting."
+            exit 1
+          fi
+           if [ -z "$DISCORD_USERNAME" ]; then
+            echo "Error: Discord Username is empty. Aborting."
+            exit 1
+          fi
+           if [ -z "$CONTACT" ]; then
+            echo "Error: Contact Information is empty. Aborting."
+            exit 1
+          fi
+
           echo "Project Name: $PROJECT_NAME"
           echo "Project Description: $PROJECT_DESC"
           echo "Project URL: $PROJECT_URL"
+          echo "Discord Username: $DISCORD_USERNAME"
+          echo "GitHub Repo: $GITHUB_REPO"
+          echo "Additional Info: $ADDITIONAL_INFO"
           echo "Contact: $CONTACT"
-        
-          NEW_ENTRY=$(jq -n --arg name "$PROJECT_NAME" --arg desc "$PROJECT_DESC" --arg url "$PROJECT_URL" --arg contact "$CONTACT" \
-            '{name: $name, description: $desc, url: $url, contact: $contact}')
-        
+
+
+          NEW_ENTRY=$(jq -n --arg name "$PROJECT_NAME" \
+            --arg desc "$PROJECT_DESC" \
+            --arg url "$PROJECT_URL" \
+             --arg discord "$DISCORD_USERNAME" \
+             --arg repo "$GITHUB_REPO" \
+            --arg info "$ADDITIONAL_INFO" \
+            --arg contact "$CONTACT" \
+            '{name: $name, description: $desc, url: $url, discord: $discord, github: $repo, additionalInfo: $info, contact: $contact}')
+
           echo "$NEW_ENTRY" > new_project.json
-
-
 
       - name: Ensure projects.json exists
         run: |
