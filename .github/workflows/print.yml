@@ -7,14 +7,10 @@ jobs:
   process-issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Print issue details as JSON
-        id: print_json
+      - name: Print issue details as key-value pairs
         run: |
-          ISSUE_TITLE=$(echo "$GITHUB_EVENT_ISSUE_TITLE" | jq -sR .)
-          ISSUE_BODY=$(echo "$GITHUB_EVENT_ISSUE_BODY" | jq -sR .)
-          
-          echo "json_output={\"title\": $ISSUE_TITLE, \"body\": $ISSUE_BODY }" >> $GITHUB_OUTPUT
-      
-      - name: Output JSON
-        run: |
-          echo "${{ steps.print_json.outputs.json_output }}"
+          echo "Issue Title: ${{ github.event.issue.title }}"
+          echo "Issue Body:"
+          echo "--------------------"
+          echo "${{ github.event.issue.body }}"
+          echo "--------------------"
