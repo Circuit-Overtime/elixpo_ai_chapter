@@ -20,7 +20,9 @@ jobs:
           else
              echo "[$JSON_OBJECT]" > projects.json
           fi
-
+      - name: Fetch before push
+        run: |
+            git fetch origin main
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions Bot'
