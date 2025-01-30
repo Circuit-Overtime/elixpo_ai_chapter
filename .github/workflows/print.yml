@@ -8,12 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print issue details as JSON
+        id: print_json
         run: |
           ISSUE_TITLE=$(echo "$GITHUB_EVENT_ISSUE_TITLE" | jq -sR .)
           ISSUE_BODY=$(echo "$GITHUB_EVENT_ISSUE_BODY" | jq -sR .)
           
-          echo "::set-output name=json_output::{\"title\": $ISSUE_TITLE, \"body\": $ISSUE_BODY }"
+          echo "json_output={\"title\": $ISSUE_TITLE, \"body\": $ISSUE_BODY }" >> $GITHUB_OUTPUT
       
       - name: Output JSON
         run: |
-          echo "${{ steps.print-issue-details-as-json.outputs.json_output }}"
+          echo "${{ steps.print_json.outputs.json_output }}"
