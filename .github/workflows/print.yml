@@ -9,15 +9,16 @@ jobs:
     steps:
       - name: Print issue details
         run: |
-          
-          # Extracting values using awk to handle multiline
-          project_name=$(echo "${{ github.event.issue.body }}" | awk '/### Project Name/{getline; print $0}' | sed 's/^[ \t]*//')
-          project_description=$(echo "${{ github.event.issue.body }}" | awk '/### Project Description/{getline; print $0}' | sed 's/^[ \t]*//')
-          project_url=$(echo "${{ github.event.issue.body }}" | awk '/### Project URL/{getline; print $0}' | sed 's/^[ \t]*//')
-          discord_username=$(echo "${{ github.event.issue.body }}" | awk '/### Discord Username or Social Profile Link/{getline; print $0}' | sed 's/^[ \t]*//')
-          github_repo=$(echo "${{ github.event.issue.body }}" | awk '/### GitHub Repository URL/{getline; print $0}' | sed 's/^[ \t]*//')
-          additional_info=$(echo "${{ github.event.issue.body }}" | awk '/### Additional Information/{getline; print $0}' | sed 's/^[ \t]*//')
-          contact_info=$(echo "${{ github.event.issue.body }}" | awk '/### Contact Information/{getline; print $0}' | sed 's/^[ \t]*//')
+          echo "Issue Title: ${{ github.event.issue.title }}"
+
+          # Extract values by using grep and trimming extra spaces
+          project_name=$(echo "${{ github.event.issue.body }}" | grep -A1 '### Project Name' | tail -n1 | sed 's/^[ \t]*//')
+          project_description=$(echo "${{ github.event.issue.body }}" | grep -A1 '### Project Description' | tail -n1 | sed 's/^[ \t]*//')
+          project_url=$(echo "${{ github.event.issue.body }}" | grep -A1 '### Project URL' | tail -n1 | sed 's/^[ \t]*//')
+          discord_username=$(echo "${{ github.event.issue.body }}" | grep -A1 '### Discord Username or Social Profile Link' | tail -n1 | sed 's/^[ \t]*//')
+          github_repo=$(echo "${{ github.event.issue.body }}" | grep -A1 '### GitHub Repository URL' | tail -n1 | sed 's/^[ \t]*//')
+          additional_info=$(echo "${{ github.event.issue.body }}" | grep -A1 '### Additional Information' | tail -n1 | sed 's/^[ \t]*//')
+          contact_info=$(echo "${{ github.event.issue.body }}" | grep -A1 '### Contact Information' | tail -n1 | sed 's/^[ \t]*//')
 
           # Printing the extracted values
           echo "Project Name: $project_name"
