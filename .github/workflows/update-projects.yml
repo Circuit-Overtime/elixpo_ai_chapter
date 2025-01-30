@@ -17,13 +17,11 @@ jobs:
 
           # Check if projects.json exists
           if [[ -f projects.json ]]; then
-              # If projects.json is not empty, append the new object
-              OLD_CONTENT=$(cat projects.json)
-              if [[ -z "$OLD_CONTENT" || "$OLD_CONTENT" == "[]" ]]; then
-                  echo "[$JSON_OBJECT]" > projects.json
+              # If projects.json exists and isn't empty, append the new object
+              if [[ $(jq '. | length' projects.json) -gt 0 ]]; then
+                  jq ". += [$JSON_OBJECT]" projects.json > tmp.json && mv tmp.json projects.json
               else
-                  NEW_ARRAY_STRING=$(echo "$OLD_CONTENT" | jq --arg new_obj "$JSON_OBJECT" '. + [$new_obj]')
-                  echo "$NEW_ARRAY_STRING" > projects.json
+                  echo "[$JSON_OBJECT]" > projects.json
               fi
           else
               # If projects.json doesn't exist, create it with the new content
