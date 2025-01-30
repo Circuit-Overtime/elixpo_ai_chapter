@@ -14,19 +14,21 @@ jobs:
         run: |
           BODY=$(echo "${{ github.event.issue.body }}" | jq -sR .)
           JSON_OBJECT="{\"content\": $BODY}"
-          
+
+          # Check if projects.json exists
           if [[ -f projects.json ]]; then
+              # If projects.json is not empty, append the new object
               OLD_CONTENT=$(cat projects.json)
-               if [[ $OLD_CONTENT == "" ]]; then
+              if [[ -z "$OLD_CONTENT" || "$OLD_CONTENT" == "[]" ]]; then
                   echo "[$JSON_OBJECT]" > projects.json
-                else
-                   NEW_ARRAY_STRING=$(echo "$OLD_CONTENT" | jq --arg new_obj "$JSON_OBJECT" '. + [$new_obj]')
-                   echo "$NEW_ARRAY_STRING" > projects.json
+              else
+                  NEW_ARRAY_STRING=$(echo "$OLD_CONTENT" | jq --arg new_obj "$JSON_OBJECT" '. + [$new_obj]')
+                  echo "$NEW_ARRAY_STRING" > projects.json
               fi
           else
+              # If projects.json doesn't exist, create it with the new content
               echo "[$JSON_OBJECT]" > projects.json
           fi
-
 
       - name: Commit and push changes
         run: |
