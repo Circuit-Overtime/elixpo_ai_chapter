@@ -17,12 +17,11 @@ jobs:
           
           if [[ -f projects.json ]]; then
               OLD_CONTENT=$(cat projects.json)
-              if [[ $OLD_CONTENT == "" ]]; then
-                echo "[$JSON_OBJECT]" > projects.json
-              else
-                OLD_CONTENT_NO_BRACKETS=$(echo "$OLD_CONTENT" | jq -r .)
-                NEW_ARRAY_STRING=$(echo "$OLD_CONTENT_NO_BRACKETS" | jq -r --arg new_obj "$JSON_OBJECT" '. + [$new_obj]')
-                echo "$NEW_ARRAY_STRING" > projects.json
+               if [[ $OLD_CONTENT == "" ]]; then
+                  echo "[$JSON_OBJECT]" > projects.json
+                else
+                   NEW_ARRAY_STRING=$(echo "$OLD_CONTENT" | jq --arg new_obj "$JSON_OBJECT" '. + [$new_obj]')
+                   echo "$NEW_ARRAY_STRING" > projects.json
               fi
           else
               echo "[$JSON_OBJECT]" > projects.json
