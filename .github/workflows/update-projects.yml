@@ -10,6 +10,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Checkout or create projects branch
+        run: |
+          git fetch origin projects || true #Fetch the branch first
+          git checkout projects || git checkout -b projects
+
       - name: Append issue body to projects.json
         run: |
           BODY=$(echo "${{ github.event.issue.body }}" | jq -sR .)
