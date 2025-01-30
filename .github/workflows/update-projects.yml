@@ -8,14 +8,14 @@ jobs:
   update-project-list:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  
-      issues: read    
+      contents: write
+      issues: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Extract project details from issue
+      - name: Extract Project Data from Issue
         id: extract_issue
         run: |
           ISSUE_NUMBER="${{ github.event.issue.number }}"
@@ -25,14 +25,19 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER")
 
-          PROJECT_NAME=$(echo "$ISSUE_JSON" | jq -r '.title' | sed 's/\[Project Submission\]: //')
-          PROJECT_DESC=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -A100 '### Project Description' | tail -n +2 | sed '/^### /Q')
-          PROJECT_URL=$(echo "$ISSUE_JSON" | jq -o 'https://[^\s"]*' | head -1)
-          CONTACT=$(echo "$ISSUE_JSON" | jq -r '.body' | grep -A100 '### Contact Information' | tail -n +2 | sed '/^### /Q')
-
-          if [ -z "$PROJECT_NAME" ] || [ -z "$PROJECT_DESC" ]; then
-            echo "Error extracting project details. Skipping."
+          if [ -z "$ISSUE_JSON" ]; then
+            echo "Error: Could not fetch issue. Exiting."
             exit 1
+          fi
+
+          PROJECT_NAME=$(echo "$ISSUE_JSON" | jq -r '.body | fromjson | .project-name')
+          PROJECT_DESC=$(echo "$ISSUE_JSON" | jq -r '.body | fromjson | .project-description')
+          PROJECT_URL=$(echo "$ISSUE_JSON" | jq -r '.body | fromjson | .project-url')
+          CONTACT=$(echo "$ISSUE_JSON" | jq -r '.body | fromjson | .contact')
+
+          if [ -z "$PROJECT_NAME" ] || [ -z "$PROJECT_DESC" ] || [ -z "$CONTACT" ]; then
+              echo "Error: Missing required project details. Skipping update."
+              exit 1
           fi
 
           echo "Project Name: $PROJECT_NAME"
@@ -40,20 +45,19 @@ jobs:
           echo "Project URL: $PROJECT_URL"
           echo "Contact: $CONTACT"
 
-          NEW_ENTRY=$(jq -n --arg name "$PROJECT_NAME" --arg desc "$PROJECT_DESC" --arg url "$PROJECT_URL" --arg contact "$CONTACT" \
-            '{name: $name, description: $desc, url: $url, contact: $contact}')
-
+          NEW_ENTRY=$(jq -n --arg name "$PROJECT_NAME" --arg desc "$PROJECT_DESC" --arg url "$PROJECT_URL" --arg contact "$CONTACT" '{name: $name, description: $desc, url: $url, contact: $contact}')
           echo "$NEW_ENTRY" > new_project.json
+
 
       - name: Ensure projects.json exists
         run: |
           if [ ! -f projects.json ]; then
-            echo "[]"> projects.json
+            echo "[]" > projects.json
           fi
 
       - name: Update projects.json
         run: |
-          jq --slurpfile new new_project.json '. + $new' projects.json > temp.json && mv temp.json projects.json
+          jq --slurpfile new new_project.json '. + [$new]' projects.json > temp.json && mv temp.json projects.json
 
       - name: Commit and Push Changes
         env:
@@ -64,4 +68,3 @@ jobs:
           git add projects.json
           git commit -m "Updated projects list from issue #${{ github.event.issue.number }}" || echo "No changes to commit"
           git push "https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git" main
-
