@@ -1,5 +1,5 @@
 name: Process Issue
-on: 
+on:
   issues:
     types: [closed]
 
@@ -7,8 +7,13 @@ jobs:
   process-issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Print issue details
+      - name: Print issue details as JSON
         run: |
-          echo "Issue Title: ${{ github.event.issue.title }}"
-          echo "Issue Body:"
-          echo "${{ github.event.issue.body }}"
+          ISSUE_TITLE=$(echo "$GITHUB_EVENT_ISSUE_TITLE" | jq -sR .)
+          ISSUE_BODY=$(echo "$GITHUB_EVENT_ISSUE_BODY" | jq -sR .)
+          
+          echo "::set-output name=json_output::{\"title\": $ISSUE_TITLE, \"body\": $ISSUE_BODY }"
+      
+      - name: Output JSON
+        run: |
+          echo "${{ steps.print-issue-details-as-json.outputs.json_output }}"
