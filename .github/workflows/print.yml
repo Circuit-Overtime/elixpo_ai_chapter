@@ -20,13 +20,12 @@ jobs:
           else
              echo "[$JSON_OBJECT]" > projects.json
           fi
-      - name: Fetch before push
-        run: |
-            git fetch origin main
+
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
           git add projects.json
           git commit -m "Update projects.json with issue body"
-          git push origin HEAD:main
+          git checkout -b projects
+          git push origin projects
