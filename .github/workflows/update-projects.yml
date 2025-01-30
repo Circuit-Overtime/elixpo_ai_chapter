@@ -19,17 +19,19 @@ jobs:
           BODY=$(echo "${{ github.event.issue.body }}" | jq -sR .)
           JSON_OBJECT="{\"content\": $BODY}"
 
-          # Check if projects.json exists
           if [[ -f projects.json ]]; then
-              # If projects.json exists and isn't empty, append the new object
               if [[ $(jq '. | length' projects.json) -gt 0 ]]; then
                   jq ". += [$JSON_OBJECT]" projects.json > projects.json.tmp && mv projects.json.tmp projects.json
+                  echo "" >> projects.json # Add a new line at end of file
+
               else
-                  echo "[$JSON_OBJECT]" > projects.json
+                   echo "[$JSON_OBJECT]" > projects.json
+                  echo "" >> projects.json # Add a new line at end of file
               fi
           else
-              # If projects.json doesn't exist, create it with the new content
               echo "[$JSON_OBJECT]" > projects.json
+              echo "" >> projects.json # Add a new line at end of file
+
           fi
 
       - name: Pull latest changes from remote
