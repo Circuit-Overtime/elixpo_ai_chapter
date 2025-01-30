@@ -14,13 +14,14 @@ jobs:
       - name: Extract Issue Data
         id: extract_data
         run: |
-          ISSUE_BODY="${{ github.event.issue.body }}"
-          
-          # Extract values safely, replacing empty fields with "null"
+          ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | tr -d '\r')
+
+          # Function to extract values safely
           extract_field() {
-            echo "$ISSUE_BODY" | grep -oP "(?<=### $1\n).*" | tr -d '\r' || echo "null"
+            echo "$ISSUE_BODY" | awk -v field="### $1" 'tolower($0) ~ tolower(field) {getline; print $0}' | sed 's/^[ \t]*//;s/[ \t]*$//' || echo ""
           }
 
+          # Extract fields from the issue body
           PROJECT_NAME=$(extract_field "Project Name")
           PROJECT_DESCRIPTION=$(extract_field "Project Description")
           PROJECT_URL=$(extract_field "Project URL")
@@ -29,36 +30,22 @@ jobs:
           ADDITIONAL_INFO=$(extract_field "Additional Information")
           CONTACT_INFO=$(extract_field "Contact Information")
 
-          # Ensure null replacement if fields are truly empty
-          PROJECT_NAME=${PROJECT_NAME:-null}
-          PROJECT_DESCRIPTION=${PROJECT_DESCRIPTION:-null}
-          PROJECT_URL=${PROJECT_URL:-null}
-          DISCORD_USERNAME=${DISCORD_USERNAME:-null}
-          GITHUB_REPO=${GITHUB_REPO:-null}
-          ADDITIONAL_INFO=${ADDITIONAL_INFO:-null}
-          CONTACT_INFO=${CONTACT_INFO:-null}
+          # Replace empty values with JSON "null"
+          [[ -z "$PROJECT_NAME" ]] && PROJECT_NAME="null" || PROJECT_NAME="\"$PROJECT_NAME\""
+          [[ -z "$PROJECT_DESCRIPTION" ]] && PROJECT_DESCRIPTION="null" || PROJECT_DESCRIPTION="\"$PROJECT_DESCRIPTION\""
+          [[ -z "$PROJECT_URL" ]] && PROJECT_URL="null" || PROJECT_URL="\"$PROJECT_URL\""
+          [[ -z "$DISCORD_USERNAME" ]] && DISCORD_USERNAME="null" || DISCORD_USERNAME="\"$DISCORD_USERNAME\""
+          [[ -z "$GITHUB_REPO" ]] && GITHUB_REPO="null" || GITHUB_REPO="\"$GITHUB_REPO\""
+          [[ -z "$ADDITIONAL_INFO" ]] && ADDITIONAL_INFO="null" || ADDITIONAL_INFO="\"$ADDITIONAL_INFO\""
+          [[ -z "$CONTACT_INFO" ]] && CONTACT_INFO="null" || CONTACT_INFO="\"$CONTACT_INFO\""
 
-          echo "Extracted values:"
-          echo "Project Name: $PROJECT_NAME"
-          echo "Project Description: $PROJECT_DESCRIPTION"
-          echo "Project URL: $PROJECT_URL"
-          echo "Discord Username: $DISCORD_USERNAME"
-          echo "GitHub Repo: $GITHUB_REPO"
-          echo "Additional Info: $ADDITIONAL_INFO"
-          echo "Contact Info: $CONTACT_INFO"
+          # Create a valid JSON entry
+          NEW_ENTRY="{\"project_name\": $PROJECT_NAME, \"project_description\": $PROJECT_DESCRIPTION, \"project_url\": $PROJECT_URL, \"discord_username\": $DISCORD_USERNAME, \"github_repo\": $GITHUB_REPO, \"additional_info\": $ADDITIONAL_INFO, \"contact\": $CONTACT_INFO}"
 
-          # Create JSON entry
-          NEW_ENTRY=$(jq -n \
-            --arg name "$PROJECT_NAME" \
-            --arg desc "$PROJECT_DESCRIPTION" \
-            --arg url "$PROJECT_URL" \
-            --arg discord "$DISCORD_USERNAME" \
-            --arg repo "$GITHUB_REPO" \
-            --arg info "$ADDITIONAL_INFO" \
-            --arg contact "$CONTACT_INFO" \
-            '{project_name: ($name // "null"), project_description: ($desc // "null"), project_url: ($url // "null"), discord_username: ($discord // "null"), github_repo: ($repo // "null"), additional_info: ($info // "null"), contact: ($contact // "null")}')
-          
-          echo "NEW_ENTRY=$NEW_ENTRY" >> $GITHUB_ENV
+          echo "Extracted Project Entry: $NEW_ENTRY"
+
+          # Store JSON entry in an environment variable
+          echo "NEW_ENTRY=$(echo "$NEW_ENTRY" | jq -c .)" >> $GITHUB_ENV
 
       - name: Update projects.json
         run: |
@@ -66,12 +53,19 @@ jobs:
             echo "[]" > projects.json
           fi
           
-          jq '. += [$NEW_ENTRY]' projects.json > tmp.json && mv tmp.json projects.json
+          # Append the new entry to the JSON file safely
+          jq '. += [env.NEW_ENTRY | fromjson]' projects.json > tmp.json && mv tmp.json projects.json
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
+          
+          if git diff --quiet projects.json; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          
           git add projects.json
           git commit -m "Add new project entry from issue #${{ github.event.issue.number }}"
           git push
