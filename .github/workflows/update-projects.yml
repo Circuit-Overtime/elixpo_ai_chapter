@@ -16,16 +16,15 @@ jobs:
           JSON_OBJECT="{\"content\": $BODY}"
           
           if [[ -f projects.json ]]; then
-              # Read the existing JSON array and append the new object
               OLD_CONTENT=$(cat projects.json)
               if [[ $OLD_CONTENT == "" ]]; then
-                  echo "[$JSON_OBJECT]" > projects.json
+                echo "[$JSON_OBJECT]" > projects.json
               else
-                  OLD_CONTENT_NO_BRACKETS=$(echo "$OLD_CONTENT" | jq -r .[])
-                  echo "[$OLD_CONTENT_NO_BRACKETS,$JSON_OBJECT]" > projects.json
+                OLD_CONTENT_NO_BRACKETS=$(echo "$OLD_CONTENT" | jq -r .)
+                NEW_ARRAY_STRING=$(echo "$OLD_CONTENT_NO_BRACKETS" | jq -r --arg new_obj "$JSON_OBJECT" '. + [$new_obj]')
+                echo "$NEW_ARRAY_STRING" > projects.json
               fi
           else
-              # Create the file with the initial JSON array
               echo "[$JSON_OBJECT]" > projects.json
           fi
 
