@@ -1,67 +1,66 @@
-name: Update Projects JSON
+name: Process Project Submission
+
 on:
   issues:
     types: [closed]
 
 jobs:
-  update_json:
+  extract-and-update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Extract issue data
-        id: extract
+      - name: Extract Issue Data
+        id: extract_data
         run: |
-          # Get raw issue body and replace newlines with \n for safe parsing
-          ISSUE_BODY=$(echo '${{ github.event.issue.body }}' | sed ':a;N;$!ba;s/\n/\\n/g')
+          ISSUE_BODY=$(jq -Rs '.' <<<"${{ github.event.issue.body }}")
+          JSON=$(echo "$ISSUE_BODY" | jq -r '
+            capture("### Project Name\\n(.+)\\n### Project Description\\n(.+)\\n### Project URL\\n(.+)\\n### Discord Username or Social Profile Link\\n(.+)\\n### GitHub Repository URL\\n(.+)\\n### Additional Information\\n(.+)\\n### Contact Information\\n(.+)")
+          ')
+          PROJECT_NAME=$(echo "$JSON" | jq -r '.["1"] // "null"')
+          PROJECT_DESCRIPTION=$(echo "$JSON" | jq -r '.["2"] // "null"')
+          PROJECT_URL=$(echo "$JSON" | jq -r '.["3"] // "null"')
+          DISCORD_USERNAME=$(echo "$JSON" | jq -r '.["4"] // "null"')
+          GITHUB_REPO=$(echo "$JSON" | jq -r '.["5"] // "null"')
+          ADDITIONAL_INFO=$(echo "$JSON" | jq -r '.["6"] // "null"')
+          CONTACT_INFO=$(echo "$JSON" | jq -r '.["7"] // "null"')
 
-          # Extract individual fields using grep + sed (more reliable than jq for plain text)
-          PROJECT_NAME=$(echo "$ISSUE_BODY" | grep -A1 'Project Name' | tail -n1 | sed 's/^ *//')
-          PROJECT_DESCRIPTION=$(echo "$ISSUE_BODY" | grep -A1 'Project Description' | tail -n1 | sed 's/^ *//')
-          PROJECT_URL=$(echo "$ISSUE_BODY" | grep -A1 'Project URL' | tail -n1 | sed 's/^ *//')
-          DISCORD_USERNAME=$(echo "$ISSUE_BODY" | grep -A1 'Discord Username' | tail -n1 | sed 's/^ *//')
-          GITHUB_REPO=$(echo "$ISSUE_BODY" | grep -A1 'GitHub Repository URL' | tail -n1 | sed 's/^ *//')
-          ADDITIONAL_INFO=$(echo "$ISSUE_BODY" | grep -A1 'Additional Information' | tail -n1 | sed 's/^ *//')
-          CONTACT_INFO=$(echo "$ISSUE_BODY" | grep -A1 'Contact Information' | tail -n1 | sed 's/^ *//')
+          echo "Extracted values:"
+          echo "Project Name: $PROJECT_NAME"
+          echo "Project Description: $PROJECT_DESCRIPTION"
+          echo "Project URL: $PROJECT_URL"
+          echo "Discord Username: $DISCORD_USERNAME"
+          echo "GitHub Repo: $GITHUB_REPO"
+          echo "Additional Info: $ADDITIONAL_INFO"
+          echo "Contact Info: $CONTACT_INFO"
 
-          # Export variables for later steps
-          echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
-          echo "PROJECT_DESCRIPTION=$PROJECT_DESCRIPTION" >> $GITHUB_ENV
-          echo "PROJECT_URL=$PROJECT_URL" >> $GITHUB_ENV
-          echo "DISCORD_USERNAME=$DISCORD_USERNAME" >> $GITHUB_ENV
-          echo "GITHUB_REPO=$GITHUB_REPO" >> $GITHUB_ENV
-          echo "ADDITIONAL_INFO=$ADDITIONAL_INFO" >> $GITHUB_ENV
-          echo "CONTACT_INFO=$CONTACT_INFO" >> $GITHUB_ENV
+          NEW_ENTRY=$(jq -n \
+            --arg name "$PROJECT_NAME" \
+            --arg desc "$PROJECT_DESCRIPTION" \
+            --arg url "$PROJECT_URL" \
+            --arg discord "$DISCORD_USERNAME" \
+            --arg repo "$GITHUB_REPO" \
+            --arg info "$ADDITIONAL_INFO" \
+            --arg contact "$CONTACT_INFO" \
+            '{project_name: $name, project_description: $desc, project_url: $url, discord_username: $discord, github_repo: $repo, additional_info: $info, contact: $contact}')
+          
+          echo "NEW_ENTRY=$NEW_ENTRY" >> $GITHUB_ENV
 
       - name: Update projects.json
         run: |
-          # Ensure projects.json exists
           if [ ! -f projects.json ]; then
             echo "[]" > projects.json
           fi
+          
+          jq '. += [$NEW_ENTRY]' projects.json > tmp.json && mv tmp.json projects.json
 
-          # Append extracted data to JSON
-          jq '. + [{
-            "project_name": "${{ env.PROJECT_NAME }}",
-            "description": "${{ env.PROJECT_DESCRIPTION }}",
-            "url": "${{ env.PROJECT_URL }}",
-            "discord_username": "${{ env.DISCORD_USERNAME }}",
-            "github_repo": "${{ env.GITHUB_REPO }}",
-            "additional_info": "${{ env.ADDITIONAL_INFO }}",
-            "contact_info": "${{ env.CONTACT_INFO }}"
-          }]' projects.json > temp.json && mv temp.json projects.json
-
-      - name: Commit changes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      - name: Commit and Push Changes
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@github.com'
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
           git add projects.json
-          git commit -m "Update projects.json with new project submission" || echo "No changes to commit"
-
-          # Authenticate using PAT_TOKEN (without x-access-token)
-          git remote set-url origin https://github.com/${{ github.repository }}.git
-          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
-
+          git commit -m "Add new project entry from issue #${{ github.event.issue.number }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
