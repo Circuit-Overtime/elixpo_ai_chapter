@@ -1,7 +1,7 @@
 name: Process Issue
 on: 
   issues:
-    types: [opened, edited]
+    types: [closed]
 
 jobs:
   process-issue:
