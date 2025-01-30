@@ -19,7 +19,7 @@ jobs:
           if [[ -f projects.json ]]; then
               # If projects.json exists and isn't empty, append the new object
               if [[ $(jq '. | length' projects.json) -gt 0 ]]; then
-                  jq ". += [$JSON_OBJECT]" projects.json > tmp.json && mv tmp.json projects.json
+                  jq ". += [$JSON_OBJECT]" projects.json > projects.json.tmp && mv projects.json.tmp projects.json
               else
                   echo "[$JSON_OBJECT]" > projects.json
               fi
