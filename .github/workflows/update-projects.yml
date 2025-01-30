@@ -30,6 +30,15 @@ jobs:
           ADDITIONAL_INFO=$(extract_field "Additional Information")
           CONTACT_INFO=$(extract_field "Contact Information")
 
+          # Debug: print extracted fields
+          echo "Extracted PROJECT_NAME: $PROJECT_NAME"
+          echo "Extracted PROJECT_DESCRIPTION: $PROJECT_DESCRIPTION"
+          echo "Extracted PROJECT_URL: $PROJECT_URL"
+          echo "Extracted DISCORD_USERNAME: $DISCORD_USERNAME"
+          echo "Extracted GITHUB_REPO: $GITHUB_REPO"
+          echo "Extracted ADDITIONAL_INFO: $ADDITIONAL_INFO"
+          echo "Extracted CONTACT_INFO: $CONTACT_INFO"
+
           # Replace empty fields with JSON "null"
           [[ -z "$PROJECT_NAME" ]] && PROJECT_NAME="null" || PROJECT_NAME="\"$PROJECT_NAME\""
           [[ -z "$PROJECT_DESCRIPTION" ]] && PROJECT_DESCRIPTION="null" || PROJECT_DESCRIPTION="\"$PROJECT_DESCRIPTION\""
@@ -46,6 +55,7 @@ jobs:
 
           # Store JSON entry in an environment variable
           echo "NEW_ENTRY=$(echo "$NEW_ENTRY" | jq -c .)" >> $GITHUB_ENV
+
 
       - name: Update projects.json
         run: |
