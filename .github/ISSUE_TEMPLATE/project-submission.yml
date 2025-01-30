@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-       Thanks for integrating witb Elixpo-Art and for sharing with us! We will be more than happy to feature your projects!
+       Thanks for integrating with Elixpo-Art and for sharing with us! We will be more than happy to feature your projects!
         
   - type: input
     id: project-name
@@ -64,3 +64,7 @@ body:
       placeholder: "@username or email"
     validations:
       required: true
+    
+validations:
+  title:
+    required: true
