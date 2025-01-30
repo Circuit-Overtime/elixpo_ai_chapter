@@ -1,5 +1,5 @@
 name: Process Issue
-on: 
+on:
   issues:
     types: [closed]
 
@@ -10,4 +10,21 @@ jobs:
       - name: Print issue details
         run: |
           echo "Issue Title: ${{ github.event.issue.title }}"
-          echo "Issue Body: ${{ github.event.issue.body }}"
+          
+          # Extracting values from the issue body using regex
+          project_name=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Project Name\s*\(.*\)/\1/p')
+          project_description=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Project Description\s*\(.*\)/\1/p')
+          project_url=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Project URL\s*\(.*\)/\1/p')
+          discord_username=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Discord Username or Social Profile Link\s*\(.*\)/\1/p')
+          github_repo=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### GitHub Repository URL\s*\(.*\)/\1/p')
+          additional_info=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Additional Information\s*\(.*\)/\1/p')
+          contact_info=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Contact Information\s*\(.*\)/\1/p')
+          
+          # Printing the extracted values
+          echo "Project Name: $project_name"
+          echo "Project Description: $project_description"
+          echo "Project URL: $project_url"
+          echo "Discord Username/Social Profile Link: $discord_username"
+          echo "GitHub Repository URL: $github_repo"
+          echo "Additional Information: $additional_info"
+          echo "Contact Information: $contact_info"
