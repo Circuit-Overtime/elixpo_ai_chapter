@@ -7,10 +7,16 @@ jobs:
   process-issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Print issue details as key-value pairs
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Append issue body to projects.json
         run: |
-          echo "Issue Title: ${{ github.event.issue.title }}"
-          echo "Issue Body:"
-          echo "--------------------"
-          echo "${{ github.event.issue.body }}"
-          echo "--------------------"
+          BODY=$(echo "${{ github.event.issue.body }}" | jq -sR .)
+          JSON_OBJECT="{\"content\": $BODY}"
+
+          if [[ -f projects.json ]]; then
+             echo "$JSON_OBJECT," >> projects.json
+          else
+             echo "[$JSON_OBJECT]" > projects.json
+          fi
