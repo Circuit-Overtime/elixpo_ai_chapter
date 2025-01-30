@@ -14,17 +14,29 @@ jobs:
       - name: Extract Issue Data
         id: extract_data
         run: |
-          ISSUE_BODY=$(jq -Rs '.' <<<"${{ github.event.issue.body }}")
-          JSON=$(echo "$ISSUE_BODY" | jq -r '
-            capture("### Project Name\\n(.+)\\n### Project Description\\n(.+)\\n### Project URL\\n(.+)\\n### Discord Username or Social Profile Link\\n(.+)\\n### GitHub Repository URL\\n(.+)\\n### Additional Information\\n(.+)\\n### Contact Information\\n(.+)")
-          ')
-          PROJECT_NAME=$(echo "$JSON" | jq -r '.["1"] // "null"')
-          PROJECT_DESCRIPTION=$(echo "$JSON" | jq -r '.["2"] // "null"')
-          PROJECT_URL=$(echo "$JSON" | jq -r '.["3"] // "null"')
-          DISCORD_USERNAME=$(echo "$JSON" | jq -r '.["4"] // "null"')
-          GITHUB_REPO=$(echo "$JSON" | jq -r '.["5"] // "null"')
-          ADDITIONAL_INFO=$(echo "$JSON" | jq -r '.["6"] // "null"')
-          CONTACT_INFO=$(echo "$JSON" | jq -r '.["7"] // "null"')
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          
+          # Extract values safely, replacing empty fields with "null"
+          extract_field() {
+            echo "$ISSUE_BODY" | grep -oP "(?<=### $1\n).*" | tr -d '\r' || echo "null"
+          }
+
+          PROJECT_NAME=$(extract_field "Project Name")
+          PROJECT_DESCRIPTION=$(extract_field "Project Description")
+          PROJECT_URL=$(extract_field "Project URL")
+          DISCORD_USERNAME=$(extract_field "Discord Username or Social Profile Link")
+          GITHUB_REPO=$(extract_field "GitHub Repository URL")
+          ADDITIONAL_INFO=$(extract_field "Additional Information")
+          CONTACT_INFO=$(extract_field "Contact Information")
+
+          # Ensure null replacement if fields are truly empty
+          PROJECT_NAME=${PROJECT_NAME:-null}
+          PROJECT_DESCRIPTION=${PROJECT_DESCRIPTION:-null}
+          PROJECT_URL=${PROJECT_URL:-null}
+          DISCORD_USERNAME=${DISCORD_USERNAME:-null}
+          GITHUB_REPO=${GITHUB_REPO:-null}
+          ADDITIONAL_INFO=${ADDITIONAL_INFO:-null}
+          CONTACT_INFO=${CONTACT_INFO:-null}
 
           echo "Extracted values:"
           echo "Project Name: $PROJECT_NAME"
@@ -35,6 +47,7 @@ jobs:
           echo "Additional Info: $ADDITIONAL_INFO"
           echo "Contact Info: $CONTACT_INFO"
 
+          # Create JSON entry
           NEW_ENTRY=$(jq -n \
             --arg name "$PROJECT_NAME" \
             --arg desc "$PROJECT_DESCRIPTION" \
@@ -43,7 +56,7 @@ jobs:
             --arg repo "$GITHUB_REPO" \
             --arg info "$ADDITIONAL_INFO" \
             --arg contact "$CONTACT_INFO" \
-            '{project_name: $name, project_description: $desc, project_url: $url, discord_username: $discord, github_repo: $repo, additional_info: $info, contact: $contact}')
+            '{project_name: ($name // "null"), project_description: ($desc // "null"), project_url: ($url // "null"), discord_username: ($discord // "null"), github_repo: ($repo // "null"), additional_info: ($info // "null"), contact: ($contact // "null")}')
           
           echo "NEW_ENTRY=$NEW_ENTRY" >> $GITHUB_ENV
 
