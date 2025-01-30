@@ -64,7 +64,3 @@ body:
       placeholder: "@username or email"
     validations:
       required: true
-    
-validations:
-  title:
-    required: true
