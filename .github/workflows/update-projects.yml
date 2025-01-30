@@ -16,9 +16,9 @@ jobs:
         run: |
           ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | tr -d '\r')
 
-          # Function to extract values safely
+          # Function to extract values correctly
           extract_field() {
-            echo "$ISSUE_BODY" | awk -v field="### $1" 'tolower($0) ~ tolower(field) {getline; print $0}' | sed 's/^[ \t]*//;s/[ \t]*$//' || echo ""
+            echo "$ISSUE_BODY" | awk -v field="### $1" 'tolower($0) ~ tolower(field) {getline; print $0}' | sed 's/^[ \t]*//;s/[ \t]*$//'
           }
 
           # Extract fields from the issue body
@@ -30,12 +30,12 @@ jobs:
           ADDITIONAL_INFO=$(extract_field "Additional Information")
           CONTACT_INFO=$(extract_field "Contact Information")
 
-          # Replace empty values with JSON "null"
+          # Replace empty fields with JSON "null"
           [[ -z "$PROJECT_NAME" ]] && PROJECT_NAME="null" || PROJECT_NAME="\"$PROJECT_NAME\""
           [[ -z "$PROJECT_DESCRIPTION" ]] && PROJECT_DESCRIPTION="null" || PROJECT_DESCRIPTION="\"$PROJECT_DESCRIPTION\""
           [[ -z "$PROJECT_URL" ]] && PROJECT_URL="null" || PROJECT_URL="\"$PROJECT_URL\""
           [[ -z "$DISCORD_USERNAME" ]] && DISCORD_USERNAME="null" || DISCORD_USERNAME="\"$DISCORD_USERNAME\""
-          [[ -z "$GITHUB_REPO" ]] && GITHUB_REPO="null" || GITHUB_REPO="\"$GITHUB_REPO\""
+          [[ -z "$GITHUB_REPO" || "$GITHUB_REPO" == "No response" ]] && GITHUB_REPO="null" || GITHUB_REPO="\"$GITHUB_REPO\""
           [[ -z "$ADDITIONAL_INFO" ]] && ADDITIONAL_INFO="null" || ADDITIONAL_INFO="\"$ADDITIONAL_INFO\""
           [[ -z "$CONTACT_INFO" ]] && CONTACT_INFO="null" || CONTACT_INFO="\"$CONTACT_INFO\""
 
@@ -68,6 +68,6 @@ jobs:
           
           git add projects.json
           git commit -m "Add new project entry from issue #${{ github.event.issue.number }}"
-          git push
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
