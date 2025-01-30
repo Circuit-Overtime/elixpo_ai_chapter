@@ -1,5 +1,5 @@
 name: Process Issue
-on:
+on: 
   issues:
     types: [closed]
 
