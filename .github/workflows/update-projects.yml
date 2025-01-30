@@ -13,17 +13,17 @@ jobs:
       - name: Extract issue data
         id: extract
         run: |
-          # Extract form data from GitHub event payload (YAML form fields)
-          ISSUE_BODY=$(jq -r '.issue.body' <<< '${{ toJSON(github.event) }}')
+          # Get raw issue body and replace newlines with \n for safe parsing
+          ISSUE_BODY=$(echo '${{ github.event.issue.body }}' | sed ':a;N;$!ba;s/\n/\\n/g')
 
-          # Extract individual fields using jq (structured YAML fields)
-          PROJECT_NAME=$(jq -r '.issue.title' <<< '${{ toJSON(github.event) }}' | sed 's/\[New Project Title\]: //')
-          PROJECT_DESCRIPTION=$(jq -r '.issue.body | capture("Project Description:\\n(?<desc>.*?)(\\n\\n|$)") | .desc' <<< "$ISSUE_BODY")
-          PROJECT_URL=$(jq -r '.issue.body | capture("Project URL:\\n(?<url>.*?)(\\n\\n|$)") | .url' <<< "$ISSUE_BODY")
-          DISCORD_USERNAME=$(jq -r '.issue.body | capture("Discord Username or Social Profile Link:\\n(?<discord>.*?)(\\n\\n|$)") | .discord' <<< "$ISSUE_BODY")
-          GITHUB_REPO=$(jq -r '.issue.body | capture("GitHub Repository URL:\\n(?<repo>.*?)(\\n\\n|$)") | .repo' <<< "$ISSUE_BODY")
-          ADDITIONAL_INFO=$(jq -r '.issue.body | capture("Additional Information:\\n(?<info>.*?)(\\n\\n|$)") | .info' <<< "$ISSUE_BODY")
-          CONTACT_INFO=$(jq -r '.issue.body | capture("Contact Information:\\n(?<contact>.*?)(\\n\\n|$)") | .contact' <<< "$ISSUE_BODY")
+          # Extract individual fields using grep + sed (more reliable than jq for plain text)
+          PROJECT_NAME=$(echo "$ISSUE_BODY" | grep -A1 'Project Name' | tail -n1 | sed 's/^ *//')
+          PROJECT_DESCRIPTION=$(echo "$ISSUE_BODY" | grep -A1 'Project Description' | tail -n1 | sed 's/^ *//')
+          PROJECT_URL=$(echo "$ISSUE_BODY" | grep -A1 'Project URL' | tail -n1 | sed 's/^ *//')
+          DISCORD_USERNAME=$(echo "$ISSUE_BODY" | grep -A1 'Discord Username' | tail -n1 | sed 's/^ *//')
+          GITHUB_REPO=$(echo "$ISSUE_BODY" | grep -A1 'GitHub Repository URL' | tail -n1 | sed 's/^ *//')
+          ADDITIONAL_INFO=$(echo "$ISSUE_BODY" | grep -A1 'Additional Information' | tail -n1 | sed 's/^ *//')
+          CONTACT_INFO=$(echo "$ISSUE_BODY" | grep -A1 'Contact Information' | tail -n1 | sed 's/^ *//')
 
           # Export variables for later steps
           echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
