@@ -28,4 +28,5 @@ jobs:
           git add projects.json
           git commit -m "Update projects.json with issue body"
           git checkout -b projects
-          git push origin projects
+          git pull origin projects || true
+          git push origin projects --force
