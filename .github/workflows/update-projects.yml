@@ -61,6 +61,7 @@ jobs:
           git add projects.json
           git commit -m "Update projects.json with new project submission" || echo "No changes to commit"
 
-          # Authenticate using PAT_TOKEN
-          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git
-          git push origin HEAD:main
+          # Authenticate using PAT_TOKEN (without x-access-token)
+          git remote set-url origin https://github.com/${{ github.repository }}.git
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+
