@@ -9,17 +9,16 @@ jobs:
     steps:
       - name: Print issue details
         run: |
-          echo "Issue Title: ${{ github.event.issue.title }}"
           
-          # Extracting values from the issue body using regex
-          project_name=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Project Name\s*\(.*\)/\1/p')
-          project_description=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Project Description\s*\(.*\)/\1/p')
-          project_url=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Project URL\s*\(.*\)/\1/p')
-          discord_username=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Discord Username or Social Profile Link\s*\(.*\)/\1/p')
-          github_repo=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### GitHub Repository URL\s*\(.*\)/\1/p')
-          additional_info=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Additional Information\s*\(.*\)/\1/p')
-          contact_info=$(echo "${{ github.event.issue.body }}" | sed -n 's/^### Contact Information\s*\(.*\)/\1/p')
-          
+          # Extracting values using awk to handle multiline
+          project_name=$(echo "${{ github.event.issue.body }}" | awk '/### Project Name/{getline; print $0}' | sed 's/^[ \t]*//')
+          project_description=$(echo "${{ github.event.issue.body }}" | awk '/### Project Description/{getline; print $0}' | sed 's/^[ \t]*//')
+          project_url=$(echo "${{ github.event.issue.body }}" | awk '/### Project URL/{getline; print $0}' | sed 's/^[ \t]*//')
+          discord_username=$(echo "${{ github.event.issue.body }}" | awk '/### Discord Username or Social Profile Link/{getline; print $0}' | sed 's/^[ \t]*//')
+          github_repo=$(echo "${{ github.event.issue.body }}" | awk '/### GitHub Repository URL/{getline; print $0}' | sed 's/^[ \t]*//')
+          additional_info=$(echo "${{ github.event.issue.body }}" | awk '/### Additional Information/{getline; print $0}' | sed 's/^[ \t]*//')
+          contact_info=$(echo "${{ github.event.issue.body }}" | awk '/### Contact Information/{getline; print $0}' | sed 's/^[ \t]*//')
+
           # Printing the extracted values
           echo "Project Name: $project_name"
           echo "Project Description: $project_description"
