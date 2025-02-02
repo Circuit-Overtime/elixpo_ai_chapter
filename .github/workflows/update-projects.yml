@@ -6,14 +6,24 @@ on:
 jobs:
   process-issue:
     runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'submission') # Check for 'submission' label
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Checkout or create projects branch
         run: |
-          git fetch origin projects || true #Fetch the branch first
+          git fetch origin projects || true # Fetch the branch first
           git checkout projects || git checkout -b projects
+
+      - name: Check if issue follows Project Submission template
+        run: |
+          BODY="${{ github.event.issue.body }}"
+
+          if ! echo "$BODY" | grep -q "Project Name"; then
+            echo "Issue does not match the Project Submission template. Skipping."
+            exit 1
+          fi
 
       - name: Append issue body to projects.json
         run: |
@@ -21,19 +31,16 @@ jobs:
           JSON_OBJECT="{\"content\": $BODY}"
 
           if [[ -f projects.json ]]; then
-              # Append with newline, handling the case where file is not empty
               if [[ $(jq '. | length' projects.json) -gt 0 ]]; then
                  jq ". += [$JSON_OBJECT]" projects.json > projects.json.tmp && mv projects.json.tmp projects.json
               else
                  echo "[$JSON_OBJECT]" > projects.json
               fi
-
           else
-               # If projects.json doesn't exist, create it with the new content
               echo "[$JSON_OBJECT]" > projects.json
-
           fi
-            echo "" >> projects.json # Always add new line
+
+          echo "" >> projects.json # Always add a newline
 
       - name: Commit and push changes
         run: |
