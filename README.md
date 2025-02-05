@@ -1,4 +1,4 @@
-# [Elixpo-art](https://circuit-overtime.github.io/Elixpo_ai_pollinations/)
+# [Elixpo-art](https://elixpoart.vercel.app)
 
 ![image](https://github.com/user-attachments/assets/26dd6299-29c1-4149-889d-d590f34312e0)
 
@@ -124,11 +124,11 @@ This project is currently funded through a combination of personal investments a
 
 ## Gallery
 
-You can explore the generated artwork in our [Gallery](https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html). 
+You can explore the generated artwork in our [Gallery](https://elixpoart.vercel.app/src/gallery). 
 
 We can include a query parameter `id` to help share specific images by their image ID. For example, you can access an image directly using the following link:
 
-[https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html?id=9pde71i621](https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html?id=9pde71i621)
+[https://elixpoart.vercel.app/src/gallery?id=9pde71i621](https://elixpoart.vercel.app/src/gallery?id=9pde71i621)
 
 ### Kaggle and Data Science Builds
 
@@ -171,7 +171,7 @@ https://discord.com/oauth2/authorize?client_id=1214916249222643752
 ### Blogs Release 
 - Released a detailed analysis blog for Elixpo_Art Service
 ```bash
-  https://circuit-overtime.github.io/Elixpo_ai_pollinations/src/blogs/elixpo_art/
+  https://elixpoart.vercel.app/src/blogs/elixpo_art
 ```
 ### Minecraft Bots
 
