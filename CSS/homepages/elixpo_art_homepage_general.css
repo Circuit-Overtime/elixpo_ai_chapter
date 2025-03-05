@@ -1,0 +1,358 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Itim&family=Parkinsans:wght@300..800&family=Salsa&family=Sixtyfour&family=VT323&display=swap');
+
+* {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    overflow: hidden;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 730px;
+    width: 1519px;
+    transition: 0.5s;
+    opacity: 1;
+    overflow-x: hidden;
+}
+
+.container::-webkit-scrollbar
+{
+    display: none;
+}
+
+
+.sitecontent {
+    position: relative;
+    top: 00%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sitecontent::-webkit-scrollbar {
+    display: none;
+}
+
+
+.ParticleContainer {
+    background: #030712;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+
+.mainName {
+    position: absolute;
+    top: 20%;
+    left: 45%;
+    transform: translateX(-50%);
+    height: 250px;
+    background-color: transparent;
+}
+
+.mainName .mainName_name {
+    position: relative;
+    left: 2%;
+    font-family: "Salsa", sans-serif;
+    font-size: 13em;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f4c801db 0%, #504900 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.integrationsIcon
+{
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    background: #0db03bc2;
+    top: 65%;
+    z-index: 1;
+    border-radius: 50%;
+    border: 2px solid #2edf16;
+    backdrop-filter: blur(2px);
+    transform: rotate(25deg);
+    cursor: pointer;
+    transition: 0.25s;
+}
+.integrationsIcon:hover
+{
+    transform: rotate(10deg) scale(1.1);
+    transition: 0.25s;
+}
+.integrationsIcon > ion-icon 
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color: #ffc;
+}
+.mainName .mainName_ending {
+    position: relative;
+    left: 5%;
+    font-family: "Rubik", sans-serif;
+    font-size: 13em;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #e6e6e6 0%, #c9c9c9 20%, #d5d5d5 30%, #b3b3b3 50%, #d5d5d5 70%, #c9c9c9 80%, #e6e6e6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        1px 1px 2px rgba(0, 0, 0, 0.1),
+        2px 2px 4px rgba(0, 0, 0, 0.1),
+        3px 3px 6px rgba(0, 0, 0, 0.1),
+        4px 4px 8px rgba(0, 0, 0, 0.1),
+        5px 5px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.siteDesc {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    width: 60%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-family: "Itim", serif;
+    text-align: center;
+    font-size: 1.1em;
+
+}
+
+.flag {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    height: 5%;
+    width: 20%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 2px solid #555;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+}
+
+.flagDesc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    text-align: center;
+    font-family: "Parkinsans", serif;
+}
+
+
+
+.visitCreateArt
+{
+    top: 70%;
+    left: 50%;
+    background: linear-gradient(15deg, #880088, #aa2068, #cc3f47, #de6f3d, #f09f33, #de6f3d, #cc3f47, #aa2068, #880088) no-repeat;
+    color: #fff;
+    transform: translateX(-50%) scale(1.2);
+    text-shadow: 2px 2px 3px rgb(136 0 136 / 50%);
+    border: none;
+}
+
+.visitDocs
+{
+    top: 80%;
+    left: 30%;
+    transform: translateX(-50%) scale(1);
+    border: none;
+    background: linear-gradient(15deg, #FF8C00, #FFA500, #FFC107, #FFD700, #FFEE58, #FFD700, #FFC107, #FFA500, #FF8C00) no-repeat;
+    color: #fff;
+    text-shadow: 2px 2px 3px rgba(0, 91, 136, 0.5);
+}
+
+.visitFeed
+{
+    top: 80%;
+    left: 70%;
+    transform: translateX(-50%) scale(1);
+    border: none;
+    background: linear-gradient(15deg, #006600, #228B22, #32CD32, #66CDAA, #7FFF00, #66CDAA, #32CD32, #228B22, #006600) no-repeat;    color: #fff;
+    text-shadow: 2px 2px 3px rgba(14, 136, 0, 0.5);
+}
+
+
+@media screen and (max-width: 798px) {
+    .mainName .mainName_name {
+        font-size: 9em;
+        left: 70px;
+        top: 70px;
+    }
+
+    .mainName .mainName_ending {
+        font-size: 8em;
+        left: 80px;
+        top: 70px;
+    }
+
+    .siteDesc>p {
+        position: absolute;
+        left: 50%;
+        margin-top:5%;
+        transform: translateX(-50%) translateY(-50%);
+        font-size: 1em;
+        width: 80%;
+        text-align: center;
+    }
+}
+
+
+
+.partnerLogos {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center; /* Ensures logos are centered */
+    align-items: center;
+    gap: 2rem;
+    width: fit-content; /* Adjusts width dynamically */
+    height: 15%;
+    opacity: 0.6;
+    background: transparent;
+}
+
+.partnerLogos .logo {
+    height: 100px;
+    width: 100px;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Specific logo background images */
+.partnerLogos .logo.logo1 {
+    background-image: url(../IMAGES/PARTNERS/elixpoArtLogo.png);
+}
+
+.partnerLogos .logo.logo2 {
+    background-image: url(../IMAGES/PARTNERS/firebaseLogo.png);
+}
+
+.partnerLogos .logo.logo3 {
+    background-image: url(../IMAGES/PARTNERS/pollinationsLogo.png);
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .mainName .mainName_name {
+        font-size: 4em;
+        width: 50%;
+        left: 70px;
+        top: 70px;
+    }
+
+    .mainName .mainName_ending {
+        font-size: 5em;
+        left: 80px;
+        top: 70px;
+    }
+
+    .siteDesc>p {
+        font-size: 0.9em;
+        width: 30%;
+        text-align: center;
+        margin-top:2%;
+    }
+    .flag
+    {
+        top: 25%;
+    }
+    .partnerLogos 
+    {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        width: 20%;
+        height: 15%;
+        opacity: .6;
+        background:transparent;
+    }
+
+    .partnerLogos .logo 
+    {
+        position: relative;
+        height: 60px;
+        width: 60px;
+        top: 50%;
+        left: 10%;
+        transform: translateX(-50%) translateY(-50%);
+        background: transparent;
+        border-radius: 50%;
+        display: flex;
+        background-size: cover;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .partnerLogos .logo.logo1 {
+        background-image: url(../IMAGES/PARTNERS/elixpoArtLogo.png);
+    }
+    
+    .partnerLogos .logo.logo2 {
+        background-image: url(../IMAGES/PARTNERS/firebaseLogo.png);
+    }
+    
+    .partnerLogos .logo.logo3 {
+        background-image: url(../IMAGES/PARTNERS/pollinationsLogo.png);
+    }
+    .visitDocs
+    {
+        left: 38%;
+        transform: scale(0.8);
+    }
+    .visitFeed
+    {
+        left: 50%;
+        transform: scale(0.8);
+    }
+    .integrationsIcon
+    {
+        transform: scale(0.45);
+        top: 45%;
+        left: 15%;
+    }
+    .integrationsIcon:hover 
+    {
+        transform: scale(0.5) rotate(10deg);
+    }
+}   

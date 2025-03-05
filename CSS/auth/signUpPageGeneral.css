@@ -2,6 +2,7 @@
 body{
     overflow: hidden;
     background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+    
 }
 .container
 {
@@ -24,7 +25,7 @@ body{
     left: 87%;
     height: 40px;
     width: 40px;
-    background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/bigstar.png?alt=media&token=53c5945b-2b37-4c3e-972c-7bd1b0b9e4f1);
     background-size: cover;
 }
 .appName
@@ -36,6 +37,7 @@ body{
     color: #fff;
     margin-left: 10px;
     font-size: 20px;
+    font-weight: 700;
 }
 
 
@@ -48,6 +50,9 @@ body{
     top: 0;
     left: 0;
     background: linear-gradient(105deg, #2F2536 10%, #18191E 20%, #18191E 80%, #2E393C 100%);
+    background: #111;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(../..//CSS/IMAGES/backdrop.webp);
+  filter: brightness(60%) blur(4px);
 }
 .backgroundTile
 {
@@ -126,7 +131,7 @@ body{
     left: 10%;
     width: 100%; /* Adjust width to your preference */
     background-size: contain;
-    background-image: url(IMAGES/vrglassGirl.png);
+    background-image: url(../IMAGES/vrglassGirl.png);
     opacity: 0.25;
     object-fit: cover;
     pointer-events: none;
@@ -243,4 +248,14 @@ body{
       transparent
     );
     position: absolute;
+  }
+
+  .redirectHome
+  {
+    position: absolute;
+    top: 90%;
+    font-size: 2em;
+    filter: drop-shadow(0 0 20px #0de165);
+    left: 95%;
+    color: #0de165;
   }

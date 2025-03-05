@@ -1,0 +1,25 @@
+.footer 
+{
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 50px;
+    width: 90%;
+    background: #191919;
+    border-top: 2px solid rgba(255, 255, 204, 0.434);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footerDesc 
+{
+    color: rgba(255, 255, 204, 0.582);
+    font-size: 1em;
+    font-family: "Parkinsans", serif;
+    background: #191919;
+    text-align: center;
+    width: 100%;
+}

@@ -1,0 +1,460 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+* {
+    user-select: none;
+}
+
+html, body {
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+}
+
+body {
+    overflow: hidden;
+}
+
+.ParticleContainer {
+    background: #111;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(../..//CSS/IMAGES/backdrop.webp);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+
+.mainContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200%;
+    width: 100%;
+    z-index: 1;
+    /* box-shadow: 0 0 40px #D62929; */
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: 0.25s;
+    transform-origin: center;
+    opacity: 1;
+    /*change to zero*/
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.blob1Background {
+    position: absolute;
+    height: 450px;
+    top: -55px;
+    left: -45px;
+    width: 450px;
+    background: #235881;
+    opacity: 0.8;
+    filter: blur(55px);
+    animation: slowRotate 40s linear infinite;
+    border-radius: 40% 20px 75% 10px;
+    z-index: -1;
+}
+
+.blob2Background {
+    position: absolute;
+    height: 450px;
+    top: 60%;
+    left: 70%;
+    width: 450px;
+    background: #3c2381;
+    opacity: 0.8;
+    filter: blur(55px);
+    animation: slowRotate 40s linear infinite;
+    border-radius: 40% 20px 75% 10px;
+    z-index: -1;
+}
+
+
+@keyframes slowRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.upperNavBar {
+    position: sticky;
+    top: 0; /* Ensures it's at the very top */
+    left: 3%;
+    width: 90%; /* Keeps the width at 90% */
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 80px;
+    z-index: 50;
+    background: #000000ae;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    padding-left: 2%;
+    transition: 0.5s;
+}
+.mainName {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 250px;
+    background-color: transparent;
+}
+
+.mainName .mainName_name {
+    position: relative;
+    font-family: "Rubik", sans-serif;
+    font-size: 11em;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #e6e6e6 0%, #e4e4e4 20%, #d5d5d5 30%, #b3b3b3 50%, #d5d5d5 70%, #c9c9c9 80%, #e6e6e6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        1px 1px 2px rgba(0, 0, 0, 0.1),
+        2px 2px 4px rgba(0, 0, 0, 0.1),
+        3px 3px 6px rgba(0, 0, 0, 0.1),
+        4px 4px 8px rgba(0, 0, 0, 0.1),
+        5px 5px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+
+.redirectHome
+{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2em;
+  filter: drop-shadow(0 0 20px #0de165);
+  left: 95%;
+  cursor: pointer;
+  color: #0de165;
+}
+
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.logo {
+    height: 40px;
+    width: 40px;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/website%20logo.png?alt=media&token=e3409e2d-d827-430d-b0b8-1345567525d5);
+    background-size: cover;
+    margin-right: 10px;
+    /* Adds some spacing between the logo and app name */
+}
+
+.appName {
+    font-family: 'Source Code Pro', monospace;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+
+.aiArtCreateNavbar {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translateY(-50%) scale(0.8);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 36px;
+    border: 4px solid;
+    border-color: transparent;
+    font-size: 16px;
+    background-color: inherit;
+    border-radius: 100px;
+    font-weight: 600;
+    color: greenyellow;
+    box-shadow: 0 0 0 2px greenyellow;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 0 0 4px greenyellow;
+}
+
+
+.aiArtCreateNavbar>ion-icon {
+    position: absolute;
+    left: 75%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    margin-left: 12px;
+    color: #212121;
+}
+
+
+.aiArtCreateNavbar svg {
+    position: absolute;
+    width: 24px;
+    fill: greenyellow;
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aiArtCreateNavbar .arr-1 {
+    right: 16px;
+}
+
+.aiArtCreateNavbar .arr-2 {
+    left: -25%;
+}
+
+.aiArtCreateNavbar .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: greenyellow;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aiArtCreateNavbar .text {
+    position: relative;
+    left: 40%;
+    z-index: 1;
+    font-size: 1.5em;
+    transform: translateX(-50%);
+    color: #212121;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aiArtCreateNavbar:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: #212121;
+    border-radius: 12px;
+}
+
+.aiArtCreateNavbar:hover>ion-icon {
+    opacity: 0;
+}
+
+.aiArtCreateNavbar:hover .text {
+    left: 50%;
+}
+
+
+.aiArtCreateNavbar:hover .arr-1 {
+    right: -25%;
+}
+
+.aiArtCreateNavbar:hover .arr-2 {
+    left: 16px;
+}
+
+
+
+.aiArtCreateNavbar:hover svg {
+    fill: #212121;
+}
+
+.aiArtCreateNavbar:active {
+    scale: 0.95;
+
+}
+
+.aiArtCreateNavbar .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+}
+
+.desc {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    display: flex;
+}
+
+.desc span {
+    position: relative;
+    margin-right: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-family: "Rubik", sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #e6e6e6 0%, #c9c9c9 20%, #d5d5d5 30%, #b3b3b3 50%, #d5d5d5 70%, #c9c9c9 80%, #e6e6e6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        1px 1px 2px rgba(0, 0, 0, 0.1),
+        2px 2px 4px rgba(0, 0, 0, 0.1),
+        3px 3px 6px rgba(0, 0, 0, 0.1),
+        4px 4px 8px rgba(0, 0, 0, 0.1),
+        5px 5px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.sampleImage {
+    position: absolute;
+    top: 65%;
+    height: 60%;
+    width: 100%;
+    left: 0%;
+    background: transparent;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+
+
+.sampleImage_content_left {
+    display: flex;
+    will-change: transform;
+    justify-content: space-between;
+    animation: scroll-left 20s linear infinite;
+    width: auto;
+    transition: 0.5s;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+        background-position: (-0%, 0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+        background-position: (-10%, 10%);
+    }
+}
+
+.sampleImage_content_left img {
+    position: relative;
+    left: -5%;
+    width: 200px;
+    height: 200px;
+    margin: 20px 10px;
+    /* 10px on left and right to create equal spacing */
+    border-radius: 15px;
+    object-fit: cover;
+    animation: imgMove 2s linear infinite;
+
+}
+
+@keyframes imgMove {
+    0% {
+        background-position: (-0%, 0%);
+    }
+
+    100% {
+        background-position: (-12%, 20%);
+    }
+}
+
+
+.sampleImage_content_right {
+    display: flex;
+    will-change: transform;
+    justify-content: space-between;
+    animation: scroll-right 20s linear infinite;
+}
+
+
+@keyframes scroll-right {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.sampleImage_content_right img {
+    position: relative;
+    left: -105%;
+    width: 200px;
+    height: 200px;
+    margin: 0 10px;
+    /* 10px on left and right to create equal spacing */
+    border-radius: 15px;
+    object-fit: cover;
+
+}
+
+.products {
+    position: absolute;
+    top: 95%;
+    height: 130%;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 2%,  /* More transparent at the very top */
+        rgba(108, 82, 172, 0.3) 5%,  /* Soft purple with transparency */
+        #4b2c99 18%,   /* Slightly lighter purple */
+        #3c2381 30%,   /* Main purple tone */
+        #2d185e 50%,   /* Darker purple */
+        #1e0f43 70%,   /* Deep indigo */
+        #0b0220 90%,   /* Almost black */
+        #000000 100%   /* Fully black */
+    );
+    
+    /* Mask the background using transparency for smooth transition */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 1) 100%);
+    mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+
+
+
+/* Separate element for applying backdrop blur */
+.productsMask {
+    position: absolute;
+    top: 0;  /* Start from the top for full effect */
+    left: 0;
+    height: 100%;
+    width: 100%;
+    /* Semi-transparent layer to make blur visible */
+    background: rgba(255, 255, 255, 0.05);
+
+    /* Applying blur effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+

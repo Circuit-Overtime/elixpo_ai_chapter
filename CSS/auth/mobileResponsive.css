@@ -27,7 +27,7 @@
     {
         left: 0%;
         top: 0%;
-        transform:scale(1);
+        transform:scale(1.2);
         background-image: url(IMAGES/vrGirlPortrait.jpg);
     }
     .form_login
@@ -51,6 +51,7 @@
     .appName
     {
         left: 25%;
+        font-weight: 700;
     }
     .logo
     {
@@ -142,4 +143,15 @@
 {
     font-size: 20px
 }
+
+.redirectHome
+{
+  position: absolute;
+  top: 93%;
+  font-size: 2em;
+  filter: drop-shadow(0 0 20px #0de165);
+  left: 5%;
+  color: #0de165;
+}
+
 }
