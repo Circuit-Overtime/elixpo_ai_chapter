@@ -1,0 +1,57 @@
+.sectionTopics {
+    background-color: #f5f5f5; /* Neutral background for contrast */
+    position: relative;
+    top: 0;
+    width: 100%;
+    padding: 5px; /* Compact padding around the container */
+    z-index: 1;
+}
+
+.sectionTopics ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow tabs to wrap to a new line */
+    justify-content: center;
+    gap: 5px; /* Minimal spacing between tabs */
+}
+
+.sectionTopics ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Ensure vertical alignment */
+    flex: 1 1 auto; /* Allow tabs to adjust their width dynamically */
+    max-width: 150px; /* Restrict the maximum width of each tab */
+}
+
+.sectionTopics ul li a {
+    color: #333; /* Darker text for readability */
+    text-decoration: none;
+    display: flex; /* Use flexbox for proper alignment */
+    justify-content: center;
+    align-items: center; /* Vertically align the text */
+    text-align: center;
+    padding: 8px 12px; /* Balanced padding for compactness */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    background-color: #ffffff; /* White background for tabs */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-size: 0.95em; /* Standard text size */
+    font-weight: 500; /* Slightly bold for emphasis */
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    width: 100%; /* Ensure tab fills the available space */
+}
+
+.sectionTopics ul li a:hover {
+    background-color: #007bff; /* Blue hover effect */
+    color: #fff; /* White text on hover for contrast */
+    transform: scale(1.03); /* Slightly enlarge on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.sectionTopics ul li a:active {
+    background-color: #0056b3; /* Darker blue for active state */
+    color: #fff;
+    transform: scale(0.97); /* Slightly shrink on active state */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on active */
+}

@@ -93,23 +93,53 @@
       }
       #OneImage
       {
-        transform: scale(0.75) translateY(-50%);
+        transform: scale(0.85) translateY(-50%);
         left: 4.5%;
       }
+      #OneImageOpacityFirst, #OneImageOpacitySecond {
+        transform: scale(0.45) translateY(-50%);
+      }
+    
+      @keyframes swapAnimationOne {
+        0%, 100% {
+          transform: translateY(-50%) scale(0.45);
+        }
+        25% {
+          transform: translateY(-50%) scale(0.75);
+        }
+        50% {
+          left: -0.5vw;
+          transform: translateY(-50%) scale(0.45);
+        }
+      }
+    
+      @keyframes swapAnimationTwo {
+        0%, 100% {
+          transform: translateY(-50%) scale(0.45);
+        }
+        25% {
+          transform: translateY(-50%) scale(0.75);
+        }
+        50% {
+          left: 4.3vw;
+          transform: translateY(-50%) scale(0.45);
+        }
+      }
+      
       .samplePrompt
       {
         max-height: 72px;
       }
       .samplePrompt .promptTextInput
       {
-        font-size: 0.7em;
+        font-size: 0.6em;
         left: 15%;
-        width: 250px;
+        width: 200px;
         max-height: 60px;
       }
       .samplePrompt.generating .promptTextInput
       {
-        font-size: 0.7em;
+        font-size: 0.5em;
       }
       .samplePrompt.generating
       {
@@ -119,9 +149,13 @@
       {
         display: none;
       }
+      .samplePrompt .stopGeneration 
+      {
+        left: 92%;
+      }
       .samplePrompt.generating .stopGeneration
       {
-        left: 95%;
+        left: 92%;
       }
       .searchBtn
       {

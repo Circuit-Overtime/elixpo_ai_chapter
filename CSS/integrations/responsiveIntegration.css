@@ -1,0 +1,158 @@
+@media screen and (max-width: 600px) {
+   *
+   {
+      -webkit-tap-highlight-color: transparent;
+   }
+.appName
+{
+   font-size: 16px;
+}
+ .aiArtCreateNavbar
+ {
+    scale: 0.7;
+    left: 40%;
+    top: 40%;
+    width: 60%;
+ }
+ .redirectHome 
+ {
+    left: 90%;
+ } 
+
+ 
+ .mainName .mainName_name
+ {
+    top: 30px;
+    font-size: 2.8em;
+ } 
+ .desc
+ {
+    top: 30%;
+    width: 100%;
+    text-align: center;
+ }
+ .visitIntegration
+ {
+    transform: scale(0.7) translateX(-50%);
+    left: 45%;
+ }
+ .blogVisit
+ {
+    top: 46%;
+    left: -5%;
+    transform: scale(0.8);
+ } 
+ .visitIntegration 
+ {
+   width: 60%;
+   font-size: 12px;
+ }
+ .feedVisit
+ {
+    top: 46%;
+    left: 50%;
+    width: 55%;
+    transform: scale(0.8);
+ }
+ 
+ .footerDesc
+ {
+    width: 100%;
+ }
+
+
+ .projectsContainer 
+ {
+   top: 25%;
+    max-height: 550px;
+    height: auto;
+    overflow-y:auto ;
+    overflow-x: hidden;
+    /* background: #000; */
+ }
+#projectTiles 
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.projectTile:nth-child(odd) >  .projectTile-content > .projectTile-image
+{
+  height: 140px;
+}
+#projectTiles::-webkit-scrollbar
+{
+    display: none;
+}
+.projectTile {
+    width: 90%; /* Adjust width for responsiveness */
+    max-width: 450px; /* Increased max width */
+    height: 350px; /* Increased height */
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden; 
+}
+.projectName {
+   width: 80%;
+   margin-top: 10px;
+   font-size: 0.8em;
+   height: auto; /* Adjust height dynamically */
+   line-height: normal; /* Ensure natural line height */
+   white-space: nowrap;
+   overflow-x: auto;
+   overflow-y: hidden;
+   -webkit-overflow-scrolling: touch;
+   display: inline-block;
+   vertical-align: middle;
+   padding: 5px 0; /* Adds space to prevent cropping */
+}
+
+/* Hide scrollbar */
+.projectName::-webkit-scrollbar {
+   display: none;
+}
+.projectName {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+}
+
+.projectTile:nth-child(odd) {
+   grid-row: span 2;
+   aspect-ratio: 1 / 1;
+   margin-bottom: 5px; /* Reduces the gap between 1:1 and 3:2 tiles */
+}
+
+/* Rectangle (4:2) tiles take 2 rows */
+.projectTile:nth-child(even) {
+   grid-row: span 1; /* Forces correct height span */
+   aspect-ratio: 4 / 2;
+   margin-bottom: 3px;
+   
+}
+
+.projectDesc
+{
+   margin-top: 8px;
+}
+.sampleImage_content_left img
+{
+   height: 150px;
+   width: 150px;
+}
+.sampleImage_content_right img
+{
+   height: 150px;
+   width: 150px;
+}
+
+.submitProject
+{
+   width: 50%;
+}
+}

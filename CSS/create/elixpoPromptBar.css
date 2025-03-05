@@ -8,7 +8,7 @@
 .searchButtonText {
     position: absolute;
     top: 50%;
-    left: 79%;
+    left: 76%;
     transform: translateY(-50%);
 }
 
@@ -206,8 +206,9 @@ button svg {
 
 .samplePrompt {
     position: absolute;
-    width: 80%;
-    left: 10%;
+    width: 70%;
+    left: 50%;
+    transform: translateX(-50%);
     top: 83%;
     height: 60px;
     padding-top: 15px;
@@ -216,14 +217,13 @@ button svg {
     max-height: 100px;
     overflow-y: auto;
     border: 1px solid #ccc;
-    border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
     overflow: hidden;
     outline: none;
-    border: 1px solid rgba(224, 60, 224, 0.533);
+    border: 1px solid rgba(0, 234, 113, 0.533);
     background: #131212;
-    border-radius: 15px;
+    border-radius: 25px;
     font-size: 24px;
     transition: 0.25s;
     z-index: 10;
@@ -255,7 +255,7 @@ button svg {
     opacity: 1;
     position: absolute;
     top: 50%;
-    left: 98%;
+    left: 97%;
     transform: translateX(-50%) translateY(-50%);
     color: #fff;
     font-size: 1.5em;
@@ -282,13 +282,13 @@ button svg {
 .samplePrompt .promptTextInput {
     position: absolute;
     height: 45px;
-    width: 850px;
+    width: 780px;
     top: 6%;
     left: 8%;
     font-size: 1em;
     border: none;
     outline: none;
-    color: #d87bfd;
+    color: #0beb7f;
     background: transparent;
     box-sizing: border-box;
     max-height: 88px;

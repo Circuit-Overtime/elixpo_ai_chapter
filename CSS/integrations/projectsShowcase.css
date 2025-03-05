@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Itim&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Parkinsans:wght@300..800&family=Salsa&family=Sixtyfour&family=VT323&display=swap');
+.projectsContainer {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-height: 500px; /* Defines how much space it can take */
+    overflow-y: auto; /* Enables vertical scrolling */
+    display: flex;
+    z-index: 100;
+    /* background: #03ff70; */
+    justify-content: center;
+    
+}
+
+.projectsContainer::-webkit-scrollbar {
+    display: none;
+}
+#projectTiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4 tiles per row */
+    gap: 5px; /* Ensures consistent spacing */
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    justify-content: center;
+    align-content: start; /* Prevents vertical gaps from collapsing */
+}
+
+  #projectTiles:hover > .projectTile::after {
+    opacity: 1;
+  }
+  
+  .projectTile {
+    background-color: rgba(255, 255, 255, 0.767);
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 400px;
+    max-width: 420px;
+    transition: all 0.3s ease;
+    aspect-ratio: 1 / 1;
+}
+
+
+/* Square (1:1) tiles */
+.projectTile:nth-child(odd) {
+    grid-row: span 2;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 5px; /* Reduces the gap between 1:1 and 3:2 tiles */
+}
+
+/* Rectangle (4:2) tiles take 2 rows */
+.projectTile:nth-child(even) {
+    grid-row: span 1; /* Forces correct height span */
+    aspect-ratio: 4 / 2;
+    margin-bottom: 3px;
+    
+}
+
+  
+  
+  .projectTile > .projectTile-content {
+    background-color: #111;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    inset: 1px;
+    padding: 10px;
+    position: absolute;
+    z-index: 2;
+  }
+
+  
+  h1, h2, h3, h4, span {
+    color: rgb(240, 240, 240);
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    margin: 0px;
+  }
+  
+  i {  
+    color: rgb(240, 240, 240);
+  }
+  
+  .projectTile:nth-child(odd) >  .projectTile-content > .projectTile-image
+  {
+    height: 200px;
+  }
+
+  .projectTile:nth-child(even) >  .projectTile-content > .projectTile-image
+  {
+    height: 140px;
+  }
+
+
+  .projectTile-image {
+    align-items: center;
+    display: flex;
+    height: 140px;
+    justify-content: center;
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    background-image: url(../CSS/IMAGES/normalBG.png);
+    background-size: cover;
+    border-radius: 25px;
+    box-shadow: inset 0 4px 16px rgba(0, 0, 0, 0.827);
+    z-index: -1;
+  }
+
+  
+  .projectTile-image > i {
+    font-size: 6em;
+    opacity: 0.25;
+  }
+  
+  .projectTile-info-wrapper {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    padding: 10px 20px;
+  }
+  
+  .projectTile-info {
+    align-items: flex-start;
+    display: flex;
+    gap: 5px;
+  }
+
+
+  .projectTile-info-title > h3 {
+   
+    font-size: 1.1em;
+    line-height: 10px;
+  }
+  
+  
+  .projectOwner
+  {
+    left: 10%;
+    position: absolute;
+    color:#015726;
+    font-size: 0.8em;
+    font-family: "Parkinsans", serif;
+    margin-top: 10px;
+    background: #03ff70;
+    border: 2px solid #015726;
+    border-radius: 8px;
+    padding: 5px 2px 2px 5px;
+    text-decoration: none;
+  }
+  .projectOwner > a 
+  {
+    text-decoration: none;
+    color: #04361a;
+    font-weight: 700;
+    padding-right: 5px;
+  }
+  .projectName
+  {
+
+    font-size: 1.2em;
+    margin-top: 25px;
+    font-family: "Sixtyfour", serif;
+
+  }
+  .projectName > a 
+  {
+    text-decoration: none;
+    color: rgb(5, 225, 111);
+    padding-right: 5px;
+    padding-bottom: 3px;
+    border-bottom: 1px dashed #ddd311;
+  }
+
+
+  .projectDesc
+  {
+    font-size: 1em;
+    margin-top: 12px;
+    font-family: "Salsa", serif;
+    opacity: 0.5;
+    max-height: 80px;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .projectDesc::-webkit-scrollbar
+  {
+    width: 5px;
+    background-color: rgba(222, 171, 6, 0.701);
+  }
+
+
+
+
+  .submitProject {
+    position: absolute;
+    top: 89%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding-block: 0.5rem;
+    padding-inline: 1.25rem;
+    background-color: rgb(0 107 179);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+    gap: 10px;
+    font-weight: bold;
+    border: 3px solid #ffffff4d;
+    outline: none;
+    overflow: hidden;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .submitProject:hover {
+    transform: scale(1.05) translateX(-50%);
+    border-color: #fff9;
+  }
+  
+  .submitProject:hover .icon {
+    transform: translate(4px);
+  }
+  
+  .submitProject:hover::before {
+    animation: shine 1.5s ease-out infinite;
+  }
+  
+  .submitProject::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0) 70%
+    );
+    top: 0;
+    left: -100px;
+    opacity: 0.6;
+  }
+  
+  @keyframes shine {
+    0% {
+      left: -100px;
+    }
+  
+    60% {
+      left: 100%;
+    }
+  
+    to {
+      left: 100%;
+    }
+  }
+  

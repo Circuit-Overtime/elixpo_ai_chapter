@@ -1,0 +1,22 @@
+.redirectBtn {
+    position: absolute;
+    width: fit-content;
+    display: flex;
+    padding: 1.2em 1rem;
+    cursor: pointer;
+    gap: 0.4rem;
+    font-weight: bold;
+    border-radius: 30px;
+    background-size: 300%;
+    background-position: left center;
+    box-shadow: 0 30px 10px -20px rgba(0, 0, 0, .2);
+    transition: background .3s ease;
+    font-family: "Sixtyfour", serif;
+    font-optical-sizing: auto;
+    cursor: pointer;
+}
+
+.redirectBtn:hover {
+    background-size: 320%;
+    background-position: right center;
+}

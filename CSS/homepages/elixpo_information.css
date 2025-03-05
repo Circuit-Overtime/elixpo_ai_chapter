@@ -1,0 +1,668 @@
+:root {
+  --card-color: rgb(25, 25, 25);
+}
+
+
+.patchNotes {
+    position: relative;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 140%;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .maskedTextPatchNotes {
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "salsa", sans-serif;
+    font-weight: 700;
+    font-size: 2em;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  
+  .maskedGradientPurple {
+    position: absolute;
+    top: -3%;
+    left: 0;
+    height: 20%;
+    width: 100%;
+    box-shadow: inset 3px -5px 10px #ffd215;
+    border-bottom-right-radius: 150px;
+    border-bottom-left-radius: 150px;
+    background: linear-gradient(180deg, #660182, rgba(0, 0, 0, 0.5));
+    display: flex;
+    justify-content: center;  /* This centers the child horizontally */
+    align-items: center;      /* This centers the child vertically */
+    overflow: hidden;
+}
+
+.asciiArtZone {
+    color: #e2bcf4;
+    top: 40%;
+
+    position: absolute;
+    font-size: 16px;
+    line-height: 1.2;
+    transform: scale(1) translateY(-50%); /* Adjust scale */
+    text-align: left;  /* Ensure text is centered within the element */
+    background: transparent;
+}
+
+.visitGithub 
+{
+  left: 10%;
+}
+
+.visitIntegration 
+{
+  left: 75%;
+}
+  
+  .footerElement {
+    position: absolute;
+    top: 90%;
+    height: 10%;
+    width: 100%;
+    left: 0;
+    border-top: 1px solid #fff;
+    /* justify-content: center; */
+  }
+  
+  .footerText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-family: "calibri", sans-serif;
+    font-weight: 100;
+    font-size: 1.3em;
+    letter-spacing: 2px;
+    color: #a19f9f;
+    display: flex;
+  }
+  
+  .faqSection {
+    position: absolute;
+    top: 30%;
+    height: 60%;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background: transparent;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  
+  .faqSection .faqHeading {
+    font-family: "Georgia", serif;
+    font-size: 2.8em;
+    color: #ff80c0;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .faqSection .faqDesc {
+    font-family: "Verdana", sans-serif;
+    font-size: 1.2em;
+    width: 90%;
+    color: #d1d1e9;
+    text-align: center;
+    margin: 0 auto 30px;
+  }
+  
+.extendContainer 
+{
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1000px;
+  padding: 1em 0em;
+  place-self: center;
+  position: relative;
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: calc(100% - 2em);
+  z-index: 2;
+}
+.extendContainer::-webkit-scrollbar
+{
+  display: none;
+}
+  .extendCard {
+    background-color: var(--card-color);
+    border-radius: 0.75em;
+    cursor: pointer;
+    height: 240px;
+    position: relative;
+  }
+  
+  .extendCard:hover:before {
+    opacity: 1;
+  }
+  
+  .extendCard:before {
+    background: linear-gradient(
+      45deg,
+      transparent 5%,
+      rgb(255, 215, 137) 50%,
+      transparent 99%
+    );
+    border-radius: inherit;
+    content: "";
+    inset: 0px;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 400ms;
+    z-index: 0;
+  }
+  
+  .extendCard-content {
+    background-color: var(--card-color);
+    border-radius: inherit;
+    display: grid;
+    inset: 1px;
+    padding: 1em;
+    position: absolute;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+ .extendCard-content::-webkit-scrollbar
+  {
+    display: none;
+  }
+.extendCard-title
+{
+   position: absolute;
+   color: #555;
+   font-size: 1.4em;
+   width: 100%;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: 700;
+   left: 50%;
+   transform: translateX(-50%);
+   text-align: center;
+   top: 75%;
+}  
+
+.extendCard:hover > .extendCard-content > .extendCard-icon {
+    opacity: 1;
+    transform: scale(1.1) translateY(-5%) translateX(-50%);
+    left: 50%;
+    transform-origin: center;
+  }
+  
+  .extendCard-icon {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 6em;
+    opacity: 0.4;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: center;
+    transition: transform 250ms, opacity 250ms;
+  }
+  
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #6a6ab0;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8a8acf;
+  }
+  .btn_patchNotes {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%) scale(1.3);
+    --duration: 7s;
+    --easing: linear;
+    --c-color-1: rgba(255, 163, 26, 0.7);
+    --c-color-2: #1a23ff;
+    --c-color-3: #e21bda;
+    --c-color-4: rgba(255, 232, 26, 0.7);
+    --c-shadow: rgba(255, 223, 87, 0.5);
+    --c-shadow-inset-top: rgba(255, 223, 52, 0.9);
+    --c-shadow-inset-bottom: rgba(255, 250, 215, 0.8);
+    --c-radial-inner: #ffd215;
+    --c-radial-outer: #fff172;
+    --c-color: #fff;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    display: table;
+    border-radius: 24px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    color: var(--c-color);
+    background: radial-gradient(circle,
+        var(--c-radial-inner),
+        var(--c-radial-outer) 80%);
+    box-shadow: 0 0 14px var(--c-shadow);
+  }
+  
+  .btn_patchNotes:before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    box-shadow:
+      inset 0 3px 12px var(--c-shadow-inset-top),
+      inset 0 -3px 4px var(--c-shadow-inset-bottom);
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper {
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    overflow: hidden;
+    border-radius: 24px;
+    min-width: 162px;
+    padding: 12px 0;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper span {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    font-family: "salsa", sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #190535;
+  }
+  
+  .btn_patchNotes:hover {
+    --duration: 2000ms;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    filter: blur(var(--blur, 8px));
+    background: var(--background, transparent);
+    transform: translate(var(--x, 0), var(--y, 0)) translateZ(0);
+    animation: var(--animation, none) var(--duration) var(--easing) infinite;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-1,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-9,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-10 {
+    --background: var(--c-color-4);
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-3,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-4 {
+    --background: var(--c-color-2);
+    --blur: 14px;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-5,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-6 {
+    --background: var(--c-color-3);
+    --blur: 16px;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-2,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-7,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-8,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-11,
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-12 {
+    --background: var(--c-color-1);
+    --blur: 12px;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-1 {
+    --x: 0;
+    --y: -40px;
+    --animation: circle-1;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-2 {
+    --x: 92px;
+    --y: 8px;
+    --animation: circle-2;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-3 {
+    --x: -12px;
+    --y: -12px;
+    --animation: circle-3;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-4 {
+    --x: 80px;
+    --y: -12px;
+    --animation: circle-4;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-5 {
+    --x: 12px;
+    --y: -4px;
+    --animation: circle-5;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-6 {
+    --x: 56px;
+    --y: 16px;
+    --animation: circle-6;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-7 {
+    --x: 8px;
+    --y: 28px;
+    --animation: circle-7;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-8 {
+    --x: 28px;
+    --y: -4px;
+    --animation: circle-8;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-9 {
+    --x: 20px;
+    --y: -12px;
+    --animation: circle-9;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-10 {
+    --x: 64px;
+    --y: 16px;
+    --animation: circle-10;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-11 {
+    --x: 4px;
+    --y: 4px;
+    --animation: circle-11;
+  }
+  
+  .btn_patchNotes .btn_patchNotes_wrapper .circle.circle-12 {
+    --blur: 14px;
+    --x: 52px;
+    --y: 4px;
+    --animation: circle-12;
+  }
+  
+  @keyframes circle-1 {
+    33% {
+      transform: translate(0px, 16px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(12px, 64px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-2 {
+    33% {
+      transform: translate(80px, -10px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(72px, -48px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-3 {
+    33% {
+      transform: translate(20px, 12px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(12px, 4px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-4 {
+    33% {
+      transform: translate(76px, -12px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(112px, -8px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-5 {
+    33% {
+      transform: translate(84px, 28px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(40px, -32px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-6 {
+    33% {
+      transform: translate(28px, -16px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(76px, -56px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-7 {
+    33% {
+      transform: translate(8px, 28px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(20px, -60px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-8 {
+    33% {
+      transform: translate(32px, -4px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(56px, -20px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-9 {
+    33% {
+      transform: translate(20px, -12px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(80px, -8px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-10 {
+    33% {
+      transform: translate(68px, 20px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(100px, 28px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-11 {
+    33% {
+      transform: translate(4px, 4px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(68px, 20px) translateZ(0);
+    }
+  }
+  
+  @keyframes circle-12 {
+    33% {
+      transform: translate(56px, 0px) translateZ(0);
+    }
+  
+    66% {
+      transform: translate(60px, -32px) translateZ(0);
+    }
+  }
+  
+  @media screen and (max-width: 798px) {
+    .faqSection .faqDesc {
+      font-family: "Verdana", sans-serif;
+      font-size: 1.2em;
+      width: 60%;
+      color: #d1d1e9;
+      text-align: center;
+      margin: 0 auto 30px;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .patchNotes
+    {
+      top: 22%;
+    }
+    .maskedTextPatchNotes {
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      font-size: 1em;
+      width: 20%;
+      text-align: center;
+    }
+    .faqSection 
+    {
+      height: 65%;
+    }
+    .faqSection .faqDesc {
+      font-family: "Verdana", sans-serif;
+      font-size: 1em;
+      width: 28%;
+      color: #d1d1e9;
+      text-align: center;
+      margin: 0 auto 30px;
+    }
+    .faqSection .faqHeading {
+      font-family: "Georgia", serif;
+      font-size: 1em;
+      color: #ff80c0;
+      text-align: center;
+      margin-bottom: 20px;
+  
+    }
+    .faqItem{
+      position: relative;
+      height:50%;
+      width: 25%;
+      margin-left: 31%;
+      left: 5%;
+    }
+    .faqItem > .faqQuestion 
+    {
+      font-size: 1em;
+      font-weight: bold;
+      color: #ff66a1;
+      font-family: "Georgia", serif;
+      margin-bottom: 8px;
+    }
+    .faqItem > .faqAnswer {
+      font-size: 0.8em;
+      color: #e5e5f7;
+    }
+    .footerElement 
+    {
+      position: absolute;
+      top: 93%;
+      height: 5%;
+      width: 100%;
+      left: 0;
+      border-top: 1px solid #fff;
+    }
+    .footerText {
+      position: absolute;
+      margin-top: 0%;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      font-family: "calibri", sans-serif;
+      font-weight: 100;
+      font-size: 0.7em;
+      width: 20%;
+      text-align: center;
+      flex-wrap: wrap;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+    }
+  }
+
+  @media(max-width: 1100px) {
+    .extendContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media(max-width: 600px) {
+    .extendContainer {
+      grid-template-columns: 1fr;
+      max-width: 800px;
+      max-height: 450px;
+      width: calc(20% - 1em);
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .maskedGradientPurple 
+    {
+      width: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .visitGithub 
+    {
+      left: 30%;
+      display: none;
+      width: 20%;
+      transform: scale(0.8);
+    }
+    .visitGithub > .visitCreateArtIcon,
+    .visitIntegration > .visitCreateArtIcon
+    {
+      display: none; 
+    }
+    .visitIntegration 
+    {
+      left: 60%;
+      display: none;
+      width: 20%;
+      transform: scale(0.8);
+    }
+  
+  }
