@@ -147,7 +147,7 @@ https://colab.research.google.com/drive/1jfJKeganPiY2i2T-vR_TlPQuMKEq8SC_?usp=sh
 ```bash
 https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-gen/data?select=prompts_collection.csv
 ```
-- A custom made prompt pimper using `Elixpo/PromptEnhance` model of hugging-face
+- A custom made prompt pimper using `Elixpo/promptPimp` model of hugging-face
 ```bash
 https://www.kaggle.com/code/overtimecraftsclips/fine-tuning-of-elixpo-promptpimp
 ```
