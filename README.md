@@ -149,7 +149,7 @@ https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-
 ```
 - A custom made prompt pimper using `gokaygokay/Flux-Prompt-Enhance` model of hugging-face
 ```bash
-https://www.kaggle.com/code/circuitovertime/flux-prompt-enhancement
+https://www.kaggle.com/code/overtimecraftsclips/fine-tuning-of-elixpo-promptpimp
 ```
 
 - Added the kaggle research begind the backend of a low level model for prompt classification
