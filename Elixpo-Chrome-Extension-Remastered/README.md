@@ -75,6 +75,10 @@ Elixpo Art is a Chrome extension that converts selected text into your imaginary
 *   **Security:** Review the application for potential security vulnerabilities, especially related to user input and interaction with external APIs.
 *   **`type()` Function:**  The snippet lacks a `type()` function definition.  It's presumed to be a function that handles dynamic text display on the UI.  Implement this function appropriately.
 
+## Checkout Kaggle and Huggingface Development
+- [Kaggle for Prompt Enhancement](https://www.kaggle.com/code/overtimecraftsclips/fine-tuning-of-elixpo-promptpimp)
+- [Hugging Face Model](https://huggingface.co/Elixpo/promptPimp)
+
 ## Deployment
 
 This application can be deployed on a web server or a cloud platform like Netlify or Vercel. Ensure that the necessary dependencies are installed and the application is configured correctly.
