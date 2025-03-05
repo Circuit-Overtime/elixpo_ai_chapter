@@ -78,3 +78,8 @@ Elixpo Art is a Chrome extension that converts selected text into your imaginary
 ## Deployment
 
 This application can be deployed on a web server or a cloud platform like Netlify or Vercel. Ensure that the necessary dependencies are installed and the application is configured correctly.
+
+## Contribution 
+
+You are free to make changes for your  purpose, forking the repo and enjoy generating images!
+
