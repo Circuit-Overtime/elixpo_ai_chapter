@@ -16,14 +16,18 @@ document.addEventListener("mouseup", function (event) {
     }
     let selection = window.getSelection();
     selectedText = selection.toString().trim();
-    if (selection.toString().trim() == "") {
-        if (document.querySelector(".shine-button")) {
-            document.querySelector(".shine-button").remove();
-            shineButton = null; 
+    setTimeout(() => {
+        // console.log(selection.toString().trim())
+        if (selection.toString().trim() == "") {
+            if (document.querySelector(".shine-button")) {
+                document.querySelector(".shine-button").remove();
+                shineButton = null; 
+            }
+            selectionLock = false;
+            return;
         }
-        selectionLock = false;
-        return;
-    }
+    }, 200);
+    
 
        
        if (selectionLock) {
@@ -53,18 +57,20 @@ document.addEventListener("mouseup", function (event) {
             height: "40px", 
             width: "45px",  
             zIndex: "10001", 
-            background: "transparent",
+            background: "linear-gradient(135deg, #2a0038, #4b0082)", // Deep purple gradient
             border: "none",
             cursor: "pointer",
             borderRadius: "15px",
-            opacity: "0.7",
-            transition: "opacity 0.2s ease-in-out",
+            opacity: "1",
+            transition: "opacity 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
             display: "flex",       
-            justifyContent: "center",  
+            justifyContent: "center", 
+            transform: "scale(0.8)", 
             alignItems: "center",     
-            background: "linear-gradient(135deg, rgba(0, 0, 0, 0.87), rgba(34, 34, 34, 0.9))", 
-            border: "2px solid rgb(255, 208, 0)"
+            boxShadow: "inset 4px 4px 6px rgba(0, 0, 0, 0.8), inset -4px -4px 6px rgba(144, 0, 255, 0.3)", // Purple glow inset
         });
+        
+        
 
         Object.assign(shineImage.style, {
             width: "24px", 
@@ -74,8 +80,8 @@ document.addEventListener("mouseup", function (event) {
 
         
         let rect = range.getBoundingClientRect(); //Get bounding rectangle
-        shineButton.style.left = `${rect.left + (rect.width / 2) - 15 + window.scrollX}px`; // Center horizontally above selection
-        shineButton.style.top = `${rect.top + window.scrollY - 35}px`; // Adjust vertical position
+        shineButton.style.left = `${rect.left + window.scrollX - shineButton.offsetWidth - 10}px`; // Position just to the left of the selection
+        shineButton.style.top = `${rect.top + window.scrollY - 45}px`; // Adjust vertical position
 
        
         shineButton.addEventListener("click", function () {
@@ -127,7 +133,8 @@ document.addEventListener("mouseup", function (event) {
             textBox.placeholder = "Any Custom Instructions?";
             textBox.classList.add("promptInstruction");
             textBox.setAttribute("id", "promptInstruction");
-
+            textBox.setAttribute("autocomplete", "off");
+            textBox.setAttribute("spellcheck", "false");
 
             let generateButton = document.createElement("button");
             generateButton.classList.add("generate-button");

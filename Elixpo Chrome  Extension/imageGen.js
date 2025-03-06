@@ -1,6 +1,6 @@
 function generateImage() {
-    console.log("generate button has been clicked");
-    console.log(selectedText);
+    // console.log("generate button has been clicked");
+    // console.log(selectedText);
     document.getElementById("loader").style.opacity = "1";
     pimpPrompt(selectedText);
     document.getElementById("generateImage").style.opacity = "0";
@@ -12,7 +12,7 @@ async function pimpPrompt(text)
     let height = 1024;
     let width = 1024;
     let seed = Math.floor(Math.random() * 1000000);
-    type("Trying to imagine something better.... umm what can I do?");
+    type("Trying to imagine something better.... what can I do?");
     var inst = "You are a prompt stylist specialized in enhancing user-provided inputs for AI-generated art. Your task is to refine and enrich the input text, making it more vivid, detailed, and optimized for an AI art generator. Ensure the output is a single, well-structured sentence without markdown formatting."
                 const url = `https://txtelixpo.vercel.app/t/ ${inst} ${encodeURIComponent(text)} in 20 words`;
                 try {
@@ -21,9 +21,9 @@ async function pimpPrompt(text)
                     let pimpText = await response.text();
                     const unwanted = `\n\n`;
                     pimpText = pimpText.replace(unwanted, "").trim();
-                    console.log(pimpText);
+                    // console.log(pimpText);
                     type(pimpText);
-                    console.log("selected aspect ratio = ", selectedAspectRatio);
+                    // console.log("selected aspect ratio = ", selectedAspectRatio);
                     if(selectedAspectRatio == "1:1")
                     {
                         height = 1024;
@@ -49,7 +49,7 @@ async function pimpPrompt(text)
             } 
             catch(e)
             {
-                console.log("Error occured", e);
+                // console.log("Error occured", e);
                 type("Well, Falling back to the original sequel of text!");
                 let height = 1024;
                 let width = 1024;
@@ -99,9 +99,9 @@ async function createImage(prompt, h, w, s)
         document.getElementById("loader").style.opacity = "0";
         document.getElementById("downloadBtn").style.opacity = "1";
         document.getElementById("downloadBtn").style.pointerEvents = "all";
-        type("Well, here's the image you had requesteed for! You can download it now from the green button, thanks for choosing Elixpo.");
+        type("Well, here's the image you had requesteed for! You can download it now from the green button, Thank you for choosing Elixpo.");
     } catch (error) {
-        console.error(`Error fetching image`, error);
+        // console.error(`Error fetching image`, error);
         type("There was an error generating the picture, please try once again, selecting the same text")
         setTimeout(() => {
             node.remove();
@@ -130,5 +130,5 @@ function downloadImage()
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         })
-        .catch(error => console.error("Error downloading the image", error));
+        // .catch(error => console.error("Error downloading the image", error));
 }
