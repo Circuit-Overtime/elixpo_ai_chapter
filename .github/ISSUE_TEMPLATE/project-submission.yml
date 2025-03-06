@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-       Thanks for integrating witb Elixpo-Art and for sharing with us! We will be more than happy to feature your projects!
+       Thanks for integrating with Elixpo-Art and for sharing with us! We will be more than happy to feature your projects!
         
   - type: input
     id: project-name
@@ -30,24 +30,26 @@ body:
     id: project-url
     attributes:
       label: Project URL
-      description: Link to your project (if public)
+      description: Link to your project where users can visit (if public). 
       placeholder: "Example --> https://xyz.vercel.app"
 
   - type: input
     id: discord-username
     attributes:
-      label: Discord Username or Social Profile Link
-      description: Provide your Discord username or a link to another social profile online
-      placeholder: "e.g., @username or https://profile.example.com"
+      label: Your Username (or developer name)
+      description: Provide your name, that would be attested with your project.
+      placeholder: "e.g., Ayushman, Thomas etc.."
     validations:
       required: true
 
   - type: input
     id: github-repo
     attributes:
-      label: GitHub Repository URL
-      description: (Optional) Provide a link to your project's GitHub repository
+      label: GitHub URL/Repository
+      description: Provide a link to your GitHub or the Repository URL.
       placeholder: "https://github.com/your-repo"
+    validations:
+      required: true
 
   - type: textarea
     id: additional-info

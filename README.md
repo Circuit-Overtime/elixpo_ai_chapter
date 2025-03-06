@@ -1,4 +1,4 @@
-# [Elixpo-art](https://circuit-overtime.github.io/Elixpo_ai_pollinations/)
+# [Elixpo-art](https://elixpoart.vercel.app)
 
 ![image](https://github.com/user-attachments/assets/26dd6299-29c1-4149-889d-d590f34312e0)
 
@@ -124,11 +124,11 @@ This project is currently funded through a combination of personal investments a
 
 ## Gallery
 
-You can explore the generated artwork in our [Gallery](https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html). 
+You can explore the generated artwork in our [Gallery](https://elixpoart.vercel.app/src/gallery). 
 
 We can include a query parameter `id` to help share specific images by their image ID. For example, you can access an image directly using the following link:
 
-[https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html?id=9pde71i621](https://circuit-overtime.github.io/Elixpo_ai_pollinations/gallery.html?id=9pde71i621)
+[https://elixpoart.vercel.app/src/gallery?id=9pde71i621](https://elixpoart.vercel.app/src/gallery?id=9pde71i621)
 
 ### Kaggle and Data Science Builds
 
@@ -147,9 +147,9 @@ https://colab.research.google.com/drive/1jfJKeganPiY2i2T-vR_TlPQuMKEq8SC_?usp=sh
 ```bash
 https://www.kaggle.com/datasets/circuitovertime/prompt-and-gibberish-for-ai-art-gen/data?select=prompts_collection.csv
 ```
-- A custom made prompt pimper using `gokaygokay/Flux-Prompt-Enhance` model of hugging-face
+- A custom made prompt pimper using `Elixpo/promptPimp` model of hugging-face
 ```bash
-https://www.kaggle.com/code/circuitovertime/flux-prompt-enhancement
+https://www.kaggle.com/code/overtimecraftsclips/fine-tuning-of-elixpo-promptpimp
 ```
 
 - Added the kaggle research begind the backend of a low level model for prompt classification
@@ -171,7 +171,7 @@ https://discord.com/oauth2/authorize?client_id=1214916249222643752
 ### Blogs Release 
 - Released a detailed analysis blog for Elixpo_Art Service
 ```bash
-  https://circuit-overtime.github.io/Elixpo_ai_pollinations/src/blogs/elixpo_art/
+  https://elixpoart.vercel.app/src/blogs/elixpo_art
 ```
 ### Minecraft Bots
 

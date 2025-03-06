@@ -1,67 +1,51 @@
-name: Update Projects JSON
+name: Process Issue
 on:
   issues:
     types: [closed]
 
 jobs:
-  update_json:
+  process-issue:
     runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'submission') # Check for 'submission' label
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Extract issue data
-        id: extract
+      - name: Checkout or create projects branch
         run: |
-          # Get raw issue body and replace newlines with \n for safe parsing
-          ISSUE_BODY=$(echo '${{ github.event.issue.body }}' | sed ':a;N;$!ba;s/\n/\\n/g')
+          git fetch origin projects || true # Fetch the branch first
+          git checkout projects || git checkout -b projects
 
-          # Extract individual fields using grep + sed (more reliable than jq for plain text)
-          PROJECT_NAME=$(echo "$ISSUE_BODY" | grep -A1 'Project Name' | tail -n1 | sed 's/^ *//')
-          PROJECT_DESCRIPTION=$(echo "$ISSUE_BODY" | grep -A1 'Project Description' | tail -n1 | sed 's/^ *//')
-          PROJECT_URL=$(echo "$ISSUE_BODY" | grep -A1 'Project URL' | tail -n1 | sed 's/^ *//')
-          DISCORD_USERNAME=$(echo "$ISSUE_BODY" | grep -A1 'Discord Username' | tail -n1 | sed 's/^ *//')
-          GITHUB_REPO=$(echo "$ISSUE_BODY" | grep -A1 'GitHub Repository URL' | tail -n1 | sed 's/^ *//')
-          ADDITIONAL_INFO=$(echo "$ISSUE_BODY" | grep -A1 'Additional Information' | tail -n1 | sed 's/^ *//')
-          CONTACT_INFO=$(echo "$ISSUE_BODY" | grep -A1 'Contact Information' | tail -n1 | sed 's/^ *//')
-
-          # Export variables for later steps
-          echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
-          echo "PROJECT_DESCRIPTION=$PROJECT_DESCRIPTION" >> $GITHUB_ENV
-          echo "PROJECT_URL=$PROJECT_URL" >> $GITHUB_ENV
-          echo "DISCORD_USERNAME=$DISCORD_USERNAME" >> $GITHUB_ENV
-          echo "GITHUB_REPO=$GITHUB_REPO" >> $GITHUB_ENV
-          echo "ADDITIONAL_INFO=$ADDITIONAL_INFO" >> $GITHUB_ENV
-          echo "CONTACT_INFO=$CONTACT_INFO" >> $GITHUB_ENV
-
-      - name: Update projects.json
+      - name: Check if issue follows Project Submission template
         run: |
-          # Ensure projects.json exists
-          if [ ! -f projects.json ]; then
-            echo "[]" > projects.json
+          BODY="${{ github.event.issue.body }}"
+
+          if ! echo "$BODY" | grep -q "Project Name"; then
+            echo "Issue does not match the Project Submission template. Skipping."
+            exit 1
           fi
 
-          # Append extracted data to JSON
-          jq '. + [{
-            "project_name": "${{ env.PROJECT_NAME }}",
-            "description": "${{ env.PROJECT_DESCRIPTION }}",
-            "url": "${{ env.PROJECT_URL }}",
-            "discord_username": "${{ env.DISCORD_USERNAME }}",
-            "github_repo": "${{ env.GITHUB_REPO }}",
-            "additional_info": "${{ env.ADDITIONAL_INFO }}",
-            "contact_info": "${{ env.CONTACT_INFO }}"
-          }]' projects.json > temp.json && mv temp.json projects.json
-
-      - name: Commit changes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      - name: Append issue body to projects.json
         run: |
-          git config --global user.name 'github-actions'
+          BODY=$(echo "${{ github.event.issue.body }}" | jq -sR .)
+          JSON_OBJECT="{\"content\": $BODY}"
+
+          if [[ -f projects.json ]]; then
+              if [[ $(jq '. | length' projects.json) -gt 0 ]]; then
+                 jq ". += [$JSON_OBJECT]" projects.json > projects.json.tmp && mv projects.json.tmp projects.json
+              else
+                 echo "[$JSON_OBJECT]" > projects.json
+              fi
+          else
+              echo "[$JSON_OBJECT]" > projects.json
+          fi
+
+          echo "" >> projects.json # Always add a newline
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
           git add projects.json
-          git commit -m "Update projects.json with new project submission" || echo "No changes to commit"
-
-          # Authenticate using PAT_TOKEN (without x-access-token)
-          git remote set-url origin https://github.com/${{ github.repository }}.git
-          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
-
+          git commit -m "Update projects.json with issue body"
+          git push origin projects --force
