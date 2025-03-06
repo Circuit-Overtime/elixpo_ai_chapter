@@ -1,5 +1,3 @@
-
-
 # Elixpo Art: Select Text and Transform to Picture
 
 Elixpo Art is a Chrome extension that converts selected text into your imaginary picture. Powered by Elixpo, this tool helps you turn words into visual art seamlessly.
@@ -86,4 +84,3 @@ This application can be deployed on a web server or a cloud platform like Netlif
 ## Contribution 
 
 You are free to make changes for your  purpose, forking the repo and enjoy generating images!
-
