@@ -1,6 +1,6 @@
 **Privacy Policy for Elixpo Art: Select Text and Transform to Picture**  
 
-**Effective Date:** [Insert 11-03-2025]  
+**Effective Date:** [11-03-2025]  
 
 Elixpo Art: Select Text and Transform to Picture ("the Extension") is an open-source project licensed under the MIT License. We respect your privacy and are committed to being transparent about how the Extension operates.  
 
