@@ -184,11 +184,13 @@
     font-size: 1em;
     margin-top: 12px;
     font-family: "Salsa", serif;
-    opacity: 0.5;
+    opacity: 1;
     max-height: 80px;
     overflow: hidden;
+    color: #fff;
     overflow-y: auto;
   }
+
   .projectDesc::-webkit-scrollbar
   {
     width: 5px;

@@ -6,17 +6,13 @@ from flask import Flask, request, jsonify
 from PIL import Image
 from io import BytesIO
 from upscaler import upscale_image
-from werkzeug.utils import secure_filename
 
+# Flask App Setup
 app = Flask(__name__)
 
 # Configurations
-app.config["UPLOAD_FOLDER"] = "uploads"
-app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5MB limit
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5MB file size limit but pollinations may change it 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
-
-# Ensure upload folder exists
-os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 def allowed_file(filename):
     """Check if the uploaded file is allowed."""
@@ -24,41 +20,35 @@ def allowed_file(filename):
 
 @app.route("/upscale", methods=["POST"])
 def upscale():
-    """Handles image upscaling."""
     start_time = time.time()
-    
-    # Check if image is provided via URL
-    image_url = request.json.get("image_url") if request.json else None
+
+    # Check for an image URL or a direct file upload
+    image_url = request.form.get("image_url")
     file = request.files.get("image")
 
     if not image_url and not file:
-        return jsonify({"error": "No image provided. Use 'image_url' or 'image' field."}), 400
+        return jsonify({"error": "No image provided. Use 'image_url' or 'image'."}), 400
 
     try:
-        # Load image from URL
         if image_url:
             response = requests.get(image_url, stream=True, timeout=5)
             if response.status_code != 200:
-                return jsonify({"error": "Failed to fetch image from URL"}), 400
+                return jsonify({"error": "Failed to fetch image from URL."}), 400
             img = Image.open(BytesIO(response.content)).convert("RGB")
 
-        # Load image from uploaded file
         elif file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            file.save(file_path)
-            img = Image.open(file_path).convert("RGB")
+            img = Image.open(BytesIO(file.read())).convert("RGB")  
 
         else:
-            return jsonify({"error": "Invalid file format"}), 400
+            return jsonify({"error": "Invalid file format."}), 400
 
         # Run upscaling
         upscaled_image_path = upscale_image(img)
-        
+
         elapsed_time = round(time.time() - start_time, 2)
         return jsonify({
             "message": "Upscaling complete!",
-            "upscaled_image_url": f"https://your-cdn.com/{upscaled_image_path}",
+            "upscaled_image_url": f"https://cloudflare-hosted-pollinations-server/{upscaled_image_path}",
             "processing_time": f"{elapsed_time} sec"
         })
 

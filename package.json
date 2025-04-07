@@ -4,6 +4,7 @@
     "axios": "^1.8.2",
     "buffer": "^6.0.3",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
     "firebase-admin": "^12.3.0",
@@ -13,8 +14,7 @@
     "marked": "^14.1.1",
     "node-fetch": "^2.7.0",
     "request-promise": "^4.2.6",
-    "simple-git": "^3.25.0",
-    "csv-writer": "^1.6.0"  
+    "simple-git": "^3.25.0"
   },
   "type": "module"
 }

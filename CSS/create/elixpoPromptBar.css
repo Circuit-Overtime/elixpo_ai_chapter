@@ -5,11 +5,441 @@
     --active: 0;
 }
 
-.searchButtonText {
+
+.samplePrompt {
+    position: absolute;
+    width: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 75%; /* Base position */
+    height: 150px;
+    padding-top: 15px;
+    padding-left: 60px;
+    resize: none;
+    max-height: 180px; /* Adjust max height */
+    overflow-y: auto;
+    border: 1px solid rgba(114, 119, 116, 0.533);
+    font-size: 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    outline: none;
+    background: #131212;
+    border-radius: 25px;
+    font-size: 24px;
+    transition: 0.25s;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.samplePrompt.image 
+{
+    height: 180px;
+    padding-top: 15px;
+    padding-left: 60px;
+    resize: none;
+    top: 73%;
+    max-height: 180px; /* Adjust max height */
+    overflow-y: auto;
+    border: 1px solid rgba(114, 119, 116, 0.533);
+    font-size: 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    outline: none;
+    background: #131212;
+    border-radius: 25px;
+    font-size: 24px;
+    transition: 0.25s;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.samplePrompt.image .promptTextInput
+{
+    width: 80%;
+    left: 10%;
+}
+
+.samplePrompt.image .imageHolder
+{
+    opacity: 1;
+    pointer-events: all;
+    transition: 0.5s;
+}
+.imageHolder
+{
+    position: absolute;
+    height: 70px;
+    width: 70px;
+    border-radius: 15px;
+    top: 5%;
+    left: 1%;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.imageHolder > #cancelImageMode
+{
+    position: absolute;
+    top: -5%;
+    left: 75%;
+    color: #fff;
+    cursor: pointer;
+}
+.samplePrompt.image .controls #inputImage
+{
+    display: none;
+}
+
+.samplePrompt .promptTextInput {
+    position: absolute;
+    min-height: 45px;
+    max-height: 110px; /* Adjust max */
+    width: 93%;
+    top: 3%;
+    left: 3%;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    color: #0beb7f;
+    background: transparent;
+    box-sizing: border-box;
+    resize: none;
+    padding-top: 10px;
+    overflow-y: auto;
+    line-height: 1.2em;
+}
+
+
+
+.samplePrompt .promptTextInput::-webkit-scrollbar {
+    display: none;
+}
+
+.samplePrompt.generating {
+    top: 74%;
+    pointer-events: none;
+    height: 60px;
+    border: 1px solid rgba(238, 204, 11, 0.533);
+}
+
+.samplePrompt.generated {
+    top: 74%;
+    pointer-events: none;
+    color: #f6a6fe;
+    height: 140px;
+    border: 1px solid rgba(145, 69, 252, 0.533);
+}
+.stopGeneration.hidden
+{
+    display: none;
+}
+.samplePrompt.generated ~ .enhancingMessage
+{
+    display: none;
+}
+
+
+.samplePrompt.generating > .controls
+{
+    display: none;
+}
+.samplePrompt.generating > .searchButtonText
+{
+    display: none;
+}
+
+.samplePrompt.generated 
+{
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+
+@keyframes swapAnimationTwo {
+  0%, 100% {
+    transform: translateY(-50%) scale(0.8);
+  }
+  25% 
+  {
+    transform: translateY(-50%) scale(0.9);
+  }
+  50% {
+    left: 4.6%;
+    transform: translateY(-50%) scale(0.8);
+  }
+}
+
+@keyframes swapAnimationOne {
+  0%, 100% {
+    transform: translateY(-50%) scale(0.8);
+  }
+  25% 
+  {
+    transform: translateY(-50%) scale(0.9);
+  }
+  50% {
+    left: 1.3%;
+    transform: translateY(-50%) scale(0.8);
+  }
+}
+
+
+
+
+
+/* .samplePrompt.generating > #OneImage,
+.samplePrompt.generating > #OneImageOpacityFirst,
+.samplePrompt.generating > #OneImageOpacitySecond
+{
+    display: none;
+} */
+.samplePrompt.generating > .stopGeneration {
+    display: block;
+    opacity: 1;
     position: absolute;
     top: 50%;
-    left: 76%;
-    transform: translateY(-50%);
+    left: 97%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+
+
+.samplePrompt.generating .stopGeneration {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.samplePrompt .controls {
+    position: absolute;
+    bottom: -10%;
+    left: 3%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+#OneImage {
+    position: relative;
+    font-size: 1.5em;
+    color: #bbbbbb; /* lighter gray for dark backgrounds */
+    cursor: pointer;
+    display: block;
+    filter: drop-shadow(0 0 10px #66ccff); /* blue glow for dark theme */
+    top: 2%;
+    left: 0%;
+    margin-right: 20px;
+    z-index: 16; /* Above controls */
+    animation: pulseTwice 15s infinite;
+    animation-duration: 8s;
+  }
+  
+  /* Smooth pulse animation with two pulses per cycle */
+  @keyframes pulseTwice {
+    /* Rest state */
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    /* Preparing for first pulse */
+    10% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    20% {
+      transform: scale(1.1);
+      opacity: 0.95;
+    }
+    30% {
+      transform: scale(1.2);
+      opacity: 0.9;
+    }
+    /* First pulse peak */
+    37.5% {
+      transform: scale(1.3);
+      opacity: 0.8;
+    }
+    /* Recovering from first pulse */
+    45% {
+      transform: scale(1.15);
+      opacity: 0.9;
+    }
+    55% {
+      transform: scale(1.05);
+      opacity: 0.85;
+    }
+    /* Second pulse peak */
+    62.5% {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+    /* Recovering from second pulse */
+    70% {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+    80% {
+      transform: scale(1.05);
+      opacity: 0.95;
+    }
+    /* Back to rest */
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+
+@keyframes clickEffect {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.6); }
+    100% { transform: scale(1); }
+  }
+  .click-effect {
+    animation: clickEffect 0.2s;
+  }
+  
+
+/* First opacity dice icon */
+#OneImageOpacityFirst {
+    left: 8%; /* Adjusted left so it doesn’t overlap */
+    transform: translateY(50%) scale(0.8) rotate(25deg);
+    z-index: 15;
+    opacity: 0.3;
+    filter: brightness(0.6);
+    animation: swapAnimationOne 1.5s ease-in-out infinite;
+}
+
+/* Second opacity dice icon */
+#OneImageOpacitySecond {
+    left: 0%; /* Adjusted left */
+    transform: translateY(50%) scale(0.8) rotate(-25deg);
+    z-index: 15;
+    opacity: 0.3;
+    filter: brightness(0.6);
+    animation: swapAnimationTwo 1.5s ease-in-out infinite;
+}
+
+/* Buttons styling */
+#privateBtn,
+#pimpPrompt,
+#promptIdea,
+#journalMode,
+#inputImage {
+    position: relative;
+    margin: 0;
+    max-height: 60px;
+    max-width: 120px;
+    color: #bec9c3;
+    cursor: pointer;
+    font-size: 0.8em;
+    z-index: 17;
+    background: transparent;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 2px solid #525252;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: fit-content;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+
+#privateBtn.selected,
+#pimpPrompt.selected,
+#promptIdea.selected,
+#journalMode.selected,
+#inputImage.selected
+
+{
+    background: #3e3c3c;
+    color: #028a5a;
+    border: 2px solid #028a5a;
+}
+#journalMode 
+{
+    background: linear-gradient(145deg, #06544d, #9B487D, #7fff00, #355604);
+    background-size: 400% 400%;
+    animation: aurora 15s ease infinite;
+}
+@keyframes aurora {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+#journalMode:hover
+{
+    background: transparent;
+    color: #bee4d7;
+}
+#journalMode:hover span
+{
+    color: #bee4d7;
+}
+#privateBtn span,
+#pimpPrompt span,
+#promptIdea span,
+#journalMode span,
+#inputImage span {
+    margin-left: 10px;
+    text-transform: capitalize;
+    font-weight: 200;
+    font-family: 'Calibri', sans-serif;
+    color: #bee4d7;
+}
+#journalMode,
+#journalMode span {
+    color: #1f1d1d;
+    font-weight: 700;
+}
+
+.samplePrompt.generating #imageHolder
+{
+    display: none;
+}
+
+.samplePrompt.image .searchButtonText
+{
+    left: 60%;
+}
+
+.searchButtonText {
+    position: relative;
+    left: 45%;
+    top: 0%;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.searchButtonText.disabled 
+{
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .searchBtn {
@@ -29,10 +459,9 @@
     font-weight: 500;
     border: 0;
     cursor: pointer;
-    padding: 0.9em 1.3em;
+    padding: 0.9em 2em;
     display: flex;
     align-items: center;
-    gap: 0.25em;
     white-space: nowrap;
     border-radius: 25px;
     transition: box-shadow var(--transition), scale var(--transition), background var(--transition);
@@ -40,6 +469,11 @@
 	transform: scale(0.5);
 }
 
+.searchBtn ion-icon
+{
+    color: #fff;
+    font-size: 1.5em;
+}
 .searchBtn:active {
     scale: 1;
 }
@@ -48,43 +482,7 @@
     animation-name: bounce;
 }
 
-.sparkle path {
-	color: hsl(0 0% calc((var(--active, 0) * 70%) + var(--base)));
-	transform-box: fill-box;
-	transform-origin: center;
-	fill: currentColor;
-	stroke: currentColor;
-	animation-delay: calc((var(--transition) * 1.5) + (var(--delay) * 1s));
-	animation-duration: 0.6s;
-	transition: color var(--transition);
-}
 
-.searchBtn:is(:hover, :focus-visible) path {
-	animation-name: bounce;
-}
-
-@keyframes bounce {
-	35%, 65% {
-		scale: var(--scale);
-	}
-}
-.sparkle path:nth-of-type(1) {
-	--scale: 0.5;
-	--delay: 0.1;
-	--base: 40%;
-}
-
-.sparkle path:nth-of-type(2) {
-	--scale: 1.5;
-	--delay: 0.2;
-	--base: 20%;
-}
-
-.sparkle path:nth-of-type(3) {
-	--scale: 2.5;
-	--delay: 0.35;
-	--base: 30%;
-}
 
 .spark {
     position: absolute;
@@ -174,177 +572,4 @@
 button:is(:hover, :focus-visible) {
     --active: 1;
     --play-state: running;
-}
-
-
-.particle-pen {
-    position: absolute;
-    width: 200%;
-    aspect-ratio: 1;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    -webkit-mask: radial-gradient(white, transparent 65%);
-    z-index: -1;
-    opacity: var(--active, 0);
-    transition: opacity var(--transition);
-}
-
-.text {
-    translate: 2% -6%;
-    letter-spacing: 0.01ch;
-    background: #fff;
-    -webkit-background-clip: text;
-    color: transparent;
-    transition: background var(--transition);
-}
-
-button svg {
-    inline-size: 1.25em;
-    translate: -25% -5%;
-}
-
-.samplePrompt {
-    position: absolute;
-    width: 70%;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 83%;
-    height: 60px;
-    padding-top: 15px;
-    padding-left: 60px;
-    resize: none;
-    max-height: 100px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    box-sizing: border-box;
-    overflow: hidden;
-    outline: none;
-    border: 1px solid rgba(0, 234, 113, 0.533);
-    background: #131212;
-    border-radius: 25px;
-    font-size: 24px;
-    transition: 0.25s;
-    z-index: 10;
-}
-
-.samplePrompt.generating {
-    top: 74%;
-    pointer-events: none;
-    height: 60px;
-    border: 1px solid rgba(238, 204, 11, 0.533);
-}
-
-.samplePrompt.generated {
-    top: 83%;
-    pointer-events: none;
-    color: #f6a6fe;
-    height: 60px;
-    border: 1px solid rgba(145, 69, 252, 0.533);
-}
-
-.samplePrompt.generating .promptTextInput {
-    font-size: 0.8em;
-    height: 45px;
-    pointer-events: none;
-}
-
-.samplePrompt .stopGeneration {
-    display: block;
-    opacity: 1;
-    position: absolute;
-    top: 50%;
-    left: 97%;
-    transform: translateX(-50%) translateY(-50%);
-    color: #fff;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
-.samplePrompt .stopGeneration.hidden {
-    position: absolute;
-    top: 50%;
-    left: 98%;
-    transform: translateX(-50%) translateY(-50%);
-    color: #fff;
-    font-size: 1.5em;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.samplePrompt .stopGeneration {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.samplePrompt .promptTextInput {
-    position: absolute;
-    height: 45px;
-    width: 780px;
-    top: 6%;
-    left: 8%;
-    font-size: 1em;
-    border: none;
-    outline: none;
-    color: #0beb7f;
-    background: transparent;
-    box-sizing: border-box;
-    max-height: 88px;
-    resize: none;
-    padding-top: 10px;
-    background: transparent;
-}
-
-.samplePrompt .promptTextInput::-webkit-scrollbar {
-    display: none;
-}
-
-.searchButton {
-    position: absolute;
-    width: 100px;
-    height: 45px;
-    border-radius: 15px;
-    transform: translateY(-50%);
-    top: 50%;
-    left: 88%;
-    border: 1px solid #4e4e4e;
-    background: #181818;
-    font-family: 'Source Code Pro', monospace;
-    overflow: hidden;
-    cursor: pointer;
-    z-index: 100;
-}
-
-
-
-.particle-pen {
-	position: absolute;
-	width: 200%;
-	aspect-ratio: 1;
-	top: 50%;
-	left: 50%;
-	translate: -50% -50%;
-	-webkit-mask: radial-gradient(white, transparent 65%);
-	z-index: -1;
-	opacity: var(--active, 0);
-	transition: opacity var(--transition);
-}
-
-
-
-.text {
-	translate: 2% -6%;
-	letter-spacing: 0.01ch;
-	background: #fff;
-	-webkit-background-clip: text;
-	color: transparent;
-	transition: background var(--transition);
-}
-
-button svg {
-	inline-size: 1.25em;
-	translate: -25% -5%;
-	fill: #fff;
 }

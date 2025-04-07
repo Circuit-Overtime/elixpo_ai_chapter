@@ -129,7 +129,7 @@
   padding: 1em 0em;
   place-self: center;
   position: relative;
-  max-height: 400px;
+  max-height: 300px;
   overflow-x: hidden;
   overflow-y: auto;
   width: calc(100% - 2em);
@@ -214,7 +214,20 @@
     transition: transform 250ms, opacity 250ms;
   }
   
-  
+  #installCount 
+  {
+    position: absolute;
+    color: #18c97f;
+    font-size: 1em;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    top: 0%;
+  }
+
+
   ::-webkit-scrollbar {
     width: 8px;
   }

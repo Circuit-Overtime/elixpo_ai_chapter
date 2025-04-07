@@ -99,7 +99,7 @@ body {
     transform: rotate(10deg) scale(1.1);
     transition: 0.25s;
 }
-.integrationsIcon > ion-icon 
+.integrationsIcon > i
 {
     position: absolute;
     top: 50%;
@@ -108,6 +108,40 @@ body {
     font-size: 2em;
     color: #ffc;
 }
+
+
+.kaizenIcon
+{
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    background: #0d61b0c2;
+    left: 97%;
+    top: 10%;
+    z-index: 1;
+    border-radius: 50%;
+    border: 2px solid #16aadf;
+    backdrop-filter: blur(2px);
+    transform: rotate(-25deg);
+    cursor: pointer;
+    transition: 0.25s;
+}
+.kaizenIcon:hover
+{
+    transform: rotate(10deg) scale(1.1);
+    transition: 0.25s;
+}
+.kaizenIcon > i
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color: #ffc;
+}
+
+
 .mainName .mainName_ending {
     position: relative;
     left: 5%;
@@ -267,6 +301,19 @@ body {
     background-image: url(../IMAGES/PARTNERS/pollinationsLogo.png);
 }
 
+.partnerLogos .logo.logo4 
+{
+    background-image: url(../IMAGES/PARTNERS/partnerKaizen.png);
+}
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    opacity: 0.8;
+    border-radius: 50%;
+}
 
 @media screen and (max-width: 600px) {
 
@@ -352,6 +399,17 @@ body {
         left: 15%;
     }
     .integrationsIcon:hover 
+    {
+        transform: scale(0.5) rotate(10deg);
+    }
+
+    .kaizenIcon
+    {
+        transform: scale(0.45);
+        top: 25%;
+        left: 115%;
+    }
+    .kaizenIcon:hover 
     {
         transform: scale(0.5) rotate(10deg);
     }

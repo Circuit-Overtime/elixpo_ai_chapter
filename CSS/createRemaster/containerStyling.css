@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&display=swap');
+.container 
+{
+    position: absolute;
+    top: 0%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.container::-webkit-scrollbar,
+.sectionContainer::-webkit-scrollbar
+{
+    display: none;
+}
+
+.backdropBG
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url(/CSS/IMAGES/backdrop.webp);
+    background-size: cover;
+    pointer-events: none;
+    filter: brightness(0.25);
+    z-index: 1; 
+}
+
+.sectionContainer
+{
+    position: absolute;
+    top: 0;
+    left: 0%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    z-index: 2; 
+    background: transparent;
+    backdrop-filter: blur(10px); 
+}
+.container::-webkit-scrollbar
+{
+ display: none;
+}
+
+#imageGenerator 
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3; 
+    background: #04b00d;
+}
+
+.notification {
+    opacity: 0;
+    right: -100%;
+    transition: 0.5s;
+    scale: 0;
+    filter: blur(10px);
+    z-index: 100;
+    min-height: 45px;
+    max-height: 100px;
+    height: auto; /* Allows dynamic height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; /* Ensures spacing */
+}
+
+.notification.display {
+    position: absolute;
+    top: 10%;
+    right: 1%;
+    width: 20%;
+    background: #e6ce8676;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border-top-left-radius: 30px;
+    border: 3px solid #e1aa07;
+    overflow-y: auto; /* Allows scrolling if content exceeds max height */
+    overflow-x: hidden;
+    z-index: 100;
+    opacity: 1;
+    scale: 0.8;
+    filter: blur(0px);
+    transition: 0.5s;
+}
+
+.notification::before {
+    content: "";
+    position: absolute;
+    top: 5%;
+    right: 1%;
+    height: 90%;
+    width: 3%;
+    background: #e1aa07;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    z-index: -1;
+}
+
+.notification::-webkit-scrollbar {
+    display: none;
+}
+
+.notification > .notifText {
+    position: relative;
+    width: 90%;
+    font-family: 'Boldonse', sans-serif;
+    text-align: center;
+    font-size: 1em;
+    color: #000000;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+.notification > .notifText::-webkit-scrollbar {
+    display: none;
+}
