@@ -112,7 +112,7 @@
 
 .features_section>.cards {
   position: relative;
-  top: 5%;
+  top: 2%;
   left: 7%;
   margin-right: 20px;
   margin-bottom: 10px;
@@ -129,7 +129,7 @@
   transition: 0.25s;
 }
 
-.features_section>.cards:hover .card_icon_holder ion-icon {
+.features_section>.cards:hover .card_icon_holder i {
   rotate: 12deg;
   transition: 0.25s;
   ;
@@ -161,7 +161,7 @@
   align-items: center;
 }
 
-.features_section>.cards>.card_icon_holder ion-icon {
+.features_section>.cards>.card_icon_holder i {
   color: #fff;
   font-size: 1.3em;
   transition: 0.25s;

@@ -1,0 +1,123 @@
+/* Existing CSS (from your previous CSS) */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 1em 0;
+}
+
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+.voice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.voice-tile {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    position: relative; /* Needed for absolute positioning of upvote button */
+}
+
+.voice-tile:hover {
+    transform: translateY(-5px);
+}
+
+.audio-player {
+    margin-bottom: 15px;
+}
+
+.play-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 1.1em;
+}
+
+.play-button:hover {
+    background-color: #0056b3;
+}
+
+.voice-name {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .voice-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Font Awesome Icons (adjust size and color if needed) */
+.fas {
+    font-size: 1.4em;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/*  NEW CSS for upvote button  */
+.upvote-button {
+    position: absolute;
+    top: 10px; /* Adjust distance from the top of the tile */
+    right: 10px; /* Adjust distance from the right of the tile */
+    background-color: transparent; /* Transparent background */
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em; /* Adjust the size of the upvote icon */
+    color: #888; /* Gray color for the icon */
+    transition: color 0.2s ease-in-out;
+}
+
+.upvote-button:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the header content */
+    position: relative; /* Allows absolute positioning of the home link */
+}
+
+.home-link {
+    position: absolute;
+    left: 50px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff; /* Adjust color to match your header */
+    text-decoration: none; /* Remove underline */
+    font-size: 1.5em; /* Adjust size of the home icon */
+    transition: color 0.2s ease-in-out;
+}
+
+.home-link:hover {
+    color: #ddd; /* Lighter color on hover */
+}

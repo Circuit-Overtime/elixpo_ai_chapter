@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <meta name="google-site-verification" content="mlhDmvvPHBB2pKRk9d2bpjw5CGsO_W7WdoNWS-SnlRY" />
+    <title>Elixpo Art Generator</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.css">
+
+    <link rel="stylesheet" href="../../CSS/createRemaster/navbarStyling.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/containerStyling.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/welcomePromptSection.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/promptBarGeneric.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/promptsControlSection.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/imageCustomizationSection.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/imageGeneratorSection.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/imageGeneratorControls.css" />
+    <link rel="stylesheet" href="../../CSS/createRemaster/imageDisplaySection.css" />
+    
+    <link rel="icon" type="image/x-icon" href="https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/bigstar.png?alt=media&token=53c5945b-2b37-4c3e-972c-7bd1b0b9e4f1">
+
+
+</head>
+<body>
+    <div class="appHeader">
+        <div class="logo"></div>
+        <p class="appName" id="appName">Elixpo-Art</p>
+
+        <i class='bx bxs-home redirectHome' id="redirectHome" ></i>
+        <i class='bx bxl-blogger redirectBlogs' id="redirectBlogs"></i>
+        <span class="userCell" id="userCell"><div class='userInfo' id="userInfo" ></div><p id="username"> Ayushman </p></span>
+        <i class='bx bxs-photo-album'></i>
+        <i class='bx bxl-github githubLogo' id="redirectGitHub"></i>
+    </div>
+
+    <div class="container">
+      <div class="notification" id="notification">
+        <div class="notifText" id="notifText">This is a notification </div>
+      </div>
+        <div class="backdropBG"></div>
+        <div class="sectionContainer">
+            <section id="imageCustomization">
+              <div class="imageThemeSection">
+                <div class="imageThemeSectionBackdrop">
+                    <div class="imageThemeSectionBackdropv-2">
+
+                      <div class="model_ratioSelectionZone">
+                        <div class="model_ratioSelectionZoneBackdrop">
+                          <div class="model_ratioSelectionZoneBackdropv1" id="model_ratioSelectionZoneBackdropv1">
+                              <div class="documentIcon"></div>
+                              <div class="blob1"></div>
+                              <div class="blob2"></div>
+                              <div class="documentContainer" id="documentContainer">
+                                <div class="modelsTiles models flux_core" data-model="core"> <span> Core </span></div>
+                                <div class="modelsTiles models flux_realism selected" data-model="realism"><span> Realism </span></div>
+                                <div class="modelsTiles models flux_cablyai" data-model="cablyai"><span> Cablyai </span></div>
+                                <div class="modelsTiles models flux_anime" data-model="anime"><span> Anime </span></div>
+                                <div class="modelsTiles models flux_3d" data-model="3d"><span> 3D </span></div>
+                                <div class="modelsTiles models any_dark" data-model="dark"><span> Dark </span></div>
+                                <div class="modelsTiles models flux_pro" data-model="pro"><span> Pro </span></div>
+                                <div class="modelsTiles models turbo" data-model="turbo"><span> Turbo </span></div>
+                              </div>
+                          </div>
+                      
+          
+                      <div class="model_ratioSelectionZoneBackdropv2">
+                          <div class="documentContainer">
+                            <div class="aspectRatioTiles ratios 1:1" data-ratio="1:1"><span> 1 : 1 </span></div>
+                            <div class="aspectRatioTiles ratios 9:16" data-ratio="9:16"><span> 9 : 16 </span></div>
+                            <div class="aspectRatioTiles ratios 16:9" data-ratio="16:9"><span> 16 : 9 </span></div>
+                            <div class="aspectRatioTiles ratios 4:3 selected" data-ratio="4:3"><span> 4 : 3 </span></div>
+                            <div class="aspectRatioTiles ratios 3:2" data-ratio="3:2"><span> 3 : 2 </span></div>
+                          </div>
+                      </div>
+                  </div>
+                      </div>
+
+
+                        <div class="imageProcessingAnimation" id="imageProcessingAnimation">
+                            <div class="userInputImageHolder" id="userInputImageHolder"></div>
+                        </div>
+                        <div class="themeShowCase">
+                            <div class="imageHolderBackdrop">
+                              <div class="themeShowCaseHolder" id="themeShowCaseHolder"></div>
+                            </div>
+                        </div>
+                        <div class="imageThemeContainer" id="imageThemeContainer">
+                            <div class="themes structure" data-theme="structure">  <i class='bx bxs-buildings' ></i> <span>Structure</span></div>
+                            <div class="themes crayon " data-theme="crayon"> <i class='bx bxs-pencil' ></i> <span>Crayon</span></div>
+                            <div class="themes ghibli" data-theme="ghibli"> <i class='bx bx-layer'></i> <span> Ghibli </span></div>
+                            <div class="themes normal selected" data-theme="normal"> <i class='bx bxs-face' ></i> <span>Normal</span></div>
+                            <div class="themes space" data-theme="space"> <i class='bx bxs-planet'></i> <span>Space</span></div>
+                            <div class="themes chromatic" data-theme="chromatic"> <i class='bx bxs-adjust-alt'></i> <span>Chromatic</span></div>
+                            <div class="themes halloween" data-theme="halloween"> <i class='bx bxs-ghost'  ></i> <span>Halloween</span></div>
+                            <div class="themes cyberpunk" data-theme="cyberpunk"> <i class='bx bxs-keyboard' ></i> <span>Cyberpunk</span></div>
+                            <div class="themes anime" data-theme="anime"> <i class='bx bxs-book-open'></i> <span>Anime</span></div>
+                            <div class="themes landscape" data-theme="landscape"> <i class='bx bxs-landscape' ></i> <span>Landscape</span></div>
+                            <div class="themes fantasy" data-theme="fantasy"> <i class='bx bxs-cloud'></i> <span>Fantasy</span></div>
+                            <div class="themes wpap" data-theme="wpap"> <i class='bx bxs-sun'></i> <span>Wpap</span></div>
+                            <div class="themes vintage" data-theme="vintage"> <i class='bx bxl-medium-old' ></i> <span>Vintage</span></div>
+                            <div class="themes pixel" data-theme="pixel"> <i class='bx bxs-invader'></i>  <span>Pixel</span></div>
+                            <div class="themes synthwave" data-theme="synthwave"> <i class='bx bxl-deezer'  ></i> <span>Synthwave</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="imageCustomizationPrompt">
+              <div class="imageCustomizationPromptBackdrop">
+                <div class="promptBox" id="promptBox">
+
+                  <div class="controls">
+                    <i class="fa-solid fa-dice-one" id="OneImage"></i>
+                    <i class="fa-solid fa-image" id="inputImage"> </i>
+                    <i class="fa-solid fa-shield" id="privateBtn"></i>
+                    <i class="fa-solid fa-lightbulb" id="pimpPrompt"></i>
+                    <i class="fa-solid fa-shuffle" id="promptIdea"></i>
+                    <div class="qualitySelection">
+                       <span id="qualitySelection_LD" class="imageQuality" data-quality="LD"> LD </span>
+                       <span class="selected imageQuality" id="qualitySelection_SD" data-quality="SD"> SD </span>
+                       <span id="qualitySelection_HD" class="imageQuality" data-quality="HD"> HD </span>
+                    </div>
+                    <div class="generateButton" id="generateButton">
+                      <button class="searchBtn">
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="backdrop"></span>
+                        <i class='bx bxs-magic-wand' id="createImageDirectly"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="imageHolder" id="imageHolder">
+                    <i class="fa-solid fa-circle-xmark" id="cancelImageMode"></i>
+                  </div>
+
+                  <textarea name="" id="promptTextInput" class="promptTextInput" spellcheck="false" autocomplete="none"
+                    placeholder="--pr a rabbit sitting on an elephant, with a cricket bat in hand --ar 9:16 --ld thematic --hd --th landscape"></textarea>
+                  <div class="overlay" id="overlay">  </div>
+                </div>
+              </div>
+            </div>
+            </section>
+
+
+            <section id="imageGenerator">
+                <div class="imageTiles" id="imageTiles">
+                  <div class="tile tile1 hidden">
+                    <div class="loadingAnimations">
+                    <div class="loadingStar">
+                      <i class='bx bxs-meteor bx-flashing stars sparkle1' ></i>
+                      <i class='bx bxs-circle stars sparkle3'></i>
+                      <i class='bx bxs-square-rounded stars sparkle2 '></i>
+                    </div>
+                    <div class="colorPop">
+                      <div class="blob1"></div>
+                      <div class="blob2"></div>
+                      <div class="blob3"></div>
+                      <div class="blob4"></div>
+                      <div class="blob5"></div>
+                      <div class="blob6"></div>
+                    </div>
+                  </div>
+
+
+                  <div class="inPictureControls">
+                    <i class='bx bxs-download' id="downloadBtn"></i>
+                    <i class='bx bxs-copy-alt' id="copyButton"></i>
+                  </div>
+
+
+                  </div>
+                  <div class="tile tile2 hidden">
+                    <div class="loadingAnimations">
+                      <div class="loadingStar">
+                        <i class='bx bxs-meteor bx-flashing stars sparkle1' ></i>
+                        <i class='bx bxs-circle stars sparkle3'></i>
+                        <i class='bx bxs-square-rounded stars sparkle2 '></i>
+                      </div>
+                      <div class="colorPop">
+                        <div class="blob1"></div>
+                        <div class="blob2"></div>
+                        <div class="blob3"></div>
+                        <div class="blob4"></div>
+                        <div class="blob5"></div>
+                        <div class="blob6"></div>
+                      </div>
+                    </div>
+
+                    <div class="inPictureControls">
+                      <i class='bx bxs-download' id="downloadBtn"></i>
+                      <i class='bx bxs-copy-alt' id="copyButton"></i>
+                    </div>
+
+
+                  </div>
+                  <div class="tile tile3 hidden">
+                    <div class="loadingAnimations">
+                      <div class="loadingStar">
+                        <i class='bx bxs-meteor bx-flashing stars sparkle1' ></i>
+                        <i class='bx bxs-circle stars sparkle3'></i>
+                        <i class='bx bxs-square-rounded stars sparkle2 '></i>
+                      </div>
+                      <div class="colorPop">
+                        <div class="blob1"></div>
+                        <div class="blob2"></div>
+                        <div class="blob3"></div>
+                        <div class="blob4"></div>
+                        <div class="blob5"></div>
+                        <div class="blob6"></div>
+                      </div>
+                    </div>
+
+                    <div class="inPictureControls">
+                      <i class='bx bxs-download' id="downloadBtn"></i>
+                      <i class='bx bxs-copy-alt' id="copyButton"></i>
+                    </div>
+
+                  </div>
+
+
+                  <div class="tile tile4 hidden">
+                    <div class="loadingAnimations">
+                      <div class="loadingStar">
+                        <i class='bx bxs-meteor bx-flashing stars sparkle1' ></i>
+                        <i class='bx bxs-circle stars sparkle3'></i>
+                        <i class='bx bxs-square-rounded stars sparkle2 '></i>
+                      </div>
+                      <div class="colorPop">
+                        <div class="blob1"></div>
+                        <div class="blob2"></div>
+                        <div class="blob3"></div>
+                        <div class="blob4"></div>
+                        <div class="blob5"></div>
+                        <div class="blob6"></div>
+                      </div>
+                    </div>
+                  
+
+                   <div class="inPictureControls">
+                      <i class='bx bxs-download' id="downloadBtn"></i>
+                      <i class='bx bxs-copy-alt' id="copyButton"></i>
+                    </div>
+                  
+                </div>
+
+                <div class="GenerateImageControls">
+                   <i class='bx bx-stop-circle interruptButton' id="interruptButton"> <p> Stop </p></i>
+                  <button class="acceptBtn hidden" id="acceptBtn">
+                    <i class='bx bx-check' ></i>
+                    Accept!
+                </button>
+                 <button class="rejectBtn hidden" id="rejectBtn">
+                  <i class='bx bx-x' ></i>
+                    Reject!
+                </button>
+                </div>
+            </section>
+
+
+
+
+            <section id="imageDisplay">
+              <div class="imageDisplaySection" id="imageDisplaySection">
+                <div class="imageDisplaySectionBackdrop">
+                    <div class="imageDisplaySectionBackdropv-2">
+                        <div class="documentContainer" id="documentContainer_ImageDisplay">
+                          <div class="goUpBtn" id="goUpBtn">
+                            <span> Go Up </span>
+                            <i class='bx bxs-up-arrow'> </i>
+                            <div class="keybind">ESC</div>
+                          </div>
+                          <div class="imageDisplayHolder"></div>
+                          <div class="imageSpecs" id="imageSpecs">
+                            <span> </span>
+                            <span>  </span>
+                          </div>
+                          <div class="imageInformationHolder">
+                            <div class="usernameDisplay" id="usernameDisplay"><span></span></div>
+                            <div class="promptDisplay" id="promptDisplay">
+                              <span>
+                                
+                              </span>
+                            </div>
+                            <div class="aspectRatioDisplay" id="aspectRatioDisplay">
+                              <span> </span>
+                            </div>
+                            <div class="timeTakenDisplay" id="timeTakenDisplay">
+                              <span> </span>
+                            </div>
+                            <div class="downloadImageBtn">
+                              <button class="downloadBtn" id="ImageDisplayDownloadBtn">
+                                Download!
+                            </button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </section>
+        </div>
+        
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
+
+    <script src="../../JS/linkRedirect.js"></script>
+    <script src="../../JS/create/imageProcessPrompt.js" ></script>
+    <script src="../../JS/create/promptscontainer.js" ></script>
+    <script src="../../JS/create/createArtGeneral.js"></script>
+    <script src="../../JS/create/locomotiveScroll.js"></script>
+    <script src="../../JS/create/welcomePrompt.js"></script>
+    <script src="../../JS/create/imageGeneration.js"></script>
+   
+</body>
+</html>
+
+

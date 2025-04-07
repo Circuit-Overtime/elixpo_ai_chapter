@@ -7,12 +7,12 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     
-    <link rel="stylesheet" href="../../CSS/feedPage.css">
-    <link rel="stylesheet" href="../../CSS/feedContent.css">
-    <link rel="stylesheet" href="../../CSS/welcomeScreen.css">
-    <link rel="stylesheet" href="../../CSS/preloader.css">
-    <link rel="stylesheet" href="../../CSS/feedLoader.css">
-    <link rel="icon" type="image/x-icon" href="../../CSS/IMAGES/LOGOS/logo3.jpeg">
+    <link rel="stylesheet" href="../../CSS/feed/feedPage.css">
+    <link rel="stylesheet" href="../../CSS/feed/feedContent.css">
+    <link rel="stylesheet" href="../../CSS/feed/welcomeScreen.css">
+    <link rel="stylesheet" href="../../CSS/feed/preloader.css">
+    <link rel="stylesheet" href="../../CSS/feed/feedLoader.css">
+    <link rel="icon" type="image/x-icon" href="https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/bigstar.png?alt=media&token=53c5945b-2b37-4c3e-972c-7bd1b0b9e4f1">
   
     <title>Elixpo.art - Feed</title>
 
@@ -21,7 +21,7 @@
     <div class="ParticleContainer" id="bg">  </div>
     <div class="blob1Background"></div>
     <div class="blob2Background"></div>
-    <div class="welcomeScreen" id="welcomeScreen">
+    <div class="welcomeScreen " id="welcomeScreen">
       <div id="green-filter"></div>
       <div id="top-gradient" class="gradient"></div>
       <div id="bottom-gradient" class="gradient"></div>
@@ -135,7 +135,7 @@
                 </div>
               </div>
             </div>
-            <div class="feedStart" id="feedStart" >
+            <div class="feedStart hidden" id="feedStart" >
                 Visit Feed
                 <div class="liquid"></div>
                 <div class="bubbles">
@@ -148,7 +148,7 @@
                 </div>
               </div>
               <div class="warning">
-                ⚠️ Contains NSFW Contents! ⚠️
+                ⚠️ Powered by Pollinations ⚠️
               </div>
     </div>
 
@@ -160,10 +160,10 @@
 
       <div class="controls hidden" id="controls">
         <div class="logo"></div><p class="appName"> Elixpo.art </p>
-        <button class="loadMore" id="loadMore" type="button">
+        <button class="loadMore hidden" id="loadMore" type="button">
           <span class="text">Load More</span>
         </button>
-        <ion-icon name="rocket" class="closeStream" id="closeStream"></ion-icon>
+        <ion-icon name="git-pull-request" class="closeStream" id="closeStream"></ion-icon>
         <ion-icon name="color-palette" class="createArt" id="createArt"></ion-icon>
         <ion-icon name="images" class="visitGallery" id="visitGallery"></ion-icon>
         <ion-icon name="home" class="homePage" id="homePage"></ion-icon>
@@ -178,14 +178,10 @@
     <script src="../../JS/masonry.pkgd.min.js"></script>
     <script src="../../JS/SplitText3.min.js"></script>
     <script src="../../JS/particles.min.js"></script>
-    <script src="../../JS/feedParticleEffect.js"></script>
-    <script src="../../JS/feedFooterParticleEffect.js"></script>
-
-    
     <script src="../../JS/linkRedirect.js"></script>
-    <script src="../../JS/feedLoader.js"></script>  
-    <script src="../../JS/feedGeneral.js"></script> 
-    <script src="../../JS/pageLoader.js"></script>
+    <script src="../../JS/feed/feedLoader.js"></script>  
+    <script src="../../JS/feed/feedGeneral.js"></script> 
+    <script src="../../JS/feed/pageLoader.js"></script>
     <script src="../../JS/PatchContextMenu.js"></script>
     
 </body>

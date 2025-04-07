@@ -5,15 +5,16 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
     <title>Welcome to Elixpo</title>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="../../CSS/signUpPageGeneral.css">
-    <link rel="stylesheet" href="../../CSS/signIn.css">
-    <link rel="stylesheet" href="../../CSS/signUp.css">
-    <link rel="stylesheet" href="../../CSS/logout.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/userGuestLogin.css">
-    <link rel="stylesheet" href="../../CSS/mobileResponsive.css">
+    <link rel="stylesheet" href="../../CSS/auth/signUpPageGeneral.css">
+    <link rel="stylesheet" href="../../CSS/auth/signIn.css">
+    <link rel="stylesheet" href="../../CSS/auth/signUp.css">
+    <link rel="stylesheet" href="../../CSS/auth/logout.css">
+    <link rel="stylesheet" type="text/css" href="../../CSS/auth/userGuestLogin.css">
+    <link rel="stylesheet" href="../../CSS/auth/mobileResponsive.css">
     
-    <link rel="icon" type="image/x-icon" href="../../CSS/IMAGES/LOGOS/logo4.jpeg">
+    <link rel="icon" type="image/x-icon" href="https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/bigstar.png?alt=media&token=53c5945b-2b37-4c3e-972c-7bd1b0b9e4f1">
 </head>
 <body>
     <div class="container">
@@ -22,8 +23,8 @@
         <div class="blob2"></div>
         <div class="inner" id="NotifTxt"></div>
     </div>
-      <ion-icon name="documents" id="readDocs"></ion-icon>
-      <ion-icon name="image" id="visitGallery"></ion-icon>
+      <ion-icon name="documents" id="readDocs" style="display: none;"></ion-icon>
+      <ion-icon name="image" id="visitGallery" style="display: none;"></ion-icon>
 
         <div class="backgroundMask"></div>
         <div class="backgroundClipPath" id="backgroundClipPath">
@@ -46,7 +47,7 @@
             <div class="tile"><img src="https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/officialDisplayImages%2FCoverPageSlidingImages%2F7_7_11zon.jpg?alt=media&token=fefbba6c-1002-4caa-bbc8-85d563af3c97" alt="Image 18" class="blur"></div>
             <div class="tile"><img src="https://firebasestorage.googleapis.com/v0/b/elixpoai.appspot.com/o/officialDisplayImages%2FCoverPageSlidingImages%2F8_8_11zon.jpg?alt=media&token=5f48aa30-ba28-40f9-a3f9-0e6805604986" alt="Image 19" class="blur"></div>
         </div>
-        <div class="logo"></div><p class="appName"> Elixpo.art </p>
+        <div class="logo"></div><p class="appName"> Elixpo-art </p>
         <div class="backgroundTile"></div>
         <div class="vgGirl"></div>
 
@@ -171,6 +172,7 @@
     <p class="p" id="reDirectPage"> Don't want to logout?<span class="span" id="signUpFormBtn"> Get Back</span>        
 </button>
 </div>
+<div class="redirectHome" id="redirectHome"><i class="bi bi-house-door-fill"></i></div>
 
 <div class="userNameGuest hidden" id="userNameGuest">
   
@@ -203,17 +205,19 @@
       </div>
     </div>
   </div>
-  
+
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
 <script src="../../JS/linkRedirect.js" defer></script>
-<script src="../../JS/signInUpGeneral.js"></script>
-<script src="../../JS/signInUpEmail.js"></script> 
-<script src="../../JS/login_with_gitHub.js"></script>
-<script src="../../JS/login_with_google.js"></script>
 <script src="../../JS/PatchContextMenu.js"></script>
+
+<script src="../../JS/auth/signInUpGeneral.js"></script>
+<script src="../../JS/auth/signInUpEmail.js"></script> 
+<script src="../../JS/auth/login_with_gitHub.js"></script>
+<script src="../../JS/auth/login_with_google.js"></script>
+
 </body>
 </html>

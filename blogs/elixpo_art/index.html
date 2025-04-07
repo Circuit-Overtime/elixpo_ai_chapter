@@ -5,21 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elixpo Art - Blog</title>
-    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.0.0/dist/locomotive-scroll.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="../../CSS/blog.css">
-    <link rel="stylesheet" href="../../CSS/hljs.css">
-    <link rel="stylesheet" href="../../CSS/topics.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="../../CSS/blogs/blog.css">
+    <link rel="stylesheet" href="../../CSS/blogs/hljs.css">
+    <link rel="stylesheet" href="../../CSS/blogs/topics.css">
     <link rel="icon" type="image/x-icon" href="https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/bigstar.png?alt=media&token=53c5945b-2b37-4c3e-972c-7bd1b0b9e4f1">
 </head>
 
 <body>
     <div class="floating-navbar">
         <div class="nav-icon-house home"><i class="bi bi-house" id="redirectHome"></i></div>
+        <div class="nav-icon-integrations"><i class='bx bx-git-branch' style='color:#c93838' id="integrations" ></i></div>
         <a href="https://www.instagram.com/elixpo_ai" target="_blank" class="nav-icon-instagram"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/ayushman-bhattacharya-a00baa229/" target="_blank" class="nav-icon-linkedin"><i class="bi bi-linkedin"></i></a>
         <a href="https://github.com/Circuit-Overtime/elixpo_ai_chapter" target="_blank" class="nav-icon-github"><i class="bi bi-github"></i></a>
         <a href="https://buymeacoffee.com/elixpo" target="_blank" class="nav-icon-buymecoffee"><i class="bi bi-cup-hot-fill"></i></a>
         <div class="commentsIcon" id="commentsIcon"><i class="bi bi-chat-left-dots-fill"></i></div>
@@ -211,6 +213,28 @@
         # write the prompt you want to generate an image for
     </code>
     </pre>
+
+    <p> You can also generate the images using <code class="shortCode">Javascript</code> language for easy integration with your websites. Just paste the code 
+    below in your <code class="javascript"> &lt;script&gt; ... &lt;/script&gt; </code> of your HTML code to download a ready image from the prompt and also 
+    explore further. </p>
+    <pre>
+        <i class="bi bi-clipboard copyCode" onclick="copy(this)"></i>
+        <code class="javascript">
+    const prompt = "a beautiful garden";
+    const url = `https://imgelixpo.vercel.app/c/${prompt}`;
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'generated_image.jpg';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+        </code>
+    </pre>
     <p>
         <b>Here are the  query parameters that can be used to customize the image generation process:</b>
         <br>
@@ -231,7 +255,7 @@
     </p>
     <p>
         Server API Rate Limits are also implemented to ensure fair usage and prevent abuse of the system. Users can
-        make a upto <code class="shortCode">3 Image Generation Request/Minute. </code>  This rate limit is enforced to maintain the stability and
+        make a upto <code class="shortCode">10 Image Generation Request/Minute. </code>  This rate limit is enforced to maintain the stability and
         performance of the API, ensuring that all users have equal access to the image generation service. If the rate limit is 
         exceeded then a <code class="shortCode">Err (429) Rate Limit Reached </code> will be thrown. It can be <b> caught </b> 
         using <code class="shortCode"> try {()} .. catch {()} </code> and reflected back on the front-end.
@@ -531,8 +555,8 @@
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.0.0/dist/locomotive-scroll.min.js"></script>
 
     <script src="../../JS/linkRedirect.js"></script>
-    <script src="../../JS/blog.js"></script>
-    <script src="../../JS/PatchContextMenu.js"></script>
+    <script src="../../JS/blogs/blog.js"></script>
+    <!-- <script src="../../JS/PatchContextMenu.js"></script> -->
 </body>
 
 </html>

@@ -1,0 +1,351 @@
+@import url("https://fonts.googleapis.com/css2?family=Crafty+Girls&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Itim&family=Parkinsans:wght@300..800&family=Salsa&family=Sixtyfour&family=VT323&display=swap');
+
+
+.maintenanceTextContainer,
+.maintenanceDescription,
+.redirectBtn,
+#wobbly-model,
+.shape,
+.column {
+    opacity: 0; /* Initially hide the elements */
+}
+
+
+        html,
+        body {
+          height: 100%;
+          overflow: hidden;
+          user-select: none;
+          font-family: "Crafty Girls", cursive;
+          margin: 0; /* Added for consistency */
+        }
+
+        @keyframes sketchy-jiggle {
+          0% {
+            transform: rotate(0) scale(1.05);
+          }
+          33% {
+            transform: rotate(-2deg) scale(1);
+          }
+          66% {
+            transform: rotate(2deg) scale(1.07);
+          }
+          /* Added 100% for smoother loop in some browsers */
+          100% {
+            transform: rotate(0) scale(1.05);
+          }
+        }
+
+        #scene {
+          height: 100%;
+          background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, #777, #bb9 calc(var(--camera-x) * 1%)),
+            color-mix(in srgb, #999, #eee calc(var(--camera-x) * 1%)) 50%,
+            #aaa 55%,
+            color-mix(in srgb, #555, #888 calc(var(--camera-x) * 1%))
+          );
+          position: relative;
+          --camera-x: 0;
+          --camera-multiplier: -2;
+        }
+
+        /* Standard CSS Nesting equivalent for &::after */
+        #scene::after {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            background-image: url("https://unblast.com/wp-content/uploads/2022/01/Paper-Texture-5.jpg");
+            background-size: cover;
+            background-position: 50% 50%;
+            mix-blend-mode: multiply;
+            opacity: 0.4;
+            z-index: 5000;
+         }
+
+         /* Standard CSS Nesting equivalent for .shape, .column */
+        #scene .shape,
+        #scene .column {
+            --z: 100;
+            --x: 0;
+            --y: 50;
+            --blur: 0;
+            --rotate: 0deg;
+            z-index: var(--z);
+            filter: blur(calc(var(--blur) * 1px)); /* Added unit for clarity */
+            left: calc(
+              50% + (((var(--x) + (var(--camera-x) * var(--camera-multiplier))) * 1%) * (var(--z) * 0.05)) /* Added 50% base for centering */
+            );
+            translate: -50% -50%;
+            transition: left 0.2s ease-out;
+            position: absolute;
+            scale: calc(var(--z) / 100);
+            rotate: var(--rotate);
+          }
+
+          model-viewer {
+            --z: 10; /* Increased for better depth */
+            --x: -20;
+            --y: 10; /* Adjusted height to sit in the middle */
+            position: absolute;
+            left: calc(
+              50% + (((var(--x) + (var(--camera-x) * var(--camera-multiplier))) * 1%) * (var(--z) * 0.05)) /* Added 50% base for centering */
+            );
+            top: 2%;
+            scale: calc(0.5);
+            rotate: var(--rotate);
+            filter: blur(calc(var(--blur) * 1px));
+            --blur: 0;
+            width: 80%; /* Slightly reduced to fit within FOV */
+            height: auto; /* Auto height to maintain aspect ratio */
+            max-height: 90vh; /* Ensures it stays within view */
+            transition: left 0.2s ease-out;
+            animation: maintenanceText 2s infinite linear alternate, maintenanceText-scale 5s infinite steps(10, jump-none);
+        }
+
+        @keyframes maintenanceText {
+          0% { filter: hue-rotate(0deg) contrast(1) brightness(1) blur(0px); }
+          20% { filter: hue-rotate(30deg) contrast(1.1) brightness(1.2) blur(1px); }
+          40% { filter: hue-rotate(-20deg) contrast(0.9) brightness(0.8) blur(2px); }
+          60% { filter: hue-rotate(10deg) contrast(1.2) brightness(1.1) blur(1px); }
+          80% { filter: hue-rotate(-10deg) contrast(1) brightness(1) blur(0px); }
+          100% { filter: hue-rotate(0deg) contrast(1) brightness(1) blur(0px); }
+        }
+      
+        /* Occasional strong distortions */
+        @keyframes maintenanceText-scale {
+          0%, 90% { transform: scale(1); }
+          91% { transform: scale(1.05) skewX(2deg); }
+          92% { transform: scale(0.95) skewX(-2deg); }
+          93%, 100% { transform: scale(1); }
+        }
+
+
+        #scene .shape {
+            font-size: 7vmin;
+            top: calc(var(--y) * 1%);
+            animation: 1s sketchy-jiggle infinite reverse steps(2, jump-start);
+            color: #fff;
+            mix-blend-mode: exclusion;
+          }
+
+        #scene .column {
+            height: 1500px;
+            top: 50%; /* Adjusted slightly for perspective */
+            border-radius: 50% / calc(var(--z) * 0.05%);
+            width: 200px;
+            background: color-mix(in srgb, #555, #ccc calc(100% - (var(--z) * 1%)))
+              linear-gradient(to right, #0002 10%, #0004 40%, #0006 70%);
+        }
+
+        /* Standard CSS Nesting equivalent for .column::before */
+        #scene .column::before {
+              content: "";
+              position: absolute;
+              width: 300%;
+              translate: -33% 50%;
+              height: 10%;
+              bottom: 0;
+              background: radial-gradient(#0002, #0000 50%);
+              mix-blend-mode: multiply;
+              rotate: calc(var(--rotate) * -1);
+            }
+
+        /* Standard CSS Nesting equivalent for .column::after */
+        #scene .column::after {
+              content: "";
+              position: absolute;
+              left: 0;
+              right: 0;
+              z-index: calc(var(--z) - 1); /* Shadow should be behind */
+              rotate: calc(var(--rotate) * -1); /* Adjusted rotation */
+              bottom: calc(-97% + (100 - var(--z)) * 0.5px); /* Adjusted shadow position based on Z */
+              height: 100%;
+              filter: blur(10px);
+              transform-origin: 50% 0;
+              background: linear-gradient(
+                to bottom,
+                #0000,
+                color-mix(in srgb, #333, #0001 calc(100% - (var(--z) * 1%))) 10%,
+                #0000
+              );
+              opacity: calc(var(--z) / 150); /* Fade shadow further away */
+            }
+
+
+        #scene-value {
+          font-weight: 700;
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          font-size: min(50vw, 25vmax);
+          z-index: 95;
+          color: #12f;
+          mix-blend-mode: difference;
+          pointer-events: none;
+          text-shadow: 10px 0 #ff0;
+        }
+
+        input[type="range"] {
+          position: absolute;
+          z-index: 9999;
+          left: 0;
+          right: 0;
+          top: 0;
+          padding: 1em;
+          margin: 0 1em;
+          width: calc(100% - 4em); /* Adjusted width */
+          cursor: grab; /* Better cursor indication */
+        }
+        input[type="range"]:active {
+            cursor: grabbing;
+        }
+        
+        .maintenanceTextContainer {
+          position: absolute;
+          top: 15%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          color: #fff;
+        }
+        .maintenanceText {
+          position: relative;
+          --z: 10; /* Increased for better depth */
+          --x: 0;
+          --y: 10; /* Adjusted height to sit in the middle */
+          position: absolute;
+          left: calc(
+            50% + (((var(--x) + (var(--camera-x) * var(--camera-multiplier))) * 1%) * (var(--z) * 0.05)) /* Added 50% base for centering */
+          );
+          font-family: 'Courier New', Courier, monospace;
+          font-size: 5em;
+          font-weight: bold;
+          text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+            0.025em 0.04em 0 #fffc00;
+          animation: maintenanceText 725ms infinite;
+          text-align: center;
+        }
+        
+        .maintenanceText span {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        
+        .maintenanceText span:first-child {
+          animation: maintenanceText 500ms infinite;
+          clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+          transform: translate(-0.04em, -0.03em);
+          opacity: 0.75;
+        }
+        
+        .maintenanceText span:last-child {
+          animation: maintenanceText 375ms infinite;
+          clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+          transform: translate(0.04em, 0.03em);
+          opacity: 0.75;
+        }
+        
+        @keyframes maintenanceText {
+          0% {
+            text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+              0.025em 0.04em 0 #fffc00;
+          }
+          15% {
+            text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+              0.025em 0.04em 0 #fffc00;
+          }
+          16% {
+            text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
+              -0.05em -0.05em 0 #fffc00;
+          }
+          49% {
+            text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
+              -0.05em -0.05em 0 #fffc00;
+          }
+          50% {
+            text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
+              0 -0.04em 0 #fffc00;
+          }
+          99% {
+            text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
+              0 -0.04em 0 #fffc00;
+          }
+          100% {
+            text-shadow: -0.05em 0 0 #00fffc, -0.025em -0.04em 0 #fc00ff,
+              -0.04em -0.025em 0 #fffc00;
+          }
+        }
+
+        .maintenanceDescription
+        {
+          position: absolute;
+          top: 20%;
+          width: 40%;
+          --z: 10; /* Increased for better depth */
+          --x: 0;
+          --y: 10; /* Adjusted height to sit in the middle */
+          position: absolute;
+          left: calc(
+            50% + (((var(--x) + (var(--camera-x) * var(--camera-multiplier))) * 1%) * (var(--z) * 0.05)) /* Added 50% base for centering */
+          );
+          font-family: 'Courier New', Courier, monospace;
+          font-size: 2em;
+        }
+
+        
+.visitCreateArt {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  background: linear-gradient(15deg, #880088, #aa2068, #cc3f47, #de6f3d, #f09f33, #de6f3d, #cc3f47, #aa2068, #880088) no-repeat;
+  color: #fff;
+  transform: translateX(-50%) scale(1.2);
+  text-shadow: 2px 2px 3px rgb(136 0 136 / 50%);
+  border: none;
+}
+
+.redirectBtn {
+  position: absolute;
+  width: fit-content;
+  display: flex;
+  padding: 1.2em 1rem;
+  cursor: pointer;
+  gap: 0.4rem;
+  font-weight: bold;
+  border-radius: 30px;
+  background-size: 300%;
+  background-position: left center;
+  box-shadow: 0 30px 10px -20px rgba(0, 0, 0, .2);
+  transition: background .3s ease;
+  font-family: "Sixtyfour", serif;
+  font-optical-sizing: auto;
+  cursor: pointer;
+  /* Reflection effect */
+  position: relative;
+  overflow: hidden;
+}
+
+.redirectBtn::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  transform: scaleY(-1);
+  filter: blur(5px) opacity(0.5);
+  z-index: -1;
+}
+.redirectBtn:hover {
+  background-size: 320%;
+  background-position: right center;
+}

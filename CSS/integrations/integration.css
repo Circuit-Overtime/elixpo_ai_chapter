@@ -104,6 +104,17 @@ body {
     padding-left: 2%;
     transition: 0.5s;
 }
+
+.upperNavBar > i 
+{
+    position: relative;
+    left: 95%;
+    font-size: 2em;
+    color: #0de165;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
 .mainName {
     position: absolute;
     top: 15%;
@@ -208,7 +219,7 @@ body {
 }
 
 
-.aiArtCreateNavbar>ion-icon {
+.aiArtCreateNavbar>i {
     position: absolute;
     left: 75%;
     top: 50%;
