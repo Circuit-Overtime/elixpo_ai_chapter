@@ -122,8 +122,3 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ---
 
-## Acknowledgments
-
-- DuckDuckGo for their search API.
-- OpenAI for language model integration.
-- Contributors to the `beautifulsoup4` and `rich` libraries.
