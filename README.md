@@ -217,9 +217,7 @@ We're committed to developing AI technology that serves humanity while respectin
 
 ## License
 
-This software is made available under the terms of *either* of the licenses
-found in LICENSE.APACHE or LICENSE.BSD. Contributions to uritemplate are
-made under the terms of *both* these licenses. 
+This is published under the `MIT LICENSE`.
 
 ---
 
