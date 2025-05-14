@@ -6,12 +6,13 @@ from searching_automation_deep_clean import smart_search_agent_pipeline as deep_
 
 console = Console()
 
-def stream_markdown(text, delay=0.002):
-    """Stream Markdown-like text character by character."""
-    for char in text:
-        console.print(char, end='', markup=False, highlight=False, soft_wrap=True)
+def stream_markdown(text, delay=0.05):
+    """Stream Markdown-like text line by line while preserving formatting."""
+    lines = text.splitlines()
+    for line in lines:
+        console.print(line, markup=False, highlight=False, soft_wrap=True)
         time.sleep(delay)
-    print()  
+    print()
 
 def main():
     user_query = input("Enter your query: ").strip()
@@ -34,7 +35,8 @@ def main():
     markdown_parts = []
 
     answer = result.get("answer", "Could not find a relevant answer.")
-    markdown_parts.append("## Answer\n\n" + answer + "\n")
+    markdown_parts.append("## Answer\n")
+    markdown_parts.append(answer + "\n")
 
     sources = result.get("sources", [])
     if sources:
@@ -54,8 +56,12 @@ def main():
     final_markdown = "\n".join(markdown_parts)
 
     console.print("\n[bold green]--- Final Result ---[/bold green]\n")
-    stream_markdown(final_markdown)
+    stream_markdown(final_markdown, delay=0.05)
     console.print("\n[bold green]--- End of Result ---[/bold green]")
+
+    # Optional: return or print raw markdown string
+    # print("\n[Raw Markdown Output]")
+    # print(final_markdown)
 
 if __name__ == "__main__":
     main()
