@@ -10,8 +10,8 @@ from duckduckgo_search import DDGS
 from bs4 import BeautifulSoup
 import math
 import mimetypes
-from tqdm import tqdm  # Import tqdm for progress bars
-import random # For exponential backoff jitter
+from tqdm import tqdm  
+import random 
 
 # --- Configuration ---
 MAX_SEARCH_RESULTS_PER_QUERY = 5
