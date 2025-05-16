@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Showcase</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f4f7;
+            color: #333;
+        }
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+        .checkbox-group {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 20px;
+            font-size: 15px;
+        }
+        button {
+            padding: 10px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        .markdown-output {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fefefe;
+            border: 1px solid #ddd;
+            overflow: auto;
+            /*max-height: 800px;*/ /* Commented out max-height to allow content to push the scroll */
+        }
+         /* Specific styles for elements within the markdown-output for better control */
+        .markdown-output h2 {
+            color: #0056b3;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        .markdown-output img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: block; /* Ensures image is on its own line */
+            margin-left: auto; /* Center images */
+            margin-right: auto;
+        }
+        .markdown-output ul, .markdown-output ol {
+            padding-left: 20px;
+        }
+         .markdown-output li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .placeholder {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Showcase</h1>
+        <textarea id="query" placeholder="Enter your search query here...">what's the latest neet news in this year</textarea>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="deepSearch"> Deep Search</label>
+            <label><input type="checkbox" id="streaming" checked> Streaming</label>
+        </div>
+        <button onclick="performSearch()">Search</button>
+        <div class="output" id="output">Search results will appear below.</div>
+        <div class="markdown-output" id="markdownOutput">
+            <p class="placeholder">Markdown-formatted answer, sources, and images will appear here.</p>
+        </div>
+    </div>
+
+    <script>
+        const markdownOutputDiv = document.getElementById('markdownOutput');
+        const outputDiv = document.getElementById('output');
+        const MAX_TOTAL_IMAGES = 3; // Match the Python limit
+
+        let currentAnswerText = '';
+        let currentSources = [];
+        let currentImages = [];
+        let eventSource = null; // Keep track of the EventSource
+
+        function updateMarkdownOutput() {
+            let fullMarkdown = '';
+
+            // Build Answer Section
+            if (currentAnswerText.length > 0) {
+                fullMarkdown += `## Answer\n\n${currentAnswerText}\n\n`;
+            } else {
+                 // Show a temporary message if no answer yet during streaming
+                fullMarkdown += `## Answer\n\n*Generating answer...*\n\n`;
+            }
+
+
+            // Build Sources Section (only if sources exist)
+            if (currentSources.length > 0) {
+                 // Sort sources alphabetically for consistent ordering
+                 const sortedSources = [...new Set(currentSources)].sort(); 
+                fullMarkdown += `## Sources\n`;
+                // Format sources as numbered list with <url>
+                fullMarkdown += sortedSources.map((src, i) => `${i + 1}. <${src}>`).join('\n');
+                fullMarkdown += `\n\n`; // Add extra newlines after sources
+            }
+
+            // Build Images Section (only if images exist)
+            if (currentImages.length > 0) {
+                fullMarkdown += `## Relevant Images\n`;
+                // Format images as ![Relevant Image](url) then <url>
+                fullMarkdown += currentImages.map(img => `![Relevant Image](${img})\n<${img}>`).join('\n');
+                fullMarkdown += `\n\n`; // Add extra newlines after images
+            }
+
+            // Parse and update the output div
+            markdownOutputDiv.innerHTML = marked.parse(fullMarkdown);
+
+             // Scroll to the bottom as new content arrives
+            markdownOutputDiv.scrollTop = markdownOutputDiv.scrollHeight;
+        }
+
+
+        async function performSearch() {
+            const query = document.getElementById('query').value;
+            const deepSearch = document.getElementById('deepSearch').checked;
+            const streaming = document.getElementById('streaming').checked;
+
+            // Clear previous results and state
+            outputDiv.innerHTML = 'Loading...';
+            markdownOutputDiv.innerHTML = '<p class="placeholder">Markdown-formatted answer, sources, and images will appear here.</p>';
+            currentAnswerText = '';
+            currentSources = [];
+            currentImages = [];
+            if (eventSource) { // Close previous connection if it exists
+                eventSource.close();
+                eventSource = null;
+            }
+
+
+            if (!query.trim()) {
+                alert('Please enter a search query.');
+                outputDiv.innerHTML = '';
+                 markdownOutputDiv.innerHTML = '<p class="placeholder">Markdown-formatted answer, sources, and images will appear here.</p>';
+                return;
+            }
+
+            const requestBody = {
+                query: query,
+                deep_search: deepSearch,
+                streaming: streaming
+            };
+
+            try {
+                if (streaming) {
+                    // Use GET for EventSource, passing params in query string
+                    const url = `http://10.42.0.56:3000/search?query=${encodeURIComponent(query)}&deep_search=${deepSearch}&streaming=true`; // Ensure streaming=true is passed
+                    eventSource = new EventSource(url);
+
+                    // Handle messages from the stream
+                    eventSource.onmessage = function(event) {
+                        try {
+                            const msg = JSON.parse(event.data);
+                            console.log("Received message:", msg); // Debug: see what messages are received
+
+                            if (msg.type === 'answer') {
+                                currentAnswerText += msg.content;
+                            } else if (msg.type === 'source') {
+                                // Add source only if not already present
+                                if (!currentSources.includes(msg.url)) {
+                                     currentSources.push(msg.url);
+                                }
+                            } else if (msg.type === 'image') {
+                                // Add image only if not already present and within limit
+                                if (!currentImages.includes(msg.url) && currentImages.length < MAX_TOTAL_IMAGES) {
+                                     currentImages.push(msg.url);
+                                }
+                            } else if (msg.type === 'end') {
+                                // Optional: Handle end of stream
+                                outputDiv.innerHTML = 'Search complete.';
+                                eventSource.close();
+                                eventSource = null;
+                            }
+
+                            // Update the displayed markdown after processing each message
+                            updateMarkdownOutput();
+
+                        } catch (e) {
+                            console.error("Error parsing streamed message:", e, "Data:", event.data);
+                             // Continue processing even if one message fails
+                        }
+                    };
+
+                     eventSource.onopen = function() {
+                         outputDiv.innerHTML = 'Streaming search results...';
+                          markdownOutputDiv.innerHTML = ''; // Clear placeholder on connection open
+                     };
+
+                    eventSource.onerror = function(err) {
+                        console.error("EventSource failed:", err);
+                        outputDiv.innerHTML = `<p style="color: red;">Streaming connection failed or closed.</p>`;
+                        eventSource.close();
+                        eventSource = null; // Clear the event source reference
+                        updateMarkdownOutput(); // Update one last time with potentially partial data
+                    };
+
+                } else { // Non-streaming fetch (your original working code)
+                     outputDiv.innerHTML = 'Fetching complete result...';
+                     markdownOutputDiv.innerHTML = ''; // Clear placeholder
+                    const response = await fetch('http://10.42.0.56:3000/search', { // Keep POST for non-streaming if that's how your backend is setup
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Populate state from the final JSON response
+                        currentAnswerText = data.answer || '';
+                        currentSources = data.sources || [];
+                        currentImages = (data.images || []).slice(0, MAX_TOTAL_IMAGES); // Apply limit here too
+
+                        // Rebuild and update markdown once
+                        updateMarkdownOutput();
+                        outputDiv.innerHTML = 'Search complete.';
+
+                    } else {
+                        outputDiv.innerHTML = `<p style="color: red;">Error: ${data.error || response.statusText}</p>`;
+                    }
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                outputDiv.innerHTML = `<p style="color: red;">Request failed: ${error.message}</p>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
