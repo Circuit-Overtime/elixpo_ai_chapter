@@ -156,6 +156,13 @@ def perform_duckduckgo_text_search(query, max_results):
                 else:
                     print(f"Attempt {attempt + 1} failed: No results from DuckDuckGo for query '{query}'. Retrying in {REQUEST_RETRY_DELAY} seconds.")
                     time.sleep(REQUEST_RETRY_DELAY)
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 403:
+                print(f"Attempt {attempt + 1} failed: Received 403 Forbidden for query '{query}'. Not retrying.")
+                break
+            else:
+                print(f"Attempt {attempt + 1} failed: HTTP error {e.response.status_code} for query '{query}'. Retrying in {REQUEST_RETRY_DELAY} seconds.")
+                time.sleep(REQUEST_RETRY_DELAY)
         except Exception as e:
             print(f"Attempt {attempt + 1} failed: Error performing DuckDuckGo text search for query '{query}': {e}. Retrying in {REQUEST_RETRY_DELAY} seconds.")
             time.sleep(REQUEST_RETRY_DELAY)
@@ -236,9 +243,15 @@ def scrape_website(url, scrape_images=True):
 
             return text_content, image_urls
         except requests.exceptions.RequestException as e:
+            if e.response and e.response.status_code == 403:
+                print(f"Attempt {attempt + 1} failed: Received 403 Forbidden for URL: {url}. Not retrying.")
+                continue
             print(f"Attempt {attempt + 1} failed: Error scraping {url}: {e}. Retrying in {REQUEST_RETRY_DELAY} seconds.")
             time.sleep(REQUEST_RETRY_DELAY)
         except Exception as e:
+            if e.response and e.response.status_code == 403:
+                print(f"Attempt {attempt + 1} failed: Received 403 Forbidden for URL: {url}. Not retrying.")
+                continue
             print(f"Attempt {attempt + 1} failed: Error parsing website {url}: {e}. Retrying in {REQUEST_RETRY_DELAY} seconds.")
             time.sleep(REQUEST_RETRY_DELAY)
 
