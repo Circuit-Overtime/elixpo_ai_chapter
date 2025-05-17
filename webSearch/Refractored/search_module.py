@@ -14,13 +14,13 @@ from tqdm import tqdm
 import random 
 
 # --- Configuration ---
-MAX_SEARCH_RESULTS_PER_QUERY = 5
-MAX_SCRAPE_WORD_COUNT = 1000
-MAX_TOTAL_SCRAPE_WORD_COUNT = 5000
+MAX_SEARCH_RESULTS_PER_QUERY = 10
+MAX_SCRAPE_WORD_COUNT = 2000
+MAX_TOTAL_SCRAPE_WORD_COUNT = 8000
 MIN_PAGES_TO_SCRAPE = 3
-MAX_PAGES_TO_SCRAPE = 5 # Adjusted this down slightly based on common needs
+MAX_PAGES_TO_SCRAPE = 8 # Adjusted this down slightly based on common needs
 MAX_IMAGES_TO_INCLUDE = 3
-MAX_TRANSCRIPT_WORD_COUNT = 3000
+MAX_TRANSCRIPT_WORD_COUNT = 6000
 
 # --- Rate Limiting and Retries ---
 DUCKDUCKGO_REQUEST_DELAY = 3 # Increased delay slightly
