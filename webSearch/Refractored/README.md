@@ -44,13 +44,30 @@ This file demonstrates how to use the `search_module.py`:
 - Provides a sample query to test the module.
 - Prints the synthesized Markdown output.
 
+### 3. `index.html`
+This file provides the front-end interface for the web search and synthesis module:
+- **User Input Form**: Allows users to input queries and toggle server logs.
+- **Dynamic Results Display**: Displays synthesized Markdown responses rendered as HTML using the `marked.js` library.
+- **Status Messages**: Provides feedback during the search process (e.g., loading, errors).
+- **Styling**: Includes a clean and responsive design with CSS for better user experience.
+
+### 4. `ai_search_agent.py`
+This file contains the back-end logic for handling search and synthesis requests:
+- **Flask API**: Exposes an endpoint (`/search`) to process user queries via GET or POST requests.
+- **Search and Synthesis Logic**: Implements the `search_and_synthesize` function to orchestrate query processing, web scraping, and AI synthesis.
+- **Error Handling**: Includes retry mechanisms and logging for robust performance.
+- **AI Integration**: Utilizes AI models for query planning and response synthesis.
+- **YouTube and Web Support**: Fetches YouTube transcripts and metadata, scrapes websites, and integrates results into a cohesive response.
+- **Rate Limiting**: Protects the API with request limits using `Flask-Limiter`.
+- **Configuration**: Offers adjustable parameters for search, scraping, and AI behavior.
+
 ---
 
 ## Usage
 
 ### Prerequisites
 - Python 3.8 or higher
-- Required libraries: `requests`, `beautifulsoup4`, `duckduckgo_search`, `pytube`, `youtube_transcript_api`, `tqdm`
+- Required libraries: `requests`, `json`, `datetime`, `re`, `time`, `sys`, `urllib.parse`, `youtube_transcript_api`, `pytube`, `duckduckgo_search`, `beautifulsoup4`, `math`, `mimetypes`, `tqdm`, `random`, `flask`, `flask_cors`, `flask_limiter`
 
 Install dependencies using:
 ```bash
