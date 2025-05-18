@@ -102,8 +102,32 @@ print(markdown_no_sources)
 
 ---
 
+### Updated Example Using `ai_search_agent.py` and `index.html`
+
+#### Running the Flask API
+1. Start the Flask server by running the `ai_search_agent.py` file:
+    ```bash
+    python ai_search_agent.py
+    ```
+2. The server will start at `http://127.0.0.1:5000/search`. You can now send queries via the front-end or directly using tools like `curl` or Postman.
+
+#### Using the Front-End (`index.html`)
+1. Open the `index.html` file in your browser.
+2. Enter a query in the text area (e.g., "Summarize the latest advancements in AI from https://openai.com and this YouTube video https://www.youtube.com/watch?v=dQw4w9WgXcQ").
+3. Click the **Search** button to send the query to the Flask API.
+4. The synthesized Markdown response will be rendered dynamically in the results area.
+
+#### Example Query via API
+You can also test the API directly using `curl`:
+```bash
+curl -X POST http://127.0.0.1:5000/search \
+-H "Content-Type: application/json" \
+-d '{"query": "What are the latest trends in AI research? Summarize this YouTube video https://www.youtube.com/watch?v=dQw4w9WgXcQ", "show_logs": true}'
+```
+
+
 ## Limitations
-- Relies on external APIs and libraries, which may have rate limits or restrictions.
+- Relies on pollinations APIs as the only endpoint, and depends on their rate limits or restrictions for the ai model endpoints.
 - Requires internet connectivity for web search and scraping.
 
 ---
