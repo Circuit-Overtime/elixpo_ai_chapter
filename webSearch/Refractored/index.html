@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search & Synthesize</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #e9e9e9;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in element's total width/height */
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 100px;
+        }
+        button {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+         button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #status-message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            min-height: 1.2em; /* Reserve space */
+        }
+        .status-loading {
+            color: #007bff;
+            background-color: #e9f7ff;
+        }
+        .status-error {
+            color: #dc3545;
+            background-color: #f8d7da;
+        }
+        #results-area {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        /* Basic styling for markdown elements */
+        #results-area h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px; }
+        #results-area p { margin-bottom: 10px; }
+        #results-area ul, #results-area ol { margin-bottom: 10px; padding-left: 20px; }
+        #results-area pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto; /* Horizontal scroll for code blocks */
+        }
+        #results-area blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 10px;
+            color: #666;
+            margin: 10px 0;
+        }
+        #results-area img {
+            max-width: 100%; /* Prevent images from overflowing */
+            height: auto;
+            display: block;
+            margin: 10px auto;
+        }
+        #results-area a { color: #007bff; text-decoration: none; }
+        #results-area a:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Search & Synthesize</h1>
+
+        <form id="search-form">
+            <label for="query-input">Enter your query:</label><br>
+            <textarea id="query-input" placeholder="e.g., Summarize the latest news about AI from wikipedia.org and this youtube video https://www.youtube.com/watch?v=my_video_id">What's the latest weather of kolkata india?</textarea><br>
+
+            <div>
+                <input type="checkbox" id="show-logs-checkbox" checked>
+                <label for="show-logs-checkbox">Show server logs in console (requires Flask app running with logs enabled)</label>
+            </div>
+            <br>
+
+            <button type="submit" id="submit-button">Search</button>
+        </form>
+
+        <div id="status-message"></div>
+
+        <div id="results-area">
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        const searchForm = document.getElementById('search-form');
+        const queryInput = document.getElementById('query-input');
+        const resultsArea = document.getElementById('results-area');
+        const statusMessage = document.getElementById('status-message');
+        const submitButton = document.getElementById('submit-button');
+        const showLogsCheckbox = document.getElementById('show-logs-checkbox');
+
+
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const query = queryInput.value.trim();
+            const showLogs = showLogsCheckbox.checked;
+
+            if (!query) {
+                statusMessage.textContent = 'Please enter a query.';
+                statusMessage.className = 'status-error';
+                return;
+            }
+
+            // Show loading status
+            statusMessage.textContent = 'Searching...';
+            statusMessage.className = 'status-loading';
+            resultsArea.innerHTML = ''; // Clear previous results
+            submitButton.disabled = true; // Disable button
+
+            // Use the Fetch API to send a POST request
+            fetch('http://127.0.0.1:5000/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query, show_logs: showLogs }),
+            })
+            .then(response => {
+                // Check if the response is OK (status 200-299)
+                if (!response.ok) {
+                    // Attempt to read error message from JSON if available, otherwise use status text
+                    return response.json().catch(() => Promise.resolve({ error: `HTTP error! status: ${response.status}` }))
+                           .then(err => { throw new Error(err.error || `HTTP error! status: ${response.status}`); });
+                }
+                // The API returns text (Markdown), so read as text
+                return response.text();
+            })
+            .then(markdownText => {
+                // Render the Markdown text to HTML using Marked.js
+                // Use marked.parse (synchronous) for simplicity
+                const htmlOutput = marked.parse(markdownText);
+
+                // Display the rendered HTML
+                resultsArea.innerHTML = htmlOutput;
+
+                // Clear status message
+                statusMessage.textContent = '';
+                statusMessage.className = '';
+            })
+            .catch(error => {
+                // Handle any errors during the fetch or processing
+                console.error('Error:', error);
+                statusMessage.textContent = 'Error: ' + error.message;
+                statusMessage.className = 'status-error';
+                resultsArea.innerHTML = ''; // Clear any partial results
+            })
+            .finally(() => {
+                 submitButton.disabled = false; // Re-enable button
+            });
+        });
+
+         // Optional: Add basic functionality to render initial placeholder markdown
+        resultsArea.innerHTML = marked.parse("### Welcome!\n\nEnter a query above and click 'Search' to get a synthesized answer based on web sources and your provided URLs.");
+
+
+    </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ import json
 import datetime
 import re
 import time
+import sys # Import sys to potentially redirect stdout
 from urllib.parse import urljoin, urlparse, parse_qs
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled
 from pytube import YouTube, exceptions
@@ -10,8 +11,10 @@ from duckduckgo_search import DDGS
 from bs4 import BeautifulSoup
 import math
 import mimetypes
-from tqdm import tqdm  
-import random 
+from tqdm import tqdm
+import random
+from flask import Flask, request, jsonify, Response
+from flask_cors import CORS 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -20,24 +23,45 @@ MAX_SEARCH_RESULTS_PER_QUERY = 8
 MAX_SCRAPE_WORD_COUNT = 2000
 MAX_TOTAL_SCRAPE_WORD_COUNT = 8000
 MIN_PAGES_TO_SCRAPE = 3
-MAX_PAGES_TO_SCRAPE = 10 
+MAX_PAGES_TO_SCRAPE = 10
 MAX_IMAGES_TO_INCLUDE = 3
 MAX_TRANSCRIPT_WORD_COUNT = 6000
-DUCKDUCKGO_REQUEST_DELAY = 3 
+DUCKDUCKGO_REQUEST_DELAY = 3
 REQUEST_RETRY_DELAY = 5
 MAX_REQUEST_RETRIES = 3
-MAX_DUCKDUCKGO_RETRIES = 5 
-CLASSIFICATION_MODEL = "OpenAI GPT-4.1-nano" 
-SYNTHESIS_MODEL = "openai-large"           
+MAX_DUCKDUCKGO_RETRIES = 5
+CLASSIFICATION_MODEL = "OpenAI GPT-4.1-nano"
+SYNTHESIS_MODEL = "openai-large"
 
+class DummyContextManager:
+    """A context manager that does nothing, used when show_logs is False."""
+    def __enter__(self):
+        return self
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
+    def set_postfix_str(self, *args, **kwargs): pass
+    def update(self, *args, **kwargs): pass
+    def close(self): pass
 
+def conditional_tqdm(iterable, show_logs, *args, **kwargs):
+    """Returns tqdm iterable or raw iterable based on show_logs."""
+    if show_logs:
+        return tqdm(iterable, *args, **kwargs)
+    else:
+        return iterable
+
+def conditional_print(message, show_logs):
+    """Prints message only if show_logs is True."""
+    if show_logs:
+        print(message)
 
 def exponential_backoff(attempt, base_delay=REQUEST_RETRY_DELAY, max_delay=60):
     """Calculates exponential backoff delay with jitter."""
     delay = min(max_delay, base_delay * (2 ** attempt))
     return delay + random.uniform(0, base_delay)
 
-def query_pollinations_ai(messages, model=SYNTHESIS_MODEL, retries=MAX_REQUEST_RETRIES):
+def query_pollinations_ai(messages, model=SYNTHESIS_MODEL, retries=MAX_REQUEST_RETRIES, show_logs=True):
+    """Queries Pollinations AI with retry logic and conditional logging."""
     for attempt in range(retries):
         payload = {
             "model": model,
@@ -51,23 +75,23 @@ def query_pollinations_ai(messages, model=SYNTHESIS_MODEL, retries=MAX_REQUEST_R
         }
 
         try:
-            response = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30) # Added timeout
+            response = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403, 404]:
-                print(f"Attempt {attempt + 1} failed: Client error {e.response.status_code} querying Pollinations AI ({model}). Not retrying.")
-                return None # Don't retry on client errors
-            print(f"Attempt {attempt + 1} failed: HTTP error {e.response.status_code} querying Pollinations AI ({model}): {e}. Retrying in {exponential_backoff(attempt):.2f} seconds.")
+                conditional_print(f"Attempt {attempt + 1} failed: Client error {e.response.status_code} querying Pollinations AI ({model}). Not retrying.", show_logs)
+                return None
+            conditional_print(f"Attempt {attempt + 1} failed: HTTP error {e.response.status_code} querying Pollinations AI ({model}): {e}. Retrying in {exponential_backoff(attempt):.2f} seconds.", show_logs)
             time.sleep(exponential_backoff(attempt))
         except requests.exceptions.RequestException as e:
-            print(f"Attempt {attempt + 1} failed: Error querying Pollinations AI ({model}): {e}. Retrying in {exponential_backoff(attempt):.2f} seconds.")
+            conditional_print(f"Attempt {attempt + 1} failed: Error querying Pollinations AI ({model}): {e}. Retrying in {exponential_backoff(attempt):.2f} seconds.", show_logs)
             time.sleep(exponential_backoff(attempt))
         except Exception as e:
-             print(f"Attempt {attempt + 1} failed: Unexpected error querying Pollinations AI ({model}): {e}. Retrying in {exponential_backoff(attempt):.2f} seconds.")
+             conditional_print(f"Attempt {attempt + 1} failed: Unexpected error querying Pollinations AI ({model}): {e}. Retrying in {exponential_backoff(attempt):.2f} seconds.", show_logs)
              time.sleep(exponential_backoff(attempt))
 
-    print(f"Failed to query Pollinations AI ({model}) after {retries} attempts.")
+    conditional_print(f"Failed to query Pollinations AI ({model}) after {retries} attempts.", show_logs)
     return None
 
 
@@ -75,7 +99,7 @@ def extract_urls_from_query(query):
     """
     Extracts URLs from the user's query and categorizes them.
     """
-    
+
     urls = re.findall(r'(https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+(?:[-\w.!~*\'()@;:$+,?&/=#%]*))', query)
     cleaned_query = re.sub(r'(https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+(?:[-\w.!~*\'()@;:$+,?&/=#%]*))', '', query).strip()
 
@@ -83,8 +107,8 @@ def extract_urls_from_query(query):
     youtube_urls = []
 
     for url in urls:
-        
-        url = url.rstrip('...') 
+
+        url = url.rstrip('...')
         parsed_url = urlparse(url)
         if "youtube.com" in parsed_url.netloc or "youtu.be" in parsed_url.netloc:
             youtube_urls.append(url)
@@ -107,51 +131,54 @@ def get_youtube_video_id(url):
             return parsed_url.path[1:]
     return None
 
-def get_youtube_transcript(video_id):
+def get_youtube_transcript(video_id, show_logs=True):
+    """Fetches YouTube transcript with conditional logging."""
     try:
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        transcript = transcript_list.find_transcript(['en', 'a.en']) 
+        transcript = transcript_list.find_transcript(['en', 'a.en'])
         if transcript:
              full_transcript = " ".join([entry['text'] for entry in transcript.fetch()])
-             
+
              return full_transcript[:MAX_TRANSCRIPT_WORD_COUNT] + ("..." if len(full_transcript) > MAX_TRANSCRIPT_WORD_COUNT else "")
         else:
-             return None 
+             conditional_print(f"No English transcript found for video ID: {video_id}", show_logs)
+             return None
 
     except NoTranscriptFound:
-        
+        conditional_print(f"No transcript found for video ID: {video_id}", show_logs)
         return None
     except TranscriptsDisabled:
-        
+        conditional_print(f"Transcripts are disabled for video ID: {video_id}", show_logs)
         return None
-    except Exception:
-        
+    except Exception as e:
+        conditional_print(f"Error fetching transcript for video ID {video_id}: {e}", show_logs)
         return None
 
-def get_youtube_video_metadata(url):
+def get_youtube_video_metadata(url, show_logs=True):
+    """Fetches YouTube video metadata with conditional logging."""
     try:
         yt = YouTube(url)
-        _ = yt.streams.filter(progressive=True, file_extension='mp4').first() 
+        _ = yt.streams.filter(progressive=True, file_extension='mp4').first()
         metadata = {
             'title': yt.title,
             'author': yt.author,
             'publish_date': yt.publish_date.strftime("%Y-%m-%d %H:%M:%S") if yt.publish_date else "Date Unknown",
             'length': f"{yt.length // 60}m {yt.length % 60}s" if yt.length is not None else "Unknown Length",
-            'views': f"{yt.views:,}" if yt.views is not None else "Unknown Views", # Format views nicely
+            'views': f"{yt.views:,}" if yt.views is not None else "Unknown Views",
             'description': yt.description[:500] + "..." if yt.description and len(yt.description) > 500 else yt.description
         }
         return metadata
     except exceptions.VideoUnavailable:
-        # print(f"Pytube: VideoUnavailable for {url}.") # Handled by tqdm description
+        conditional_print(f"Pytube: VideoUnavailable for {url}.", show_logs)
         return None
     except exceptions.LiveStreamError:
-        # print(f"Pytube: LiveStreamError for {url}. Cannot get metadata for live streams.") # Handled by tqdm description
+        conditional_print(f"Pytube: LiveStreamError for {url}. Cannot get metadata for live streams.", show_logs)
         return None
     except exceptions.RegexMatchError:
-        # print(f"Pytube: RegexMatchError for {url}. URL format issue?") # Handled by tqdm description
+        conditional_print(f"Pytube: RegexMatchError for {url}. URL format issue?", show_logs)
         return None
-    except Exception:
-        # print(f"Pytube: Other error getting metadata for {url}: {e}") # Handled by tqdm description
+    except Exception as e:
+        conditional_print(f"Pytube: Other error getting metadata for {url}: {e}", show_logs)
         return None
 
 def is_likely_search_result_url(url):
@@ -159,10 +186,8 @@ def is_likely_search_result_url(url):
         return False
     parsed_url = urlparse(url)
     if any(domain in parsed_url.netloc for domain in ['google.com', 'duckduckgo.com', 'bing.com', 'yahoo.com']):
-        # Check common search path patterns
         if parsed_url.path.startswith('/search') or parsed_url.path.startswith('/html') or parsed_url.path.startswith('/res') or parsed_url.path == '/':
              return True
-        # Check for search query parameters
         if parsed_url.query:
             query_params = parse_qs(parsed_url.query)
             if any(param in query_params for param in ['q', 'query', 'p', 'wd']):
@@ -177,7 +202,7 @@ def is_likely_image(url):
     if not url:
         return False
 
-    if not url.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')):
+    if not url.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg')): # Added .svg
         return False
 
     if any(keyword in url.lower() for keyword in ['icon', 'logo', 'loader', 'sprite', 'thumbnail', 'small', 'avatar', 'advert', 'ad_']):
@@ -186,21 +211,9 @@ def is_likely_image(url):
     if re.search(r'/\d+x\d+/', url) or re.search(r'-\d+x\d+\.', url):
         return False
 
-    # Attempt to head request (faster than GET) to check content type and size (optional but good)
-    # Keeping this disabled by default as of now since it is adding latency and might be blocked region based
-    #will update later overtime!
-    # try:
-    #     response = requests.head(url, timeout=3, headers={'User-Agent': 'Mozilla/5.0 (compatible; AcmeInc/1.0)'}) # Use a generic User-Agent
-    #     if 'Content-Type' in response.headers and response.headers['Content-Type'].lower().startswith('image/'):
-    #         # Could add size check here based on 'Content-Length' header if available
-    #         # if 'Content-Length' in response.headers and int(response.headers['Content-Length']) < 2000: # e.g., less than 2KB
-    #         #     return False
-    #         return True
-    # except requests.exceptions.RequestException:
-    #     pass # Ignore errors, fall back to URL heuristics
+    return True
 
-    return True 
-def scrape_website(url, scrape_images=True, total_word_count_limit=MAX_TOTAL_SCRAPE_WORD_COUNT):
+def scrape_website(url, scrape_images=True, total_word_count_limit=MAX_TOTAL_SCRAPE_WORD_COUNT, show_logs=True):
     """
     Scrapes text content and potentially relevant image URLs from a given URL with limits.
     Includes basic image filtering and improved retry logic that skips 403s.
@@ -208,78 +221,78 @@ def scrape_website(url, scrape_images=True, total_word_count_limit=MAX_TOTAL_SCR
     text_content = ""
     image_urls = []
     retries = MAX_REQUEST_RETRIES
-    headers = {'User-Agent': 'Mozilla/5.0 (compatible; AcmeInc/1.0)'} 
+    headers = {'User-Agent': 'Mozilla/5.0 (compatible; AcmeInc/1.0)'}
     for attempt in range(retries):
         try:
-            response = requests.get(url, timeout=15, headers=headers) 
-            response.raise_for_status() 
+            response = requests.get(url, timeout=15, headers=headers)
+            response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
 
-            
-            for script_or_style in soup(['script', 'style']):
+            for script_or_style in soup(['script', 'style', 'nav', 'footer', 'header']): 
                 script_or_style.extract()
 
             temp_text = ''
-            for tag in soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'div', 'article', 'main']):
+            # Prioritize body > main > article, then other tags
+            main_content = soup.find('main') or soup.find('article') or soup.find('body') or soup
+            for tag in main_content.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'div']):
                  text = tag.get_text()
-                 text = re.sub(r'\s+', ' ', text).strip() 
+                 text = re.sub(r'\s+', ' ', text).strip()
                  if text:
-                     temp_text += text + '\n\n' 
+                     temp_text += text + '\n\n'
 
             words = temp_text.split()
             page_word_limit = min(MAX_SCRAPE_WORD_COUNT, total_word_count_limit - len(text_content.split()))
             if page_word_limit <= 0:
-                text_content = "" 
+                text_content = ""
             elif len(words) > page_word_limit:
                 text_content = ' '.join(words[:page_word_limit]) + '...'
             else:
                 text_content = temp_text.strip()
 
             if scrape_images:
-                img_tags = soup.find_all('img')
+                img_tags = main_content.find_all('img') # Only look for images within the main content area
                 for img in img_tags:
-                    img_url = img.get('src') or img.get('data-src') 
+                    img_url = img.get('src') or img.get('data-src')
                     if img_url:
                         img_url = urljoin(url, img_url)
-                        
-                        if urlparse(img_url).path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg')):
-                            if is_likely_image(img_url): 
-                                image_urls.append(img_url)
-                                if len(image_urls) >= MAX_IMAGES_TO_INCLUDE:
-                                    break 
+
+                        # Check if the URL ends with an image extension after joining
+                        parsed_img_url = urlparse(img_url)
+                        if parsed_img_url.path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg')):
+                             if is_likely_image(img_url):
+                                 image_urls.append(img_url)
+                                 if len(image_urls) >= MAX_IMAGES_TO_INCLUDE:
+                                     break
 
             return text_content, image_urls
         except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 403:
-                # print(f"Attempt {attempt + 1}: Received 403 Forbidden for URL: {url}. Skipping this URL.") # Handled by tqdm description
-                return "", [] # Do not retry on 403
-            elif e.response.status_code == 404:
-                 # print(f"Attempt {attempt + 1}: Received 404 Not Found for URL: {url}. Skipping this URL.") # Handled by tqdm description
-                 return "", [] # Do not retry on 404
+            if e.response.status_code in [403, 404]:
+                conditional_print(f"Attempt {attempt + 1}: Received {e.response.status_code} for URL: {url}. Skipping.", show_logs)
+                return "", []
             else:
-                # print(f"Attempt {attempt + 1}: HTTP error {e.response.status_code} for URL: {url}. Retrying in {exponential_backoff(attempt):.2f}s.") # Handled by tqdm description
+                conditional_print(f"Attempt {attempt + 1}: HTTP error {e.response.status_code} for URL: {url}. Retrying in {exponential_backoff(attempt):.2f}s.", show_logs)
                 time.sleep(exponential_backoff(attempt))
         except requests.exceptions.RequestException as e:
-            # print(f"Attempt {attempt + 1}: Error scraping {url}: {e}. Retrying in {exponential_backoff(attempt):.2f}s.") # Handled by tqdm description
+            conditional_print(f"Attempt {attempt + 1}: Error scraping {url}: {e}. Retrying in {exponential_backoff(attempt):.2f}s.", show_logs)
             time.sleep(exponential_backoff(attempt))
         except Exception as e:
-            # print(f"Attempt {attempt + 1}: Error parsing website {url}: {e}. Retrying in {exponential_backoff(attempt):.2f}s.") # Handled by tqdm description
+            conditional_print(f"Attempt {attempt + 1}: Error parsing website {url}: {e}. Retrying in {exponential_backoff(attempt):.2f}s.", show_logs)
             time.sleep(exponential_backoff(attempt))
 
-    # print(f"Failed to scrape content after {retries} attempts for {url}.") # Handled by tqdm description
+    conditional_print(f"Failed to scrape content after {retries} attempts for {url}.", show_logs)
     return "", []
 
 # --- Planning Function (Consolidated AI Analysis) ---
-def plan_execution_llm(user_query, website_urls, youtube_urls, cleaned_query, current_time_utc, location):
+def plan_execution_llm(user_query, website_urls, youtube_urls, cleaned_query, current_time_utc, location, show_logs=True):
     """
     Uses the LLM to analyze the query, determine necessary steps (native, search, scrape, youtube),
-    and plan the execution.
+    and plan the execution with conditional logging.
     """
-    
+
     effective_cleaned_query = cleaned_query if cleaned_query else user_query
 
     messages = [
-        {"role": "system", "content": """You are an AI assistant that analyzes user queries to determine the best strategy for finding information using native knowledge, provided URLs (websites and YouTube), and web searches. Plan the execution steps and required resources.
+        {"role": "system", "content": """You analyze user queries to determine the best strategy for finding information using native knowledge, provided URLs (websites and YouTube), and web searches. Plan the execution steps and required resources.
 
         Analyze the original query, the provided URLs, and the cleaned query (without URLs). Determine:
         1.  What parts of the query can be answered using your native knowledge?
@@ -289,7 +302,7 @@ def plan_execution_llm(user_query, website_urls, youtube_urls, cleaned_query, cu
         5.  Estimate the number of web pages (from search results) to scrape (between 3 and 5).
         6.  Determine the primary focus of the query (Purely Native, YouTube Focused, Mixed, Other Web Focused).
 
-        Respond in a structured, parseable JSON format:
+        Strictly Respond in a structured, parseable JSON format:
         ```json
         {
           "native_parts": "String describing parts answerable natively, or 'None'",
@@ -315,127 +328,139 @@ def plan_execution_llm(user_query, website_urls, youtube_urls, cleaned_query, cu
         {"role": "user", "content": "Plan the execution strategy in the specified JSON format."}
     ]
 
-    
-    response = query_pollinations_ai(messages, model=CLASSIFICATION_MODEL)
+
+    response = query_pollinations_ai(messages, model=CLASSIFICATION_MODEL, show_logs=show_logs)
 
     default_plan = {
         "native_parts": "None",
         "search_queries": [effective_cleaned_query] if effective_cleaned_query else [],
         "scrape_provided_websites": len(website_urls) > 0,
         "process_provided_youtube": len(youtube_urls) > 0,
-        "estimated_pages_to_scrape": MAX_PAGES_TO_SCRAPE,
+        "estimated_pages_to_scrape": MAX_PAGES_TO_SCRAPE, 
         "query_focus": "Mixed"
     }
 
     if response and 'choices' in response and len(response['choices']) > 0:
         ai_output = response['choices'][0]['message']['content'].strip()
-        # Attempt to extract and parse JSON
         json_match = re.search(r"```json\n(.*)\n```", ai_output, re.DOTALL)
         if json_match:
             try:
                 plan = json.loads(json_match.group(1))
-                # Validate and sanitize plan
                 plan["native_parts"] = str(plan.get("native_parts", "None"))
                 plan["search_queries"] = [str(q).strip() for q in plan.get("search_queries", []) if isinstance(q, str) and q.strip()]
                 plan["scrape_provided_websites"] = bool(plan.get("scrape_provided_websites", len(website_urls) > 0))
                 plan["process_provided_youtube"] = bool(plan.get("process_provided_youtube", len(youtube_urls) > 0))
-                plan["estimated_pages_to_scrape"] = max(MIN_PAGES_TO_SCRAPE, min(MAX_PAGES_TO_SCRAPE, int(plan.get("estimated_pages_to_scrape", MAX_PAGES_TO_SCRAPE))))
-                plan["query_focus"] = plan.get("query_focus", "Mixed") # Could add validation for focus types
-                print("\n--- AI Execution Plan ---")
-                print(json.dumps(plan, indent=2))
-                print("-------------------------")
+                # Ensure estimated pages is within bounds
+                estimated = int(plan.get("estimated_pages_to_scrape", MAX_PAGES_TO_SCRAPE))
+                plan["estimated_pages_to_scrape"] = max(MIN_PAGES_TO_SCRAPE, min(MAX_PAGES_TO_SCRAPE, estimated))
+                plan["query_focus"] = plan.get("query_focus", "Mixed")
+                conditional_print("\n--- AI Execution Plan ---", show_logs)
+                conditional_print(json.dumps(plan, indent=2), show_logs)
+                conditional_print("-------------------------", show_logs)
                 return plan
             except (json.JSONDecodeError, ValueError, TypeError) as e:
-                # print(f"Error parsing AI plan JSON: {e}. Using default plan.")
-                # print(f"AI output: {ai_output}") # Log the problematic output
+                conditional_print(f"Error parsing AI plan JSON: {e}. Using default plan.", show_logs)
+                conditional_print(f"AI output: {ai_output}", show_logs)
                 return default_plan
         else:
-            # print("AI response did not contain valid JSON plan. Using default plan.")
-            # print(f"AI output: {ai_output}") # Log the problematic output
+            conditional_print("AI response did not contain valid JSON plan. Using default plan.", show_logs)
+            conditional_print(f"AI output: {ai_output}", show_logs)
             return default_plan
 
-    print("Could not get execution plan from AI. Using default plan.")
+    conditional_print("Could not get execution plan from AI. Using default plan.", show_logs)
     return default_plan
 
 
-def perform_duckduckgo_text_search(query, max_results, retries=MAX_DUCKDUCKGO_RETRIES):
+def perform_duckduckgo_text_search(query, max_results, retries=MAX_DUCKDUCKGO_RETRIES, show_logs=True):
     """
-    Performs a text search using the DuckDuckGo Search API with exponential backoff.
+    Performs a text search using the DuckDuckGo Search API with exponential backoff and conditional logging.
     """
     results = []
     for attempt in range(retries):
         try:
-            
-            time.sleep(DUCKDUCKGO_REQUEST_DELAY + exponential_backoff(attempt, base_delay=1, max_delay=10)) # Extra backoff for search
+            time.sleep(DUCKDUCKGO_REQUEST_DELAY + exponential_backoff(attempt, base_delay=1, max_delay=10))
             with DDGS() as ddgs:
-                
                 search_results = list(ddgs.text(query, max_results=max_results))
                 if search_results:
                     return search_results
                 else:
-                     # Treat no results on a specific attempt as a soft failure, retry
-                     print(f"DDGS Attempt {attempt + 1}: No results returned for query '{query}'. Retrying.")
+                     conditional_print(f"DDGS Attempt {attempt + 1}: No results returned for query '{query}'. Retrying.", show_logs)
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 403:
-                print(f"DDGS Attempt {attempt + 1}: Received 403 Forbidden for query '{query}'. Not retrying.")
-                return [] # Do not retry on 403
-            print(f"DDGS Attempt {attempt + 1}: HTTP error {e.response.status_code} for query '{query}'. Retrying in {exponential_backoff(attempt):.2f}s.")
+                conditional_print(f"DDGS Attempt {attempt + 1}: Received 403 Forbidden for query '{query}'. Not retrying.", show_logs)
+                return []
+            conditional_print(f"DDGS Attempt {attempt + 1}: HTTP error {e.response.status_code} for query '{query}'. Retrying in {exponential_backoff(attempt):.2f}s.", show_logs)
             time.sleep(exponential_backoff(attempt))
         except Exception as e:
-            # Catch Ratelimit (often not a standard HTTP error status) and other exceptions
-            print(f"DDGS Attempt {attempt + 1}: Error performing text search for query '{query}': {e}. Retrying in {exponential_backoff(attempt):.2f}s.")
+            conditional_print(f"DDGS Attempt {attempt + 1}: Error performing text search for query '{query}': {e}. Retrying in {exponential_backoff(attempt):.2f}s.", show_logs)
             time.sleep(exponential_backoff(attempt))
 
-    # print(f"Failed to get search results after {retries} attempts for query '{query}'.") # Handled by tqdm description
+    conditional_print(f"Failed to get search results after {retries} attempts for query '{query}'.", show_logs)
     return []
 
 
-def search_and_synthesize(user_input_query, show_sources=True, scrape_images=True):
+# --- Main Search and Synthesize Function (Modified for show_logs) ---
+def search_and_synthesize(user_input_query, show_sources=True, scrape_images=True, show_logs=True):
+    """
+    Main function to orchestrate the search, scrape, and synthesize process.
+    Includes a show_logs parameter to control console output and progress bars.
+    """
+    if not user_input_query:
+        return "Error: No query provided.", 400 # Return an error for Flask
+
     website_urls, youtube_urls, cleaned_query = extract_urls_from_query(user_input_query)
 
-    
     current_time_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     location = ""
     try:
-        response = requests.get("https://ipinfo.io/json", timeout=5) # Added timeout
+        response = requests.get("https://ipinfo.io/json", timeout=5)
         response.raise_for_status()
         location_data = response.json()
         location = location_data.get("city", "")
     except requests.exceptions.RequestException:
-        location = "" 
+        location = ""
 
-    
-    plan = plan_execution_llm(user_input_query, website_urls, youtube_urls, cleaned_query, current_time_utc, location)
 
-    
+    plan = plan_execution_llm(user_input_query, website_urls, youtube_urls, cleaned_query, current_time_utc, location, show_logs=show_logs)
     native_answer_content = ""
     if plan.get("native_parts") and plan["native_parts"] != "None":
-        with tqdm(total=1, desc="Getting Native Answer", unit="step") as pbar:
+        if show_logs:
+             pbar = tqdm(total=1, desc="Getting Native Answer", unit="step")
+        else:
+             pbar = DummyContextManager() # Use dummy
+
+        with pbar as pb:
             native_answer_messages = [
-                {"role": "system", "content": f"Answer the following question based on your native knowledge: {plan['native_parts']}"},
-                {"role": "user", "content": cleaned_query} 
+                {"role": "system", "content": f"Answer the following question in detail with proper description based on your knowledge: {plan['native_parts']}"},
+                {"role": "user", "content": cleaned_query}
             ]
-            native_answer_response = query_pollinations_ai(native_answer_messages, model=SYNTHESIS_MODEL)
+            native_answer_response = query_pollinations_ai(native_answer_messages, model=SYNTHESIS_MODEL, show_logs=show_logs)
             if native_answer_response and 'choices' in native_answer_response and len(native_answer_response['choices']) > 0:
                 native_answer_content = native_answer_response['choices'][0]['message']['content']
-                pbar.set_postfix_str("Success")
+                pb.set_postfix_str("Success")
             else:
-                pbar.set_postfix_str("Failed")
-                print("Warning: Could not get native answer.")
-            pbar.update(1)
+                pb.set_postfix_str("Failed")
+                conditional_print("Warning: Could not get native answer.", show_logs)
+            pb.update(1)
+
 
     youtube_transcripts_content = ""
     processed_youtube_urls = []
     if plan.get("process_provided_youtube") and youtube_urls:
-        print("\nProcessing YouTube URLs...")
-        with tqdm(total=len(youtube_urls), desc="Processing YouTube URLs", unit="video") as pbar:
+        conditional_print("\nProcessing YouTube URLs...", show_logs)
+        if show_logs:
+            pbar = tqdm(total=len(youtube_urls), desc="Processing YouTube URLs", unit="video")
+        else:
+            pbar = DummyContextManager()
+
+        with pbar as pb:
             for url in youtube_urls:
                 video_id = get_youtube_video_id(url)
                 if video_id:
-                    pbar.set_postfix_str(f"Fetching transcript for {video_id}")
-                    transcript = get_youtube_transcript(video_id)
-                    metadata = get_youtube_video_metadata(url) 
-                    if transcript or metadata: #
+                    pb.set_postfix_str(f"Fetching transcript for {video_id}")
+                    transcript = get_youtube_transcript(video_id, show_logs=show_logs)
+                    metadata = get_youtube_video_metadata(url, show_logs=show_logs)
+                    if transcript or metadata:
                         youtube_transcripts_content += f"\n\n--- Content from YouTube: {url} ---\n"
                         if metadata:
                             youtube_transcripts_content += f"Title: {metadata.get('title', 'N/A')}\n"
@@ -446,18 +471,18 @@ def search_and_synthesize(user_input_query, show_sources=True, scrape_images=Tru
                             youtube_transcripts_content += f"Description: {metadata.get('description', 'N/A')}\n\n"
                         if transcript:
                             youtube_transcripts_content += transcript
-                            pbar.set_postfix_str(f"Processed transcript for {video_id}")
+                            pb.set_postfix_str(f"Processed transcript for {video_id}")
                         else:
                             youtube_transcripts_content += "Transcript not available.\n"
-                            pbar.set_postfix_str(f"Processed metadata (no transcript) for {video_id}")
+                            pb.set_postfix_str(f"Processed metadata (no transcript) for {video_id}")
 
                         processed_youtube_urls.append(url)
                     else:
-                         pbar.set_postfix_str(f"Failed for {video_id}")
+                         pb.set_postfix_str(f"Failed for {video_id}")
 
                 else:
-                    pbar.set_postfix_str(f"Invalid URL: {url}")
-                pbar.update(1)
+                    pb.set_postfix_str(f"Invalid URL: {url}")
+                pb.update(1)
 
 
     scraped_text_content = ""
@@ -466,36 +491,40 @@ def search_and_synthesize(user_input_query, show_sources=True, scrape_images=Tru
     found_image_urls = []
     urls_to_scrape = []
 
-    # Add provided website URLs if the plan says to scrape them
     if plan.get("scrape_provided_websites") and website_urls:
          urls_to_scrape.extend(website_urls)
 
-    # Add URLs from search results if search queries are needed
     search_urls = []
     if plan.get("search_queries"):
-         print("\nPerforming Web Search...")
-         for query in tqdm(plan["search_queries"], desc="Performing Web Searches", unit="query"):
-              search_urls.extend([result.get('href') for result in perform_duckduckgo_text_search(query, max_results=MAX_SEARCH_RESULTS_PER_QUERY)])
+         conditional_print("\nPerforming Web Search...", show_logs)
+         for query in conditional_tqdm(plan["search_queries"], show_logs, desc="Performing Web Searches", unit="query"):
+              search_results = perform_duckduckgo_text_search(query, max_results=MAX_SEARCH_RESULTS_PER_QUERY, show_logs=show_logs)
+              search_urls.extend([result.get('href') for result in search_results if result and result.get('href')])
 
          urls_to_scrape.extend(search_urls)
 
     unique_urls_to_scrape = []
     for url in urls_to_scrape:
-        if url and url not in unique_urls_to_scrape and not is_likely_search_result_url(url):
+        if url and urlparse(url).scheme in ['http', 'https'] and not is_likely_search_result_url(url) and url not in unique_urls_to_scrape:
             unique_urls_to_scrape.append(url)
 
     if unique_urls_to_scrape and total_scraped_words < MAX_TOTAL_SCRAPE_WORD_COUNT:
-        print("\nScraping Web Content...")
+        conditional_print("\nScraping Web Content...", show_logs)
         urls_for_scraping = unique_urls_to_scrape[:plan.get("estimated_pages_to_scrape", MAX_PAGES_TO_SCRAPE)]
 
-        with tqdm(total=len(urls_for_scraping), desc="Scraping Websites", unit="page") as pbar:
+        if show_logs:
+            pbar = tqdm(total=len(urls_for_scraping), desc="Scraping Websites", unit="page")
+        else:
+            pbar = DummyContextManager()
+
+        with pbar as pb:
             for url in urls_for_scraping:
                 if total_scraped_words >= MAX_TOTAL_SCRAPE_WORD_COUNT:
-                    pbar.set_postfix_str("Total word limit reached")
-                    break 
+                    pb.set_postfix_str("Total word limit reached")
+                    break
 
-                pbar.set_postfix_str(f"Scraping {urlparse(url).hostname}")
-                content, images = scrape_website(url, scrape_images=scrape_images, total_word_count_limit=MAX_TOTAL_SCRAPE_WORD_COUNT - total_scraped_words)
+                pb.set_postfix_str(f"Scraping {urlparse(url).hostname}")
+                content, images = scrape_website(url, scrape_images=scrape_images, total_word_count_limit=MAX_TOTAL_SCRAPE_WORD_COUNT - total_scraped_words, show_logs=show_logs)
 
                 if content:
                     scraped_text_content += f"\n\n--- Content from {url} ---\n{content}"
@@ -507,20 +536,21 @@ def search_and_synthesize(user_input_query, show_sources=True, scrape_images=Tru
                             if len(found_image_urls) < MAX_IMAGES_TO_INCLUDE and img_url not in found_image_urls:
                                 found_image_urls.append(img_url)
                             elif len(found_image_urls) >= MAX_IMAGES_TO_INCLUDE:
-                                 break 
+                                 break
 
-                    pbar.set_postfix_str(f"Scraped {len(content.split())} words from {urlparse(url).hostname}")
+                    pb.set_postfix_str(f"Scraped {len(content.split())} words from {urlparse(url).hostname}")
                 else:
-                    pbar.set_postfix_str(f"Failed to scrape {urlparse(url).hostname}")
+                    pb.set_postfix_str(f"Failed to scrape {urlparse(url).hostname}")
 
-                pbar.update(1)
+                pb.update(1)
+
             if total_scraped_words >= MAX_TOTAL_SCRAPE_WORD_COUNT:
-                 print("Reached total scraped word limit.")
+                 conditional_print("Reached total scraped word limit.", show_logs)
     elif not unique_urls_to_scrape:
-         print("\nNo unique URLs found for scraping.")
+         conditional_print("\nNo unique URLs found for scraping.", show_logs)
 
 
-    print("\nSending Information to AI for Synthesis...")
+    conditional_print("\nSending Information to AI for Synthesis...", show_logs)
 
     synthesis_prompt = """You are a helpful assistant. Synthesize a comprehensive, detailed, and confident answer to the user's original query based *only* on the provided information from native knowledge, scraped web pages, and YouTube transcripts.
 
@@ -566,13 +596,18 @@ def search_and_synthesize(user_input_query, show_sources=True, scrape_images=Tru
 
     final_markdown_output = ""
 
-    with tqdm(total=1, desc="Synthesizing Answer", unit="step") as pbar:
-        final_answer_response = query_pollinations_ai(final_answer_messages, model=SYNTHESIS_MODEL) # Use the larger model
+    if show_logs:
+        pbar = tqdm(total=1, desc="Synthesizing Answer", unit="step")
+    else:
+        pbar = DummyContextManager()
+
+    with pbar as pb:
+        final_answer_response = query_pollinations_ai(final_answer_messages, model=SYNTHESIS_MODEL, show_logs=show_logs)
         if final_answer_response and 'choices' in final_answer_response and len(final_answer_response['choices']) > 0:
             final_markdown_output += final_answer_response['choices'][0]['message']['content']
-            pbar.set_postfix_str("Success")
+            pb.set_postfix_str("Success")
         else:
-            pbar.set_postfix_str("Failed")
+            pb.set_postfix_str("Failed")
             if not native_answer_content and not scraped_text_content and not youtube_transcripts_content:
                 final_markdown_output = "--- No Information Found ---\nCould not find enough information (either natively, from web searches/provided URLs, or YouTube transcripts) to answer the query.\n---------------------------"
             else:
@@ -581,7 +616,8 @@ def search_and_synthesize(user_input_query, show_sources=True, scrape_images=Tru
                 if youtube_transcripts_content: final_markdown_output += "**YouTube Content:** Available\n"
                 if scraped_text_content: final_markdown_output += "**Scraped Web Content:** Available\n"
                 final_markdown_output += "\nConsider retrying the query."
-        pbar.update(1)
+        pb.update(1)
+
 
     if show_sources and (scraped_website_urls or processed_youtube_urls or found_image_urls or (native_answer_content and plan.get("native_parts") != "None")):
         final_markdown_output += "\n\n## Sources\n"
@@ -600,20 +636,54 @@ def search_and_synthesize(user_input_query, show_sources=True, scrape_images=Tru
             final_markdown_output += "### Images Found on Scraped Pages\n"
             for url in found_image_urls:
                 final_markdown_output += f"- {url}\n"
-        elif scrape_images and (scraped_website_urls or processed_youtube_urls): 
+        elif scrape_images and (scraped_website_urls or processed_youtube_urls):
              final_markdown_output += "### Images Found on Scraped Pages\n"
              final_markdown_output += "No relevant images found on scraped pages within limits.\n"
 
         final_markdown_output += "---\n"
 
-    return final_markdown_output
+    return final_markdown_output, 200
 
-# Script based usage
-if __name__ == "__main__":
-    user_input_query = input("Enter your query: ")
-    final_output = search_and_synthesize(user_input_query, show_sources=True, scrape_images=True)
-    print("\n" + "="*50)
-    print("Final Output:")
-    print("="*50)
-    print(final_output)
-    print("="*50)
+
+# --- Flask Application ---
+
+app = Flask(__name__)
+CORS(app)  
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address, 
+    storage_uri="memory://", 
+    strategy="moving-window" 
+)
+
+
+@limiter.limit("10 per minute")
+@app.route('/search', methods=['GET', 'POST'])
+def handle_search():
+    """
+    Handles search requests. Accepts 'query' and optional 'show_logs' parameter
+    via GET query string or POST JSON body.
+    """
+    user_input_query = None
+    show_logs_param = None 
+
+    if request.method == 'POST':
+        data = request.get_json()
+        if data:
+            user_input_query = data.get('query')
+            show_logs_param = data.get('show_logs', None) 
+    elif request.method == 'GET':
+        user_input_query = request.args.get('query')
+        show_logs_param = request.args.get('show_logs', None) 
+
+    if not user_input_query:
+        return jsonify({"error": "Query parameter 'query' is required."}), 400
+    show_logs = str(show_logs_param).lower() == 'true' if show_logs_param is not None else True 
+    markdown_output, status_code = search_and_synthesize(user_input_query, show_sources=True, scrape_images=True, show_logs=show_logs)
+    return Response(markdown_output, mimetype='text/markdown', status=status_code)
+
+# --- Entry Point for running the Flask app ---
+if __name__ == '__main__':
+    print("Starting Flask app on http://127.0.0.1:5000/search")
+    print("Use GET or POST with 'query' parameter. Add 'show_logs=false' to suppress console output.")
+    app.run(host="127.0.0.1", port=5000, debug=False) 
