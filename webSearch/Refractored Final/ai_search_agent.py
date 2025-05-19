@@ -3,7 +3,7 @@ import json
 import datetime
 import re
 import time
-import sys # Import sys to potentially redirect stdout
+import sys 
 from urllib.parse import urljoin, urlparse, parse_qs
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled
 from pytube import YouTube, exceptions
