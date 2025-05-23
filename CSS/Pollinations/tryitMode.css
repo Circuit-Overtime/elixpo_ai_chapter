@@ -1,0 +1,555 @@
+:root {
+  --orange-base: #ff8c00;
+  --orange-light: #ffb347;
+  --orange-lighter: #ffd8a1;
+  --orange-dark: #cc7000;
+  --orange-darker: #994f00;
+
+  --bg-panel: #fff3e5;
+  --shadow-dark: rgba(153, 79, 0, 0.4);
+  --shadow-light: rgba(255, 210, 160, 0.6);
+  --border-color: #e6a962;
+  --text-color: #4a2d0c;
+  --hover-glow: rgba(255, 196, 100, 0.3);
+  --accent-glow: rgba(255, 176, 90, 0.7);
+}
+
+.generationInfo.tryitMode
+{
+    opacity: 0;
+    filter: blur(2px);
+    transition: opacity 0.5s ease-in-out, filter 0.2s ease-in-out;
+    scale: 0;
+}
+.imageFeedText.tryitMode
+{
+    transition: 0.5s;
+    opacity: 0;
+    scale: 0;
+    transform-origin: center;
+}
+.imageFeedDescription.tryitMode
+{
+    position: absolute;
+    top: 2%;
+    transition: 0.5s;
+}
+.tryItBtn.tryitMode 
+{
+    top: 2%;
+    scale: 0.85;
+}
+
+.genInfo.tryitMode
+{
+    opacity: 0;
+    filter: blur(2px);
+    transition: opacity 0.5s ease-in-out, filter 0.2s ease-in-out;
+    scale: 0;
+}
+
+
+.imageHolderBackdrop.tryitMode
+{
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    border: none;
+    box-shadow: none;
+    opacity: 1;
+    scale: 1;
+    pointer-events: all;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+  .ImagePromptSection 
+  {
+    opacity: 0;
+    scale: 0;
+    transition: opacity 0.5s ease-in-out, scale 0.2s ease-in-out;
+    pointer-events: none;
+    top: 76%;
+    left: 50%;
+  }
+  .ImagePromptSection.tryitMode {
+    position: absolute;
+    top: 76%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 22px;
+    max-width: 920px;
+    width: 100%;
+    height: 150px;
+    background: hsla(33, 77%, 79%, 0.534);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      inset 8px 8px 14px var(--shadow-dark),
+      inset -8px -8px 14px var(--shadow-light);
+    font-family: "Orbitron", sans-serif;
+    transition: opacity 0.5s ease-in-out, scale 0.2s ease-in-out;
+    opacity: 1;
+    scale: 1;
+    pointer-events: all;
+  }
+  
+
+  .topRow,
+  .bottomRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+
+  .promptInputImage,
+  .heightImage,
+  .widthImage,
+  .seedImage {
+    flex: 1;
+    padding: 12px 18px;
+    height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: var(--bg-panel);
+    color: var(--text-color);
+    font-family: "Orbitron", sans-serif;
+    box-shadow:
+      inset 5px 5px 10px var(--shadow-dark),
+      inset -5px -5px 10px var(--shadow-light);
+    transition: all 0.25s ease;
+    outline: none;
+    border: none;
+  }
+  
+  input::placeholder {
+    color: rgba(100, 50, 10, 0.5);
+  }
+  
+  
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-panel) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+  }
+  
+  
+  .enhanceButton,
+  .privateButton,
+  .logoButton,
+  .generateImage {
+    width: 56px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.3em;
+    border: none;
+    cursor: pointer;
+    border-radius: 14px;
+    background: linear-gradient(to bottom, #ffb347, #e9e0be);
+    color: #5b3706;
+    text-shadow: 0 1px 1px rgba(255, 235, 200, 0.6);
+    box-shadow:
+      inset 4px 4px 8px var(--shadow-dark),
+      inset -4px -4px 8px var(--shadow-light);
+    transition: all 0.25s ease;
+    animation: none;
+    opacity: 1;
+    pointer-events: all;
+  }
+.generateImage.generating 
+{
+  opacity: .5;
+  pointer-events: none;
+  animation: flash 2s linear alternate infinite;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+  
+  .enhanceButton,
+  .privateButton,
+  .logoButton,
+  .generateImage {
+    background: linear-gradient(to bottom, var(--orange-base), var(--orange-light));
+    border: #562103 solid 2px;
+    color: #fff;
+    transition: all 0.25s ease;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.3em;
+    text-shadow: 0 1px 1px rgba(255, 235, 200, 0.6);
+}
+  
+  .enhanceButton:hover,
+  .privateButton:hover,
+  .logoButton:hover,
+  .generateImage:hover {
+    background: linear-gradient(to bottom, var(--orange-lighter), var(--orange-light));
+    box-shadow:
+      inset 4px 4px 10px var(--shadow-dark),
+      inset -4px -4px 10px var(--shadow-light),
+      0 0 10px var(--hover-glow);
+    transform: scale(1.05);
+  }
+  
+  .enhanceButton:active,
+  .privateButton:active,
+  .logoButton:active,
+  .generateImage:active
+  {
+    box-shadow:
+      inset 4px 4px 10px var(--shadow-light),
+      inset -4px -4px 10px var(--shadow-dark);
+    transform: scale(0.95);
+    transition: 0.25s;
+  }
+
+
+  
+  .enhanceButton.enhance,
+  .privateButton.private,
+  .logoButton.logo
+  {
+    background: linear-gradient(to bottom, var(--orange-base), var(--orange-dark));
+    border: #562103 solid 2px;
+    color: #fff;
+    transition: 0.25s;
+  }
+  
+  .modelImage {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    background: #3e2400bd;
+    border: 3px solid #f0c588;
+    font-family: "orbitron", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+  .modelImage ion-icon 
+  {
+    font-size: 1.5em;
+    color: #ffc;
+    margin-right: 10px;
+    transition: all 0.25s ease;
+  }
+  
+.modelImage:hover {
+    box-shadow:
+      inset 8px 8px 16px var(--shadow-dark),
+      inset -8px -8px 16px var(--shadow-light),
+      0 0 10px var(--hover-glow);
+    transform: scale(1.05);
+    transition: 0.25s;
+}
+.modelImage:active
+{
+    box-shadow:
+      inset 8px 8px 16px var(--shadow-light),
+      inset -8px -8px 16px var(--shadow-dark);
+    transform: scale(0.95);
+    transition: 0.25s;
+}
+.imageGenerationAnimation {
+  opacity: 0;
+  scale: 0.8; /* Slight scale down when not visible */
+  transition: opacity 0.4s ease-out, scale 0.4s ease-out; /* Animate opacity and scale */
+  transform-origin: center;
+  pointer-events: none;
+  z-index: -1;
+  position: absolute; /* Ensure it covers the area correctly */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+   /* Backdrop filter applied only when generating by the .generating class */
+}
+
+.imageGenerationAnimation.generating {
+  opacity: 1;
+  scale: 1;
+  pointer-events: auto; /* Allow interaction if needed, otherwise keep none */
+  z-index: 10;
+   /* Apply backdrop-filter here */
+   backdrop-filter: blur(18px);
+   -webkit-backdrop-filter: blur(18px);
+   background: rgba(0, 0, 0, 0.1); /* Optional: Add a subtle background color if needed */
+}
+
+.imageGenerationAnimation.generating > .animation-blob {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  filter: blur(20px); /* Apply blur to the blobs */
+  opacity: 1; /* Increase blob opacity slightly */
+  mix-blend-mode: normal; /* Use screen blend mode for luminous effect */
+  pointer-events: none; /* Don't interfere with clicks below */
+}
+
+.imageGenerationAnimation.generating > .animation-blob.blob-1 {
+  background: radial-gradient(circle at center, rgba(255, 140, 0, 1) 0%, transparent 70%); /* Full opacity in gradient start */
+  top: -10%;
+  left: -30%;
+  animation: moveBlob1 4s ease-in-out infinite alternate;
+}
+
+.imageGenerationAnimation.generating > .animation-blob.blob-2 {
+  background: radial-gradient(circle at center, rgba(255, 105, 180, 1) 0%, transparent 70%); /* Full opacity in gradient start */
+  top: 60%;
+  left: 70%;
+  animation: moveBlob2 5s ease-in-out infinite alternate;
+}
+
+.imageGenerationAnimation.generating > .animation-blob.blob-3 {
+  background: radial-gradient(circle at center, rgba(135, 206, 235, 1) 0%, transparent 70%); /* Full opacity in gradient start */
+  top: 30%;
+  left: 40%;
+  animation: moveBlob3 4.5s ease-in-out infinite alternate;
+}
+
+.imageGenerationAnimation.generating > .animation-blob.blob-4 {
+  background: radial-gradient(circle at center, rgba(144, 238, 144, 1) 0%, transparent 70%); /* Full opacity in gradient start */
+  top: 80%;
+  left: 20%;
+  animation: moveBlob4 5.5s ease-in-out infinite alternate;
+}
+
+/* Keyframes for moving the individual blobs */
+@keyframes moveBlob1 {
+  0%   { transform: translate(0, 0) scale(1); } /* Add subtle scale animation */
+  100% { transform: translate(50px, -30px) scale(1.05); }
+}
+
+@keyframes moveBlob2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-40px, 60px) scale(1.1); }
+}
+
+@keyframes moveBlob3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 40px) scale(1.08); }
+}
+
+@keyframes moveBlob4 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-50px, -50px) scale(1.12); }
+}
+
+/* You might want a separate class for the actual loading indicator (spinner/text) */
+/* that appears on top of the animation. */
+
+
+
+.displayImage.tryitMode 
+{
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+
+/* ===================================================================TEXT==================================================================== */
+
+
+
+
+.textPromptSection 
+{
+  opacity: 0;
+  scale: 0;
+  transition: opacity 0.5s ease-in-out, scale 0.2s ease-in-out;
+  pointer-events: none;
+  top: 76%;
+  left: 50%;
+}
+.textPromptSection.tryitMode {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  max-width: 920px;
+  width: 100%;
+  height: 200px;
+  background: hsla(33, 77%, 79%, 0.534);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 8px 8px 14px var(--shadow-dark),
+    inset -8px -8px 14px var(--shadow-light);
+  font-family: "Orbitron", sans-serif;
+  transition: opacity 0.5s ease-in-out, scale 0.2s ease-in-out;
+  opacity: 1;
+  scale: 1;
+  pointer-events: all;
+}
+
+
+.topRow,
+.bottomRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.promptInputText 
+{
+    flex: 1;
+    padding: 12px 18px;
+    height: 100px;
+    border: none;
+    border-radius: 14px;
+    background: var(--bg-panel);
+    color: var(--text-color);
+    font-family: "Orbitron", sans-serif;
+    box-shadow:
+      inset 5px 5px 10px var(--shadow-dark),
+      inset -5px -5px 10px var(--shadow-light);
+    transition: all 0.25s ease;
+    outline: none;
+    border: none;
+    resize: none;
+    font-size: 1.2em;
+
+  }
+
+  .promptInputText::-webkit-scrollbar
+  {
+   display: none;
+  }
+
+.generateText{
+  width: 56px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.3em;
+    border: none;
+    cursor: pointer;
+    border-radius: 14px;
+    background: linear-gradient(to bottom, #ffb347, #e9e0be);
+    color: #5b3706;
+    text-shadow: 0 1px 1px rgba(255, 235, 200, 0.6);
+    box-shadow:
+      inset 4px 4px 8px var(--shadow-dark),
+      inset -4px -4px 8px var(--shadow-light);
+    transition: all 0.25s ease;
+    animation: none;
+    opacity: 1;
+    pointer-events: all;
+  }
+.generateText.generating 
+{
+  opacity: .5;
+  pointer-events: none;
+  animation: flash 2s linear alternate infinite;
+}
+
+.generateText:hover {
+  background: linear-gradient(to bottom, var(--orange-lighter), var(--orange-light));
+  box-shadow:
+    inset 4px 4px 10px var(--shadow-dark),
+    inset -4px -4px 10px var(--shadow-light),
+    0 0 10px var(--hover-glow);
+  transform: scale(1.05);
+}
+
+.generateText:active
+  {
+    box-shadow:
+      inset 4px 4px 10px var(--shadow-light),
+      inset -4px -4px 10px var(--shadow-dark);
+    transform: scale(0.95);
+    transition: 0.25s;
+  }
+
+
+  
+  .modelText {
+    position: relative;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 40px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    background: #3e2400bd;
+    border: 3px solid #f0c588;
+    font-family: "orbitron", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+  .modelText ion-icon 
+  {
+    font-size: 1.5em;
+    color: #ffc;
+    margin-right: 10px;
+    transition: all 0.25s ease;
+  }
+  
+.modelText:hover {
+    box-shadow:
+      inset 8px 8px 16px var(--shadow-dark),
+      inset -8px -8px 16px var(--shadow-light),
+      0 0 10px var(--hover-glow);
+    transform: translateX(-50%) scale(1.05);
+    transition: 0.25s;
+}
+.modelText:active
+{
+    box-shadow:
+      inset 8px 8px 16px var(--shadow-light),
+      inset -8px -8px 16px var(--shadow-dark);
+    transform: translateX(-50%) scale(0.95);
+    transition: 0.25s;
+}
+
+.userPromptServer.tryitMode
+{
+  opacity: 0;
+  scale: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out, scale 0.2s ease-in-out;
+  transform-origin: center;
+}
+
+.aiRespondServer.tryitMode 
+{
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    width: 80%;
+    height: 50%;
+}

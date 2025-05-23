@@ -1,0 +1,220 @@
+:root {
+    --primary: #a855f7;
+    --primary-light: #c084fc;
+    --primary-dark: #8b5cf6;
+    --dark-bg: #1f1e1e;
+    --card-bg: #111111;
+    --navbar-bg: rgba(18, 18, 18, 0.8);
+    --text: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text);
+    line-height: 1.6;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(100, 50, 200, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(100, 50, 200, 0.03) 0%, transparent 20%);
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+
+.notificationCenter {
+    position: fixed;  /* Changed from absolute to fixed */
+    top: 5%;
+    right: 2%;       /* Changed from left: 65% to right: 5% for better positioning */
+    height: auto;
+    max-height: 150px;
+    width: 30%;
+    z-index: 200;
+    border-radius: var(--border-radius);
+    overflow-y: auto;
+
+}
+.notificationCenter::-webkit-scrollbar
+{
+    display: none;
+}
+
+.notificationCenter > .notification {
+    position: relative;  /* Add position relative for absolute child positioning */
+    height: auto;       /* Change from fixed height to auto */
+    min-height: 60px;   /* Set minimum height instead */
+    width: 90%;
+    margin: 10px auto;
+    background: linear-gradient(90deg, #004627bb, #006417);
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;  /* Change from center to flex-start */
+    font-family: 'Courier New', Courier, monospace;
+    overflow-y: auto;
+}
+
+.notificationCenter > .notification span {
+    position: sticky;   /* Make span stick to top */
+    top: 0;            /* Stick to top of container */
+    width: 100%;       /* Take full width */
+    padding: 15px 20px;  /* Add consistent padding */
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #fff;
+    box-sizing: border-box;
+    white-space: normal;  /* Allow text to wrap */
+    word-break: break-word;  /* Break long words if needed */
+}
+
+/* Update the before pseudo-element to match new layout */
+.notification::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #32e9698b;
+    border-radius: 12px 0 0 12px;
+}
+.container {
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    top: 3%;
+    transition: 0.3s ease;
+    background-color: #222222d2;
+    backdrop-filter: blur(5px);
+    border-radius: 50px;
+    margin: 20px auto;
+    max-width: 70%;
+    border: 1px solid rgba(7, 240, 209, 0.473);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon svg {
+    width: 24px;
+    height: 24px;
+}
+.appname 
+{
+    position: relative;
+    left: 1%;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ebf874bb, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 10px;
+}
+.navRedirects {
+    position: relative;
+    left: 35%;
+    display: flex;
+    gap: 30px;
+    margin-left: 20px;
+    transition: 0.25s;
+}
+.navRedirects ion-icon
+{
+    font-size: 30px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+.navRedirects ion-icon:nth-child(n+3)
+{
+    transform: rotate(5deg);
+    filter: drop-shadow(0 0 3px #ebf874bb);
+}
+.navRedirects ion-icon:nth-child(2n-3)
+{
+    transform: rotate(-5deg);
+    filter: drop-shadow(0 0 3px #ebf874bb);
+}
+.navRedirects ion-icon:nth-child(2),
+.navRedirects ion-icon:nth-child(3)
+{
+    color: #9E55DF;
+    filter: drop-shadow(0 0 2px #9E55DF);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.mobile-menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 2px;
+    background-color: var(--text);
+    transition: var(--transition);
+}
+
+section.is-hidden > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: none;
+  }
+  
+  section.is-visible > * {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  

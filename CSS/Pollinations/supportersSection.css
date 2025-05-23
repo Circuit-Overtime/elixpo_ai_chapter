@@ -1,0 +1,186 @@
+.supporters
+{
+    position: relative; 
+    margin-top: 50px;
+    z-index: 3; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    /* background: #fff; */
+    min-height: 100vh;
+}
+
+
+.supportersBackdrop 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 0, 111, 0.1),
+        rgba(0, 0, 0, 0.3)
+    );
+    border-radius: 24px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+}
+
+.supporterBackdropOverlay 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../IMAGES/Pollinations/heroSectionPreview/bgOverlay.jpeg);
+    transform: rotate(180deg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 24px;
+    opacity: 0.5;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+
+.supportersSection 
+{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+}
+
+.supportersSection > .supportersText
+{
+  position: absolute;
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Orbitron";
+  font-size: 5em;
+  font-weight: 700;
+}
+.supportersSection > .supportersDescription
+{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Lexend", sans-serif;
+    font-size: 1.3em;
+    font-weight: 400;
+    text-align: center;
+    display: flex;
+}
+
+.supportersShowcase 
+{
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    justify-content: center;
+    transform: translateX(-50%) translateY(-50%) scale(0.9);
+    height: 70%;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px 20px;
+}
+
+.supportersShowcase::-webkit-scrollbar
+{
+    display: none;
+}
+
+.supportersTile 
+{
+    position: relative;
+    width: 350px;
+    height: 150px;
+    background: #663d07c8;
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.1) 1px,
+        transparent 5px
+    );
+    background-size: 10px 10px;
+    border: 2px solid #edddb2;
+    border-radius: 14px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    flex-direction: column;
+    display: flex;
+    gap: 8px;
+}
+.supportersTile > .supportersContainer {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 80%;
+    height: 60px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: flex-start; 
+    align-items: center;
+    overflow: hidden; 
+}
+
+.supportersTile > .supportersContainer > .supportersLogo {
+    flex-shrink: 0; 
+    height: 60px;
+    width: 60px;
+    background: url(../IMAGES/PARTNERS/pollinationsLogo.png) center/cover no-repeat;
+    border-radius: 50%;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.supportersTile > .supportersContainer > .supportersNameRedirect {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.3em;
+    color: #f7d47e;
+    user-select: none;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+    font-family: "Orbitron";
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(236, 183, 119, 0.5);
+}
+
+.supportersTile > .supportersDescription 
+{
+    position: relative;
+    top: 55%;
+    left: 10%;
+    width: 80%;
+    height: 40%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-family: "Lexend", sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    text-align: left;
+    color: #fefdff;
+    text-shadow: 0 0 5px rgba(236, 183, 119, 0.5);
+}
+.supportersTile > .supportersDescription::-webkit-scrollbar
+{
+    display: none;
+}

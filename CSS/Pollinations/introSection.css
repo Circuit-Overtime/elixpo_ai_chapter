@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Baumans&family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baumans&family=Nerko+One&family=Orbitron:wght@400..900&display=swap');
+
+
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 80px 0 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.backgroundOverlay 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../IMAGES/Pollinations/heroSectionPreview/bgHero.jpg) no-repeat center center/cover;
+    filter: blur(3px);
+    z-index: -1;
+}
+.backgroundOverlayScreen 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../IMAGES/Pollinations/heroSectionPreview/bgOverlay.jpeg) no-repeat center center/cover;
+    opacity: 0.68;
+    mix-blend-mode: multiply;
+    filter: blur(5px);
+    z-index: -1;
+}
+.welcome-pill {
+    left: -35%;
+    position: relative;
+    background-color: rgba(44, 4, 59, 0.912);
+    border: 2px solid #e4e5d8eb;
+    border-radius: 8px;
+    border-top-left-radius: 20px;
+    padding: 8px 20px;
+    display: inline-block;
+    gap: 8px;
+    transform: scale(1.2);
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 10px #ebf87480;
+    display: flex;
+}
+.welcome-pill ion-icon 
+{
+    font-size: 20px;
+    margin-right: 5px;
+}
+.welcome-pill span 
+{
+    font-size: 14px;
+    font-weight: 700;
+    color: #ebf874bb;
+    /* text-shadow: 0 0 5px #ebf874bb, 0 0 10px #ebf874bb, 0 0 15px #ebf874bb; */
+}
+.welcome-pill .starlogo
+{
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    filter: drop-shadow(0 0 3px #ebf874bb);
+    transform: rotate(15deg);
+}
+.mainDesc {
+    font-family: "Nerko One", cursive;
+    font-weight: 400;
+    font-size: 6.5em;
+    color: #ffc;
+    position: relative;
+    left: -25%;
+    line-height: 1em;
+    background-size: 400% 400%;
+    max-width: 600px;
+    word-wrap: break-word;
+}
+
+@keyframes liquidGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 100%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 0%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.hero .subtitle {
+    position: relative;
+    left: -15%;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2em;
+    font-family: "Baumans", system-ui;
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 55%;
+    text-align: left;
+    justify-content: left;
+}
+
+/* Base highlight */
+.hero .subtitle .highlight {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 0.1em 0.4em;
+    border-radius: 6px;
+}
+
+/* Animated gradient for `open-source` */
+.hero .subtitle .gradient-animate {
+    font-weight: 600;
+    background: linear-gradient(270deg, #a855f7, #c084fc, #8b5cf6, #ebf874bb, #a855f7);
+    background-size: 600% 600%;
+    animation: gradientShift 8s ease-in-out infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero .subtitle .fancy {
+    font-weight: 400;
+    font-size: 1.1em;
+    color: #f9e8ff;
+    background: linear-gradient(120deg, #e0c3fc, #8ec5fc, #c3e5ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: shimmerText 6s ease-in-out infinite;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+
+/* Gradient animation keyframes */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes shimmerText {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% { 
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.imageContainerBackdrop {
+    position: absolute;
+    top: 10%;
+    left: 65%;
+    height: 250px;
+    width: 450px;
+    background: transparent;
+    filter: drop-shadow(0 0 1px #c084fc);
+    border-radius: 20px;
+  }
+
+.imageContainerBackdrop > .imageContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url(../IMAGES/Pollinations/heroSectionPreview/img1.jpg);
+    background-size: cover;
+    height: 90%;
+    width: 90%;
+    border-radius: 20px;
+    overflow: hidden;
+    filter: sepia(0.6) contrast(1.2) brightness(0.9) saturate(0.8);
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.3), 0 0 30px rgba(255, 165, 0, 0.2);
+    border: 4px solid rgba(255, 165, 0, 0.5);
+}
+.imageContainerBackdrop > .textContainer {
+    position: absolute;
+    bottom: -10%;
+    left: -30%;
+    max-height: 100px;
+    max-width: 85%;
+    transform: translate(0, 0);
+    color: #fff;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); */
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-top-left-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    font-family:   'Orbitron', sans-serif;
+}
+.textContainer::-webkit-scrollbar
+{
+    display: none;
+}
+.reditectButtons 
+{
+    position: absolute;
+    top: 93%;
+    left: 60%;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    height: 80px;
+    background: transparent;
+}
+
+.reditectButtons > .rediBtn
+{
+    position: relative;
+    height: 60px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: #8a5cf65d;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    border: 3px solid #a855f7;
+    transition: all 0.3s ease;
+}
+.reditectButtons > .githubReadme {
+    background: #4caf4f9d;
+    border: 3px solid #34d399;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.reditectButtons > .githubReadme:hover {
+    background: #34d399;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.reditectButtons > .githubReadme:active {
+    transform: scale(0.95);
+}
+
+.reditectButtons > .githubReadme > span {
+    font-size: 1.3em;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+.reditectButtons > .githubReadme:hover > span,
+.reditectButtons > .githubReadme:hover > ion-icon {
+    color: #fff;
+}
+
+.reditectButtons > .githubReadme > ion-icon {
+    position: relative;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    color: #d1fae5;
+    margin-right: 10px;
+    transform: rotate(-15deg);
+}
+.reditectButtons > .discordInvite:hover
+{
+    background: #8a5cf6;
+    color: #fff;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.reditectButtons > .discordInvite:active
+{
+    transform: scale(0.95);
+}
+.reditectButtons > .discordInvite > span 
+{
+    color: #ffc;
+    font-size: 1.3em;
+    font-weight: 400;
+    margin-left: 10px;
+}
+.reditectButtons > .discordInvite:hover > span,
+.reditectButtons > .discordInvite:hover > ion-icon
+
+{
+    color: #fff;
+}
+.reditectButtons > .discordInvite > ion-icon
+{
+    position: relative;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    color: rgb(199, 163, 241);
+    margin-right: 10px;
+    transform: rotate(-15deg);
+}
+
+.tippingRedirects 
+{
+    position: absolute;
+    top: 93%;
+    left: 0%;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    height: 80px;
+    /* background: #fff; */
+}
