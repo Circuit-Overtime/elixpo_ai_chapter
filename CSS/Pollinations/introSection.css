@@ -36,54 +36,105 @@
     filter: blur(5px);
     z-index: -1;
 }
-.welcome-pill {
-    left: -35%;
+.githubstats {
     position: relative;
-    background-color: rgba(44, 4, 59, 0.912);
+    top: 20px;
+    left: 0;
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: 'Orbitron', sans-serif;
+    /* Removed background */
+  }
+  
+  .welcome-pill {
+    top: 10px;
+    position: relative;
     border: 2px solid #e4e5d8eb;
     border-radius: 8px;
-    border-top-left-radius: 20px;
-    padding: 8px 20px;
-    display: inline-block;
-    gap: 8px;
-    transform: scale(1.2);
-    margin-bottom: 30px;
-    font-size: 14px;
-    color: var(--text);
-    font-family: 'Orbitron', sans-serif;
-    box-shadow: 0 0 10px #ebf87480;
+    padding: 8px 40px;
     display: flex;
-}
-.welcome-pill ion-icon 
-{
-    font-size: 20px;
-    margin-right: 5px;
-}
-.welcome-pill span 
-{
-    font-size: 14px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    font-size: 1.2em;
+    color: var(--text);
+    box-shadow: 0 0 10px #ebf87480,
+    inset 0 20px 30px #5e3fa5,
+    inset 10px 20px 30px #260474;
+    transition: all 1s ease;
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  .welcome-pill ion-icon {
+    font-size: 1.3em;
+    font-weight: 700;
+    transform: rotate(-15deg);
+    color: #ecede6eb;
+  }
+  
+  .welcome-pill span {
     font-weight: 700;
     color: #ebf874bb;
-    /* text-shadow: 0 0 5px #ebf874bb, 0 0 10px #ebf874bb, 0 0 15px #ebf874bb; */
-}
-.welcome-pill .starlogo
-{
-    width: 20px;
-    height: 20px;
+  }
+  
+  .welcome-pill .starlogo {
+    width: 30px;
+    height: 30px;
     margin-left: 10px;
     filter: drop-shadow(0 0 3px #ebf874bb);
     transform: rotate(15deg);
-}
+  }
+  
+  .welcome-pill:hover 
+  {
+    background: linear-gradient(135deg, #a855f7, #c084fc, #8b5cf6, #ebf874bb, #a855f7);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), inset 0 20px 30px rgba(94, 63, 165, 0.2), inset 10px 20px 30px rgba(38, 4, 116, 0.2);
+    transition: all 0.3s ease;
+  }
+  .profile-stack {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .profile-stack img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: -15px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .profile-stack img:first-child {
+    margin-left: 0;
+  }
+  
+  .profile-stack img:hover {
+    transform: scale(1.1);
+    z-index: 1;
+  }
+  
+
+
 .mainDesc {
     font-family: "Nerko One", cursive;
     font-weight: 400;
     font-size: 6.5em;
     color: #ffc;
     position: relative;
-    left: -25%;
+    left: 0%;
     line-height: 1em;
     background-size: 400% 400%;
-    max-width: 600px;
     word-wrap: break-word;
 }
 
@@ -108,7 +159,7 @@
 
 .hero .subtitle {
     position: relative;
-    left: -15%;
+    left: 0%;
     display: flex;
     flex-wrap: wrap;
     font-size: 2em;
@@ -116,8 +167,8 @@
     font-weight: 400;
     color: var(--text-secondary);
     max-width: 55%;
-    text-align: left;
-    justify-content: left;
+    text-align: center;
+    justify-content: center;
 }
 
 /* Base highlight */
@@ -232,9 +283,9 @@
 }
 .reditectButtons 
 {
-    position: absolute;
-    top: 93%;
-    left: 60%;
+    position: relative;
+    top: 120px;
+    left: 30%;
     width: 40%;
     display: flex;
     justify-content: center;

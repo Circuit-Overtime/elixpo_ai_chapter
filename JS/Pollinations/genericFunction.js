@@ -89,6 +89,15 @@ document.getElementById("tippingRedirects").addEventListener("click", function (
     window.open("https://ko-fi.com/pollinationsai", "_blank");
 });
 
+document.getElementById("projectSubmit").addEventListener("click", function () {
+    window.open("https://github.com/pollinations/pollinations/issues/new?template=project-submission.yml", "_blank");
+});
+
+document.getElementById("apiDocsVisit").addEventListener("click", function () {
+    window.open("https://github.com/pollinations/pollinations/blob/master/APIDOCS.md", "_blank");
+});
+
+
 let box_node = `<div class="box"></div>`;
 for (let i = 0; i < 35; i++) {
     document.getElementById("topBoxesDesigns").innerHTML += box_node;
@@ -117,3 +126,80 @@ async function updateGithubStarCount(owner, repo) {
   // Example usage:
   updateGithubStarCount('pollinations', 'pollinations');
   
+
+
+  const container = document.querySelector('.container');
+  const sections = document.querySelectorAll('.snap-section');
+
+  let isAutoScrolling = false;
+  let scrollTimer = null;
+
+  function getVisibleSectionIndex() {
+    const containerRect = container.getBoundingClientRect();
+    const containerTop = container.scrollTop;
+    const viewHeight = window.innerHeight;
+
+    let maxVisibleRatio = 0;
+    let bestIndex = -1;
+
+    sections.forEach((section, index) => {
+      const sectionTop = section.offsetTop;
+      const sectionBottom = sectionTop + section.offsetHeight;
+
+      const visibleTop = Math.max(containerTop, sectionTop);
+      const visibleBottom = Math.min(containerTop + viewHeight, sectionBottom);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+      const ratio = visibleHeight / section.offsetHeight;
+
+      if (ratio > maxVisibleRatio) {
+        maxVisibleRatio = ratio;
+        bestIndex = index;
+      }
+    });
+
+    return maxVisibleRatio >= 0.9 ? bestIndex : -1; // snap only if ≥ 90% visible
+  }
+
+  container.addEventListener('scroll', () => {
+    if (isAutoScrolling) return;
+    clearTimeout(scrollTimer);
+
+    scrollTimer = setTimeout(() => {
+      const targetIndex = getVisibleSectionIndex();
+      if (targetIndex !== -1) {
+        const targetScrollTop = sections[targetIndex].offsetTop;
+
+        isAutoScrolling = true;
+        anime({
+          targets: container,
+          scrollTop: targetScrollTop,
+          duration: 700,
+          easing: 'easeOutCubic',
+          complete: () => {
+            isAutoScrolling = false;
+          }
+        });
+      }
+    }, 100); // wait 100ms after scroll stops
+  });
+
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        e.preventDefault();
+
+        const scrollContainer = document.querySelector('.container');
+        const targetPosition = targetElement.offsetTop;
+
+        anime({
+          targets: scrollContainer,
+          scrollTop: targetPosition,
+          duration: 700,
+          easing: 'easeInOutQuad'
+        });
+      }
+    });
+  });

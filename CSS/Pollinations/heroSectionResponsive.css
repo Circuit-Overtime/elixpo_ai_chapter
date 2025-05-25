@@ -1,0 +1,104 @@
+@media only screen and (max-width: 600px) {
+    .navbar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 15px 25px;
+        top: 3%;
+        max-width: 90%;
+        border: 1px solid rgba(7, 240, 209, 0.473);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+    }
+
+    .navRedirects {
+        display: none;
+    }
+
+
+    .mainDesc {
+        font-size: 4em;
+        color: #ffc;
+        left: 0%;
+        top: -50px;
+        line-height: 0.9em;
+        max-width: 600px;
+        word-wrap: break-word;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero .subtitle {
+        position: relative;
+        font-size: 1.5em;
+        top: -30px;
+        max-width: 90%;
+        text-align: left;
+        justify-content: left;
+    }
+    .githubstats {
+        scale: 0.8;
+        top: -30px;
+        flex-wrap: nowrap; /* ensure no wrapping */
+      }
+    
+      .welcome-pill {
+        position: static; /* remove absolute */
+        transform: scale(1); /* or adjust scale as needed */
+        margin-bottom: 0;
+        padding: 8px 10px;
+      }
+    
+      .profile-stack {
+        scale: 1; /* remove scaling or set to 1 */
+        padding: 10px;
+      }
+      .reditectButtons 
+      {
+            top: 0px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+      }
+      .reditectButtons > .rediBtn > span
+      {
+        display: none;
+      }
+      .reditectButtons > .rediBtn > ion-icon 
+      {
+        font-size: 30px;
+        color: #fff;
+        left: 4px;
+      }
+      .tippingRedirects  
+      {
+        top: 75%;
+      }
+      .button 
+      {
+        height: 54px;
+      }
+      .text 
+      {
+        font-size: 0.6em;
+      }
+      .icon-1 svg 
+      {
+        scale: 0.8;
+        transform: translateX(-10px);
+      }
+      #realtimeFeed 
+        {
+          margin-top: 30px;
+        }
+
+        .notificationCenter
+        {
+          width: 70%;
+        }
+        .notificationCenter > .notification span 
+        {
+          font-size: 0.8em;
+        }
+}

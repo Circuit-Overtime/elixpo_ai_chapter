@@ -5,6 +5,7 @@
     left: 0%;
     height: 73%;
     width: 85%;
+    scale: 0.9;
     background: transparent;
     display: flex;
     flex-direction: row;
@@ -13,11 +14,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 }
-[data-scroll-section] 
-{
-  width: 85%;
-  top: 25%;
-}
+
 .projectDisplaySection::-webkit-scrollbar
 {
     display: none;

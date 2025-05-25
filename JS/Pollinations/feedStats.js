@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentEventSource = null; // Keep track of the current connection attempt
 
         function tryConnect(url, isFallback = false) {
-            console.log(`Attempting to connect to EventSource: ${url}`);
+            // console.log(`Attempting to connect to EventSource: ${url}`);
 
             if (currentEventSource) {
                 currentEventSource.close(); // Close previous attempt if any
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             currentEventSource.onopen = function () {
-                console.log(`EventSource connected successfully to ${url}.`);
+                // console.log(`EventSource connected successfully to ${url}.`);
                 retryCount = 0; // Reset retry count on successful open
             };
         }

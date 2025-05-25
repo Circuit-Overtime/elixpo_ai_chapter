@@ -10,7 +10,9 @@
     --border-radius: 8px;
     --transition: all 0.3s ease;
 }
-
+html {
+    scroll-behavior: smooth;
+}
 * {
     margin: 0;
     padding: 0;
@@ -90,8 +92,15 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 0 20px;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-y: smooth;
 }
 
+.container section {
+    scroll-snap-align: start;
+    
+}
 
 
 .navbar {
@@ -149,6 +158,7 @@ body {
     gap: 30px;
     margin-left: 20px;
     transition: 0.25s;
+    text-decoration: none;
 }
 .navRedirects ion-icon
 {

@@ -3,7 +3,8 @@
 .button-wrap {
   position: absolute;
   inset: 0;
-  left: 3%;
+  top: 1%;
+  left: 5%;
   display: flex;
   overflow: hidden;
 }

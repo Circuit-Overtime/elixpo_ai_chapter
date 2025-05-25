@@ -139,7 +139,14 @@
     -webkit-text-fill-color: var(--text-color) !important;
   }
   
-  
+  .enhanceButton span,
+  .privateButton span,
+  .logoButton span,
+  .generateImage span,
+  .generateText span
+  {
+    display: none;
+  }
   .enhanceButton,
   .privateButton,
   .logoButton,
@@ -243,6 +250,7 @@
     align-items: center;
     cursor: pointer;
     user-select: none;
+    color: #fff;
 }
 
   .modelImage ion-icon 
@@ -471,7 +479,10 @@
   pointer-events: none;
   animation: flash 2s linear alternate infinite;
 }
-
+.generateText > span 
+{
+  display: none;
+}
 .generateText:hover {
   background: linear-gradient(to bottom, var(--orange-lighter), var(--orange-light));
   box-shadow:
@@ -494,9 +505,9 @@
   
   .modelText {
     position: relative;
-    width: 90%;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 20px;
+    width: 80%;
+    left: 3%;
     height: 40px;
     border-radius: 10px;
     transition: all 0.25s ease;
@@ -507,6 +518,8 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    color: #fff;
+    font-size: 1.5em;
     user-select: none;
 }
 
@@ -523,7 +536,7 @@
       inset 8px 8px 16px var(--shadow-dark),
       inset -8px -8px 16px var(--shadow-light),
       0 0 10px var(--hover-glow);
-    transform: translateX(-50%) scale(1.05);
+    transform:scale(1.05);
     transition: 0.25s;
 }
 .modelText:active
@@ -531,7 +544,7 @@
     box-shadow:
       inset 8px 8px 16px var(--shadow-light),
       inset -8px -8px 16px var(--shadow-dark);
-    transform: translateX(-50%) scale(0.95);
+    transform: scale(0.95);
     transition: 0.25s;
 }
 

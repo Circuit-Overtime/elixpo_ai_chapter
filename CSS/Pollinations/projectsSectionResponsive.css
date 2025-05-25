@@ -1,0 +1,62 @@
+@media only screen and (max-width: 600px) {
+    .projectsSection > .projectsText
+    {
+        font-size: 3em;
+        top: 1%;
+    }
+    .projectsSection > .projectsDescription
+    {
+        font-size: 0.8em;
+        top: 12%;
+        width: 90%;
+    }
+    .projectSubmit
+    {
+        position: absolute;
+        top: 20%;
+        left: 0%;
+        height: 50px;
+        width: 200px;
+        font-size: 0.8em;
+        scale: 0.8;
+    }
+    .projectTile 
+    {
+        width: 300px;
+        height: 250px;
+    }
+    .segment-list-wrapper-project 
+    {
+        height: 250px;
+    }
+    .segment-item-project
+    {
+        transform: scale(1) translateX(00px);
+        padding: 8px 10px;
+        font-size: 0.6em;
+        text-align: left;
+    }
+    .segment-item-project.most-fainted
+    {
+        transform: scale(1) translateX(0px);
+    }
+    .segment-item-project.faint
+    {
+        transform: scale(1) translateX(0px);
+    }
+    .stars-badge
+    {
+        font-size: 0.4em;
+        padding: 12px 14px;
+    }
+    .projectDisplaySection
+    {
+        top: 27%;
+        height: 73%;
+        scale: 0.9;
+    }
+    .segment-list-wrapper-projects
+    {
+        height: 350px;
+    }
+}

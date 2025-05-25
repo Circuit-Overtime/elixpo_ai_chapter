@@ -106,6 +106,21 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.snippetSection .snippetHeader .language-label {
+    font-weight: bold;
+}
+
+.snippetSection .snippetHeader ion-icon 
+{
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.snippetSection .snippetHeader ion-icon:active 
+{
+    transform: scale(0.8);
+    transition: 0.25s;
+}
 .snippetSection .dots {
     display: flex;
     gap: 8px;
@@ -206,4 +221,55 @@ code::selection
 {
     background: #ff79c6;
     color: #282a36;
+}
+
+
+
+.apiDocsVisit
+{
+    position: absolute;
+    top: 20%;
+    left: 3%;
+    height: 60px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: #8a5cf65d;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    border: 3px solid #a855f7;
+    transition: all 0.3s ease;
+}
+
+.apiDocsVisit:hover{
+    background: #8a5cf65d;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.apiDocsVisit:active {
+    transform: scale(0.95);
+}
+
+.apiDocsVisit span {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-left: 10px;
+    color: #fff;
+}
+
+.apiDocsVisit ion-icon {
+    position: relative;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    color: #d1fae5;
+    margin-right: 10px;
+    transform: rotate(-15deg);
 }
