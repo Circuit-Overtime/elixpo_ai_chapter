@@ -137,7 +137,7 @@ export async function handleGenerate(interaction) {
                  actionRow.addComponents(new ButtonBuilder()
                     .setLabel('Download')
                     .setStyle(ButtonStyle.Link)
-                    .setURL(firstImageUrl.replace("&referrer=elixpoart&token=fEWo70t94146ZYgk", "")));
+                    .setURL(firstImageUrl.replace("&referrer=REFERRERHERE!!&token=TOKENHERE!!", "")));
                 //  console.log(`Added Link button for download for interaction ${interaction.id}.`);
             } else {
                  actionRow.addComponents(createDownloadButton(null, interaction.id, 0));
