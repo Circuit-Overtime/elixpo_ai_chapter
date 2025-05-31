@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           },
         });
-      }, 2400);
+      },  400);
     };
     document.body.style.overflow = "hidden";
     
@@ -114,3 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("container").style.overflow = "hidden"; // prevent scroll
 
   
+
+
+      

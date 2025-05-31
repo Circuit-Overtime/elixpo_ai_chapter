@@ -1,0 +1,243 @@
+@media only screen and (max-width: 600px) {
+    #realtimeFeed {
+        min-height: 150vh;
+    }
+
+    .imageFeedSection {
+        width: 100%;
+    }
+    
+    .imageFeedSection>.imageFeedDescription {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        font-size: 0.8em;
+        font-weight: 700;
+        width: 80%;
+    }
+
+
+    .imageFeedSection>.imageFeedText {
+        position: absolute;
+        top: 1%;
+        left: 50%;
+        transform: translateX(-50% -50%);
+        font-family: "Orbitron";
+        font-size: 2em;
+        font-weight: 700;
+        width: 100%;
+        text-align: center;
+    }
+    .imageTextFeedToggle 
+    {
+        scale: 0.8;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+    
+    .imageHolderBackdrop > .genInfo > .modelused
+    {
+        font-size: 0.8em;
+    }
+    .imageHolderBackdrop > .genInfo > .referrer
+    {
+        font-size: 0.8em;
+    }
+
+    .imageHolderBackdrop {
+        position: absolute;
+        top: 23%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 350px;
+        width: 95%;
+    }
+    
+    .imageContainerBackdrop>.imageContainer {
+        position: absolute;
+        top: 50%;
+        left: 25%;
+        transform: translate(-50%, -50%);
+        height: 65%;
+        width: 65%;
+    }
+
+    .imageContainerBackdrop>.textContainer {
+        position: absolute;
+        bottom: -10%;
+        left: -10%;
+        max-height: 100px;
+        max-width: 70%;
+    }
+    .aiRespondServer 
+    {
+        font-size: 0.8em;
+    }
+    .userPromptServer 
+    {
+        font-size: 0.8em;
+    }
+
+    .generationInfo {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        transform: translateX(-50%);
+        min-height: 80px;
+        height: 150px;
+        width: 90%;
+    }
+    .generationInfo > .generationNumber,
+    .generationInfo > .generationTime
+    {
+        font-size: 1.2em;
+        font-weight: 700;
+        text-align: center;
+    }
+    .imagePrompt {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+        min-height: 60px;
+        max-height: 150px;
+        width: 90%;
+        font-size: 0.8em;
+    }
+
+    .tryItBtn {
+        top: 17%;
+        scale: 0.8;
+    }
+    .generationInfo.textMode
+    {
+        top: 80%;
+    }
+
+    .tryItBtn.tryitMode 
+    {
+        top: 10%;
+        scale: 0.85;
+    }
+    .imageFeedSection>.imageFeedDescription.tryitMode
+    {
+        top: 2%;
+    }
+    .aiRespondServer.tryitMode 
+    {
+        width: 100%;
+        height: 70%;
+    }
+    
+    .modelText
+    {
+        font-size: 0.8em;
+    }
+    
+    .imageHolderBackdrop.tryitMode 
+    {
+        height: 40%;
+        width: 95%;
+        top: 15%;
+    }
+
+    .ImagePromptSection.tryitMode {
+        top: 50%;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 16px;
+        gap: 12px;
+    }
+    
+    .topRow {
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .topRow > div:not(.promptInputImage) {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+    
+    
+    .enhanceButton,
+    .privateButton,
+    .logoButton,
+    .generateImage,
+    .generateText {
+        flex: 0 0 auto;
+        width: 90%;
+        height: 40px;
+        padding: 8px;
+        display: flex;
+        margin: 0;
+    }
+
+    .enhanceButton span,
+    .privateButton span,
+    .logoButton span,
+    .generateImage span,
+    .generateText span
+    {
+      display: block;
+    }
+
+    .enhanceButton ion-icon,
+    .privateButton ion-icon,
+    .logoButton ion-icon,
+    .generateImage ion-icon,
+    .generateText ion-icon
+    {
+        font-size: 1.2em;
+        margin-right: 8px;
+    }
+    .promptInputImage {
+        width: 100%;
+        height: 40px;
+        margin: 0;
+    }
+    
+    .bottomRow {
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: space-between;
+    }
+    
+    .heightImage,
+    .widthImage,
+    .seedImage {
+        flex: 1;
+        min-width: 60px;
+        margin: 0;
+    }
+    
+    .modelImage {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .textPromptSection > .topRow 
+    {
+        height: 300px;
+        width: 100%;
+    }
+    .textPromptSection.tryitMode 
+    {
+        top: 50%;
+        height: 400px;
+        width: 100%;
+    }
+    .promptInputText 
+    {   
+        width: 100%;
+        font-size: 0.8em;
+    }
+
+}

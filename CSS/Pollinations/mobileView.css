@@ -1,92 +1,138 @@
+/* ---------Image and Text Display section starts here------------ */
 
-/* Responsive Styles */
-@media (max-width: 992px) {
-    h1 {
-        font-size: 36px;
-    }
 
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        border-radius: 20px;
-        padding: 12px 20px;
-    }
-
-    .nav-links,
-    .nav-buttons {
-        display: none;
-    }
-
-    .mobile-menu-btn {
-        display: flex;
-    }
-
-    .mobile-menu-active .mobile-menu-btn span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-    }
-
-    .mobile-menu-active .mobile-menu-btn span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .mobile-menu-active .mobile-menu-btn span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-    }
-
-    .mobile-menu-active .nav-links {
-        display: flex;
-        flex-direction: column;
+    .imageContainerBackdrop>.imageContainer {
         position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background-color: var(--card-bg);
-        padding: 20px;
-        border-radius: var(--border-radius);
-        z-index: 10;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        animation: slideDown 0.3s ease forwards;
+        top: 50%;
+        left: 25%;
+        transform: translate(-50%, -50%);
+        background: url(../IMAGES/Pollinations/heroSectionPreview/img1.jpg);
+        background-size: cover;
+        height: 65%;
+        width: 65%;
+        border-radius: 20px;
+        overflow: hidden;
+        filter: sepia(0.6) contrast(1.2) brightness(0.9) saturate(0.8);
+        box-shadow: 0 0 15px rgba(255, 255, 0, 0.3), 0 0 30px rgba(255, 165, 0, 0.2);
+        border: 4px solid rgba(255, 165, 0, 0.5);
     }
 
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .imageContainerBackdrop>.textContainer {
+        position: absolute;
+        bottom: -10%;
+        left: -10%;
+        max-height: 100px;
+        max-width: 70%;
+        transform: translate(0, 0);
+        color: #fff;
+        text-align: center;
+        font-size: 1em;
+        font-weight: bold;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-top-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow-y: auto;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Orbitron', sans-serif;
     }
 
-    .mobile-menu-active .nav-buttons {
+    .imageFeedSection>.imageFeedText {
+        position: absolute;
+        top: 1%;
+        left: 50%;
+        transform: translateX(-50% -50%);
+        font-family: "Orbitron";
+        font-size: 3em;
+        font-weight: 700;
+        width: 100%;
+        text-align: center;
+    }
+
+    .imageFeedSection>.imageFeedDescription {
+        position: absolute;
+        top: 18%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Lexend", sans-serif;
+        font-size: 1.2em;
+        font-weight: 700;
+        text-align: center;
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        align-items: center;
+        width: 100%;
     }
 
-    .mobile-menu-active .dropdown-content {
-        position: static;
-        box-shadow: none;
-        transform: none;
-        margin: 10px 0 10px 20px;
-        width: auto;
-        border: none;
-        background-color: rgba(0, 0, 0, 0.2);
+    .imageHolderBackdrop {
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 65%;
+        width: 95%;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 2px dotted rgba(255, 140, 0, 0.5);
+        background: transparent;
+        border-radius: 16px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .mobile-menu-active .dropdown:hover .dropdown-content {
-        animation: none;
-        transform: none;
+    .generationInfo {
+        position: absolute;
+        top: 94%;
+        left: 25%;
+        transform: translateX(-50%);
+        min-height: 80px;
+        height: 220px;
+        width: 45%;
+        background: #1e1e1e;
+        border-radius: 25px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        box-shadow:
+            inset 6px 6px 12px rgba(0, 0, 0, 0.7),
+            inset -6px -6px 12px rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        color: #ffe580;
+        font-family: "Orbitron", sans-serif;
+        text-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
+        scrollbar-width: none;
     }
 
-    h1 {
-        font-size: 28px;
+    .imagePrompt {
+        position: absolute;
+        top: 94%;
+        left: 75%;
+        transform: translateX(-50%);
+        min-height: 80px;
+        max-height: 200px;
+        width: 45%;
+        background: #2a2a2a;
+        border-radius: 25px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        box-shadow:
+            -6px -6px 12px rgba(255, 255, 255, 0.05),
+            6px 6px 15px rgba(0, 0, 0, 0.6),
+            0 0 12px rgba(255, 140, 0, 0.15);
+        border: 1px solid rgba(255, 140, 0, 0.2);
+        backdrop-filter: blur(6px);
     }
-
-    .hero {
-        padding: 40px 0;
-    }
-}

@@ -1,0 +1,14 @@
+/* Media query for mobile phones */
+@media only screen and (max-width: 600px) {
+    .supportersSection > .supportersText
+    {
+        font-size: 2em;
+        top: 5%;
+    }
+    .supportersSection > .supportersDescription
+    {
+        font-size: 1.2em;
+        top: 15%;
+        width: 90%;
+    }
+}

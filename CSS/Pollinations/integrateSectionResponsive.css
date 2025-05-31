@@ -1,0 +1,46 @@
+@media only screen and (max-width: 600px) {
+    .integrateSection > .integrateText
+    {
+        font-size: 3em;
+        top: 1%;
+    }
+    .integrateSection > .integrateDescription
+    {
+        font-size: 0.8em;
+        top: 12%;
+        width: 90%;
+    }
+    .apiDocsVisit 
+    {
+        position: absolute;
+        top: 22%;
+        left: 0%;
+        height: 50px;
+        width: 200px;
+        font-size: 0.8em;
+        scale: 0.8;
+    }
+    pre  
+    {
+        left: -40px;
+    }
+    .segment-list-wrapper-integrate 
+    {
+        height: 350px;
+    }
+    .segment-item-integrate
+    {
+        transform: scale(1) translateX(00px);
+        padding: 8px 10px;
+        font-size: 0.6em;
+        text-align: left;
+    }
+    .segment-item-integrate.most-fainted
+    {
+        transform: scale(1) translateX(0px);
+    }
+    .segment-item-integrate.faint
+    {
+        transform: scale(1) translateX(0px);
+    }
+}

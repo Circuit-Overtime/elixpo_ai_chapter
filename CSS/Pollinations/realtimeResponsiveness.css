@@ -1,0 +1,565 @@
+/* Responsive Styles for Realtime Feed Section */
+
+/* Apply these rules when the screen width is 1024px or less */
+@media (max-width: 1024px) {
+    #realtimeFeed {
+        /* Allow section to grow vertically */
+        min-height: auto;
+        /* Add some padding around the content */
+        padding: 10px;
+        /* Adjust top margin */
+        margin-top: 50px;
+        /* Let the child manage its flex layout */
+        display: block;
+    }
+
+    .realtimeFeedBackdrop,
+    .realtimeFeedBackdropOverlay {
+        /* Keep covering the potentially taller section */
+        /* Maybe slightly smaller border radius */
+        border-radius: 12px;
+    }
+
+
+    .imageFeedSection {
+        /* Switch from absolute positioning */
+        position: static;
+        /* Allow width to fill parent (with padding from #realtimeFeed) */
+        width: 100%;
+        /* Allow height to wrap content */
+        height: auto;
+        /* Use Flexbox to stack children vertically */
+        display: flex;
+        flex-direction: column;
+        /* Center items horizontally within the column */
+        align-items: center;
+        /* Add space between stacked items */
+        gap: 20px;
+        /* Allow content to be visible outside the container if needed */
+        overflow: visible;
+        /* Add horizontal padding */
+        padding: 0 10px;
+        /* Ensure padding is included in width calculations */
+        box-sizing: border-box;
+    }
+
+    /* Select all direct children that were previously absolutely positioned
+       and make them static to participate in the flex flow */
+    .imageFeedSection > .imageFeedText,
+    .imageFeedSection > .imageFeedDescription,
+    .imageFeedSection > .generationInfo,
+    .imageFeedSection > .tryItBtn,
+    .imageFeedSection > .imageHolderBackdrop,
+    .imageFeedSection > .imagePrompt,
+    .imageFeedSection > .ImagePromptSection,
+    .imageFeedSection > .textPromptSection,
+    /* Also apply to the server response elements when they appear */
+    .imageFeedSection > .userPromptServer,
+    .imageFeedSection > .aiRespondServer
+    {
+        position: static !important; /* Force static position */
+        top: auto !important; /* Remove absolute top positioning */
+        left: auto !important; /* Remove absolute left positioning */
+        bottom: auto !important; /* Remove absolute bottom positioning */
+        right: auto !important; /* Remove absolute right positioning */
+        transform: none !important; /* Remove absolute transforms */
+        /* Adjust width to fill the container, leave small gap */
+        width: 98%;
+        /* Remove max-width constraints if they hinder responsiveness */
+        max-width: none;
+        /* Allow height to adjust based on content */
+        height: auto;
+        /* Center block elements if needed (redundant with align-items: center but safe) */
+        margin: 0 auto;
+        /* Ensure padding and border are included in the element's total width and height */
+        box-sizing: border-box;
+    }
+
+    /* Specific adjustments for elements when stacked */
+
+    .imageFeedText {
+        /* Adjust font size for smaller screens */
+        font-size: 3em;
+        text-align: center; /* Ensure text is centered */
+        margin-bottom: 10px; /* Add space below the title */
+    }
+
+    .imageFeedDescription {
+        /* Adjust font size */
+        font-size: 1em;
+        text-align: center; /* Ensure text is centered */
+        /* Stack the description text and the toggle button */
+        flex-direction: column;
+        gap: 10px; /* Space between description parts */
+        margin-bottom: 10px; /* Add space below the description */
+    }
+    /* Make the spans block level so they stack within the description flex container */
+    .imageFeedDescription span {
+        display: block;
+    }
+    /* Center the toggle button */
+    .imageFeedDescription label {
+        margin: 10px auto;
+    }
+
+
+    .tryItBtn {
+        /* Default static positioning applied above */
+        margin-top: 10px; /* Add space above the button */
+        margin-bottom: 10px; /* Add space below the button */
+        width: fit-content; /* Button width based on its content */
+        height: 20%;
+        display: none;
+    }
+
+    /* The main image/text output area */
+    .imageHolderBackdrop {
+        /* Default static positioning applied above */
+        /* Add padding */
+        padding: 10px;
+        /* Ensure a minimum height to contain content */
+        min-height: 200px;
+        /* Use flexbox to arrange internal elements (image, genInfo) */
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Space between image and genInfo */
+        align-items: center;
+        border-radius: 12px; /* Smaller border radius */
+        /* Make it position: relative again so absolute children like animation work */
+        position: relative;
+    }
+
+    /* Children within the backdrop */
+    .imageHolderBackdrop > .displayImage {
+        position: static; /* Ensure it flows within the backdrop flex */
+        width: 100%; /* Fill the width of the backdrop (minus padding) */
+        /* Allow height to scale with width, but set a max */
+        height: auto;
+        max-height: 400px;
+        /* Ensure the image fits without distortion */
+        object-fit: contain;
+        /* Remove padding/border if backdrop provides it */
+        padding: 0;
+        border: none;
+         /* The .displayImage.tryitMode class adds its own padding/border, handle that below */
+    }
+    .imageHolderBackdrop > .genInfo {
+        position: static; /* Ensure it flows within the backdrop flex */
+        width: 100%; /* Fill the width of the backdrop (minus padding) */
+        height: auto;
+        padding: 0 5px; /* Add some horizontal padding */
+    }
+     /* Adjust internal genInfo text */
+     .imageHolderBackdrop > .genInfo > .modelused,
+     .imageHolderBackdrop > .genInfo > .referrer {
+         left: auto; /* Remove the absolute left offset */
+         font-size: 1em; /* Adjust font size */
+         margin-right: 10px;
+     }
+     .imageHolderBackdrop > .genInfo > .spacer {
+         /* Ensure spacer takes available space */
+         flex-grow: 1;
+     }
+
+
+    /* The prompt display area below the backdrop */
+    .imagePrompt {
+        /* Default static positioning applied above */
+        /* Limit height and enable scroll */
+        max-height: 150px;
+        overflow-y: auto;
+        padding: 10px;
+        border-radius: 12px;
+    }
+     /* Adjust prompt text size */
+    .imagePrompt > span {
+        font-size: 1em;
+    }
+
+
+    /* The generation info area below the prompt */
+    .generationInfo {
+        /* Default static positioning applied above */
+        min-height: 100px;
+        padding: 10px;
+        border-radius: 12px;
+    }
+     /* Adjust internal text sizes and positioning */
+     .generationInfo > .generationNumber,
+     .generationInfo > .generationTime {
+         left: auto; /* Remove absolute left offset */
+         font-size: 1.3em; /* Adjust font size */
+         top: auto; /* Remove absolute top offset */
+         margin-bottom: 5px; /* Space between items */
+     }
+     /* Adjust progress bars to fit within parent */
+     .progressBar,
+     .serverLoadShower {
+         position: static; /* Ensure static flow within parent */
+         width: 98%; /* Fill parent width */
+         margin-top: 5px;
+     }
+
+
+    /* Hidden elements (userPromptServer, aiRespondServer, ImagePromptSection, textPromptSection)
+       will also become static. Their visibility is handled by the original CSS opacity/scale/pointer-events */
+     .userPromptServer,
+     .aiRespondServer,
+     .ImagePromptSection,
+     .textPromptSection {
+         /* Default static positioning applied above */
+          /* Ensure they have appropriate dimensions when they *are* made visible */
+         width: 98%;
+         margin: 0 auto;
+         box-sizing: border-box;
+         height: auto; /* Allow height to adapt */
+         max-width: none;
+     }
+
+
+    /* --- tryitMode Adjustments for Responsive Views --- */
+
+    /* Ensure elements that are hidden in tryitMode via original CSS
+       also adopt static positioning so they don't disrupt layout */
+     .imageFeedText.tryitMode,
+     .generationInfo.tryitMode,
+     .imagePrompt.tryitMode,
+     .genInfo.tryitMode,
+     .userPromptServer.tryitMode {
+         position: static !important;
+         /* Visibility (opacity, scale, pointer-events) is handled by the original CSS */
+         /* Optional: collapse them fully when hidden */
+         /* opacity: 0; scale: 0; pointer-events: none; are already handled, but add dimensions */
+         height: 0 !important; /* Collapse height */
+         padding: 0 !important; /* Remove padding */
+         margin: 0 !important; /* Remove margin */
+         overflow: hidden !important; /* Hide content */
+     }
+
+
+    /* Elements that are visible/repositioned in tryitMode */
+
+    .imageFeedDescription.tryitMode {
+        /* Default static positioning applied above */
+        /* Ensure it remains visible and centered */
+        position: static !important;
+        top: auto !important;
+        transform: none !important;
+        width: 90%;
+        font-size: 1em;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* The main output area in tryit mode (image or text) */
+    /* imageHolderBackdrop is for Image Tryit Mode */
+    .imageHolderBackdrop.tryitMode {
+        /* Default static positioning applied above */
+        /* This is the main *image* display area in tryit mode */
+        min-height: 250px; /* Make image area a bit bigger */
+        padding: 10px; /* Adjust padding */
+         /* Internal flex layout for image/genInfo is handled above for .imageHolderBackdrop */
+         /* The .genInfo inside it will be hidden by .genInfo.tryitMode rules */
+    }
+    /* Specific styling for the image *inside* the backdrop in tryit mode */
+    .displayImage.tryitMode {
+        /* Default static positioning handled within backdrop flex */
+         /* Original CSS adds padding/border to the image itself */
+         padding: 5px; /* Adjust padding */
+         border: 1px dashed rgba(255, 140, 0, 0.5); /* Adjust border */
+         min-height: 200px; /* Ensure image has height */
+         height: auto;
+         width: 100%;
+         object-fit: contain;
+    }
+
+    /* aiRespondServer is for Text Tryit Mode (replaces image area) */
+    .aiRespondServer.tryitMode {
+        /* Default static positioning applied above */
+        /* This is the main *text* display area in tryit mode */
+        height: auto; /* Allow height to adapt */
+        min-height: 200px; /* Ensure minimum height for content */
+        padding: 10px;
+        border-radius: 12px;
+        /* Make sure it's visible */
+        opacity: 1 !important;
+        scale: 1 !important;
+        pointer-events: all !important;
+        filter: none !important; /* Remove blur */
+    }
+
+
+    /* The input area in tryit mode (image or text) */
+    /* ImagePromptSection is for Image Input */
+    .ImagePromptSection.tryitMode {
+        /* Default static positioning applied above */
+        /* This is the image *input* area */
+        height: auto; /* Allow height to adapt to content */
+        padding: 10px; /* Adjust padding */
+        /* Stack the rows within the input section */
+        flex-direction: column;
+        gap: 10px; /* Space between top and bottom rows */
+    }
+     /* Stack elements within the rows */
+    .ImagePromptSection.tryitMode .topRow,
+    .ImagePromptSection.tryitMode .bottomRow {
+        flex-direction: column;
+        gap: 10px; /* Space between inputs/buttons */
+        width: 100%; /* Ensure rows take full width */
+    }
+    /* Make inputs and buttons fill the width within their rows */
+    .ImagePromptSection.tryitMode .topRow > *,
+    .ImagePromptSection.tryitMode .bottomRow > * {
+        width: 100% !important;
+        flex: none; /* Remove flex-basis */
+    }
+     /* Adjust input/button heights */
+    .ImagePromptSection.tryitMode .promptInputImage {
+        height: 60px; /* Give prompt input more height */
+    }
+     .ImagePromptSection.tryitMode .enhanceButton,
+     .ImagePromptSection.tryitMode .privateButton,
+     .ImagePromptSection.tryitMode .logoButton,
+     .ImagePromptSection.tryitMode .generateImage {
+         height: 40px;
+     }
+      .ImagePromptSection.tryitMode .modelImage {
+          height: 40px;
+           font-size: 1em; /* Adjust font size */
+      }
+       .ImagePromptSection.tryitMode .modelImage ion-icon {
+           font-size: 1.2em; /* Adjust icon size */
+       }
+
+    /* textPromptSection is for Text Input */
+    .textPromptSection.tryitMode {
+        /* Default static positioning applied above */
+        /* This is the text *input* area */
+        height: auto; /* Allow height to adapt */
+        padding: 10px; /* Adjust padding */
+         /* Stack the rows within the input section */
+        flex-direction: column;
+        gap: 10px; /* Space between top row (textarea) and bottom row (model) */
+    }
+     .textPromptSection.tryitMode .topRow {
+          flex-direction: column; /* Stack textarea and button */
+          gap: 10px;
+          width: 100%;
+     }
+      .textPromptSection.tryitMode .promptInputText {
+           height: 100px; /* Fixed height for textarea */
+           width: 100%;
+            font-size: 1em; /* Adjust font size */
+      }
+       .textPromptSection.tryitMode .generateText {
+           width: 100%;
+           height: 40px;
+           font-size: 1em; /* Adjust font size */
+       }
+     .textPromptSection.tryitMode .bottomRow {
+         flex-direction: column; /* Stack model select */
+         gap: 10px;
+         width: 100%;
+     }
+      .textPromptSection.tryitMode .modelText {
+          width: 100%;
+          left: auto; /* Remove original positioning */
+          transform: none; /* Remove original transform */
+           height: 40px;
+            font-size: 1em; /* Adjust font size */
+      }
+       .textPromptSection.tryitMode .modelText ion-icon {
+          font-size: 1.2em; /* Adjust icon size */
+       }
+
+
+    /* Ensure the image generation animation still works within the backdrop */
+    .imageGenerationAnimation.generating {
+        /* Keep position absolute relative to the backdrop (which is now relative) */
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        /* Ensure visibility and covering */
+        scale: 1;
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 10;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        background: rgba(0, 0, 0, 0.1);
+    }
+    /* Ensure blobs are absolute within the animation container */
+    .imageGenerationAnimation > .animation-blob {
+         position: absolute;
+         /* Blurs are already handled in original CSS */
+    }
+
+}
+
+/* Further adjustments for smaller screens (e.g., tablets and large phones in portrait) */
+@media (max-width: 768px) {
+     .imageFeedText {
+        font-size: 2.5em;
+     }
+     .imageFeedDescription {
+         font-size: 0.9em;
+     }
+      .imageHolderBackdrop {
+         min-height: 180px;
+         padding: 8px;
+     }
+     .displayImage.tryitMode {
+         min-height: 150px;
+         padding: 4px;
+     }
+     .imageHolderBackdrop > .genInfo > .modelused,
+     .imageHolderBackdrop > .genInfo > .referrer {
+          font-size: 0.9em;
+     }
+     .imagePrompt {
+         padding: 8px;
+     }
+     .imagePrompt > span {
+          font-size: 0.9em;
+     }
+     .generationInfo {
+         padding: 8px;
+         min-height: 90px;
+     }
+     .generationInfo > .generationNumber,
+     .generationInfo > .generationTime {
+          font-size: 1.1em;
+     }
+
+     /* tryitMode input area adjustments */
+      .ImagePromptSection.tryitMode,
+      .textPromptSection.tryitMode {
+          padding: 8px;
+      }
+       .ImagePromptSection.tryitMode .promptInputImage {
+           height: 50px;
+            font-size: 0.9em;
+       }
+        .ImagePromptSection.tryitMode .enhanceButton,
+        .ImagePromptSection.tryitMode .privateButton,
+        .ImagePromptSection.tryitMode .logoButton,
+        .ImagePromptSection.tryitMode .generateImage,
+        .textPromptSection.tryitMode .generateText {
+            height: 35px;
+            font-size: 1em;
+        }
+         .ImagePromptSection.tryitMode .modelImage,
+         .textPromptSection.tryitMode .modelText {
+             height: 35px;
+             font-size: 1em;
+         }
+          .ImagePromptSection.tryitMode .modelImage ion-icon,
+          .textPromptSection.tryitMode .modelText ion-icon {
+             font-size: 1em;
+          }
+        .textPromptSection.tryitMode .promptInputText {
+           height: 90px;
+            font-size: 1em;
+        }
+         .aiRespondServer.tryitMode {
+            min-height: 180px;
+            padding: 8px;
+            font-size: 1em;
+         }
+}
+
+/* Further adjustments for small phones */
+@media (max-width: 480px) {
+     #realtimeFeed {
+        padding: 5px;
+        margin-top: 30px;
+     }
+      .imageFeedSection {
+         gap: 15px;
+         padding: 0 5px;
+      }
+     .imageFeedText {
+        font-size: 2em;
+     }
+     .imageFeedDescription {
+         font-size: 0.8em;
+         gap: 5px;
+     }
+      .imageHolderBackdrop {
+         min-height: 150px;
+         padding: 5px;
+         gap: 5px;
+     }
+     .displayImage.tryitMode {
+         min-height: 120px;
+         padding: 3px;
+     }
+     .imageHolderBackdrop > .genInfo {
+         padding: 0 3px;
+     }
+     .imageHolderBackdrop > .genInfo > .modelused,
+     .imageHolderBackdrop > .genInfo > .referrer {
+          font-size: 0.8em;
+          margin-right: 5px;
+     }
+     .imagePrompt {
+         padding: 5px;
+         max-height: 120px;
+     }
+     .imagePrompt > span {
+          font-size: 0.8em;
+     }
+      .generationInfo {
+         padding: 5px;
+         min-height: 80px;
+     }
+     .generationInfo > .generationNumber,
+     .generationInfo > .generationTime {
+          font-size: 1em;
+     }
+
+     /* tryitMode input area adjustments */
+     .ImagePromptSection.tryitMode,
+     .textPromptSection.tryitMode {
+          padding: 5px;
+          gap: 8px;
+      }
+      .ImagePromptSection.tryitMode .topRow,
+      .ImagePromptSection.tryitMode .bottomRow,
+      .textPromptSection.tryitMode .topRow,
+      .textPromptSection.tryitMode .bottomRow {
+         gap: 8px;
+      }
+       .ImagePromptSection.tryitMode .promptInputImage {
+           height: 45px;
+            font-size: 0.8em;
+            padding: 8px 12px;
+       }
+        .ImagePromptSection.tryitMode .enhanceButton,
+        .ImagePromptSection.tryitMode .privateButton,
+        .ImagePromptSection.tryitMode .logoButton,
+        .ImagePromptSection.tryitMode .generateImage,
+        .textPromptSection.tryitMode .generateText {
+            height: 30px;
+            font-size: 0.9em;
+        }
+        .ImagePromptSection.tryitMode .modelImage,
+         .textPromptSection.tryitMode .modelText {
+             height: 30px;
+             font-size: 0.9em;
+         }
+         .ImagePromptSection.tryitMode .modelImage ion-icon,
+         .textPromptSection.tryitMode .modelText ion-icon {
+             font-size: 0.9em;
+         }
+       .textPromptSection.tryitMode .promptInputText {
+          height: 80px;
+           font-size: 0.9em;
+           padding: 8px 12px;
+       }
+        .aiRespondServer.tryitMode {
+            min-height: 150px;
+            padding: 8px;
+            font-size: 0.9em;
+         }
+}

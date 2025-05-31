@@ -1,0 +1,27 @@
+@media only screen and (max-width: 600px) {
+        .contributeSection > .contributeText
+        {
+            font-size: 3em;
+            top: 5%;
+        }
+        .contributeSection > .contributeDescription
+        {
+            font-size: 0.8em;
+            top: 15%;
+            width: 90%;
+        }
+        .contribBtn 
+        {
+            scale: 0.5;
+        }
+        .githubRedirect  
+        {
+            top: 33%;
+            left: -4%;
+        }
+        .discordRedirect 
+        {
+            top: 90%;
+            left: 45%;
+        }
+}
