@@ -1,0 +1,127 @@
+.projects
+{
+    position: relative; 
+    margin-top: 50px;
+    z-index: 3; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.projectsBackdrop 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        145deg,
+        rgba(140, 0, 255, 0.1),
+        rgba(0, 0, 0, 0.3)
+    );
+    border-radius: 24px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+}
+.projectsBackdropOverlay 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../IMAGES/Pollinations/heroSectionPreview/bgOverlay.jpeg);
+    background-position: center;
+    transform: rotate(180deg);
+    background-size: cover;
+    border-radius: 24px;
+    opacity: 0.5;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.projectsSection 
+{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+}
+
+.projectsSection > .projectsText
+{
+  position: absolute;
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Orbitron";
+  font-size: 5em;
+  font-weight: 700;
+}
+.projectsSection > .projectsDescription
+{
+    position: absolute;
+    top: 17%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Lexend", sans-serif;
+    font-size: 1.3em;
+    font-weight: 400;
+    text-align: center;
+    display: flex;
+}
+
+
+.projectSubmit
+{
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    height: 60px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: #8a5cf65d;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    border: 3px solid #a855f7;
+    transition: all 0.3s ease;
+}
+
+.projectSubmit:hover{
+    background: #8a5cf65d;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.projectSubmit:active {
+    transform: scale(0.95);
+}
+
+.projectSubmit span {
+    font-size: 1.1em;
+    font-weight: 400;
+    margin-left: 10px;
+    color: #fff;
+}
+
+.projectSubmit ion-icon {
+    position: relative;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    color: #d1fae5;
+    margin-right: 10px;
+    transform: rotate(-15deg);
+}

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 14, 14, 0.975);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  display: none;
+}
+
+.loader-content {
+  text-align: center;
+  color: #00ffc8;
+  font-family: 'Orbitron', sans-serif;
+  padding: 1rem 2rem;
+  user-select: none;
+}
+
+.loader-content ion-icon {
+  font-size: 80px;
+  margin-bottom: 16px;
+  will-change: transform, opacity;
+}
+
+.loader-text {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  letter-spacing: 0.1em;
+}
+
+.progress-wrapper {
+  width: 260px;
+  height: 8px;
+  background: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progress-bar {
+  display: flex;
+  height: 100%;
+  gap: 2px;
+}
+
+.bar-segment {
+  flex: 1;
+  background: #00ffc8;
+  opacity: 0;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform, opacity;
+}

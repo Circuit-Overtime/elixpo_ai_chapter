@@ -1,0 +1,106 @@
+
+.segment-scroll-container-projects {
+    font-family: 'Kalam', cursive; /* Hand-drawn style font */
+    position: relative;
+    left: 82%; 
+    top: 50%;
+    font-size: 1.3em;
+    transform: translateY(-50%); 
+    display: flex;
+    align-items: center;
+    z-index: 1000; 
+    mix-blend-mode: screen;
+}
+
+/* Wrapper for the scrollable list to control dimensions and hide overflow */
+.segment-list-wrapper-projects {
+    position: relative; 
+    width: 250px; 
+    height: 550px; 
+    overflow: hidden; 
+    
+    border-radius: 8px;
+}
+
+.segment-list-projects {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    cursor: grab;
+    backdrop-filter: blur(10px);    
+}
+
+.segment-list-projects::-webkit-scrollbar {
+    display: none;  
+}
+
+.segment-item-project {
+    background-color: #a9882e;
+    border: 2px solid #f1c657;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin: 10px 0;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0.2;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    transform-origin: center left;
+    transform: scale(0.75) translateX(60px);
+    z-index: 1;
+}
+
+.segment-item-project.most-fainted {
+    opacity: 0.4;
+    border-color: #ddbc58;
+    background-color: #947728;
+    transform: scale(0.85) translateX(40px);
+    z-index: 2;
+}
+
+.segment-item-project.faint {
+    opacity: 0.7;
+    border-color: #caa841;
+    background-color: #80621f;
+    transform: scale(0.93) translateX(20px);
+    z-index: 3;
+}
+
+.segment-item-project.selected {
+    opacity: 1;
+    border-color: #fff3c0;
+    background-color: #f1c657;
+    font-weight: bold;
+    transform: scale(1) translateX(0px);
+    z-index: 4;
+}
+
+
+
+/* Gradient overlays for fading edges */
+.fade-overlay-projects {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 80px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.fade-overlay.top {
+    top: 0;
+    background: linear-gradient(to bottom, #1a1a1a, rgba(26, 26, 26, 0));
+}
+
+.fade-overlay.bottom {
+    bottom: 0;
+    background: linear-gradient(to top, #1a1a1a, rgba(26, 26, 26, 0));
+}

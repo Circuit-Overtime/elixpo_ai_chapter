@@ -1,0 +1,225 @@
+.imageTextFeedToggle {
+    perspective: 1200px;
+    position: relative;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .imageTextFeedToggle input {
+    display: none; /* Hide default checkbox */
+  }
+  
+  .toggle-button {
+    position: relative;
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(
+      145deg,
+      #3f3f5a,
+      #4a4a75
+    ); /* Dark base with subtle saffron tint */
+    border-radius: 30px;
+    box-shadow: 
+                  /* Neumorphic outer shadows */
+      10px 10px 20px rgba(0, 0, 0, 0.4),
+      -10px -10px 20px rgba(255, 165, 0, 0.1),
+      /* Saffron-tinted highlight */ /* Skeuomorphic inset */ inset 0 3px 6px
+        rgba(255, 255, 255, 0.1),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1); /* Smooth, snappy */
+    transform-style: preserve-3d;
+  }
+  
+  /* Inner track for texture */
+  .toggle-button::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 140, 0, 0.1),
+      rgba(0, 0, 0, 0.3)
+    );
+    border-radius: 24px;
+    top: 0px;
+    left: 0px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    pointer-events: none;
+  }
+  
+  /* Knob */
+  .toggle-button::before {
+    content: "";
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    background: radial-gradient(
+      circle at 40% 30%,
+      #ff8c00,
+      #cc7000
+    ); /* Saffron orange */
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    box-shadow: 
+                  /* Neumorphic knob shadows */
+      5px 5px 10px rgba(0, 0, 0, 0.5),
+      -5px -5px 10px rgba(255, 179, 71, 0.3),
+      /* Golden highlight */ /* Skeuomorphic highlights */ inset 0 -2px 4px rgba(0, 0, 0, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Elastic bounce */
+    transform: translateZ(15px) scale(1);
+    z-index: 2;
+  }
+  
+  /* Glow effect for knob */
+  .toggle-button .glow {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 140, 0, 0.5),
+      transparent
+    ); /* Saffron glow */
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    transform: translateZ(10px);
+    pointer-events: none;
+  }
+  
+  /* Checked state */
+  .imageTextFeedToggle input:checked ~ .toggle-button {
+    background: linear-gradient(145deg, #4a3f2a, #5a4f3a); /* Warm saffron base */
+    box-shadow:
+      10px 10px 20px rgba(0, 0, 0, 0.4),
+      -10px -10px 20px rgba(255, 179, 71, 0.2),
+      /* Golden tint */ inset 0 3px 6px rgba(255, 255, 255, 0.1),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+  }
+  
+  .imageTextFeedToggle input:checked ~ .toggle-button::before {
+    left: 45px;
+    background: radial-gradient(
+      circle at 40% 30%,
+      #ffb347,
+      #ff8c00
+    ); /* Golden saffron */
+    transform: translateZ(15px) rotate(720deg) scale(1.05); /* Spin and pulse */
+    box-shadow:
+      5px 5px 10px rgba(0, 0, 0, 0.5),
+      -5px -5px 10px rgba(255, 255, 255, 0.2),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  }
+  
+  .imageTextFeedToggle input:checked ~ .toggle-button::after {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 179, 71, 0.2),
+      rgba(0, 0, 0, 0.2)
+    );
+    box-shadow: inset 0 0 10px rgba(255, 140, 0, 0.3); /* Saffron glow */
+  }
+  
+  .imageTextFeedToggle input:checked ~ .toggle-button .glow {
+    background: radial-gradient(
+      circle,
+      rgba(255, 179, 71, 0.5),
+      transparent
+    ); /* Golden glow */
+    left: 50px;
+    opacity: 0.7;
+  }
+  
+  /* Hover effect */
+  .toggle-button:hover {
+    box-shadow:
+      12px 12px 24px rgba(0, 0, 0, 0.5),
+      -12px -12px 24px rgba(255, 140, 0, 0.2); /* Saffron accent */
+    transform: translateZ(5px);
+  }
+  
+  .toggle-button:hover::before {
+    transform: translateZ(18px) scale(1.02);
+  }
+  
+  /* Active (click) effect */
+  .toggle-button:active::before {
+    transform: translateZ(10px) scale(0.95);
+    box-shadow:
+      3px 3px 6px rgba(0, 0, 0, 0.5),
+      -3px -3px 6px rgba(255, 179, 71, 0.2);
+  }
+  
+  /* Micro-interaction animations */
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+  }
+  
+  @keyframes track-vibrate {
+    0%,
+    100% {
+      transform: translateZ(0);
+    }
+    50% {
+      transform: translateZ(2px);
+    }
+  }
+  
+  .imageTextFeedToggle input:checked ~ .toggle-button .glow {
+    animation: pulse-glow 1.5s infinite ease-in-out;
+  }
+  
+  .toggle-button {
+    animation: track-vibrate 0.1s ease-in-out 0.2s 2; /* Haptic feedback */
+  }
+  
+  /* Light flare effect */
+  .flare {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent);
+    border-radius: 50%;
+    top: 9px;
+    left: 9px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .imageTextFeedToggle input:checked ~ .toggle-button .flare {
+    left: 69px;
+    opacity: 0.7;
+  }
+  
+  /* Subtle track glow animation */
+  @keyframes track-glow {
+    0%,
+    100% {
+      box-shadow: inset 0 0 8px rgba(255, 140, 0, 0.2);
+    }
+    50% {
+      box-shadow: inset 0 0 12px rgba(255, 140, 0, 0.4);
+    }
+  }
+  
+  .imageTextFeedToggle input:checked ~ .toggle-button::after {
+    animation: track-glow 2s infinite ease-in-out;
+  }
+  

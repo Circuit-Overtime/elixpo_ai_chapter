@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <title>Pollinations.ai - Free and Opensource AI APIs</title>
+    <meta name="description" content="Pollinations.ai offers free and open-source APIs for text and image generation.">
+    <meta name="keywords" content="AI, artificial intelligence, text generation, image generation, open source, API, free API, AI platform, machine learning, generative AI, Midjourney alternative, Stable Diffusion alternative, Large Language Models, LLM, AI community, integrate AI">
+    <meta name="author" content="https://elixpoart.vercel.app/PollinationsAI">
+    <meta property="og:title" content="Pollinations.ai - Open Source AI APIs">
+    <meta property="og:description" content="Free and open-source APIs for text and image generation. Explore, integrate, and contribute!">
+    <meta property="og:image" content="https://image.pollinations.ai/prompt/3D_wireframe_blueprint_of_the_conceptual_isometric_world_of_Pollinations_AI_a_surreal_hyperrealistic_digital_garden_Elements_emerge_partially_from_all_sides?width=3000&height=1000&seed=-1"> 
+    <meta property="og:url" content="https://elixpoart.vercel.app/PollinationsAI"> 
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pollinations.ai - Open Source AI APIs">
+    <meta name="twitter:description" content="Free and open-source APIs for text and image generation. Explore, integrate, and contribute!">
+    <meta name="twitter:image" content="https://image.pollinations.ai/prompt/3d_wireframe_blueprint_for_the_prompt_conceptual%20isometric%20world%20of%20pollinations%20ai%20surreal%20hyperrealistic%20digital%20garden?width=2000&height=500&nologo=true&seed=-1"> <!-- Replace with a relevant Twitter preview image URL -->
+    <link rel="canonical" href="https://elixpoart.vercel.app/PollinationsAI">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/flaticon@latest/css/flaticon.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <link rel="icon" href="https://pollinations.ai/favicon-32x32.png" type="image/png">
+
+    <link rel='stylesheet' href='../CSS/Pollinations/generalStyling.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/patternsDesigns.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/introSection.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/tipBtnStyle.css'>
+
+
+    <link rel='stylesheet' href='../CSS/Pollinations/realtimeFeedSection.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/imageTextFeedToggle.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/tryitBtn.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/tryitMode.css'>
+
+
+    <link rel='stylesheet' href='../CSS/Pollinations/projectsSection.css'>
+    <link rel="stylesheet" href="../CSS/Pollinations/projectsDomainScrolling.css">
+    <link rel="stylesheet" href="../CSS/Pollinations/projectsDisplaySection.css">
+
+
+    <link rel='stylesheet' href='../CSS/Pollinations/integrateSection.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/integrateDomainScrolling.css'>
+
+
+    <link rel='stylesheet' href='../CSS/Pollinations/contributeSection.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/contributeImageFrame.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/contributeRedirectButtons.css'>
+
+    <link rel='stylesheet' href='../CSS/Pollinations/supportersSection.css'>
+    <link rel='stylesheet' href='../CSS/Pollinations/footerSection.css'>
+
+    <link rel="stylesheet" href="../CSS/Pollinations/loaderView.css">
+
+    <link rel="stylesheet" href="../CSS/Pollinations/supportersSectionResponsive.css">
+    <link rel="stylesheet" href="../CSS/Pollinations/contributeSectionResponsive.css">
+    <link rel="stylesheet" href="../CSS/Pollinations/integrateSectionResponsive.css">
+    <link rel="stylesheet" href="../CSS/Pollinations/projectsSectionResponsive.css">
+    <link rel="stylesheet" href="../CSS/Pollinations/heroSectionResponsive.css">
+    <link rel="stylesheet" href="../CSS/Pollinations/realtimeFeedSectionResponsive.css">
+</head>
+
+<body id="body">
+
+  <div id="welcomeLoader" class="loader-overlay">
+    <div class="loader-content">
+      <ion-icon id="loaderIcon" name="flash-outline" aria-hidden="true"></ion-icon>
+      <p class="loader-text">Pollinations.ai</p>
+      <div class="progress-wrapper">
+        <div class="progress-bar" id="progressBar">
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+          <div class="bar-segment"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="particles" id="particles" aria-hidden="true"></div>
+    <div class="topBoxesDesigns" id="topBoxesDesigns" aria-hidden="true"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">
+                <!-- Added alt attribute to logo image -->
+                <img src="https://pollinations.ai/favicon-32x32.png" alt="Pollinations.ai Logo">
+            </div>
+        </div>
+        <span class="appname">pollinations.ai</span> <!-- Changed div to span for inline text -->
+        <div class="navRedirects">
+          <ion-icon name="logo-linkedin" id="linkedinRedirect"></ion-icon>
+          <ion-icon name="logo-discord" id="discordInvite"></ion-icon>
+          <ion-icon name="logo-github" id="githubRedirect"></ion-icon>
+          <ion-icon name="logo-youtube" id="youtubeRedirect"></ion-icon>
+          <ion-icon name="logo-instagram" id="instagramRedirect"></ion-icon>
+          <ion-icon name="logo-tiktok" id="tiktokRedirect"></ion-icon>
+      </div>
+
+        <div class="mobile-menu-btn" role="button" aria-label="Toggle mobile menu" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="notificationCenter" id="notificationCenter"></div>
+
+    <div class="backgroundOverlay" aria-hidden="true">
+        <div class="backgroundOverlayScreen"></div>
+    </div>
+    <div class="container" id="container">
+        <section class="hero">
+            <!-- Main heading of the page -->
+            <h1 class="mainDesc"> Pollinations - AI</h1>
+            <!-- Subtitle describing the platform -->
+            <p class="subtitle">
+                An open-source platform offering easy Text and Image generations APIs, no signup or keys needed!
+              </p>
+
+              <div class="githubstats">
+                <div class="welcome-pill">
+                  <ion-icon name="logo-github" class="githublogo" aria-hidden="true"></ion-icon>
+                  <div class="spacer" aria-hidden="true"></div>
+                  <span id="githubStarCount">1,9002</span>
+                  <ion-icon name="star" class="starlogo" aria-hidden="true"></ion-icon>
+                </div>
+
+                <div class="profile-stack" id="profile-stack">
+                    <!-- Supporter profiles likely added here dynamically -->
+                </div>
+              </div>
+
+              <div class="tippingRedirects" id="tippingRedirects">
+                <!-- Tipping buttons likely added here dynamically -->
+              </div>
+              <div class="reditectButtons">
+                <button class="discordInvite rediBtn" type="button" id="discordRedirect">
+                  <ion-icon name="logo-discord" aria-hidden="true"></ion-icon>
+                    <span>Join on Discord</span>
+                  </button>
+
+                  <button class="githubReadme rediBtn" type="button" id="githubReadme">
+                    <ion-icon name="logo-github" aria-hidden="true"></ion-icon>
+                      <span>Visit Readme</span>
+                    </button>
+
+              </div>
+        </section>
+
+
+      <section id="realtimeFeed">
+            <div class="realtimeFeedBackdrop" aria-hidden="true">
+                <div class="realtimeFeedBackdropOverlay"></div>
+            </div>
+            <div class="imageFeedSection">
+                <!-- Changed div to h2 for semantic section title -->
+                <h2 class="imageFeedText tryit-target" id="imageFeedText">Realtime Feed</h2>
+                <!-- Changed div to p for semantic description -->
+                <div class="imageFeedDescription tryit-target" id="imageFeedDescription"> 
+                  <span id="imageFeedSectionDescriptionLeft">This is the realtime image </span>
+                  <label class="imageTextFeedToggle">
+                      <input type="checkbox" id="imageOrTextCheckBox"/>
+                      <div class="toggle-button" id="toggle-button">
+                      <div class="glow"></div>
+                      <div class="flare"></div>
+                      </div>
+                  </label>
+                  <span id="imageFeedSectionDescriptionRight"> text feed of pollinations </span>
+                  </div>
+                    <div class="generationInfo tryit-target" id="generationInfo">
+                            <div class="generationNumber">
+                                 <span class="countText">#</span>
+                                 <span class="countNumber" id="countNumber"> </span>
+                                 <div class="progressBar" id="progressBar">
+                                 </div>
+                            </div>
+                            <div class="generationTime">
+                                <span class="generationTimeText"> #/ms</span>
+                                <span class="generationRate" id="generationRate"> </span>
+                                <div class="serverLoadShower" id="serverLoadShower"></div>
+                            </div>
+                    </div>
+                    <button type="button" class="tryItBtn tryit-target" id="tryItBtn" data-mode="tryMode">
+                      <span class="fold" aria-hidden="true"></span>
+                      <div class="points_wrapper" aria-hidden="true">
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                        <i class="point"></i>
+                      </div>
+
+                      <span class="inner" id="tryItBtnText">
+                        <ion-icon name="flash" class="icon" aria-hidden="true"></ion-icon>
+                          Try Now?</span>
+                    </button>
+                    <div class="imageHolderBackdrop tryit-target" id="imageHolderBackdrop">
+                        <div class="displayImage hidden tryit-target" id="displayImage">
+                          <div class="imageGenerationAnimation" id="imageGenerationAnimation" aria-hidden="true">
+                            <div class="animation-blob blob-1"></div>
+                            <div class="animation-blob blob-2"></div>
+                            <div class="animation-blob blob-3"></div>
+                            <div class="animation-blob blob-4"></div>
+                          </div>
+                        </div>
+                        <p class="userPromptServer hidden tryit-target" id="userPromptServer"> </p>
+                        <p class="aiRespondServer hidden tryit-target" id="aiRespondServer"> </p>
+
+                        <div class="genInfo tryit-target" id="genInfo">
+                            <span class="modelused" id="modelused">Flux </span>
+                            <div class="spacer" aria-hidden="true"></div>
+                            <span class="referrer" id="referrerMentioned"> pollinations.ai</span>
+                        </div>
+
+                    </div>
+                    <!-- Changed div to p for semantic text content -->
+                    <p class="imagePrompt tryit-target" id="imagePrompt">
+                       <span> </span>
+                    </p>
+                    <div class="ImagePromptSection tryit-target" id="ImagePromptSection">
+                      <div class="topRow">
+                        <!-- Changed divs to buttons for semantic interactive elements -->
+                        <button class="enhanceButton" id="enhanceButton"> <span> Enhance Prompt</span> <ion-icon name="color-wand" aria-hidden="true"></ion-icon></button>
+                        <button class="privateButton" id="privateButton"> <span> Private Mode </span> <ion-icon name="shield" aria-hidden="true"></ion-icon></button>
+                        <button class="logoButton logo" id="logoButton"> <span> Disable Logo </span> <ion-icon name="golf" aria-hidden="true"></ion-icon></button>
+                        <input type="text" class="promptInputImage" id="promptInputImage" value="" placeholder="Type your prompt here..." autocomplete="off" spellcheck="false">
+                        <button class="generateImage" id="generateImage"> <span> Generate Image</span> <ion-icon name="send" aria-hidden="true"></ion-icon></button>
+                      </div>
+
+                      <div class="bottomRow">
+                        <input type="text" class="heightImage" id="heightImage" value="" placeholder="Height" autocomplete="off" spellcheck="false">
+                        <input type="text" class="widthImage" id="widthImage" value="" placeholder="Width" autocomplete="off" spellcheck="false">
+                        <input type="text" class="seedImage" id="seedImage" value="" placeholder="Seed" autocomplete="off" spellcheck="false">
+                        <button class="modelImage" id="modelImage"> <ion-icon name="shuffle" aria-hidden="true"></ion-icon> Flux </button>
+                      </div>
+                    </div>
+                    <div class="textPromptSection tryit-target" id="textPromptSection">
+                      <div class="topRow">
+                        <textarea class="promptInputText" id="promptInputText" placeholder="Type your question here..." autocomplete="off" spellcheck="false" multiline></textarea>
+                      <div class="generateText" id="generateText">  <ion-icon name="send" aria-hidden="true"></ion-icon> <span> Generate Text </span></div>
+                      </div>
+                      <div class="bottomRow">
+                      <button class="modelText" id="modelText"> <ion-icon name="shuffle" aria-hidden="true"></ion-icon> mistral- Mistral Small 3.1 24B </button>
+                    </div>
+                    </div>
+            </div>
+          </section>
+
+        <section id="projects" class="projects">
+            <div class="projectsBackdrop" aria-hidden="true">
+                <div class="projectsBackdropOverlay"></div>
+            </div>
+            <div class="projectsSection">
+                <!-- Changed div to h2 for semantic section title -->
+                <h2 class="projectsText">Projects</h2>
+                 <!-- Changed div to p for semantic description -->
+                <p class="projectsDescription">Here're some of the various implementations that our API is powering!</p>
+
+                <div class="segment-scroll-container-projects">
+                  <div class="segment-list-wrapper-projects">
+                      <div class="fade-overlay-projects top" aria-hidden="true"></div>
+                      <div class="fade-overlay-projects bottom" aria-hidden="true"></div>
+                      <div class="segment-list-projects">
+                          <!-- Project list items likely added here dynamically -->
+                      </div>
+                  </div>
+              </div>
+              <button class="projectSubmit" type="button" id="projectSubmit">
+                <ion-icon name="git-merge" aria-hidden="true"></ion-icon>
+                  <span>Submit Your Project</span>
+              </button>
+              <div class="projectDisplaySection" id="projectDisplaySection" data-scroll-section>
+                  <!-- Project details likely displayed here dynamically. Ensure images inside have alt attributes. -->
+              </div>
+          </section>
+
+
+        <section id="integrate" class="integrate">
+            <div class="integrateBackdrop" aria-hidden="true">
+                <div class="integrateBackdropOverlay"></div>
+            </div>
+            <div class="integrateSection">
+                <!-- Changed div to h2 for semantic section title -->
+                <h2 class="integrateText">Integrate</h2>
+                <!-- Changed div to p for semantic description -->
+                <p class="integrateDescription">Discover how to seamlessly integrate our free image and text generation API into your projects.</p>
+                <div class="segment-scroll-container-integrate">
+                    <div class="segment-list-wrapper-integrate">
+                        <div class="fade-overlay-integrate top" aria-hidden="true"></div>
+                        <div class="fade-overlay-integrate bottom" aria-hidden="true"></div>
+                        <div class="segment-list-integrate">
+                            <!-- Integration options likely added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <button class="apiDocsVisit" type="button" id="apiDocsVisit">
+                  <ion-icon name="logo-github" aria-hidden="true"></ion-icon>
+                    <span>apidocs.md</span>
+                </button>
+                <div class="snippetSection">
+                    <div class="snippetHeader">
+                      <div class="dots" aria-hidden="true">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                      </div>
+                       
+                      <span class="language-label" id="language_label">JavaScript</span>
+                      <div class="copyButton" id="copyCodeSnippet" title="Copy code snippet" aria-label="Copy code snippet"><ion-icon name="copy" aria-hidden="true"></ion-icon></div>
+                    </div>
+                    <div class="codeArea">
+                      <pre class="line-numbers"><code class="language" id="codeEditorZone">
+                      </code></pre>
+                    </div>
+                  </div>
+          </section>
+
+
+        <section id="contribute" class="contribute">
+            <div class="contributeBackdrop" aria-hidden="true">
+                <div class="contributeBackdropOverlay"></div>
+            </div>
+            <div class="contributeSection">
+                <h2 class="contributeText">Contribute</h2>
+                <p class="contributeDescription">Welcome to our community driven approach. We're building a platform where developers, creators and AI enthusiasts can collaborate and innovate!</p>
+                <div class="redirectButtonsContribute">
+                  <button class="githubRedirect contribBtn" type="button" id="githubRedirect">
+                    <div class="outline" aria-hidden="true"></div>
+                    <div class="state state--default">
+                      <div class="icon">
+                        <ion-icon name="logo-github" style="font-size: 1.4em; filter: drop-shadow(0 1px 0.6px rgba(0,0,0,0.5));" aria-hidden="true"></ion-icon>
+                      </div>
+                      <p>
+                        <span style="--i:0">S</span>
+                        <span style="--i:1">O</span>
+                        <span style="--i:2">U</span>
+                        <span style="--i:3">R</span>
+                        <span style="--i:4">C</span>
+                        <span style="--i:5">E</span>
+
+                      </p>
+                    </div>
+                    <div class="state state--sent">
+                      <div class="icon">
+                        <ion-icon name="construct" aria-hidden="true"></ion-icon>
+                      </div>
+                      <p>
+                        <span style="--i:0">g</span>
+                        <span style="--i:1">i</span>
+                        <span style="--i:2">t</span>
+                        <span style="--i:3"> </span>
+                        <span style="--i:4">c</span>
+                        <span style="--i:5">l</span>
+                        <span style="--i:6">o</span>
+                        <span style="--i:7">n</span>
+                        <span style="--i:8">e</span>
+                        <span style="--i:9">.</span>
+                        <span style="--i:10">.</span>
+                        <span style="--i:11">.</span>
+                      </p>
+                    </div>
+                  </button>
+                  <button class="discordRedirect contribBtn" type="button" id="discordRedirect">
+                    <div class="outline" aria-hidden="true"></div>
+                    <div class="state state--default">
+                      <div class="icon">
+                        <ion-icon name="logo-discord" style="font-size: 1.4em; filter: drop-shadow(0 1px 0.6px rgba(0,0,0,0.5));" aria-hidden="true"></ion-icon>
+                      </div>
+                      <p>
+                        <span style="--i:0">D</span>
+                        <span style="--i:1">I</span>
+                        <span style="--i:2">S</span>
+                        <span style="--i:3">C</span>
+                        <span style="--i:4">O</span>
+                        <span style="--i:5">R</span>
+                        <span style="--i:6">D</span>
+
+                      </p>
+                    </div>
+                    <div class="state state--sent">
+                      <div class="icon">
+                        <ion-icon name="person" aria-hidden="true"></ion-icon>
+                      </div>
+                      <p>
+                        <span style="--i:0">h</span>
+                        <span style="--i:1">o</span>
+                        <span style="--i:2">l</span>
+                        <span style="--i:3">a</span>
+                        <span style="--i:4"> </span>
+                        <span style="--i:5">a</span>
+                        <span style="--i:6">m</span>
+                        <span style="--i:7">i</span>
+                        <span style="--i:8">g</span>
+                        <span style="--i:9">o</span>
+                        <span style="--i:10">s</span>
+                        <span style="--i:11">!</span>
+
+                      </p>
+                    </div>
+                  </button>
+                </div>
+                <!-- Divs like imageGithub/imageDiscord likely represent background images or visual elements for the frame.
+                     Kept as divs to preserve structure, assuming they are decorative or complex visual components handled by CSS/JS.
+                     If they were simple images conveying information, img tags with alt would be preferred. -->
+                <div class="imageFrame" id="imageFrame">
+                    <div class="particleContainerImageFrame" id="particleContainerImageFrame" aria-hidden="true"></div>
+                    <div class="imageGithub" aria-hidden="true"></div>
+                    <div class="redirectButtonContainer"></div>
+                    <div class="imageDiscord" aria-hidden="true"></div>
+                </div>
+          </section>
+
+        <section id="supporters" class="supporters">
+            <div class="supportersBackdrop" aria-hidden="true">
+              <div class="supporterBackdropOverlay"></div>
+            </div>
+            <div class="supportersSection">
+                <!-- Changed div to h2 for semantic section title -->
+                <h2 class="supportersText">Supporters</h2>
+                <!-- Changed div to p for semantic description -->
+                <p class="supportersDescription">We are grateful to our supporters for their contributions to our platform.</p>
+                <div class="supportersShowcase" id="supportersShowcase">
+                    <!-- Supporter logos/info likely added here dynamically. Ensure images inside have alt attributes. -->
+                </div>
+            </div>
+        </section>
+
+        <footer id="footer" class="footer">
+          <div class="footerBackdrop" aria-hidden="true"></div>
+            <div class="footer-container">
+              <div class="footer-grid">
+                <div class="footer-col span-2">
+                  <!-- Changed h2 to h3 for better heading hierarchy (h1 page title -> h2 sections -> h3 footer) -->
+                  <h3 class="footer-title">Pollinations - AI</h3>
+                  <p class="footer-description">An open source innovation from Berlin</p>
+                  <div class="footer-socials">
+                    <!-- Added href, title, and aria-label for social links -->
+                    <a href="https://www.linkedin.com/company/pollinations-ai" target="_blank" rel="noopener noreferrer" class="footer-social" title="Visit Pollinations on LinkedIn" aria-label="LinkedIn Profile">
+                      <ion-icon name="logo-linkedin" aria-hidden="true"></ion-icon>
+                    </a>
+                    <a href="https://discord.com/invite/k9F7SyTgqn" target="_blank" rel="noopener noreferrer" class="footer-social" title="Join Pollinations on Discord" aria-label="Discord Server Invite">
+                      <ion-icon name="logo-discord" aria-hidden="true"></ion-icon>
+                    </a>
+                    <a href="https://github.com/pollinations/pollinations" target="_blank" rel="noopener noreferrer" class="footer-social" title="Visit Pollinations on GitHub" aria-label="GitHub Repository">
+                      <ion-icon name="logo-github" aria-hidden="true"></ion-icon>
+                    </a>
+                    <a href="https://www.youtube.com/@Pollinations" target="_blank" rel="noopener noreferrer" class="footer-social" title="Visit Pollinations on YouTube" aria-label="YouTube Channel">
+                      <ion-icon name="logo-youtube" aria-hidden="true"></ion-icon>
+                    </a>
+                    <a href="https://www.instagram.com/pollinations.ai" target="_blank" rel="noopener noreferrer" class="footer-social" title="Visit Pollinations on Instagram" aria-label="Instagram Profile">
+                      <ion-icon name="logo-instagram" aria-hidden="true"></ion-icon>
+                    </a>
+                    <a href="https://www.tiktok.com/@pollinations" target="_blank" rel="noopener noreferrer" class="footer-social" title="Visit Pollinations on TikTok" aria-label="TikTok Profile">
+                      <ion-icon name="logo-tiktok" aria-hidden="true"></ion-icon>
+                    </a>
+                  </div>
+                  <div class="footer-badge">
+                    <a target="_blank" href="https://github.com/Pollinations/Pollinations" rel="noopener noreferrer" title="Star Pollinations on GitHub">
+                      <!-- Added alt attribute to GitHub stars image -->
+                      <img src="https://img.shields.io/github/stars/Pollinations/Pollinations?style=plastic"
+                           alt="GitHub stars count for Pollinations/Pollinations repository" width="130" height="30" />
+                    </a>
+                  </div>
+                </div>
+                <div class="footer-col">
+                  <h3 class="footer-heading">About</h3>
+                  <ul>
+                    <li><a href="#realtimeFeed">Feed</a></li>
+                    <!-- Changed "Integrations" link to point to #projects section -->
+                    <li><a href="#projects">Integrations</a></li>
+                     <!-- Changed "Snippets" link to point to #integrate section -->
+                    <li><a href="#integrate">Snippets</a></li>
+                    <li><a href="#contribute">Contribute</a></li>
+                    <li><a href="#supporters">Supporters</a></li>
+                    <!-- Changed "Contact" link to point to #footer section -->
+                    <li><a href="#footer">Contact</a></li>
+                  </ul>
+                </div>
+                <div class="footer-col">
+                  <h3 class="footer-heading">Startup</h3>
+                  <ul>
+                    <!-- Added rel="noopener noreferrer" to external links -->
+                    <li><a href="https://github.com/pollinations/pollinations" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://discord.com/invite/k9F7SyTgqn" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                    <li><a href="https://github.com/pollinations/pollinations/blob/master/README.md" target="_blank" rel="noopener noreferrer">Readme</a></li>
+                    <li><a href="https://github.com/pollinations/pollinations/blob/master/APIDOCS.md" target="_blank" rel="noopener noreferrer">API Docs</a></li>
+                  </ul>
+                </div>
+                <div class="footer-col">
+                  <h3 class="footer-heading">Legal</h3>
+                  <ul>
+                    <!-- Assuming terms link exists -->
+                    <li><a href="#">Terms & Conditions</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="footer-bottom">
+                <p>© 2025 pollinations.ai</p>
+                <span>Made with ❤️ in Berlin BE</span>
+              </div>
+            </div>
+          </footer>
+    </div>
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
+
+    <script src="../JS/Pollinations/stats.min.js"></script>
+    <script src="../JS/particles.js"></script>
+    <script src="../JS/Pollinations/particleEffect.js"></script>
+    <script src="../JS/Pollinations/progressShimmerParticleEffect.js"></script>
+    <script src="../JS/Pollinations/contributeSectionParticle.js"></script>
+    <script src="../JS/Pollinations/genericFunction.js"></script>
+    <script src="../JS/Pollinations/feedStats.js"></script>
+     <script src="../JS/Pollinations/tryitImageText.js"></script>
+    <script src="../JS/Pollinations/tipBtnHtml.js"></script>
+    <script src="../JS/Pollinations/contributeListAppend.js"></script>
+
+    <script type="module" src="../JS/Pollinations/supporterListAppend.js"></script>
+    <script type="module" src="../JS/Pollinations/Config/supporterList.js"></script>
+    <script type="module" src="../JS/Pollinations/integrateListAppend.js"></script>
+    <script type="module" src="../JS/Pollinations/Config/codeExamplesText.js"></script>
+    <script type="module" src="../JS/Pollinations/Config/projectsList.js"></script>
+    <script type="module" src="../JS/Pollinations/projectsListAppend.js"></script>
+    <script type="module" src="../JS/Pollinations/scrollReveal.js"></script>
+
+    <script src="../JS/Pollinations/githubContrib.js"></script>
+    <script src="../JS/Pollinations/consolePrint.js"></script>
+
+</body>
+</html>

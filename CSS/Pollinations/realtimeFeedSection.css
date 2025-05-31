@@ -1,0 +1,431 @@
+@import url('https://fonts.googleapis.com/css2?family=Baumans&family=Lexend:wght@100..900&family=Nerko+One&family=Orbitron:wght@400..900&display=swap');
+#realtimeFeed {
+    position: relative; 
+    margin-top: 100px;
+    z-index: 3; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.realtimeFeedBackdrop 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 140, 0, 0.1),
+        rgba(0, 0, 0, 0.3)
+    );
+    background: url(../IMAGES/Pollinations/realtimeFeedSection/backdrop.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    filter: opacity(0.6) brightness(0.4) blur(2px);
+    border-radius: 24px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+}
+.realtimeFeedBackdropOverlay 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../IMAGES/Pollinations/heroSectionPreview/bgOverlay.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 24px;
+    opacity: 0.5;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.imageFeedSection 
+{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+}
+
+.imageFeedSection > .imageFeedText
+{
+  position: absolute;
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Orbitron";
+  font-size: 5em;
+  font-weight: 700;
+  transition: 0.5s;
+  transform-origin: center;
+}
+.imageFeedSection > .imageFeedDescription
+{
+    position: absolute;
+    top: 17%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Lexend", sans-serif;
+    font-size: 1.3em;
+    font-weight: 400;
+    text-align: center;
+    display: flex;
+    transition: 0.5s;
+    transform-origin: center;
+}
+
+
+.imageHolderBackdrop {
+    position: absolute;
+    top: 30%;
+    left: 3%;
+    height: 65%;
+    width: 60%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 2px dotted rgba(255, 140, 0, 0.5);
+    background: transparent;
+    border-radius: 16px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .imageHolderBackdrop:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+} */
+
+.displayImage {
+    min-width: 100%;
+    min-height: 40%;
+    max-width: 100%;
+    max-height: 90%;
+    width: 100%;
+    height: 90%;
+    border-radius: 16px;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    background: url(../IMAGES/backdrop.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: bottom right;
+    filter: blur(0px);
+    transition: opacity 0.5s ease-in-out;
+}
+.displayImage.hidden 
+{
+    opacity: 0;
+    scale: 0;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    transform-origin: top left;
+}
+.displayImage.tryitMode 
+{
+    padding: 10px 20px;
+    border: 2px dashed rgba(255, 140, 0, 0.5);
+}
+.imageHolderBackdrop > .genInfo 
+{
+    display: flex;
+    position: relative;
+    height: 60px;
+    width: 100%;
+    gap: 10px;
+    /* background: #fff; */
+    align-items: center;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.imageHolderBackdrop > .genInfo > .modelused
+{
+    position: relative;
+   color: #fff;
+   left: 2%;
+   font-size: 1.3em;
+    font-family: "Orbitron";
+    margin-right: 20px;
+    font-weight: 700;
+}
+
+.imageHolderBackdrop > .genInfo > .spacer
+ {
+    flex-grow: 1;
+    height: 1px;
+    background-color: rgba(255, 140, 0, 0.5);
+    margin: 0 10px;
+ }
+.imageHolderBackdrop > .genInfo > .referrer
+{
+    position: relative;
+   color: #fff;
+   left: 2%;
+   font-size: 1.3em;
+    font-family: "Orbitron";
+    margin-right: 20px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+
+.imagePrompt {
+    position: absolute;
+    bottom: 40px;
+    left: 80%;
+    transform: translateX(-50%);
+    min-height: 80px;
+    max-height: 200px;
+    width: 30%;
+    background: #2a2a2a; /* Dark gray background */
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    /* Neumorphic light-outside shadow (embossed effect) */
+    box-shadow:
+        -6px -6px 12px rgba(255, 255, 255, 0.05),
+        6px 6px 15px rgba(0, 0, 0, 0.6),
+        0 0 12px rgba(255, 140, 0, 0.15); /* ambient orange glow */
+    
+    border: 1px solid rgba(255, 140, 0, 0.2); /* Soft retro orange border */
+    backdrop-filter: blur(6px); /* Slight glassy effect */
+    opacity: 1;
+    scale: 1;
+    z-index: 1;
+    filter: blur(0px);
+    pointer-events: all;
+}
+.imagePrompt span 
+{
+    display: inline-block;
+    white-space: pre;
+}
+.imagePrompt.hidden
+{
+    opacity: 0;
+    scale: 0;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    transform-origin: right;
+}
+.imagePrompt.tryitMode
+{
+    opacity: 0;
+    scale: 0;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    transform-origin: right;
+}
+.imagePrompt::-webkit-scrollbar {
+    display: none;
+}
+
+.imagePrompt > span {
+    font-family: "Baumans", cursive;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #ffddaa; /* warm light amber text */
+    text-align: center;
+    text-shadow:
+        0 0 8px rgba(0, 0, 0, 0.6),
+        0 0 4px rgba(255, 165, 0, 0.4); /* enhanced retro glow */
+}
+
+.generationInfo {
+    position: absolute;
+    top: 30%;
+    left: 80%;
+    transform: translateX(-50%);
+    min-height: 80px;
+    height: 220px;
+    width: 30%;
+    background: #1e1e1e; /* Dark retro panel background */
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+
+    /* Neumorphic inset shadows (dark theme) */
+    box-shadow:
+        inset 6px 6px 12px rgba(0, 0, 0, 0.7),
+        inset -6px -6px 12px rgba(255, 255, 255, 0.05);
+
+    border: 2px solid rgba(255, 215, 0, 0.3); /* Subtle retro gold border */
+
+    color: #ffe580; /* Retro amber text */
+    font-family: "Orbitron", sans-serif; /* Retro-futuristic font */
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.3); /* Soft glow effect */
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+.generationInfo.textMode
+{
+    top: 45%;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.generationInfo::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+.generationInfo > .generationNumber
+{
+    display: flex;
+    gap: 10px;
+    position: relative;
+    top: 5%;
+    left: 5%;
+    font-size: 2em;
+}
+.progressBar 
+{
+    position: absolute;
+    top: 80%;
+    left: 0%;
+    width: 90%;
+    height: 15px;
+    background-color: rgba(255, 140, 0, 0.2);
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    overflow: hidden;
+}
+
+
+.generationInfo > .generationTime
+{
+    display: flex;
+    gap: 10px;
+    position: relative;
+    top: 25%;
+    left: 5%;
+    font-size: 2em;
+}
+
+
+.serverLoadShower 
+{
+    position: absolute;
+    top: 80%;
+    left: 0%;
+    width: 90%;
+    height: 15px;
+    background-color: rgba(255, 140, 0, 0.2);
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    transition: 0.25s;
+    overflow: hidden;
+}
+
+.userPromptServer 
+{
+    position: absolute;
+    top: 5%;
+    right: 2.5%;
+    width: 65%;
+    height: 35%;
+    background-color: rgba(255, 140, 0, 0.2);
+    border-radius: 8px;
+    border-top-right-radius: 20px;
+    margin-top: 10px;
+    display: flex;
+    overflow: hidden;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    text-align: left;
+    font-family: "Baumans", system-ui;
+    font-size: 1.3em;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    flex-wrap: wrap;    
+    max-width: 90%;
+    overflow-y: auto;
+    opacity: 1;
+    scale: 1;
+    pointer-events: all;
+    
+}
+.userPromptServer.hidden 
+{
+    opacity: 0;
+    scale: 0;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    transform-origin: top right;
+}
+.aiRespondServer 
+{
+    position: absolute;
+    top: 45%;
+    left: 2.5%;
+    width: 65%;
+    height: 40%;
+    background-color: rgba(246, 187, 115, 0.2);
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    overflow: hidden;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-top-left-radius: 20px;
+    font-family: "Lexend", sans-serif;
+    font-size: 1.2em;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    flex-wrap: wrap;    
+    max-width: 90%;
+    overflow-y: auto;
+    opacity: 1;
+    scale: 1;
+    pointer-events: all;
+}
+.aiRespondServer.hidden 
+{
+    opacity: 0;
+    scale: 0;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    transform-origin: bottom left;
+}
+
+#userPromptServer span,
+#aiRespondServer span {
+    display: inline-block;
+    white-space: pre;
+}
+
+.userPromptServer::-webkit-scrollbar,
+.aiRespondServer::-webkit-scrollbar {
+    display: none;
+}
