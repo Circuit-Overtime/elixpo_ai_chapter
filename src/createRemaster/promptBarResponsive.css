@@ -1,0 +1,311 @@
+
+
+@media (max-width: 768px) {
+
+  .controls {
+        position: absolute;
+        top: 60%;
+        left: 5%;
+        width: 75%;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 0;
+        align-items: center;
+        padding: 4px 6px;
+        overflow-x: auto;
+        box-sizing: border-box;
+        }
+        .controls > i 
+        {
+          scale: 0.8;
+          margin-right: 5px;
+
+        }
+        .controls > .qualitySelection 
+        {
+          scale: 0.8;
+        }
+        .generateButton 
+        {
+          scale: 0.7;
+          left: 65%;
+          top: 45%;
+        }
+        .promptBox.image .controls  {
+          width: 60%;
+        }
+        #cancelImageMode 
+        {
+          font-size: 0.8em;
+        }
+        .imageHolder
+        {
+          left: 5%;
+          border-radius: 5px;
+          height: 60px;
+          width: 60px;
+        }
+        .promptBox .promptTextInput
+        {
+          font-size: 0.8em;
+          margin-top: 1%;
+          margin-bottom: 1%;
+          left: 5%;
+          width: 90%;
+          max-height: 70px;
+        }
+        .promptBox.image .promptTextInput
+          {
+            top: 0%;
+            width: 70%;
+            left: 20%;
+            max-height: 80px;
+          }
+
+}
+
+
+@media (max-width: 1024px) {
+
+  .controls {
+        position: absolute;
+        top: 60%;
+        left: 5%;
+        width: 75%;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 0;
+        align-items: center;
+        padding: 4px 6px;
+        overflow-x: auto;
+        box-sizing: border-box;
+        }
+        .controls > i 
+        {
+          scale: 1;
+          margin-right: 5px;
+
+        }
+        .controls > .qualitySelection 
+        {
+          scale: 1;
+        }
+        .generateButton 
+        {
+          scale: 0.9;
+          left: 80%;
+          top: 45%;
+        }
+        .promptBox.image .controls  {
+          width: 60%;
+        }
+        #cancelImageMode 
+        {
+          font-size: 1em;
+        }
+        .imageHolder
+        {
+          left: 5%;
+          top: 5%;
+          border-radius: 5px;
+          height: 60px;
+          width: 60px;
+        }
+        .promptBox .promptTextInput
+        {
+          font-size: 0.8em;
+          margin-top: 1%;
+          margin-bottom: 1%;
+          left: 5%;
+          width: 90%;
+          max-height: 70px;
+        }
+        .promptBox.image .promptTextInput
+          {
+            top: 0%;
+            width: 80%;
+            left: 15%;
+            max-height: 80px;
+          }
+
+}
+
+@media (max-width: 600px) {
+
+  .promptBox {
+      max-height: 150px;
+      width: 80%;
+
+    }
+    .promptBox.image 
+    {
+      max-height: 150px;
+    }
+    .promptBox.image .promptTextInput
+    {
+      top: 0%;
+      width: 70%;
+      left: 25%;
+      max-height: 80px;
+    }
+    .imageHolder
+    {
+      left: 5%;
+      border-radius: 5px;
+      height: 40px;
+      width: 40px;
+    }
+   
+    .promptBox .promptTextInput {
+      font-size: 0.6em;
+      margin-top: 1%;
+      margin-bottom: 1%;
+      left: 5%;
+      width: 220px;
+      max-height: 75px;
+    }
+    .promptBox .stopGeneration {
+      left: 92%;
+    }
+    .promptBox.generating .promptTextInput
+    {
+      left: 5%;
+      max-width: 200px;
+      text-align: left;
+      font-size: 0.5em;
+      color: #ffc;
+    }
+    .promptBox.generating .stopGeneration
+    {
+      left: 85%;
+    }
+    .promptBox.generated 
+    {
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.5s;
+    }
+    .searchButtonText {
+      position: relative;
+      left: -20%;
+      transform: scale(0.8);
+      top: 15px;
+      opacity: 1;
+      pointer-events: all;
+  }
+  .promptBox.generating > .searchButtonText
+  {
+      opacity: 0;
+      transform: scale(0);
+      pointer-events: none;
+  }
+
+  
+      .promptBox.image .searchButtonText
+      {
+        left: -10%;
+      }
+      .searchBtn {
+        left: -15%;
+      }
+
+    .enhancingMessage {
+      position: absolute;
+      top: 85%;
+      height: 60px;
+      max-height: 20px;
+      width: 60%;
+      left: 20%;
+      border-left: 5px solid #555;
+      background: transparent;
+      backdrop-filter: blur(12px);
+      display: flex;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transition: 0.5s;
+      justify-content: center;
+      align-items: center;
+      padding-top: 20px;
+      padding-bottom: 10px;
+    }
+
+    .enhancingMessage>.enhancedPrompt {
+      position: relative;
+      left: 2%;
+      top: 5px;
+      width: 100%;
+      font-family: "raleway", sans-serif;
+      flex-wrap: wrap;
+      flex-direction: column;
+      max-height: 80px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      color: #aab8bfbe;
+      font-size: 1em;
+      text-align: left;
+    }
+   
+    .controls {
+      position: absolute;
+      top: 60%;
+      left: 5%;
+      width: 60%;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 0;
+      align-items: center;
+      padding: 4px 6px;
+      overflow-x: auto;
+      box-sizing: border-box;
+      }
+
+      #OneImage 
+      {
+        margin-right: 5px;
+      }
+  .controls::-webkit-scrollbar
+  {
+    display: none;
+  }
+  .controls > i 
+  {
+    scale: 0.8;
+    margin-right: 5px;
+
+  }
+  .controls > .qualitySelection 
+  {
+    scale: 0.8;
+  }
+  .generateButton 
+  {
+    scale: 0.7;
+    left: 55%;
+    top: 40%;
+  }
+  .promptBox.image .controls  {
+    width: 57%;
+  }
+  #cancelImageMode 
+  {
+    font-size: 0.8em;
+  }
+  .imageThemeSectionBackdropv-2 > .themeShowCase 
+  {
+    display: none;
+  }
+  .imageThemeSectionBackdropv-2 > .imageThemeContainer 
+    {
+      width: 90%;
+      top: 35%;
+    }
+    .model_ratioSelectionZoneBackdropv1 > .documentContainer > .modelsTiles,
+    .model_ratioSelectionZoneBackdropv2 > .documentContainer > .aspectRatioTiles 
+    {
+      width: 80px; 
+      height: 60px; 
+    }
+}

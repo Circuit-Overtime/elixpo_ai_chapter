@@ -1,0 +1,388 @@
+#imageGenerator 
+{
+    position: relative;
+    top: 0%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3; 
+    background: transparent;
+    padding-top: 20px;
+    margin-top: 40px;
+    opacity: 1;
+}
+#imageGenerator.sabotage 
+{
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+    display: none;
+}
+#imageGenerator  > .imageTiles
+{
+    position: absolute;
+    top: 40%;
+    border-radius: 20px;
+    background: repeating-linear-gradient(-45deg, 
+    #8888885e, #2e242471 2px,  /* Darker gray stripe */
+    transparent 1px, transparent 8px  /* Transparent stripe */
+    );
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 98%;
+    height: 70%;
+    border-bottom: 2px solid #e91e6241;
+    padding: 10px 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+
+#imageGenerator > .imageTiles > .tile
+{
+    position: relative;
+    background: #000;
+    max-height: 100%;
+    max-width: 98%;
+    left: 1%;
+    top: 0%;
+    border-radius: 25px;
+    overflow: hidden;
+    cursor: pointer;
+    
+}
+#imageGenerator > .imageTiles > .tile > .inPictureControls
+{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    border: 3px solid #0a2634;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 20px #03a9f4;
+    gap: 20px;
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    border-bottom-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#imageGenerator > .imageTiles > .tile > .inPictureControls > i
+{
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px;
+    transition: 0.5s;
+}
+#imageGenerator > .imageTiles > .tile > .inPictureControls > i:hover 
+{
+    color: #f46f03;
+    transform: scale(1.2) rotate(5deg);
+    transition: 0.5s;
+}
+
+
+
+#imageGenerator > .imageTiles > .tile.tile1
+{
+
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 20px #111,
+    inset 0 0px 40px #000,
+    0 0 5px #03a9f4; 
+    display: block;
+}
+
+#imageGenerator > .imageTiles > .tile.tile2
+{
+
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 20px #111,
+    inset 0 0px 40px #000,
+    0 0 5px #f48403; 
+    display: block;
+}
+
+#imageGenerator > .imageTiles > .tile.tile3
+{
+
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 20px #111,
+    inset 0 0px 40px #000,
+    0 0 5px #d803f4; 
+    display: block;
+}
+
+#imageGenerator > .imageTiles > .tile.tile4
+{
+
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 20px #111,
+    inset 0 0px 40px #000,
+    0 0 5px #03f4a4; 
+    display: block;
+}
+
+#imageGenerator > .imageTiles > .tile.tile1.hidden,
+#imageGenerator > .imageTiles > .tile.tile2.hidden,
+#imageGenerator > .imageTiles > .tile.tile3.hidden,
+#imageGenerator > .imageTiles > .tile.tile4.hidden
+{
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s;
+    filter: blur(10px);
+    display: none;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    transition: 0.95s;
+}
+#imageGenerator > .imageTiles > .tile > .loadingAnimations.hidden 
+{
+    filter: blur(10px);
+    transition: 0.95s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .loadingStar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 10;
+    transform-origin: center;
+    animation: rotateLoadingStar 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes rotateLoadingStar {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .loadingStar > .stars {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #fff;
+    /* filter: blur(2px); */
+    z-index: 0;
+    opacity: 0.8;
+}
+
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .loadingStar > .stars:nth-child(1) {
+    left: 45%;
+    font-size: 18em;
+    color: #999;
+    animation: twinkleLarge 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Mid-size Star */
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .loadingStar > .stars:nth-child(2) {
+    left: 30%;
+    top: 30%;
+    font-size: 6em;
+    color: #bbb;
+    animation: twinkleMid 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+/* Smallest Star */
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .loadingStar > .stars:nth-child(3) {
+    left: 70%;
+    top: 65%;
+    font-size: 8em;
+    color: #ddd;
+    animation: twinkleSmall 3s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate-reverse;
+}
+
+/* Large Star Animation */
+@keyframes twinkleLarge {
+    0% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1) rotate(180deg); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0.8) rotate(360deg); opacity: 1; }
+}
+
+/* Medium Star Animation */
+@keyframes twinkleMid {
+    0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 0.7; }
+    50% { transform: translate(-50%, -50%) scale(0.7) rotate(180deg); opacity: 0.4; }
+    100% { transform: translate(-50%, -50%) scale(0.5) rotate(360deg); opacity: 0.7; }
+}
+
+/* Smallest Star Animation */
+@keyframes twinkleSmall {
+    0% { transform: translate(-50%, -50%) scale(0.3) rotate(0deg); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(0.5) rotate(180deg); opacity: 0.3; }
+    100% { transform: translate(-50%, -50%) scale(0.3) rotate(360deg); opacity: 0.6; }
+}
+
+
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations >  .colorPop
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #111;
+    z-index: 2;
+}
+
+
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob1
+{
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    transform: translate(-50%, -50%) scale(1.2);
+    height: 40%;
+    width: 40%;
+    background: #259e06;
+    border-radius: 250px;
+    z-index: 1;
+    opacity: 0.8;
+    filter: blur(50px);
+}
+
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob2 {
+    position: absolute;
+    top: 70%;
+    left: 80%;
+    transform: translate(-50%, -50%) scale(1.5);
+    height: 50%;
+    width: 50%;
+    background: #ff5722;
+    border-radius: 250px;
+    z-index: 1;
+    opacity: 0.5;
+    filter: blur(90px);
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob3 {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    transform: translate(-50%, -50%) scale(1.3);
+    height: 35%;
+    width: 35%;
+    background: #03a9f4;
+    border-radius: 250px;
+    z-index: 1;
+    opacity: 0.7;
+    filter: blur(85px);
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob4 {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.1);
+    height: 45%;
+    width: 45%;
+    background: #e91e63;
+    border-radius: 250px;
+    z-index: 1;
+    opacity: 0.6;
+    filter: blur(100px);
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob5 {
+    position: absolute;
+    top: 25%;
+    left: 75%;
+    transform: translate(-50%, -50%) scale(1.4);
+    height: 30%;
+    width: 30%;
+    background: #ffeb3b;
+    border-radius: 250px;
+    z-index: 1;
+    opacity: 0.8;
+    filter: blur(80px);
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob6 {
+    position: absolute;
+    top: 85%;
+    left: 20%;
+    transform: translate(-50%, -50%) scale(1.2);
+    height: 40%;
+    width: 40%;
+    background: #9c27b0;
+    border-radius: 250px;
+    z-index: 1;
+    opacity: 0.5;
+    filter: blur(95px);
+}
+
+@keyframes moveBlob {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+}
+
+@keyframes blurBlob {
+    0% { filter: blur(80px); }
+    50% { filter: blur(100px); }
+    100% { filter: blur(80px); }
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > div {
+    animation: moveBlob 5s infinite alternate ease-in-out, blurBlob 6s infinite alternate ease-in-out;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob1 {
+    animation-duration: 4s, 5s;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob2 {
+    animation-duration: 5.5s, 6.2s;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob3 {
+    animation-duration: 4.7s, 5.5s;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob4 {
+    animation-duration: 6s, 7s;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob5 {
+    animation-duration: 5.2s, 6s;
+}
+
+#imageGenerator > .imageTiles > .tile > .loadingAnimations > .colorPop > .blob6 {
+    animation-duration: 4.8s, 5.6s;
+}

@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&display=swap');
+.container 
+{
+    position: absolute;
+    top: 0%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+    display: block;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.container::-webkit-scrollbar,
+.sectionContainer::-webkit-scrollbar
+{
+    display: none;
+}
+
+.backdropBG
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url(../IMAGES/backdrop.jpg);
+    background-size: cover;
+    pointer-events: none;
+    filter: brightness(0.25);
+    z-index: 1; 
+}
+
+.sectionContainer
+{
+    position: absolute;
+    top: 6%;
+    left: 0%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    z-index: 2; 
+    background: transparent;
+    backdrop-filter: blur(10px); 
+    overscroll-behavior: none;
+}
+.container::-webkit-scrollbar
+{
+ display: none;
+}
+
+#imageGenerator 
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3; 
+    background: #04b00d;
+}
+
+.notification {
+    position: absolute;
+    top: 10%;
+    right: 1%;
+    width: 20%;
+    background: transparent;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* stacking gap between .notifText elements */
+    align-items: flex-end;
+    padding-right: 5px;
+    pointer-events: none; /* prevents clicks unless overridden on child */
+}
+
+.notification.display {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.notification > .notifText::before {
+    content: "";
+    position: absolute;
+    top: 5%;
+    right: 1%;
+    height: 90%;
+    width: 3%;
+    background: #e1aa07;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    z-index: -1;
+}
+
+.notification > .notifText {
+    position: relative;
+    background: #e6ce8676;
+    backdrop-filter: blur(10px);
+    border: 3px solid #e1aa07;
+    border-radius: 10px;
+    border-top-left-radius: 30px;
+    padding: 5px 20px;
+    width: 100%;
+    font-family: 'Boldonse', sans-serif;
+    font-size: 0.9em;
+    color: #000000;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-y: auto;
+    max-height: 80px;
+    min-height: 50px;
+    opacity: 1;
+    filter: blur(0px);
+    letter-spacing: 1.5px;
+    transition: all 0.5s ease;
+    pointer-events: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.notification > .notifText::-webkit-scrollbar {
+    display: none;
+}
+
+#imageCustomization.blocked {
+    display: none;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+   
+    .notification {
+        position: absolute;
+        top: 15%;
+        right: 0%;
+        width: 30%;
+    }
+    .notification > .notifText  
+    {
+        background: #e6ce86;
+    }
+        
+    }
+
+    @media screen and (max-width: 1024px) {
+   
+        .notification {
+            position: absolute;
+            top: 15%;
+            right: 0%;
+            width: 30%;
+            scale: 0.8;
+        }
+        .notification > .notifText  
+        {
+            background: #e6ce86;
+        }
+            
+        }
+
+        @media screen and (max-width: 600px) {
+   
+            .notification {
+                position: absolute;
+                top: 15%;
+                right: 0%;
+                width: 50%;
+            }
+            .notification > .notifText  
+            {
+                background: #e6ce86;
+            }
+                
+            }

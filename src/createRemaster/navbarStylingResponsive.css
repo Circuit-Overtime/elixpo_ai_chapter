@@ -1,0 +1,92 @@
+
+@media (max-width: 768px) {
+    
+    .appName {
+        font-size: 1.5rem;
+        left: 5%;
+    }
+    .githubLogo
+    {
+        left: 35%;
+        font-size: 1.5em;
+    }
+    .redirectHome 
+    {
+        left: 45%;
+        font-size: 1.5em;
+    }
+    .redirectBlogs
+    {
+        left: 55%;
+        font-size: 1.5em;
+    }
+    .userCell 
+    {
+        left: 80%;
+        width: 100px;
+        scale: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    
+    .appName {
+        font-size: 2rem;
+        left: 5%;
+    }
+    .githubLogo
+    {
+        left: 65%;
+        font-size: 1.5em;
+    }
+    .redirectHome 
+    {
+        left: 70%;
+        font-size: 1.5em;
+    }
+    .redirectBlogs
+    {
+        left: 75%;
+        font-size: 1.5em;
+    }
+    .userCell 
+    {
+        left: 80%;
+        width: 130px;
+        scale: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .appName {
+        font-size: 1rem;
+        left: 11%;
+    }
+    .githubLogo
+    {
+        left: 40%;
+        font-size: 1.5em;
+    }
+    .redirectHome 
+    {
+        left: 50%;
+        font-size: 1.5em;
+    }
+    .redirectBlogs
+    {
+        left: 60%;
+        font-size: 1.5em;
+    }
+    .userCell 
+    {
+        left: 65%;
+        width: 100px;
+        scale: 0.7;
+    }
+    .userCell > .userInfo 
+    {
+        left: 5%;
+        height: 30px;
+        width: 30px;
+    }
+}

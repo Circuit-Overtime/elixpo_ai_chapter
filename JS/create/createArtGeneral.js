@@ -1,23 +1,41 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyAlwbxxxxxxxxx",
-  authDomain: "elixxxxxxx",
-  projectId: "elixpxxxx",
-  storageBucket: "elixpxxxxxx",
-  messagingSenderId: "718153xxxxxxx",
-  appId: "1:71815386620xxxx"
+  apiKey: "AIzaSyAlwbv2cZbPOr6v3r6z-rtch-mhZe0wycM",
+  authDomain: "elixpoai.firebaseapp.com",
+  projectId: "elixpoai",
+  storageBucket: "elixpoai.appspot.com",
+  messagingSenderId: "718153866206",
+  appId: "1:718153866206:web:671c00aba47368b19cdb4f"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let lastPromptText = "";
+const MAX_NOTIFS = 3;
+const notifQueue = [];
+
+window.addEventListener('resize', scaleContainer);
+window.addEventListener('load', scaleContainer);
 
 window.onload = function() {
+  showSection("imageCustomization"); 
+  hideSection("imageDisplay");
+  hideSection("imageGenerator");
+  const container = document.querySelector(".sectionContainer"); 
+  const imageDisplaySection = document.getElementById("imageCustomization");
+  const offsetTop = imageDisplaySection.offsetTop;
+  container.scrollTo({ top: offsetTop, behavior: "smooth" });
+
   setInterval(() => {
     if (localStorage.getItem("ElixpoAIUser") == null) {
         redirectTo("src/auth/?notify=true"); //root hompage redirect
     }
   }, 1000);
+  setTimeout(() => {
+    document.getElementById("promptTextInput").focus();
+  }, 200);
+
+  
 }
 
 
@@ -98,8 +116,8 @@ document.getElementById("promptIdea").addEventListener("click", function() {
 });
 
 
-// let imageGeneratorTop = document.getElementById("imageDisplay").getBoundingClientRect().top - 60;
-// document.querySelector(".sectionContainer").scrollTo({ top: imageGeneratorTop});
+
+
 
 
 document.querySelector(".sectionContainer").addEventListener("scroll", function(e) {
@@ -122,24 +140,106 @@ document.getElementById("appName").addEventListener("click", function() {
   location.reload();
 });
 
+
 function notify(msg, persist = false) {
-  const notif = document.getElementById("notification");
-  const notifText = document.getElementById("notifText");
+  const notifContainer = document.getElementById("notification");
 
+  const notifText = document.createElement("div");
+  notifText.className = "notifText";
   notifText.innerText = msg;
-  notif.classList.add("display");
+  notifText.dataset.persist = persist;
+  notifText.dataset.removed = "false";
 
-  // If not persistent, auto-remove after 3 seconds
+  const currentNotifs = Array.from(notifContainer.querySelectorAll(".notifText"));
+
+  if (currentNotifs.length >= MAX_NOTIFS) {
+    const nonPersist = currentNotifs.find(n => n.dataset.persist === "false" && n.dataset.removed !== "true");
+
+    if (nonPersist && notifContainer.contains(nonPersist)) {
+      nonPersist.dataset.removed = "true";
+      anime({
+        targets: nonPersist,
+        opacity: 0,
+        translateX: 50,
+        scale: 0.5,
+        duration: 400,
+        easing: 'easeInOutQuad',
+        complete: () => {
+          if (notifContainer.contains(nonPersist)) {
+            notifContainer.removeChild(nonPersist);
+          }
+        }
+      });
+    } else {
+      console.warn("⚠️ Notification clash: all notifications are persistent.");
+      return;
+    }
+  }
+
+  notifContainer.classList.add("display");
+  notifContainer.appendChild(notifText);
+  notifQueue.push(notifText);
+
+  anime({
+    targets: notifText,
+    opacity: [0, 1],
+    translateX: [30, 0],
+    scale: [0.5, 1],
+    duration: 500,
+    easing: 'easeOutBack'
+  });
+
   if (!persist) {
-      setTimeout(() => {
-          notif.classList.remove("display");
-      }, 3000);
+    setTimeout(() => {
+      if (notifText.dataset.removed === "true") return;
+
+      notifText.dataset.removed = "true";
+      anime({
+        targets: notifText,
+        opacity: 0,
+        translateX: 50,
+        scale: 0.5,
+        duration: 400,
+        easing: 'easeInOutQuad',
+        complete: () => {
+          if (notifContainer.contains(notifText)) {
+            notifContainer.removeChild(notifText);
+            if (!notifContainer.querySelector(".notifText")) {
+              notifContainer.classList.remove("display");
+            }
+          }
+        }
+      });
+    }, 3000);
   }
 }
-function dismissNotification() {
-  document.getElementById("notification").classList.remove("display");
-}
 
+function dismissNotification() {
+  const notifContainer = document.getElementById("notification");
+  const currentNotifs = Array.from(notifContainer.querySelectorAll(".notifText"));
+
+  currentNotifs.forEach(el => {
+    if (el.dataset.removed === "true") return;
+
+    el.dataset.removed = "true";
+    anime({
+      targets: el,
+      opacity: 0,
+      translateX: 50,
+      scale: 0.5,
+      duration: 400,
+      easing: 'easeInOutQuad',
+      complete: () => {
+        if (notifContainer.contains(el)) {
+          notifContainer.removeChild(el);
+          if (!notifContainer.querySelector(".notifText")) {
+            notifContainer.classList.remove("display");
+          }
+        }
+      }
+    });
+  });
+}
 
 
 document.querySelectorAll(".themes").forEach(function(element) {
@@ -211,16 +311,24 @@ function handleInput() {
     }
 
     // Aspect ratio
-    handleSelectiveFlagUpdate("--ar", ".aspectRatioTiles", "ratio", "4:3");
+    handleSelectiveFlagUpdate("--ar", ".aspectRatioTiles", "ratio", "16:9");
 
     // Theme
     handleSelectiveFlagUpdate("--th", ".themes", "theme", "normal");
 
     // Model
-    handleSelectiveFlagUpdate("--md", ".modelsTiles", "model", "core");
+    handleSelectiveFlagUpdate("--md", ".modelsTiles", "model", "flux");
 
     // Update last prompt
     lastPromptText = promptText;
+}
+
+
+function handleFlagUpdateAuto(selector, dataAttr, providedValue) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => el.classList.remove("selected"));
+        const element = [...elements].find(el => el.dataset[dataAttr] === providedValue);
+        if (element) element.classList.add("selected");
 }
 
 // Only update if new flag is added or removed
@@ -229,14 +337,14 @@ function handleSelectiveFlagUpdate(flag, selector, dataAttr, defaultValue) {
     const lastText = lastPromptText;
 
     if (currentText.includes(flag) || lastText.includes(flag)) {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => el.classList.remove("selected"));
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => el.classList.remove("selected"));
 
-        const match = currentText.match(new RegExp(`${flag}\\s([\\w-:]+)`));
-        const selectedValue = match ? match[1] : defaultValue;
+      const match = currentText.match(new RegExp(`${flag}\\s([\\w-:]+)`));
+      const selectedValue = match ? match[1] : defaultValue;
 
-        const element = [...elements].find(el => el.dataset[dataAttr] === selectedValue);
-        if (element) element.classList.add("selected");
+      const element = [...elements].find(el => el.dataset[dataAttr] === selectedValue);
+      if (element) element.classList.add("selected");
     }
 }
 
@@ -262,17 +370,34 @@ function debounce(func, wait) {
     };
 }
 
-const container = document.querySelector(".sectionContainer");
+function hideSection(sectionID)
+{
+  document.getElementById(sectionID).classList.add("sabotage");
+}
+function showSection(sectionID)
+{
+  document.getElementById(sectionID).classList.remove("sabotage");
+}
 
-// Prevent scroll via wheel (mouse wheel, trackpad, etc.)
-container.addEventListener("wheel", function (e) {
-  e.preventDefault();
-}, { passive: false }); // ⚠️ important: passive must be false to allow preventDefault
 
-// Prevent middle mouse button scroll
-container.addEventListener("mousedown", function (e) {
-  if (e.button === 1) { // Middle mouse button
-    e.preventDefault();
-    return false; // Just in case
+function scaleContainer() {
+  if((!window.matchMedia("(max-width: 1080px) and (max-height: 1440px)").matches))
+  {
+
+  const container = document.querySelector('.container');
+  const containerWidth = 1480;
+  const containerHeight = 698;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  // Calculate scale factors for both width and height
+  const scaleWidth = windowWidth / containerWidth;
+  const scaleHeight = windowHeight / containerHeight;
+
+  // Use the smaller scale factor to ensure the container fits in the viewport
+  const scale = Math.min(scaleWidth, scaleHeight);
+
+  // Apply the scale transform
+  container.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
-});
+}

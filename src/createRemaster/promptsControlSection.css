@@ -1,0 +1,161 @@
+/* Controls container */
+.controls {
+  position: absolute;
+  top: 55%;
+  left: 3%;
+  width: 80%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#OneImage {
+  position: relative;
+  font-size: 1.5em;
+  color: #bbbbbb;
+  cursor: pointer;
+  display: block;
+  filter: drop-shadow(0 0 10px #66ccff);
+  top: 2%;
+  left: 0%;
+  margin-right: 20px;
+  z-index: 16;
+  animation: pulseTwice 8s infinite;
+}
+
+/* Buttons and custom elements */
+#privateBtn,
+#pimpPrompt,
+#promptIdea,
+#journalMode,
+#inputImage,
+#customizePrompts,
+.qualitySelection {
+  position: relative;
+  margin: 0;
+  max-height: 60px;
+  max-width: 120px;
+  color: #bec9c3;
+  cursor: pointer;
+  font-size: 0.8em;
+  z-index: 17;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid #525252;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: fit-content;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+#customizePrompts {
+  box-shadow: inset 0 0 10px #66ccff;
+  border: 2px solid #66ccff;
+}
+
+/* Quality selection */
+.qualitySelection {
+  box-sizing: border-box;
+  transform: scale(1);
+}
+
+.qualitySelection span {
+  font-size: 0.8em;
+  position: relative;
+  padding: 0 5px;
+  border-right: 2px solid #d1870f6c;
+  transition: 0.25s;
+  overflow: hidden;
+}
+
+.qualitySelection span:last-child {
+  border-right: none;
+}
+
+.qualitySelection span:hover {
+  box-shadow: inset 0 0 10px #8e9290;
+  color: #8e9290;
+}
+
+.qualitySelection span.selected {
+  box-shadow: inset 0 0 10px #028a5a;
+  color: #028a5a;
+}
+
+/* Selected state for all */
+#privateBtn.selected,
+#pimpPrompt.selected,
+#promptIdea.selected,
+#journalMode.selected,
+#inputImage.selected,
+#customizePrompts.selected,
+.qualitySelection.selected {
+  background: #3e3c3c;
+  color: #028a5a;
+  border: 2px solid #028a5a;
+}
+
+/* Span styling for buttons */
+#privateBtn span,
+#pimpPrompt span,
+#promptIdea span,
+#journalMode span,
+#inputImage span {
+  margin-left: 10px;
+  text-transform: capitalize;
+  font-weight: 200;
+  font-family: 'Calibri', sans-serif;
+  color: #bee4d7;
+}
+
+
+.generateButton.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Click animation */
+@keyframes clickEffect {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.6); }
+  100% { transform: scale(1); }
+}
+
+.click-effect {
+  animation: clickEffect 0.2s;
+}
+
+/* Generate button */
+.generateButton {
+  position: absolute;
+  top: 45%;
+  left: 85%;
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Hide imageHolder while generating */
+.promptBox.generating #imageHolder {
+  display: none;
+}
+
+/* Hide controls while generating */
+.promptBox.generating > .controls {
+  display: none;
+}
+
+/* Hide input image in image prompt mode */
+.promptBox.image .controls #inputImage {
+  display: none;
+}
+.promptBox.image .controls  {
+  width: 80%;
+}
+

@@ -1,0 +1,156 @@
+.GenerateImageControls {
+    position: absolute;
+    top: 75%;
+    left: 0%;
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+}
+
+.acceptBtn, .rejectBtn {
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 7px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    background: transparent;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    scale: 1;
+    transform: scale(0.8);
+    opacity: 1;
+    pointer-events: all;
+
+}
+
+.interruptButton
+{
+  position: absolute;
+  top: 10%;
+  left: 2%;
+  font-size: 1.3em;
+  color: #f50a29;
+  text-shadow: 0 0 10px #f50a29;
+  display: flex;
+  cursor: pointer;
+  border-radius: 10px;
+    height: 40px;
+    padding: 0px 5px;
+ justify-content: center;
+ align-items: center;
+ border: 2px solid #f50a29;
+ transition: all 0.3s ease;
+}
+.interruptButton:hover 
+{
+    box-shadow: 0 0 10px #f50a29;
+    background: rgba(245, 10, 41, 0.2);
+    transition: all 0.3s ease;
+}
+.interruptButton:active{
+    box-shadow: 0 0 10px #f50a29;
+    background: rgba(245, 10, 41, 0.4);
+    transition: all 0.3s ease;
+}
+.interruptButton p 
+{
+    font-size: 0.8em;
+    margin-left: 5px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 0 10px #f50a29;
+}
+.interruptButton.hidden
+{
+  opacity: 0;
+  pointer-events: none;
+  scale: 0;
+}
+
+
+.acceptBtn.hidden, .rejectBtn.hidden {
+    scale: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+}
+.acceptBtn i, .rejectBtn i {
+    font-size: 25px;
+}
+.acceptBtn {
+    left: 80%;
+    border: 1px solid rgb(34, 139, 34);
+    background: rgb(34, 139, 34);
+    box-shadow: 0 0 30px 5px rgba(50, 205, 50, 0.815);
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.acceptBtn:hover::before, .rejectBtn:hover::before {
+    -webkit-animation: sh02 0.5s 0s linear;
+    -moz-animation: sh02 0.5s 0s linear;
+    animation: sh02 0.5s 0s linear;
+}
+
+.acceptBtn::before, .rejectBtn::before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: #fff;
+    box-shadow: 0 0 50px 30px #fff;
+    -webkit-transform: skewX(-20deg);
+    -moz-transform: skewX(-20deg);
+    -ms-transform: skewX(-20deg);
+    -o-transform: skewX(-20deg);
+    transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+    from {
+        opacity: 0;
+        left: 0%;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        left: 100%;
+    }
+}
+
+.acceptBtn:active, .rejectBtn:active {
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: box-shadow 0.2s ease-in;
+    -moz-transition: box-shadow 0.2s ease-in;
+    transition: box-shadow 0.2s ease-in;
+}
+
+.rejectBtn {
+    left: 55%;
+    border: 1px solid rgb(139, 0, 0);
+    background: rgb(139, 0, 0);
+    box-shadow: 0 0 30px 5px rgba(255, 69, 0, 0.815);
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+

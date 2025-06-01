@@ -5,128 +5,174 @@ let isImageMode = false;
 let selectedImageQuality = "SD";
 let generationNumber = 1;
 let imageTheme = "normal";
-let ratio = "4:3";
-let model = "realism";
+let ratio = "16:9";
+let model = "flux";
 let controller = null;
 let imageTimeout = null;
 let imageController = null;
 let isMouseOverImageDisplay = false;
 let extractedDetails = {};
-let enhanceUrl = "https://imgelixpo.vercel.app";
-function manageTileNumbers()
-{
-    if(generationNumber == 1)
-        {
-            document.querySelector(".tile1").classList.remove("hidden");
-            document.querySelector(".tile2").classList.add("hidden");
-            document.querySelector(".tile3").classList.add("hidden");
-            document.querySelector(".tile4").classList.add("hidden");
-        
-            document.querySelector(".tile1").style.cssText = `
-                 grid-column: span 6 / span 6;
-                grid-row: span 5 / span 5;
-            `
-        
-            document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
-                grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 8px;
-            `
+
+
+
+async function uploadImageToUguu(file) {
+    if (!file) {
+        notify("No file provided for upload.", false);
+        console.error("Upload Error: No file provided.");
+        return null; // Indicate failure
+    }
+
+
+    notify("Processing Media, just a min", false);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const res = await fetch(`https://imgelixpo.vercel.app/upload-to-uguu`, {
+            method: 'POST',
+            body: formData,
+        });
+        if (!res.ok) {
+            // Attempt to read the response body, which might contain an error message from your backend
+            const errorData = await res.json().catch(() => ({ error: `HTTP error: ${res.status} ${res.statusText}` }));
+            const errorMessage = errorData.error || `Upload failed with status: ${res.status}`;
+            console.error('Upload failed at backend endpoint:', errorMessage);
+            notify(`Failed to process image!: ${errorMessage}`, false); // Notify user about the failure
+            return null; // Indicate failure
         }
-        
-        else if(generationNumber == 2)
-        {
-             
-            document.querySelector(".tile1").classList.remove("hidden");
-            document.querySelector(".tile2").classList.remove("hidden");
-            document.querySelector(".tile3").classList.add("hidden");
-            document.querySelector(".tile4").classList.add("hidden");
-        
-            document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
-                grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 8px;
-            `
-        
-            document.querySelector(".tile1").style.cssText = `
-                grid-column: span 3 / span 3;
-            grid-row: span 5 / span 5;
-            `
-            document.querySelector(".tile2").style.cssText = `
-                grid-column: span 3 / span 3;
-            grid-row: span 5 / span 5;
-            grid-column-start: 4;   
-            `
+
+        // If the response status is OK, parse the JSON body
+        const data = await res.json();
+        console.log('Response from backend upload endpoint:', data);
+
+        // Your backend returns { url: "..." } on success
+        if (data && data.url) {
+            notify("Image uploaded successfully!"); // Notify user about success
+            console.log("Image uploaded via backend, Uguu URL:", data.url);
+            return data.url; // Return the final Uguu URL received from your backend
+        } else {
+            // Handle cases where the backend returned 200 OK but the body was not as expected
+            console.error('Upload succeeded according to status, but invalid response body from backend:', data);
+            notify("Upload failed: Invalid response from server.", false);
+            return null; // Indicate failure
         }
-        
-        else if(generationNumber == 3)
-        {
-        
-            document.querySelector(".tile1").classList.remove("hidden");
-            document.querySelector(".tile2").classList.remove("hidden");
-            document.querySelector(".tile3").classList.remove("hidden");
-            document.querySelector(".tile4").classList.add("hidden");
-        
-            document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
-                grid-template-columns: repeat(6, 1fr);
+    } catch (e) {
+        // Catch network errors (e.g., server is down) or errors during response processing (e.g., JSON parsing failed unexpectedly)
+        console.error('Error during image upload process:', e);
+        notify(`Failed to upload image: ${e.message || 'Network or server error'}`, false); // Notify user about the failure
+        return null; // Indicate failure
+    }
+}
+function manageTileNumbers() {
+    // Only apply this logic for large screens (≥1024px)
+    
+
+    if (generationNumber == 1) {
+        document.querySelector(".tile1").classList.remove("hidden");
+        document.querySelector(".tile2").classList.add("hidden");
+        document.querySelector(".tile3").classList.add("hidden");
+        document.querySelector(".tile4").classList.add("hidden");
+        if (window.innerWidth < 1024) return;
+        document.querySelector(".tile1").style.cssText = `
+            grid-column: span 6 / span 6;
+            grid-row: span 5 / span 5;
+        `;
+
+        document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
+            grid-template-columns: repeat(6, 1fr);
             grid-template-rows: repeat(5, 1fr);
             gap: 8px;
-            `
-        
-            document.querySelector(".tile1").style.cssText = `
-                grid-column: span 2 / span 2;
+        `;
+    }
+
+    else if (generationNumber == 2) {
+        document.querySelector(".tile1").classList.remove("hidden");
+        document.querySelector(".tile2").classList.remove("hidden");
+        document.querySelector(".tile3").classList.add("hidden");
+        document.querySelector(".tile4").classList.add("hidden");
+        if (window.innerWidth < 1024) return;
+        document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+        `;
+
+        document.querySelector(".tile1").style.cssText = `
+            grid-column: span 3 / span 3;
             grid-row: span 5 / span 5;
-            `
-            document.querySelector(".tile2").style.cssText = `
-               grid-column: span 2 / span 2;
+        `;
+        document.querySelector(".tile2").style.cssText = `
+            grid-column: span 3 / span 3;
+            grid-row: span 5 / span 5;
+            grid-column-start: 4;
+        `;
+    }
+
+    else if (generationNumber == 3) {
+        document.querySelector(".tile1").classList.remove("hidden");
+        document.querySelector(".tile2").classList.remove("hidden");
+        document.querySelector(".tile3").classList.remove("hidden");
+        document.querySelector(".tile4").classList.add("hidden");
+        if (window.innerWidth < 1024) return;
+        document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+        `;
+
+        document.querySelector(".tile1").style.cssText = `
+            grid-column: span 2 / span 2;
+            grid-row: span 5 / span 5;
+        `;
+        document.querySelector(".tile2").style.cssText = `
+            grid-column: span 2 / span 2;
             grid-row: span 5 / span 5;
             grid-column-start: 3;
-            `
-            document.querySelector(".tile3").style.cssText = `
-                grid-column: span 2 / span 2;
+        `;
+        document.querySelector(".tile3").style.cssText = `
+            grid-column: span 2 / span 2;
             grid-row: span 5 / span 5;
             grid-column-start: 5;
-            `
-        }
-        
-        else if(generationNumber == 4)
-        {
-            document.querySelector(".tile1").classList.remove("hidden");
-            document.querySelector(".tile2").classList.remove("hidden");
-            document.querySelector(".tile3").classList.remove("hidden");
-            document.querySelector(".tile4").classList.remove("hidden");
-        
-            document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
-                grid-template-columns: repeat(8, 1fr);
+        `;
+    }
+
+    else if (generationNumber == 4) {
+        document.querySelector(".tile1").classList.remove("hidden");
+        document.querySelector(".tile2").classList.remove("hidden");
+        document.querySelector(".tile3").classList.remove("hidden");
+        document.querySelector(".tile4").classList.remove("hidden");
+        if (window.innerWidth < 1024) return;
+        document.querySelector("#imageGenerator  > .imageTiles").style.cssText = `
+            grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(5, 1fr);
             gap: 8px;
-            `
-        
-        
-            document.querySelector(".tile1").style.cssText = `
-               grid-column: span 2 / span 2;
+        `;
+
+        document.querySelector(".tile1").style.cssText = `
+            grid-column: span 2 / span 2;
             grid-row: span 3 / span 3;
-            `
-            document.querySelector(".tile2").style.cssText = `
-                grid-column: span 2 / span 2;
+        `;
+        document.querySelector(".tile2").style.cssText = `
+            grid-column: span 2 / span 2;
             grid-row: span 3 / span 3;
             grid-column-start: 3;
             grid-row-start: 2;
-            `
-            document.querySelector(".tile3").style.cssText = `
-                grid-column: span 2 / span 2;
+        `;
+        document.querySelector(".tile3").style.cssText = `
+            grid-column: span 2 / span 2;
             grid-row: span 3 / span 3;
             grid-column-start: 5;
             grid-row-start: 2;
-            `
-            document.querySelector(".tile4").style.cssText = `
-                grid-column: span 2 / span 2;
+        `;
+        document.querySelector(".tile4").style.cssText = `
+            grid-column: span 2 / span 2;
             grid-row: span 3 / span 3;
             grid-column-start: 7;
             grid-row-start: 3;
-            `
-        }
+        `;
+    }
 }
+
 
 document.getElementById("generateButton").addEventListener("click", function () {
     const promptBox = document.getElementById("promptTextInput");
@@ -227,9 +273,6 @@ document.getElementById("generateButton").addEventListener("click", function () 
 async function preparePromptInput(generationNumber, prompt, ratio, model, selectedImageQuality, imageTheme, enhanceMode, privateMode, imageMode) {
     manageTileNumbers();
     document.getElementById("generateButton").setAttribute("disabled", "true");
-    console.log("entered func");
-
-    // Initialize AbortController
     controller = new AbortController();
     const { signal } = controller;
 
@@ -238,103 +281,21 @@ async function preparePromptInput(generationNumber, prompt, ratio, model, select
     const imageSize = aspectRatio[selectedImageQuality];
     const [width, height] = imageSize.split("x");
 
-    if (imageMode) {
-        
-        imageController = new AbortController();
-        imageTimeout = setTimeout(() => {
-            notify("Image processing took too long. Please try again.");
-            if (imageController) imageController.abort();
-            resetAll();
-        }, 120000);
-    
-        document.getElementById("promptTextInput").classList.add("blur");
-        document.getElementById("overlay").classList.add("display");
-        
-        notify("Hmmm... What is this? Let's see... Can take a min.. please wait", true);
-    
-        const imageUrl = document.getElementById("imageHolder").style.background.slice(5, -2);
-        document.getElementById("imageProcessingAnimation").classList.add("imageMode");
-        document.getElementById("imageThemeContainer").classList.add("imageMode");
-    
-        let generatedPrompt;
-    
-        try {
-            generatedPrompt = await generatePromptFromImage(
-                `data:image/jpeg;base64,${extractedBase64Data}`,
-                prompt,
-                imageController
-            );
-        } catch (err) {
-            if (err.name === "AbortError") {
-                console.warn("Image analysis aborted.");
-                return;
-            } else {
-                console.error("Error during image analysis:", err);
-                notify("Oops! I crashed trying to analyze that image...");
-                resetAll();
-                return;
-            }
-        } finally {
-            clearTimeout(imageTimeout);
-        }
-    
-        if (!generatedPrompt) {
-            notify("Well... seems like I faded out trying to understand the image! Sorry, try something else buddy...");
-            setTimeout(() => {
-                resetAll();
-            }, 2000);
-            return;
-        }
-    
-        typeEnhancedPrompt(generatedPrompt, 0, () => {
-            document.getElementById("promptTextInput").value = generatedPrompt;
-            document.getElementById("promptTextInput").classList.remove("blur");
-            document.getElementById("overlay").classList.remove("display");
-            document.getElementById("promptTextInput").focus();
-            document.getElementById("overlay").innerHTML = "";
-    
-            setTimeout(() => {
-                extractedDetails["Prompt"] = generatedPrompt;
-                scrollToImageGenerator();
-                generateImage(
-                    generationNumber,
-                    generatedPrompt,
-                    width,
-                    height,
-                    model,
-                    suffixPrompt,
-                    selectedImageQuality,
-                    enhanceMode,
-                    privateMode,
-                    imageMode,
-                    signal
-                );
-            }, 1000);
-        });
-    
-        return;
-    }
-    
-
-    if (enhanceMode) {
+    // Helper to handle prompt enhancement
+    async function enhancePrompt(originalPrompt) {
         const pimpController = new AbortController();
-        const timeoutId = setTimeout(() => {
-            pimpController.abort();
-        }, 60000); // abort after 60 seconds
-    
+        const timeoutId = setTimeout(() => pimpController.abort(), 60000);
+
         document.getElementById("promptTextInput").classList.add("blur");
-        document.getElementById("generateButton").style.cssText = `
-            opacity: 0.5;
-            pointer-events: none;
-        `;
+        document.getElementById("generateButton").style.cssText = "opacity: 0.5; pointer-events: none;";
         document.getElementById("overlay").classList.add("display");
         notify("Enhancing your prompt...", true);
-    
+
+        let enhancedPrompt;
         const startTime = Date.now();
-        let pimpedPrompt;
-    
+
         try {
-            pimpedPrompt = await promptEnhance(prompt, pimpController);
+            enhancedPrompt = await promptEnhance(originalPrompt, pimpController);
         } catch (err) {
             if (err.name === "AbortError") {
                 notify("Prompt enhancement took too long. Proceeding with original prompt.");
@@ -342,61 +303,94 @@ async function preparePromptInput(generationNumber, prompt, ratio, model, select
                 console.error("Enhancer Error:", err);
                 notify("Enhancer crashed. Using original prompt.");
             }
-            pimpedPrompt = prompt;
+            enhancedPrompt = originalPrompt;
         } finally {
             clearTimeout(timeoutId);
         }
-    
-        const endTime = Date.now();
-        const elapsedTime = (endTime - startTime) / 1000;
-    
+
+        const elapsedTime = (Date.now() - startTime) / 1000;
         if (elapsedTime > 15 && elapsedTime <= 60) {
             notify("Taking longer than expected.");
         }
-    
-        typeEnhancedPrompt(pimpedPrompt, 0, () => {
-            document.getElementById("promptTextInput").value = pimpedPrompt;
-            document.getElementById("promptTextInput").classList.remove("blur");
+
+        return enhancedPrompt;
+    }
+
+    // Helper to update UI after prompt enhancement
+    function finalizePromptUI(finalPrompt) {
+        document.getElementById("promptTextInput").value = finalPrompt;
+        document.getElementById("promptTextInput").classList.remove("blur");
+        document.getElementById("overlay").classList.remove("display");
+        document.getElementById("promptTextInput").focus();
+        document.getElementById("overlay").innerHTML = "";
+        dismissNotification();
+    }
+
+    // If image mode is enabled
+    if (imageMode) {
+        let finalPrompt = prompt;
+
+        if (enhanceMode) {
+            finalPrompt = await enhancePrompt(prompt);
+            await new Promise(resolve => {
+                typeEnhancedPrompt(finalPrompt, 0, resolve);
+            });
+            finalizePromptUI(finalPrompt);
+        }
+
+        const uploadedUrl = await window.showAndUploadImageIfNeeded();
+        console.log("Uploaded URL:", uploadedUrl);
+
+        if (uploadedUrl) {
+            document.getElementById("imageHolder").setAttribute("data-uploaded-url", uploadedUrl);
+            notify("Processing your image...", true);
             document.getElementById("overlay").classList.remove("display");
-            document.getElementById("promptTextInput").focus();
-            document.getElementById("overlay").innerHTML = "";
-            dismissNotification();
-    
-            setTimeout(() => {
-                extractedDetails["Prompt"] = pimpedPrompt;
-                scrollToImageGenerator();
-                generateImage(
-                    generationNumber,
-                    pimpedPrompt,
-                    width,
-                    height,
-                    model,
-                    suffixPrompt,
-                    selectedImageQuality,
-                    enhanceMode,
-                    privateMode,
-                    imageMode,
-                    signal
-                );
-            }, 1000);
-        });
-    
+            scrollToImageGenerator();
+            generateImage(generationNumber, finalPrompt, width, height, "gptimage", suffixPrompt, selectedImageQuality, enhanceMode, privateMode, imageMode, signal);
+        } else {
+            notify("Failed to upload image. Please try again.");
+            document.getElementById("generateButton").removeAttribute("disabled");
+        }
+
         return;
     }
-    
 
-    // Direct generation path
+    // If only enhance mode (no image mode)
+    if (enhanceMode) {
+        const enhancedPrompt = await enhancePrompt(prompt);
+
+        await new Promise(resolve => {
+            typeEnhancedPrompt(enhancedPrompt, 0, resolve);
+        });
+
+        finalizePromptUI(enhancedPrompt);
+
+        setTimeout(() => {
+            extractedDetails["Prompt"] = enhancedPrompt;
+            scrollToImageGenerator();
+            generateImage(generationNumber, enhancedPrompt, width, height, model, suffixPrompt, selectedImageQuality, enhanceMode, privateMode, imageMode, signal);
+        }, 1000);
+
+        return;
+    }
+
+    // Final fallback: basic generation
     const finalPrompt = document.getElementById("promptTextInput").value;
     scrollToImageGenerator();
     generateImage(generationNumber, finalPrompt, width, height, model, suffixPrompt, selectedImageQuality, enhanceMode, privateMode, imageMode, signal);
 }
 
+
 // Scroll utility
 function scrollToImageGenerator() {
+    hideSection("imageCustomization");
+    hideSection("imageDisplay");
+    showSection("imageGenerator");
     const imageGeneratorSection = document.getElementById("imageGenerator");
     const offsetTop = imageGeneratorSection.offsetTop - 60;
     const container = document.querySelector(".sectionContainer");
     container.scrollTo({ top: offsetTop, behavior: "smooth" });
+  
 }
 
 // Abort button handler
@@ -411,12 +405,26 @@ document.getElementById("interruptButton").addEventListener("click", function ()
     }
 });
 
-function generateImage(generationNumber, prompt, width, height, model, suffixPrompt, selectedImageQuality, enhanceMode, privateMode, imageMode, signal) {
+async function generateImage(generationNumber, prompt, width, height, model, suffixPrompt, selectedImageQuality, enhanceMode, privateMode, imageMode, signal) {
     document.getElementById("interruptButton").classList.remove("hidden");
-    notify("Trying to paint the image!", true);
+    const promptText = `${prompt}`;
+    let generateUrl;
 
-    const promptText = `${prompt} ${suffixPrompt}`;
-    let generateUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptText)}?width=${width}&height=${height}&model=${model}&nologo=true&referrer=pollinations.ai`;
+    if (imageMode) {
+        console.log("In image mode");
+        const uploadedUrl = document.getElementById("imageHolder").getAttribute("data-uploaded-url");
+        if (uploadedUrl) {
+            model = "gptimage";
+            generateUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?model=gptimage&nologo=true&token=xxxxxxxxxx&image=${encodeURIComponent(uploadedUrl)}`;
+            notify("Remixing with your request!! Would take a minute or so, hang on buddy!");
+        } else {
+            notify("Image not found. Please upload a valid image.");
+            return;
+        }
+    } else {
+        generateUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptText)}?width=${width}&height=${height}&model=${model}&nologo=true&referrer=xxxxxxxx&token=xxxxxxx`;
+        notify("Trying to paint the image!", true);
+    }
 
     if (privateMode) {
         generateUrl += "&private=true";
@@ -426,39 +434,63 @@ function generateImage(generationNumber, prompt, width, height, model, suffixPro
     const generationTimes = [];
 
     for (let i = 1; i <= generationNumber; i++) {
-        const startTime = performance.now(); 
-
         const tile = document.querySelector(`.tile${i}`);
         const loadingAnimation = tile.querySelector(".loadingAnimations");
         const downloadBtn = tile.querySelector(".inPictureControls > #downloadBtn");
         const copyBtn = tile.querySelector(".inPictureControls > #copyButton");
+
         tile.style.pointerEvents = "none";
         loadingAnimation.classList.remove("hidden");
 
-        const seed = Math.floor(Math.random() * 10000);
-        const imageRequestUrl = `${generateUrl}&seed=${seed}`;
-
-        const tilePromise = fetch(imageRequestUrl, { signal })
-            .then(response => {
+        const tileSeed = Math.floor(Math.random() * 10000);
+        let imageRequestUrl = `${generateUrl}&seed=${tileSeed}`;
+        const tryGeneration = async (currentModel, watchdogTimeout = 60000) => {
+            const controller = new AbortController();
+            const watchdog = setTimeout(() => controller.abort(), watchdogTimeout);
+            try {
+                const response = await fetch(imageRequestUrl, { signal: controller.signal });
+                clearTimeout(watchdog);
                 if (!response.ok) {
-                    throw new Error(`Failed to generate image for tile${i}`);
+                    throw new Error(`HTTP error ${response.status}`);
                 }
                 return response.blob();
-            })
+            } catch (error) {
+                clearTimeout(watchdog);
+
+                if (controller.signal.aborted && currentModel === "gptimage" && !imageMode) {
+                    notify("gptimage model took too long. Switching to flux...");
+                    const fallbackUrl = imageRequestUrl.replace("model=gptimage", "model=flux");
+                    imageRequestUrl = fallbackUrl;
+                    return tryGeneration("flux");
+                }
+
+                if ((error.message.includes("500") || error.message.includes("HTTP")) && currentModel !== "flux") {
+                    notify("Opps my brush broke! Trying  again");
+                    imageRequestUrl = imageRequestUrl.replace(`model=${currentModel}`, "model=flux");
+                    return tryGeneration("flux");
+                }
+
+                throw error;
+            }
+        };
+
+        const tilePromise = tryGeneration(model)
             .then(blob => {
-                const endTime = performance.now(); 
-                const generationTime = Math.round((endTime - startTime) / 1000); 
+                const endTime = performance.now();
+                const generationTime = Math.round((endTime - performance.now()) / 1000);
                 generationTimes.push(generationTime);
-                generateURLS.push(imageRequestUrl);
+
                 const imageUrl = URL.createObjectURL(blob);
                 tile.style.backgroundImage = `url(${imageUrl})`;
                 tile.style.pointerEvents = "all";
                 tile.setAttribute("data-time", generationTime);
+
                 loadingAnimation.classList.add("hidden");
                 downloadBtn.setAttribute("data-id", imageUrl);
                 copyBtn.setAttribute("data-id", prompt);
-                tile.addEventListener("click", function () {
-                    expandImage(imageUrl, prompt, seed, height, width, model, ratio, generationTime);
+
+                tile.addEventListener("click", () => {
+                    expandImage(imageUrl, promptText, tileSeed, height, width, model, ratio, generationTime);
                 });
             })
             .catch(error => {
@@ -468,6 +500,7 @@ function generateImage(generationNumber, prompt, width, height, model, suffixPro
                     console.warn(`Fetch aborted for tile${i}`);
                 } else {
                     console.error(`Error generating image for tile${i}:`, error);
+                    notify("Failed to generate image. Please try again.");
                 }
             });
 
@@ -475,7 +508,7 @@ function generateImage(generationNumber, prompt, width, height, model, suffixPro
     }
 
     Promise.all(tilePromises).then(() => {
-        if (signal.aborted) return; 
+        if (signal.aborted) return;
 
         notify("Generation complete");
         dismissNotification();
@@ -483,10 +516,12 @@ function generateImage(generationNumber, prompt, width, height, model, suffixPro
         document.getElementById("rejectBtn").classList.remove("hidden");
         document.getElementById("acceptBtn").setAttribute("data-prompt", prompt);
         document.getElementById("interruptButton").classList.add("hidden");
+
         const avg = Math.round(generationTimes.reduce((a, b) => a + b, 0) / generationTimes.length);
-        console.log(`Average generation time: ${avg}ms`);
+        console.log(`Average generation time: ${avg}s`);
     });
 }
+
 
 
 
@@ -553,12 +588,8 @@ async function handleStaticServerUpload(generateURLS, imageNumber, imageTheme, m
     
 }
 
-function resetAll(preserve=false) 
+function resetAll(preserve) 
 {
-    if(!preserve)
-    {
-        document.getElementById("promptTextInput").value = "";
-    }
     document.getElementById("promptTextInput").classList.remove("blur");
     document.getElementById("overlay").classList.remove("display");
     document.getElementById("overlay").innerHTML = "";
@@ -580,14 +611,19 @@ function resetAll(preserve=false)
     document.getElementById("acceptBtn").removeAttribute("data-prompt");
     document.getElementById("generateButton").removeAttribute("disabled");
     document.getElementById("overlay").scrollTop = 0;
-    const imageGeneratorSection = document.getElementById("imageCustomization");
     document.querySelector(".imageProcessingAnimation ").classList.remove("imageMode");
     document.querySelector(".imageThemeContainer").classList.remove("imageMode");
     document.getElementById("interruptButton").classList.add("hidden");
     document.getElementById("usernameDisplay").innerHTML = "";
-    const offsetTop = imageGeneratorSection.offsetTop - 60;
+    hideSection("imageDisplay");
+    hideSection("imageGenerator");
+    showSection("imageCustomization");
+    const imageCustomizationrSection = document.getElementById("imageCustomization");
+    const offsetTop = imageCustomizationrSection.offsetTop - 60;
     const container = document.querySelector(".sectionContainer");
     container.scrollTo({ top: offsetTop, behavior: "smooth" });
+
+
     document.getElementById("generateButton").style.cssText = `
     opacity: 1;
     pointer-events: all;
@@ -595,11 +631,14 @@ function resetAll(preserve=false)
     if(preserve)
     {
         notify("let's try again!");
+        
     }
     else 
     {
         notify("Anything more? Let's go!");
+        document.getElementById("promptTextInput").value = "";
     }
+    document.getElementById("promptTextInput").focus();
 
 }
 
@@ -670,11 +709,13 @@ function expandImage(imageUrl, prompt, seed, height, width, model, ratio, time) 
     const downloadButton = document.getElementById("ImageDisplayDownloadBtn");
     document.getElementById("usernameDisplay").innerHTML = `<span> by ${localStorage.getItem("ElixpoAIUser").slice(0, 11)+"..."}</span>`;
 
-    const container = document.querySelector(".sectionContainer"); // your scrollable container
+    
+    hideSection("imageCustomization");
+    hideSection("imageGenerator");
+    showSection("imageDisplay");
+    const container = document.querySelector(".sectionContainer"); 
     const imageDisplaySection = document.getElementById("imageDisplay");
-
-    // Scroll container to the image display section with a -60px offset
-    const offsetTop = imageDisplaySection.offsetTop;
+    const offsetTop = imageDisplaySection.offsetTop + 60;
     container.scrollTo({ top: offsetTop, behavior: "smooth" });
 
     imageDisplayHolder.style.backgroundImage = `url(${imageUrl})`;
@@ -706,8 +747,12 @@ function expandImage(imageUrl, prompt, seed, height, width, model, ratio, time) 
 }
 
 document.getElementById("goUpBtn").addEventListener("click", function () {
+    hideSection("imageCustomization");
+    hideSection("imageDisplay");
+    showSection("imageGenerator");
     const imageGeneratorSection = document.getElementById("imageGenerator");
     const offsetTop = imageGeneratorSection.offsetTop - 60;
+    const container = document.querySelector(".sectionContainer");
     container.scrollTo({ top: offsetTop, behavior: "smooth" });
 });
 
@@ -722,8 +767,11 @@ imageDisplay.addEventListener("mouseleave", () => {
 });
 document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" && isMouseOverImageDisplay) {
+        hideSection("imageCustomization");
+        hideSection("imageDisplay");
+        showSection("imageGenerator");
         const imageGeneratorSection = document.getElementById("imageGenerator");
-        const offsetTop = imageGeneratorSection.offsetTop - 60;
+        const offsetTop = imageGeneratorSection.offsetTop - 20;
         const container = document.querySelector(".sectionContainer");
         container.scrollTo({ top: offsetTop, behavior: "smooth" });
     }
@@ -758,7 +806,7 @@ document.querySelectorAll(".inPictureControls > #copyButton").forEach(copyBtn =>
 
 
 
-// generateImage(2, "a beautiful kite", "512", "512", "realism", "a realistic depiction", "SD", false, false, false, null, new AbortController());
+// generateImage(2, "a beautiful kite", "512", "512", "flux", "a realistic depiction", "SD", false, false, false, null, new AbortController());
 function typeEnhancedPrompt(msg, wordIndex = 0, callback) {
     const welcomeMessage = document.getElementById("overlay");
     const message = msg;
@@ -836,21 +884,21 @@ async function promptEnhance(userPrompt, pimpController) {
 function getSuffixPrompt(theme)
 {
     const themeSuffixMap = {
-        "structure": "a detailed architectural masterpiece",
-        "crayon": "a vibrant crayon-style illustration",
-        "normal": "a realistic depiction",
-        "space": "a cosmic scene with stars and galaxies",
-        "chromatic": "a colorful chromatic artwork",
-        "halloween": "a spooky Halloween-themed design",
-        "cyberpunk": "a futuristic cyberpunk cityscape",
-        "anime": "an anime-style character or scene",
-        "landscape": "a breathtaking natural landscape",
-        "fantasy": "a magical fantasy world",
-        "ghibli": "a whimsical Studio Ghibli-inspired scene",
-        "wpap": "a WPAP-style geometric portrait",
-        "vintage": "a vintage retro-style artwork",
-        "pixel": "a pixelated retro game-style image",
-        "synthwave": "a neon-lit synthwave aesthetic"
+        "structure": "-- a stunning architectural masterpiece, carved from stone with intricate details and realistic textures",
+        "crayon": "-- a vibrant and playful crayon-style illustration, full of bold colors and childlike charm",
+        "normal": "-- a highly realistic and lifelike depiction, capturing fine details and natural tones",
+        "space": "-- a mesmerizing cosmic scene, featuring stars, galaxies, and the vastness of the universe",
+        "chromatic": "-- a vivid and colorful chromatic artwork, blending hues in a visually striking manner",
+        "halloween": "-- a spooky and atmospheric Halloween-themed design, with eerie lighting and haunting elements",
+        "cyberpunk": "-- a futuristic cyberpunk cityscape, glowing with neon lights and high-tech aesthetics",
+        "anime": "-- a beautifully crafted anime-style character or scene, with expressive features and dynamic composition",
+        "landscape": "-- a breathtaking natural landscape, showcasing majestic scenery and serene beauty",
+        "fantasy": "-- a magical and enchanting fantasy world, filled with mythical creatures and imaginative settings",
+        "ghibli": "-- a whimsical Studio Ghibli-inspired scene, brimming with charm and storytelling",
+        "wpap": "-- a bold and vibrant WPAP-style geometric portrait, with sharp lines and vivid colors",
+        "vintage": "-- a nostalgic vintage retro-style artwork, evoking the charm of a bygone era sepia themed browish",
+        "pixel": "-- a pixelated retro game-style image, reminiscent of classic 8-bit or 16-bit graphics",
+        "synthwave": "-- a neon-lit synthwave aesthetic, inspired by 80s retro-futurism and electronic music"
     };
 
     return themeSuffixMap[theme] || "a generic artistic creation";

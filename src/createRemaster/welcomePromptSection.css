@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&family=DynaPuff:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+#welcomePrompt 
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3; 
+    background: transparent;
+    overflow: hidden;
+}
+
+.imageArray {
+    width: 90%;
+    left: 0;
+    transform: rotateX(50deg) rotateZ(-35deg) translate(20%, -20%) scale(1.7);
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Adjust image size */
+    gap: 25px; /* Reduce gap for a seamless stitch effect */
+    pointer-events: none;
+    overflow: hidden;
+    filter: opacity(.55) brightness(0.35) contrast(1.2) blur(1px);
+}
+
+.imageArray img {
+    width: 100%; /* Makes each image fill its grid cell */
+    height: auto;
+    object-fit: cover; /* Ensures images don't stretch */
+}
+
+.imageArray img:nth-child(even) {
+    /* animation: moveUp 8s ease-in-out infinite; */
+}
+
+.imageArray img:nth-child(odd) {
+    /* animation: moveDown 8s ease-in-out infinite; */
+}
+
+@keyframes moveUp {
+    0%, 100% {
+        transform: translateY(-5%);
+    }
+    50% {
+        transform: translateY(5%);
+    }
+}
+
+@keyframes moveDown {
+    0%, 100% {
+        transform: translateY(5%);
+    }
+    50% {
+        transform: translateY(-5%);
+    }
+}
+
+.welcomeMessage 
+{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 4em;
+    width: 70%;
+    flex-wrap: wrap;
+    z-index: 10;
+    color: rgb(166, 101, 240);
+    gap: 5px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+
+}
+
+.welcomeMessage span {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: rgb(166, 101, 240);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: auto;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    font-family: "DynaPuff", system-ui;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    transition: font-weight 0.6s ease-in-out, font-variation-settings 0.6s ease-in-out;
+    transition: 0.25s;
+}
+.descMessage 
+{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    font-size: 1m;
+    width: 70%;
+    flex-wrap: wrap;
+    z-index: 10;
+    color: rgb(215, 190, 244);
+    gap: 10px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+.descMessage span
+{
+    font-size: 1.2em;
+    text-shadow: 0 0 10px rgb(90, 88, 91);
+    font-weight: 400;
+    color: rgb(215, 190, 244);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: auto;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    font-family: "Boldonse", system-ui;
+    font-weight: 400;
+}
+
+
+
+.enhancementSphere {
+    position: absolute;
+    top: 88%;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg) translateY(0px);
+    width: 850px;
+    height: 450px;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9, #80D0C7, #8EC5FC, #E0C3FC,
+        #FBAB7E, #F7CE68, #4158D0, #C850C0, #FFCC70);
+    background-position: 20px 40px;
+    z-index: 1;
+    filter: blur(20px) opacity(0.35);
+    border-radius: 50%;
+    animation: animateColor 4s linear infinite;
+    transition: 2.5s;
+  }
+  
+  .enhancementSphere.hidden {
+    transform: translateX(-50%) rotate(180deg) translateY(-250px);
+  }
+  
+  @keyframes animateColor {
+    0% {
+      filter: blur(20px);
+      background-position: 20px 40px;
+    }
+  
+    20% {
+      filter: blur(20px);
+      background-position: 40px 260px;
+    }
+  
+    40% {
+      filter: blur(20px);
+      background-position: 60px 180px;
+    }
+  
+    60% {
+      filter: blur(20px);
+      background-position: 180px 200px;
+    }
+  
+    80% {
+      filter: blur(20px);
+      background-position: 200px 20px;
+    }
+  
+    100% {
+      filter: blur(20px);
+      background-position: 20px 40px;
+    }
+  }
+
+  .instructionsForUser 
+  {
+    position: absolute;
+    top: 68%;
+    width: 70%;
+    left: 10%;
+    font-size: 1.1em;
+    color: #ffc;
+    opacity: 0.5;
+    }
+
+    .instructionsForUser .notations 
+    {
+        font-size: 1.1em;
+        color: rgb(255, 255, 255);
+        opacity: 1;
+        font-weight: 500;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        width: auto;
+        box-sizing: border-box;
+        word-wrap: break-word;
+    }
+
+
+    .createBtn {
+      position: absolute;
+      top: 85%;
+      left: 10%;
+      padding: 15px 30px;
+      border: 2px solid #2c2c2c;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: all 0.4s ease;
+      outline: none;
+      overflow: hidden;
+      font-weight: bold;
+    }
+    
+    .createBtn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      transform: scale(0);
+      transition: transform 0.5s ease;
+    }
+    
+    .createBtn:hover::after {
+      transform: scale(4);
+    }
+    
+    .createBtn:hover {
+      border-color: #666666;
+      background: #292929;
+    }
+    

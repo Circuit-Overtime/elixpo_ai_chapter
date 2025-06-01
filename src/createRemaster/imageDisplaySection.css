@@ -1,0 +1,349 @@
+#imageDisplay
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3; 
+    display: block;
+    background: transparent;
+}
+#imageDisplay.sabotage 
+{
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+    display: none;
+}
+
+
+.imageDisplaySection {
+    position: absolute;
+    top: 40px;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    /* border-bottom: 5px solid #1D202A; */
+    border-left: 1px solid #1D202A;
+    border-right: 1px solid #1D202A;
+    overflow: hidden;
+  }
+  
+  .imageDisplaySectionBackdrop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 100%;
+    width: 100%;
+    background: #1D202A;
+  }
+  
+  .imageDisplaySectionBackdropv-2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 25px;
+    height: 95%;
+    width: 98%;
+    background: #030712;
+    border: 1px solid #616678;
+    overflow: hidden;
+  }
+  
+  .imageDisplaySectionBackdropv-2>.documentIcon {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 5em;
+    color: #fff;
+    font-weight: 500;
+  }
+  
+  
+  .imageDisplaySectionBackdropv-2>.documentContainer {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    left: 0%;
+    height: 100%;
+    background-image: radial-gradient(rgba(225, 191, 19, 0.205) 1px, transparent 0);
+    background-size: 10px 10px;
+    background-position: -5px -5px;
+    border: 1px solid #555;
+    border-radius: 15px;
+    overflow-x: hidden;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 14px;
+  }
+
+  .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn
+    {
+        position: absolute;
+        top: 15%;
+        width: 40%;
+        height: 20%;
+        padding: 10px 20px;
+        grid-column: span 4 / span 4;
+        grid-row: span 2 / span 2;
+        grid-column-start: 2;
+        grid-row-start: 1;
+        background-color: #728ce01d;
+        border-radius: 12px;
+        border: 2px solid #8a8de596;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn > i 
+    {
+        position: absolute;
+        top: 20%;
+        left: 5%;
+        font-size: 2em;
+        color: #8a8de5d9;
+        cursor: pointer;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .imageSpecs
+    {
+        position: absolute;
+        top: 25%;
+        width: max-content;
+        height: 20%;
+        padding: 10px 20px;
+        grid-column: span 4 / span 4;
+        grid-row: span 2 / span 2;
+        grid-column-start: 2;
+        grid-row-start: 8;
+        background-color: #728ce0c6;
+        border-radius: 12px;
+        border: 2px solid #8a8de596;
+        gap: 20px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .imageSpecs > span 
+    {
+        font-size: 1em;
+        font-weight: 500;
+        color: #0c0d23fc;
+        padding-right: 20px;
+        border-right: 5px dotted #0c0d23fc;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn > span 
+    {
+        position: absolute;
+        top: 50%;
+        left: 20%;
+        transform: translateY(-50%);
+        font-size: 1.7em;
+        font-weight: 500;
+        color: #8a8de5d9;
+        cursor: pointer;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn > .keybind 
+    {
+        position: absolute;
+        top: 52%;
+        right: 5%;
+        transform: translateY(-50%);
+        font-size: 1.5em;
+        font-weight: 500;
+        color: #fff;
+        cursor: pointer;
+        padding: 0px 10px;
+        border-radius: 5px;
+        box-shadow: inset 0 0 5px rgba(133, 160, 247, 0.5),
+        inset 1px 2px 6px rgba(133, 160, 247, 0.5);
+        background: #030712;
+    }
+  .imageDisplaySectionBackdropv-2>.documentContainer>.imageDisplayHolder
+  {
+    position: relative;
+    height: 90%;
+    top: 2%;
+    width: 85%;
+    background: url(/CSS/IMAGES/celeb3.jpg);
+    border: 2px solid rgba(255, 255, 204, 0.484);
+    /* background: #1D202A; */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    overflow: hidden;
+    grid-column: span 8 / span 8;
+    grid-row: span 7 / span 7;
+    grid-column-start: 2;
+    grid-row-start: 2;
+  }
+
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder
+{
+    position: relative;
+    height: 97%;
+    width: 97%;
+    background: #1D202A;
+    border-radius: 25px;
+    overflow: hidden;
+    grid-column: span 3 / span 3;
+    grid-row: span 5 / span 5;
+    grid-column-start: 9;
+    grid-row-start: 3;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 8px;
+}
+
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .usernameDisplay
+{
+    position: relative;
+    background: transparent;
+    border-radius: 15px;
+    grid-column: span 4 / span 4;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 1;
+    justify-content: center;
+    align-items: center;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .usernameDisplay > span 
+{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    font-weight: 500;
+    color: #85a0f787;
+    text-align: center;
+    display: block;
+    padding: 5px;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .promptDisplay
+{
+    position: relative;
+    background: transparent;
+    width: 90%;
+    left: 5%;
+    border-radius: 8px;
+    grid-column: span 4 / span 4;
+    grid-row: span 4 / span 4;
+    grid-column-start: 1;
+    grid-row-start: 3;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .promptDisplay::-webkit-scrollbar
+{
+    display: none;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .promptDisplay > span 
+{
+    font-size: 1em;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    font-weight: 500;
+    color: #85a0f787;
+    text-align: justify;
+    display: block;
+    padding: 5px;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .aspectRatioDisplay
+{
+    position: relative;
+    background: transparent;
+    border-radius: 15px;
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 7;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .aspectRatioDisplay > span 
+{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #85a0f787;
+    text-align: center;
+    display: block;
+    padding: 5px;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .timeTakenDisplay
+{
+    position: relative;
+    background: transparent;
+    border-radius: 15px;
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 7;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .timeTakenDisplay > span 
+{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #85a0f787;
+    text-align: center;
+    display: block;
+    padding: 5px;
+}
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .downloadImageBtn
+{
+    position: relative;
+    background: transparent;
+    border-radius: 15px;
+    grid-column: span 4 / span 4;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 9;
+}
+
+
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .downloadImageBtn > .downloadBtn {
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 7px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #85a0f787;
+    background: #85a0f787;
+    box-shadow: 0 0 30px 5px rgba(133, 160, 247, 0.5);
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .downloadImageBtn > .downloadBtn:hover {
+    background: transparent;
+    color: #85a0f787;
+    border: 1px solid #85a0f787;
+    box-shadow: 0 0 30px 5px rgba(133, 160, 247, 0.8);
+}
+
+.imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .downloadImageBtn > .downloadBtn > i {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 25px;
+}

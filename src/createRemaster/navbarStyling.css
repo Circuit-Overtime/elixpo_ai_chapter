@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* 
+{
+    user-select: none;
+    font-family: "Kanit", serif;
+}
+:root 
+{
+    --fancy-button-gradient-0: #8d49fd;
+    --fancy-button-gradient-50: #7f56f3;
+    --fancy-button-gradient-100: #5691f3;
+    --fancy-button-inner-shadow-top: rgba(233, 209, 255, 0.2);
+    --fancy-button-inner-shadow-top-lg: rgba(9, 12, 60, 0.1);
+    --fancy-button-inner-shadow-bottom: rgba(137, 222, 246, 0.3);
+    --fancy-button-shine-top: #e9d1ff;
+    --fancy-button-shine-bottom: #adfff9;
+}
+
+
+
+
+.appHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  border-bottom: 2px solid #1D202A;
+  display: flex;
+  align-items: center;
+  background-color: #030712; 
+  z-index: 1000; 
+}
+
+.appName {
+    position: absolute;
+    left: 5%;
+    font-size: 1.875548405255515109rem; 
+    font-weight: 700;
+    font-family: "Kanit", serif;
+    color: #fff;
+    cursor: pointer;
+}
+
+.logo
+{
+    position: absolute;
+    left: 3%;
+    transform: rotate(-25deg);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: url(https://firebasestorage.googleapis.com/v0/b/videolize-3563f.appspot.com/o/bigstar.png?alt=media&token=53c5945b-2b37-4c3e-972c-7bd1b0b9e4f1);
+    background-size: cover;
+}
+
+
+  
+  .githubLogo
+{
+    position: absolute;
+    left: 95%;
+    color: #888;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.redirectHome 
+{
+    position: absolute;
+    left: 78%;
+    color: #888;
+    font-size: 2em;
+    cursor: pointer;
+}
+.redirectBlogs
+{
+    position: absolute;
+    left: 82%;
+    color: #888;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.userCell
+{
+    position: absolute;
+    left: 85%;
+    height: 40px;
+    width: 120px;
+    background: transparent;
+    border: 2px solid #1D202A;
+    border-radius: 10px;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    gap: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    box-shadow: inset 0 0 10px #7f56f3;
+    border: 2px solid #7f56f3;
+    overflow: hidden;
+    cursor: pointer;
+}
+.userCell > .userInfo 
+{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background: #7f56f3;
+    background: url(../IMAGES/LOGOS/logo3.jpeg);
+    background-size: cover;
+}
+
+.userCell > p 
+{
+    position: absolute;
+    font-size: 1.2em;
+    color: #d8c8c8;
+    margin-left: 40px;
+    display: block;
+}

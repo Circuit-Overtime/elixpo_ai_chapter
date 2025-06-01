@@ -1,7 +1,5 @@
 let extractedBase64Data = null;
-
-
-
+let selectedImageFile = null; 
 
 document.getElementById("inputImage").addEventListener("click", function () {
     document.getElementById("generateButton").classList.add("disabled");
@@ -10,53 +8,90 @@ document.getElementById("inputImage").addEventListener("click", function () {
     input.accept = "image/*";
 
     input.onchange = async function (event) {
-        await handleImageFile(event.target.files[0]);
+        selectedImageFile = event.target.files[0] || null;
+        if (!selectedImageFile) return;
+        if (selectedImageFile.size >= 10 * 1024 * 1024) {
+            notify("Please select an image file smaller than 10 MB.");
+            selectedImageFile = null;
+            return;
+        }
+        // Extract base64 and show image in imageHolder
+        const reader = new FileReader();
+        reader.onload = function () {
+            extractedBase64Data = reader.result.split(",")[1];
+            // Show preview in imageHolder immediately
+            const imageDataUrl = reader.result;
+            isImageMode = true;
+            document.getElementById("promptBox").classList.add("image");
+            document.getElementById("imageHolder").style.background = `url(${imageDataUrl})`;
+            document.querySelector(".userInputImageHolder").style.setProperty("--before-background", `url(${imageDataUrl})`);
+            document.getElementById("imageHolder").style.backgroundSize = "cover";
+            document.getElementById("imageHolder").style.backgroundPosition = "center center";
+            handleFlagUpdateAuto(".models", "model", "gptimage");
+            handleFlagUpdateAuto(".themes", "theme", "normal");
+            document.querySelectorAll(".modelsTiles").forEach(tile => {
+                tile.style.pointerEvents = "none";
+            });
+            document.getElementById("OneImage").style.pointerEvents = "none";
+            document.getElementById("OneImage").className = "fa-solid fa-dice-one";
+            generationNumber = 1;
+
+        };
+        reader.readAsDataURL(selectedImageFile);
+        document.getElementById("generateButton").classList.remove("disabled");
     };
 
-    input.oncancel = function (event) { // Add oncancel handler
+    input.oncancel = function () {
         cancelImageReference();
+        selectedImageFile = null;
     };
 
     input.click();
 });
 
+// Only show image and upload when preparePromptInput is called and isImageMode is true
+async function showAndUploadImageIfNeeded() {
+    if (!selectedImageFile) return null;
+    // Show preview
+    const reader = new FileReader();
+    return new Promise((resolve) => {
+        reader.onload = async function () {
+            const imageDataUrl = reader.result;
+            extractedBase64Data = imageDataUrl.split(",")[1];
+            document.getElementById("promptBox").classList.add("image");
+            document.getElementById("imageHolder").style.background = `url(${imageDataUrl})`;
+            document.querySelector(".userInputImageHolder").style.setProperty("--before-background", `url(${imageDataUrl})`);
+            document.getElementById("imageHolder").style.backgroundSize = "cover";
+            document.getElementById("imageHolder").style.backgroundPosition = "center center";
+            document.getElementById("overlay").classList.add("display");
+            const uploadedUrl = await uploadImageToUguu(selectedImageFile);
+            document.getElementById("overlay").classList.remove("display");
+            if (uploadedUrl) {
+                document.getElementById("imageHolder").setAttribute("data-uploaded-url", uploadedUrl);
+                resolve(uploadedUrl);
+            } else {
+                document.getElementById("imageHolder").removeAttribute("data-uploaded-url");
+                resolve(null);
+            }
+        };
+        reader.readAsDataURL(selectedImageFile);
+    });
+}
 
+// Remove old handleImageFile, only use for paste/hardcoded
 async function handleImageFile(file) {
     if (!file) return;
-
     if (file.size >= 10 * 1024 * 1024) {
-        alert("Please select an image file smaller than 10 MB.");
+        notify("Please select an image file smaller than 10 MB.");
         return;
     }
-
-    console.log("File accepted:", file.name);
-
+    selectedImageFile = file;
     const reader = new FileReader();
-
-    reader.onprogress = function (event) {
-        if (event.lengthComputable) {
-            const percentLoaded = Math.round((event.loaded / event.total) * 100);
-            console.log(`Loading: ${percentLoaded}%`);
-        }
+    reader.onload = function () {
+        extractedBase64Data = reader.result.split(",")[1];
     };
-    document.getElementById("cancelImageMode").classList.remove("hidden");
-    document.getElementById("pimpPrompt").style.opacity = "0.5";
-    document.getElementById("pimpPrompt").style.pointerEvents = "none";
-    reader.onload = async function () {
-        console.log("File loaded successfully.");
-        imageDataUrl = reader.result;
-        extractedBase64Data = imageDataUrl.split(",")[1]; // ✅ Save just the base64 part
-
-        document.getElementById("promptBox").classList.add("image");
-        document.getElementById("imageHolder").style.background = `url(${imageDataUrl})`;
-        document.querySelector(".userInputImageHolder").style.setProperty("--before-background", `url(${imageDataUrl})`);
-        document.getElementById("imageHolder").style.backgroundSize = "cover";
-        document.getElementById("imageHolder").style.backgroundPosition = "center center";
-        document.getElementById("generateButton").classList.remove("disabled");
-        isImageMode = true;
-    };
-
     reader.readAsDataURL(file);
+    document.getElementById("generateButton").classList.remove("disabled");
 }
 
 function cancelImageReference() {
@@ -64,7 +99,10 @@ function cancelImageReference() {
     document.getElementById("imageHolder").style.background = "none";
     document.querySelector(".userInputImageHolder").style.setProperty("--before-background", `none`);
     isImageMode = false;
-    document.getElementById("generateButton").classList.remove("disabled"); // Re-enable if disabled
+    selectedImageFile = null;
+    extractedBase64Data = null;
+    handleFlagUpdateAuto(".models", "model", "flux");
+    document.getElementById("generateButton").classList.remove("disabled");
     document.getElementById("pimpPrompt").style.opacity = "1";
     document.getElementById("pimpPrompt").style.pointerEvents = "all";
     document.getElementById("imageHolder").style.opacity = "1";
@@ -75,15 +113,18 @@ function cancelImageReference() {
     document.getElementById("promptTextInput").classList.remove("blur");
     document.getElementById("overlay").classList.remove("display");
     document.getElementById("overlay").innerHTML = "";
-    document.getElementById("promptTextInput").value = "";
+    document.querySelectorAll(".modelsTiles").forEach(tile => {
+        tile.style.pointerEvents = "all";
+    });
     dismissNotification();
+    document.getElementById("OneImage").style.pointerEvents = "all"
     notify("Image reference removed.");
     if (imageController) {
-        imageController.abort(); 
+        imageController.abort();
         imageController = null;
     }
     if (imageTimeout) {
-        clearTimeout(imageTimeout); 
+        clearTimeout(imageTimeout);
         imageTimeout = null;
     }
     return;
@@ -93,114 +134,18 @@ document.getElementById("cancelImageMode").addEventListener("click", () => {
     cancelImageReference();
 });
 
-// Function to generate prompt from image
-async function generatePromptFromImage(imageUrl, userGivenprompt, controller) {
-    console.log(userGivenprompt);
-    const systemInstructions = `
-You are an expert AI art prompt engineer.
-
-Your task is to deeply analyze a visual image and generate a high-quality, natural language prompt that would allow an AI art generator to accurately reconstruct it. Additionally, **blend in** the user’s creative request to enrich the final output.
-
-### Instructions:
-1. Study the image carefully and describe:
-   - Human presence (how many, gender, appearance, expressions, clothing, ethnicity if relevant)
-   - **Age estimate** (child, teenager, adult, elderly)
-   - Camera angle (close-up, wide shot, aerial, etc.)
-   - Environment, setting, background elements
-   - Mood/emotion (from posture, color palette, lighting)
-   - Style (realism, anime, digital painting, 3D, etc.)
-   - Lighting (natural, cinematic, neon, golden hour, etc.)
-   - Composition (rule of thirds, depth, focus, framing)
-
-2. **Preserve facial details**, accessories, gender identity, pose, and clothing if visible.
-
-3. After analyzing the image, **thoughtfully incorporate the user's request**  into the prompt — altering or enriching the environment, character, or details accordingly, while still preserving the image’s core.
-The user request is :- "${userGivenprompt}"
-Study the image and blend in the user request to create a unique, high-quality prompt.
-4. Merge all of the above into a single detailed AI prompt (50–100 words). Avoid lists or explanation.
-
-
-`;
-
-    try {
-        const base64Image = imageUrl.split(",")[1];
-
-        const response = await fetch("https://text.pollinations.ai/openai", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: "openai",
-                messages: [
-                    {
-                        role: "system",
-                        content: systemInstructions.trim()
-                    },
-                    {
-                        role: "user",
-                        content: [
-                            {
-                                type: "text",
-                                text: "Analyze this image and build a refined generation prompt."
-                            },
-                            {
-                                type: "image_url",
-                                image_url: { url: `data:image/jpeg;base64,${base64Image}` }
-                            }
-                        ]
-                    }
-                ],
-                max_tokens: 250 // Slightly increased to fit the merged prompt better
-            })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            notify("Failed to reach the prompt server.");
-            console.error("HTTP error:", response.status, await response.text());
-            return false;
-        }
-        
-        // Check for valid structure
-        if (data?.choices?.length > 0 && data.choices[0]?.message?.content) {
-            return data.choices[0].message.content.trim();
-        } else {
-            notify("Invalid response format from server.");
-            console.error("Unexpected API response structure:", data);
-            return false;
-        }
-        
-
-    } catch (error) {
-        if (controller.signal.aborted) {
-            console.log("Generation was aborted.");
-            notify("Generation was aborted.");
-            return false;
-        }
-        console.error("Error generating prompt:", error);
-        notify("Generation failed.");
-        return false;
-    }
-}
-
-
-
-
+// Paste handler (for clipboard images)
 document.getElementById("promptTextInput").addEventListener("paste", async (event) => {
     const items = (event.clipboardData || event.clipboardData).items;
     let blob = null;
-
     for (let i = 0; i < items.length; i++) {
         if (items[i].type.indexOf("image") === 0) {
             blob = items[i].getAsFile();
             break;
         }
     }
-
     if (blob !== null) {
-        event.preventDefault(); // Prevent default paste behavior
+        event.preventDefault();
         if (blob.size >= 10 * 1024 * 1024) {
             alert("Please paste an image smaller than 10 MB.");
             return;
@@ -209,20 +154,18 @@ document.getElementById("promptTextInput").addEventListener("paste", async (even
     }
 });
 
-
+// For hardcoded image loading (dev/test)
 async function loadHardcodedImage() {
-    const imageUrl = "../../CSS/IMAGES/normalBG.png";
+    const imageUrl = "../../CSS/IMAGES/testImg.jpg";
     try {
         const response = await fetch(imageUrl);
         const blob = await response.blob();
         const file = new File([blob], "hardcoded_image.jpg", { type: "image/jpeg" });
         await handleImageFile(file);
         const reader = new FileReader();
-
         reader.onload = async function () {
             extractedBase64Data = reader.result.split(",")[1];
         };
-
         reader.readAsDataURL(file);
     } catch (error) {
         console.error("Error loading hardcoded image:", error);
@@ -230,7 +173,7 @@ async function loadHardcodedImage() {
     }
 }
 
-// window.onload = loadHardcodedImage;
-
-//image mode bug
-
+// Export for use in imageGeneration.js
+window.showAndUploadImageIfNeeded = showAndUploadImageIfNeeded;
+window.cancelImageReference = cancelImageReference;
+window.handleImageFile = handleImageFile;

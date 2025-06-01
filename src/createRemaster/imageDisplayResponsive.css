@@ -1,0 +1,106 @@
+
+
+@media screen and (max-width: 768px) {
+    .imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .downloadImageBtn
+    {
+        position: relative;
+        top: -20px;
+        left: 5%;
+        width: 90%;
+        height: 20px;
+        transform: scale(0.8);
+    }
+    .imageDisplaySectionBackdropv-2>.documentContainer>.imageDisplayHolder
+    {
+        position: relative;
+        top: 5%;
+        left: 2.5%;
+        width: 75%;
+        border: navajowhite;
+    }
+
+    .imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder
+    {
+        grid-column: span 4 / span 4;
+        grid-column-start: 8;
+        background: #1d202a94;
+        backdrop-filter: blur(5px);
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn
+    {
+        top: 35%;
+        width: 70%;
+        z-index: 1000;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .imageSpecs
+    {
+        grid-column: span 6 / span 6;
+        grid-column-start: 2;
+        grid-row-start: 7;
+    }
+    
+}
+@media screen and (max-width: 1024px) {
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn
+    {
+        width: 70%;
+        z-index: 1000;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .imageDisplaySectionBackdropv-2>.documentContainer
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn
+    {
+        width: 90%;
+        z-index: 1000;
+    }
+    .imageDisplaySectionBackdropv-2>.documentContainer>.imageDisplayHolder
+    {
+        position: relative;
+        top: 5%;
+        left: 2.5%;
+        width: 95%;
+        border: navajowhite;
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .imageSpecs
+    {
+        position: relative;
+        top: -5%;
+        left: 5%;
+        height: 40px;
+        width: 75%;
+
+    }
+    .imageDisplaySectionBackdropv-2 > .documentContainer > .goUpBtn
+    {
+        top: 5%;
+        height: 5%;
+        width: 75%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+    }
+    .imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder
+    {
+        position: relative;
+        height: 60%;
+        width: 95%;
+        top: -5%;
+        left: 2.5%;
+    }
+    .imageDisplaySectionBackdropv-2>.documentContainer>.imageInformationHolder > .downloadImageBtn
+    {
+        position: relative;
+        top: -20px;
+        left: 5%;
+        width: 90%;
+        height: 20px;
+        transform: scale(0.8);
+    }
+}
