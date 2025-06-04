@@ -14,6 +14,8 @@ from tqdm import tqdm
 import random 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+import os
+from dotenv import load_dotenv
 
 # --- Configuration ---
 MAX_SEARCH_RESULTS_PER_QUERY = 8
@@ -29,7 +31,7 @@ MAX_REQUEST_RETRIES = 3
 MAX_DUCKDUCKGO_RETRIES = 5 
 CLASSIFICATION_MODEL = "OpenAI GPT-4.1-nano" 
 SYNTHESIS_MODEL = "openai-large"           
-
+load_dotenv()
 
 
 def exponential_backoff(attempt, base_delay=REQUEST_RETRY_DELAY, max_delay=60):
@@ -43,8 +45,8 @@ def query_pollinations_ai(messages, model=SYNTHESIS_MODEL, retries=MAX_REQUEST_R
             "model": model,
             "messages": messages,
             "seed": 518450,
-            "token" : "fEWo70t94146ZYgk",
-            "referrer" : "elixpoart"
+            "token" : os.getenv("POLLINATIONS_TOKEN"),
+            "referrer" : os.getenv("POLLINATIONS_REFERRER")
         }
 
         url = "https://text.pollinations.ai/openai"
