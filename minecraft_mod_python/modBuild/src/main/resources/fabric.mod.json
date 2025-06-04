@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "elixpo_image",
+	"version": "1.0",
+	"name": "elixpo_image",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Ayushman Bhattacharya"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/Circuit-Overtime/elixpo_ai_chapter"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/elixpo_image/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.example.Elixpo_image"
+		],
+		"client": [
+			"com.example.Elixpo_imageClient"
+		]
+	},
+	"mixins": [
+		"elixpo_image.mixins.json",
+		{
+			"config": "elixpo_image.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

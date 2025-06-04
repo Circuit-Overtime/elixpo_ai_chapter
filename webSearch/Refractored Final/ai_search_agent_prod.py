@@ -17,6 +17,12 @@ from flask import Flask, request, jsonify, Response
 from flask_cors import CORS 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+import os
+from dotenv import load_dotenv
+import html
+from concurrent.futures import ThreadPoolExecutor
+import threading
+import logging
 
 # --- Configuration ---
 MAX_SEARCH_RESULTS_PER_QUERY = 8
@@ -32,7 +38,8 @@ MAX_REQUEST_RETRIES = 3
 MAX_DUCKDUCKGO_RETRIES = 5
 CLASSIFICATION_MODEL = "OpenAI GPT-4.1-nano"
 SYNTHESIS_MODEL = "openai-large"
-
+MAX_CONCURRENT_REQUESTS = 5
+load_dotenv()
 class DummyContextManager:
     """A context manager that does nothing, used when show_logs is False."""
     def __enter__(self):
@@ -66,9 +73,9 @@ def query_pollinations_ai(messages, model=SYNTHESIS_MODEL, retries=MAX_REQUEST_R
         payload = {
             "model": model,
             "messages": messages,
-            "seed": 518450,
-            "token" : "fEWo70t94146ZYgk",
-            "referrer" : "elixpoart"
+            "seed": random.randint(0, 2**31 - 1),
+            "token" : os.getenv("POLLINATIONS_TOKEN"),
+            "referrer" : os.getenv("POLLINATIONS_REFERRER")
         }
 
         url = "https://text.pollinations.ai/openai"
@@ -658,7 +665,8 @@ limiter = Limiter(
     strategy="moving-window" 
 )
 
-
+executor = ThreadPoolExecutor(max_workers=MAX_CONCURRENT_REQUESTS)
+semaphore = threading.Semaphore(MAX_CONCURRENT_REQUESTS)
 @limiter.limit("10 per minute")
 @app.route('/search', methods=['GET', 'POST'])
 def handle_search():
@@ -676,15 +684,39 @@ def handle_search():
             show_logs_param = data.get('show_logs', None) 
     elif request.method == 'GET':
         user_input_query = request.args.get('query')
-        show_logs_param = request.args.get('show_logs', None) 
+        show_logs_param = request.args.get('show_logs', None)
+
+    if not user_input_query or not isinstance(user_input_query, str):
+        return jsonify({"error": "Query parameter 'query' is required and must be a string."}), 400
+    
+    user_input_query = user_input_query.strip()
+    if len(user_input_query) == 0:
+        return jsonify({"error": "Query parameter 'query' cannot be empty."}), 400
+    if len(user_input_query) > 1000:
+        return jsonify({"error": "Query parameter 'query' is too long (max 1000 characters)."}), 400
+
+    # user_input_query = html.escape(user_input_query)
+    # if "<script" in user_input_query.lower():
+    #     return jsonify({"error": "Query contains forbidden content."}), 400
 
     if not user_input_query:
         return jsonify({"error": "Query parameter 'query' is required."}), 400
     show_logs = str(show_logs_param).lower() == 'true' if show_logs_param is not None else True 
-    markdown_output, status_code = search_and_synthesize(user_input_query, show_sources=True, scrape_images=True, show_logs=show_logs)
+    def process_request():
+        with semaphore:
+            markdown_output, status_code = search_and_synthesize(
+                user_input_query,
+                show_sources=True,
+                scrape_images=True,
+                show_logs=show_logs
+            )
+            return markdown_output, status_code
+
+    future = executor.submit(process_request)
+    markdown_output, status_code = future.result()
     return Response(markdown_output, mimetype='text/markdown', status=status_code)
 
-# --- Entry Point for running the Flask app ---
+
 if __name__ == '__main__':
     print("Starting Flask app on http://127.0.0.1:5000/search")
     print("Use GET or POST with 'query' parameter. Add 'show_logs=false' to suppress console output.")

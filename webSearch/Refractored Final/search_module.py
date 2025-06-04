@@ -42,7 +42,9 @@ def query_pollinations_ai(messages, model=SYNTHESIS_MODEL, retries=MAX_REQUEST_R
         payload = {
             "model": model,
             "messages": messages,
-            "seed": 518450
+            "seed": 518450,
+            "token" : "fEWo70t94146ZYgk",
+            "referrer" : "elixpoart"
         }
 
         url = "https://text.pollinations.ai/openai"

@@ -1,9 +1,12 @@
-flask
+Flask
 flask-cors
 flask-limiter
+gunicorn
+python-dotenv
 requests
+tqdm
 beautifulsoup4
 duckduckgo-search
 pytube
 youtube-transcript-api
-tqdm
+waitress
