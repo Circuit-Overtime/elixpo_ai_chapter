@@ -246,7 +246,13 @@ POWER = [
     p2("C21", "2x10uF", "Capacitor_SMD:C_0805_2012Metric", "+3V3", "GND", 285, 180),
     p2("R17", "100k", R0402, "VBAT", "VBAT_SENSE", 155, 225),
     p2("R18", "100k", R0402, "VBAT_SENSE", "GND", 205, 225),
-    p2("C22", "100nF", C0402, "VBAT_SENSE", "GND", 255, 225),
+    p2("C22", "100nF", C0402, "VBAT_SENSE", "GND", 255, 260),
+    p2("R19", "1M shield bleed", R0402, "CHASSIS", "GND", 320, 42),
+    p2("C23", "1nF shield HF", C0402, "CHASSIS", "GND", 320, 75),
+    p2("R23", "2.2k", R0402, "+3V3", "CHG_PG_LED_A", 320, 115),
+    p2("D20", "green power-good", "LED_SMD:LED_0603_1608Metric", "CHG_PG_LED_A", "CHG_PG", 320, 150),
+    p2("R24", "2.2k", R0402, "+3V3", "CHG_STAT_LED_A", 320, 190),
+    p2("D21", "amber charging", "LED_SMD:LED_0603_1608Metric", "CHG_STAT_LED_A", "CHG_STAT", 320, 225),
 ]
 
 
@@ -303,7 +309,7 @@ PERIPHERALS = [
                ("VDD", 4, "+3V3"), ("SCK", 5, "SPI_SCK"), ("GND", 6, "GND"),
                ("MISO/DAT0", 7, "SD_MISO"), ("DAT1", 8, "SD_DAT1_NC"), ("SHIELD", "S", "GND")], 250, 65),
     p2("R47", "10k", R0402, "SD_CS", "+3V3", 210, 115),
-    p2("R48", "10k", R0402, "SD_MISO", "+3V3", 260, 115),
+    p2("R48", "10k", R0402, "SD_MISO", "+3V3", 260, 150),
     component("J5", "I2C / accessory", "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical",
               [("3V3", 1, "+3V3"), ("GND", 2, "GND"), ("SDA", 3, "I2C_SDA"),
                ("SCL", 4, "I2C_SCL"), ("GPIO21", 5, "TOUCH_1"), ("VSYS", 6, "VSYS")], 250, 210),
