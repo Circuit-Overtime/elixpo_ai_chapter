@@ -59,7 +59,7 @@ Pygments==2.19.2
 PyJWT==2.11.0
 PyNaCl==1.6.2
 python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
+python-dotenv==1.2.2
 PyYAML==6.0.3
 referencing==0.37.0
 regex==2026.1.15
