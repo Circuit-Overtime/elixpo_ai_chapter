@@ -44,18 +44,20 @@ def _layout_pins(pins):
     # even-sized pin groups whose first offset is a half pitch.
     pitch = 5.08
     half = max(12.0, (max(len(left), len(right)) - 1) * pitch / 2 + 5)
+    pin_x = 10.16 if len(pins) <= 4 else 25.4
+    body_x = pin_x - 2.54
     laid = []
     for side, group in (("left", left), ("right", right)):
         for index, (name, number, net) in enumerate(group):
             y = (len(group) - 1) * pitch / 2 - index * pitch
             laid.append(dict(name=name, number=str(number), net=net, side=side,
-                             x=-25.4 if side == "left" else 25.4, y=y,
+                             x=-pin_x if side == "left" else pin_x, y=y,
                              angle=0 if side == "left" else 180))
-    return laid, half
+    return laid, half, body_x
 
 
 def symbol_def(key, comp):
-    pins, half = _layout_pins(comp["pins"])
+    pins, half, body_x = _layout_pins(comp["pins"])
     rows = [
         f'(symbol "{LIB}:{key}"',
         '  (pin_names (offset 1.016))',
@@ -66,7 +68,7 @@ def symbol_def(key, comp):
         f'  (property "Datasheet" "" (at 0 0 0) {fx(hide=True)})',
         f'  (property "Description" "{comp["note"]}" (at 0 0 0) {fx(hide=True)})',
         f'  (symbol "{key}_0_1"',
-        f'    (rectangle (start -22.86 {-half}) (end 22.86 {half})',
+        f'    (rectangle (start {-body_x} {-half}) (end {body_x} {half})',
         '      (stroke (width 0.254) (type solid)) (fill (type background)))',
         f'    (text "{comp["value"]}" (at 0 0 0) {fx(1.05, bold=True)})',
         '  )',
@@ -209,8 +211,14 @@ CORE = [
 ]
 for i, value in enumerate(("10uF", "1uF", "100nF", "100nF", "100nF", "100nF"), 5):
     CORE.append(p2(f"C{i}", value, C0603 if value != "100nF" else C0402,
-                   "+3V3" if i != 6 else "+3V3A", "GND", 225 + ((i - 5) % 3) * 45,
+                   "+3V3" if i != 6 else "+3V3A", "GND", 205 + ((i - 5) % 3) * 40,
                    215 + ((i - 5) // 3) * 28))
+CORE += [
+    p2("FB1", "600R@100MHz >=500mA", "Inductor_SMD:L_0603_1608Metric", "+3V3", "+3V3A", 165, 270,
+       "Ferrite bead feeding the ESP32 analog/RF rail"),
+    p2("C11", "1uF", C0603, "+3V3_FLASH", "GND", 210, 270),
+    p2("C12", "100nF", C0402, "+3V3_FLASH", "GND", 255, 270),
+]
 
 
 POWER = [
@@ -228,31 +236,40 @@ POWER = [
     component("U4", "BQ24074RGT", "Package_DFN_QFN:VQFN-16-1EP_3x3mm_P0.5mm_EP1.68x1.68mm_ThermalVias",
               [("IN", 13, "VBUS_5V"), ("OUT", "10/11", "VSYS"), ("BAT", "2/3", "VBAT"),
                ("ISET", 16, "CHG_ISET"), ("ILIM", 12, "USB_ILIM"), ("TS", 1, "BAT_NTC"),
-               ("CE", 4, "GND"), ("TMR", 14, "GND"), ("PG#", 7, "CHG_PG"),
-               ("CHG#", 9, "CHG_STAT"), ("GND/EP", "6/17", "GND")], 95, 145,
+               ("CE#", 4, "GND"), ("EN2", 5, "VSYS"), ("EN1", 6, "GND"),
+               ("PG#", 7, "CHG_PG"), ("VSS/EP", "8/17", "GND"), ("CHG#", 9, "CHG_STAT"),
+               ("TMR", 14, "CHG_TMR"), ("ITERM", 15, "CHG_ITERM")], 95, 145,
               "1-cell Li-ion charger with power path"),
     p2("R14", "1.8k (about 500mA)", R0402, "CHG_ISET", "GND", 42, 205),
     p2("R15", "2.0k (about 800mA)", R0402, "USB_ILIM", "GND", 95, 205),
     component("J2", "LiPo JST-PH 3-pin", "Connector_JST:JST_PH_S3B-PH-K_1x03_P2.00mm_Horizontal",
               [("BAT+", 1, "VBAT"), ("NTC", 2, "BAT_NTC"), ("BAT-", 3, "GND")], 42, 150),
-    p2("R16", "10k NTC fallback", R0402, "BAT_NTC", "GND", 42, 248),
-    p2("SW3", "MAIN POWER", "Button_Switch_SMD:SW_SPDT_CK_JS102011SAQN", "VSYS", "VSYS_SW", 155, 145),
+    p2("R16", "DNP 10k NTC fallback", R0402, "BAT_NTC", "GND", 42, 248,
+       "Populate only for a 2-wire battery without its own 10k NTC"),
+    component("SW3", "MAIN POWER", "Button_Switch_SMD:SW_SPDT_CK_JS102011SAQN",
+              [("COM", 2, "VSYS"), ("ON", 1, "VSYS_SW"), ("NC", 3, "POWER_SWITCH_NC")], 155, 145),
     component("U5", "TPS63031 3V3", "Package_SON:WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm_ThermalVias",
               [("VIN", 8, "VSYS_SW"), ("VINA", 9, "VSYS_SW"), ("L1", 7, "BUCK_L1"),
                ("L2", 5, "BUCK_L2"), ("VOUT", 2, "+3V3"), ("EN", 10, "VSYS_SW"),
                ("PS/SYNC", 1, "GND"), ("GND/EP", "3/11", "GND")], 230, 145),
     p2("L2", "1.5uH >=1.5A", "Inductor_SMD:L_1210_3225Metric", "BUCK_L1", "BUCK_L2", 285, 115),
     p2("C20", "10uF", "Capacitor_SMD:C_0805_2012Metric", "VSYS_SW", "GND", 285, 150),
-    p2("C21", "2x10uF", "Capacitor_SMD:C_0805_2012Metric", "+3V3", "GND", 285, 180),
+    p2("C21", "10uF", "Capacitor_SMD:C_0805_2012Metric", "+3V3", "GND", 285, 180),
     p2("R17", "100k", R0402, "VBAT", "VBAT_SENSE", 155, 225),
     p2("R18", "100k", R0402, "VBAT_SENSE", "GND", 205, 225),
-    p2("C22", "100nF", C0402, "VBAT_SENSE", "GND", 255, 260),
+    p2("C22", "100nF", C0402, "VBAT_SENSE", "GND", 235, 225),
     p2("R19", "1M shield bleed", R0402, "CHASSIS", "GND", 320, 42),
     p2("C23", "1nF shield HF", C0402, "CHASSIS", "GND", 320, 75),
     p2("R23", "2.2k", R0402, "+3V3", "CHG_PG_LED_A", 320, 115),
     p2("D20", "green power-good", "LED_SMD:LED_0603_1608Metric", "CHG_PG_LED_A", "CHG_PG", 320, 150),
     p2("R24", "2.2k", R0402, "+3V3", "CHG_STAT_LED_A", 320, 190),
     p2("D21", "amber charging", "LED_SMD:LED_0603_1608Metric", "CHG_STAT_LED_A", "CHG_STAT", 320, 225),
+    p2("R22", "46.4k 1% (6.25h)", R0402, "CHG_TMR", "GND", 155, 270),
+    p2("R25", "3.0k 1% (about 50mA)", R0402, "CHG_ITERM", "GND", 205, 270),
+    p2("C24", "1uF 16V", C0603, "VBUS_5V", "GND", 240, 270),
+    p2("C25", "4.7uF 10V", C0603, "VSYS", "GND", 265, 225),
+    p2("C26", "4.7uF 10V", C0603, "VBAT", "GND", 275, 270),
+    p2("C28", "10uF", "Capacitor_SMD:C_0805_2012Metric", "+3V3", "GND", 355, 180),
 ]
 
 
@@ -261,10 +278,11 @@ DISPLAY = [
               [("VIN", 6, "VSYS"), ("SW", 5, "LCD_BOOST_SW"), ("VOUT", 4, "LCD_5V"),
                ("FB", 3, "LCD_FB"), ("EN", 1, "VSYS"), ("GND", 2, "GND")], 48, 65),
     p2("L3", "1uH >=2A", "Inductor_SMD:L_1210_3225Metric", "VSYS", "LCD_BOOST_SW", 105, 45),
-    p2("R20", "732k 1%", R0402, "LCD_5V", "LCD_FB", 105, 72),
+    p2("R20", "910k 1%", R0402, "LCD_5V", "LCD_FB", 105, 72),
     p2("R21", "100k 1%", R0402, "LCD_FB", "GND", 155, 72),
     p2("C30", "10uF", "Capacitor_SMD:C_0805_2012Metric", "VSYS", "GND", 105, 100),
-    p2("C31", "2x22uF", "Capacitor_SMD:C_0805_2012Metric", "LCD_5V", "GND", 155, 100),
+    p2("C31", "22uF 10V", "Capacitor_SMD:C_0805_2012Metric", "LCD_5V", "GND", 155, 100),
+    p2("C32", "22uF 10V", "Capacitor_SMD:C_0805_2012Metric", "LCD_5V", "GND", 205, 100),
     component("J3", "ST7789 320x240 module", "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical",
               [("VCC", 1, "LCD_5V"), ("GND", 2, "GND"), ("BL/EN", 3, "LCD_BL"),
                ("DC", 4, "LCD_DC"), ("SCK/SCL", 5, "SPI_SCK"), ("MOSI/SDA", 6, "SPI_MOSI"),
@@ -337,6 +355,44 @@ PAGES = [
 ]
 
 
+SOURCING = {
+    "U1": ("Espressif Systems", "ESP32-S3R8", "Active", "Core device; 3.3 V octal PSRAM in package"),
+    "U2": ("Winbond", "W25Q128JVSIQ", "Active", "16 MB, 3.3 V, 80 MHz quad-SPI"),
+    "Y1": ("Abracon", "ABM8-40.000MHZ-B2-T", "Verify CL", "Recalculate C1/C2 from measured PCB stray capacitance"),
+    "ANT1": ("Johanson Technology", "2450AT18B100E", "Tune on PCB", "Keep pi-network provisions and validate with VNA"),
+    "J1": ("GCT", "USB4105-GF-A", "Active", "USB 2.0 Type-C receptacle"),
+    "U3": ("STMicroelectronics", "USBLC6-2SC6", "Active", "USB ESD array"),
+    "U4": ("Texas Instruments", "BQ24074RGTR", "Active", "Power-path single-cell Li-ion charger"),
+    "SW3": ("C&K", "JS102011SAQN", "Active", "Main system disconnect; charger remains connected"),
+    "U5": ("Texas Instruments", "TPS63031DSKR", "Active", "Fixed 3.3 V buck-boost"),
+    "L2": ("Murata", "LQH32PN1R5NN0L", "Verify current", "1.5 uH shielded power inductor"),
+    "U6": ("Texas Instruments", "TPS61023DRLR", "Active", "Adjustable synchronous boost for LCD 5 V"),
+    "L3": ("Murata", "LQH32PN1R0NN0L", "Verify current", "1.0 uH shielded power inductor"),
+    "J3": ("Samtec", "SSQ-108-03-T-S", "Mechanical check", "Confirm mating orientation against chosen ST7789 module"),
+    "U7": ("TDK InvenSense", "MPU-6050", "Sourcing risk", "Firmware-compatible; buy only traceable stock or qualify a successor"),
+    "U8": ("Vishay", "TSOP38238", "Active", "38 kHz demodulating IR receiver"),
+    "Q1": ("onsemi", "MMBT2222ALT1G", "Active", "IR LED pulse driver"),
+    "D10": ("Vishay", "VSMY2940GX01", "Active", "940 nm high-intensity IR emitter; verify footprint"),
+    "U9": ("Worldsemi", "WS2812B-2020", "Verify source", "3.3 V operation to be checked on prototypes"),
+    "J4": ("Hirose", "DM3D-SF", "Lifecycle check", "Push-push microSD connector"),
+    "J2": ("JST", "S3B-PH-K-S(LF)(SN)", "Active", "3-pin battery/NTC connector; confirm pack polarity"),
+}
+
+
+def sourcing_for(comp):
+    if comp["ref"] in SOURCING:
+        return SOURCING[comp["ref"]]
+    prefix = ''.join(ch for ch in comp["ref"] if ch.isalpha())
+    if prefix in ("R", "C"):
+        return ("Qualified commodity", "", "Select by rating",
+                "Use 1% resistors; X7R capacitors with voltage derating")
+    if prefix in ("D", "L", "FB"):
+        return ("Qualified commodity", "", "Select by rating", "Confirm current, power and package")
+    if prefix == "SW":
+        return ("E-Switch / C&K equivalent", "", "Mechanical check", "Confirm actuator height and force")
+    return ("TBD", "", "Select", "Confirm availability and mechanical fit")
+
+
 def root_schematic():
     root = uid("elixporoot")
     rows = ['(kicad_sch', '  (version 20250114)', '  (generator "oreo_badge_generator")',
@@ -363,11 +419,27 @@ def root_schematic():
 
 def write_bom():
     with (OUT / "BOM_PRELIMINARY.csv").open("w", newline="") as stream:
-        csv = writer(stream)
+        csv = writer(stream, lineterminator="\n")
         csv.writerow(("Reference", "Value / part", "Footprint", "Sheet", "Design note"))
         for name, _title, components, _notes in PAGES:
             for comp in components:
                 csv.writerow((comp["ref"], comp["value"], comp["footprint"], name, comp["note"]))
+
+    with (OUT / "BOM_PROCUREMENT.csv").open("w", newline="") as stream:
+        csv = writer(stream, lineterminator="\n")
+        csv.writerow(("Reference", "Qty", "Value / function", "Manufacturer",
+                      "Manufacturer part", "Footprint", "Populate", "Status", "Notes"))
+        for name, _title, components, _notes in PAGES:
+            for comp in components:
+                manufacturer, mpn, status, sourcing_note = sourcing_for(comp)
+                populate = "DNP" if comp["value"].startswith("DNP") else "YES"
+                csv.writerow((comp["ref"], 1, comp["value"], manufacturer, mpn,
+                              comp["footprint"], populate, status,
+                              "; ".join(x for x in (comp["note"], sourcing_note) if x)))
+        csv.writerow(("BT1", 1, "Protected 1S LiPo, >=1000mAh, 10k NTC",
+                      "Qualified battery vendor", "TBD after enclosure volume",
+                      "Off-board / JST-PH 3-wire", "YES", "Safety-critical",
+                      "Must include protection PCB; certify cell and verify connector polarity"))
 
 
 def write_symbol_library():
