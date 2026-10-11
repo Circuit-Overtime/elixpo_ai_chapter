@@ -64,6 +64,12 @@ A.~Q. Nichol and P.~Dhariwal, ``Improved denoising diffusion probabilistic
   Machine Learning}.\hskip 1em plus 0.5em minus 0.4em\relax PMLR, 2021, pp.
   8162--8171.
 
+\bibitem{binarydm2025}
+X.~Zheng, X.~Liu, H.~Qin, X.~Ma, M.~Zhang, H.~Hao, J.~Wang, Z.~Zhao, J.~Guo,
+  and M.~Magno, ``{BinaryDM}: Accurate weight binarization for efficient
+  diffusion models,'' in \emph{International Conference on Learning
+  Representations}, 2025, arXiv:2404.05662.
+
 \bibitem{courbariaux2015binaryconnect}
 M.~Courbariaux, Y.~Bengio, and J.-P. David, ``{BinaryConnect}: Training deep
   neural networks with binary weights during propagations,'' in \emph{Advances
@@ -74,6 +80,22 @@ Y.~Bengio, N.~L{\'e}onard, and A.~Courville, ``Estimating or propagating
   gradients through stochastic neurons for conditional computation,''
   \emph{arXiv preprint arXiv:1308.3432}, 2013.
 
+\bibitem{ronneberger2015unet}
+O.~Ronneberger, P.~Fischer, and T.~Brox, ``U-net: Convolutional networks for
+  biomedical image segmentation,'' in \emph{International Conference on Medical
+  Image Computing and Computer-Assisted Intervention}.\hskip 1em plus 0.5em
+  minus 0.4em\relax Springer, 2015, pp. 234--241.
+
+\bibitem{vaswani2017attention}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
+  {\L}.~Kaiser, and I.~Polosukhin, ``Attention is all you need,'' in
+  \emph{Advances in Neural Information Processing Systems}, vol.~30, 2017.
+
+\bibitem{he2016preact}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun, ``Identity mappings in deep residual
+  networks,'' in \emph{European Conference on Computer Vision}.\hskip 1em plus
+  0.5em minus 0.4em\relax Springer, 2016, pp. 630--645.
+
 \bibitem{lecun1998mnist}
 Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner, ``Gradient-based learning
   applied to document recognition,'' \emph{Proceedings of the IEEE}, vol.~86,
@@ -82,6 +104,16 @@ Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner, ``Gradient-based learning
 \bibitem{krizhevsky2009cifar}
 A.~Krizhevsky, ``Learning multiple layers of features from tiny images,''
   University of Toronto, Tech. Rep., 2009.
+
+\bibitem{loshchilov2019adamw}
+I.~Loshchilov and F.~Hutter, ``Decoupled weight decay regularization,'' in
+  \emph{International Conference on Learning Representations}, 2019.
+
+\bibitem{heusel2017fid}
+M.~Heusel, H.~Ramsauer, T.~Unterthiner, B.~Nessler, and S.~Hochreiter, ``{GANs}
+  trained by a two time-scale update rule converge to a local {Nash}
+  equilibrium,'' in \emph{Advances in Neural Information Processing Systems},
+  vol.~30, 2017.
 
 \bibitem{binkowski2018kid}
 M.~Bi{\'n}kowski, D.~J. Sutherland, M.~Arbel, and A.~Gretton, ``Demystifying
@@ -93,5 +125,10 @@ M.~F. Naeem, S.~J. Oh, Y.~Uh, and Y.~Choi, ``Reliable fidelity and diversity
   metrics for generative models,'' in \emph{Proceedings of the 37th
   International Conference on Machine Learning}.\hskip 1em plus 0.5em minus
   0.4em\relax PMLR, 2020, pp. 7176--7185.
+
+\bibitem{monodiffuseRepo}
+A.~Bhattacharya, A.~Chakraborty, and N.~Gazi, ``{MonoDiffuse}: Binary-weight
+  diffusion study and diffuino hardware artifact,'' GitHub repository, 2026,
+  available: \url{https://github.com/elixpo/monodiffuse}.
 
 \end{thebibliography}

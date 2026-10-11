@@ -132,10 +132,12 @@ parts.
 \paragraph{Quantized diffusion.}
 Q-Diffusion and PTQD address the unusual activation distributions and error
 accumulation of diffusion PTQ at 4--8 bits
-~\cite{li2023qdiffusion,he2023ptqd}. BiDM studies binary weights and activations
-with a timestep-friendly architecture and spatially patched distillation
-~\cite{bidm2024}. Our tiny unconditional networks are not competitors to BiDM's
-large-scale results. They instead isolate initialization and training path while
+~\cite{li2023qdiffusion,he2023ptqd}. BinaryDM uses quantization-aware training,
+evolvable binary bases, and representation mimicking for W1A4 diffusion
+~\cite{binarydm2025}. BiDM studies binary weights and activations with a
+timestep-friendly architecture and spatially patched distillation
+~\cite{bidm2024}. Our tiny unconditional networks are not competitors to these
+large-scale systems. They instead isolate initialization and training path while
 holding the model topology constant.
 
 \paragraph{Binary networks.}
@@ -160,8 +162,9 @@ minimize
 \sqrt{1-\bar\alpha_t}\epsilon,t\right)\right\|_2^2.
 \end{equation}
 We use 1,000 linearly spaced diffusion steps. The denoiser is a compact residual
-U-Net with base width 16, widths $[16,32,64]$, two downsampling stages, two skip
-concatenations, sinusoidal time embeddings, and GroupNorm. It has 218,993
+U-Net~\cite{ronneberger2015unet} with base width 16, widths $[16,32,64]$, two
+downsampling stages, two skip concatenations, sinusoidal time
+embeddings~\cite{vaswani2017attention}, and GroupNorm. It has 218,993
 parameters on MNIST. Input/output convolutions, normalization, time-conditioning
 linears, biases, scales, and residual additions remain FP32 in every condition.
 Consequently, ``W1A1 core'' is more accurate than ``fully binary network.''
@@ -208,20 +211,21 @@ Native W1A1 core & random & W1/A1 \\
 \end{table}
 
 For native W1A32 on MNIST we cross centered/uncentered projection with pre- and
-post-activation residual blocks. All variants have identical trainable parameter
-counts and compatible state dictionaries.
+post-activation residual blocks~\cite{he2016preact}. All variants have identical
+trainable parameter counts and compatible state dictionaries.
 
 \subsection{Data and optimization}
 
 We use the canonical 60,000/10,000 MNIST split~\cite{lecun1998mnist} and the
 50,000/10,000 CIFAR-10 split~\cite{krizhevsky2009cifar}. Images are scaled to
 $[-1,1]$; CIFAR-10 training uses random crop and horizontal flip. Each condition
-is optimized in 12-epoch stages with AdamW, learning rate $2\times10^{-4}$, weight decay
-$10^{-4}$, cosine decay, gradient norm clipping at 1, batch size 256 for MNIST and
-128 for CIFAR-10, and seeds $\{0,1,2\}$. AMP accelerates training, while stored
-parameters and evaluation remain FP32. The sampler is ancestral DDPM with all
-1,000 reverse steps. Each reported model distribution uses 2,000 samples from a
-fixed sampling seed; the training seed changes independently.
+is optimized in 12-epoch stages with AdamW~\cite{loshchilov2019adamw}, learning
+rate $2\times10^{-4}$, weight decay $10^{-4}$, cosine decay, gradient norm
+clipping at 1, batch size 256 for MNIST and 128 for CIFAR-10, and seeds
+$\{0,1,2\}$. AMP accelerates training, while stored parameters and evaluation
+remain FP32. The sampler is ancestral DDPM with all 1,000 reverse steps. Each
+reported model distribution uses 2,000 samples from a fixed sampling seed; the
+training seed changes independently.
 
 Native and FP32 models receive one optimization stage. PTQ adds no training after
 the FP32 stage, whereas warm QAT receives a second 12-epoch stage after loading
@@ -232,7 +236,7 @@ treated as free compute.
 
 An independently initialized domain classifier is trained only on the real
 training split. Its penultimate features define domain-feature Fr\'echet distance
-(\dfid), unbiased cubic-polynomial kernel distance (\dkid)
+(\dfid)~\cite{heusel2017fid}, unbiased cubic-polynomial kernel distance (\dkid)
 ~\cite{binkowski2018kid}, and $k=5$ density and coverage
 ~\cite{naeem2020density}. We also report Jensen--Shannon divergence between mean
 predicted class distributions. Lower is better for \dfid, \dkid, and JS; higher
@@ -497,11 +501,12 @@ aggregate means and sample standard deviations, encoder accuracy/calibration,
 real--real and Gaussian-noise controls, and fixed-seed sample grids. Unit tests
 cover parameter compatibility, forward shapes, diffusion schedules,
 distribution-metric controls, and physical bit packing. The exact entry points
-are documented under \path{experiments/v1_binary_study}; all paper tables are
-traceable to \path{artifacts/v1_binary_study}. Diffuino is distributed as a
-deterministically generated Arduino App archive with an allowlisted runtime
-payload and a SHA-256 manifest; its interactive FP32 checkpoint is explicitly
-separated from the binary checkpoints evaluated in the study.
+are documented in the released repository~\cite{monodiffuseRepo} under
+\path{experiments/v1_binary_study}; all paper tables are traceable to
+\path{artifacts/v1_binary_study}. Diffuino is distributed as a deterministically
+generated Arduino App archive with an allowlisted runtime payload and a SHA-256
+manifest; its interactive FP32 checkpoint is explicitly separated from the
+binary checkpoints evaluated in the study.
 
 \section{Conclusion}
 
@@ -519,8 +524,8 @@ diffusion work should compare native, warm-started, and distilled training rathe
 than treating zero-shot PTQ failure as the binary limit.
 
 \smallskip\noindent\textbf{Code availability.}
-Source, checkpoints, packed weights, and evaluation artifacts are available at
-\url{https://github.com/elixpo/monodiffuse}.
+Source, checkpoints, packed weights, and evaluation artifacts are available in
+the public MonoDiffuse repository~\cite{monodiffuseRepo}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
