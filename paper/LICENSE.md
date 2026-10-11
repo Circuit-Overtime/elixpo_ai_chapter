@@ -27,5 +27,5 @@ and copyright notices.
 
 For permission requests, contact:
 
-- Ayushman Bhattacharya — ayushman@myceli.ai
+- Ayushman Bhattacharya — ayushman.elixpo@gmail.com
 - Anwesha Chakraborty — anwesha.elixpo@gmail.com
