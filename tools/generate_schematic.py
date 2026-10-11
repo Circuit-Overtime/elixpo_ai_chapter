@@ -212,8 +212,7 @@ def main() -> None:
         "D0": (-12.7, 15.24), "D1": (-12.7, 12.7), "VIN": (-2.54, 25.4),
         "3V3": (2.54, 25.4), "RESET1": (12.7, 15.24), "RESET2": (12.7, 12.7),
         "AREF": (12.7, 5.08), "A1": (12.7, -2.54), "A2": (12.7, -5.08),
-        "A4": (12.7, -10.16),
-        "A5": (12.7, -12.7), "A7": (12.7, -17.78),
+        "A4": (12.7, -10.16), "A6": (12.7, -15.24), "A7": (12.7, -17.78),
     }
     schematic.noConnects.extend(
         no_connect(name, *pin_xy(n, *point)) for name, point in nano_unused.items()
@@ -276,7 +275,7 @@ def main() -> None:
         schematic.noConnects.append(no_connect(f"U2-Q{index}", *pin_xy(high, *point)))
     schematic.noConnects.append(no_connect("U2-QH-prime", *pin_xy(high, 10.16, -12.7)))
 
-    # Pull-ups, A6 status LED, bypass capacitors, and the ground power flag.
+    # Pull-ups, A5 status LED, bypass capacitors, and the ground power flag.
     extras = [
         (resistor, "R1", "10k /WE", 177.8, 48.26, 0),
         (resistor, "R2", "10k /OE", 186.69, 48.26, 0),
@@ -344,9 +343,9 @@ def main() -> None:
          (269.24, 156.21), (185.42, 156.21), (185.42, control_targets[2][1]),
          control_targets[2])
 
-    # Nano A6 -> resistor -> LED -> ground.
-    status_source = pin_xy(n, 12.7, -15.24)
-    wire(schematic, "STATUS-A6", status_source, (278.13, status_source[1]), (278.13, 107.95))
+    # Nano A5 -> resistor -> LED -> ground. A6/A7 are input-only.
+    status_source = pin_xy(n, 12.7, -12.7)
+    wire(schematic, "STATUS-A5", status_source, (278.13, status_source[1]), (278.13, 107.95))
     wire(schematic, "STATUS-R-LED", (278.13, 115.57), (278.13, 121.92))
     wire(schematic, "STATUS-GND", (278.13, 129.54), (278.13, 170.18))
     junction(schematic, "STATUS-GND", (278.13, 170.18))
@@ -360,7 +359,7 @@ def main() -> None:
             note("ARDUINO NANO", 245.11, 25.4, 1.7, True),
             note("A0-A12 ADDRESS BUS", 144.78, 68.58, 1.1, True),
             note("D5-D12 DATA BUS", 222.25, 68.58, 1.1, True),
-            note("A6 STATUS", 274.32, 137.16, 1.1, True),
+            note("A5 STATUS", 274.32, 137.16, 1.1, True),
             note("/CE is controlled by A3 and pulled high. Never tie /CE to GND when /WE uses D13.", 55.88, 182.88, 1.1, True),
         ]
     )
