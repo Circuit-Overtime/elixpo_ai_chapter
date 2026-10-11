@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "eeprom28c64"
+version = "1.0.0"
+description = "Friendly command-line client for the Arduino 28C64 programmer"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Elixpo" }]
+dependencies = [
+  "pyserial>=3.5,<4",
+  "tqdm>=4.66,<5",
+]
+
+[project.scripts]
+eeprom28c64 = "eeprom28c64.cli:main"
+
+[dependency-groups]
+dev = [
+  "kiutils>=1.4.8",
+  "pyinstaller>=6.0,<7",
+  "pytest>=8,<10",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/eeprom28c64"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
