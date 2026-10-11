@@ -7,6 +7,10 @@ You select a `.hex` or `.bin` file; the command-line tool checks it, programs
 the complete 8 KiB chip, shows progress, reads the chip back, and confirms that
 every byte and the CRC match.
 
+![Nano28C64 programmer assembled on a breadboard](docs/board_image.jpeg)
+
+*The completed Nano28C64 breadboard programmer.*
+
 ## Supported EEPROM
 
 This programmer is for the **5 V, 8 KiB 28C64 only** and has been tested with
