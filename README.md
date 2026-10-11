@@ -1,7 +1,7 @@
-# 28C64 EEPROM Programmer
+# Nano28C64
 
-A small programmer for the AT28C64B EEPROM, built with an Arduino Nano and two
-74HC595 shift registers.
+Nano28C64 is an Arduino Nano programmer for 5 V AT28C64B EEPROMs, built with
+two 74HC595 shift registers.
 
 You select a `.hex` or `.bin` file; the command-line tool checks it, programs
 the complete 8 KiB chip, shows progress, reads the chip back, and confirms that
@@ -128,3 +128,9 @@ tools/      release build scripts
 
 See [CLI details](docs/CLI.md) for every command and [firmware details](docs/FIRMWARE.md)
 for the serial protocol and diagnostic commands.
+
+## License
+
+Nano28C64's firmware, CLI, documentation, and hardware design are released
+under the MIT License. Development tools and runtime dependencies retain their
+own licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).
