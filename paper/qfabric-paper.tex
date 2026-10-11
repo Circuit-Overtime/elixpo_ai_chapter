@@ -227,6 +227,17 @@ Linux also supplies deadline-aware scheduling mechanisms
 RT utilization guard with empirical cross-domain evidence, and explicitly
 compares against tuned Linux scheduling.
 
+CoMOS provides processor-agnostic tasks and runtime migration across
+heterogeneous processors~\cite{goraczko2006comos}, while YASMIN supports
+functionally equivalent task implementations and user-space real-time mapping
+on heterogeneous COTS platforms~\cite{rouxel2021yasmin}. Awkernel more recently
+brings DAG scheduling into an RTOS and evaluates it on physical
+hardware~\cite{yano2026awkernel}. These systems establish closely related
+programming and scheduling foundations. \system instead focuses on recovery
+after an observed empirical-contract violation across an already deployed
+Linux--RTOS boundary, with semantic admission, a quiescent epoch change, and a
+probation-based commit or rollback.
+
 Table~\ref{tab:related} locates the contribution. A checkmark means the feature
 is central to the cited work, not that it could not be added. To the best of
 our literature search, the combined column pattern---empirical violation,
@@ -249,6 +260,9 @@ HEFT~\cite{topcuoglu2002heft} & \checkmark & -- & -- & -- & -- & -- \\
 Feedback scheduling~\cite{lu2002feedback} & -- & \checkmark & -- & model-specific & -- & -- \\
 Stochastic contracts~\cite{nandi2015contracts} & -- & \checkmark & -- & -- & -- & -- \\
 RT task migration~\cite{pourmohseni2020migration} & \checkmark & -- & -- & \checkmark & migration protocol & -- \\
+CoMOS~\cite{goraczko2006comos} & \checkmark & -- & -- & -- & migration protocol & -- \\
+YASMIN~\cite{rouxel2021yasmin} & \checkmark & -- & -- & -- & -- & -- \\
+Awkernel~\cite{yano2026awkernel} & \checkmark & \checkmark & -- & -- & -- & -- \\
 Bridge / rpmsg~\cite{arduinoRouterBridge,linuxRpmsg} & transport only & -- & -- & -- & -- & \checkmark \\
 \system & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
 \bottomrule
@@ -414,6 +428,10 @@ controller and demonstrate one successful commit and one rollback. Finally,
 application graph, placement, edge cost, and seed. Replay permits paired,
 repeatable comparison across seven policies, but it is not equivalent to
 running four complete application binaries.
+
+Application-graph deadlines scale the pre-derived per-node deadline by graph
+size: 60 ms for each three-node graph and 80 ms for the four-node flagship.
+This rule is fixed before replay and is applied uniformly across policies.
 
 \subsection{Applications and baselines}
 The four models are a four-node synthetic chain, a three-node signal pipeline,
@@ -658,14 +676,15 @@ fixtures, SVG outputs, and stage audits. The final evaluation JSON is the source
 of truth for this manuscript's quantitative macros, Table~\ref{tab:flagship},
 and Fig.~\ref{fig:flagship}. Running
 \texttt{make} in the \texttt{paper} directory first regenerates those assets,
-records the input digest, and then builds the PDF. A real testbed photograph can
-be added without changing the manuscript source; until then a visible
-placeholder prevents a stock or synthetic image from being mistaken for
-experimental evidence.
+records the input digest, and then builds the PDF. The included testbed
+photograph shows the physical board used for the reported experiments, with
+identifying details redacted; it can be replaced without changing the
+manuscript source.
 
-For archival citation, the repository is released as \texttt{v0.1.0} and is
-prepared for deposition in a DOI-issuing archive. The release retains the
-audited Stage 11 evidence used to generate this manuscript's results.
+For archival citation, the latest tagged repository release at manuscript build
+time is \texttt{v1.0.1}. The repository is prepared for deposition in a
+DOI-issuing archive, and its releases retain the audited Stage 11 evidence used
+to generate this manuscript's results.
 
 \section{Conclusion}
 \system demonstrates a narrow but useful form of runtime adaptation across a

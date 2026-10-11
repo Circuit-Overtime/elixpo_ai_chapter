@@ -8,10 +8,9 @@ Build from this directory with:
 
     make
 
-The output is qfabric-paper.pdf. To replace the testbed placeholder, add a
-landscape photograph at paper/figures/testbed.jpg and rebuild. The photograph
-should show the UNO Q, its USB connection, and the host computer without
-revealing serial numbers, screens, or private network details.
+The output is qfabric-paper.pdf. The included landscape photograph at
+paper/figures/testbed.jpg shows the physical testbed with identifying details
+redacted. Replace that file and rebuild if a newer capture is required.
 
 Before submission, select the target venue's template, add the repository
 release DOI if one is minted, and run a final bibliography and claim audit.
