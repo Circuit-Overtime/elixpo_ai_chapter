@@ -1,0 +1,15 @@
+{
+  "protocol_version": 1,
+  "types": {
+    "Oversized": {"kind": "array", "element": "u8", "length": 989}
+  },
+  "tasks": [
+    {
+      "name": "oversized",
+      "task_id": 100,
+      "effect": "pure",
+      "request": "Oversized",
+      "response": "u8"
+    }
+  ]
+}

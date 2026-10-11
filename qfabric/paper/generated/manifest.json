@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source": "data/processed/stage11/stage11-evaluation-01/evaluation.json",
+  "source_sha256": "3975e0a343e0bece56eb83f043c472f0632283dc1d4af3269cd2c85dcfbdb03e",
+  "outputs": [
+    "flagship-table.tex",
+    "flagship.dat",
+    "idle-applications.dat",
+    "metrics.tex"
+  ]
+}

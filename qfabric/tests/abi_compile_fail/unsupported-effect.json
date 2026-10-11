@@ -1,0 +1,13 @@
+{
+  "protocol_version": 1,
+  "types": {},
+  "tasks": [
+    {
+      "name": "unsafe",
+      "task_id": 101,
+      "effect": "unknown",
+      "request": "u8",
+      "response": "u8"
+    }
+  ]
+}
