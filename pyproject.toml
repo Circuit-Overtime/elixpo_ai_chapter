@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "eeprom28c64"
 version = "1.0.0"
-description = "Friendly command-line client for the Arduino 28C64 programmer"
+description = "CLI for the Nano28C64 Arduino EEPROM programmer"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
