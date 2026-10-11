@@ -21,7 +21,8 @@ constexpr uint8_t DATA_FIRST_PIN  = 5;
 constexpr uint8_t WRITE_ENABLE_PIN = 13;
 constexpr uint8_t OUTPUT_ENABLE_PIN = A0;
 constexpr uint8_t CHIP_ENABLE_PIN = A3;
-constexpr uint8_t STATUS_LED_PIN = A6;
+// A6/A7 on the Nano are analog-input-only and cannot drive an LED.
+constexpr uint8_t STATUS_LED_PIN = A5;
 
 constexpr uint16_t EEPROM_SIZE = 8192;
 constexpr uint16_t WRITE_TIMEOUT_MS = 20;
