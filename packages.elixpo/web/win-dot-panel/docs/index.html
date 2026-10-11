@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101219">
+  <meta name="description" content="Learn how to use Win Dot Panel for emoji, symbols, kaomoji, and private clipboard history on Linux.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://packages.elixpo.com/win-dot-panel/docs/">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="/info.css">
+  <meta property="og:title" content="Win Dot Panel guide | Emoji and clipboard history for Linux">
+  <meta property="og:description" content="Shortcuts, everyday use, privacy, and troubleshooting for Win Dot Panel.">
+  <meta property="og:url" content="https://packages.elixpo.com/win-dot-panel/docs/">
+  <meta property="og:image" content="https://packages.elixpo.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://packages.elixpo.com/og-image.png">
+  <title>Win Dot Panel guide | Elixpo Linux Packages</title>
+</head>
+<body>
+  <div class="wrap">
+    <nav><a class="brand" href="/win-dot-panel/"><img src="/favicon.png" alt="">Win Dot Panel</a><div class="nav-links"><a href="/win-dot-panel/">Overview</a><a href="/win-dot-panel/about/">About</a><a href="/">All apps</a></div></nav>
+    <header class="hero"><div class="eyebrow">Win Dot Panel guide</div><h1>Emoji and clipboard history, always close by.</h1><p class="lead">Use two familiar shortcuts to open a searchable picker without leaving the application where you are working.</p><div class="actions"><a class="button primary" href="#shortcuts">Set up shortcuts</a><a class="button" href="#troubleshooting">Troubleshooting</a></div></header>
+    <main>
+      <section class="section" id="shortcuts"><h2>Set up your shortcuts</h2><div class="grid"><article class="card"><h3>Emoji and symbols</h3><p>Assign <strong>Super + .</strong> to <code>/usr/bin/win-dot-panel toggle</code>.</p></article><article class="card"><h3>Clipboard history</h3><p>Assign <strong>Super + V</strong> to <code>/usr/bin/win-dot-panel toggle-clipboard</code>.</p></article></div><h3>GNOME</h3><p>Open <strong>Settings → Keyboard → View and Customize Shortcuts → Custom Shortcuts</strong>. Add each command and record its key combination.</p><h3>KDE Plasma</h3><p>Open <strong>System Settings → Shortcuts</strong>, choose <strong>Add New → Command or Script</strong>, and add each command. KDE calls the Super key <strong>Meta</strong>.</p></section>
+      <section class="section"><h2>Using the panel</h2><ol class="steps"><li><strong>Open it.</strong> Press your shortcut or launch Win Dot Panel from the applications menu.</li><li><strong>Choose a tab.</strong> Browse emoji, clipboard items, kaomoji, or symbols.</li><li><strong>Search naturally.</strong> Type a name or keyword to narrow the current collection.</li><li><strong>Pick an item.</strong> Text is inserted where you were working when desktop access is available. Screenshots can be copied or pasted from their card menu.</li><li><strong>Close it.</strong> Press <strong>Esc</strong> or use the same shortcut again.</li></ol></section>
+      <section class="section"><h2>Clipboard history</h2><p>Copied text and screenshots appear in the Clipboard tab. Use a card's menu to copy it again, pin it, or remove it. Pinned items remain easy to find.</p><p class="note">Clipboard history is stored on your computer. It is not synchronized or uploaded by Win Dot Panel.</p></section>
+      <section class="section" id="troubleshooting"><h2>Troubleshooting</h2><h3>The shortcut types a letter or opens another picker</h3><p>IBus may already use <strong>Super + .</strong>. Change its emoji shortcut or select another combination, then confirm there is only one matching custom shortcut in desktop settings.</p><pre>gsettings set org.freedesktop.ibus.panel.emoji hotkey "['&lt;Super&gt;semicolon']"</pre><h3>Clipboard history stays empty</h3><p>Log out and back in once after installation so the background application starts with your desktop session. On Wayland, approve keyboard and clipboard access when prompted.</p><h3>An item is copied but not inserted</h3><p>Desktop security may prevent direct insertion. Paste normally with <strong>Ctrl + V</strong>. On Wayland, reopen the app and approve the desktop access request.</p><h3>The panel does not open</h3><pre>/usr/bin/win-dot-panel status
+/usr/bin/win-dot-panel quit
+/usr/bin/win-dot-panel toggle</pre><p>The quit command clears an older background process. The final command starts it again and opens the panel.</p></section>
+      <section class="section"><h2>Update or remove</h2><pre>sudo apt update
+sudo apt install --only-upgrade win-dot-panel</pre><p>To remove the application, run <code>sudo apt remove win-dot-panel</code>. Removing the package does not automatically erase your saved clipboard database.</p></section>
+    </main>
+    <footer><span>Win Dot Panel documentation</span><span><a href="/win-dot-panel/about/">About</a> · <a href="https://github.com/elixpo/packages.elixpo/issues">Get help</a> · <a href="/">All apps</a></span></footer>
+  </div>
+</body>
+</html>

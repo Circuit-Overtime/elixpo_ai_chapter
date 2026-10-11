@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111525">
+  <meta name="description" content="Learn how to use ScreenBridge to share computer audio and microphone audio on Ubuntu and Debian Linux.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://packages.elixpo.com/screenbridge/docs/">
+  <link rel="icon" type="image/svg+xml" href="/screenbridge/icon.svg">
+  <link rel="stylesheet" href="/info.css">
+  <meta property="og:title" content="ScreenBridge guide | Share computer audio on Linux">
+  <meta property="og:description" content="Setup, usage, audio-input choices, and troubleshooting for ScreenBridge.">
+  <meta property="og:url" content="https://packages.elixpo.com/screenbridge/docs/">
+  <meta property="og:image" content="https://packages.elixpo.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://packages.elixpo.com/og-image.png">
+  <title>ScreenBridge guide | Elixpo Linux Packages</title>
+</head>
+<body>
+  <div class="wrap">
+    <nav><a class="brand" href="/screenbridge/"><img src="/screenbridge/icon.svg" alt="">ScreenBridge</a><div class="nav-links"><a href="/screenbridge/">Overview</a><a href="/screenbridge/about/">About</a><a href="/">All apps</a></div></nav>
+    <header class="hero"><div class="eyebrow">ScreenBridge guide</div><h1>Share computer sound without rebuilding your audio setup.</h1><p class="lead">ScreenBridge creates clear audio inputs that calling and recording apps can understand, while you continue hearing everything normally.</p><div class="actions"><a class="button primary" href="#getting-started">Get started</a><a class="button" href="#troubleshooting">Troubleshooting</a></div></header>
+    <main>
+      <section class="section" id="getting-started"><h2>Getting started</h2><ol class="steps"><li><strong>Open ScreenBridge</strong> from your applications menu.</li><li><strong>Choose “Listen on”.</strong> Select the speakers, headphones, or headset where you want to hear computer sound.</li><li><strong>Choose your microphone.</strong> This remains available separately unless you enable the combined option.</li><li><strong>Press “Start sharing audio”.</strong> ScreenBridge creates the audio inputs and routes currently playing apps.</li><li><strong>Open your call or recording app.</strong> Select the ScreenBridge input that matches what you want to send.</li></ol></section>
+      <section class="section"><h2>Which input should I choose?</h2><div class="grid"><article class="card"><h3>Screen Share Audio</h3><p>Computer sound only. Keep your normal microphone selected separately in apps that support separate inputs.</p></article><article class="card"><h3>Screen Share Audio + Microphone</h3><p>Computer sound and your selected microphone together. Use this when an app accepts only one audio input.</p></article></div><p class="note">Start ScreenBridge before opening the audio settings in your call or recording app. Some apps only scan for microphones when they start.</p></section>
+      <section class="section"><h2>When you finish</h2><p>Press <strong>Stop sharing audio</strong>. ScreenBridge restores your previous default output, moves application sound back, removes its temporary audio devices, and clears the saved session.</p><p>If ScreenBridge or the audio service stopped unexpectedly, reopen ScreenBridge and press stop. Its recovery state is designed to clean up a partially completed session.</p></section>
+      <section class="section" id="troubleshooting"><h2>Troubleshooting</h2><h3>The ScreenBridge input is missing</h3><p>Start sharing first, then completely close and reopen the calling or recording app. Check its microphone list again.</p><h3>People hear their own voices</h3><p>ScreenBridge captures desktop playback. If your meeting app plays the call through the shared route, its sound can be sent back to participants. While sharing, open your desktop sound settings or <code>pavucontrol</code> and route the meeting app directly to your physical headphones instead of <strong>ScreenBridge Capture</strong>.</p><h3>A newly opened app is silent or not shared</h3><p>Confirm its playback device is <strong>ScreenBridge Capture</strong> in your desktop sound settings. ScreenBridge makes that the default while sharing, but an app may remember another output.</p><h3>Audio was not restored</h3><p>Open ScreenBridge and press stop. If the audio server itself restarted, sign out and back in. The saved session state is stored under your user state directory so cleanup can resume safely.</p><div class="warning">Use headphones during calls to avoid acoustic echo. ScreenBridge routes audio; it does not apply echo cancellation or change the behavior of the calling app.</div></section>
+      <section class="section"><h2>Compatibility and commands</h2><dl><dt>Systems</dt><dd>Ubuntu 22.04 or newer and many Ubuntu/Debian-based distributions.</dd><dt>Audio services</dt><dd>PipeWire with PulseAudio compatibility, or PulseAudio.</dd><dt>Desktop</dt><dd>GNOME, KDE Plasma, and other desktops that expose audio through <code>pactl</code>.</dd></dl><pre>screenbridge status
+screenbridge list
+screenbridge stop</pre><p>Most people only need the graphical application. These commands are useful for checking or stopping a session from Terminal.</p></section>
+    </main>
+    <footer><span>ScreenBridge documentation</span><span><a href="/screenbridge/about/">About</a> · <a href="https://github.com/elixpo/packages.elixpo/issues">Get help</a> · <a href="/">All apps</a></span></footer>
+  </div>
+</body>
+</html>

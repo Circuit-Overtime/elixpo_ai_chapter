@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=ScreenBridge
+Comment=Share system audio while screen sharing
+Exec=@EXEC@
+Icon=io.github.screenbridge.app
+Terminal=false
+Categories=AudioVideo;
+Keywords=screen;share;audio;microphone;pipewire;
+StartupNotify=true
