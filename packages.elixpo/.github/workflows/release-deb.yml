@@ -1,0 +1,80 @@
+name: Check and publish Debian package
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'win-dot-panel/v*'
+    paths:
+      - 'apps/win-dot-panel/**'
+      - 'scripts/**'
+      - 'web/**'
+      - 'packages.toml'
+      - 'pyproject.toml'
+      - 'LICENSE'
+      - 'tests/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint and test
+    uses: ./.github/workflows/checks.yml
+
+  package:
+    name: Build and validate package
+    needs: checks
+    uses: ./.github/workflows/package.yml
+
+  publish:
+    name: Publish validated package
+    needs: package
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: validated-debian-package
+          path: dist
+      - name: Verify downloaded package
+        run: cd dist && sha256sum -c SHA256SUMS
+      - name: Publish versioned release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APT_SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
+        run: |
+          test -n "$APT_SIGNING_KEY" || { echo 'APT_SIGNING_KEY is required for stable releases' >&2; exit 1; }
+          if gh release view "${{ needs.package.outputs.release_tag }}" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "${{ needs.package.outputs.release_tag }}" dist/win-dot-panel_*.deb dist/SHA256SUMS \
+              --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "${{ needs.package.outputs.release_tag }}" dist/win-dot-panel_*.deb dist/SHA256SUMS \
+              --verify-tag --generate-notes --title "Win Dot Panel ${GITHUB_REF_NAME#win-dot-panel/v}" \
+              --repo "$GITHUB_REPOSITORY"
+          fi
+      - name: Publish main prerelease
+        if: github.ref_type == 'branch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ needs.package.outputs.release_tag }}" dist/win-dot-panel_*.deb dist/SHA256SUMS \
+            --target "$GITHUB_SHA" --prerelease --latest=false \
+            --title "Main build #${GITHUB_RUN_NUMBER}" \
+            --notes "Development build from main commit ${GITHUB_SHA}." \
+            --repo "$GITHUB_REPOSITORY"
+
+  pages:
+    name: Publish package site and APT repository
+    if: github.ref_type == 'tag'
+    needs: [package, publish]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy-packages.yml
+    secrets: inherit

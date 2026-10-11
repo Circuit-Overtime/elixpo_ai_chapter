@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+launcher_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$launcher_dir"
+exec python3 -m screenbridge "$@"
+

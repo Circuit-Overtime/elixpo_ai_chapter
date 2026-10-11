@@ -1,0 +1,64 @@
+name: Release ScreenBridge Debian package
+
+on:
+  push:
+    tags:
+      - 'screenbridge/v*'
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Build, validate, and publish
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: apps/screenbridge
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Validate release tag
+        id: version
+        run: |
+          version="$(sed -n 's/^__version__ = "\([^"]*\)"/\1/p' screenbridge/__init__.py)"
+          revision="${GITHUB_REF_NAME##*-}"
+          if [[ ! "$revision" =~ ^[1-9][0-9]*$ || "$GITHUB_REF_NAME" != "screenbridge/v${version}-${revision}" ]]; then
+            echo "Tag must match screenbridge/v${version}-<positive Debian revision>" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+
+      - name: Run tests
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Build and inspect package
+        run: |
+          ./packaging/build-deb.sh --revision "${{ steps.version.outputs.revision }}"
+          package="dist/screenbridge_${{ steps.version.outputs.version }}-${{ steps.version.outputs.revision }}_all.deb"
+          test -f "$package"
+          test "$(dpkg-deb --field "$package" Package)" = screenbridge
+          test "$(dpkg-deb --field "$package" Version)" = "${{ steps.version.outputs.version }}-${{ steps.version.outputs.revision }}"
+          (cd dist && sha256sum screenbridge_*_all.deb > SHA256SUMS && sha256sum --check SHA256SUMS)
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/screenbridge_*_all.deb dist/SHA256SUMS \
+            --verify-tag --generate-notes \
+            --title "ScreenBridge ${GITHUB_REF_NAME#screenbridge/v}" \
+            --repo "$GITHUB_REPOSITORY"
+
+  pages:
+    name: Publish package site and APT repository
+    needs: release
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy-packages.yml
+    secrets: inherit
