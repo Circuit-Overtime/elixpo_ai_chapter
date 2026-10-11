@@ -14,7 +14,10 @@ capacitor directly between VCC and GND at the Nano-side power entry, each
 | D5-D12 | EEPROM I/O0-I/O7 in order |
 | D13 | EEPROM `/WE` pin 27 |
 | A0 | EEPROM `/OE` pin 22 |
-| A6 | Status LED through 330 ohm-1 kilohm to GND |
+| A5 | Status LED through 330 ohm-1 kilohm to GND |
+
+Do not use A6 or A7 for the status LED. On the classic ATmega328P Nano those
+two pins are analog-input-only and cannot drive a digital output.
 | A3 | EEPROM `/CE` pin 20 |
 
 ## Address registers
