@@ -56,7 +56,11 @@ jobs:
             "rewrite.elixpo https://github.com/elixpo/rewrite.elixpo.git"
             "wish.elixpo https://github.com/elixpo/wish.elixpo.git"
             "claudeOps.elixpo https://github.com/elixpo/claudeOps.elixpo.git"
+            "packages.elixpo https://github.com/elixpo/packages.elixpo"
             "oreo https://github.com/elixpo/oreo"
+            "qfabric https://github.com/elixpo/qfabric"
+            "monodiffuse https://github.com/elixpo/monodiffuse"
+            "nano28C64 https://github.com/elixpo/nano28C64"
           )
 
           STATE_DIR=.github/.sync-state
