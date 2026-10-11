@@ -5,7 +5,7 @@
 	(uuid "3bf2971f-aa3f-5ee9-b842-a01107e96edd")
 	(paper "A4")
 	(title_block
-		(title "Arduino Nano AT28C64B Programmer")
+		(title "Nano28C64 — Arduino Nano AT28C64B Programmer")
 		(date "2026-10-11")
 		(rev "v10")
 		(company "Elixpo")
