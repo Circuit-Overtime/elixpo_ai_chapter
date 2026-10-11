@@ -1,0 +1,11 @@
+{
+  "class_js_divergence": 0.2555312133291662,
+  "coverage": 0.0020000000949949026,
+  "dataset": "cifar10",
+  "density": 0.0322,
+  "feature_fid": 533.3274792673396,
+  "feature_kid": 4.616871207657004,
+  "mean_classifier_confidence": 0.6547453999519348,
+  "seed": 0,
+  "variant": "ptq_centered"
+}

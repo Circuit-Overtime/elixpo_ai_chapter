@@ -1,0 +1,91 @@
+{
+  "dataset": "mnist",
+  "history": [
+    {
+      "accuracy": 0.9193999767303467,
+      "epoch": 1,
+      "expected_calibration_error_10_bin": 0.1438477445454752,
+      "mean_confidence": 0.7757737636566162,
+      "train_loss": 0.9274598561604818
+    },
+    {
+      "accuracy": 0.958899974822998,
+      "epoch": 2,
+      "expected_calibration_error_10_bin": 0.06996014703126269,
+      "mean_confidence": 0.8889398574829102,
+      "train_loss": 0.22279899501800537
+    },
+    {
+      "accuracy": 0.9453999996185303,
+      "epoch": 3,
+      "expected_calibration_error_10_bin": 0.03899687625081235,
+      "mean_confidence": 0.9066730737686157,
+      "train_loss": 0.14178382053375244
+    },
+    {
+      "accuracy": 0.9584000110626221,
+      "epoch": 4,
+      "expected_calibration_error_10_bin": 0.030084680564999945,
+      "mean_confidence": 0.9284830093383789,
+      "train_loss": 0.1095677026907603
+    },
+    {
+      "accuracy": 0.9485999941825867,
+      "epoch": 5,
+      "expected_calibration_error_10_bin": 0.025911127937089648,
+      "mean_confidence": 0.9252123832702637,
+      "train_loss": 0.08983762400945028
+    },
+    {
+      "accuracy": 0.9621999859809875,
+      "epoch": 6,
+      "expected_calibration_error_10_bin": 0.020600207597720334,
+      "mean_confidence": 0.9422114491462708,
+      "train_loss": 0.07739145674705505
+    },
+    {
+      "accuracy": 0.9743000268936157,
+      "epoch": 7,
+      "expected_calibration_error_10_bin": 0.019178117910046255,
+      "mean_confidence": 0.9551270604133606,
+      "train_loss": 0.06928798415660858
+    },
+    {
+      "accuracy": 0.9785000085830688,
+      "epoch": 8,
+      "expected_calibration_error_10_bin": 0.015930494578593718,
+      "mean_confidence": 0.9628390669822693,
+      "train_loss": 0.06131717622280121
+    },
+    {
+      "accuracy": 0.9787999987602234,
+      "epoch": 9,
+      "expected_calibration_error_10_bin": 0.014006798598834648,
+      "mean_confidence": 0.9653322100639343,
+      "train_loss": 0.05607379919687907
+    },
+    {
+      "accuracy": 0.9803000092506409,
+      "epoch": 10,
+      "expected_calibration_error_10_bin": 0.014389911051590737,
+      "mean_confidence": 0.966517984867096,
+      "train_loss": 0.05376631627877553
+    }
+  ],
+  "provenance": {
+    "cuda": "12.4",
+    "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "git_commit": "604a34d940983362bf64d3145e377b698a4ca6c6",
+    "python": "3.11.15",
+    "pytorch": "2.5.1+cu124"
+  },
+  "seed": 2026,
+  "sha256": "6ba1bf525bb61bd3eb3448c96d282a9bd32ff354ebf2b4540e44210a3142a359",
+  "test": {
+    "accuracy": 0.9803000092506409,
+    "epoch": 10,
+    "expected_calibration_error_10_bin": 0.014389911051590737,
+    "mean_confidence": 0.966517984867096,
+    "train_loss": 0.05376631627877553
+  }
+}
