@@ -20,7 +20,8 @@ abstract: >
 authors:
   - family-names: Bhattacharya
     given-names: Ayushman
-    email: ayushman@pollinations.ai
+    email: ayushman.elixpo@gmail.com
+    affiliation: Pollinations AI
 keywords:
   - conference-badge
   - micropython
@@ -38,7 +39,7 @@ license-url: "https://github.com/elixpo/oreo/blob/main/LICENSE"
 repository-code: "https://github.com/elixpo/oreo"
 url: "https://oreo.elixpo.com"
 contact:
-  - email: ayushman@pollinations.ai
+  - email: ayushman.elixpo@gmail.com
     name: Ayushman Bhattacharya
 # `version` and `date-released` are auto-updated by tools/release.py
 # whenever a new release is cut. Don't hand-edit them unless you're
