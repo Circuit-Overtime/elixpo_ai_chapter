@@ -2214,17 +2214,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "A6 STATUS"
-		(exclude_from_sim no)
-		(at 274.32 137.16 0)
-		(effects
-			(font
-				(size 1.1 1.1)
-				(bold yes)
-			)
-		)
-		(uuid "4d472ba9-6b40-5a63-8087-39573b3bd05b")
-	)
 	(text "/CE is controlled by A3 and pulled high. Never tie /CE to GND when /WE uses D13."
 		(exclude_from_sim no)
 		(at 55.88 182.88 0)
@@ -2257,6 +2246,17 @@
 			)
 		)
 		(uuid "7073f70d-7df2-5b4b-8743-9dad5f4a0d6e")
+	)
+	(text "A5 STATUS"
+		(exclude_from_sim no)
+		(at 274.32 137.16 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+				(bold yes)
+			)
+		)
+		(uuid "84f89cdc-4b9a-5bd2-afcf-7d04206c7797")
 	)
 	(text "BYPASS CAPACITORS"
 		(exclude_from_sim no)
@@ -2525,16 +2525,16 @@
 		(uuid "82ba3878-28d6-55e1-bfe7-623cbceee1e2")
 	)
 	(no_connect
-		(at 267.97 87.63)
-		(uuid "8352375d-8214-58a3-a85d-a0432286a00e")
-	)
-	(no_connect
 		(at 130.81 142.24)
 		(uuid "925f25de-c3c7-5e97-a590-7451ec07b022")
 	)
 	(no_connect
 		(at 130.81 139.7)
 		(uuid "956483fa-e525-5574-a036-3266daf2085b")
+	)
+	(no_connect
+		(at 267.97 90.17)
+		(uuid "a6fa8df1-b8fc-5ae7-845f-209f78258fa1")
 	)
 	(no_connect
 		(at 252.73 49.53)
@@ -2761,6 +2761,16 @@
 			(type default)
 		)
 		(uuid "300ea989-2521-58c3-82a2-8736181f6955")
+	)
+	(wire
+		(pts
+			(xy 278.13 87.63) (xy 278.13 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "31ccbc60-0e9c-5cd4-a982-c722b79932ab")
 	)
 	(wire
 		(pts
@@ -3001,16 +3011,6 @@
 			(type default)
 		)
 		(uuid "7fd6ec37-209a-598b-8c5e-a568ad52eb86")
-	)
-	(wire
-		(pts
-			(xy 267.97 90.17) (xy 278.13 90.17)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "804dc7bd-d0bb-5e94-943c-8467005d52b5")
 	)
 	(wire
 		(pts
@@ -3394,6 +3394,16 @@
 	)
 	(wire
 		(pts
+			(xy 267.97 87.63) (xy 278.13 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "deb4ac00-9b3d-5d56-952c-9bbc2fe584d6")
+	)
+	(wire
+		(pts
 			(xy 237.49 64.77) (xy 237.49 54.61)
 		)
 		(stroke
@@ -3401,16 +3411,6 @@
 			(type default)
 		)
 		(uuid "e502ae12-cdc6-5a99-b757-2763f5d77525")
-	)
-	(wire
-		(pts
-			(xy 278.13 90.17) (xy 278.13 107.95)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ee0df351-9070-58d3-a1f9-af2cb6fc8602")
 	)
 	(wire
 		(pts
