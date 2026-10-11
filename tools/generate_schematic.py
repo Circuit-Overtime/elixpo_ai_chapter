@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Generate the native KiCad schematic from the verified wiring map."""
 
 from __future__ import annotations
@@ -178,7 +179,7 @@ def main() -> None:
     schematic.uuid = uid("root")
     schematic.generator = "eeprom28c64_schematic_generator"
     schematic.titleBlock = TitleBlock(
-        title="Arduino Nano AT28C64B Programmer",
+        title="Nano28C64 — Arduino Nano AT28C64B Programmer",
         date="2026-10-11",
         revision="v10",
         company="Elixpo",
