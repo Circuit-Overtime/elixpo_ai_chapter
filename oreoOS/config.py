@@ -18,7 +18,7 @@ _env = _load_env()
 # OS version. tools/deploy.py auto-bumps the PATCH number on every push.
 # The literal MUST stay on its own line as `VERSION = "vN.N.N"` — the
 # deploy regex relies on that exact format to rewrite in place.
-VERSION           = "v1.4.125"
+VERSION           = "v1.4.126"
 # ISO-date stamp of the current VERSION. Updated by tools/release.py
 # (or by hand for hot-fix builds). Shown on the Updates page as the
 # "Latest stable as of …" line when no newer release is available.
