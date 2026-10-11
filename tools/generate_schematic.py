@@ -63,11 +63,15 @@ def instance(
     root_uuid: str,
     footprint: str = "",
     angle: float = 0,
+    reference_at: tuple[float, float] | None = None,
+    value_at: tuple[float, float] | None = None,
 ) -> SchematicSymbol:
     symbol_uuid = uid(reference)
+    reference_x, reference_y = reference_at or (x - 3, y - 3)
+    value_x, value_y = value_at or (x - 3, y + 3)
     props = [
-        Property("Reference", reference, position=Position(x - 3, y - 3, 0), effects=effects()),
-        Property("Value", value, position=Position(x - 3, y + 3, 0), effects=effects()),
+        Property("Reference", reference, position=Position(reference_x, reference_y, 0), effects=effects()),
+        Property("Value", value, position=Position(value_x, value_y, 0), effects=effects()),
         Property("Footprint", footprint, position=Position(x, y, 0), effects=effects(hidden=True)),
         Property("Datasheet", "", position=Position(x, y, 0), effects=effects(hidden=True)),
         Property("Description", "", position=Position(x, y, 0), effects=effects(hidden=True)),
@@ -200,10 +204,26 @@ def main() -> None:
     n = (255.27, 74.93)
     schematic.schematicSymbols.extend(
         [
-            instance(nano, "A1", "Arduino Nano v3", *n, schematic.uuid, "Module:Arduino_Nano"),
-            instance(shift, "U1", "74HC595 (A0-A7)", *low, schematic.uuid, "Package_DIP:DIP-16_W7.62mm"),
-            instance(shift, "U2", "74HC595 (A8-A12)", *high, schematic.uuid, "Package_DIP:DIP-16_W7.62mm"),
-            instance(eeprom, "U3", "AT28C64B-15PC", *mem, schematic.uuid, "Package_DIP:DIP-28_W15.24mm"),
+            instance(
+                nano, "A1", "Arduino Nano v3", *n, schematic.uuid,
+                "Module:Arduino_Nano", reference_at=(255.27, 44.45),
+                value_at=(255.27, 105.41),
+            ),
+            instance(
+                shift, "U1", "74HC595 (A0-A7)", *low, schematic.uuid,
+                "Package_DIP:DIP-16_W7.62mm", reference_at=(120.65, 62.23),
+                value_at=(120.65, 105.41),
+            ),
+            instance(
+                shift, "U2", "74HC595 (A8-A12)", *high, schematic.uuid,
+                "Package_DIP:DIP-16_W7.62mm", reference_at=(120.65, 116.84),
+                value_at=(120.65, 160.02),
+            ),
+            instance(
+                eeprom, "U3", "AT28C64B-15PC", *mem, schematic.uuid,
+                "Package_DIP:DIP-28_W15.24mm", reference_at=(205.74, 62.23),
+                value_at=(205.74, 128.27),
+            ),
         ]
     )
 
@@ -277,24 +297,27 @@ def main() -> None:
 
     # Pull-ups, A5 status LED, bypass capacitors, and the ground power flag.
     extras = [
-        (resistor, "R1", "10k /WE", 177.8, 48.26, 0),
-        (resistor, "R2", "10k /OE", 186.69, 48.26, 0),
-        (resistor, "R3", "10k /CE", 195.58, 48.26, 0),
-        (resistor, "R4", "680R", 278.13, 111.76, 0),
-        (led, "D1", "STATUS", 278.13, 125.73, 90),
-        (capacitor, "C1", "100n U1", 60.96, 104.14, 0),
-        (capacitor, "C2", "100n U2", 73.66, 104.14, 0),
-        (capacitor, "C3", "100n U3", 86.36, 104.14, 0),
-        (power_flag, "#FLG01", "PWR_FLAG", 99.06, 170.18, 0),
+        (resistor, "R1", "10k", 177.8, 48.26, 0, (174.0, 42.0), (174.0, 57.0)),
+        (resistor, "R2", "10k", 186.69, 48.26, 0, (183.0, 42.0), (183.0, 57.0)),
+        (resistor, "R3", "10k", 195.58, 48.26, 0, (192.0, 42.0), (192.0, 57.0)),
+        (resistor, "R4", "680R", 278.13, 111.76, 0, (272.0, 105.0), (271.0, 118.0)),
+        (led, "D1", "STATUS", 278.13, 125.73, 0, (272.0, 121.0), (271.0, 132.0)),
+        (capacitor, "C1", "100n U1", 60.96, 104.14, 0, (57.0, 96.5), (56.0, 114.3)),
+        (capacitor, "C2", "100n U2", 73.66, 104.14, 0, (70.0, 96.5), (68.5, 114.3)),
+        (capacitor, "C3", "100n U3", 86.36, 104.14, 0, (82.5, 96.5), (81.0, 114.3)),
+        (power_flag, "#FLG01", "PWR_FLAG", 99.06, 170.18, 0, (92.0, 166.0), (92.0, 176.0)),
     ]
-    for symbol, reference, value, x, y, angle in extras:
+    for symbol, reference, value, x, y, angle, reference_at, value_at in extras:
         schematic.schematicSymbols.append(
-            instance(symbol, reference, value, x, y, schematic.uuid, angle=angle)
+            instance(
+                symbol, reference, value, x, y, schematic.uuid, angle=angle,
+                reference_at=reference_at, value_at=value_at,
+            )
         )
 
     # Visible +5 V and ground rails.
     wire(schematic, "+5V-RAIL", (60.96, 38.1), (260.35, 38.1))
-    wire(schematic, "GND-RAIL", (60.96, 170.18), (278.13, 170.18))
+    wire(schematic, "GND-RAIL", (60.96, 170.18), (274.32, 170.18))
     schematic.labels.extend((label("+5V", 60.96, 38.1), label("GND", 60.96, 170.18)))
 
     # Device power, 595 reset/output-enable, and both Nano ground pins.
@@ -346,9 +369,9 @@ def main() -> None:
     # Nano A5 -> resistor -> LED -> ground. A6/A7 are input-only.
     status_source = pin_xy(n, 12.7, -12.7)
     wire(schematic, "STATUS-A5", status_source, (278.13, status_source[1]), (278.13, 107.95))
-    wire(schematic, "STATUS-R-LED", (278.13, 115.57), (278.13, 121.92))
-    wire(schematic, "STATUS-GND", (278.13, 129.54), (278.13, 170.18))
-    junction(schematic, "STATUS-GND", (278.13, 170.18))
+    wire(schematic, "STATUS-R-LED", (278.13, 115.57), (281.94, 115.57), (281.94, 125.73))
+    wire(schematic, "STATUS-GND", (274.32, 125.73), (274.32, 170.18))
+    junction(schematic, "STATUS-GND", (274.32, 170.18))
     junction(schematic, "PWR-FLAG", (99.06, 170.18))
 
     schematic.texts.extend(
