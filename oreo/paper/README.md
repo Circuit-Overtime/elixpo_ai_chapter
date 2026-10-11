@@ -1,8 +1,10 @@
 # RV565 paper source
 
 This directory contains the measurement-ready academic draft for the RV565
-video architecture. Ayushman Bhattacharya is the sole author of the current
-draft; contact: `ayushman@pollinations.ai`.
+video architecture by Ayushman Bhattacharya (Pollinations AI), Anwesha
+Chakraborty (Department of Computer Science and Engineering, JIS University),
+and Nihal Gazi (Department of Computer Science and Engineering (AI & ML), IEM).
+Contact: `ayushman.elixpo@gmail.com`.
 
 The quantitative fields are intentionally blank. Do not replace them with
 estimates. Populate them only from committed benchmark scripts and raw logs
