@@ -4,6 +4,10 @@ The `eeprom28c64` tool accepts Intel HEX and raw binary files. Intel HEX
 checksums, overlapping records, address limits, and the EOF record are checked
 before the serial port is opened.
 
+The CLI is intentionally limited to an 8192-byte 28C64. It cannot electrically
+identify the chip in the socket; verify that a compatible 5 V 28C64 is fitted
+before running `program`.
+
 ## Commands
 
 ```text
