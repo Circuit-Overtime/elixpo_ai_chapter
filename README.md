@@ -7,6 +7,17 @@ You select a `.hex` or `.bin` file; the command-line tool checks it, programs
 the complete 8 KiB chip, shows progress, reads the chip back, and confirms that
 every byte and the CRC match.
 
+## Supported EEPROM
+
+This programmer is for the **5 V, 8 KiB 28C64 only** and has been tested with
+the **AT28C64B-15PC**. The software assumes 13 address lines, eight data lines,
+the 28-pin 28C64 pinout, and AT28C64B-compatible write timing and software-data
+protection.
+
+Do not insert a 24C-series serial EEPROM, 27C64 EPROM, 28C16, 28C256, or a
+3.3 V memory. The programmer cannot identify the fitted chip and will assume
+it is a compatible 28C64.
+
 ## What you need
 
 - Arduino Nano (ATmega328P)
