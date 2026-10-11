@@ -1,0 +1,89 @@
+{
+  "application_count": 4,
+  "application_result_cells": 28,
+  "captured_utc": "2026-10-09T09:03:00.458952+00:00",
+  "checks": {
+    "claim_boundary_is_empirical": true,
+    "complete_application_baseline_matrix": true,
+    "complete_flagship_baseline_matrix": true,
+    "deadline_derived_from_stage1": true,
+    "effort_comparison_labeled_proxy": true,
+    "fixed_seed_and_no_cherry_picking": true,
+    "four_required_applications": true,
+    "hardware_recovery_evidence_complete": true,
+    "offline_oracle_is_upper_bound": true,
+    "overheads_quantified": true,
+    "paper_figure_regenerable": true,
+    "paper_table_regenerable": true,
+    "physical_view_uses_prior_audited_trace": true,
+    "positive_negative_infeasible_rollback_covered": true,
+    "scheduler_baseline_disclosure_complete": true,
+    "six_research_questions_answered": true,
+    "source_manifest_valid": true,
+    "tuned_linux_measured_or_explicitly_unavailable": true
+  },
+  "claim": "safe-closed-loop-recovery-of-empirical-timing-contracts",
+  "failures": [],
+  "flagship_result_cells": 7,
+  "research_questions": {
+    "RQ1": {
+      "answer": "yes-with-bounded-window-delay-in-the-controlled-hardware-scenario",
+      "detection_delay_windows": [
+        1
+      ],
+      "false_switches": 0
+    },
+    "RQ2": {
+      "answer": "yes-for-the-tested-feasible-alternate",
+      "flagship_p95_improvement_pct": 36.555639709621616,
+      "verified_recovery_windows": [
+        4
+      ]
+    },
+    "RQ3": {
+      "answer": "yes-for-the-enumerated-negative-scenarios",
+      "rejection_codes": [
+        "contract_not_satisfied",
+        "cooldown_active",
+        "destination_not_admitted",
+        "higher_predicted_end_to_end",
+        "insufficient_evidence",
+        "mcu_headroom_exceeded",
+        "observed_miss_rate_exceeds_contract",
+        "predicted_deadline_miss",
+        "semantic_ineligible"
+      ]
+    },
+    "RQ4": {
+      "answer": "improves-on-ordinary-linux-but-trails-tuned-linux-and-oracle",
+      "recovery_to_oracle_p95_ratio": 1.6252535064789453,
+      "recovery_to_tuned_linux_p95_ratio": 2.953732995398751
+    },
+    "RQ5": {
+      "answer": "quantified-for-policy-profiling-communication-stabilization-and-visualization",
+      "policy_cpu_p95_ns": 170052.05,
+      "policy_peak_traced_bytes": 3138,
+      "profile_overhead_pct": {
+        "linux": {
+          "disabled_p95_ns": 8246005.300000001,
+          "full_p95_ns": 8047401.25,
+          "p95_delta_pct": -2.4084880226793053
+        },
+        "rt": {
+          "disabled_p95_ns": 11261440.6,
+          "full_p95_ns": 11417419.3,
+          "p95_delta_pct": 1.3850687983915764
+        }
+      },
+      "visualization_overhead_pct": 2.0520402815189565
+    },
+    "RQ6": {
+      "answer": "fewer-maintained-lines-in-the-declared-proxy-comparison",
+      "line_reduction_pct": 90.9090909090909,
+      "user_study": false
+    }
+  },
+  "schema_version": 1,
+  "stage": 11,
+  "status": "pass"
+}
