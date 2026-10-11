@@ -1,5 +1,9 @@
 # Hardware wiring
 
+This circuit is specifically for a 5 V 28C64 EEPROM and was verified with an
+AT28C64B-15PC. It is not a universal EEPROM socket; chips with different
+capacities, pinouts, voltages, or programming algorithms must not be inserted.
+
 All devices use the same regulated +5 V and ground. Place one 100 nF ceramic
 capacitor directly between VCC and GND at the Nano-side power entry, each
 74HC595, and the EEPROM.
