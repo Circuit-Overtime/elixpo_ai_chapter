@@ -39,6 +39,14 @@ test('classifies acquisition without retaining full referrer URLs', () => {
   assert.deepEqual(classifyReferrer('https://www.reddit.com/r/writing'), { source: 'Social', domain: 'reddit.com' });
 });
 
+test('lookalike referrer domains stay External', () => {
+  assert.equal(classifyReferrer('https://notgoogle.com/post').source, 'External');
+  assert.equal(classifyReferrer('https://myreddit.net/post').source, 'External');
+  assert.equal(classifyReferrer('https://google.com.evil.example/post').source, 'External');
+  assert.equal(classifyReferrer('https://search.brave.com/search?q=x').source, 'Search');
+  assert.equal(classifyReferrer('https://google.co.in/search').source, 'Search');
+});
+
 test('classifies devices and computes stable percentage changes', () => {
   assert.equal(classifyDevice('Mozilla/5.0 (iPhone; Mobile)'), 'Mobile');
   assert.equal(classifyDevice('Mozilla/5.0 (iPad; Tablet)'), 'Tablet');
