@@ -3,6 +3,21 @@ import { normalizeLegacyChecklistBlocks } from './normalizeChecklistBlocks.js';
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const escAttr = (s) => String(s ?? '').replace(/"/g, '&quot;');
 
+function safeHref(href) {
+  const value = String(href || '').trim();
+  if (/^https?:\/\//i.test(value) || value.startsWith('/') || value.startsWith('#') || /^mailto:/i.test(value)) {
+    return value;
+  }
+  return '#';
+}
+
+function uniqueHeadingId(text, seen) {
+  const base = `h-${text.trim().toLowerCase().replace(/[^\w]+/g, '-').slice(0, 40)}`;
+  const count = (seen.get(base) || 0) + 1;
+  seen.set(base, count);
+  return count === 1 ? base : `${base}-${count}`;
+}
+
 // Email-safe "bulletproof" CTA button (table/anchor, inline styles, Outlook-safe).
 // Reads the 2.7.0 props (text/url/align/variant/color/radius) with legacy
 // (label/action/actionValue) fallbacks. {{variables}} in url/text are left intact.
@@ -52,7 +67,7 @@ export function renderBlocksToHTML(blocks) {
       // Links wrap child content
       if (c.type === 'link' && c.href) {
         const linkText = c.content ? inlineToHTML(c.content) : (c.text || c.href).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return `<a href="${c.href}">${linkText || c.href}</a>`;
+        return `<a href="${escAttr(safeHref(c.href))}">${linkText || esc(c.href)}</a>`;
       }
       let text = (c.text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       if (!text) return '';
@@ -70,12 +85,14 @@ export function renderBlocksToHTML(blocks) {
 
   // Collect headings for TOC
   const headings = [];
+  const seenIds = new Map();
   function collectHeadings(blockList) {
     for (const block of blockList) {
       if (block.type === 'heading') {
         const text = (block.content || []).map(c => c.text || '').join('');
         if (text.trim()) {
-          const id = `h-${text.trim().toLowerCase().replace(/[^\w]+/g, '-').slice(0, 40)}`;
+          const id = uniqueHeadingId(text, seenIds);
+          block._lixId = id;
           headings.push({ id, text: text.trim(), level: block.props?.level || 1 });
         }
       }
@@ -97,7 +114,7 @@ export function renderBlocksToHTML(blocks) {
       case 'heading': {
         const level = block.props?.level || 1;
         const text = (block.content || []).map(c => c.text || '').join('');
-        const id = `h-${text.trim().toLowerCase().replace(/[^\w]+/g, '-').slice(0, 40)}`;
+        const id = block._lixId || uniqueHeadingId(text, seenIds);
         return `<h${level} id="${id}"${alignAttr}>${content}</h${level}>${childrenHTML}`;
       }
       case 'bulletListItem':
@@ -129,7 +146,7 @@ export function renderBlocksToHTML(blocks) {
       case 'image':
         if (block.props?.url) {
           const ip = block.props;
-          const alt = escAttr(ip.alt || ip.caption || '');
+          const alt = escAttr(esc(ip.alt || ip.caption || ''));
           const align = ['left', 'center', 'right'].includes(ip.align) ? ip.align : null;
           // Images fill the content width by default (block); an explicit width
           // (from resizing) is respected but never overflows.
@@ -141,7 +158,7 @@ export function renderBlocksToHTML(blocks) {
           // figure margin matches paragraph spacing; caption always centered.
           const figStyle = `margin:16px 0;${align ? `text-align:${align};` : ''}`;
           const caption = ip.caption
-            ? `<figcaption style="text-align:center;margin-top:6px;font-size:0.85em;color:#9aa0a6;">${ip.caption}</figcaption>`
+            ? `<figcaption style="text-align:center;margin-top:6px;font-size:0.85em;color:#9aa0a6;">${esc(ip.caption)}</figcaption>`
             : '';
           return `<figure style="${figStyle}">${img}${caption}</figure>${childrenHTML}`;
         }
@@ -209,7 +226,7 @@ export function renderBlocksToHTML(blocks) {
   if (headings.length > 0) {
     const tocItems = headings.map(h => {
       const indent = (h.level - 1) * 16;
-      return `<li><a href="#${h.id}" class="lix-toc-link" style="padding-left:${indent}px">${h.text}</a></li>`;
+      return `<li><a href="#${h.id}" class="lix-toc-link" style="padding-left:${indent}px">${esc(h.text)}</a></li>`;
     }).join('');
     const tocHTML = `<div class="lix-toc-block"><p class="lix-toc-label">Table of Contents</p><ul class="lix-toc-list">${tocItems}</ul></div>`;
     html = html.replace('__TOC_PLACEHOLDER__', tocHTML);
