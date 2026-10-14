@@ -48,6 +48,28 @@ binary diffusion.** Physical bit packing, three-seed artifacts, controls, hashes
 and exact commands support this claim as reproducibility contributions rather
 than being presented as a new binary-training algorithm.
 
+## Preprint and citation
+
+The manuscript is released as **MonoDiffuse Technical Report 2026-01** and is a
+preprint that has not undergone peer review. Publication metadata, the engrXiv
+upload checklist, the Zenodo software-release fields, and the deterministic
+packaging command are in [`publication/`](publication/README.md).
+
+Build the local upload bundles with:
+
+```bash
+python scripts/package_publication.py
+```
+
+The canonical paper DOI will point to the engrXiv record once assigned. Zenodo
+is used separately for the versioned software release, preventing duplicate
+paper DOIs from fragmenting citations. Until the DOI is assigned, cite the
+technical report using [`CITATION.cff`](CITATION.cff).
+
+The Scholar-readable manuscript landing page is
+<https://research.elixpo.com/monodiffuse/>. It mirrors the canonical preprint and
+does not represent peer review or a separate publication.
+
 ## Current finding
 
 On MNIST, the best native W1A32 condition substantially outperforms zero-shot PTQ,
@@ -145,11 +167,19 @@ bill of materials, and exhaustive truth table are in
   tests, and exact commands;
 - `artifacts/v1_binary_study/`: per-seed checkpoints, hashes, histories, metrics,
   controls, summaries, and sample grids;
-- `paper/v0_mnist/paper.tex`: the paper source; and
+- `paper/v0_mnist/`: the combined archival technical report;
+- `paper/v1_mnist_narrow/`: the focused MNIST manuscript and its arXiv source;
 - `hardware/diffuino_selector/`: KiCad source and publication exports for the
-  BCD input, validity gate, generate trigger, and reset circuit; and
+  BCD input, validity gate, generate trigger, and reset circuit;
 - `experiments/v0_mnist/`: archived exploratory scripts and figures, not the
   source of the controlled-study results.
+
+Build the focused manuscript from `paper/v1_mnist_narrow` with `latexmk -pdf
+paper.tex`. Afterward, create a self-contained arXiv upload archive with:
+
+~~~bash
+python3 scripts/package_narrow_arxiv.py
+~~~
 
 ## License
 

@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: >-
+  If you use MonoDiffuse, please cite the associated preprint and this software
+  release. Add the preprint DOI once engrXiv assigns it.
+title: "MonoDiffuse: controlled one-bit-weight diffusion experiments and Diffuino artifact"
+type: software
+version: 1.0.0
+date-released: 2026-10-14
+license: MIT
+repository-code: "https://github.com/elixpo/monodiffuse"
+url: "https://github.com/elixpo/monodiffuse"
+authors:
+  - family-names: Bhattacharya
+    given-names: Ayushman
+    affiliation: Pollinations AI
+    email: ayushman.elixpo@gmail.com
+  - family-names: Chakraborty
+    given-names: Anwesha
+    affiliation: Department of Computer Science and Engineering, JIS University
+    email: anwesha.elixpo@gmail.com
+  - family-names: Gazi
+    given-names: Nihal
+    affiliation: Department of Computer Science and Engineering (AI and ML), IEM
+    email: nihalg2006@gmail.com
+keywords:
+  - binary neural networks
+  - diffusion models
+  - quantization-aware training
+  - post-training quantization
+  - reproducible machine learning
+  - edge AI
+preferred-citation:
+  type: report
+  title: "Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and CIFAR-10 Study"
+  authors:
+    - family-names: Bhattacharya
+      given-names: Ayushman
+    - family-names: Chakraborty
+      given-names: Anwesha
+    - family-names: Gazi
+      given-names: Nihal
+  institution:
+    name: MonoDiffuse Project
+  number: MonoDiffuse-TR-2026-01
+  year: 2026
+  url: "https://research.elixpo.com/monodiffuse/"
