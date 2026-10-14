@@ -67,7 +67,7 @@ paper DOIs from fragmenting citations. Until the DOI is assigned, cite the
 technical report using [`CITATION.cff`](CITATION.cff).
 
 The Scholar-readable manuscript landing page is
-<https://elixpo.github.io/monodiffuse/>. It mirrors the canonical preprint and
+<https://research.elixpo.com/monodiffuse/>. It mirrors the canonical preprint and
 does not represent peer review or a separate publication.
 
 ## Current finding

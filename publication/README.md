@@ -44,9 +44,12 @@ The workflow in `.github/workflows/pages.yml` deploys a static landing page and
 the same PDF to GitHub Pages. In GitHub, open **Settings → Pages → Build and
 deployment**, select **GitHub Actions**, and run the `pages` workflow.
 
-The expected URL is:
+The canonical URL is:
 
-<https://elixpo.github.io/monodiffuse/>
+<https://research.elixpo.com/monodiffuse/>
+
+Until that site is deployed, GitHub Pages remains available as a temporary
+mirror at <https://elixpo.github.io/monodiffuse/>.
 
 After engrXiv publication, add `citation_doi` and a DOI link to
 `docs/index.html`. This page is a discovery mirror, not another publication.

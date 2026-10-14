@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://elixpo.github.io/monodiffuse/</loc>
+    <loc>https://research.elixpo.com/monodiffuse/</loc>
     <lastmod>2026-10-14</lastmod>
   </url>
   <url>
-    <loc>https://elixpo.github.io/monodiffuse/monodiffuse-preprint.pdf</loc>
+    <loc>https://research.elixpo.com/monodiffuse/monodiffuse-preprint.pdf</loc>
     <lastmod>2026-10-14</lastmod>
   </url>
 </urlset>
