@@ -9,6 +9,14 @@ test('free managed storage is capped at 10 MB without changing Member storage', 
   assert.equal(getLimits('member').totalStorageBytes, 2 * 1024 * 1024 * 1024);
 });
 
+test('unknown and prototype tier keys fall back to free limits', () => {
+  const free = getLimits('free');
+  assert.equal(getLimits('__proto__'), free);
+  assert.equal(getLimits('constructor'), free);
+  assert.equal(getLimits('nope'), free);
+  assert.equal(getLimits('__proto__').totalStorageBytes, 10 * 1024 * 1024);
+});
+
 test('media inventory caches are private to a versioned user key', () => {
   assert.equal(mediaInventoryCacheKey('user-123'), 'v3:media-inventory:user-123');
 });
