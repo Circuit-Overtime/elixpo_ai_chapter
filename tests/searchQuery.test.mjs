@@ -132,7 +132,15 @@ test('free text ANDs across terms and ORs across fields', () => {
   const { where, binds } = buildBlogSearch(parseSearchQuery('rookie hacktoberfest'));
   // 2 terms × 4 default fields
   assert.equal(binds.filter(b => typeof b === 'string' && b.startsWith('%')).length, 8);
-  assert.match(where, /LIKE \? OR/);
+  assert.match(where, /LIKE \?/);
+});
+
+test('wildcard characters in search terms are escaped literally', () => {
+  const percent = buildBlogSearch(parseSearchQuery('100%'));
+  assert.ok(percent.binds.some((b) => b === '%100\\%%'));
+  const underscore = buildBlogSearch(parseSearchQuery('a_b'));
+  assert.ok(underscore.binds.some((b) => b === '%a\\_b%'));
+  assert.match(percent.where, /ESCAPE/);
 });
 
 test('in:title restricts free text to one column', () => {
