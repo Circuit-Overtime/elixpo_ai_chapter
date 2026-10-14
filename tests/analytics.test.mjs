@@ -32,6 +32,14 @@ test('custom ranges include the complete end date with an exclusive upper bound'
   assert.equal(range.to, Date.parse('2026-01-03T00:00:00Z') / 1000);
 });
 
+test('a custom range with the same from and to selects that single day', () => {
+  const now = Date.parse('2026-01-03T00:00:00Z') / 1000;
+  const range = parseAnalyticsRange(new URLSearchParams('range=custom&from=2026-01-02&to=2026-01-02'), now);
+  assert.equal(range.from, Date.parse('2026-01-02T00:00:00Z') / 1000);
+  assert.equal(range.to, Date.parse('2026-01-03T00:00:00Z') / 1000);
+  assert.throws(() => parseAnalyticsRange(new URLSearchParams('range=custom&from=2026-01-05&to=2026-01-02'), now));
+});
+
 test('classifies acquisition without retaining full referrer URLs', () => {
   assert.deepEqual(classifyReferrer(''), { source: 'Direct', domain: null });
   assert.deepEqual(classifyReferrer('https://blogs.elixpo.com/feed'), { source: 'Internal', domain: 'blogs.elixpo.com' });
