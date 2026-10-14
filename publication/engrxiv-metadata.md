@@ -81,3 +81,9 @@ under the repository's MIT License.
 This is a preprint and has not undergone peer review. The CIFAR-10 experiment is
 reported as a failed small-model stress test, not as evidence of competitive
 natural-image generation.
+
+Before submission, every named author should review the final PDF, code,
+figures, and metadata and agree to be accountable for them. Review engrXiv's
+current AI policy at https://engrxiv.org/ai-policy and include any disclosure it
+requires. Do not claim that no AI-assisted tooling was used if such tooling
+contributed to manuscript preparation.

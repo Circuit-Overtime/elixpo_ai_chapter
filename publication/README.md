@@ -16,6 +16,8 @@ Upload `dist/publication/engrxiv/monodiffuse-preprint.pdf` using the values in
 [`engrxiv-metadata.md`](engrxiv-metadata.md). The PDF is the manuscript; do not
 upload the source ZIP as a second manuscript. The source ZIP and checksum file
 may be supplied as reproduction/supporting material if the form permits it.
+The provisional BibTeX entry is in [`CITATION.bib`](CITATION.bib); add the DOI
+after it is assigned.
 
 Once engrXiv assigns a DOI:
 
