@@ -68,6 +68,9 @@ test('isEmptyQuery distinguishes "nothing" from "qualifier-only"', () => {
   assert.ok(isEmptyQuery(parseSearchQuery('')));
   assert.ok(isEmptyQuery(parseSearchQuery('   ')));
   assert.ok(!isEmptyQuery(parseSearchQuery('tag:ai')), 'tag-only is a real query');
+  assert.ok(!isEmptyQuery(parseSearchQuery('-is:draft')), 'negated status is a real query');
+  assert.ok(!isEmptyQuery(parseSearchQuery('in:title')), 'field filter is a real query');
+  assert.ok(!isEmptyQuery(parseSearchQuery('sort:likes')), 'sort-only is a real query');
 });
 
 // ── dates ───────────────────────────────────────────────────────────────────
