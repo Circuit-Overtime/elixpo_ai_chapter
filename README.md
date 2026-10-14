@@ -167,11 +167,19 @@ bill of materials, and exhaustive truth table are in
   tests, and exact commands;
 - `artifacts/v1_binary_study/`: per-seed checkpoints, hashes, histories, metrics,
   controls, summaries, and sample grids;
-- `paper/v0_mnist/paper.tex`: the paper source; and
+- `paper/v0_mnist/`: the combined archival technical report;
+- `paper/v1_mnist_narrow/`: the focused MNIST manuscript and its arXiv source;
 - `hardware/diffuino_selector/`: KiCad source and publication exports for the
-  BCD input, validity gate, generate trigger, and reset circuit; and
+  BCD input, validity gate, generate trigger, and reset circuit;
 - `experiments/v0_mnist/`: archived exploratory scripts and figures, not the
   source of the controlled-study results.
+
+Build the focused manuscript from `paper/v1_mnist_narrow` with `latexmk -pdf
+paper.tex`. Afterward, create a self-contained arXiv upload archive with:
+
+~~~bash
+python3 scripts/package_narrow_arxiv.py
+~~~
 
 ## License
 
