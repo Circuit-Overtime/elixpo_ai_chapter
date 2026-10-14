@@ -38,3 +38,5 @@ venv/
 *.fls
 *.fdb_latexmk
 *.aux
+*.blg
+*.out
