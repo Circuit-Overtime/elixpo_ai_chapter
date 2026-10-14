@@ -48,6 +48,24 @@ binary diffusion.** Physical bit packing, three-seed artifacts, controls, hashes
 and exact commands support this claim as reproducibility contributions rather
 than being presented as a new binary-training algorithm.
 
+## Preprint and citation
+
+The manuscript is released as **MonoDiffuse Technical Report 2026-01** and is a
+preprint that has not undergone peer review. Publication metadata, the engrXiv
+upload checklist, the Zenodo software-release fields, and the deterministic
+packaging command are in [`publication/`](publication/README.md).
+
+Build the local upload bundles with:
+
+```bash
+python scripts/package_publication.py
+```
+
+The canonical paper DOI will point to the engrXiv record once assigned. Zenodo
+is used separately for the versioned software release, preventing duplicate
+paper DOIs from fragmenting citations. Until the DOI is assigned, cite the
+technical report using [`CITATION.cff`](CITATION.cff).
+
 ## Current finding
 
 On MNIST, the best native W1A32 condition substantially outperforms zero-shot PTQ,

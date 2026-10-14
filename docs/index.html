@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Training Binary-Weight Diffusion Models from Scratch</title>
+  <meta name="description" content="A controlled MNIST and CIFAR-10 study of native binary-weight diffusion training, post-training quantization, and warm-started QAT.">
+  <meta name="citation_title" content="Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and CIFAR-10 Study">
+  <meta name="citation_author" content="Ayushman Bhattacharya">
+  <meta name="citation_author" content="Anwesha Chakraborty">
+  <meta name="citation_author" content="Nihal Gazi">
+  <meta name="citation_publication_date" content="2026/10/14">
+  <meta name="citation_technical_report_institution" content="MonoDiffuse Project">
+  <meta name="citation_technical_report_number" content="MonoDiffuse-TR-2026-01">
+  <meta name="citation_pdf_url" content="https://elixpo.github.io/monodiffuse/monodiffuse-preprint.pdf">
+  <link rel="canonical" href="https://elixpo.github.io/monodiffuse/">
+  <style>
+    :root { color-scheme: light dark; font-family: Georgia, serif; }
+    body { max-width: 780px; margin: 3rem auto; padding: 0 1.2rem; line-height: 1.6; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.12; }
+    .authors, .meta { color: #666; }
+    @media (prefers-color-scheme: dark) { .authors, .meta { color: #bbb; } }
+    .actions { display: flex; gap: .8rem; flex-wrap: wrap; margin: 1.5rem 0; }
+    .actions a { border: 1px solid currentColor; border-radius: .3rem; padding: .55rem .8rem; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="meta">Preprint · MonoDiffuse Technical Report 2026-01 · 14 October 2026</p>
+    <h1>Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and CIFAR-10 Study</h1>
+    <p class="authors">Ayushman Bhattacharya, Anwesha Chakraborty, and Nihal Gazi</p>
+    <div class="actions">
+      <a href="monodiffuse-preprint.pdf">Read the PDF</a>
+      <a href="https://github.com/elixpo/monodiffuse">Code and artifacts</a>
+    </div>
+    <h2>Abstract</h2>
+    <p>At one bit per weight, post-training quantization can destroy a diffusion model's denoising function. We isolate how much can be recovered by optimizing with binary weights in the forward pass using a parameter-compatible small residual U-Net. The study compares FP32 training, zero-shot PTQ, native W1A32 training, warm-started quantization-aware training, and a W1A1 core under matched budgets and three training seeds. On MNIST, native W1A32 substantially mitigates PTQ collapse but remains behind FP32. On CIFAR-10, even the compact FP32 control fails the evaluation audit, so the stress test does not establish natural-image performance. The result is deliberately bounded: optimization path matters at one bit on MNIST, while a general teacher-free solution to binary diffusion remains open.</p>
+    <h2>Status</h2>
+    <p>This manuscript is a preprint and has not undergone peer review. Its CIFAR-10 result is reported as a failed small-model stress test, not as competitive natural-image generation.</p>
+  </main>
+</body>
+</html>

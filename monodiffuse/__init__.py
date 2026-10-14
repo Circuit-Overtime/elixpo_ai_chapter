@@ -16,4 +16,4 @@ denoiser    : 1-bit weight + 1-bit activation U-Net that predicts per-bit flip l
 eval        : FID / legibility / memorization metrics (shared with the Phase 0 baseline)
 """
 
-__version__ = "0.1.0.dev0"
+__version__ = "1.0.0"

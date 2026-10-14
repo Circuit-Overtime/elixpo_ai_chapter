@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://elixpo.github.io/monodiffuse/sitemap.xml
