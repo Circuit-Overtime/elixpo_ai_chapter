@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const limit = Math.min(parseInt(searchParams.get('limit') || '30', 10), 50);
+  const parsed = Number.parseInt(searchParams.get('limit') || '30', 10);
+  const limit = Number.isInteger(parsed) && parsed >= 1 && parsed <= 50 ? parsed : 30;
 
   try {
     const { kvCache } = await import('../../../../lib/cache');
