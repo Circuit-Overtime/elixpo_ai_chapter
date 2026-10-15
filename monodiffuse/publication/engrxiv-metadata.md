@@ -6,8 +6,8 @@ Preprint / technical report
 
 ## Title
 
-Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and
-CIFAR-10 Study
+Native Binary-Weight Training Outperforms Zero-Shot Sign Projection in MNIST
+Diffusion
 
 ## Authors, in order
 
@@ -22,31 +22,25 @@ ORCID or use another person's identifier.
 
 ## Abstract
 
-At one bit per weight, post-training quantization (PTQ) can destroy a diffusion
-model's denoising function. Does this imply that a useful binary score network
-must be distilled from a floating-point teacher? We isolate that question in a
-small residual U-Net whose parameterization is identical across precision
-conditions. We compare FP32 training, zero-shot PTQ, binary-weight training from
-random initialization, floating-point warm-started quantization-aware training
-(QAT), and a binary-weight/binary-activation core. We additionally cross
-mean-centering with pre- versus post-activation residual ordering. All conditions
-use the same data, optimizer, per-stage budget, and ancestral 1,000-step DDPM
-sampler and are repeated over three training seeds; warm QAT additionally
-inherits a 12-epoch FP32 checkpoint. Evaluation uses a held-out domain encoder
-and reports Frechet and kernel distances, density, coverage, and class-prior
-divergence, together with real-real and Gaussian-noise controls. On MNIST, the
-best native W1A32 condition obtains domain-feature Frechet distance 46.33 ±
-17.24, far below zero-shot PTQ (1314.20 ± 314.96), but well above FP32 (3.15 ±
-0.38). On CIFAR-10, all conditions fail the control audit: even FP32 obtains
-382.67 ± 46.91 versus a real-real baseline of 7.13. The previously proposed
-centering explanation is not supported: centering increases latent-to-binary
-angular error and worsens the pre-activation model. Thus, native optimization
-substantially mitigates PTQ collapse on MNIST, but neither establishes parity
-with floating point nor generalization to natural images. We release code,
-per-seed checkpoints, hashes, histories, controls, and physically bit-packed
-inference weights. Our conclusion is deliberately bounded: training path matters
-at one bit, while a general teacher-free solution to binary diffusion remains
-open.
+Does severe failure after projecting a diffusion model to one-bit weights show
+that its binary representation is unusable? We test that implication, rather
+than propose a new quantizer, in a small MNIST residual U-Net. We compare
+floating-point training, zero-shot per-channel sign/scale projection of a
+trained model, binary-weight training from random initialization, floating-point
+warm-started quantization-aware training (QAT), and a binary-weight/
+binary-activation core. The primary FP32, native W1A32, and projected W1A32
+comparison fixes the parameterization, data, training budget where applicable,
+and 1,000-step ancestral sampler, with three independent training seeds. Native
+W1A32 training obtains domain-feature Frechet distance 46.33 ± 17.24, 28.4-fold
+lower than matched zero-shot projection (1314.20 ± 314.96), but remains
+substantially worse than FP32 (3.15 ± 0.38). Warm QAT also recovers much of the
+projection loss, while the W1A1 core retains a large distributional gap. An
+elementary feasible-set argument explains why one projected floating-point
+solution is not an impossibility certificate for the binary hypothesis class.
+The supported claim is deliberately local: on MNIST, optimizing binary forwards
+reaches a much better W1A32 solution than this zero-shot projection baseline;
+this does not establish full W1A1 success, floating-point parity, or transfer to
+natural images.
 
 ## Keywords
 
