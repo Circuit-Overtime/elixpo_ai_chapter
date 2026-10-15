@@ -1,0 +1,5 @@
+gradio==5.49.1
+huggingface_hub>=0.27
+numpy>=1.26,<3
+onnxruntime>=1.20,<2
+Pillow>=10,<13
