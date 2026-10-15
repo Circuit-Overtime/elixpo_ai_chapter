@@ -22,7 +22,7 @@ function mockDb() {
 }
 
 test('dwell signals with bad durations are dropped', async () => {
-  for (const bad of ['oops', NaN, undefined]) {
+  for (const bad of ['oops', NaN, Infinity, undefined]) {
     const db = mockDb();
     await recordSignal(db, 'u1', 'dwell', { blogId: null, tag: 'ai', dwellSeconds: bad });
     assert.equal(db.calls.filter((c) => Array.isArray(c)).length, 0, `no insert for ${String(bad)}`);
