@@ -8,7 +8,7 @@ app_file: app.py
 pinned: false
 license: mit
 models:
-  - elixpo/monodiffuse-mnist-diffusion
+  - Elixpo/monodiffuse
 tags:
   - diffusion
   - mnist
@@ -26,4 +26,3 @@ browser.
 The full source, Arduino UNO Q application, hardware selector, checkpoints,
 and experimental artifacts live in
 [MonoDiffuse](https://github.com/elixpo/monodiffuse).
-
