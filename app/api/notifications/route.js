@@ -10,8 +10,13 @@ export async function GET(request) {
   }
 
   const { searchParams } = new URL(request.url);
-  const limit = Math.min(parseInt(searchParams.get('limit') || '30', 10), 50);
-  const offset = parseInt(searchParams.get('offset') || '0', 10);
+  const rawLimit = Number.parseInt(searchParams.get('limit') || '30', 10);
+  const rawOffset = Number.parseInt(searchParams.get('offset') || '0', 10);
+  if (!Number.isFinite(rawLimit) || rawLimit < 1 || !Number.isFinite(rawOffset) || rawOffset < 0) {
+    return NextResponse.json({ error: 'Invalid pagination' }, { status: 400 });
+  }
+  const limit = Math.min(rawLimit, 50);
+  const offset = rawOffset;
 
   try {
     const { getDB } = await import('../../../lib/cloudflare');

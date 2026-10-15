@@ -47,3 +47,13 @@ test('rejects malformed JSON image bodies', async () => {
 
   await assert.rejects(() => readUploadRequest(request), /Invalid base64 image body/);
 });
+
+test('rejects base64 with bad length using the same error', async () => {
+  const request = new Request('https://blogs.elixpo.com/api/media/upload', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: 'abcde', mimeType: 'image/webp' }),
+  });
+
+  await assert.rejects(() => readUploadRequest(request), /Invalid base64 image body/);
+});
