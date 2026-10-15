@@ -8,7 +8,7 @@ import AppShell from "../components/AppShell";
 import AuthorAttribution from "../components/AuthorAttribution";
 import BlogComments from "../components/BlogComments";
 import BlogDotsMenu from "../components/BlogDotsMenu";
-import BlogFollowCard, { FollowToggle } from "../components/BlogFollowButtons";
+import { FollowToggle } from "../components/BlogFollowButtons";
 import ReaderCompanion from "../components/ReaderCompanion";
 import ReadingResumePrompt from "../components/ReadingResumePrompt";
 import BlogInteractionBar from "../components/BlogInteractionBar";
@@ -1030,33 +1030,6 @@ function HandlePageInner({ path, initialData = null }) {
                             </Link>
                         )}
                     </nav>
-                    {!blog.secret && (
-                        <ReaderCompanion
-                            author={{
-                                username: blog.author_username,
-                                displayName: blog.author_name,
-                                designation: blog.author_designation,
-                                avatarUrl: blog.author_avatar,
-                            }}
-                            org={
-                                data.owner?.type === "org"
-                                    ? {
-                                          slug: data.owner.slug,
-                                          name: data.owner.name,
-                                          tagline: data.owner.tagline,
-                                          logoUrl:
-                                              data.owner.logo_url ||
-                                              data.owner.logo_r2_key,
-                                      }
-                                    : null
-                            }
-                            primaryTag={
-                                Array.isArray(blog.tags)
-                                    ? blog.tags[0]
-                                    : null
-                            }
-                        />
-                    )}
                     <ReadingResumePrompt blogId={blog.id} />
                     {!blog.secret && !blog.member_only && !blog.paywalled && (
                         <RevisionTimeline blogId={blog.id} onRevision={setRevision} />
@@ -1080,8 +1053,10 @@ function HandlePageInner({ path, initialData = null }) {
                             </Link>
                         </div>
                     )}
-                    {InteractiveBlogPreview ? (
-                        <InteractiveBlogPreview
+                    <div className="reader-story-grid">
+                        <div className="reader-story-main">
+                            {InteractiveBlogPreview ? (
+                                <InteractiveBlogPreview
                             title={blog.title}
                             subtitle={blog.subtitle}
                             pageEmoji={blog.page_emoji}
@@ -1179,45 +1154,54 @@ function HandlePageInner({ path, initialData = null }) {
                                     }
                                 />
                             }
-                        />
-                    ) : (
-                        <CrawlableArticle
-                            blog={blog}
-                            blocks={blocks}
-                            owner={data.owner}
-                        />
-                    )}
+                                />
+                            ) : (
+                                <CrawlableArticle
+                                    blog={blog}
+                                    blocks={blocks}
+                                    owner={data.owner}
+                                />
+                            )}
 
-                    {/* End-of-blog follow card — author (+ org) */}
-                    <div className="reader-endmatter">
-                    <BlogFollowCard
-                        author={{
-                            username: blog.author_username,
-                            display_name: blog.author_name,
-                            designation: blog.author_designation,
-                            avatar_url: blog.author_avatar,
-                        }}
-                        org={
-                            data.owner?.type === "org"
-                                ? {
-                                      slug: data.owner.slug,
-                                      name: data.owner.name,
-                                      logo_url:
-                                          data.owner.logo_url ||
-                                          data.owner.logo_r2_key,
-                                  }
-                                : null
-                        }
-                    />
+                            <div className="reader-endmatter">
+                                {/* Comments section — always expanded */}
+                                <BlogComments
+                                    blogId={blog.id}
+                                    blogAuthorId={blog.author_id}
+                                />
+                            </div>
+                        </div>
 
-                    {/* Comments section — always expanded */}
-                    <BlogComments
-                        blogId={blog.id}
-                        blogAuthorId={blog.author_id}
-                    />
-
-                    {/* More to read — related recommendations */}
-                    <BlogRecommendations blogId={blog.id} />
+                    <div className="reader-side-rail">
+                        {!blog.secret && (
+                            <ReaderCompanion
+                                author={{
+                                    username: blog.author_username,
+                                    displayName: blog.author_name,
+                                    designation: blog.author_designation,
+                                    avatarUrl: blog.author_avatar,
+                                }}
+                                org={
+                                    data.owner?.type === "org"
+                                        ? {
+                                              slug: data.owner.slug,
+                                              name: data.owner.name,
+                                              tagline: data.owner.tagline,
+                                              logoUrl:
+                                                  data.owner.logo_url ||
+                                                  data.owner.logo_r2_key,
+                                          }
+                                        : null
+                                }
+                                primaryTag={
+                                    Array.isArray(blog.tags)
+                                        ? blog.tags[0]
+                                        : null
+                                }
+                            />
+                        )}
+                        <BlogRecommendations blogId={blog.id} compact limit={3} />
+                        </div>
                     </div>
                 </div>
                 </main>
