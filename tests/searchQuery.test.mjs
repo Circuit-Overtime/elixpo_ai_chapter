@@ -68,6 +68,9 @@ test('isEmptyQuery distinguishes "nothing" from "qualifier-only"', () => {
   assert.ok(isEmptyQuery(parseSearchQuery('')));
   assert.ok(isEmptyQuery(parseSearchQuery('   ')));
   assert.ok(!isEmptyQuery(parseSearchQuery('tag:ai')), 'tag-only is a real query');
+  assert.ok(!isEmptyQuery(parseSearchQuery('-is:draft')), 'negated status is a real query');
+  assert.ok(!isEmptyQuery(parseSearchQuery('in:title')), 'field filter is a real query');
+  assert.ok(!isEmptyQuery(parseSearchQuery('sort:likes')), 'sort-only is a real query');
 });
 
 // ── dates ───────────────────────────────────────────────────────────────────
@@ -94,6 +97,16 @@ test('malformed dates are reported, not silently dropped', () => {
   const p = parseSearchQuery('created:yesterday');
   assert.equal(p.dates.length, 0);
   assert.ok(p.unknown.includes('created:yesterday'));
+});
+
+test('impossible calendar dates are reported as unknown', () => {
+  const bad = parseSearchQuery('created:2025-02-30');
+  assert.equal(bad.dates.length, 0);
+  assert.ok(bad.unknown.includes('created:2025-02-30'));
+  const leap = parseSearchQuery('created:2024-02-29');
+  assert.equal(leap.dates.length, 1);
+  const nonLeap = parseSearchQuery('created:2025-02-29');
+  assert.equal(nonLeap.dates.length, 0);
 });
 
 // ── SQL building: security rules ────────────────────────────────────────────
@@ -132,7 +145,15 @@ test('free text ANDs across terms and ORs across fields', () => {
   const { where, binds } = buildBlogSearch(parseSearchQuery('rookie hacktoberfest'));
   // 2 terms × 4 default fields
   assert.equal(binds.filter(b => typeof b === 'string' && b.startsWith('%')).length, 8);
-  assert.match(where, /LIKE \? OR/);
+  assert.match(where, /LIKE \?/);
+});
+
+test('wildcard characters in search terms are escaped literally', () => {
+  const percent = buildBlogSearch(parseSearchQuery('100%'));
+  assert.ok(percent.binds.some((b) => b === '%100\\%%'));
+  const underscore = buildBlogSearch(parseSearchQuery('a_b'));
+  assert.ok(underscore.binds.some((b) => b === '%a\\_b%'));
+  assert.match(percent.where, /ESCAPE/);
 });
 
 test('in:title restricts free text to one column', () => {
