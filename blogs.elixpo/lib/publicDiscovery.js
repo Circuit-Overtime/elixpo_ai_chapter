@@ -1,5 +1,5 @@
 import { kvCache } from './cache';
-import { rankBlogs, stripInternalRecommendationFields } from './recommendations';
+import { diversifyBlogs, rankBlogs, stripInternalRecommendationFields } from './recommendations';
 
 const DEFAULT_PAGE_SIZE = 12;
 const MAX_PAGE_SIZE = 24;
@@ -49,7 +49,10 @@ async function queryPublicStories(page, pageSize, recommendationContext = null) 
         AND b.secret = 0
         AND COALESCE(b.member_only, 0) = 0
         AND LOWER(u.username) != 'selenium-cutlet'
-      ORDER BY b.published_at DESC, b.id DESC
+      ORDER BY
+        ROW_NUMBER() OVER (PARTITION BY b.author_id ORDER BY b.published_at DESC, b.id DESC),
+        b.published_at DESC,
+        b.id DESC
       LIMIT ? OFFSET ?
     `).bind(rowLimit, offset).all(),
     db.prepare(`
@@ -153,7 +156,7 @@ async function queryPublicStories(page, pageSize, recommendationContext = null) 
       bookmarked: false,
       }));
       if (!recommendationContext) return serialized;
-      return rankBlogs(serialized, recommendationContext)
+      return diversifyBlogs(rankBlogs(serialized, recommendationContext))
         .slice(sliceOffset, sliceOffset + pageSize)
         .map(stripInternalRecommendationFields);
     })(),
@@ -165,7 +168,7 @@ export async function listPublicStories({ page = 1, pageSize = DEFAULT_PAGE_SIZE
   const safePageSize = clampInt(pageSize, DEFAULT_PAGE_SIZE, 1, MAX_PAGE_SIZE);
   if (recommendationContext) return queryPublicStories(safePage, safePageSize, recommendationContext);
   return kvCache(
-    `v1:public-discovery:${safePage}:${safePageSize}`,
+    `v2:public-discovery:${safePage}:${safePageSize}`,
     300,
     () => queryPublicStories(safePage, safePageSize),
   );

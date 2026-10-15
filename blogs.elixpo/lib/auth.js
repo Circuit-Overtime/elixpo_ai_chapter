@@ -73,7 +73,9 @@ export async function getSession() {
     const key = await getHmacKey(['verify']);
     const valid = await crypto.subtle.verify('HMAC', key, sigBytes, payloadBytes);
     if (!valid) return null;
-    return JSON.parse(new TextDecoder().decode(payloadBytes));
+    const session = JSON.parse(new TextDecoder().decode(payloadBytes));
+    if (session && Number.isFinite(session.expiresAt) && Date.now() > session.expiresAt) return null;
+    return session;
   } catch {
     return null;
   }

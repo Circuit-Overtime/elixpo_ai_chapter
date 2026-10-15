@@ -16,8 +16,17 @@ export function collectionSlug(value) {
 export function curatedCoverUrl(value) {
   const url = String(value || '').trim();
   if (!url) return null;
-  if (url.length > 2048 || !/^https:\/\//i.test(url)) throw new Error('invalid_cover_url');
-  return url;
+  if (url.length > 2048) throw new Error('invalid_cover_url');
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    throw new Error('invalid_cover_url');
+  }
+  if (parsed.protocol !== 'https:' || !parsed.hostname || parsed.username || parsed.password) {
+    throw new Error('invalid_cover_url');
+  }
+  return parsed.toString();
 }
 
 export function serializeCuratedCollection(row) {

@@ -176,9 +176,13 @@ export function publicConnection(connection) {
   const parse = (value, fallback) => { try { return JSON.parse(value); } catch { return fallback; } };
   const usage = parse(connection.usage_summary || 'null', null);
   const usageRows = Array.isArray(usage) ? usage : Array.isArray(usage?.data) ? usage.data : Array.isArray(usage?.usage) ? usage.usage : [];
+  const toNumber = (value) => {
+    const n = Number(value ?? 0);
+    return Number.isFinite(n) ? n : 0;
+  };
   const usageTotals = usageRows.reduce((totals, row) => ({
-    requests: totals.requests + Number(row.requests ?? row.requestCount ?? row.count ?? 0),
-    pollen: totals.pollen + Number(row.cost ?? row.pollen ?? row.amount ?? 0),
+    requests: totals.requests + toNumber(row.requests ?? row.requestCount ?? row.count),
+    pollen: totals.pollen + toNumber(row.cost ?? row.pollen ?? row.amount),
   }), { requests: 0, pollen: 0 });
   return {
     connected: !expired && connection.status === 'connected', status: expired ? 'expired' : connection.status,

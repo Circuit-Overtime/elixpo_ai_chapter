@@ -48,3 +48,16 @@ test('public connection shape never returns encrypted credential material', () =
   assert.deepEqual(result.models, ['flux']);
   assert.equal('access_token_encrypted' in result, false);
 });
+
+test('usage totals ignore malformed rows instead of NaN', () => {
+  const bad = publicConnection({
+    status: 'connected', expires_at: 9999999999, granted_scope: 'usage',
+    permitted_models: '[]', usage_summary: JSON.stringify([{ requests: 'oops', cost: 'oops' }]),
+  });
+  assert.deepEqual(bad.usageTotals, { requests: 0, pollen: 0 });
+  const good = publicConnection({
+    status: 'connected', expires_at: 9999999999, granted_scope: 'usage',
+    permitted_models: '[]', usage_summary: JSON.stringify([{ requests: 3, cost: 1.5 }, { requestCount: '2', pollen: '4' }]),
+  });
+  assert.deepEqual(good.usageTotals, { requests: 5, pollen: 5.5 });
+});

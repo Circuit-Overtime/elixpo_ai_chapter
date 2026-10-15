@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { diffRevisionBlocks } from '../../lib/revisionDiff';
 
 function formatRevisionDate(timestamp) {
   return new Intl.DateTimeFormat(undefined, {
@@ -11,8 +10,7 @@ function formatRevisionDate(timestamp) {
   }).format(new Date(timestamp * 1000));
 }
 
-// The selected revision lives in `?rev=` so it survives refresh and Back/Forward.
-// Native history calls keep Next's searchParams in sync without a server round trip.
+// The selected revision lives in `?rev=` so refresh and Back/Forward preserve it.
 function setRevisionParam(id, replace = false) {
   const url = new URL(window.location.href);
   if (id) url.searchParams.set('rev', id);
@@ -31,7 +29,8 @@ export default function RevisionTimeline({ blogId, onRevision }) {
   const [error, setError] = useState('');
   const cache = useRef(new Map());
   const listRequested = useRef(false);
-  const revIndex = revId ? versions.findIndex((version) => version.id === revId) : -1;
+  const panelRef = useRef(null);
+  const revIndex = revId ? versions.findIndex(version => version.id === revId) : -1;
   const selectedIndex = revIndex >= 0 ? revIndex : Math.max(0, versions.length - 1);
   const selectedId = versions[selectedIndex]?.id;
   const isHistorical = revIndex >= 0 && revIndex < versions.length - 1;
@@ -57,28 +56,40 @@ export default function RevisionTimeline({ blogId, onRevision }) {
     }
   }
 
-  function toggleTimeline() {
-    if (open) setOpen(false);
-    else openTimeline();
-  }
-
   useEffect(() => {
     if (revId) openTimeline();
   }, [revId]);
 
-  // An unknown or inaccessible revision falls back to the latest article.
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const closeOnOutsidePress = event => {
+      if (!panelRef.current?.contains(event.target)) setOpen(false);
+    };
+    const closeOnEscape = event => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsidePress);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsidePress);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [open]);
+
   useEffect(() => {
     if (loaded && revId && revIndex === -1) setRevisionParam(null, true);
   }, [loaded, revId, revIndex]);
 
-  // Keep showing the previous article until the next revision has loaded, so it never flashes.
+  // The parent swaps the full rendered article body, not a separate diff panel.
   useEffect(() => {
     if (!isHistorical) onRevision?.(null);
     else if (historical) onRevision?.(historical);
   }, [isHistorical, historical, onRevision]);
 
   useEffect(() => {
-    if (!open || !selectedId) return undefined;
+    if (!open || !selectedId || !isHistorical) return undefined;
     const cached = cache.current.get(selectedId);
     if (cached) {
       setRevisionData(cached);
@@ -92,16 +103,16 @@ export default function RevisionTimeline({ blogId, onRevision }) {
     fetch(`/api/blogs/${encodeURIComponent(blogId)}/timeline?version=${encodeURIComponent(selectedId)}`, {
       signal: controller.signal,
     })
-      .then(async (response) => {
+      .then(async response => {
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'Revision could not be loaded');
         return data;
       })
-      .then((data) => {
+      .then(data => {
         cache.current.set(selectedId, data);
         setRevisionData(data);
       })
-      .catch((loadError) => {
+      .catch(loadError => {
         if (loadError.name !== 'AbortError') setError(loadError.message || 'Revision could not be loaded');
       })
       .finally(() => {
@@ -109,12 +120,9 @@ export default function RevisionTimeline({ blogId, onRevision }) {
       });
 
     return () => controller.abort();
-  }, [blogId, open, selectedId]);
+  }, [blogId, isHistorical, open, selectedId]);
 
   const selectedVersion = versions[selectedIndex];
-  const changes = revisionData
-    ? diffRevisionBlocks(revisionData.previous?.content || [], revisionData.revision?.content || [])
-    : [];
   const editCount = Math.max(0, versions.length - 1);
   const spanDays = versions.length > 1
     ? Math.max(1, Math.ceil((versions.at(-1).created_at - versions[0].created_at) / 86400))
@@ -122,87 +130,94 @@ export default function RevisionTimeline({ blogId, onRevision }) {
 
   return (
     <>
-    <section className="mb-8 rounded-xl border p-4 sm:p-5" style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-surface)' }}>
-      <button
-        type="button"
-        onClick={toggleTimeline}
-        aria-expanded={open}
-        className="flex w-full items-center justify-between gap-3 text-left"
-        style={{ color: 'var(--text-primary)' }}
+      <section
+        ref={panelRef}
+        className={`fixed bottom-4 left-3 z-[62] border backdrop-blur-xl transition-[width] sm:bottom-5 sm:left-5 ${open ? 'w-[calc(100vw-24px)] max-w-[460px] rounded-2xl p-4' : 'w-auto rounded-full p-1.5'}`}
+        style={{
+          borderColor: 'color-mix(in srgb, var(--accent) 28%, var(--border-default))',
+          backgroundColor: 'color-mix(in srgb, var(--bg-surface) 92%, transparent)',
+          boxShadow: '0 12px 36px color-mix(in srgb, var(--text-primary) 12%, transparent)',
+        }}
+        aria-label="Story revision history"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold">
-          <ion-icon name="git-compare-outline" aria-hidden="true" />
-          Revision timeline
-        </span>
-        <ion-icon name={open ? 'chevron-up-outline' : 'chevron-down-outline'} aria-hidden="true" />
-      </button>
+        <button
+          type="button"
+          onClick={() => (open ? setOpen(false) : openTimeline())}
+          aria-expanded={open}
+          className={`flex items-center justify-between gap-3 text-left ${open ? 'w-full' : 'rounded-full px-3 py-1.5'}`}
+          style={{ color: 'var(--text-primary)' }}
+        >
+          <span className="flex items-center gap-2 text-sm font-semibold">
+            <ion-icon name="time-outline" aria-hidden="true" />
+            {isHistorical ? 'Older revision' : 'History'}
+          </span>
+          <ion-icon name={open ? 'chevron-down-outline' : 'chevron-up-outline'} aria-hidden="true" />
+        </button>
 
-      {open && (
-        <div className="mt-4 border-t pt-4" style={{ borderColor: 'var(--divider)' }}>
-          {loadingList ? (
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading saved revisions...</p>
-          ) : error && !selectedId ? (
-            <p role="alert" className="text-sm" style={{ color: 'var(--text-muted)' }}>{error}</p>
-          ) : versions.length < 2 ? (
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>There are not enough saved revisions to compare yet.</p>
-          ) : (
-            <>
-              <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                  Revised {editCount} {editCount === 1 ? 'time' : 'times'} over {spanDays} {spanDays === 1 ? 'day' : 'days'}
-                </p>
-                <p className="text-xs tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                  {selectedVersion ? formatRevisionDate(selectedVersion.created_at) : ''}
-                </p>
-              </div>
-              <label htmlFor={`revision-range-${blogId}`} className="sr-only">Choose a saved revision</label>
-              <input
-                id={`revision-range-${blogId}`}
-                type="range"
-                min="0"
-                max={versions.length - 1}
-                step="1"
-                value={selectedIndex}
-                onChange={(event) => {
-                  const index = Number(event.currentTarget.value);
-                  setRevisionParam(index < versions.length - 1 ? versions[index].id : null);
-                }}
-                className="w-full accent-[var(--accent)]"
-              />
-              <div className="mb-4 flex justify-between text-[11px]" style={{ color: 'var(--text-faint)' }}>
-                <span>Oldest saved</span>
-                <span>Latest</span>
-              </div>
-              {loadingRevision ? (
-                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading revision...</p>
-              ) : error ? (
-                <p role="alert" className="text-sm" style={{ color: 'var(--text-muted)' }}>{error}</p>
-              ) : (
-                <div className="max-h-[32rem] overflow-auto rounded-lg border p-4 text-sm leading-7" style={{ borderColor: 'var(--border-default)', color: 'var(--text-body)', backgroundColor: 'var(--bg-app)', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
-                  {changes.map((part, index) => part.added ? (
-                    <ins key={index} className="rounded-sm no-underline" style={{ color: 'var(--revision-added-text, #166534)', backgroundColor: 'var(--revision-added-bg, #dcfce7)' }}>{part.value}</ins>
-                  ) : part.removed ? (
-                    <del key={index} style={{ color: 'var(--text-muted)', textDecorationThickness: '1px' }}>{part.value}</del>
-                  ) : (
-                    <span key={index}>{part.value}</span>
-                  ))}
+        {open && (
+          <div className="mt-4 border-t pt-4" style={{ borderColor: 'var(--divider)' }}>
+            {loadingList ? (
+              <p className="text-sm text-[var(--text-muted)]">Loading saved revisions...</p>
+            ) : error && !selectedId ? (
+              <p role="alert" className="text-sm text-[var(--text-muted)]">{error}</p>
+            ) : versions.length < 2 ? (
+              <p className="text-sm text-[var(--text-muted)]">There are not enough saved revisions yet.</p>
+            ) : (
+              <>
+                <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <p className="text-sm font-medium text-[var(--text-primary)]">
+                    {isHistorical ? 'Previewing saved version' : `${editCount} saved ${editCount === 1 ? 'edit' : 'edits'}`}
+                  </p>
+                  <p className="text-xs tabular-nums text-[var(--text-muted)]">
+                    {selectedVersion ? formatRevisionDate(selectedVersion.created_at) : ''}
+                  </p>
                 </div>
-              )}
-            </>
-          )}
+                <label htmlFor={`revision-range-${blogId}`} className="sr-only">Choose a saved revision</label>
+                <input
+                  id={`revision-range-${blogId}`}
+                  type="range"
+                  min="0"
+                  max={versions.length - 1}
+                  step="1"
+                  value={selectedIndex}
+                  onChange={event => {
+                    const index = Number(event.currentTarget.value);
+                    setRevisionParam(index < versions.length - 1 ? versions[index].id : null);
+                  }}
+                  className="w-full accent-[var(--accent)]"
+                />
+                <div className="mb-4 flex justify-between text-[11px] text-[var(--text-faint)]">
+                  <span>Oldest saved</span>
+                  <span>{spanDays ? `${spanDays} ${spanDays === 1 ? 'day' : 'days'}` : ''}</span>
+                  <span>Current</span>
+                </div>
+                {loadingRevision && isHistorical ? (
+                  <p className="text-xs text-[var(--text-muted)]">Updating the story preview...</p>
+                ) : error ? (
+                  <p role="alert" className="text-xs text-[var(--text-muted)]">{error}</p>
+                ) : isHistorical ? (
+                  <div className="flex items-center justify-between gap-3 rounded-xl bg-[var(--accent-subtle)] px-3 py-2.5 text-xs">
+                    <span className="text-[var(--text-muted)]">The complete story now shows this revision.</span>
+                    <button type="button" onClick={() => setRevisionParam(null)} className="shrink-0 font-semibold text-[var(--accent)] hover:underline">
+                      Latest
+                    </button>
+                  </div>
+                ) : null}
+              </>
+            )}
+          </div>
+        )}
+      </section>
+      {historical && (
+        <div role="status" className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border px-4 py-2.5 text-sm" style={{ borderColor: 'var(--accent)', backgroundColor: 'var(--accent-subtle)', color: 'var(--text-primary)' }}>
+          <ion-icon name="time-outline" aria-hidden="true" />
+          <span className="font-semibold">Historical preview</span>
+          <span className="text-[var(--text-muted)]">Revision <code>{historical.id.slice(0, 7)}</code> from {formatRevisionDate(historical.created_at)}</span>
+          <button type="button" onClick={() => setRevisionParam(null)} className="font-medium text-[var(--accent)] underline">
+            Return to latest
+          </button>
         </div>
       )}
-    </section>
-    {historical && (
-      <div role="status" className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border px-4 py-2.5 text-sm" style={{ borderColor: 'var(--accent)', backgroundColor: 'var(--accent-subtle)', color: 'var(--text-primary)' }}>
-        <ion-icon name="time-outline" aria-hidden="true" />
-        <span className="font-semibold">Viewing an older revision</span>
-        <span style={{ color: 'var(--text-muted)' }}>· Revision <code>{historical.id.slice(0, 7)}</code> · {formatRevisionDate(historical.created_at)} ·</span>
-        <button type="button" onClick={() => setRevisionParam(null)} className="font-medium underline" style={{ color: 'var(--accent)' }}>
-          Return to latest
-        </button>
-      </div>
-    )}
     </>
   );
 }

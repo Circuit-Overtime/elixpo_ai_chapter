@@ -32,11 +32,27 @@ test('custom ranges include the complete end date with an exclusive upper bound'
   assert.equal(range.to, Date.parse('2026-01-03T00:00:00Z') / 1000);
 });
 
+test('a custom range with the same from and to selects that single day', () => {
+  const now = Date.parse('2026-01-03T00:00:00Z') / 1000;
+  const range = parseAnalyticsRange(new URLSearchParams('range=custom&from=2026-01-02&to=2026-01-02'), now);
+  assert.equal(range.from, Date.parse('2026-01-02T00:00:00Z') / 1000);
+  assert.equal(range.to, Date.parse('2026-01-03T00:00:00Z') / 1000);
+  assert.throws(() => parseAnalyticsRange(new URLSearchParams('range=custom&from=2026-01-05&to=2026-01-02'), now));
+});
+
 test('classifies acquisition without retaining full referrer URLs', () => {
   assert.deepEqual(classifyReferrer(''), { source: 'Direct', domain: null });
   assert.deepEqual(classifyReferrer('https://blogs.elixpo.com/feed'), { source: 'Internal', domain: 'blogs.elixpo.com' });
   assert.deepEqual(classifyReferrer('https://www.google.com/search?q=post'), { source: 'Search', domain: 'google.com' });
   assert.deepEqual(classifyReferrer('https://www.reddit.com/r/writing'), { source: 'Social', domain: 'reddit.com' });
+});
+
+test('lookalike referrer domains stay External', () => {
+  assert.equal(classifyReferrer('https://notgoogle.com/post').source, 'External');
+  assert.equal(classifyReferrer('https://myreddit.net/post').source, 'External');
+  assert.equal(classifyReferrer('https://google.com.evil.example/post').source, 'External');
+  assert.equal(classifyReferrer('https://search.brave.com/search?q=x').source, 'Search');
+  assert.equal(classifyReferrer('https://google.co.in/search').source, 'Search');
 });
 
 test('classifies devices and computes stable percentage changes', () => {

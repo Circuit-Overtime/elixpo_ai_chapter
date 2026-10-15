@@ -218,7 +218,12 @@ function BlogImageRenderer({ block, editor }) {
   const showFailToast = useCallback((msg) => {
     const toast = document.createElement('div');
     toast.className = 'blog-img-fail-toast';
-    toast.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="#f87171" stroke-width="1.5"/><path d="M8 4.5v4" stroke="#f87171" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".75" fill="#f87171"/></svg><span>${msg}</span>`;
+    const icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="#f87171" stroke-width="1.5"/><path d="M8 4.5v4" stroke="#f87171" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".75" fill="#f87171"/></svg>`;
+    const label = document.createElement('span');
+    label.textContent = msg;
+    toast.append(icon, label);
     document.body.appendChild(toast);
     setTimeout(() => { toast.classList.add('blog-img-fail-toast--out'); }, 3200);
     setTimeout(() => { toast.remove(); }, 3600);
