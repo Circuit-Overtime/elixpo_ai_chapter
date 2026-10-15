@@ -31,6 +31,7 @@ except ImportError:
 MODEL_REPO = os.getenv("MODEL_REPO", "Elixpo/monodiffuse")
 MODEL_DIR = os.getenv("MODEL_DIR")
 DIFFUSION_STEPS = 1000
+FRAME_DELAY_SECONDS = 0.08
 FP32_DIGIT_SEEDS = {0: 15, 1: 16, 2: 50, 3: 22, 4: 0, 5: 0, 6: 12, 7: 4, 8: 10, 9: 18}
 MODEL_FILES = {
     "FP32 deployment": "mnist_conditional_fp32.onnx",
@@ -97,6 +98,7 @@ def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bo
     yield display_image(np.clip(state, -1, 1)), (
         f"### Noise initialized\nDigit **{digit}** · seed **{seed}** · {model_name}"
     )
+    time.sleep(FRAME_DELAY_SECONDS)
 
     for position, timestep_value in enumerate(schedule):
         timestep = int(timestep_value)
@@ -139,6 +141,7 @@ def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bo
                 f"Step **{completed}/{len(schedule)}** · diffusion timestep **{timestep}** · "
                 f"elapsed **{elapsed:.1f}s**"
             )
+            time.sleep(FRAME_DELAY_SECONDS)
 
     state = np.clip(state, -1, 1).astype(np.float32, copy=False)
     predicted_digit, confidence = classifier_prediction(state)
@@ -200,8 +203,7 @@ CSS = """
 
 with gr.Blocks() as demo:
     gr.HTML(
-        "<div id='hero'><h1>Diffuino Live</h1>"
-        "<p>Watch noise become a digit—one denoising trajectory at a time.</p></div>"
+        "<div id='hero'><h1>Diffuino Live</h1></div>"
     )
     with gr.Row(equal_height=True, elem_id="workspace"):
         with gr.Column(scale=2, elem_id="stage"):
@@ -239,10 +241,8 @@ with gr.Blocks() as demo:
     )
 
     gr.Markdown(
-        "**Full DDPM** matches the board's 1,000-step sampler. **W1A32** uses binary "
-        "convolutional weights with FP32 activations and surrounding operations; this demo is "
-        "not a packed binary kernel. The evaluator is diagnostic, not a perceptual-quality "
-        "guarantee. · [Source and hardware](https://github.com/elixpo/monodiffuse)",
+        "[Source](https://github.com/elixpo/monodiffuse) · "
+        "[Circuit](https://github.com/elixpo/monodiffuse/tree/main/hardware/diffuino_selector)",
         elem_id="footer-note",
     )
 
