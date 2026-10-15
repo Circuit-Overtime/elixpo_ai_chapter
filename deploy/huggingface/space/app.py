@@ -10,6 +10,23 @@ import onnxruntime as ort
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
+try:
+    import spaces
+except ImportError:
+    class _LocalSpaces:
+        """Keep the Space runnable outside Hugging Face ZeroGPU."""
+
+        @staticmethod
+        def GPU(*args, **kwargs):
+            del args, kwargs
+
+            def decorator(function):
+                return function
+
+            return decorator
+
+    spaces = _LocalSpaces()
+
 
 MODEL_REPO = os.getenv("MODEL_REPO", "Elixpo/monodiffuse")
 MODEL_DIR = os.getenv("MODEL_DIR")
@@ -59,6 +76,7 @@ def sampling_plan(mode: str) -> tuple[str, np.ndarray]:
     return "ddim", np.linspace(DIFFUSION_STEPS - 1, 0, steps, dtype=np.int64)
 
 
+@spaces.GPU(duration=30)
 def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bool):
     digit = int(digit)
     seed = FP32_DIGIT_SEEDS[digit] if curated_seed and model_name == "FP32 deployment" else int(seed)
