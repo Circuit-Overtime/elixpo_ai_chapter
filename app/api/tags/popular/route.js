@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const parsed = Number.parseInt(searchParams.get('limit') || '30', 10);
+  const parsed = Number(searchParams.get('limit') || '30');
   const limit = Number.isInteger(parsed) && parsed >= 1 && parsed <= 50 ? parsed : 30;
 
   try {
