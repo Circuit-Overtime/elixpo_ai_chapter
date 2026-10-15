@@ -6,6 +6,7 @@ email/preview/
 out/
 dist/
 .release/
+brag-output/
 .wrangler/
 # Collab worker config has no secrets (just bindings/ids) and is needed to
 # deploy worker/collab — keep it tracked.
