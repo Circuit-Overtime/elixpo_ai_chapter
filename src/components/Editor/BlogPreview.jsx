@@ -1009,8 +1009,9 @@ export default function BlogPreview({
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
         </button>
       )}
+      <section className="blog-preview-hero" aria-labelledby={readerMode ? 'story-title' : undefined}>
       {/* Cover + emoji */}
-      <div className="relative mb-2">
+      <div className="blog-preview-visual relative mb-2">
         {coverPreview && (
           <div className="blog-preview-cover rounded-xl overflow-hidden">
             <img
@@ -1040,14 +1041,15 @@ export default function BlogPreview({
             </div>
           </div>
         )}
+
+        {/* Spacer when emoji overlaps cover */}
+        {pageEmoji && coverPreview && <div className="h-8" />}
       </div>
 
-      {/* Spacer when emoji overlaps cover */}
-      {pageEmoji && coverPreview && <div className="h-8" />}
-
+      <div className="blog-preview-header">
       {/* Badges — Member-only / Featured */}
       {(memberOnly || featured) && (
-        <div className="flex items-center gap-2 mt-6 mb-3">
+        <div className="blog-preview-badges flex items-center gap-2 mt-6 mb-3">
           {memberOnly && (
             <span className="flex items-center gap-1.5 text-[13px] px-3 py-1 rounded-full" style={{ border: '1px solid var(--border-default)', color: 'var(--text-body)' }}>
               <ion-icon name="sparkles" style={{ fontSize: '13px', color: '#e8a840' }} /> Member-only story
@@ -1063,7 +1065,7 @@ export default function BlogPreview({
 
       {/* Title */}
       {title && (
-        <h1 className={`blog-preview-title text-[2.2em] font-extrabold leading-tight ${(memberOnly || featured) ? 'mt-0' : 'mt-6'} mb-2`} style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>{title}</h1>
+        <h1 id={readerMode ? 'story-title' : undefined} className={`blog-preview-title text-[2.2em] font-extrabold leading-tight ${(memberOnly || featured) ? 'mt-0' : 'mt-6'} mb-2`} style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>{title}</h1>
       )}
 
       {/* Subtitle */}
@@ -1073,7 +1075,8 @@ export default function BlogPreview({
 
       {/* Tags — directly under the title */}
       {tags.length > 0 && (
-        readerMode ? <TopicInterestChips tags={tags} /> : (
+        <div className="blog-preview-topics">
+        {readerMode ? <TopicInterestChips tags={tags} /> : (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {tags.map((tag) => (
               <span key={tag} className="px-2.5 py-0.5 bg-[#9b7bf70a] rounded-full text-[13px] text-[#9b7bf7]">
@@ -1081,7 +1084,8 @@ export default function BlogPreview({
               </span>
             ))}
           </div>
-        )
+        )}
+        </div>
       )}
 
       {/* Author bar — under title. Primary author + accepted co-authors, with
@@ -1183,6 +1187,8 @@ export default function BlogPreview({
           </div>
         );
       })()}
+      </div>
+      </section>
 
       {/* Header action bar (clap / comment / repost / save / share) */}
       {headerActions && (
