@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import base64
+import io
 import os
 import time
 from functools import lru_cache
@@ -31,7 +33,8 @@ except ImportError:
 MODEL_REPO = os.getenv("MODEL_REPO", "Elixpo/monodiffuse")
 MODEL_DIR = os.getenv("MODEL_DIR")
 DIFFUSION_STEPS = 1000
-FRAME_DELAY_SECONDS = 0.08
+FRAME_DELAY_SECONDS = 0.16
+TARGET_PREVIEW_FRAMES = 30
 FP32_DIGIT_SEEDS = {0: 15, 1: 16, 2: 50, 3: 22, 4: 0, 5: 0, 6: 12, 7: 4, 8: 10, 9: 18}
 MODEL_FILES = {
     "FP32 deployment": "mnist_conditional_fp32.onnx",
@@ -55,10 +58,17 @@ def load_session(filename: str) -> ort.InferenceSession:
     return ort.InferenceSession(path, session_options(), providers=["CPUExecutionProvider"])
 
 
-def display_image(state: np.ndarray, scale: int = 12) -> Image.Image:
+def display_frame(state: np.ndarray) -> str:
     pixels = np.clip((state.squeeze() + 1.0) * 127.5, 0, 255).astype(np.uint8)
     image = Image.fromarray(pixels, mode="L")
-    return image.resize((28 * scale, 28 * scale), Image.Resampling.NEAREST).convert("RGB")
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG", optimize=True)
+    encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
+    return (
+        '<div class="preview-frame">'
+        f'<img src="data:image/png;base64,{encoded}" alt="Current diffusion frame">'
+        "</div>"
+    )
 
 
 def classifier_prediction(state: np.ndarray) -> tuple[int, float]:
@@ -92,10 +102,10 @@ def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bo
 
     rng = np.random.default_rng(seed)
     state = rng.standard_normal((1, 1, 28, 28), dtype=np.float32)
-    emit_every = max(1, len(schedule) // 40)
+    emit_every = max(1, (len(schedule) + TARGET_PREVIEW_FRAMES - 1) // TARGET_PREVIEW_FRAMES)
     started = time.perf_counter()
 
-    yield display_image(np.clip(state, -1, 1)), (
+    yield display_frame(np.clip(state, -1, 1)), (
         f"### Noise initialized\nDigit **{digit}** · seed **{seed}** · {model_name}"
     )
     time.sleep(FRAME_DELAY_SECONDS)
@@ -136,7 +146,7 @@ def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bo
         if completed % emit_every == 0 or completed == len(schedule):
             elapsed = time.perf_counter() - started
             percent = 100.0 * completed / len(schedule)
-            yield display_image(np.clip(predicted_clean, -1, 1)), (
+            yield display_frame(np.clip(predicted_clean, -1, 1)), (
                 f"### Denoising · {percent:.0f}%\n"
                 f"Step **{completed}/{len(schedule)}** · diffusion timestep **{timestep}** · "
                 f"elapsed **{elapsed:.1f}s**"
@@ -148,7 +158,7 @@ def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bo
     elapsed = time.perf_counter() - started
     match = predicted_digit == digit
     badge = "✅ match" if match else "⚠️ mismatch"
-    yield display_image(state), (
+    yield display_frame(state), (
         f"### Complete · {badge}\nRequested **{digit}** · evaluator prediction "
         f"**{predicted_digit}** · confidence **{confidence:.1%}** · seed **{seed}** · "
         f"**{elapsed:.1f}s**"
@@ -166,7 +176,12 @@ CSS = """
 #workspace {gap: 14px !important; align-items: stretch;}
 #stage {border: 1px solid rgba(124,58,237,.35); border-radius: 24px;
   box-shadow: 0 20px 80px rgba(76,29,149,.16); overflow:hidden;}
-#stage .image-container {min-height: 0 !important;}
+#preview {height: 330px; min-height: 330px; padding: 0 !important;
+  background: radial-gradient(circle at 50% 45%,rgba(124,58,237,.12),transparent 58%);}
+#preview .preview-frame {height: 100%; width: 100%; display: flex;
+  align-items: center; justify-content: center;}
+#preview .preview-frame img {width: min(92%,330px); height: min(92%,330px);
+  object-fit: contain; image-rendering: pixelated; image-rendering: crisp-edges;}
 #status {min-height: 64px; padding: 2px 12px; font-size: .9rem;}
 #status h3 {margin: .2rem 0 !important; font-size: 1rem;}
 #controls {gap: 8px !important;}
@@ -207,7 +222,10 @@ with gr.Blocks() as demo:
     )
     with gr.Row(equal_height=True, elem_id="workspace"):
         with gr.Column(scale=2, elem_id="stage"):
-            output = gr.Image(label="Live diffusion", type="pil", height=330)
+            output = gr.HTML(
+                '<div class="preview-frame"><span>Ready for diffusion</span></div>',
+                elem_id="preview",
+            )
             status = gr.Markdown("### Ready\nChoose a digit and start diffusion.", elem_id="status")
         with gr.Column(scale=1, elem_id="controls"):
             with gr.Row(elem_classes=["compact-row"]):
