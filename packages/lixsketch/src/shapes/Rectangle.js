@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { registerRotationAnchor } from '../core/ScreenSpaceControls.js';
 import { canvasToLocal, localToCanvas } from '../core/CanvasSpace.js';
+import { DEFAULT_SHAPE_LABEL_FONT_SIZE, measureShapeLabel } from '../core/ShapeLabelLayout.js';
 import { resolveThemeLabelColor } from '../utils/themeColors.js';
 // Rectangle shape class - extracted from drawSquare.js
 // Depends on globals: svg, shapes, rough, currentShape, currentZoom, rc
@@ -52,7 +53,7 @@ class Rectangle {
         this.label = options.label || '';
         this.labelElement = null;
         this.labelColor = resolveThemeLabelColor(options.labelColor);
-        this.labelFontSize = options.labelFontSize || 14;
+        this.labelFontSize = options.labelFontSize || DEFAULT_SHAPE_LABEL_FONT_SIZE;
         this.labelBg = options.labelBg !== false; // set labelBg:false to render plain text with no pill backdrop
         this._isEditingLabel = false;
         this._hitArea = null;
@@ -78,6 +79,7 @@ class Rectangle {
         this.draw();
     }
     draw() {
+        const labelLayout = this._ensureLabelFits();
         const childrenToRemove = [];
         const preserveSet = this._skipAnchors ? new Set([...this.anchors, this.selectionOutline, this.rotationAnchor].filter(Boolean)) : null;
         for (let i = 0; i < this.group.children.length; i++) {
@@ -126,7 +128,7 @@ class Rectangle {
         this._updateShade();
 
         // Update embedded label
-        this._updateLabelElement();
+        this._updateLabelElement(labelLayout);
 
         const rotateCenterX = this.width / 2;
         const rotateCenterY = this.height / 2;
@@ -219,7 +221,18 @@ class Rectangle {
         }
     }
 
-    _updateLabelElement() {
+    _ensureLabelFits() {
+        if (!this.label) return null;
+        const layout = measureShapeLabel(this.label, this.labelFontSize);
+        // Dense diagram renderers opt out of the label backdrop and own their
+        // geometry. Auto-fit is for interactive rectangle labels.
+        if (this.isBeingDrawn || !this.labelBg) return layout;
+        this.width = Math.max(this.width, layout.requiredWidth);
+        this.height = Math.max(this.height, layout.requiredHeight);
+        return layout;
+    }
+
+    _updateLabelElement(layout = null) {
         if (!this.label) {
             // Remove label element if label is empty
             if (this.labelElement && this.labelElement.parentNode === this.group) {
@@ -239,15 +252,25 @@ class Rectangle {
             this.labelElement.setAttribute('pointer-events', 'none');
         }
 
+        const labelLayout = layout || measureShapeLabel(this.label, this.labelFontSize);
+        const startY = (this.height - labelLayout.contentHeight) / 2;
+
+        while (this.labelElement.firstChild) this.labelElement.removeChild(this.labelElement.firstChild);
+        labelLayout.lines.forEach((line, index) => {
+            const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+            tspan.setAttribute('x', this.width / 2);
+            tspan.setAttribute('y', startY + index * labelLayout.lineHeight);
+            tspan.setAttribute('dominant-baseline', 'hanging');
+            tspan.textContent = line || ' ';
+            this.labelElement.appendChild(tspan);
+        });
+
         // Position at center of rectangle
         this.labelElement.setAttribute('x', this.width / 2);
-        this.labelElement.setAttribute('y', this.height / 2);
         this.labelElement.setAttribute('text-anchor', 'middle');
-        this.labelElement.setAttribute('dominant-baseline', 'central');
         this.labelElement.setAttribute('fill', this.labelColor);
         this.labelElement.setAttribute('font-size', this.labelFontSize);
         this.labelElement.setAttribute('font-family', 'lixFont, sans-serif');
-        this.labelElement.textContent = this.label;
 
         // Background padding rect behind text (like arrows have) — skippable
         // via labelBg:false for dense multi-row content (e.g. mermaid ER
@@ -270,9 +293,8 @@ class Rectangle {
         this._labelBg.setAttribute('fill', canvasBg);
         const hPadding = 6;
         const vPadding = 2;
-        const charWidth = this.labelFontSize * 0.6;
-        const bgW = this.label.length * charWidth + hPadding * 2;
-        const bgH = this.labelFontSize + vPadding * 2;
+        const bgW = labelLayout.contentWidth + hPadding * 2;
+        const bgH = labelLayout.contentHeight + vPadding * 2;
         this._labelBg.setAttribute('x', this.width / 2 - bgW / 2);
         this._labelBg.setAttribute('y', this.height / 2 - bgH / 2);
         this._labelBg.setAttribute('width', bgW);
@@ -363,7 +385,7 @@ class Rectangle {
         }, 10);
 
         const finishEdit = () => {
-            const newText = input.textContent.trim().replace(/\u00A0/g, '');
+            const newText = input.innerText.trim().replace(/\u00A0/g, '');
             this.label = newText;
             this._isEditingLabel = false;
 

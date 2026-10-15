@@ -8,14 +8,22 @@ let eraserGlow = null;
 let eraserPoints = [];
 let targetedElements = new Set();
 
-const MAX_TRAIL_LENGTH = 16;
-const FADE_DURATION = 200;
-const MIN_POINT_DISTANCE = 1.5;
-const SMOOTHING_WINDOW = 3;
+const MAX_TRAIL_LENGTH = 28;
+const FADE_DURATION = 320;
+const MIN_POINT_DISTANCE = 1;
+const SMOOTHING_WINDOW = 5;
 
 let fadeAnimationId = null;
 let fadeStartTime = null;
 let fadeInitialPoints = null;
+let renderAnimationId = null;
+
+function trailPalette() {
+    const isLight = document.documentElement.dataset.canvasTheme === 'light' || document.body?.classList.contains('theme-light');
+    return isLight
+        ? { core: '49, 40, 63', glow: '124, 89, 195' }
+        : { core: '245, 239, 251', glow: '199, 164, 255' };
+}
 
 // Getter/setter for isErasing so eraserTool can share state
 function getIsErasing() { return isErasing; }
@@ -98,6 +106,10 @@ function safeRemove(el) {
 
 // Remove all trail elements and reset state
 function cleanupTrail() {
+    if (renderAnimationId) {
+        cancelAnimationFrame(renderAnimationId);
+        renderAnimationId = null;
+    }
     if (fadeAnimationId) {
         cancelAnimationFrame(fadeAnimationId);
         fadeAnimationId = null;
@@ -119,7 +131,8 @@ function createEraserTrail(x, y) {
     // Outer glow
     eraserGlow = document.createElementNS("http://www.w3.org/2000/svg", "path");
     eraserGlow.setAttribute("fill", "none");
-    eraserGlow.setAttribute("stroke", "rgba(80, 80, 80, 0.15)");
+    const palette = trailPalette();
+    eraserGlow.setAttribute("stroke", `rgba(${palette.glow}, 0.20)`);
     eraserGlow.setAttribute("stroke-width", 14 / currentZoom);
     eraserGlow.setAttribute("stroke-linecap", "round");
     eraserGlow.setAttribute("stroke-linejoin", "round");
@@ -129,7 +142,7 @@ function createEraserTrail(x, y) {
     // Core path
     eraserPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     eraserPath.setAttribute("fill", "none");
-    eraserPath.setAttribute("stroke", "rgba(53, 53, 53, 0.5)");
+    eraserPath.setAttribute("stroke", `rgba(${palette.core}, 0.62)`);
     eraserPath.setAttribute("stroke-width", 5 / currentZoom);
     eraserPath.setAttribute("stroke-linecap", "round");
     eraserPath.setAttribute("stroke-linejoin", "round");
@@ -158,7 +171,12 @@ function updateEraserTrail(x, y) {
         eraserPoints.shift();
     }
 
-    renderTrail(eraserPoints, 1.0);
+    if (!renderAnimationId) {
+        renderAnimationId = requestAnimationFrame(() => {
+            renderAnimationId = null;
+            renderTrail(eraserPoints, 1.0);
+        });
+    }
 }
 
 // Render the trail with given points and opacity multiplier
@@ -168,16 +186,17 @@ function renderTrail(points, opacityMul) {
     const pathD = buildSmoothPath(points);
     const coreW = Math.max(1.5 / currentZoom, (5 / currentZoom) * opacityMul);
     const glowW = Math.max(3 / currentZoom, (14 / currentZoom) * opacityMul);
-    const coreOpacity = 0.5 * opacityMul;
-    const glowOpacity = 0.15 * opacityMul;
+    const coreOpacity = 0.62 * opacityMul;
+    const glowOpacity = 0.20 * opacityMul;
+    const palette = trailPalette();
 
     eraserPath.setAttribute("d", pathD);
-    eraserPath.setAttribute("stroke", `rgba(53, 53, 53, ${coreOpacity})`);
+    eraserPath.setAttribute("stroke", `rgba(${palette.core}, ${coreOpacity})`);
     eraserPath.setAttribute("stroke-width", coreW);
 
     if (eraserGlow) {
         eraserGlow.setAttribute("d", pathD);
-        eraserGlow.setAttribute("stroke", `rgba(80, 80, 80, ${glowOpacity})`);
+        eraserGlow.setAttribute("stroke", `rgba(${palette.glow}, ${glowOpacity})`);
         eraserGlow.setAttribute("stroke-width", glowW);
     }
 }
@@ -187,6 +206,12 @@ function fadeOutEraserTrail() {
     if (!eraserPath) {
         cleanupTrail();
         return;
+    }
+
+    if (renderAnimationId) {
+        cancelAnimationFrame(renderAnimationId);
+        renderAnimationId = null;
+        renderTrail(eraserPoints, 1.0);
     }
 
     // Cancel any existing fade
