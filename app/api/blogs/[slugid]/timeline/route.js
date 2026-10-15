@@ -45,14 +45,8 @@ export async function GET(request, { params }) {
     `).bind(versionId, slugid).first();
     if (!revision) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-    const previous = await db.prepare(`
-      SELECT id, content, created_at FROM blog_versions
-      WHERE blog_id = ? AND (created_at < ? OR (created_at = ? AND id < ?))
-      ORDER BY created_at DESC, id DESC LIMIT 1
-    `).bind(slugid, revision.created_at, revision.created_at, revision.id).first();
     return NextResponse.json({
       revision: presentRevision(revision),
-      previous: previous ? presentRevision(previous) : null,
     });
   } catch (error) {
     console.error('Public revision timeline error:', error?.message || error);

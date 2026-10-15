@@ -2,7 +2,7 @@ export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { getSession } from '../../../lib/auth';
 import { STAFF_ORG_ID } from '../../../lib/staff';
-import { loadRecommendationContext, rankBlogs, stripInternalRecommendationFields } from '../../../lib/recommendations';
+import { diversifyBlogs, loadRecommendationContext, rankBlogs, stripInternalRecommendationFields } from '../../../lib/recommendations';
 
 const BLOG_FIELDS = `b.id, b.slug, b.secret, b.title, b.subtitle, b.excerpt, b.cover_image_r2_key, b.page_emoji,
   b.author_id, b.published_as, b.published_at, b.read_time_minutes,
@@ -46,7 +46,7 @@ export async function GET(request) {
         ? `v1:feed:anon:tag:${filterTag}:p${page}`
         : filterType === 'featured'
         ? `v1:feed:anon:featured:p${page}`
-        : `v2:feed:anon:recommended:${anonymousLanguage}:${anonymousRegion}:p${page}`;
+        : `v3:feed:anon:recommended:${anonymousLanguage}:${anonymousRegion}:p${page}`;
 
       const cached = await kvCache(cacheKey, 180, async () => {
         const { getDB } = await import('../../../lib/cloudflare');
@@ -121,7 +121,9 @@ async function queryFollowing(db, userId, now, limit, offset) {
             AND user_id IN (SELECT following_id FROM follows WHERE follower_id = ? AND following_type = 'user')
         )
       )
-    ORDER BY b.published_at DESC
+    ORDER BY
+      ROW_NUMBER() OVER (PARTITION BY b.author_id ORDER BY b.published_at DESC, b.id DESC),
+      b.published_at DESC
     LIMIT ? OFFSET ?
   `).bind(cutoff, userId, userId, userId, limit, offset).all();
   return result?.results || [];
@@ -160,7 +162,9 @@ async function queryInterests(db, userId, now, limit) {
         )
       )
       AND b.author_id != ?
-    ORDER BY b.published_at DESC
+    ORDER BY
+      ROW_NUMBER() OVER (PARTITION BY b.author_id ORDER BY b.published_at DESC, b.id DESC),
+      b.published_at DESC
     LIMIT ?
   `).bind(cutoff, userId, userId, signalCutoff, userId, limit).all();
   return result?.results || [];
@@ -173,7 +177,14 @@ async function queryTrending(db, now, limit, offset) {
     SELECT ${BLOG_FIELDS}
     FROM blogs b
     WHERE b.status = 'published'${EXCLUDE_TEST} AND b.published_at > ?
-    ORDER BY b.like_count DESC, b.view_count DESC, b.published_at DESC
+    ORDER BY
+      ROW_NUMBER() OVER (
+        PARTITION BY b.author_id
+        ORDER BY b.like_count DESC, b.view_count DESC, b.published_at DESC
+      ),
+      b.like_count DESC,
+      b.view_count DESC,
+      b.published_at DESC
     LIMIT ? OFFSET ?
   `).bind(cutoff, limit, offset).all();
   return result?.results || [];
@@ -186,7 +197,9 @@ async function queryFeatured(db, now, limit, offset) {
     FROM blogs b
     WHERE b.status = 'published'${EXCLUDE_TEST}
       AND b.published_as = ?
-    ORDER BY b.published_at DESC
+    ORDER BY
+      ROW_NUMBER() OVER (PARTITION BY b.author_id ORDER BY b.published_at DESC, b.id DESC),
+      b.published_at DESC
     LIMIT ? OFFSET ?
   `).bind(`org:${STAFF_ORG_ID}`, limit, offset).all();
   return result?.results || [];
@@ -222,7 +235,9 @@ async function queryRecent(db, limit, offset = 0) {
     SELECT ${BLOG_FIELDS}
     FROM blogs b
     WHERE b.status = 'published'${EXCLUDE_TEST}
-    ORDER BY b.published_at DESC
+    ORDER BY
+      ROW_NUMBER() OVER (PARTITION BY b.author_id ORDER BY b.published_at DESC, b.id DESC),
+      b.published_at DESC
     LIMIT ? OFFSET ?
   `).bind(limit, offset).all();
   return result?.results || [];
@@ -258,7 +273,7 @@ async function queryBlended(db, userId, headers, now, limit, offset = 0) {
   await attachCandidateTags(db, all);
   const context = await loadRecommendationContext(db, userId, headers);
   const eligible = await filterMuted(db, userId, all);
-  const ranked = rankBlogs(eligible, context, { now })
+  const ranked = diversifyBlogs(rankBlogs(eligible, context, { now }))
     .slice(offset, offset + limit)
     .map(stripInternalRecommendationFields);
 
@@ -270,7 +285,7 @@ async function queryRecommendedAnonymous(db, headers, now, limit, offset) {
   const recent = await queryRecent(db, candidateLimit, 0);
   await attachCandidateTags(db, recent);
   const context = await loadRecommendationContext(db, null, headers);
-  return rankBlogs(recent, context, { now })
+  return diversifyBlogs(rankBlogs(recent, context, { now }))
     .slice(offset, offset + limit)
     .map(stripInternalRecommendationFields);
 }
