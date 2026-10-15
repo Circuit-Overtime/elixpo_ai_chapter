@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Training Binary-Weight Diffusion Models from Scratch</title>
-  <meta name="description" content="A controlled MNIST and CIFAR-10 study of native binary-weight diffusion training, post-training quantization, and warm-started QAT.">
-  <meta name="citation_title" content="Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and CIFAR-10 Study">
+  <title>Native Binary-Weight Training in MNIST Diffusion</title>
+  <meta name="description" content="A controlled MNIST study separating zero-shot sign projection failure from native binary-weight optimization.">
+  <meta name="citation_title" content="Native Binary-Weight Training Outperforms Zero-Shot Sign Projection in MNIST Diffusion">
   <meta name="citation_author" content="Ayushman Bhattacharya">
   <meta name="citation_author" content="Anwesha Chakraborty">
   <meta name="citation_author" content="Nihal Gazi">
@@ -28,16 +28,16 @@
 <body>
   <main>
     <p class="meta">Preprint · MonoDiffuse Technical Report 2026-01 · 14 October 2026</p>
-    <h1>Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and CIFAR-10 Study</h1>
+    <h1>Native Binary-Weight Training Outperforms Zero-Shot Sign Projection in MNIST Diffusion</h1>
     <p class="authors">Ayushman Bhattacharya, Anwesha Chakraborty, and Nihal Gazi</p>
     <div class="actions">
       <a href="monodiffuse-preprint.pdf">Read the PDF</a>
       <a href="https://github.com/elixpo/monodiffuse">Code and artifacts</a>
     </div>
     <h2>Abstract</h2>
-    <p>At one bit per weight, post-training quantization can destroy a diffusion model's denoising function. We isolate how much can be recovered by optimizing with binary weights in the forward pass using a parameter-compatible small residual U-Net. The study compares FP32 training, zero-shot PTQ, native W1A32 training, warm-started quantization-aware training, and a W1A1 core under matched budgets and three training seeds. On MNIST, native W1A32 substantially mitigates PTQ collapse but remains behind FP32. On CIFAR-10, even the compact FP32 control fails the evaluation audit, so the stress test does not establish natural-image performance. The result is deliberately bounded: optimization path matters at one bit on MNIST, while a general teacher-free solution to binary diffusion remains open.</p>
+    <p>Does severe failure after projecting a diffusion model to one-bit weights show that its binary representation is unusable? In a controlled small MNIST residual U-Net, native W1A32 training obtains domain-feature Fréchet distance 46.33 ± 17.24, 28.4-fold lower than matched zero-shot projection at 1314.20 ± 314.96, while remaining substantially worse than FP32 at 3.15 ± 0.38. The result is deliberately local: optimizing binary forwards reaches a much better solution than this projection baseline, but it does not establish full W1A1 success, floating-point parity, or transfer to natural images.</p>
     <h2>Status</h2>
-    <p>This manuscript is a preprint and has not undergone peer review. Its CIFAR-10 result is reported as a failed small-model stress test, not as competitive natural-image generation.</p>
+    <p>This manuscript is a preprint and has not undergone peer review. A separate compact CIFAR-10 attempt is excluded from the evidence because its FP32 control also failed.</p>
   </main>
 </body>
 </html>

@@ -1,8 +1,8 @@
 # MonoDiffuse v1.0.0
 
 This is the archival reproducibility release associated with
-**MonoDiffuse-TR-2026-01**, *Training Binary-Weight Diffusion Models from Scratch:
-A Controlled MNIST and CIFAR-10 Study*.
+**MonoDiffuse-TR-2026-01**, *Native Binary-Weight Training Outperforms Zero-Shot
+Sign Projection in MNIST Diffusion*.
 
 Included:
 
