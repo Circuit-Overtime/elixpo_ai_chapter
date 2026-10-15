@@ -153,14 +153,48 @@ def generate(digit: int, model_name: str, mode: str, seed: int, curated_seed: bo
 
 
 CSS = """
-.gradio-container {max-width: 1100px !important; margin: auto !important;}
-#hero {text-align:center; padding: 12px 0 2px;}
-#hero h1 {font-size: clamp(2.2rem, 6vw, 4.7rem); margin-bottom: .15em;
+.gradio-container {max-width: 1080px !important; margin: auto !important;
+  padding: 10px 18px 8px !important; min-height: 100vh;}
+#hero {text-align:center; padding: 0 0 6px;}
+#hero h1 {font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1; margin: 0 0 .12em;
   background: linear-gradient(90deg,#7c3aed,#22d3ee); -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;}
+#hero p {margin: 0; font-size: .95rem; opacity: .78;}
+#workspace {gap: 14px !important; align-items: stretch;}
 #stage {border: 1px solid rgba(124,58,237,.35); border-radius: 24px;
   box-shadow: 0 20px 80px rgba(76,29,149,.16); overflow:hidden;}
-#status {min-height: 92px; padding: 8px 14px;}
+#stage .image-container {min-height: 0 !important;}
+#status {min-height: 64px; padding: 2px 12px; font-size: .9rem;}
+#status h3 {margin: .2rem 0 !important; font-size: 1rem;}
+#controls {gap: 8px !important;}
+#controls .block {margin: 0 !important;}
+.compact-row {gap: 8px !important;}
+.gradient-selector .wrap {gap: 6px !important; flex-direction: row !important;
+  flex-wrap: nowrap !important;}
+.gradient-selector label:has(input[type="radio"]) {flex: 1 1 0; min-width: 0;
+  justify-content: center; text-align: center; padding: 8px 7px !important;
+  border: 1px solid rgba(124,58,237,.3) !important; border-radius: 11px !important;
+  background: linear-gradient(145deg,rgba(124,58,237,.08),rgba(34,211,238,.05));
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;}
+.gradient-selector label:has(input[type="radio"]):hover {transform: translateY(-1px);
+  border-color: rgba(34,211,238,.8) !important;}
+.gradient-selector label:has(input[type="radio"]:checked) {
+  color: white !important; border-color: transparent !important;
+  background: linear-gradient(115deg,#7c3aed,#2563eb 55%,#0891b2) !important;
+  box-shadow: 0 5px 16px rgba(76,29,149,.25);}
+.gradient-selector label:has(input[type="radio"]:checked) span {color: white !important;}
+.gradient-selector input[type="radio"] {display: none !important;}
+#run-button {min-height: 42px !important; border: 0 !important;
+  background: linear-gradient(105deg,#7c3aed,#2563eb 55%,#0891b2) !important;
+  box-shadow: 0 8px 22px rgba(76,29,149,.24);}
+#footer-note {font-size: .78rem; line-height: 1.35; opacity: .72; text-align: center;
+  padding: 3px 10px 0;}
+#footer-note p {margin: 0 !important;}
+@media (max-width: 760px) {
+  .gradio-container {padding: 8px 10px !important;}
+  .gradient-selector .wrap {flex-wrap: wrap !important;}
+  .gradient-selector label:has(input[type="radio"]) {min-width: 46%;}
+}
 """
 
 
@@ -169,25 +203,32 @@ with gr.Blocks() as demo:
         "<div id='hero'><h1>Diffuino Live</h1>"
         "<p>Watch noise become a digit—one denoising trajectory at a time.</p></div>"
     )
-    with gr.Row(equal_height=True):
+    with gr.Row(equal_height=True, elem_id="workspace"):
         with gr.Column(scale=2, elem_id="stage"):
-            output = gr.Image(label="Live diffusion", type="pil", height=430)
+            output = gr.Image(label="Live diffusion", type="pil", height=330)
             status = gr.Markdown("### Ready\nChoose a digit and start diffusion.", elem_id="status")
-        with gr.Column(scale=1):
-            digit = gr.Slider(0, 9, value=6, step=1, label="Requested digit")
-            model = gr.Radio(list(MODEL_FILES), value="FP32 deployment", label="Checkpoint")
+        with gr.Column(scale=1, elem_id="controls"):
+            with gr.Row(elem_classes=["compact-row"]):
+                digit = gr.Slider(0, 9, value=6, step=1, label="Digit", scale=3)
+                seed = gr.Number(value=12, precision=0, label="Seed", scale=1)
+            model = gr.Radio(
+                list(MODEL_FILES),
+                value="FP32 deployment",
+                label="Checkpoint",
+                elem_classes=["gradient-selector"],
+            )
             mode = gr.Radio(
                 ["Fast DDIM · 100 steps", "Detailed DDIM · 200 steps", "Full DDPM · 1000 steps"],
                 value="Full DDPM · 1000 steps",
                 label="Sampling path",
+                elem_classes=["gradient-selector"],
             )
             curated = gr.Checkbox(value=True, label="Use visually audited FP32 seed")
-            seed = gr.Number(value=12, precision=0, label="Custom noise seed")
-            run = gr.Button("Start diffusion", variant="primary", size="lg")
-            gr.Markdown(
-                "The **Full DDPM** option matches the board's 1,000-step sampler. "
-                "The W1A32 checkpoint uses binary convolutional weights with FP32 activations "
-                "and surrounding operations; this browser demo is not a packed binary kernel."
+            run = gr.Button(
+                "Start diffusion",
+                variant="primary",
+                size="lg",
+                elem_id="run-button",
             )
 
     run.click(
@@ -198,8 +239,11 @@ with gr.Blocks() as demo:
     )
 
     gr.Markdown(
-        "---\nBuilt from [MonoDiffuse](https://github.com/elixpo/monodiffuse). "
-        "The evaluator label is diagnostic, not a perceptual-quality guarantee."
+        "**Full DDPM** matches the board's 1,000-step sampler. **W1A32** uses binary "
+        "convolutional weights with FP32 activations and surrounding operations; this demo is "
+        "not a packed binary kernel. The evaluator is diagnostic, not a perceptual-quality "
+        "guarantee. · [Source and hardware](https://github.com/elixpo/monodiffuse)",
+        elem_id="footer-note",
     )
 
 
