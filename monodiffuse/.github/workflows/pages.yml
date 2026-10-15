@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - "docs/**"
-      - "paper/v0_mnist/paper.pdf"
+      - "paper/v1_mnist_narrow/paper.pdf"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -a docs/. _site/
-          cp paper/v0_mnist/paper.pdf _site/monodiffuse-preprint.pdf
+          cp paper/v1_mnist_narrow/paper.pdf _site/monodiffuse-preprint.pdf
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
