@@ -3,7 +3,12 @@
 // Depends on globals: svg, isEraserToolActive, ACTION_DELETE, historyStack, redoStack, clearAllSelections
 import { createEraserTrail, updateEraserTrail, fadeOutEraserTrail, forceCleanupEraserTrail, getIsErasing, setIsErasing, getTargetedElements } from '../core/EraserTrail.js';
 
-const eraserCursorSVG = `data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="#222" stroke="white" stroke-width="2"/></svg>')}`;
+function getEraserCursorSVG() {
+  const isLight = document.documentElement.dataset.canvasTheme === 'light' || document.body?.classList.contains('theme-light');
+  const fill = isLight ? '#31283f' : '#f5effb';
+  const stroke = isLight ? '#ffffff' : '#31283f';
+  return `data:image/svg+xml;base64,${btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="${fill}" stroke="${stroke}" stroke-width="2"/></svg>`)}`;
+}
 
 // Expose force cleanup on window so SketchEngine can call it on tool switch
 window.forceCleanupEraserTrail = forceCleanupEraserTrail;
@@ -107,10 +112,11 @@ svg.addEventListener("pointerdown", (e) => {
 
 svg.addEventListener("pointermove", (e) => {
   if (isEraserToolActive) {
-      svg.style.cursor = `url(${eraserCursorSVG}) 10 10, auto`;
+      svg.style.cursor = `url(${getEraserCursorSVG()}) 10 10, auto`;
   }
   if (!getIsErasing()) return;
-  updateEraserTrail(e.clientX, e.clientY);
+  const events = typeof e.getCoalescedEvents === 'function' ? e.getCoalescedEvents() : [e];
+  events.forEach((point) => updateEraserTrail(point.clientX, point.clientY));
   handleElementHighlight(e.clientX, e.clientY);
 });
 

@@ -185,6 +185,7 @@ export function applyTheme(theme) {
   body.classList.remove('theme-dark', 'theme-light')
   body.classList.add(`theme-${resolved}`)
   body.dataset.resolvedTheme = resolved
+  document.documentElement.dataset.canvasTheme = resolved
   document.documentElement.style.colorScheme = resolved
   return resolved
 }

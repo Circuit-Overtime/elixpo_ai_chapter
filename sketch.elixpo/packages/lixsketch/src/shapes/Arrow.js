@@ -2,6 +2,7 @@
 import { resolveThemeLabelColor } from '../utils/themeColors.js';
 // Arrow shape class - extracted from drawArrow.js
 // Depends on globals: svg, shapes, rough, currentShape, currentZoom
+import { DEFAULT_SHAPE_LABEL_FONT_SIZE } from '../core/ShapeLabelLayout.js';
 
 let isDragging = false;
 let hoveredFrameArrow = null;
@@ -56,7 +57,7 @@ class Arrow {
         this.label = options.label || '';
         this.labelElement = null;
         this.labelColor = resolveThemeLabelColor(options.labelColor);
-        this.labelFontSize = options.labelFontSize || 12;
+        this.labelFontSize = options.labelFontSize || DEFAULT_SHAPE_LABEL_FONT_SIZE;
         this.labelBg = options.labelBg !== false; // labelBg:false → no knockout rect behind label
         this.labelOffsetY = options.labelOffsetY || 0; // shift label along the perpendicular of the line, e.g. lift it clear of the stroke
         this._isEditingLabel = false;

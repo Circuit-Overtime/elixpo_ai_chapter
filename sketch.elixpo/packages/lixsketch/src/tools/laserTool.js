@@ -12,11 +12,12 @@ const fadeOutDuration = 1200;
 const baseLaserOpacity = 0.85;
 const baseLaserWidth = 3.5;
 const glowWidth = 10;
-const minDistanceThreshold = 1;
-const smoothingWindow = 4; // points to average for smoothing
+const minDistanceThreshold = 0.75;
+const smoothingWindow = 5; // points to average for smoothing
 
 let drawingAnimationId = null;
 let fadingAnimationId = null;
+let activePointerId = null;
 
 function screenToViewBoxPoint(x, y) {
     const CTM = svg.getScreenCTM();
@@ -248,7 +249,7 @@ function fadeLaserTrail(laser) {
 }
 
 
-svg.addEventListener("mousedown", (e) => {
+svg.addEventListener("pointerdown", (e) => {
     if (!isLaserToolActive) return;
 
     if (e.target !== svg) {
@@ -266,6 +267,8 @@ svg.addEventListener("mousedown", (e) => {
     }
 
     isDrawing = true;
+    activePointerId = e.pointerId;
+    svg.setPointerCapture?.(e.pointerId);
 
     const laserId = "laserGroup_" + Date.now() + "_" + Math.random().toString(16).slice(2);
     const newLaser = {
@@ -279,20 +282,23 @@ svg.addEventListener("mousedown", (e) => {
     }
 });
 
-svg.addEventListener("mousemove", (e) => {
+svg.addEventListener("pointermove", (e) => {
     if (isLaserToolActive) {
         svg.style.cursor = `url(${lazerCursor}) 0 0, auto`;
     }
 
     if (!isDrawing) return;
 
-    addPointToCurrentLaser(e.clientX, e.clientY);
+    const events = typeof e.getCoalescedEvents === 'function' ? e.getCoalescedEvents() : [e];
+    events.forEach((point) => addPointToCurrentLaser(point.clientX, point.clientY));
 });
 
-svg.addEventListener("mouseup", (e) => {
+svg.addEventListener("pointerup", (e) => {
     if (!isDrawing) return;
 
     isDrawing = false;
+    if (activePointerId !== null) svg.releasePointerCapture?.(activePointerId);
+    activePointerId = null;
 
     if (lasers.length > 0) {
         fadeLaserTrail(lasers[lasers.length - 1]);
@@ -305,13 +311,13 @@ svg.addEventListener("mouseup", (e) => {
     }
 });
 
-svg.addEventListener("mouseleave", (e) => {
+svg.addEventListener("pointercancel", () => {
     if (!isDrawing) return;
 
     isDrawing = false;
+    activePointerId = null;
 
     if (lasers.length > 0) {
         fadeLaserTrail(lasers[lasers.length - 1]);
     }
-
 });
