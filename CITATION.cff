@@ -31,7 +31,7 @@ keywords:
   - edge AI
 preferred-citation:
   type: report
-  title: "Training Binary-Weight Diffusion Models from Scratch: A Controlled MNIST and CIFAR-10 Study"
+  title: "Native Binary-Weight Training Outperforms Zero-Shot Sign Projection in MNIST Diffusion"
   authors:
     - family-names: Bhattacharya
       given-names: Ayushman
