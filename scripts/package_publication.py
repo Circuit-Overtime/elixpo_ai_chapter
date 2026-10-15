@@ -49,7 +49,7 @@ def write_source_zip(destination: Path) -> None:
 
 
 def main() -> None:
-    paper = ROOT / "paper" / "v0_mnist" / "paper.pdf"
+    paper = ROOT / "paper" / "v1_mnist_narrow" / "paper.pdf"
     if not paper.exists():
         raise SystemExit(f"missing {paper}; build the manuscript first")
 
