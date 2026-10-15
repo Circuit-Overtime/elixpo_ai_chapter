@@ -1,12 +1,18 @@
 import { normalizeLegacyChecklistBlocks } from './normalizeChecklistBlocks.js';
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const escAttr = (s) => String(s ?? '').replace(/"/g, '&quot;');
+const escAttr = (s) => esc(s).replace(/"/g, '&quot;');
 
 function safeHref(href) {
   const value = String(href || '').trim();
-  if (/^https?:\/\//i.test(value) || value.startsWith('/') || value.startsWith('#') || /^mailto:/i.test(value)) {
-    return value;
+  if (value.startsWith('#')) return value;
+  if (value.startsWith('/') && !value.startsWith('//') && !value.includes('\\')) return value;
+  if (/^mailto:/i.test(value)) return value;
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      const parsed = new URL(value);
+      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return value;
+    } catch {}
   }
   return '#';
 }
@@ -86,13 +92,14 @@ export function renderBlocksToHTML(blocks) {
   // Collect headings for TOC
   const headings = [];
   const seenIds = new Map();
+  const headingIds = new WeakMap();
   function collectHeadings(blockList) {
     for (const block of blockList) {
       if (block.type === 'heading') {
         const text = (block.content || []).map(c => c.text || '').join('');
         if (text.trim()) {
           const id = uniqueHeadingId(text, seenIds);
-          block._lixId = id;
+          headingIds.set(block, id);
           headings.push({ id, text: text.trim(), level: block.props?.level || 1 });
         }
       }
@@ -114,7 +121,7 @@ export function renderBlocksToHTML(blocks) {
       case 'heading': {
         const level = block.props?.level || 1;
         const text = (block.content || []).map(c => c.text || '').join('');
-        const id = block._lixId || uniqueHeadingId(text, seenIds);
+        const id = headingIds.get(block) || uniqueHeadingId(text, seenIds);
         return `<h${level} id="${id}"${alignAttr}>${content}</h${level}>${childrenHTML}`;
       }
       case 'bulletListItem':
@@ -146,7 +153,7 @@ export function renderBlocksToHTML(blocks) {
       case 'image':
         if (block.props?.url) {
           const ip = block.props;
-          const alt = escAttr(esc(ip.alt || ip.caption || ''));
+          const alt = escAttr(ip.alt || ip.caption || '');
           const align = ['left', 'center', 'right'].includes(ip.align) ? ip.align : null;
           // Images fill the content width by default (block); an explicit width
           // (from resizing) is respected but never overflows.
