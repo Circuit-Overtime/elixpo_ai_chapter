@@ -146,7 +146,7 @@ CSS = """
 """
 
 
-with gr.Blocks(css=CSS, theme=gr.themes.Soft(primary_hue="violet", secondary_hue="cyan")) as demo:
+with gr.Blocks() as demo:
     gr.HTML(
         "<div id='hero'><h1>Diffuino Live</h1>"
         "<p>Watch noise become a digit—one denoising trajectory at a time.</p></div>"
@@ -186,4 +186,7 @@ with gr.Blocks(css=CSS, theme=gr.themes.Soft(primary_hue="violet", secondary_hue
 
 
 if __name__ == "__main__":
-    demo.queue(max_size=16).launch()
+    demo.queue(max_size=16).launch(
+        css=CSS,
+        theme=gr.themes.Soft(primary_hue="violet", secondary_hue="cyan"),
+    )
