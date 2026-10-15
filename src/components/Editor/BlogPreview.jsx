@@ -394,7 +394,7 @@ function renderBlocksToHTML(blocks) {
 }
 
 export default function BlogPreview({
-  paywalled = false, title, subtitle, coverPreview, coverZoom, coverPos, pageEmoji, tags, html, blocks, user, org, coAuthorCount, coAuthors = [], wordCount, followSlot = null, memberOnly = false, featured = false, publishedAt = null, headerActions = null, hideHighlights = false, readTimeMinutes = 0, anonymous = false, readerMode = false }) {
+  paywalled = false, title, subtitle, coverPreview, coverZoom, coverPos, pageEmoji, tags, html, blocks, user, org, coAuthorCount, coAuthors = [], wordCount, followSlot = null, memberOnly = false, featured = false, publishedAt = null, headerActions = null, hideHighlights = false, readTimeMinutes = 0, anonymous = false, readerMode = false, readerAside = null }) {
   const { isDark } = useTheme();
   const contentRef = useRef(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -1200,16 +1200,19 @@ export default function BlogPreview({
       {/* Gap before content */}
       <div style={{ height: '32px' }} />
 
-      <div className={hideHighlights ? 'hide-highlights' : ''}>
-        {renderedHTML ? (
-          <div
-            ref={contentRef}
-            className={`blog-preview-content max-w-none ${paywalled ? 'relative pb-10 overflow-hidden mask-bottom' : ''}`}
-            style={paywalled ? { WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', maxHeight: '400px' } : {}}
-          />
-        ) : (
-          <p className="text-[var(--text-faint)] italic">Start writing to see a preview...</p>
-        )}
+      <div className={`blog-preview-body ${readerAside ? 'has-reader-aside' : ''}`}>
+        {readerAside}
+        <div className={hideHighlights ? 'hide-highlights' : ''}>
+          {renderedHTML ? (
+            <div
+              ref={contentRef}
+              className={`blog-preview-content max-w-none ${paywalled ? 'relative pb-10 overflow-hidden mask-bottom' : ''}`}
+              style={paywalled ? { WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', maxHeight: '400px' } : {}}
+            />
+          ) : (
+            <p className="text-[var(--text-faint)] italic">Start writing to see a preview...</p>
+          )}
+        </div>
       </div>
 
       {paywalled && (

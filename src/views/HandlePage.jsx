@@ -194,7 +194,7 @@ function StaticBlocks({ blocks = [] }) {
     });
 }
 
-function CrawlableArticle({ blog, blocks, owner }) {
+function CrawlableArticle({ blog, blocks, owner, readerAside = null }) {
     const cover =
         blog.cover_image_r2_key || generateBlogBanner(blog.id || blog.slug);
     const author = blog.secret
@@ -306,11 +306,14 @@ function CrawlableArticle({ blog, blocks, owner }) {
                 </p>
             </header>
             </section>
-            <div
-                className="blog-preview-content max-w-none"
-                itemProp="articleBody"
-            >
-                <StaticBlocks blocks={blocks} />
+            <div className={`blog-preview-body ${readerAside ? "has-reader-aside" : ""}`}>
+                {readerAside}
+                <div
+                    className="blog-preview-content max-w-none"
+                    itemProp="articleBody"
+                >
+                    <StaticBlocks blocks={blocks} />
+                </div>
             </div>
         </article>
     );
@@ -994,6 +997,40 @@ function HandlePageInner({ path, initialData = null }) {
             : null;
         const canEdit =
             isAuthor || myCoRole === "editor" || myCoRole === "admin";
+        const readerAside = (
+            <div
+                className="reader-side-rail"
+                role="complementary"
+                aria-label="About the author and related stories"
+            >
+                {!blog.secret && (
+                    <ReaderCompanion
+                        author={{
+                            username: blog.author_username,
+                            displayName: blog.author_name,
+                            designation: blog.author_designation,
+                            avatarUrl: blog.author_avatar,
+                        }}
+                        org={
+                            data.owner?.type === "org"
+                                ? {
+                                      slug: data.owner.slug,
+                                      name: data.owner.name,
+                                      tagline: data.owner.tagline,
+                                      logoUrl:
+                                          data.owner.logo_url ||
+                                          data.owner.logo_r2_key,
+                                  }
+                                : null
+                        }
+                        primaryTag={
+                            Array.isArray(blog.tags) ? blog.tags[0] : null
+                        }
+                    />
+                )}
+                <BlogRecommendations blogId={blog.id} compact limit={3} />
+            </div>
+        );
 
         return (
             <AppShell showSidebar={false}>
@@ -1053,8 +1090,7 @@ function HandlePageInner({ path, initialData = null }) {
                             </Link>
                         </div>
                     )}
-                    <div className="reader-story-grid">
-                        <div className="reader-story-main">
+                    <div className="reader-story-main">
                             {InteractiveBlogPreview ? (
                                 <InteractiveBlogPreview
                             title={blog.title}
@@ -1154,12 +1190,14 @@ function HandlePageInner({ path, initialData = null }) {
                                     }
                                 />
                             }
+                            readerAside={readerAside}
                                 />
                             ) : (
                                 <CrawlableArticle
                                     blog={blog}
                                     blocks={blocks}
                                     owner={data.owner}
+                                    readerAside={readerAside}
                                 />
                             )}
 
@@ -1170,38 +1208,6 @@ function HandlePageInner({ path, initialData = null }) {
                                     blogAuthorId={blog.author_id}
                                 />
                             </div>
-                        </div>
-
-                    <div className="reader-side-rail">
-                        {!blog.secret && (
-                            <ReaderCompanion
-                                author={{
-                                    username: blog.author_username,
-                                    displayName: blog.author_name,
-                                    designation: blog.author_designation,
-                                    avatarUrl: blog.author_avatar,
-                                }}
-                                org={
-                                    data.owner?.type === "org"
-                                        ? {
-                                              slug: data.owner.slug,
-                                              name: data.owner.name,
-                                              tagline: data.owner.tagline,
-                                              logoUrl:
-                                                  data.owner.logo_url ||
-                                                  data.owner.logo_r2_key,
-                                          }
-                                        : null
-                                }
-                                primaryTag={
-                                    Array.isArray(blog.tags)
-                                        ? blog.tags[0]
-                                        : null
-                                }
-                            />
-                        )}
-                        <BlogRecommendations blogId={blog.id} compact limit={3} />
-                        </div>
                     </div>
                 </div>
                 </main>

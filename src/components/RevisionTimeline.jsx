@@ -29,6 +29,7 @@ export default function RevisionTimeline({ blogId, onRevision }) {
   const [error, setError] = useState('');
   const cache = useRef(new Map());
   const listRequested = useRef(false);
+  const panelRef = useRef(null);
   const revIndex = revId ? versions.findIndex(version => version.id === revId) : -1;
   const selectedIndex = revIndex >= 0 ? revIndex : Math.max(0, versions.length - 1);
   const selectedId = versions[selectedIndex]?.id;
@@ -58,6 +59,24 @@ export default function RevisionTimeline({ blogId, onRevision }) {
   useEffect(() => {
     if (revId) openTimeline();
   }, [revId]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const closeOnOutsidePress = event => {
+      if (!panelRef.current?.contains(event.target)) setOpen(false);
+    };
+    const closeOnEscape = event => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsidePress);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsidePress);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [open]);
 
   useEffect(() => {
     if (loaded && revId && revIndex === -1) setRevisionParam(null, true);
@@ -112,6 +131,7 @@ export default function RevisionTimeline({ blogId, onRevision }) {
   return (
     <>
       <section
+        ref={panelRef}
         className={`fixed bottom-4 left-3 z-[62] border backdrop-blur-xl transition-[width] sm:bottom-5 sm:left-5 ${open ? 'w-[calc(100vw-24px)] max-w-[460px] rounded-2xl p-4' : 'w-auto rounded-full p-1.5'}`}
         style={{
           borderColor: 'color-mix(in srgb, var(--accent) 28%, var(--border-default))',
