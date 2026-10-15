@@ -219,21 +219,28 @@ function CrawlableArticle({ blog, blocks, owner }) {
                     content={new Date(blog.updated_at * 1000).toISOString()}
                 />
             )}
-            {cover && (
-                <img
-                    src={cover}
-                    alt={blog.title ? `${blog.title} cover` : "Blog cover"}
-                    className="blog-preview-cover w-full object-cover rounded-xl mb-10"
-                    itemProp="image"
-                />
-            )}
-            <header className="mb-10">
-                {blog.page_emoji && (
-                    <p className="text-5xl mb-5" aria-hidden="true">
-                        {blog.page_emoji}
-                    </p>
+            <section className="blog-preview-hero" aria-labelledby="story-title">
+            <div className="blog-preview-visual relative">
+                {cover && (
+                    <div className="blog-preview-cover overflow-hidden rounded-xl">
+                        <img
+                            src={cover}
+                            alt={blog.title ? `${blog.title} cover` : "Blog cover"}
+                            className="h-full w-full object-cover"
+                            itemProp="image"
+                        />
+                    </div>
                 )}
+                {blog.page_emoji && (
+                    <div className="absolute bottom-[-24px] left-4 z-10 flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-[var(--bg-app)] bg-[var(--bg-app)] text-[42px] shadow-lg" aria-hidden="true">
+                        {blog.page_emoji}
+                    </div>
+                )}
+                {blog.page_emoji && cover && <div className="h-8" />}
+            </div>
+            <header className="blog-preview-header">
                 <h1
+                    id="story-title"
                     className="blog-preview-title text-4xl sm:text-5xl font-bold leading-tight"
                     itemProp="headline"
                 >
@@ -246,6 +253,24 @@ function CrawlableArticle({ blog, blocks, owner }) {
                         itemProp="description"
                     >
                         {blog.subtitle}
+                    </p>
+                )}
+                {!!blog.tags?.length && (
+                    <p
+                        className="blog-preview-topics mt-3 flex flex-wrap items-center gap-2 text-sm"
+                        style={{ color: "var(--text-faint)" }}
+                    >
+                        <span>Topics:</span>
+                        {blog.tags.map((tag) => (
+                            <Link
+                                key={tag}
+                                href={`/tag/${encodeURIComponent(tag)}`}
+                                rel="tag"
+                                className="hover:text-[#9b7bf7]"
+                            >
+                                #{tag}
+                            </Link>
+                        ))}
                     </p>
                 )}
                 <p
@@ -279,25 +304,8 @@ function CrawlableArticle({ blog, blocks, owner }) {
                         ? <>{" · "}<time dateTime={new Date(blog.published_at * 1000).toISOString()}>{formatUtcDate(blog.published_at, { year: "numeric", month: "short", day: "numeric" })}</time></>
                         : ""}
                 </p>
-                {!!blog.tags?.length && (
-                    <p
-                        className="mt-3 flex flex-wrap items-center gap-2 text-sm"
-                        style={{ color: "var(--text-faint)" }}
-                    >
-                        <span>Topics:</span>
-                        {blog.tags.map((tag) => (
-                            <Link
-                                key={tag}
-                                href={`/tag/${encodeURIComponent(tag)}`}
-                                rel="tag"
-                                className="hover:text-[#9b7bf7]"
-                            >
-                                #{tag}
-                            </Link>
-                        ))}
-                    </p>
-                )}
             </header>
+            </section>
             <div
                 className="blog-preview-content max-w-none"
                 itemProp="articleBody"
