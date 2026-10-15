@@ -1,12 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { getLimits } from '../lib/tiers.js';
+import { formatBytes, getLimits } from '../lib/tiers.js';
 import { mediaInventoryCacheKey } from '../lib/cache.js';
 import { PLANS } from '../lib/pricing.js';
 
 test('free managed storage is capped at 10 MB without changing Member storage', () => {
   assert.equal(getLimits('free').totalStorageBytes, 10 * 1024 * 1024);
   assert.equal(getLimits('member').totalStorageBytes, 2 * 1024 * 1024 * 1024);
+});
+
+test('byte formatting never emits an undefined unit', () => {
+  assert.equal(formatBytes(0), '0 B');
+  assert.equal(formatBytes(512), '512.0 B');
+  assert.equal(formatBytes(2048), '2.0 KB');
+  assert.equal(formatBytes(2 * 1024 * 1024 * 1024), '2.0 GB');
+  assert.equal(formatBytes(2 * 1024 ** 4), '2048.0 GB');
+  assert.equal(formatBytes(0.5), '0.5 B');
+  assert.equal(formatBytes(-5), '0 B');
+  assert.equal(formatBytes(NaN), '0 B');
 });
 
 test('unknown and prototype tier keys fall back to free limits', () => {
