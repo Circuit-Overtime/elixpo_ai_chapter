@@ -20,6 +20,14 @@ test('byte formatting never emits an undefined unit', () => {
   assert.equal(formatBytes(NaN), '0 B');
 });
 
+test('unknown and prototype tier keys fall back to free limits', () => {
+  const free = getLimits('free');
+  assert.equal(getLimits('__proto__'), free);
+  assert.equal(getLimits('constructor'), free);
+  assert.equal(getLimits('nope'), free);
+  assert.equal(getLimits('__proto__').totalStorageBytes, 10 * 1024 * 1024);
+});
+
 test('media inventory caches are private to a versioned user key', () => {
   assert.equal(mediaInventoryCacheKey('user-123'), 'v3:media-inventory:user-123');
 });
