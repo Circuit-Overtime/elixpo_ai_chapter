@@ -15,12 +15,11 @@ export async function GET(request, { params }) {
     return NextResponse.json({ error: 'Missing media id' }, { status: 400 });
   }
 
-  // Already a full URL stored by mistake? Pass it straight through.
+  // Only stored public_ids are valid here. A full URL in the path is rejected
+  // instead of passed through, so this endpoint can never bounce to an
+  // external origin.
   if (/^https?:\/\//i.test(publicId)) {
-    return NextResponse.redirect(publicId, {
-      status: 302,
-      headers: { 'Cache-Control': 'public, max-age=3600, s-maxage=86400' },
-    });
+    return NextResponse.json({ error: 'Invalid media id' }, { status: 400 });
   }
 
   const version = new URL(request.url).searchParams.get('v');

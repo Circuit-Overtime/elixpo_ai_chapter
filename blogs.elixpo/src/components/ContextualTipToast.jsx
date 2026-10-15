@@ -24,6 +24,23 @@ const STAGE_LABELS = {
   established: 'Creator tip',
   veteran: 'Power workflow',
 };
+const MOOD_LABELS = {
+  progress: 'Nice progress',
+  focus: 'While you write',
+  discovery: 'Something to explore',
+  setup: 'Tune your workspace',
+  quiet: 'Good to know',
+};
+
+function contextualMood(pathname, { eventDriven = false, manual = false } = {}) {
+  if (eventDriven) return { name: 'progress', presentation: 'corner' };
+  if (manual) return { name: 'quiet', presentation: 'corner' };
+  if (pathname === '/new-blog' || pathname.startsWith('/edit/')) return { name: 'focus', presentation: 'footer' };
+  if (pathname === '/' || pathname === '/explore' || pathname.startsWith('/contests')) return { name: 'discovery', presentation: 'footer' };
+  if (pathname.startsWith('/docs')) return { name: 'quiet', presentation: 'footer' };
+  if (pathname.startsWith('/settings') || pathname === '/profile') return { name: 'setup', presentation: 'corner' };
+  return { name: 'quiet', presentation: 'corner' };
+}
 
 const TIPS = [
   {
@@ -290,9 +307,10 @@ export default function ContextualTipToast() {
       rememberTip(candidate, now);
     }
     setTipsPaused(Number(state.snoozedUntil || 0) > now);
-    setTip(candidate);
+    const mood = contextualMood(pathname, { eventDriven, manual });
+    setTip({ ...candidate, mood: mood.name, presentation: candidate.presentation || mood.presentation });
     hideTimerRef.current = setTimeout(() => setTip(null), 11_000);
-  }, [stage]);
+  }, [pathname, stage]);
 
   useEffect(() => {
     const state = readState();
@@ -349,10 +367,13 @@ export default function ContextualTipToast() {
   };
 
   if (!tip) return null;
+  const footerPresentation = tip.presentation === 'footer';
 
   return (
     <aside
-      className="contextual-tip fixed right-3 top-[68px] z-[70] w-[calc(100vw-24px)] max-w-[410px] overflow-hidden rounded-2xl border px-4 py-4 backdrop-blur-xl sm:right-5"
+      className={footerPresentation
+        ? 'contextual-tip contextual-tip--footer fixed bottom-4 left-1/2 z-[70] w-[calc(100vw-24px)] max-w-[720px] overflow-hidden rounded-2xl border px-4 py-3 backdrop-blur-xl sm:bottom-5'
+        : 'contextual-tip contextual-tip--corner fixed right-3 top-[68px] z-[70] w-[calc(100vw-24px)] max-w-[410px] overflow-hidden rounded-2xl border px-4 py-4 backdrop-blur-xl sm:right-5'}
       style={{
         background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, var(--bg-surface)) 0%, color-mix(in srgb, var(--bg-surface) 96%, transparent) 58%, color-mix(in srgb, var(--accent) 5%, var(--bg-surface)) 100%)',
         borderColor: 'color-mix(in srgb, var(--accent) 42%, var(--border-default))',
@@ -368,7 +389,7 @@ export default function ContextualTipToast() {
         </span>
         <div className="min-w-0">
           <p className="mb-1 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--accent)]">
-            <span className="contextual-tip-dot h-1.5 w-1.5 rounded-full bg-[var(--accent)]" /> {STAGE_LABELS[stage]}
+            <span className="contextual-tip-dot h-1.5 w-1.5 rounded-full bg-[var(--accent)]" /> {MOOD_LABELS[tip.mood] || STAGE_LABELS[stage]}
           </p>
           <p className="text-[13px] font-bold leading-tight text-[var(--text-primary)]">{tip.title}</p>
           <p className="mt-1 text-[12px] leading-[1.5] text-[var(--text-muted)]">{tip.message}</p>
@@ -395,7 +416,8 @@ export default function ContextualTipToast() {
       </button>
       <span className="contextual-tip-progress absolute inset-x-0 bottom-0 h-[3px] origin-left bg-[linear-gradient(90deg,var(--accent),#60a5fa,var(--accent))] opacity-80" />
       <style jsx>{`
-        .contextual-tip { animation: contextual-tip-in 420ms cubic-bezier(.2,.9,.25,1.15) both; }
+        .contextual-tip--corner { animation: contextual-tip-in 420ms cubic-bezier(.2,.9,.25,1.15) both; }
+        .contextual-tip--footer { animation: contextual-tip-footer-in 420ms cubic-bezier(.2,.9,.25,1.08) both; }
         .contextual-tip-icon { animation: contextual-tip-icon-in 520ms 90ms cubic-bezier(.2,.9,.25,1.2) both; }
         .contextual-tip-glow { animation: contextual-tip-glow 900ms 180ms ease-out both; }
         .contextual-tip-dot { animation: contextual-tip-dot 1.8s ease-in-out 2; }
@@ -403,6 +425,10 @@ export default function ContextualTipToast() {
         @keyframes contextual-tip-in {
           from { opacity: 0; transform: translateY(-14px) scale(0.96); }
           to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes contextual-tip-footer-in {
+          from { opacity: 0; transform: translate(-50%, 14px) scale(0.98); }
+          to { opacity: 1; transform: translate(-50%, 0) scale(1); }
         }
         @keyframes contextual-tip-icon-in {
           from { opacity: 0; transform: rotate(-10deg) scale(0.65); }
@@ -422,7 +448,8 @@ export default function ContextualTipToast() {
           to { transform: scaleX(0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .contextual-tip, .contextual-tip-icon, .contextual-tip-glow, .contextual-tip-dot, .contextual-tip-progress { animation: none; }
+          .contextual-tip--corner, .contextual-tip--footer, .contextual-tip-icon, .contextual-tip-glow, .contextual-tip-dot, .contextual-tip-progress { animation: none; }
+          .contextual-tip--footer { transform: translateX(-50%); }
         }
       `}</style>
     </aside>

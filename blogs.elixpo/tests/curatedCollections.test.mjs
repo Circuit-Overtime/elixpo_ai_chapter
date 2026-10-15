@@ -5,6 +5,7 @@ import {
   BLOG_LICENSES,
   COLLECTION_VISIBILITIES,
   collectionSlug,
+  curatedCoverUrl,
   publicBlogHref,
   serializeCuratedEntry,
 } from '../lib/curatedCollections.js';
@@ -43,4 +44,13 @@ test('serialized entries retain attribution and license', () => {
   assert.equal(entry.license, 'cc-by-4.0');
   assert.equal(entry.canonicalUrl, '/writer/a-post');
   assert.equal(entry.position, 2);
+});
+
+test('curated cover urls must be real credential-free https urls', () => {
+  assert.equal(curatedCoverUrl(''), null);
+  assert.equal(curatedCoverUrl('https://cdn.example/cover.jpg'), 'https://cdn.example/cover.jpg');
+  assert.throws(() => curatedCoverUrl('https://'), /invalid_cover_url/);
+  assert.throws(() => curatedCoverUrl('https://not a url with spaces'), /invalid_cover_url/);
+  assert.throws(() => curatedCoverUrl('https://user:pass@evil.com/x.jpg'), /invalid_cover_url/);
+  assert.throws(() => curatedCoverUrl('http://cdn.example/cover.jpg'), /invalid_cover_url/);
 });

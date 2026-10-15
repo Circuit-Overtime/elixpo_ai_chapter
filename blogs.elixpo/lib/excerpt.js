@@ -17,5 +17,6 @@ export function excerptFromBlocks(blocks, max = 200) {
   };
   walk(blocks);
   const text = out.join(' ').replace(/\s+/g, ' ').trim();
-  return text.length > max ? text.slice(0, max).replace(/\s+\S*$/, '') + '…' : text;
+  const chars = Array.from(text);
+  return chars.length > max ? chars.slice(0, max).join('').replace(/\s+\S*$/, '') + '…' : text;
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { rankBlogs } from '../lib/recommendations.js';
+import { diversifyBlogs, rankBlogs } from '../lib/recommendations.js';
 
 const context = {
   language: 'en',
@@ -42,4 +42,22 @@ test('rising labels require real early engagement and new labels expire', () => 
 
   assert.equal(rising.discovery_label, 'Rising');
   assert.equal(old.discovery_label, null);
+});
+
+test('diversification interleaves authors without losing deterministic order', () => {
+  const ranked = [
+    story({ id: 'a-1', author_id: 'a' }),
+    story({ id: 'a-2', author_id: 'a' }),
+    story({ id: 'a-3', author_id: 'a' }),
+    story({ id: 'b-1', author_id: 'b' }),
+    story({ id: 'c-1', author_id: 'c' }),
+    story({ id: 'b-2', author_id: 'b' }),
+  ];
+
+  const diversified = diversifyBlogs(ranked, { windowSize: 4, maxPerAuthor: 1 });
+  assert.deepEqual(diversified.map(item => item.id), ['a-1', 'b-1', 'c-1', 'a-2', 'b-2', 'a-3']);
+  assert.deepEqual(
+    diversifyBlogs(ranked, { windowSize: 4, maxPerAuthor: 1 }),
+    diversified,
+  );
 });

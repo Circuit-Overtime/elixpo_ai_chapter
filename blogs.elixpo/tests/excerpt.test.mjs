@@ -50,3 +50,12 @@ test('truncates at word boundary with ellipsis when exceeding max', () => {
   assert.equal(excerptFromBlocks(blocks, 20), 'This is a longer…');
   assert.equal(excerptFromBlocks(blocks, 50), 'This is a longer sentence that will exceed the…');
 });
+
+test('truncation keeps emoji pairs intact', () => {
+  const grin = String.fromCodePoint(0x1f600);
+  const blocks = [{ type: 'paragraph', content: [{ type: 'text', text: grin.repeat(10) }] }];
+  const out = excerptFromBlocks(blocks, 5);
+  assert.equal(Array.from(out.replace('…', '')).length, 5);
+  assert.ok(!/[\ud800-\udbff](?![\udc00-\udfff])/.test(out), 'no lone surrogate');
+  assert.doesNotThrow(() => JSON.parse(JSON.stringify(out)));
+});

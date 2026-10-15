@@ -8,7 +8,7 @@ import AppShell from "../components/AppShell";
 import AuthorAttribution from "../components/AuthorAttribution";
 import BlogComments from "../components/BlogComments";
 import BlogDotsMenu from "../components/BlogDotsMenu";
-import BlogFollowCard, { FollowToggle } from "../components/BlogFollowButtons";
+import { FollowToggle } from "../components/BlogFollowButtons";
 import ReaderCompanion from "../components/ReaderCompanion";
 import ReadingResumePrompt from "../components/ReadingResumePrompt";
 import BlogInteractionBar from "../components/BlogInteractionBar";
@@ -194,7 +194,7 @@ function StaticBlocks({ blocks = [] }) {
     });
 }
 
-function CrawlableArticle({ blog, blocks, owner }) {
+function CrawlableArticle({ blog, blocks, owner, readerAside = null }) {
     const cover =
         blog.cover_image_r2_key || generateBlogBanner(blog.id || blog.slug);
     const author = blog.secret
@@ -219,21 +219,28 @@ function CrawlableArticle({ blog, blocks, owner }) {
                     content={new Date(blog.updated_at * 1000).toISOString()}
                 />
             )}
-            {cover && (
-                <img
-                    src={cover}
-                    alt={blog.title ? `${blog.title} cover` : "Blog cover"}
-                    className="blog-preview-cover w-full object-cover rounded-xl mb-10"
-                    itemProp="image"
-                />
-            )}
-            <header className="mb-10">
-                {blog.page_emoji && (
-                    <p className="text-5xl mb-5" aria-hidden="true">
-                        {blog.page_emoji}
-                    </p>
+            <section className="blog-preview-hero" aria-labelledby="story-title">
+            <div className="blog-preview-visual relative">
+                {cover && (
+                    <div className="blog-preview-cover overflow-hidden rounded-xl">
+                        <img
+                            src={cover}
+                            alt={blog.title ? `${blog.title} cover` : "Blog cover"}
+                            className="h-full w-full object-cover"
+                            itemProp="image"
+                        />
+                    </div>
                 )}
+                {blog.page_emoji && (
+                    <div className="absolute bottom-[-24px] left-4 z-10 flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-[var(--bg-app)] bg-[var(--bg-app)] text-[42px] shadow-lg" aria-hidden="true">
+                        {blog.page_emoji}
+                    </div>
+                )}
+                {blog.page_emoji && cover && <div className="h-8" />}
+            </div>
+            <header className="blog-preview-header">
                 <h1
+                    id="story-title"
                     className="blog-preview-title text-4xl sm:text-5xl font-bold leading-tight"
                     itemProp="headline"
                 >
@@ -246,6 +253,24 @@ function CrawlableArticle({ blog, blocks, owner }) {
                         itemProp="description"
                     >
                         {blog.subtitle}
+                    </p>
+                )}
+                {!!blog.tags?.length && (
+                    <p
+                        className="blog-preview-topics mt-3 flex flex-wrap items-center gap-2 text-sm"
+                        style={{ color: "var(--text-faint)" }}
+                    >
+                        <span>Topics:</span>
+                        {blog.tags.map((tag) => (
+                            <Link
+                                key={tag}
+                                href={`/tag/${encodeURIComponent(tag)}`}
+                                rel="tag"
+                                className="hover:text-[#9b7bf7]"
+                            >
+                                #{tag}
+                            </Link>
+                        ))}
                     </p>
                 )}
                 <p
@@ -279,30 +304,16 @@ function CrawlableArticle({ blog, blocks, owner }) {
                         ? <>{" · "}<time dateTime={new Date(blog.published_at * 1000).toISOString()}>{formatUtcDate(blog.published_at, { year: "numeric", month: "short", day: "numeric" })}</time></>
                         : ""}
                 </p>
-                {!!blog.tags?.length && (
-                    <p
-                        className="mt-3 flex flex-wrap items-center gap-2 text-sm"
-                        style={{ color: "var(--text-faint)" }}
-                    >
-                        <span>Topics:</span>
-                        {blog.tags.map((tag) => (
-                            <Link
-                                key={tag}
-                                href={`/tag/${encodeURIComponent(tag)}`}
-                                rel="tag"
-                                className="hover:text-[#9b7bf7]"
-                            >
-                                #{tag}
-                            </Link>
-                        ))}
-                    </p>
-                )}
             </header>
-            <div
-                className="blog-preview-content max-w-none"
-                itemProp="articleBody"
-            >
-                <StaticBlocks blocks={blocks} />
+            </section>
+            <div className={`blog-preview-body ${readerAside ? "has-reader-aside" : ""}`}>
+                {readerAside}
+                <div
+                    className="blog-preview-content max-w-none"
+                    itemProp="articleBody"
+                >
+                    <StaticBlocks blocks={blocks} />
+                </div>
             </div>
         </article>
     );
@@ -986,6 +997,40 @@ function HandlePageInner({ path, initialData = null }) {
             : null;
         const canEdit =
             isAuthor || myCoRole === "editor" || myCoRole === "admin";
+        const readerAside = (
+            <div
+                className="reader-side-rail"
+                role="complementary"
+                aria-label="About the author and related stories"
+            >
+                {!blog.secret && (
+                    <ReaderCompanion
+                        author={{
+                            username: blog.author_username,
+                            displayName: blog.author_name,
+                            designation: blog.author_designation,
+                            avatarUrl: blog.author_avatar,
+                        }}
+                        org={
+                            data.owner?.type === "org"
+                                ? {
+                                      slug: data.owner.slug,
+                                      name: data.owner.name,
+                                      tagline: data.owner.tagline,
+                                      logoUrl:
+                                          data.owner.logo_url ||
+                                          data.owner.logo_r2_key,
+                                  }
+                                : null
+                        }
+                        primaryTag={
+                            Array.isArray(blog.tags) ? blog.tags[0] : null
+                        }
+                    />
+                )}
+                <BlogRecommendations blogId={blog.id} compact limit={3} />
+            </div>
+        );
 
         return (
             <AppShell showSidebar={false}>
@@ -1022,33 +1067,6 @@ function HandlePageInner({ path, initialData = null }) {
                             </Link>
                         )}
                     </nav>
-                    {!blog.secret && (
-                        <ReaderCompanion
-                            author={{
-                                username: blog.author_username,
-                                displayName: blog.author_name,
-                                designation: blog.author_designation,
-                                avatarUrl: blog.author_avatar,
-                            }}
-                            org={
-                                data.owner?.type === "org"
-                                    ? {
-                                          slug: data.owner.slug,
-                                          name: data.owner.name,
-                                          tagline: data.owner.tagline,
-                                          logoUrl:
-                                              data.owner.logo_url ||
-                                              data.owner.logo_r2_key,
-                                      }
-                                    : null
-                            }
-                            primaryTag={
-                                Array.isArray(blog.tags)
-                                    ? blog.tags[0]
-                                    : null
-                            }
-                        />
-                    )}
                     <ReadingResumePrompt blogId={blog.id} />
                     {!blog.secret && !blog.member_only && !blog.paywalled && (
                         <RevisionTimeline blogId={blog.id} onRevision={setRevision} />
@@ -1072,8 +1090,9 @@ function HandlePageInner({ path, initialData = null }) {
                             </Link>
                         </div>
                     )}
-                    {InteractiveBlogPreview ? (
-                        <InteractiveBlogPreview
+                    <div className="reader-story-main">
+                            {InteractiveBlogPreview ? (
+                                <InteractiveBlogPreview
                             title={blog.title}
                             subtitle={blog.subtitle}
                             pageEmoji={blog.page_emoji}
@@ -1171,45 +1190,24 @@ function HandlePageInner({ path, initialData = null }) {
                                     }
                                 />
                             }
-                        />
-                    ) : (
-                        <CrawlableArticle
-                            blog={blog}
-                            blocks={blocks}
-                            owner={data.owner}
-                        />
-                    )}
+                            readerAside={readerAside}
+                                />
+                            ) : (
+                                <CrawlableArticle
+                                    blog={blog}
+                                    blocks={blocks}
+                                    owner={data.owner}
+                                    readerAside={readerAside}
+                                />
+                            )}
 
-                    {/* End-of-blog follow card — author (+ org) */}
-                    <div className="reader-endmatter">
-                    <BlogFollowCard
-                        author={{
-                            username: blog.author_username,
-                            display_name: blog.author_name,
-                            designation: blog.author_designation,
-                            avatar_url: blog.author_avatar,
-                        }}
-                        org={
-                            data.owner?.type === "org"
-                                ? {
-                                      slug: data.owner.slug,
-                                      name: data.owner.name,
-                                      logo_url:
-                                          data.owner.logo_url ||
-                                          data.owner.logo_r2_key,
-                                  }
-                                : null
-                        }
-                    />
-
-                    {/* Comments section — always expanded */}
-                    <BlogComments
-                        blogId={blog.id}
-                        blogAuthorId={blog.author_id}
-                    />
-
-                    {/* More to read — related recommendations */}
-                    <BlogRecommendations blogId={blog.id} />
+                            <div className="reader-endmatter">
+                                {/* Comments section — always expanded */}
+                                <BlogComments
+                                    blogId={blog.id}
+                                    blogAuthorId={blog.author_id}
+                                />
+                            </div>
                     </div>
                 </div>
                 </main>

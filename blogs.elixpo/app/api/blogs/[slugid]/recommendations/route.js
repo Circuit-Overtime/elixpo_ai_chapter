@@ -1,15 +1,18 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
+import { diversifyBlogs } from '../../../../../lib/recommendations';
 
 const FIELDS = `b.id, b.slug, b.title, b.subtitle, b.cover_image_r2_key,
   b.author_id, b.published_as, b.published_at, b.read_time_minutes, b.like_count, b.comment_count`;
 const EXCLUDE_TEST = "b.author_id NOT IN (SELECT id FROM users WHERE LOWER(username) = 'selenium-cutlet')";
 
-// GET — "next blogs to read": related by tag, then more from the author, then
-// trending. Excludes the current blog and the test author.
+// GET — related stories with a deterministic author-diversity pass. Relevance
+// still comes first, but a prolific writer cannot fill the whole module.
 export async function GET(request, { params }) {
   const { slugid } = await params;
   const limit = 4;
+  const candidateLimit = 16;
+  const maxCandidates = candidateLimit * 3;
   try {
     const { getDB } = await import('../../../../../lib/cloudflare');
     const db = getDB();
@@ -18,12 +21,12 @@ export async function GET(request, { params }) {
     // Same-author recommendations would identify the writer of a secret post.
     const authorId = blog?.secret ? null : blog?.author_id || null;
 
-    const picked = [];
+    const candidates = [];
     const seen = new Set([slugid]);
     const add = (rows) => {
       for (const r of rows) {
-        if (picked.length >= limit) break;
-        if (!seen.has(r.id)) { seen.add(r.id); picked.push(r); }
+        if (candidates.length >= maxCandidates) break;
+        if (!seen.has(r.id)) { seen.add(r.id); candidates.push(r); }
       }
     };
 
@@ -35,29 +38,28 @@ export async function GET(request, { params }) {
           SELECT blog_id FROM blog_tags WHERE tag IN (SELECT tag FROM blog_tags WHERE blog_id = ?)
         )
       ORDER BY b.like_count DESC, b.published_at DESC LIMIT ?
-    `).bind(slugid, slugid, limit).all();
+    `).bind(slugid, slugid, candidateLimit).all();
     add(tagRows?.results || []);
 
     // 2) More from the same author.
-    if (picked.length < limit && authorId) {
+    if (authorId) {
       const moreRows = await db.prepare(`
         SELECT ${FIELDS} FROM blogs b
         WHERE b.status = 'published' AND b.secret = 0 AND b.author_id = ? AND b.id != ?
         ORDER BY b.published_at DESC LIMIT ?
-      `).bind(authorId, slugid, limit).all();
+      `).bind(authorId, slugid, candidateLimit).all();
       add(moreRows?.results || []);
     }
 
     // 3) Trending fallback.
-    if (picked.length < limit) {
-      const trend = await db.prepare(`
-        SELECT ${FIELDS} FROM blogs b
-        WHERE b.status = 'published' AND b.secret = 0 AND b.id != ? AND ${EXCLUDE_TEST}
-        ORDER BY b.like_count DESC, b.view_count DESC, b.published_at DESC LIMIT ?
-      `).bind(slugid, limit).all();
-      add(trend?.results || []);
-    }
+    const trend = await db.prepare(`
+      SELECT ${FIELDS} FROM blogs b
+      WHERE b.status = 'published' AND b.secret = 0 AND b.id != ? AND ${EXCLUDE_TEST}
+      ORDER BY b.like_count DESC, b.view_count DESC, b.published_at DESC LIMIT ?
+    `).bind(slugid, candidateLimit).all();
+    add(trend?.results || []);
 
+    const picked = diversifyBlogs(candidates, { windowSize: limit, maxPerAuthor: 1 }).slice(0, limit);
     if (picked.length === 0) return NextResponse.json({ posts: [] });
 
     // Enrich with author + org.
