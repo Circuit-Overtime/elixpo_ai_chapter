@@ -282,6 +282,10 @@ body:has(.preview-back-to-top) .global-scroll-to-top {
   padding-bottom: 0;
 }
 
+.reader-rail-recommendation:not(.reader-rail-recommendation-skeleton) {
+  animation: reader-recommendation-enter 180ms ease-out both;
+}
+
 .reader-rail-recommendation-cover {
   width: 58px;
   height: 58px;
@@ -289,6 +293,50 @@ body:has(.preview-back-to-top) .global-scroll-to-top {
   align-self: center;
   border-radius: 7px;
   object-fit: cover;
+}
+
+.reader-rail-recommendation-skeleton {
+  pointer-events: none;
+}
+
+.reader-rail-skeleton-copy {
+  display: grid;
+  flex: 1;
+  align-content: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.reader-rail-skeleton-line,
+.reader-rail-skeleton-cover {
+  display: block;
+  background: var(--bg-elevated);
+  animation: reader-recommendation-pulse 1.35s ease-in-out infinite;
+}
+
+.reader-rail-skeleton-line {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.reader-rail-skeleton-line-short {
+  width: 42%;
+  height: 6px;
+}
+
+.reader-rail-skeleton-line-medium {
+  width: 68%;
+}
+
+@keyframes reader-recommendation-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes reader-recommendation-enter {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .reader-context {
@@ -543,6 +591,12 @@ body:has(.preview-back-to-top) .global-scroll-to-top {
   .preview-back-to-top,
   .reader-context-link {
     transition: none;
+  }
+
+  .reader-rail-skeleton-line,
+  .reader-rail-skeleton-cover,
+  .reader-rail-recommendation:not(.reader-rail-recommendation-skeleton) {
+    animation: none;
   }
 }
 
