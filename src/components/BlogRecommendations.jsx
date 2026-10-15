@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { generateBlogThumbnail, generatePixelAvatar } from '../utils/pixelAvatar';
 
-// "More to read" under the comments — related blogs (by tag, author, trending).
+// "More to read" under the comments — related first, then author-diversified.
 export default function BlogRecommendations({ blogId }) {
   const [posts, setPosts] = useState([]);
 
