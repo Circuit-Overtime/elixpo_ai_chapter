@@ -108,9 +108,10 @@ export default async function sitemap() {
     const blogUrls = (blogs?.results || []).map((b) => {
       const owner = b.published_as?.startsWith('org:') ? b.org_slug : b.author_username;
       if (!owner || !b.slug) return null;
+      const enc = (s) => encodeURIComponent(s);
       const path = b.collection_slug && b.org_slug
-        ? `${b.org_slug}/${b.collection_slug}/${b.slug}`
-        : `${owner}/${b.slug}`;
+        ? `${enc(b.org_slug)}/${enc(b.collection_slug)}/${enc(b.slug)}`
+        : `${enc(owner)}/${enc(b.slug)}`;
       return {
         url: `${SITE_URL}/${path}`,
         lastModified: ts(b.updated_at || b.published_at),
@@ -120,28 +121,28 @@ export default async function sitemap() {
     }).filter(Boolean);
 
     const userUrls = (users?.results || []).map((u) => ({
-      url: `${SITE_URL}/${u.username}`,
+      url: `${SITE_URL}/${encodeURIComponent(u.username)}`,
       lastModified: ts(u.updated_at),
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
 
     const orgUrls = (orgs?.results || []).map((o) => ({
-      url: `${SITE_URL}/${o.slug}`,
+      url: `${SITE_URL}/${encodeURIComponent(o.slug)}`,
       lastModified: ts(o.updated_at),
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
 
     const collectionUrls = (collections?.results || []).map((c) => ({
-      url: `${SITE_URL}/${c.oslug}/${c.cslug}`,
+      url: `${SITE_URL}/${encodeURIComponent(c.oslug)}/${encodeURIComponent(c.cslug)}`,
       lastModified: ts(c.updated_at),
       changeFrequency: 'weekly',
       priority: 0.6,
     }));
 
     const curatedCollectionUrls = (curatedCollections?.results || []).map((c) => ({
-      url: `${SITE_URL}/${c.username}/reads/${c.cslug}`,
+      url: `${SITE_URL}/${encodeURIComponent(c.username)}/reads/${encodeURIComponent(c.cslug)}`,
       lastModified: ts(c.updated_at),
       changeFrequency: 'weekly',
       priority: 0.6,
@@ -155,7 +156,7 @@ export default async function sitemap() {
     }));
 
     const contestUrls = (contests?.results || []).map((contest) => ({
-      url: `${SITE_URL}/contests/${contest.slug}`,
+      url: `${SITE_URL}/contests/${encodeURIComponent(contest.slug)}`,
       lastModified: ts(contest.updated_at),
       changeFrequency: contest.status === 'completed' || contest.status === 'cancelled' ? 'monthly' : 'daily',
       priority: 0.7,
