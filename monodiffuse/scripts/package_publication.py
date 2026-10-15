@@ -48,15 +48,35 @@ def write_source_zip(destination: Path) -> None:
             archive.writestr(info, path.read_bytes(), compresslevel=9)
 
 
+def write_manuscript_zip(source_directory: Path, destination: Path) -> None:
+    files = [
+        source_directory / "paper.tex",
+        source_directory / "paper.bbl",
+        source_directory / "references.bib",
+        *(source_directory / "figures" / "results").glob("*.png"),
+    ]
+    with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        for path in sorted(files):
+            if not path.is_file():
+                raise SystemExit(f"missing manuscript dependency: {path}")
+            relative = path.relative_to(source_directory)
+            info = zipfile.ZipInfo(relative.as_posix(), EPOCH)
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = (path.stat().st_mode & 0xFFFF) << 16
+            archive.writestr(info, path.read_bytes(), compresslevel=9)
+
+
 def main() -> None:
-    paper = ROOT / "paper" / "v0_mnist" / "paper.pdf"
+    paper = ROOT / "paper" / "v1_mnist_narrow" / "paper.pdf"
     if not paper.exists():
         raise SystemExit(f"missing {paper}; build the manuscript first")
 
     engrxiv = OUTPUT / "engrxiv"
+    preprints = OUTPUT / "preprints"
     zenodo = OUTPUT / "zenodo"
     shutil.rmtree(OUTPUT, ignore_errors=True)
     engrxiv.mkdir(parents=True)
+    preprints.mkdir(parents=True)
     zenodo.mkdir(parents=True)
 
     manuscript = engrxiv / "monodiffuse-preprint.pdf"
@@ -66,10 +86,22 @@ def main() -> None:
     source = engrxiv / "monodiffuse-v1.0.0-source.zip"
     write_source_zip(source)
 
+    preprints_pdf = preprints / "monodiffuse-preprint.pdf"
+    preprints_source = preprints / "monodiffuse-manuscript-source.zip"
+    shutil.copy2(paper, preprints_pdf)
+    write_manuscript_zip(paper.parent, preprints_source)
+
     shutil.copy2(ROOT / "CITATION.cff", zenodo / "CITATION.cff")
     shutil.copy2(ROOT / "publication" / "zenodo-software-metadata.md", zenodo / "metadata.md")
 
-    files = [manuscript, source, zenodo / "CITATION.cff", zenodo / "metadata.md"]
+    files = [
+        manuscript,
+        source,
+        preprints_pdf,
+        preprints_source,
+        zenodo / "CITATION.cff",
+        zenodo / "metadata.md",
+    ]
     lines = [f"{sha256(path)}  {path.relative_to(OUTPUT)}" for path in files]
     (OUTPUT / "SHA256SUMS").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"built {OUTPUT}")
