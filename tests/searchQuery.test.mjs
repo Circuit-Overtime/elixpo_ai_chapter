@@ -99,6 +99,16 @@ test('malformed dates are reported, not silently dropped', () => {
   assert.ok(p.unknown.includes('created:yesterday'));
 });
 
+test('impossible calendar dates are reported as unknown', () => {
+  const bad = parseSearchQuery('created:2025-02-30');
+  assert.equal(bad.dates.length, 0);
+  assert.ok(bad.unknown.includes('created:2025-02-30'));
+  const leap = parseSearchQuery('created:2024-02-29');
+  assert.equal(leap.dates.length, 1);
+  const nonLeap = parseSearchQuery('created:2025-02-29');
+  assert.equal(nonLeap.dates.length, 0);
+});
+
 // ── SQL building: security rules ────────────────────────────────────────────
 test('SECURITY: author: never matches a secret post', () => {
   const { where, binds } = buildBlogSearch(parseSearchQuery('author:nonsense3'));
