@@ -6,6 +6,39 @@ const SITE_NAME = 'Elixpo Sketch'
 const SITE_TAGLINE = 'Open Source Infinite Canvas, Hand Drawn Aesthetics, Built In Docs Editor'
 const SITE_DESCRIPTION =
   'LixSketch is a free, open-source collaborative whiteboard for technical diagrams, wireframes, flowcharts, architecture drawings, and presentations. No login required — start drawing instantly as a guest. Features AI-powered smart editing (Beta), end-to-end encrypted sharing, real-time collaboration with live cursors, a Notion-style docs editor, LixScript DSL for scripted diagrams, 250K+ icons, and a VS Code extension. Runs entirely in the browser. Forever free.'
+
+// Canvas routes need their persisted theme before React hydrates. Keeping this
+// tiny bootstrap before the application markup prevents a dark-to-light (or
+// light-to-dark) frame while the client stores restore local preferences.
+const canvasThemeBootstrap = `
+  (() => {
+    try {
+      if (!/^\\/(c|room)\\//.test(location.pathname)) return;
+      const allowedThemes = new Set(['dark', 'light', 'system']);
+      let theme = localStorage.getItem('theme');
+      if (!allowedThemes.has(theme)) {
+        const prefs = JSON.parse(localStorage.getItem('lix_ui_prefs') || '{}');
+        theme = allowedThemes.has(prefs.theme) ? prefs.theme : 'dark';
+      }
+      const resolved = theme === 'system'
+        ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : theme;
+      const defaults = { dark: '#15111f', light: '#FFFFFF' };
+      const palettes = {
+        dark: ['#000000', '#161718', '#15111f', '#181605', '#1b1615'],
+        light: ['#ffffff', '#f6dbc0', '#f5eed2', '#f5f2ed', '#f5dabf'],
+      };
+      const stored = localStorage.getItem('lixsketch-canvas-background-' + resolved);
+      const background = stored && palettes[resolved].includes(stored.toLowerCase())
+        ? stored
+        : defaults[resolved];
+      document.documentElement.dataset.canvasTheme = resolved;
+      document.documentElement.style.colorScheme = resolved;
+      document.documentElement.style.setProperty('--lixsketch-canvas-background', background);
+      document.body.classList.add('canvas-mode', 'theme-' + resolved);
+    } catch (_) {}
+  })();
+`
 export const metadata = {
   metadataBase: new URL(SITE_URL),
 
@@ -165,7 +198,8 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: canvasThemeBootstrap }} />
         <InitHljs />
         {children}
       </body>

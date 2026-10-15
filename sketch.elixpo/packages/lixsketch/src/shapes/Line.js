@@ -2,6 +2,7 @@
 // Line shape class - extracted from lineTool.js
 // Depends on globals: svg, shapes, rough, currentShape, currentZoom
 import { updateAttachedArrows as updateArrowsForShape } from '../tools/arrowTool.js';
+import { DEFAULT_SHAPE_LABEL_FONT_SIZE } from '../core/ShapeLabelLayout.js';
 import { resolveThemeLabelColor } from '../utils/themeColors.js';
 
 const rc = rough.svg(svg);
@@ -45,7 +46,7 @@ class Line {
         this.label = options.label || '';
         this.labelElement = null;
         this.labelColor = resolveThemeLabelColor(options.labelColor);
-        this.labelFontSize = options.labelFontSize || 12;
+        this.labelFontSize = options.labelFontSize || DEFAULT_SHAPE_LABEL_FONT_SIZE;
         this._isEditingLabel = false;
         this._hitArea = null;
         this._labelBg = null;

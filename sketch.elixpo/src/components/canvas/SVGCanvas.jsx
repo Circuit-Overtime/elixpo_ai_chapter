@@ -111,7 +111,9 @@ export default function SVGCanvas() {
       ref={svgRef}
       className="absolute inset-0 w-full h-full"
       style={{
-        background: canvasBackground,
+        // The head bootstrap sets this before first paint; Zustand takes over
+        // after hydration and keeps the variable in sync.
+        background: `var(--lixsketch-canvas-background, ${canvasBackground})`,
         // Split view is a viewport crop, not a canvas resize. Keep the SVG
         // surface at the browser width and let SplitLayout's overflow-hidden
         // pane reveal less of it. If the SVG follows the pane width, each

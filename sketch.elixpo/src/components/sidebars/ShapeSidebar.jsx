@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import useSketchStore from '@/store/useSketchStore'
 
 /**
@@ -10,12 +11,30 @@ import useSketchStore from '@/store/useSketchStore'
 export function ToolbarButton({ icon, preview, children, tooltip, label = tooltip }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
+  const panelRef = useRef(null)
+  const [panelPosition, setPanelPosition] = useState(null)
+
+  useEffect(() => {
+    if (!open) return
+    const updatePosition = () => {
+      const rect = ref.current?.getBoundingClientRect()
+      if (!rect) return
+      setPanelPosition({ left: rect.left + rect.width / 2, top: rect.top - 12 })
+    }
+    updatePosition()
+    window.addEventListener('resize', updatePosition)
+    window.addEventListener('scroll', updatePosition, true)
+    return () => {
+      window.removeEventListener('resize', updatePosition)
+      window.removeEventListener('scroll', updatePosition, true)
+    }
+  }, [open])
 
   // Close on outside click
   useEffect(() => {
     if (!open) return
     const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+      if (!ref.current?.contains(e.target) && !panelRef.current?.contains(e.target)) setOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
@@ -42,14 +61,19 @@ export function ToolbarButton({ icon, preview, children, tooltip, label = toolti
         </svg>
       </button>
 
-      {open && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-20">
+      {open && panelPosition && createPortal(
+        <div
+          ref={panelRef}
+          className="fixed -translate-x-1/2 -translate-y-full z-[10050] max-w-[calc(100vw-16px)]"
+          style={panelPosition}
+        >
           <div className="bg-surface-card border border-border-light rounded-xl p-3 shadow-xl shadow-black/20 min-w-max">
             {children}
           </div>
           {/* Arrow pointer */}
           <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 bg-surface-card border-r border-b border-border-light" />
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   )
