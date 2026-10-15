@@ -19,6 +19,6 @@ export async function GET(request) {
     const result = await checkNameAvailable(db, name);
     return NextResponse.json(result);
   } catch {
-    return NextResponse.json({ available: true });
+    return NextResponse.json({ available: false, error: 'Availability check unavailable' }, { status: 503 });
   }
 }
