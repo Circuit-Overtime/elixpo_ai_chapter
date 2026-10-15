@@ -187,12 +187,16 @@ function generateColor(userId) {
   return `hsl(${hue}, 70%, 60%)`;
 }
 
+const ALLOWED_ORIGINS = new Set(['https://blogs.elixpo.com', 'http://localhost:3000']);
+
 function corsHeaders(request) {
-  const origin = request.headers.get('Origin') || '*';
+  const origin = request.headers.get('Origin') || '';
+  const allow = ALLOWED_ORIGINS.has(origin) ? origin : 'https://blogs.elixpo.com';
   return {
-    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Credentials': 'true',
+    Vary: 'Origin',
   };
 }
