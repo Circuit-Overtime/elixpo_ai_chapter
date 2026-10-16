@@ -15,7 +15,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.
 - `discussions.json` — verified GitHub Discussions source, eligible public categories, refresh policy, and editorial-feature boundary.
 - `history.json` — institutional timeline copy, designed to grow only through verifiable milestones.
-- `brand.json` — canonical public asset location, visual direction, palette, and branding-migration state.
+- `brand.json` — canonical public asset location, visual direction, palette, source inventory, duplicate audit, migration exclusions, and branding-migration state.
 - `schemas/project-manifest.schema.json` — pilot contract for repository-owned `.elixpo/project.yml` manifests.
 - `schemas/*.schema.json` — machine-readable contracts for canonical organization, directory, people, history, brand, policy, taxonomy, and repository records.
 
@@ -28,6 +28,9 @@ The human-readable sponsorship policy lives at
 The portal-hosted canonical brand masters live under
 [`public/brand/source/`](../public/brand/source/); production pipelines,
 prompts, and the large sticker archive have not yet migrated.
+The proposed organization-wide visual rules are documented in
+[`docs/brand-system.md`](../docs/brand-system.md) and remain explicitly
+unapproved until the visual-language gate is accepted.
 
 Canonical shared README prose and repository wrappers live under `readme/`.
 Generated artifacts under `docs/readme/generated/` are synchronized to the

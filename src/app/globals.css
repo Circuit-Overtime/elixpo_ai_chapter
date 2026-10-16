@@ -598,6 +598,10 @@ svg { transition: transform .2s ease; }
 .icon-grid a { display: grid; gap: .8rem; justify-items: start; padding: 1rem; border: 1px solid var(--line); border-radius: 1rem; background: white; }
 .icon-grid img { border-radius: 1.3rem; }
 .icon-grid span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; font: .65rem var(--font-ui-mono); }
+.brand-audit { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(520px,.9fr); gap: clamp(3rem,8vw,8rem); align-items: end; margin-top: 7rem; padding: clamp(2rem,5vw,5rem); border-radius: 1.5rem; color: white; background: var(--ink); }
+.brand-audit h2 { max-width: 760px; margin: 0; font-size: clamp(2.5rem,5vw,5.5rem); line-height: .95; letter-spacing: -.065em; }.brand-audit > div > p:last-child { max-width: 660px; margin-top: 2rem; color: rgba(255,255,255,.62); line-height: 1.7; }
+.brand-audit dl { display: grid; grid-template-columns: repeat(3,1fr); margin: 0; border-top: 1px solid rgba(255,255,255,.2); }.brand-audit dl > div { min-width: 0; padding: 1.2rem; border-right: 1px solid rgba(255,255,255,.2); }.brand-audit dl > div:last-child { border-right: 0; }
+.brand-audit dt { color: rgba(255,255,255,.58); font: .62rem var(--font-ui-mono); text-transform: uppercase; letter-spacing: .1em; }.brand-audit dd { margin: 1.3rem 0 .45rem; font-size: clamp(2.4rem,5vw,4.7rem); line-height: .8; letter-spacing: -.07em; }.brand-audit small { color: rgba(255,255,255,.54); font-size: .66rem; }
 .architecture-stack { border-top: 1px solid var(--line); }
 .architecture-stack article { display: grid; grid-template-columns: 70px minmax(220px,.65fr) 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--line); align-items: baseline; }
 .architecture-stack span { color: var(--leaf); font: .65rem var(--font-ui-mono); }
@@ -698,6 +702,7 @@ svg { transition: transform .2s ease; }
   .discussion-meta { grid-column: 2; grid-template-columns: 1fr 1fr; }
   .partnership-rules { grid-template-columns: 1fr; gap: 2rem; }
   .brand-direction { grid-template-columns: 1fr; gap: 2rem; }
+  .brand-audit { grid-template-columns: 1fr; }
   .architecture-contract > div:first-child { grid-template-columns: 1fr; gap: 1.5rem; }
   .architecture-contract > div:first-child .eyebrow { grid-column: auto; margin-bottom: 0; }
   .mark-grid { grid-template-columns: 1fr; }
@@ -850,5 +855,6 @@ svg { transition: transform .2s ease; }
   .footer-links > div:first-child { grid-column: 1 / -1; }
   .footer-meta { flex-direction: column; }
   .icon-grid { grid-template-columns: repeat(2,1fr); }
+  .brand-audit { margin-top: 4rem; padding: 1.5rem; }.brand-audit dl { grid-template-columns: 1fr; }.brand-audit dl > div { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }.brand-audit dl > div:last-child { border-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }

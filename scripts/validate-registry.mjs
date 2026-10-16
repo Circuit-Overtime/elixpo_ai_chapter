@@ -78,6 +78,7 @@ if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "exp
 if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(history.lastVerified)) addError("history.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.lastVerified)) addError("brand.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(brand.audit?.auditedAt)) addError("brand.audit.auditedAt", "expected YYYY-MM-DD");
 if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
 
 validateUrl("discussions.sourceRepository", discussions.sourceRepository);
@@ -162,6 +163,12 @@ for (const [index, milestone] of (history.entries ?? []).entries()) {
 
 validateUrl("brand.canonicalHome", brand.canonicalHome);
 validateUrl("brand.sourceRepository", brand.sourceRepository);
+if (!["proposed", "approved", "retired"].includes(brand.visualDirection?.approvalStatus)) {
+  addError("brand.visualDirection.approvalStatus", "expected proposed, approved, or retired");
+}
+if (brand.visualDirection?.approvalStatus !== "approved" && brand.migrationStatus === "complete") {
+  addError("brand.migrationStatus", "cannot be complete before the visual direction is approved");
+}
 const paletteNames = new Set();
 const paletteHexValues = new Set();
 for (const [index, color] of (brand.visualDirection?.palette ?? []).entries()) {
@@ -178,6 +185,12 @@ for (const [index, group] of (brand.assetGroups ?? []).entries()) {
   if (!group.name) addError(`${location}.name`, "is required");
   if (!group.path?.startsWith("/")) addError(`${location}.path`, "must be a root-relative public asset path");
   if (!["staged", "canonical", "retired"].includes(group.status)) addError(`${location}.status`, "unknown value");
+}
+if ((brand.audit?.exactMasterDuplicates ?? 0) > (brand.audit?.portalBrandFiles ?? 0)) {
+  addError("brand.audit.exactMasterDuplicates", "cannot exceed the portal brand file count");
+}
+if (!(brand.audit?.excludedFromPublicMigration ?? []).some((item) => item.includes(".env"))) {
+  addError("brand.audit.excludedFromPublicMigration", "must explicitly exclude environment files");
 }
 
 const licensingClasses = new Set();
