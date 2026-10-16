@@ -195,9 +195,26 @@ that needs an owner and reason.
 Migration MUST use a reviewable branch and pull request. Bulk automation MUST
 generate diffs; it MUST NOT push silent rewrites to project repositories.
 
+## Conformance checker
+
+Run the human-readable audit from a checkout of `elixpo/elixpo`:
+
+```bash
+npm run repository:check -- /path/to/project
+```
+
+The checker validates the 0.1 manifest contract, required and conditional
+documents, policy and workflow pointers, maintainer accountability,
+conformance metadata, and agreement with the canonical repository and
+directory records. It reports a remediation beside every finding and does not
+modify the target repository. Use `--strict` when warnings should fail CI.
+
+The checker requires Python 3 and PyYAML in the audit environment. This is a
+tooling dependency of the central audit, not a dependency imposed on project
+applications.
+
 ## Known 0.1 gaps
 
-- The shared conformance checker is not implemented.
 - Archived, research, hardware, and package-focused profiles need pilot repos.
 - Workflow reuse boundaries require inventory across `elixpo`,
   `elixpo_chapter`, and `agent.elixpo`.
