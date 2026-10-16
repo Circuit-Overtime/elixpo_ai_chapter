@@ -1,7 +1,5 @@
 import { createPageMetadata } from "@/lib/seo";
-import { LegalHero } from "@/components/LegalHero";
 import { ELIXPO_LINKS } from "@/lib/elixpo-links";
-import { VIDEOS } from "@/lib/media";
 
 export const metadata = createPageMetadata({
   title: "Terms of Service",
@@ -11,32 +9,23 @@ export const metadata = createPageMetadata({
 
 export default function TermsPage() {
   return (
-    <>
-      <LegalHero
-        title="Terms of Service"
-        subtitle="The terms that govern your use of the Elixpo ecosystem - our open-source tools, packages, and services."
-        video={VIDEOS.sketch}
-        updated="June 2026"
-      />
-
-      <article className="prose prose-invert max-w-3xl mx-auto px-6 py-16 prose-headings:font-serif prose-headings:text-white prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-white">
+    <main className="page-shell legal-page">
+      <header className="page-intro"><p className="eyebrow">Policy / last reviewed October 2026</p><h1>Terms of service</h1><p className="lede">These portal-level terms describe the general boundary between Elixpo’s public information, open-source artifacts, and hosted services. A repository license and a service’s operating terms are separate instruments.</p></header>
+      <article className="prose prose-lg max-w-3xl prose-headings:tracking-tight prose-a:text-[#0b623c] prose-a:no-underline hover:prose-a:underline">
         <h2>1. Acceptance of terms</h2>
         <p>
-          By accessing or using any Elixpo project - including Elixpo Art, Elixpo
-          Blogs, LixSketch, LixEditor, Elixpo Chat, Elixpo Search, Elixpo
-          Accounts, and related tools - you agree to these Terms. If you do not
-          agree, please do not use the services.
+          By using this portal or an operated Elixpo service, you agree to the
+          terms that apply to that surface. Archived repositories and third-party
+          Member Projects are not automatically operated services.
         </p>
 
         <h2>2. Open source &amp; licensing</h2>
         <p>
-          Elixpo is open source. Source code is provided under the{" "}
-          <strong>MIT License (with Oreo-trademark exception)</strong> and visual
-          assets under <strong>CC-BY-4.0</strong>, as set out in our{" "}
-          <a href={`${ELIXPO_LINKS.githubChapter}/blob/main/LICENSE`}>LICENSE</a>.
-          The Oreo mascot, the chest E-badge, and the &ldquo;Elixpo&rdquo; and
-          &ldquo;Oreo&rdquo; names and brand palette are reserved and not granted
-          for use outside Elixpo-aligned projects.
+          Licenses vary by project and artifact. The license file in the relevant
+          repository controls use of its code, research, hardware, data, or media.
+          Elixpo&rsquo;s default-license policy is published separately, and
+          copyright permission does not grant a right to imply endorsement or use
+          protected names and marks as though a modified work were official.
         </p>
 
         <h2>3. Acceptable use</h2>
@@ -84,6 +73,6 @@ export default function TermsPage() {
           <a href={ELIXPO_LINKS.discussions}>GitHub Discussions</a>.
         </p>
       </article>
-    </>
+    </main>
   );
 }

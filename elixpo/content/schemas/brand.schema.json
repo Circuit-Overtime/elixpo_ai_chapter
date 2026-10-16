@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/brand.schema.json",
+  "title": "Elixpo canonical brand record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "lastVerified", "canonicalHome", "sourceRepository", "migrationStatus", "visualDirection", "assetGroups", "stickerAccess", "audit", "note"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "lastVerified": { "type": "string", "format": "date" },
+    "canonicalHome": { "type": "string", "format": "uri" },
+    "sourceRepository": { "type": "string", "format": "uri" },
+    "migrationStatus": { "enum": ["not-started", "in-progress", "portal-canonical-assets-migrated", "complete"] },
+    "visualDirection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "approvalStatus", "principle", "palette", "typography", "geometry", "iconography", "mascotUsage", "motion", "accessibility"],
+      "properties": {
+        "name": { "type": "string", "minLength": 2 },
+        "approvalStatus": { "enum": ["proposed", "approved", "retired"] },
+        "principle": { "type": "string", "minLength": 30 },
+        "palette": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "hex"],
+            "properties": {
+              "name": { "type": "string", "minLength": 2 },
+              "hex": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+            }
+          }
+        },
+        "typography": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sans", "serif", "mono"],
+          "properties": {
+            "sans": { "type": "string", "minLength": 20 },
+            "serif": { "type": "string", "minLength": 20 },
+            "mono": { "type": "string", "minLength": 20 }
+          }
+        },
+        "geometry": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 20 } },
+        "iconography": { "type": "string", "minLength": 30 },
+        "mascotUsage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["useFor", "avoidFor", "rule"],
+          "properties": {
+            "useFor": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 3 } },
+            "avoidFor": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 3 } },
+            "rule": { "type": "string", "minLength": 30 }
+          }
+        },
+        "motion": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 20 } },
+        "accessibility": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 20 } }
+      }
+    },
+    "assetGroups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "status"],
+        "properties": {
+          "name": { "type": "string", "minLength": 2 },
+          "path": { "type": "string", "pattern": "^/" },
+          "status": { "enum": ["staged", "canonical", "retired"] }
+        }
+      }
+    },
+    "stickerAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publicAccess", "printReadyAccess", "requestUrl", "statement", "openBrandMaterials", "restrictedMaterials"],
+      "properties": {
+        "publicAccess": { "const": "watermarked-preview-only" },
+        "printReadyAccess": { "const": "approved-partnership-request" },
+        "requestUrl": { "type": "string", "format": "uri" },
+        "statement": { "type": "string", "minLength": 40 },
+        "openBrandMaterials": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "restrictedMaterials": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auditedAt", "sourceRevision", "sourceTreeClean", "standaloneTrackedFiles", "standaloneDiskSizeBytes", "portalBrandFiles", "portalBrandDiskSizeBytes", "exactMasterDuplicates", "sourceBreakdown", "exactDuplicateGroups", "excludedFromPublicMigration", "migrationPrinciples"],
+      "properties": {
+        "auditedAt": { "type": "string", "format": "date" },
+        "sourceRevision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "sourceTreeClean": { "type": "boolean" },
+        "standaloneTrackedFiles": { "type": "integer", "minimum": 1 },
+        "standaloneDiskSizeBytes": { "type": "integer", "minimum": 1 },
+        "portalBrandFiles": { "type": "integer", "minimum": 1 },
+        "portalBrandDiskSizeBytes": { "type": "integer", "minimum": 1 },
+        "exactMasterDuplicates": { "type": "integer", "minimum": 0 },
+        "sourceBreakdown": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["group", "trackedFiles"],
+            "properties": {
+              "group": { "type": "string", "minLength": 2 },
+              "trackedFiles": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "exactDuplicateGroups": { "type": "array", "items": { "type": "string", "minLength": 2 } },
+        "excludedFromPublicMigration": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 10 } },
+        "migrationPrinciples": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 10 } }
+      }
+    },
+    "note": { "type": "string", "minLength": 40 }
+  }
+}

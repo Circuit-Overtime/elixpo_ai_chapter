@@ -1,7 +1,7 @@
 {
   "name": "elixpo",
   "version": "2.1.2",
-  "description": "Elixpo — An open-source ecosystem of AI-powered tools for art, search, sketching, and more. Built by a global community.",
+  "description": "The public portal for Elixpo, an open-source project foundry for software, research, and operated services.",
   "author": {
     "name": "Ayushman Bhattacharya",
     "url": "https://github.com/Circuit-Overtime"
@@ -10,12 +10,13 @@
   "homepage": "https://elixpo.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elixpo/elixpo_chapter"
+    "url": "https://github.com/elixpo/elixpo"
   },
   "keywords": [
     "elixpo",
     "open-source",
-    "ai",
+    "project-foundry",
+    "open-research",
     "developer-tools",
     "next.js",
     "community"
@@ -25,7 +26,13 @@
     "dev": "NEXT_PRIVATE_NO_CACHE=1 next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "registry:check": "node scripts/validate-registry.mjs",
+    "registry:links": "node scripts/check-registry-links.mjs",
+    "repository:check": "python3 scripts/check-repository-conformance.py",
+    "readme:check": "node scripts/render-readmes.mjs --check",
+    "readme:write": "node scripts/render-readmes.mjs --write",
+    "readme:sync-workspace": "node scripts/render-readmes.mjs --sync-workspace"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
@@ -44,6 +51,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.0",
     "tailwindcss": "^4",
