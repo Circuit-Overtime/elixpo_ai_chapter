@@ -22,7 +22,7 @@
         { "label": "About", "href": "/about" },
         { "label": "Open Source", "href": "/resources" },
         { "label": "Hacktoberfest", "href": "https://hacktoberfest.com" },
-        { "label": "Sponsor Us", "href": "https://github.com/sponsors/Circuit-Overtime" }
+        { "label": "Funding Policy", "href": "https://github.com/elixpo/elixpo/blob/main/docs/policies/sponsorship.md" }
       ]
     }
   ],
@@ -31,5 +31,5 @@
     { "platform": "discussions", "href": "https://github.com/orgs/elixpo/discussions" },
     { "platform": "twitter", "href": "https://twitter.com/elixpo" }
   ],
-  "copyright": "2023-2026 Elixpo. Licensed under MIT & CC-BY-4.0."
+  "copyright": "2023-2026 Elixpo. Licenses vary by project and artifact."
 }

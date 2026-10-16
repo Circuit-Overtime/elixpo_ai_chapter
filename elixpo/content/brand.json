@@ -1,0 +1,25 @@
+{
+  "$schema": "./schemas/brand.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "canonicalHome": "https://elixpo.com/assets",
+  "sourceRepository": "https://github.com/elixpo/branding",
+  "migrationStatus": "portal-canonical-assets-migrated",
+  "visualDirection": {
+    "name": "Open Field",
+    "principle": "Warm institutional clarity with the Oreo mascot used as a human signal, not as decoration on every surface.",
+    "palette": [
+      { "name": "Paper", "hex": "#F6F5F0" },
+      { "name": "Ink", "hex": "#142018" },
+      { "name": "Foundry green", "hex": "#0B623C" },
+      { "name": "Field green", "hex": "#18A466" },
+      { "name": "Archive warm", "hex": "#F0E6D3" }
+    ]
+  },
+  "assetGroups": [
+    { "name": "Primary marks", "path": "/brand/source/marks", "status": "canonical" },
+    { "name": "Project icons", "path": "/brand/source/icons", "status": "canonical" },
+    { "name": "Social templates", "path": "/brand/source/social", "status": "canonical" }
+  ],
+  "note": "The portal now owns the public canonical copies. Generation pipelines, prompts, sticker archives, and their provenance remain staged for a separate reviewed migration before the standalone branding repository can be archived."
+}

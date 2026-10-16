@@ -1,5 +1,5 @@
 import { ArrowUpRight, Package, Terminal } from "lucide-react";
-import { ELIXPO_PACKAGES } from "@/lib/catalog";
+import { ELIXPO_PACKAGES } from "@/lib/packages";
 import { ELIXPO_LINKS } from "@/lib/elixpo-links";
 
 export function PackageCatalogSection() {
