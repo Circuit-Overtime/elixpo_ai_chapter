@@ -14,6 +14,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `history.json` — institutional timeline copy, designed to grow only through verifiable milestones.
 - `brand.json` — canonical public asset location, visual direction, palette, and branding-migration state.
 - `schemas/project-manifest.schema.json` — pilot contract for repository-owned `.elixpo/project.yml` manifests.
+- `schemas/*.schema.json` — machine-readable contracts for canonical organization, directory, people, history, brand, policy, taxonomy, and repository records.
 
 The human-readable repository contract and adoption templates live under
 [`docs/repository-standard/`](../docs/repository-standard/).

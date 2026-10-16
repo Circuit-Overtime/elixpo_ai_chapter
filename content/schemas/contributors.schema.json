@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/contributors.schema.json",
+  "title": "Elixpo evidence-led contributor recognition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "lastVerified", "methodology", "selectionPolicy", "excludedLeadHandles", "excludedAutomationHandles", "featured"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "lastVerified": { "type": "string", "format": "date" },
+    "methodology": { "type": "string", "minLength": 40 },
+    "selectionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "minimumObservedContributions", "reviewCadence", "correctionUrl", "optOutUrl"],
+      "properties": {
+        "basis": { "type": "string", "minLength": 40 },
+        "minimumObservedContributions": { "type": "integer", "minimum": 1 },
+        "reviewCadence": { "type": "string", "minLength": 20 },
+        "correctionUrl": { "type": "string", "format": "uri" },
+        "optOutUrl": { "type": "string", "format": "uri" }
+      }
+    },
+    "excludedLeadHandles": { "$ref": "#/$defs/handles" },
+    "excludedAutomationHandles": { "$ref": "#/$defs/handles" },
+    "featured": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["handle", "name", "observedContributions", "activeWindow", "story", "github", "portfolio", "profileSource", "evidence"],
+        "properties": {
+          "handle": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "observedContributions": { "type": "integer", "minimum": 1 },
+          "activeWindow": { "type": "string", "minLength": 4 },
+          "story": { "type": "string", "minLength": 40 },
+          "github": { "type": "string", "format": "uri" },
+          "portfolio": { "type": ["string", "null"], "format": "uri" },
+          "profileSource": { "enum": ["public-evidence-only", "consented"] },
+          "evidence": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "format": "uri" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "handles": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+  }
+}

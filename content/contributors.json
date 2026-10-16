@@ -1,7 +1,15 @@
 {
+  "$schema": "./schemas/contributors.schema.json",
   "schemaVersion": 1,
   "lastVerified": "2026-10-16",
   "methodology": "GitHub default-branch contributor totals across current public Elixpo repositories, with bots and the declared lead group excluded. Counts are evidence for selection, not a measure of human value.",
+  "selectionPolicy": {
+    "basis": "A featured contributor must combine sustained public activity with at least one evidence-linked outcome that materially advanced an Elixpo project. Raw commit totals alone are not sufficient.",
+    "minimumObservedContributions": 50,
+    "reviewCadence": "Review at each major portal release and whenever the repository inventory changes materially.",
+    "correctionUrl": "https://github.com/elixpo/elixpo/issues/new",
+    "optOutUrl": "https://github.com/elixpo/elixpo/issues/new"
+  },
   "excludedLeadHandles": ["Circuit-Overtime", "ez-vivek", "anwe-ch"],
   "excludedAutomationHandles": ["elixpoo", "github-actions[bot]", "dependabot[bot]", "Copilot", "actions-user"],
   "featured": [
@@ -13,6 +21,7 @@
       "story": "Led a concentrated chapter of work in the master repository, including the Infinite Castle contribution stream.",
       "github": "https://github.com/IgYaHiko",
       "portfolio": null,
+      "profileSource": "public-evidence-only",
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/b0585ce22d2ae7af5dc78464ab71fea08b015a88", "https://github.com/elixpo/elixpo_chapter/commit/b385748cde32f6413466474905277880433cfd0b"]
     },
     {
@@ -23,6 +32,7 @@
       "story": "Contributed across the Chapter and multiple services, then continued as the independent maintainer of Member Project Kareixo.",
       "github": "https://github.com/karanray06",
       "portfolio": "https://me.elixpo.com/karan",
+      "profileSource": "public-evidence-only",
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/719dcb484f0904f3c0b2349bd31de97e2dee573c", "https://github.com/elixpo/Kareixo/commit/723e55e5b4d74992d38e5aa2b3024cc72730a076"]
     },
     {
@@ -33,6 +43,7 @@
       "story": "Strengthened release automation and contributed across Accounts, LixBlogs, LixSketch, Open Source, Status, and the Chapter.",
       "github": "https://github.com/bhumikasudarshani-cmd",
       "portfolio": "https://me.elixpo.com/bhumika",
+      "profileSource": "public-evidence-only",
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/4703c65eab526f4b015c59c1b2e1d02729dcf627", "https://github.com/elixpo/elixpo_chapter/commit/96e1e16ff538e6d3954e38de0b15198b32a21e71"]
     },
     {
@@ -43,6 +54,7 @@
       "story": "Worked across service interfaces, documentation, publishing, mail infrastructure, payouts, and the Chapter record.",
       "github": "https://github.com/divyanshuj91",
       "portfolio": null,
+      "profileSource": "public-evidence-only",
       "evidence": ["https://github.com/elixpo/accounts.elixpo/commit/01f5f36c4eab8f6e99db9f62dd50653627e1a678", "https://github.com/elixpo/blogs.elixpo/commit/d49b0c5cbd41b99814ac8979ba1ec36fbe78100f"]
     }
   ]

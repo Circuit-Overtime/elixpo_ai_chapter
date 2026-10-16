@@ -90,6 +90,12 @@ const excludedContributorHandles = new Set([
   ...(contributors.excludedLeadHandles ?? []),
   ...(contributors.excludedAutomationHandles ?? []),
 ]);
+if (!contributors.selectionPolicy?.basis) addError("contributors.selectionPolicy.basis", "is required");
+if (!Number.isInteger(contributors.selectionPolicy?.minimumObservedContributions) || contributors.selectionPolicy.minimumObservedContributions < 1) {
+  addError("contributors.selectionPolicy.minimumObservedContributions", "expected a positive integer");
+}
+validateUrl("contributors.selectionPolicy.correctionUrl", contributors.selectionPolicy?.correctionUrl);
+validateUrl("contributors.selectionPolicy.optOutUrl", contributors.selectionPolicy?.optOutUrl);
 for (const [index, person] of (contributors.featured ?? []).entries()) {
   const location = `contributors.featured[${index}]`;
   if (!person.handle) addError(`${location}.handle`, "is required");
@@ -97,6 +103,12 @@ for (const [index, person] of (contributors.featured ?? []).entries()) {
   contributorHandles.add(person.handle);
   if (excludedContributorHandles.has(person.handle)) addError(`${location}.handle`, "lead or automation handle cannot be featured");
   if (!Number.isInteger(person.observedContributions) || person.observedContributions < 1) addError(`${location}.observedContributions`, "expected a positive integer");
+  if (person.observedContributions < contributors.selectionPolicy.minimumObservedContributions) {
+    addError(`${location}.observedContributions`, "is below the published selection threshold");
+  }
+  if (!["public-evidence-only", "consented"].includes(person.profileSource)) {
+    addError(`${location}.profileSource`, "expected public-evidence-only or consented");
+  }
   validateUrl(`${location}.github`, person.github);
   if (person.portfolio !== null) validateUrl(`${location}.portfolio`, person.portfolio);
   for (const [evidenceIndex, url] of (person.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
@@ -111,6 +123,23 @@ for (const [index, milestone] of (history.entries ?? []).entries()) {
 
 validateUrl("brand.canonicalHome", brand.canonicalHome);
 validateUrl("brand.sourceRepository", brand.sourceRepository);
+const paletteNames = new Set();
+const paletteHexValues = new Set();
+for (const [index, color] of (brand.visualDirection?.palette ?? []).entries()) {
+  const location = `brand.visualDirection.palette[${index}]`;
+  if (!color.name) addError(`${location}.name`, "is required");
+  if (!/^#[0-9a-f]{6}$/i.test(color.hex ?? "")) addError(`${location}.hex`, "expected a six-digit hex color");
+  if (paletteNames.has(color.name)) addError(`${location}.name`, "duplicate color name");
+  if (paletteHexValues.has(color.hex?.toLowerCase())) addError(`${location}.hex`, "duplicate color value");
+  paletteNames.add(color.name);
+  paletteHexValues.add(color.hex?.toLowerCase());
+}
+for (const [index, group] of (brand.assetGroups ?? []).entries()) {
+  const location = `brand.assetGroups[${index}]`;
+  if (!group.name) addError(`${location}.name`, "is required");
+  if (!group.path?.startsWith("/")) addError(`${location}.path`, "must be a root-relative public asset path");
+  if (!["staged", "canonical", "retired"].includes(group.status)) addError(`${location}.status`, "unknown value");
+}
 
 const licensingClasses = new Set();
 for (const [index, policy] of licensing.defaultsForNewWork.entries()) {

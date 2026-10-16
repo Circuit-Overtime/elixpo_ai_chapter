@@ -1,4 +1,5 @@
 {
+  "$schema": "./schemas/history.schema.json",
   "schemaVersion": 1,
   "lastVerified": "2026-10-16",
   "entries": [
