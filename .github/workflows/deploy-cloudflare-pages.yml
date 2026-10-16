@@ -1,4 +1,4 @@
-name: Deploy Cloudflare Pages candidate
+name: Deploy Cloudflare Pages
 
 on:
   workflow_dispatch:
@@ -14,21 +14,23 @@ permissions:
   deployments: write
 
 concurrency:
-  group: packages-elixpo-cloudflare-candidate
+  group: packages-elixpo-cloudflare-pages
   cancel-in-progress: false
 
 jobs:
   deploy:
+    name: Validate and deploy
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     environment:
       name: cloudflare-pages-candidate
       url: https://packages-elixpo.pages.dev
     steps:
       - name: Check out package-site source
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24
           cache: npm
@@ -158,7 +160,7 @@ jobs:
 
       - name: Deploy candidate to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@v4
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

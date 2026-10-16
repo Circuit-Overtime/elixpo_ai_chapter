@@ -22,7 +22,13 @@ def prepare_site(source: Path, destination: Path) -> None:
 
     # These stable URLs predate the application frontend and remain part of
     # the public package contract. The Next.js site references them directly.
-    for relative in ("favicon.ico", "favicon.png", "info.css", "og-image.png", "screenbridge/icon.svg"):
+    for relative in (
+        "favicon.ico",
+        "favicon.png",
+        "info.css",
+        "og-image.png",
+        "screenbridge/icon.svg",
+    ):
         target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(Path("web") / relative, target)

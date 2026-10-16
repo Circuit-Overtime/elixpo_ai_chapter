@@ -55,10 +55,13 @@ class HeadParser(HTMLParser):
 def check_site(site: Path) -> None:
     robots = (site / "robots.txt").read_text(encoding="utf-8")
     rules = [line.strip() for line in robots.splitlines() if line.strip()]
-    assert "User-agent: *" in rules
-    assert "Allow: /" in rules
-    assert "Disallow: /" not in rules
-    assert f"Sitemap: {SITEMAP_URL}" in rules
+    normalized_rules = {rule.casefold() for rule in rules}
+    assert "user-agent: *" in normalized_rules, "robots.txt has no wildcard user-agent"
+    assert "allow: /" in normalized_rules, "robots.txt does not allow the public site"
+    assert "disallow: /" not in normalized_rules, "robots.txt blocks the entire site"
+    assert (
+        f"sitemap: {SITEMAP_URL}".casefold() in normalized_rules
+    ), "robots.txt does not advertise the canonical sitemap"
 
     sitemap = ET.parse(site / "sitemap.xml")
     urls = [node.text for node in sitemap.findall(f"{SITEMAP_NS}url/{SITEMAP_NS}loc")]
@@ -72,15 +75,23 @@ def check_site(site: Path) -> None:
         head = HeadParser()
         head.feed(path.read_text(encoding="utf-8"))
         assert head.title.strip(), f"Missing title in {path}"
-        assert head.links.get("canonical") == expected_url
+        assert (
+            head.links.get("canonical") == expected_url
+        ), f"Unexpected canonical URL in {path}: {head.links.get('canonical')!r}"
         robots_meta = {part.strip().lower() for part in head.meta.get("robots", "").split(",")}
-        assert "index" in robots_meta and "noindex" not in robots_meta
-        assert head.meta.get("description")
-        assert head.meta.get("og:url") == expected_url
-        assert head.meta.get("og:title")
-        assert head.meta.get("og:description")
-        assert head.meta.get("og:image")
-        assert head.meta.get("twitter:card") == "summary_large_image"
+        assert (
+            "index" in robots_meta and "noindex" not in robots_meta
+        ), f"Page is not indexable: {path} ({sorted(robots_meta)})"
+        assert head.meta.get("description"), f"Missing meta description in {path}"
+        assert (
+            head.meta.get("og:url") == expected_url
+        ), f"Unexpected Open Graph URL in {path}: {head.meta.get('og:url')!r}"
+        assert head.meta.get("og:title"), f"Missing Open Graph title in {path}"
+        assert head.meta.get("og:description"), f"Missing Open Graph description in {path}"
+        assert head.meta.get("og:image"), f"Missing Open Graph image in {path}"
+        assert (
+            head.meta.get("twitter:card") == "summary_large_image"
+        ), f"Unexpected Twitter card in {path}: {head.meta.get('twitter:card')!r}"
 
     for name in (
         "favicon.ico",
