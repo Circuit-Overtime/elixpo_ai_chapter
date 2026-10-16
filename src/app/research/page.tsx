@@ -5,11 +5,18 @@ import { getDirectoryEntries } from "@/lib/directory";
 import { LIVE_RESEARCH_DEMOS, RESEARCH_LAST_VERIFIED, RESEARCH_RECORDS } from "@/lib/research";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
-export const metadata = createPageMetadata({
+const pageMetadata = createPageMetadata({
   title: "Open research, experiments, and reproducibility",
   description: "Explore Elixpo research projects with source code, lifecycle status, papers, datasets, models, reproducibility records, and live Hugging Face experiments including OreoLook and Diffuino.",
   path: "/research",
 });
+export const metadata = {
+  ...pageMetadata,
+  alternates: {
+    ...pageMetadata.alternates,
+    types: { "application/atom+xml": "/research/feed.xml" },
+  },
+};
 
 const research = getDirectoryEntries("research");
 export default function ResearchPage() {
@@ -83,7 +90,7 @@ export default function ResearchPage() {
 
     <section className="research-directory section-wrap" aria-labelledby="research-index">
       <div className="section-heading split">
-        <div><p className="eyebrow">Research index</p><h2 id="research-index">All research records and their current lifecycle.</h2></div>
+        <div><p className="eyebrow">Research index</p><h2 id="research-index">All research records and their current lifecycle.</h2><a className="text-link" href="/research/feed.xml">Subscribe to the research feed <ArrowUpRight size={14}/></a></div>
         <p>The directory includes active investigations, completed studies, paused work, and historical experiments. Lifecycle labels describe the present state rather than the importance of the work.</p>
       </div>
       <div className="research-list">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, Github } from "lucide-react";
 import type { DirectoryEntry } from "@/lib/directory";
 import type { ResearchRecord } from "@/lib/research";
 import { serializeJsonLd } from "@/lib/seo";
@@ -29,7 +29,7 @@ export function ResearchRecordPage({ entry, record }: { entry: DirectoryEntry; r
         <article><p className="eyebrow">Review statement</p><h2>{record.reviewStatus.replaceAll("-", " ")}</h2><p>Elixpo reports the review state explicitly and does not imply external peer review where none is recorded.</p></article>
       </section>
       {record.liveDemos.length > 0 && <section className="method-panel"><p className="eyebrow">Runnable demonstrations</p><h2>Inspect the work interactively.</h2><div className="inline-links">{record.liveDemos.map((demo) => <a className="text-link" key={demo.url} href={demo.url} target="_blank" rel="noreferrer">{demo.name} <ArrowUpRight size={14}/></a>)}</div></section>}
-      {(record.licenses.length > 0 || record.citation) && <section className="research-publication-record"><div><p className="eyebrow">Licensing</p>{record.licenses.length ? record.licenses.map((license) => <p key={license.artifact}><strong>{license.artifact}</strong><br/><a href={license.url} target="_blank" rel="noreferrer">{license.license} <ArrowUpRight size={12}/></a></p>) : <p>No artifact-specific license is recorded.</p>}</div><div><p className="eyebrow">Citation</p><p>{record.citation?.text ?? "No formal citation record is published."}</p>{record.citation?.cffUrl && <a className="text-link" href={record.citation.cffUrl} target="_blank" rel="noreferrer">Open CITATION.cff <ArrowUpRight size={13}/></a>}</div></section>}
+      {(record.licenses.length > 0 || record.citation) && <section className="research-publication-record"><div><p className="eyebrow">Licensing</p>{record.licenses.length ? record.licenses.map((license) => <p key={license.artifact}><strong>{license.artifact}</strong><br/><a href={license.url} target="_blank" rel="noreferrer">{license.license} <ArrowUpRight size={12}/></a></p>) : <p>No artifact-specific license is recorded.</p>}</div><div><p className="eyebrow">Citation</p><p>{record.citation?.text ?? "No formal citation record is published."}</p><div className="inline-links">{record.citation && <a className="text-link" href={`/research/${record.slug}/citation.bib`} download><Download size={13}/> Download BibTeX</a>}{record.citation?.cffUrl && <a className="text-link" href={record.citation.cffUrl} target="_blank" rel="noreferrer">Open CITATION.cff <ArrowUpRight size={13}/></a>}</div></div></section>}
     </article>
   </main>;
 }

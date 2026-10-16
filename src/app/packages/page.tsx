@@ -3,11 +3,18 @@ import { ArrowRight, ArrowUpRight, Github, PackageCheck, ShieldCheck, Terminal }
 import { ELIXPO_PACKAGES, LINUX_APPLICATIONS, PACKAGE_DISTRIBUTION, PACKAGES_LAST_VERIFIED } from "@/lib/packages";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
-export const metadata = createPageMetadata({
+const pageMetadata = createPageMetadata({
   title: "Elixpo Packages — signed Linux applications and developer packages",
   description: "Install Win Dot Panel and ScreenBridge from Elixpo's signed Debian APT repository, review supported Linux environments, or browse maintained Elixpo npm libraries and command-line tools.",
   path: "/packages",
 });
+export const metadata = {
+  ...pageMetadata,
+  alternates: {
+    ...pageMetadata.alternates,
+    types: { "application/atom+xml": "/packages/feed.xml" },
+  },
+};
 
 export default function PackagesPage() {
   const jsonLd = {
@@ -91,7 +98,7 @@ export default function PackagesPage() {
     </section>
 
     <section className="developer-packages section-wrap" aria-labelledby="developer-package-index">
-      <div className="section-heading split"><div><p className="eyebrow">JavaScript and command-line tooling</p><h2 id="developer-package-index">Developer packages published separately through npm.</h2></div><p>These libraries and command-line tools support Elixpo’s canvas, publishing, identity, and link services. They are separate from the Linux application repository above.</p></div>
+      <div className="section-heading split"><div><p className="eyebrow">JavaScript and command-line tooling</p><h2 id="developer-package-index">Developer packages published separately through npm.</h2><a className="text-link" href="/packages/feed.xml">Subscribe to package releases <ArrowUpRight size={14}/></a></div><p>These libraries and command-line tools support Elixpo’s canvas, publishing, identity, and link services. They are separate from the Linux application repository above.</p></div>
       <div className="developer-package-list">
         {ELIXPO_PACKAGES.map((item, index) => <a href={item.href} target="_blank" rel="noreferrer" key={item.name}><span>{String(index + 1).padStart(2,"0")}</span><i className="npm-mark">npm</i><div><small>{item.type} · v{item.version} · {item.license}</small><strong>{item.name}</strong><code>{item.install}</code></div><ArrowUpRight size={16}/></a>)}
       </div>
