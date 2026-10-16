@@ -13,6 +13,7 @@
   <a href="https://elixpo.com">Website</a> ·
   <a href="https://github.com/orgs/elixpo/discussions">Discussions</a> ·
   <a href="https://github.com/elixpo/elixpo_chapter">Chapter</a> ·
+  <a href="https://elixpo.com/research">Research</a> ·
   <a href="https://packages.elixpo.com">Packages</a>
 </p>
 

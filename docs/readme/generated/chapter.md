@@ -20,7 +20,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 classifications and custody decisions are published from the canonical registry
 maintained by `elixpo/elixpo`.
 
-<!-- BEGIN ELIXPO SHARED · sha256:b8e79bcf0c93702f4af9c1fda16af4113368fd5fa183f13a28d79b8888c0bba6 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:2eadee9a84daf2ac0ca524c423bd59b34829d56220f44cfdd015227aec0e61b6 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -134,10 +134,11 @@ specialized repositories operate deeper publication surfaces:
 
 - [`packages.elixpo`](https://packages.elixpo.com) owns package building, signed APT
   distribution, release artifacts, installers, and the package catalogue.
-- [`research.elixpo`](https://research.elixpo.com) is the planned research publisher for
-  papers, citations, datasets, models, demonstrations, and reproducibility
-  records. Research code and primary evidence stay in their owning project
-  repositories.
+- `research.elixpo.com` is reserved for the planned standalone research
+  publisher. Until that surface launches, the live [Elixpo Research
+  index](https://elixpo.com/research) publishes papers, citations, datasets, models,
+  demonstrations, and reproducibility records. Research code and primary
+  evidence stay in their owning project repositories.
 
 The specialized sites must consume the shared schema or synchronize changes
 through reviewable pull requests. They do not maintain independent
@@ -159,9 +160,10 @@ owning repository as the source of technical evidence.
 - **Follow Chapter operations:** use the
   [Elixpo Chapter repository](https://github.com/elixpo/elixpo_chapter).
 - **Explore installable work:** visit [Elixpo Packages](https://packages.elixpo.com).
-- **Follow research:** the dedicated [Elixpo Research](https://research.elixpo.com) surface
-  is planned as a separately maintained publisher; research records remain
-  available through the portal and owning repositories until it launches.
+- **Follow research:** use the live [Elixpo Research
+  index](https://elixpo.com/research). The separately maintained
+  `research.elixpo.com` publisher remains planned and is not presented as an
+  available service.
 
 ## Evidence, credit, and history
 
@@ -208,7 +210,7 @@ permission policy is still being consolidated.
 
 [Website](https://elixpo.com) · [GitHub](https://github.com/elixpo) ·
 [Discussions](https://github.com/orgs/elixpo/discussions) · [Chapter](https://github.com/elixpo/elixpo_chapter) ·
-[Packages](https://packages.elixpo.com) · [People](https://elixpo.com/people) ·
+[Research](https://elixpo.com/research) · [Packages](https://packages.elixpo.com) · [People](https://elixpo.com/people) ·
 [History](https://elixpo.com/history)
 
 <!-- END ELIXPO SHARED -->

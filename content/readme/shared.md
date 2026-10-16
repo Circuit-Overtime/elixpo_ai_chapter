@@ -69,10 +69,11 @@ specialized repositories operate deeper publication surfaces:
 
 - [`packages.elixpo`]({{PACKAGES_URL}}) owns package building, signed APT
   distribution, release artifacts, installers, and the package catalogue.
-- [`research.elixpo`]({{RESEARCH_URL}}) is the planned research publisher for
-  papers, citations, datasets, models, demonstrations, and reproducibility
-  records. Research code and primary evidence stay in their owning project
-  repositories.
+- `research.elixpo.com` is reserved for the planned standalone research
+  publisher. Until that surface launches, the live [Elixpo Research
+  index]({{RESEARCH_INDEX_URL}}) publishes papers, citations, datasets, models,
+  demonstrations, and reproducibility records. Research code and primary
+  evidence stay in their owning project repositories.
 
 The specialized sites must consume the shared schema or synchronize changes
 through reviewable pull requests. They do not maintain independent
@@ -94,9 +95,10 @@ owning repository as the source of technical evidence.
 - **Follow Chapter operations:** use the
   [Elixpo Chapter repository]({{CHAPTER_URL}}).
 - **Explore installable work:** visit [Elixpo Packages]({{PACKAGES_URL}}).
-- **Follow research:** the dedicated [Elixpo Research]({{RESEARCH_URL}}) surface
-  is planned as a separately maintained publisher; research records remain
-  available through the portal and owning repositories until it launches.
+- **Follow research:** use the live [Elixpo Research
+  index]({{RESEARCH_INDEX_URL}}). The separately maintained
+  `research.elixpo.com` publisher remains planned and is not presented as an
+  available service.
 
 ## Evidence, credit, and history
 
@@ -143,5 +145,5 @@ permission policy is still being consolidated.
 
 [Website]({{WEBSITE_URL}}) · [GitHub]({{GITHUB_URL}}) ·
 [Discussions]({{DISCUSSIONS_URL}}) · [Chapter]({{CHAPTER_URL}}) ·
-[Packages]({{PACKAGES_URL}}) · [People]({{PEOPLE_URL}}) ·
+[Research]({{RESEARCH_INDEX_URL}}) · [Packages]({{PACKAGES_URL}}) · [People]({{PEOPLE_URL}}) ·
 [History]({{HISTORY_URL}})
