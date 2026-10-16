@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Github, PackageCheck, ShieldCheck, Terminal } from "lucide-react";
 import { ELIXPO_PACKAGES, LINUX_APPLICATIONS, PACKAGE_DISTRIBUTION, PACKAGES_LAST_VERIFIED } from "@/lib/packages";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
@@ -77,7 +78,7 @@ export default function PackagesPage() {
           <div className="linux-package-heading">
             <span className="package-number">{String(index + 1).padStart(2, "0")}</span>
             <Image src={item.icon} alt="" width={80} height={80} />
-            <div><p className="eyebrow">{item.category} · v{item.version}</p><h3>{item.name}</h3><p>{item.summary}</p></div>
+            <div><p className="eyebrow">{item.category} · v{item.version}</p><h3><Link href={`/packages/${item.slug}`}>{item.name}</Link></h3><p>{item.summary}</p></div>
           </div>
           {item.images.length > 0 ? <div className="package-screenshots">{item.images.map((image) => <Image key={image.src} src={image.src} alt={image.alt} width={920} height={620} />)}</div> : <div className="audio-diagram" aria-label="Illustration of ScreenBridge routing computer audio and microphone input"><span className="audio-source">Computer audio</span><i/><span className="audio-bridge">ScreenBridge</span><i/><span className="audio-target">Call or recording</span></div>}
           <div className="linux-package-details">
@@ -100,7 +101,7 @@ export default function PackagesPage() {
     <section className="developer-packages section-wrap" aria-labelledby="developer-package-index">
       <div className="section-heading split"><div><p className="eyebrow">JavaScript and command-line tooling</p><h2 id="developer-package-index">Developer packages published separately through npm.</h2><a className="text-link" href="/packages/feed.xml">Subscribe to package releases <ArrowUpRight size={14}/></a></div><p>These libraries and command-line tools support Elixpo’s canvas, publishing, identity, and link services. They are separate from the Linux application repository above.</p></div>
       <div className="developer-package-list">
-        {ELIXPO_PACKAGES.map((item, index) => <a href={item.href} target="_blank" rel="noreferrer" key={item.name}><span>{String(index + 1).padStart(2,"0")}</span><i className="npm-mark">npm</i><div><small>{item.type} · v{item.version} · {item.license}</small><strong>{item.name}</strong><code>{item.install}</code></div><ArrowUpRight size={16}/></a>)}
+        {ELIXPO_PACKAGES.map((item, index) => <Link href={`/packages/${item.slug}`} key={item.name}><span>{String(index + 1).padStart(2,"0")}</span><i className="npm-mark">npm</i><div><small>{item.type} · v{item.version} · {item.license}</small><strong>{item.name}</strong><code>{item.install}</code></div><ArrowRight size={16}/></Link>)}
       </div>
       <p className="registry-date">Package metadata last verified {PACKAGES_LAST_VERIFIED}.</p>
     </section>

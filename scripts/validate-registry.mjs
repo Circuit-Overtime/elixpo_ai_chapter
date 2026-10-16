@@ -286,6 +286,22 @@ for (const key of ["website", "repository", "aptDocumentation"]) {
 }
 const linuxPackageNames = new Set();
 const packageSlugs = new Set();
+const directoryRecordsBySlug = new Map(
+  repositories.entries
+    .filter((entry) => entry.disposition === "public-entry")
+    .map((entry) => {
+      const detail = directory.entries?.[entry.name];
+      return [detail?.slug, { family: entry.publicClass, name: entry.name }];
+    })
+    .filter(([slug]) => Boolean(slug)),
+);
+
+function validateRelatedRecord(location, related) {
+  const target = directoryRecordsBySlug.get(related?.slug);
+  if (!target) addError(location, "must reference a public directory slug");
+  else if (target.family !== related?.family) addError(`${location}.family`, `expected ${target.family} for ${target.name}`);
+}
+
 for (const [index, item] of (packages.linuxApplications ?? []).entries()) {
   const location = `packages.linuxApplications[${index}]`;
   if (packageSlugs.has(item.slug)) addError(`${location}.slug`, "duplicate slug");
@@ -297,6 +313,7 @@ for (const [index, item] of (packages.linuxApplications ?? []).entries()) {
   for (const key of ["page", "source", "releases"]) validateUrl(`${location}.${key}`, item[key]);
   if (item.icon?.startsWith("http")) validateUrl(`${location}.icon`, item.icon);
   else if (!item.icon?.startsWith("/")) addError(`${location}.icon`, "expected a URL or root-relative asset path");
+  validateRelatedRecord(`${location}.related`, item.related);
   for (const [imageIndex, image] of (item.images ?? []).entries()) {
     validateUrl(`${location}.images[${imageIndex}].src`, image.src);
     if (!image.alt) addError(`${location}.images[${imageIndex}].alt`, "is required");
@@ -305,6 +322,9 @@ for (const [index, item] of (packages.linuxApplications ?? []).entries()) {
 const npmPackageNames = new Set();
 for (const [index, item] of (packages.npmPackages ?? []).entries()) {
   const location = `packages.npmPackages[${index}]`;
+  if (!item.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.slug)) addError(`${location}.slug`, "expected a lowercase URL-safe slug");
+  else if (packageSlugs.has(item.slug)) addError(`${location}.slug`, "duplicate package slug");
+  packageSlugs.add(item.slug);
   if (!item.name?.startsWith("@elixpo/")) addError(`${location}.name`, "must use the @elixpo scope");
   if (npmPackageNames.has(item.name)) addError(`${location}.name`, "duplicate package name");
   npmPackageNames.add(item.name);
@@ -312,6 +332,7 @@ for (const [index, item] of (packages.npmPackages ?? []).entries()) {
   if (!["maintained", "deprecated", "unsupported", "archived"].includes(item.status)) addError(`${location}.status`, "unknown value");
   validateUrl(`${location}.href`, item.href);
   validateUrl(`${location}.source`, item.source);
+  validateRelatedRecord(`${location}.related`, item.related);
 }
 if (npmPackageNames.has("@elixpo/claudeops")) {
   addError("packages.npmPackages", "ClaudeOps is not maintained and must not appear in the maintained package catalog");

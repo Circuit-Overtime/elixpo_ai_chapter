@@ -27,18 +27,19 @@
     "linuxApplication": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["slug", "packageName", "name", "version", "status", "category", "summary", "support", "install", "page", "source", "releases", "icon", "license", "maintainer", "images", "capabilities"],
+      "required": ["slug", "packageName", "name", "version", "status", "category", "summary", "support", "install", "page", "source", "releases", "icon", "license", "maintainer", "related", "images", "capabilities"],
       "properties": {
-        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "packageName": { "type": "string" }, "name": { "type": "string" }, "version": { "type": "string" }, "status": { "$ref": "#/$defs/status" }, "category": { "type": "string" }, "summary": { "type": "string", "minLength": 40 }, "support": { "type": "string" }, "install": { "type": "string" }, "page": { "$ref": "#/$defs/url" }, "source": { "$ref": "#/$defs/url" }, "releases": { "$ref": "#/$defs/url" }, "icon": { "type": "string" }, "license": { "type": "string" }, "maintainer": { "type": "string" }, "images": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["src", "alt"], "properties": { "src": { "$ref": "#/$defs/url" }, "alt": { "type": "string", "minLength": 10 } } } }, "capabilities": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } }
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "packageName": { "type": "string" }, "name": { "type": "string" }, "version": { "type": "string" }, "status": { "$ref": "#/$defs/status" }, "category": { "type": "string" }, "summary": { "type": "string", "minLength": 40 }, "support": { "type": "string" }, "install": { "type": "string" }, "page": { "$ref": "#/$defs/url" }, "source": { "$ref": "#/$defs/url" }, "releases": { "$ref": "#/$defs/url" }, "icon": { "type": "string" }, "license": { "type": "string" }, "maintainer": { "type": "string" }, "related": { "$ref": "#/$defs/related" }, "images": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["src", "alt"], "properties": { "src": { "$ref": "#/$defs/url" }, "alt": { "type": "string", "minLength": 10 } } } }, "capabilities": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } }
       }
     },
     "npmPackage": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "version", "status", "href", "source", "install", "type", "license", "maintainer", "description", "capabilities"],
+      "required": ["slug", "name", "version", "status", "href", "source", "install", "type", "license", "maintainer", "related", "description", "capabilities"],
       "properties": {
-        "name": { "type": "string", "pattern": "^@elixpo/" }, "version": { "type": "string" }, "status": { "$ref": "#/$defs/status" }, "href": { "$ref": "#/$defs/url" }, "source": { "$ref": "#/$defs/url" }, "install": { "type": "string" }, "type": { "type": "string" }, "license": { "type": "string" }, "maintainer": { "type": "string" }, "description": { "type": "string", "minLength": 40 }, "capabilities": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } }
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "name": { "type": "string", "pattern": "^@elixpo/" }, "version": { "type": "string" }, "status": { "$ref": "#/$defs/status" }, "href": { "$ref": "#/$defs/url" }, "source": { "$ref": "#/$defs/url" }, "install": { "type": "string" }, "type": { "type": "string" }, "license": { "type": "string" }, "maintainer": { "type": "string" }, "related": { "$ref": "#/$defs/related" }, "description": { "type": "string", "minLength": 40 }, "capabilities": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } }
       }
-    }
+    },
+    "related": { "type": "object", "additionalProperties": false, "required": ["family", "slug"], "properties": { "family": { "enum": ["project", "research", "service"] }, "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" } } }
   }
 }
