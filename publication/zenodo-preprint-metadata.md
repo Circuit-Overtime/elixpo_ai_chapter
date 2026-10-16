@@ -2,9 +2,9 @@
 
 ## Digital Object Identifier
 
-Answer **No** to "Do you already have a DOI for this upload?", then select
-**Get a DOI now**. Keep the record as a draft until the reserved DOI has been
-added to the manuscript and repository metadata.
+Published version DOI: `10.5281/zenodo.23424654`.
+
+All-versions concept DOI: `10.5281/zenodo.23424653`.
 
 ## Resource type
 
