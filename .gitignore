@@ -10,6 +10,7 @@ node_modules/
 .next/
 out/
 site/
+.deploy/
 *.tsbuildinfo
 *.log
 .env*

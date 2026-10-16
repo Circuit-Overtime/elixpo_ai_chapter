@@ -72,6 +72,17 @@ python3 scripts/check_site.py /tmp/elixpo-package-site
 Application and Python checks are documented in
 [`docs/maintainers.md`](docs/maintainers.md).
 
+The repository deployment helper follows the shared Elixpo interface:
+
+```bash
+./deploy.sh --pages build
+./deploy.sh --pages build deploy
+./deploy.sh --pages deploy --promote-domain
+```
+
+The final command is reserved for the custom-domain cutover after a candidate
+deployment passes its remote smoke tests.
+
 ## Releases and deployment
 
 Stable product tags use independent namespaces:
@@ -91,8 +102,8 @@ GitHub Pages remains the production host during the Cloudflare migration. The
 manual Cloudflare candidate workflow publishes the same artifact to the
 `packages-elixpo` Pages project. The custom domain moves only after the candidate
 passes route, installer, signature, and package-pool verification. Cloudflare
-and APT credentials are organization-managed and are not duplicated in the
-repository.
+credentials are repository-scoped during this migration; the APT signing key
+remains organization-managed.
 
 See [`docs/apt-repository.md`](docs/apt-repository.md) for signing, release, and
 recovery operations, and [`docs/cloudflare-pages.md`](docs/cloudflare-pages.md)

@@ -12,12 +12,13 @@ frontend-only deployment.
 - Production domain: `https://packages.elixpo.com/`
 - Production branch: `main`
 - Workflow: `.github/workflows/deploy-cloudflare-pages.yml`
-- Credentials: organization-scoped `CLOUDFLARE_API_TOKEN` and
+- Credentials: repository-scoped `CLOUDFLARE_API_TOKEN` and
   `CLOUDFLARE_ACCOUNT_ID`
 - Signing material: organization-scoped `APT_SIGNING_KEY`
 
-Do not add duplicate repository-level Cloudflare secrets. The organization
-secrets must explicitly grant this repository access.
+The Cloudflare credentials are intentionally repository-scoped for the current
+migration. A later CI-standardization pass may consolidate them at organization
+scope without changing the workflow-facing names.
 
 ## Project creation
 
