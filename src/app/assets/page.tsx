@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { Download } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Download, ShieldCheck } from "lucide-react";
 import brand from "../../../content/brand.json";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Elixpo brand, logos, project icons, and social assets",
-  description: "Download canonical Elixpo marks, the Oreo mascot, project icons, social artwork, and sticker samples, with provenance and migration status for the Open Field identity.",
+  title: "Elixpo brand kit, usage guidance, and sticker previews",
+  description: "Use Elixpo's Open Field colours, typography guidance, canonical marks, project icons, and social artwork. View protected sticker previews and request approved event materials.",
   path: "/assets",
 });
 
@@ -22,9 +23,9 @@ const socialAssets = [
 ];
 
 const stickers = [
-  { name: "Ship it", file: "/brand/stickers/ship-it.webp" },
-  { name: "Commit", file: "/brand/stickers/commit.webp" },
-  { name: "LGTM", file: "/brand/stickers/lgtm.webp" },
+  { name: "Ship it", file: "/brand/stickers/previews/ship-it-preview.webp" },
+  { name: "Commit", file: "/brand/stickers/previews/commit-preview.webp" },
+  { name: "LGTM", file: "/brand/stickers/previews/lgtm-preview.webp" },
 ];
 
 const icons = ["accounts.elixpo", "admin.elixpo", "agent.elixpo", "art.elixpo", "blogs.elixpo", "chat.elixpo", "crumb.elixpo", "elixpo.com", "mail.elixpo", "me.elixpo", "oreo.elixpo", "payouts.elixpo", "search.elixpo", "sketch.elixpo", "url.elixpo"];
@@ -42,7 +43,7 @@ export default function AssetsPage() {
   const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", name: "Elixpo brand assets", description: metadata.description, url: "https://elixpo.com/assets" };
   return <main className="page-shell brand-page">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
-    <header className="page-intro"><p className="eyebrow">Brand / Open Field</p><h1>A recognizable commons,<br />without the corporate costume.</h1><p className="lede">The Elixpo identity combines quiet institutional typography, warm paper, foundry green, and the Oreo mascot. This library is the canonical public source for organization and project assets.</p></header>
+    <header className="page-intro"><p className="eyebrow">Brand / Open Field</p><h1>A consistent identity for Elixpo&apos;s public work.</h1><p className="lede">The Elixpo identity combines clear institutional typography, warm paper, foundry green, and the Oreo mascot. This library provides the public colour system, typography guidance, reviewed organization marks, project assets, and the access rules for protected event material.</p></header>
     <section className="brand-direction"><div><p className="eyebrow">Visual principle</p><h2>{brand.visualDirection.name}</h2><p>{brand.visualDirection.principle}</p></div><div className="swatches">{brand.visualDirection.palette.map((color) => <div key={color.hex}><i style={{ background: color.hex }} /><span>{color.name}<small>{color.hex}</small></span></div>)}</div></section>
     <section className="asset-section brand-proof-section" aria-labelledby="brand-proofs-title">
       <div className="section-heading split"><div><p className="eyebrow">System proofs</p><h2 id="brand-proofs-title">One grammar across six kinds of public record.</h2></div><p>These components test Open Field against the surfaces Elixpo actually maintains. They share structure without erasing the identity or evidence of each record.</p></div>
@@ -58,8 +59,22 @@ export default function AssetsPage() {
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Primary marks</p><h2>Use the mark with room to breathe.</h2></div><DownloadGrid items={marks} /></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Project icon family</p><h2>One family, distinct tools.</h2></div><div className="icon-grid">{icons.map((name) => <a key={name} href={`/brand/source/icons/${name}.png`} download><Image src={`/brand/source/icons/${name}.png`} alt={`${name} project icon`} width={96} height={96} /><span>{name}</span><Download size={13} /></a>)}</div></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Social templates</p><h2>Stable artwork for public announcements.</h2></div><DownloadGrid items={socialAssets} /></section>
-    <section className="asset-section"><div className="section-heading"><p className="eyebrow">Sticker samples</p><h2>Artwork made for the community.</h2></div><DownloadGrid items={stickers} /></section>
+    <section className="asset-section sticker-preview-section" aria-labelledby="sticker-previews-title">
+      <div className="section-heading split">
+        <div><p className="eyebrow">Protected event material</p><h2 id="sticker-previews-title">Official stickers are available by approved request.</h2></div>
+        <p>The images below are watermarked, screen-resolution previews. They are not print sources and do not grant permission to reproduce, distribute, modify, or sell the artwork.</p>
+      </div>
+      <div className="sticker-preview-grid">{stickers.map((sticker) => <article key={sticker.file}>
+        <div><Image src={sticker.file} alt={`Watermarked preview of the ${sticker.name} Elixpo sticker`} width={480} height={480} /></div>
+        <span><ShieldCheck size={15} /> Watermarked preview</span>
+        <h3>{sticker.name}</h3>
+      </article>)}</div>
+      <div className="sticker-access-note">
+        <div><p className="eyebrow">Request access</p><h3>Planning a community event?</h3><p>Approved partners may receive physical sticker packs or print-ready artwork for the agreed event. Elixpo records the scope and permitted use in writing before release.</p></div>
+        <Link className="button" href="/partnerships">Review the partnership process <ArrowRight size={16} /></Link>
+      </div>
+    </section>
     <section className="brand-audit" aria-labelledby="brand-audit-title"><div><p className="eyebrow">Source audit</p><h2 id="brand-audit-title">A curated public library, not a raw repository dump.</h2><p>The standalone archive contains generation tools, prompts, outputs, and historical material. Only reviewed assets become canonical here.</p></div><dl><div><dt>Standalone source</dt><dd>{brand.audit.standaloneTrackedFiles}</dd><small>tracked files · {formatMegabytes(brand.audit.standaloneDiskSizeBytes)}</small></div><div><dt>Portal library</dt><dd>{brand.audit.portalBrandFiles}</dd><small>reviewed files · {formatMegabytes(brand.audit.portalBrandDiskSizeBytes)}</small></div><div><dt>Exact masters</dt><dd>{brand.audit.exactMasterDuplicates}</dd><small>verified byte-for-byte</small></div></dl></section>
-    <section className="method-panel"><p className="eyebrow">Migration status</p><h2>The public canon has moved; the production archive has not.</h2><p>{brand.note}</p><p>Copyright licenses and trademark permissions are separate. Download availability does not grant permission to imply endorsement, impersonate Elixpo, or present a modified mark as official.</p></section>
+    <section className="method-panel"><p className="eyebrow">Migration status</p><h2>The reviewed public library has moved; restricted production material has not.</h2><p>{brand.note}</p><p>Colour tokens, typography guidance, and general usage guidance remain public. Copyright licenses and trademark permissions are separate, and download availability does not grant permission to imply endorsement, impersonate Elixpo, or present a modified mark as official.</p></section>
   </main>;
 }

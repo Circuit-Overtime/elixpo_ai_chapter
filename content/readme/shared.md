@@ -133,7 +133,10 @@ weights, and brand assets require artifact-specific review.
 
 Copyright permission does not grant permission to impersonate Elixpo or claim
 endorsement. The canonical brand destination is the
-[Elixpo asset library]({{ASSETS_URL}}); its final standalone brand and sticker
+[Elixpo asset library]({{ASSETS_URL}}). Colour tokens, typography guidance, and
+general usage guidance are public. Official sticker artwork is shown only as a
+watermarked preview; print-ready files or physical packs are released through
+an approved written event partnership. The final standalone brand and trademark
 permission policy is still being consolidated.
 
 ---

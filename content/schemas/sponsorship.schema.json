@@ -57,7 +57,7 @@
       "additionalProperties": false,
       "required": ["sponsorshipRequestAllowed", "statement", "eventPartnerships"],
       "properties": {
-        "sponsorshipRequestAllowed": {"const": false},
+        "sponsorshipRequestAllowed": {"const": true},
         "statement": {"type": "string", "minLength": 20},
         "eventPartnerships": {
           "type": "object",

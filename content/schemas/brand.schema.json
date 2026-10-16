@@ -4,7 +4,7 @@
   "title": "Elixpo canonical brand record",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "lastVerified", "canonicalHome", "sourceRepository", "migrationStatus", "visualDirection", "assetGroups", "audit", "note"],
+  "required": ["schemaVersion", "lastVerified", "canonicalHome", "sourceRepository", "migrationStatus", "visualDirection", "assetGroups", "stickerAccess", "audit", "note"],
   "properties": {
     "$schema": { "type": "string" },
     "schemaVersion": { "type": "integer", "minimum": 1 },
@@ -72,6 +72,19 @@
           "path": { "type": "string", "pattern": "^/" },
           "status": { "enum": ["staged", "canonical", "retired"] }
         }
+      }
+    },
+    "stickerAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publicAccess", "printReadyAccess", "requestUrl", "statement", "openBrandMaterials", "restrictedMaterials"],
+      "properties": {
+        "publicAccess": { "const": "watermarked-preview-only" },
+        "printReadyAccess": { "const": "approved-partnership-request" },
+        "requestUrl": { "type": "string", "format": "uri" },
+        "statement": { "type": "string", "minLength": 40 },
+        "openBrandMaterials": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "restrictedMaterials": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } }
       }
     },
     "audit": {

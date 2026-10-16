@@ -43,7 +43,8 @@ public/brand/
 │   ├── marks/
 │   ├── icons/
 │   └── social/
-├── stickers/                 # approved public sticker exports
+├── stickers/
+│   └── previews/             # watermarked display derivatives only
 ├── illustrations/            # portal illustrations
 └── generated/                # reviewed web-ready derivatives where needed
 ```
@@ -68,7 +69,8 @@ derivative recorded in the provenance manifest.
    as byte-identical in the portal.
 7. Keep product-specific OG images and LixBlogs badges with their owning project
    unless the portal is their declared canonical distribution point.
-8. Validate checksums, licences, links, asset dimensions, and public downloads.
+8. Validate checksums, licences, links, asset dimensions, open public downloads,
+   and the watermark on every public sticker preview.
 9. Update every known consumer to the stable `https://elixpo.com/brand/...` or
    `https://elixpo.com/assets` destination as appropriate.
 10. Publish a redirect notice in the standalone README, verify consumers again,
@@ -86,10 +88,13 @@ derivative recorded in the provenance manifest.
 ## Ownership boundaries
 
 General Elixpo marks, the approved Open Field system, and organization assets are
-portal-owned. Product-specific brand assets remain project-owned unless the
-registry explicitly transfers their canonical distribution here. Oreo's visual
-rules remain in `brand/MASCOT.md`, while the Open Field system determines where
-the mascot is appropriate across organization surfaces.
+portal-owned. Colour tokens, typography guidance, and general usage guidance
+remain public. Official sticker masters and production sheets are restricted
+partnership material; only watermarked previews belong in `public/`. Product-
+specific brand assets remain project-owned unless the registry explicitly
+transfers their canonical distribution here. Oreo's visual rules remain in
+`brand/MASCOT.md`, while the Open Field system determines where the mascot is
+appropriate across organization surfaces.
 
 ## Archive gate
 
@@ -98,7 +103,7 @@ true:
 
 - the provenance manifest validates;
 - no active repository or site depends on an old raw-content URL;
-- public downloads resolve from the portal;
+- open public downloads and watermarked sticker previews resolve from the portal;
 - project-owned assets have an explicit owner and canonical location;
 - the sticker-use policy is published;
 - secrets and historical credentials have been reviewed;

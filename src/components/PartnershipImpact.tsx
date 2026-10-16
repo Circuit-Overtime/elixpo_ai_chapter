@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 const stickers = [
-  { src: "/brand/stickers/ship-it.webp", alt: "Elixpo panda riding a rocket sticker" },
-  { src: "/brand/stickers/commit.webp", alt: "Elixpo panda and Octocat commit sticker" },
-  { src: "/brand/stickers/lgtm.webp", alt: "Elixpo panda LGTM sticker" },
+  { src: "/brand/stickers/previews/ship-it-preview.webp", alt: "Watermarked preview of the Elixpo panda riding a rocket sticker" },
+  { src: "/brand/stickers/previews/commit-preview.webp", alt: "Watermarked preview of the Elixpo panda and Octocat commit sticker" },
+  { src: "/brand/stickers/previews/lgtm-preview.webp", alt: "Watermarked preview of the Elixpo panda LGTM sticker" },
 ];
 
 export function PartnershipImpact() {
@@ -58,11 +58,11 @@ export function PartnershipImpact() {
 
   return (
     <section className="partnership-impact" ref={sectionRef} aria-labelledby="sticker-impact-title">
-      <div className="impact-sticker-field" aria-label="A selection of Elixpo sticker artwork">
+      <div className="impact-sticker-field" aria-label="Watermarked previews of Elixpo sticker artwork">
         <i aria-hidden="true" />
         {stickers.map((sticker, index) => (
           <figure key={sticker.src} className={`impact-sticker sticker-${index + 1}`}>
-            <Image src={sticker.src} alt={sticker.alt} width={640} height={640} sizes="(max-width: 620px) 42vw, 260px" />
+            <Image src={sticker.src} alt={sticker.alt} width={480} height={480} sizes="(max-width: 620px) 42vw, 260px" />
           </figure>
         ))}
       </div>
@@ -75,7 +75,9 @@ export function PartnershipImpact() {
         <p>
           More than 3,500 stickers have reached students, developers, and
           community events. They are shared as an invitation to discover the
-          projects, contribute in public, and carry the work into another room.
+          projects and contribute in public. The artwork shown here is a
+          protected preview; event-use material is released only after a
+          partnership request is approved.
         </p>
       </div>
     </section>

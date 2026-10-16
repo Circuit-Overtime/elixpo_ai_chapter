@@ -27,7 +27,7 @@ upstream rights are respected.
 | Hardware design sources | CERN-OHL-S-2.0. |
 | Datasets | Select per artifact after provenance, consent, privacy, and upstream review. |
 | Models, weights, and checkpoints | Select per artifact after training-data, upstream-model, and distribution review. |
-| Brand assets and stickers | A dedicated permission policy, separate from trademark rules. |
+| Brand assets and stickers | Public colour, typography, and usage guidance; watermarked sticker previews only, with print-ready access limited to approved written event partnerships. |
 
 These are defaults for new work, not a declaration that existing repositories
 already use them.
@@ -65,9 +65,12 @@ license does not automatically grant a right to impersonate Elixpo, claim
 endorsement, or control official names, domains, registry identities, or
 distribution accounts.
 
-The final brand and sticker permission policy remains pending. Until it is
-published, project-specific terms apply and public text must not promise a
-broader permission from memory.
+The final general brand and trademark permission policy remains pending. In the
+interim, public colour tokens, typography guidance, and general usage guidance
+may be consulted openly. Official sticker previews do not grant reproduction,
+printing, distribution, modification, or resale permission. Print-ready sticker
+material is released only under the written terms of an approved event
+partnership.
 
 ## Existing unclear or missing licenses
 

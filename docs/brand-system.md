@@ -95,11 +95,25 @@ These tiers must live in separate directories. Exact duplicates should not be
 copied again, and environment files, credentials, caches, and local generation
 state must never enter the public asset tree.
 
+## Sticker access boundary
+
+Official sticker artwork is sponsor-controlled event material. The public
+library may display only visibly watermarked, screen-resolution previews. Those
+previews are not source files and do not grant permission to reproduce, print,
+distribute, modify, or sell the artwork. Print-ready artwork and physical packs
+are released only after an event partnership is approved and its permitted use
+is recorded in writing.
+
+This restriction applies to sticker artwork, production sheets, and unwatermarked
+exports. It does not close the Open Field colour tokens, typography guidance, or
+general brand-usage guidance published by the portal.
+
 ## Approval record
 
 Open Field was approved on 2026-10-16 with its colour roles, typography roles,
 geometry, iconography, Oreo boundary, motion rules, and accessibility rules as a
 single system. Representative README, research, package, Chapter, and timeline
 components can now be produced against this stable grammar. Approval does not
-settle copyright, trademark, resale, or modified-sticker permissions; those
-remain a separate policy and legal-review task.
+settle the broader copyright, trademark, resale, or modification policy; those
+remain a separate legal-review task. The interim sticker-access boundary above
+remains controlling until that review is complete.

@@ -21,8 +21,8 @@
     "editorial": "Funding does not purchase favourable editorial treatment."
   },
   "stickers": {
-    "sponsorshipRequestAllowed": false,
-    "statement": "Public sticker downloads remain free of sponsorship requests. Elixpo may separately approve an in-kind event partnership that exchanges a supplied sticker quantity for disclosed community visibility.",
+    "sponsorshipRequestAllowed": true,
+    "statement": "The public site shows watermarked sticker previews only. Print-ready artwork or physical sticker packs are released only after Elixpo approves a non-monetary event partnership request in writing; viewing a preview does not grant permission to print or distribute it.",
     "eventPartnerships": {
       "enabled": true,
       "monetary": false,

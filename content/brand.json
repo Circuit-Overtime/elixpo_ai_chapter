@@ -48,8 +48,24 @@
     { "name": "Primary marks", "path": "/brand/source/marks", "status": "canonical" },
     { "name": "Project icons", "path": "/brand/source/icons", "status": "canonical" },
     { "name": "Social templates", "path": "/brand/source/social", "status": "canonical" },
-    { "name": "Sticker samples", "path": "/brand/stickers", "status": "canonical" }
+    { "name": "Watermarked sticker previews", "path": "/brand/stickers/previews", "status": "canonical" }
   ],
+  "stickerAccess": {
+    "publicAccess": "watermarked-preview-only",
+    "printReadyAccess": "approved-partnership-request",
+    "requestUrl": "https://elixpo.com/partnerships",
+    "statement": "Official sticker artwork is sponsor-controlled event material. Public files are visibly watermarked previews; print-ready artwork or physical packs are released only under an approved written event partnership.",
+    "openBrandMaterials": [
+      "Colour tokens",
+      "Typography guidance",
+      "General brand usage guidance"
+    ],
+    "restrictedMaterials": [
+      "Print-ready official sticker artwork",
+      "Production sticker sheets",
+      "Unwatermarked sticker exports"
+    ]
+  },
   "audit": {
     "auditedAt": "2026-10-16",
     "sourceRevision": "7c274b1ca900eb8f21f4ded811779963ba8f0c21",
@@ -57,7 +73,7 @@
     "standaloneTrackedFiles": 618,
     "standaloneDiskSizeBytes": 779259920,
     "portalBrandFiles": 43,
-    "portalBrandDiskSizeBytes": 16067466,
+    "portalBrandDiskSizeBytes": 16041312,
     "exactMasterDuplicates": 21,
     "sourceBreakdown": [
       { "group": "Sticker artwork and sheets", "trackedFiles": 168 },
@@ -85,5 +101,5 @@
       "Record provenance and artifact-specific licensing for every migrated group."
     ]
   },
-  "note": "The portal now owns the public canonical copies. Generation pipelines, prompts, sticker archives, and their provenance remain staged for a separate reviewed migration before the standalone branding repository can be archived."
+  "note": "The portal owns the reviewed public brand library and watermarked sticker previews. Print-ready sticker masters, generation pipelines, prompts, and their provenance remain restricted in the standalone archive until their controlled migration is complete."
 }

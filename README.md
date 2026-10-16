@@ -40,7 +40,7 @@ The maintenance boundary between the portal, `research.elixpo`,
 `packages.elixpo`, and individual project repositories is documented in
 [`docs/architecture/specialized-surfaces.md`](docs/architecture/specialized-surfaces.md).
 
-<!-- BEGIN ELIXPO SHARED · sha256:9167d256c26e6c22b3ed6d4c237cd6bf6226a5af334a4ee16394ba40281bd220 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:b8e79bcf0c93702f4af9c1fda16af4113368fd5fa183f13a28d79b8888c0bba6 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -218,7 +218,10 @@ weights, and brand assets require artifact-specific review.
 
 Copyright permission does not grant permission to impersonate Elixpo or claim
 endorsement. The canonical brand destination is the
-[Elixpo asset library](https://elixpo.com/assets); its final standalone brand and sticker
+[Elixpo asset library](https://elixpo.com/assets). Colour tokens, typography guidance, and
+general usage guidance are public. Official sticker artwork is shown only as a
+watermarked preview; print-ready files or physical packs are released through
+an approved written event partnership. The final standalone brand and trademark
 permission policy is still being consolidated.
 
 ---

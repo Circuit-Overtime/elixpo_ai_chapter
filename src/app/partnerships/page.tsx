@@ -136,10 +136,11 @@ export default function PartnershipsPage() {
           <p className="eyebrow">Community partnerships / in-kind support</p>
           <h1>Elixpo works with communities that help people build in public.</h1>
           <p className="lede">
-            We support aligned events with speakers, stickers, and print-ready
-            artwork. Each arrangement is documented as a transparent in-kind
-            exchange; it is not a payment, endorsement sale, or route to project
-            selection.
+            We support aligned events with speakers and approved sticker
+            material. Public sticker images are watermarked previews; physical
+            packs or print-ready artwork are released only after an event request
+            is approved in writing. Each arrangement is a transparent in-kind
+            exchange, not a payment or endorsement sale.
           </p>
           <a className="button partnership-primary" href={mailto("Elixpo community partnership proposal")}>
             Email a proposal <Mail size={16} />

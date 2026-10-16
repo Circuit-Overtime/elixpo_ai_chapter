@@ -125,11 +125,21 @@ if (
 if (sponsorship.legalRecipient !== null || sponsorship.accountingProcess !== null) {
   addError("sponsorship", "legal recipient and accounting process must remain null while not accepting funds");
 }
-if (sponsorship.stickers?.sponsorshipRequestAllowed !== false) {
-  addError("sponsorship.stickers.sponsorshipRequestAllowed", "must remain false");
+if (sponsorship.stickers?.sponsorshipRequestAllowed !== true) {
+  addError("sponsorship.stickers.sponsorshipRequestAllowed", "must remain true for the documented event-partnership request path");
 }
 if (sponsorship.stickers?.eventPartnerships?.monetary !== false) {
   addError("sponsorship.stickers.eventPartnerships.monetary", "event partnerships must remain non-monetary while organization sponsorship is closed");
+}
+if (brand.stickerAccess?.publicAccess !== "watermarked-preview-only") {
+  addError("brand.stickerAccess.publicAccess", "must keep public sticker files limited to watermarked previews");
+}
+if (brand.stickerAccess?.printReadyAccess !== "approved-partnership-request") {
+  addError("brand.stickerAccess.printReadyAccess", "must route print-ready sticker access through an approved partnership request");
+}
+validateUrl("brand.stickerAccess.requestUrl", brand.stickerAccess?.requestUrl);
+if (brand.stickerAccess?.requestUrl !== "https://elixpo.com/partnerships") {
+  addError("brand.stickerAccess.requestUrl", "must use the canonical partnership request route");
 }
 
 const contributorHandles = new Set();
