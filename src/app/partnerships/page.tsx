@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { ArrowUpRight, Mail } from "lucide-react";
+import { PartnershipImpact } from "@/components/PartnershipImpact";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
   title: "Community event partnerships and sticker support",
   description:
-    "See Elixpo's community partnership record and learn how aligned events can request open-source speakers, stickers, print-ready artwork, and transparent in-kind support.",
+    "See Elixpo's community partnership record, including more than 3,500 stickers distributed, and learn how aligned events can request speakers, artwork, and transparent in-kind support.",
   path: "/partnerships",
 });
 
@@ -125,6 +126,12 @@ export default function PartnershipsPage() {
       />
 
       <header className="partnership-hero">
+        <div className="partnership-hero-geometry" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
         <div className="partnership-hero-copy">
           <p className="eyebrow">Community partnerships / in-kind support</p>
           <h1>Elixpo works with communities that help people build in public.</h1>
@@ -145,6 +152,8 @@ export default function PartnershipsPage() {
           <small>Support is reviewed for every event. Past work does not imply a standing endorsement.</small>
         </aside>
       </header>
+
+      <PartnershipImpact />
 
       <section className="collaboration-section" aria-labelledby="past-collaborations">
         <div className="section-heading split">

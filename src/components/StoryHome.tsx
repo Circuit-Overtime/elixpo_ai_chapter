@@ -31,13 +31,15 @@ export function StoryHome() {
               <Link className="button primary" href="/projects">Browse the projects <ArrowRight size={16} /></Link>
               <Link className="button secondary" href="/about">How Elixpo works</Link>
             </div>
+            <div className="hero-data" aria-label="Elixpo public directory summary">
+              <dl>
+                <div><dd>{counts.project}</dd><dt>Project records</dt></div>
+                <div><dd>{counts.research}</dd><dt>Research records</dt></div>
+                <div><dd>{counts.service}</dd><dt>Public services</dt></div>
+              </dl>
+              <p><span>EST.</span> Building in public since 2023</p>
+            </div>
           </div>
-          <aside className="hero-identity" aria-label="Elixpo organization summary">
-            <p>Elixpo</p>
-            <strong>Open-source<br/><em>project foundry</em></strong>
-            <dl><div><dt>Projects</dt><dd>{counts.project}</dd></div><div><dt>Research</dt><dd>{counts.research}</dd></div><div><dt>Services</dt><dd>{counts.service}</dd></div></dl>
-            <small>Building in public since 2023</small>
-          </aside>
         </div>
       </section>
 
