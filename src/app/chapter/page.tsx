@@ -3,11 +3,18 @@ import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
 import { CHAPTER_ENTRY } from "@/lib/directory";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
-export const metadata = createPageMetadata({
+const pageMetadata = createPageMetadata({
   title: "The Elixpo Chapter — the public build floor",
   description: "Learn how the Elixpo Chapter turns active open-source work into bounded public releases through framing, contribution design, accountable review, attribution, and a durable record.",
   path: "/chapter",
 });
+export const metadata = {
+  ...pageMetadata,
+  alternates: {
+    ...pageMetadata.alternates,
+    types: { "application/atom+xml": "/chapter/feed.xml" },
+  },
+};
 
 const stages = [
   ["01", "Frame", "A maintainer and steward define a release-sized outcome, its evidence, boundaries, and the contribution paths that are genuinely ready."],
@@ -51,7 +58,7 @@ export default function ChapterPage() {
 
     <section className="chapter-contract section-wrap">
       <div><p className="eyebrow">The contract</p><h2>Why build here?</h2></div>
-      <div><p>Because open source needs more than storage. The Chapter concentrates attention around prepared work, connects contribution to a visible release, and gives maintainers and contributors a durable public record they can point to.</p><p>Elixpo contributes coordination, standards, discovery, review structure, and attribution. It does not claim ownership of a maintainer’s authorship or disguise paused work as active.</p><a className="text-link" href={repositoryUrl} target="_blank" rel="noreferrer">Inspect the working repository <ArrowUpRight size={15} /></a></div>
+      <div><p>Because open source needs more than storage. The Chapter concentrates attention around prepared work, connects contribution to a visible release, and gives maintainers and contributors a durable public record they can point to.</p><p>Elixpo contributes coordination, standards, discovery, review structure, and attribution. It does not claim ownership of a maintainer’s authorship or disguise paused work as active.</p><div className="inline-links"><a className="text-link" href={repositoryUrl} target="_blank" rel="noreferrer">Inspect the working repository <ArrowUpRight size={15} /></a><a className="text-link" href="/chapter/feed.xml">Subscribe to Chapter proposals <ArrowUpRight size={15} /></a></div></div>
     </section>
   </main>;
 }

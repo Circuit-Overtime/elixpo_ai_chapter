@@ -27,7 +27,7 @@ export type PublicDiscussion = {
 
 export const DISCUSSIONS_CONFIG = discussions;
 
-export async function getLatestDiscussions(limit = 8): Promise<PublicDiscussion[]> {
+export async function getLatestDiscussions(limit = 8, category?: string): Promise<PublicDiscussion[]> {
   if (discussions.status !== "active") return [];
   const token = process.env.ELIXPO_GITHUB_TOKEN ?? process.env.GITHUB_TOKEN;
   const excludedNumbers = new Set<number>(discussions.moderation.excludedDiscussionNumbers);
@@ -47,6 +47,7 @@ export async function getLatestDiscussions(limit = 8): Promise<PublicDiscussion[
     const records = await response.json() as GitHubDiscussion[];
     return records
       .filter((record) => discussions.eligibleCategories.includes(record.category.name))
+      .filter((record) => !category || record.category.name === category)
       .filter((record) => !discussions.moderation.excludeLocked || !record.locked)
       .filter((record) => !excludedNumbers.has(record.number))
       .filter((record) => !excludedAuthors.has(record.user.login))
