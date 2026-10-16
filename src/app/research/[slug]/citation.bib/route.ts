@@ -26,7 +26,10 @@ function citationKey(slug: string, authors: { name: string }[], releasedAt: stri
   return `${surname.toLowerCase()}${releasedAt.slice(0, 4)}${slug.replaceAll(/[^a-zA-Z0-9]/g, "")}`;
 }
 
-export async function GET(_request: Request, { params }: RouteContext<"/research/[slug]/citation.bib">) {
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string }> },
+) {
   const { slug } = await params;
   const record = getResearchRecord(slug);
   if (!record?.citation || !record.authors.length || !record.releasedAt) {

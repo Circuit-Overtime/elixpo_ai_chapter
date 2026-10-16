@@ -39,7 +39,10 @@ function findRecord(kind: string, slug: string): SocialRecord | undefined {
   return { eyebrow: `Elixpo Open ${kind === "project" ? "Projects" : "Services"}`, title: entry.name, description: entry.summary, status: `${entry.lifecycle} · ${entry.relationship}`, ...colors };
 }
 
-export async function GET(_request: Request, { params }: RouteContext<"/social/[kind]/[slug]">) {
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ kind: string; slug: string }> },
+) {
   const { kind, slug } = await params;
   const record = findRecord(kind, slug);
   if (!record) return new Response("Social card not found.\n", { status: 404 });
