@@ -24,10 +24,10 @@ scripts/
 ├── check_site.py           Validates public pages and crawler metadata
 └── prepare_site.py         Renders product-specific installers
 tests/                      Shared package-site tests
-web/
-├── index.html              Package catalog
-├── win-dot-panel/          Win Dot Panel page
-└── screenbridge/           ScreenBridge page
+content/                    Canonical package-registry snapshot
+public/                     Static response headers
+src/                        Next.js catalogue and package records
+web/                        Stable installer template and legacy assets
 packages.toml               Package and release registry
 ```
 
@@ -69,9 +69,14 @@ python -m unittest discover -s tests -v
 ./packaging/build-deb.sh --revision 1
 ```
 
-Prepare and validate the public site:
+Build, prepare, and validate the public site:
 
 ```bash
+npm ci
+npm run registry:check
+npm run lint
+npm run typecheck
+npm run build
 python scripts/prepare_site.py /tmp/elixpo-package-site
 python scripts/check_site.py /tmp/elixpo-package-site
 ```
@@ -85,7 +90,7 @@ win-dot-panel/v1.0.0-10
 screenbridge/v1.0.0-2
 ```
 
-Each release workflow tests its application, builds a revisioned `Architecture: all` Debian package, publishes checksums, and invokes the shared package-site deployment. The deployment downloads the latest stable release for both registered products, verifies them, rebuilds the combined index, signs it with `APT_SIGNING_KEY`, and deploys GitHub Pages atomically.
+Each release workflow tests its application, builds a revisioned `Architecture: all` Debian package, publishes checksums, and invokes the shared package-site deployment. The deployment downloads the latest stable release for both registered products, verifies them, rebuilds the combined index, signs it with the organization-managed `APT_SIGNING_KEY`, and deploys the catalogue and repository atomically. GitHub Pages remains production during the Cloudflare candidate period.
 
 See [APT repository operations](apt-repository.md) for signing, secrets, deployment, and recovery procedures.
 
