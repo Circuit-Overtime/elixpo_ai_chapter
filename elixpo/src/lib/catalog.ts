@@ -5,9 +5,6 @@ export interface EcosystemProduct {
   schemaType?: "SoftwareApplication" | "Product";
   description: string; audience: string; capabilities: string[]; keywords: string[]; relatedPackages: string[];
 }
-export interface ElixpoPackage {
-  name: string; href: string; install: string; type: string; description: string; capabilities: string[];
-}
 
 /** Canonical product copy used by pages, metadata, JSON-LD, and the sitemap. */
 export const ECOSYSTEM_PRODUCTS: EcosystemProduct[] = [
@@ -76,14 +73,6 @@ export const ECOSYSTEM_PRODUCTS: EcosystemProduct[] = [
     keywords: ["conference badge", "open hardware", "OreoOS", "wearable technology", "MicroPython", "badge app SDK"],
     relatedPackages: [],
   },
-];
-
-export const ELIXPO_PACKAGES: ElixpoPackage[] = [
-  { name: "@elixpo/lixsketch", href: "https://www.npmjs.com/package/@elixpo/lixsketch", install: "npm i @elixpo/lixsketch", type: "Canvas engine", description: "Embeddable SVG whiteboard engine with hand-drawn visuals, scene operations, exports, and programmatic diagrams.", capabilities: ["SVG canvas", "LixScript", "MCP support"] },
-  { name: "@elixpo/lixeditor", href: "https://www.npmjs.com/package/@elixpo/lixeditor", install: "npm i @elixpo/lixeditor", type: "React editor", description: "Rich WYSIWYG BlockNote editor and renderer with equations, Mermaid diagrams, code highlighting, and extensible blocks.", capabilities: ["BlockNote", "LaTeX", "Mermaid"] },
-  { name: "@elixpo/lixblogs-cli", href: "https://www.npmjs.com/package/@elixpo/lixblogs-cli", install: "npm i -g @elixpo/lixblogs-cli", type: "Publishing CLI", description: "Official command-line client for publishing, managing, inspecting, and automating LixBlogs through its supported API.", capabilities: ["Publishing", "Analytics", "Automation"] },
-  { name: "@elixpo/accounts", href: "https://www.npmjs.com/package/@elixpo/accounts", install: "npm i @elixpo/accounts", type: "Identity SDK", description: "Standards-first OAuth 2.0 and OpenID Connect SDK for integrating applications with Elixpo Accounts.", capabilities: ["OAuth 2.0", "OIDC", "Authentication"] },
-  { name: "@elixpo/lixrl-cli", href: "https://www.npmjs.com/package/@elixpo/lixrl-cli", install: "npm i -g @elixpo/lixrl-cli", type: "Link CLI", description: "Official command-line client for shortening URLs, managing links and analytics, and generating production-ready QR codes.", capabilities: ["Short links", "QR codes", "Analytics"] },
 ];
 
 export const getProduct = (slug: string) => ECOSYSTEM_PRODUCTS.find((product) => product.slug === slug);

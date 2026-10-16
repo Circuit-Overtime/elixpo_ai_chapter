@@ -85,7 +85,7 @@ export function AboutSection() {
 
             <div className="absolute bottom-0 left-0 p-5 sm:p-7">
               <span className="text-[10px] uppercase font-mono tracking-widest text-primary/80 block mb-1">
-                Open Source · MIT & CC-BY-4.0
+                Build in public · Release as a project
               </span>
               <p className="text-lg sm:text-2xl font-serif italic text-white leading-tight">
                 Built in the open, together.
