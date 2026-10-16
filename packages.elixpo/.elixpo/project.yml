@@ -1,0 +1,66 @@
+schema_version: "0.1"
+
+project:
+  id: packages
+  name: packages.elixpo
+  title: Elixpo Packages
+  description: "Monorepo and signed distribution surface for Elixpo Linux applications and their public package catalogue."
+  family: project
+  artifact_type: package
+  lifecycle: active
+  relationship: core
+  custody: elixpo-owned
+  stack: python-nextjs
+  node_version: "24"
+  repository: https://github.com/elixpo/packages.elixpo
+  deployment: https://packages.elixpo.com
+  discussions: https://github.com/orgs/elixpo/discussions
+  status_owner: elixpo
+  status_verified_at: "2026-10-17"
+
+publication:
+  public: true
+  featured: true
+  canonical_slug: packages
+
+license:
+  current_file: LICENSE
+  notice_file: NOTICE
+  migration_status: complete
+  target_code_license: MIT
+  trademark_policy: pending-separation
+
+ci:
+  lint_cmd: "npm run lint && ruff check scripts tests"
+  test_cmd: "npm run typecheck && python -m pytest -q tests"
+  build_cmd: "npm run build"
+
+operations:
+  deployment_workflow: .github/workflows/deploy-packages.yml
+  preview_workflow: .github/workflows/deploy-cloudflare-pages.yml
+  test_workflow: .github/workflows/checks.yml
+  release_workflow: .github/workflows/release-deb.yml
+  privileged_workflows_repo_specific: true
+  fork_prs_receive_secrets: false
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [linux-packaging, apt, python, nextjs, release-engineering]
+    lead: true
+
+governance:
+  model: maintainer-led
+  document: GOVERNANCE.md
+
+support:
+  document: SUPPORT.md
+
+security:
+  document: SECURITY.md
+
+conformance:
+  standard: "0.1"
+  status: migration-in-progress
+  assessed_at: "2026-10-17"
+  exceptions:
+    - "GitHub Pages remains the production host until the Cloudflare candidate and custom-domain migration are verified."

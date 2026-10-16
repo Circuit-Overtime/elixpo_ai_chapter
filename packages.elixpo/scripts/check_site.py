@@ -1,8 +1,9 @@
-"""Check that the Pages artifact exposes its public crawl files."""
+"""Check that the package artifact preserves its routes and crawl contract."""
 
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
@@ -11,13 +12,15 @@ from pathlib import Path
 SITE_URL = "https://packages.elixpo.com/"
 SITEMAP_URL = f"{SITE_URL}sitemap.xml"
 SITEMAP_NS = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+with open("content/packages.json", encoding="utf-8") as registry_file:
+    registry = json.load(registry_file)
+
+LINUX_SLUGS = [record["slug"] for record in registry["linuxApplications"]]
+NPM_SLUGS = [record["slug"] for record in registry["npmPackages"]]
 PUBLIC_ROUTES = [
-    "win-dot-panel/",
-    "win-dot-panel/docs/",
-    "win-dot-panel/about/",
-    "screenbridge/",
-    "screenbridge/docs/",
-    "screenbridge/about/",
+    "repository/",
+    *(f"{slug}/" for slug in [*LINUX_SLUGS, *NPM_SLUGS]),
+    *(f"{slug}/{section}/" for slug in LINUX_SLUGS for section in ("docs", "about")),
 ]
 
 
@@ -59,9 +62,8 @@ def check_site(site: Path) -> None:
 
     sitemap = ET.parse(site / "sitemap.xml")
     urls = [node.text for node in sitemap.findall(f"{SITEMAP_NS}url/{SITEMAP_NS}loc")]
-    assert urls == [SITE_URL, *(f"{SITE_URL}{route}" for route in PUBLIC_ROUTES)], (
-        f"Unexpected sitemap URLs: {urls}"
-    )
+    expected_urls = {SITE_URL, *(f"{SITE_URL}{route}" for route in PUBLIC_ROUTES)}
+    assert set(urls) == expected_urls, f"Unexpected sitemap URLs: {urls}"
 
     pages = [(site / "index.html", SITE_URL)] + [
         (site / route / "index.html", f"{SITE_URL}{route}") for route in PUBLIC_ROUTES
@@ -77,6 +79,7 @@ def check_site(site: Path) -> None:
         assert head.meta.get("og:url") == expected_url
         assert head.meta.get("og:title")
         assert head.meta.get("og:description")
+        assert head.meta.get("og:image")
         assert head.meta.get("twitter:card") == "summary_large_image"
 
     for name in (
@@ -84,6 +87,8 @@ def check_site(site: Path) -> None:
         "favicon.png",
         "info.css",
         "og-image.png",
+        "feed.xml",
+        "_headers",
         "install.sh",
         "win-dot-panel/install.sh",
         "screenbridge/install.sh",
@@ -94,7 +99,7 @@ def check_site(site: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("site", type=Path, help="Prepared GitHub Pages artifact directory")
+    parser.add_argument("site", type=Path, help="Assembled static catalogue and package artifact")
     args = parser.parse_args()
     try:
         check_site(args.site)

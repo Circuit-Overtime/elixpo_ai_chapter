@@ -1,0 +1,49 @@
+title: "[Research] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this category for reproducible research, papers, experiments, datasets, models, and research tooling. Describe claims precisely; an Elixpo listing does not imply peer review.
+  - type: input
+    id: artifact
+    attributes:
+      label: Research artifact
+      description: Link the paper, repository, dataset, model, demo, or preprint.
+      placeholder: https://...
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Research question and contribution
+      description: State the question, the proposed contribution, and what is new or useful about it.
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Method and evidence
+      description: Summarize the method, evaluation, data provenance, and evidence supporting the current claims.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction path
+      description: Give the commands, environment, hardware assumptions, data access, and expected result needed to reproduce the work.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limitations and open questions
+      description: Record known limitations, negative results, safety concerns, and questions where help is wanted.
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License and citation
+      description: Identify the software/data license and link a citation file or preferred citation when available.
+    validations:
+      required: false

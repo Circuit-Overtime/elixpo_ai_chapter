@@ -1,0 +1,193 @@
+{
+  "$schema": "./schemas/packages.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "statusOwner": "elixpo",
+  "distribution": {
+    "name": "Elixpo Packages",
+    "website": "https://packages.elixpo.com",
+    "repository": "https://github.com/elixpo/packages.elixpo",
+    "aptDocumentation": "https://github.com/elixpo/packages.elixpo/blob/main/docs/apt-repository.md",
+    "license": "MIT",
+    "maintainer": "Elixpo"
+  },
+  "linuxApplications": [
+    {
+      "slug": "win-dot-panel",
+      "packageName": "win-dot-panel",
+      "name": "Win Dot Panel",
+      "version": "1.0.0-10",
+      "status": "maintained",
+      "category": "Emoji and clipboard utility",
+      "summary": "A desktop panel for finding emoji, kaomoji, and symbols and for keeping a private clipboard history on Linux.",
+      "support": "Debian 13 and Ubuntu 26.04 · GNOME and KDE Plasma · Wayland and X11",
+      "install": "curl -fsSL -o /var/tmp/win-dot-panel-install.sh https://packages.elixpo.com/win-dot-panel/install.sh && bash /var/tmp/win-dot-panel-install.sh",
+      "page": "https://packages.elixpo.com/win-dot-panel/",
+      "source": "https://github.com/elixpo/packages.elixpo/tree/main/apps/win-dot-panel",
+      "releases": "https://github.com/elixpo/packages.elixpo/releases?q=win-dot-panel%2Fv",
+      "icon": "https://packages.elixpo.com/favicon.png",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "project",
+        "slug": "packages"
+      },
+      "images": [
+        {
+          "src": "https://raw.githubusercontent.com/elixpo/packages.elixpo/main/apps/win-dot-panel/docs/images/emoji-panel.png",
+          "alt": "Win Dot Panel showing the searchable emoji panel"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/elixpo/packages.elixpo/main/apps/win-dot-panel/docs/images/clipboard-panel.png",
+          "alt": "Win Dot Panel showing local clipboard history"
+        }
+      ],
+      "capabilities": [
+        "Offline emoji, kaomoji, and symbol search",
+        "Local clipboard and screenshot history",
+        "Keyboard shortcuts and desktop integration",
+        "Light and dark desktop themes"
+      ]
+    },
+    {
+      "slug": "screenbridge",
+      "packageName": "screenbridge",
+      "name": "ScreenBridge",
+      "version": "1.0.0-2",
+      "status": "maintained",
+      "category": "Desktop audio sharing",
+      "summary": "A focused Linux application for sharing computer audio during calls, presentations, recordings, and streams while keeping microphone control separate.",
+      "support": "Ubuntu 22.04 and newer · PipeWire and PulseAudio",
+      "install": "curl -fsSL -o /var/tmp/screenbridge-install.sh https://packages.elixpo.com/screenbridge/install.sh && bash /var/tmp/screenbridge-install.sh",
+      "page": "https://packages.elixpo.com/screenbridge/",
+      "source": "https://github.com/elixpo/packages.elixpo/tree/main/apps/screenbridge",
+      "releases": "https://github.com/elixpo/packages.elixpo/releases?q=screenbridge%2Fv",
+      "icon": "/brand/icons/screenbridge.svg",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "project",
+        "slug": "packages"
+      },
+      "images": [],
+      "capabilities": [
+        "Share computer audio through a virtual input",
+        "Keep computer sound available locally",
+        "Use the microphone separately or combine it",
+        "Restore the previous audio configuration when stopped"
+      ]
+    }
+  ],
+  "npmPackages": [
+    {
+      "slug": "lixsketch",
+      "name": "@elixpo/lixsketch",
+      "version": "5.6.12",
+      "status": "maintained",
+      "href": "https://www.npmjs.com/package/@elixpo/lixsketch",
+      "source": "https://github.com/elixpo/sketch.elixpo",
+      "install": "npm i @elixpo/lixsketch",
+      "type": "Canvas engine",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "project",
+        "slug": "lixsketch"
+      },
+      "description": "Embeddable SVG whiteboard engine with hand-drawn visuals, scene operations, exports, and programmatic diagrams.",
+      "capabilities": [
+        "SVG canvas",
+        "LixScript",
+        "MCP support"
+      ]
+    },
+    {
+      "slug": "lixeditor",
+      "name": "@elixpo/lixeditor",
+      "version": "2.8.12",
+      "status": "maintained",
+      "href": "https://www.npmjs.com/package/@elixpo/lixeditor",
+      "source": "https://github.com/elixpo/blogs.elixpo",
+      "install": "npm i @elixpo/lixeditor",
+      "type": "React editor",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "service",
+        "slug": "blogs"
+      },
+      "description": "Rich WYSIWYG BlockNote editor and renderer with equations, Mermaid diagrams, code highlighting, and extensible blocks.",
+      "capabilities": [
+        "BlockNote",
+        "LaTeX",
+        "Mermaid"
+      ]
+    },
+    {
+      "slug": "lixblogs-cli",
+      "name": "@elixpo/lixblogs-cli",
+      "version": "1.8.0",
+      "status": "maintained",
+      "href": "https://www.npmjs.com/package/@elixpo/lixblogs-cli",
+      "source": "https://github.com/elixpo/blogs.elixpo",
+      "install": "npm i -g @elixpo/lixblogs-cli",
+      "type": "Publishing CLI",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "service",
+        "slug": "blogs"
+      },
+      "description": "Official command-line client for publishing, managing, inspecting, and automating LixBlogs through its supported API.",
+      "capabilities": [
+        "Publishing",
+        "Analytics",
+        "Automation"
+      ]
+    },
+    {
+      "slug": "accounts",
+      "name": "@elixpo/accounts",
+      "version": "1.0.4",
+      "status": "maintained",
+      "href": "https://www.npmjs.com/package/@elixpo/accounts",
+      "source": "https://github.com/elixpo/accounts.elixpo",
+      "install": "npm i @elixpo/accounts",
+      "type": "Identity SDK",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "service",
+        "slug": "accounts"
+      },
+      "description": "Standards-first OAuth 2.0 and OpenID Connect SDK for integrating applications with Elixpo Accounts.",
+      "capabilities": [
+        "OAuth 2.0",
+        "OIDC",
+        "Authentication"
+      ]
+    },
+    {
+      "slug": "lixrl-cli",
+      "name": "@elixpo/lixrl-cli",
+      "version": "1.1.5",
+      "status": "maintained",
+      "href": "https://www.npmjs.com/package/@elixpo/lixrl-cli",
+      "source": "https://github.com/elixpo/lixrl.com",
+      "install": "npm i -g @elixpo/lixrl-cli",
+      "type": "Link CLI",
+      "license": "MIT",
+      "maintainer": "Elixpo",
+      "related": {
+        "family": "service",
+        "slug": "lixrl"
+      },
+      "description": "Official command-line client for shortening URLs, managing links and analytics, and generating production-ready QR codes.",
+      "capabilities": [
+        "Short links",
+        "QR codes",
+        "Analytics"
+      ]
+    }
+  ]
+}

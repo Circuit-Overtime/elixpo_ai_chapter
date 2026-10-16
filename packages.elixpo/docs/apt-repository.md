@@ -1,6 +1,6 @@
 # Signed multi-package APT repository
 
-The package catalog is published at `https://packages.elixpo.com/`, with Win Dot Panel at `/win-dot-panel/`, ScreenBridge at `/screenbridge/`, and stable packages at `/apt/`. Both applications and their releases live in `elixpo/packages.elixpo`. The deployment workflow selects the latest stable namespaced release for each product, verifies both packages, builds one signed APT index, and deploys the site atomically through GitHub Pages.
+The package catalog is published at `https://packages.elixpo.com/`, with Win Dot Panel at `/win-dot-panel/`, ScreenBridge at `/screenbridge/`, and stable packages at `/apt/`. Both applications and their releases live in `elixpo/packages.elixpo`. The deployment workflow selects the latest stable namespaced release for each product, verifies both packages, builds one signed APT index, and deploys the catalogue and repository as one artifact. GitHub Pages remains the production host while an equivalent Cloudflare Pages candidate is verified.
 
 ## Quick install
 
@@ -34,7 +34,8 @@ The same source can install `screenbridge`; do not register the repository a sec
 
 ## Publishing architecture
 
-- `elixpo/packages.elixpo` owns both application sources, GitHub Releases, GitHub Pages, the custom domain, and `APT_SIGNING_KEY`.
+- `elixpo/packages.elixpo` owns both application sources, GitHub Releases, the publication workflows, and the custom-domain deployment contract.
+- `APT_SIGNING_KEY` is organization-managed. Cloudflare credentials are repository-scoped during the current migration and exposed only to trusted workflows.
 - Stable package binaries use product-prefixed tags: `win-dot-panel/v...` and `screenbridge/v...`.
 - `.github/workflows/deploy-packages.yml` verifies both releases, builds the shared index, signs it, and deploys one Pages artifact.
 - Each stable product release invokes that shared deployment workflow directly.
@@ -44,8 +45,8 @@ The same source can install `screenbridge`; do not register the repository a sec
 1. Keep GitHub Pages on **GitHub Actions** with the custom domain `packages.elixpo.com`.
 2. Keep the existing `packages` CNAME pointed at the Pages host for the `elixpo` organization and retain the domain-verification TXT record.
 3. In **Environments → github-pages**, allow `win-dot-panel/v*`, `screenbridge/v*`, and the `main` branch.
-4. Keep `APT_SIGNING_KEY` in this repository's Actions secrets and maintain an offline backup of its private key.
-5. Run **Deploy packages.elixpo.com** manually when either package release must be republished without a new tag.
+4. Grant this repository access to the organization-managed `APT_SIGNING_KEY` and maintain an offline backup of its private key.
+5. Run **Deploy packages.elixpo.com** manually when either package release must be republished without a new tag. During migration, run **Deploy Cloudflare Pages candidate** separately and compare the complete artifact before moving DNS.
 
 ## Release process
 
