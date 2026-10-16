@@ -16,7 +16,7 @@
   <a href="https://packages.elixpo.com">Packages</a>
 </p>
 
-<!-- BEGIN ELIXPO SHARED · sha256:7ea62378033b98b869cf9ffbaeeb3fab69b69bde5310c8d69349004bb4bbf9e5 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:a28f9092f071abdc191a69a59532e6ef600d7f9403dc3f81be52a1103140cd46 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -99,6 +99,7 @@ Feature placement is editorial and does not change these records.
 | Repository | Lifecycle | Relationship |
 | --- | --- | --- |
 | [`monodiffuse`](https://github.com/elixpo/monodiffuse) | Active | Core |
+| [`octabit`](https://github.com/elixpo/octabit) | Active | Core |
 | [`search.elixpo`](https://github.com/pollinations/search.elixpo) | Active | Connected |
 | [`wozformer`](https://github.com/elixpo/wozformer) | Paused | Core |
 | [`qfabric`](https://github.com/elixpo/qfabric) | Completed | Core |

@@ -7,7 +7,7 @@ import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 const pageMetadata = createPageMetadata({
   title: "Open research, experiments, and reproducibility",
-  description: "Explore Elixpo research projects with source code, lifecycle status, papers, datasets, models, reproducibility records, and live Hugging Face experiments including OreoLook and Diffuino.",
+  description: "Explore Elixpo research with papers, source code, lifecycle status, models, and reproducibility records, led by OctaBit, OreoLook, and MonoDiffuse.",
   path: "/research",
 });
 export const metadata = {
@@ -18,7 +18,13 @@ export const metadata = {
   },
 };
 
-const research = getDirectoryEntries("research");
+const leadingResearchSlugs = ["octabit", "oreolook", "monodiffuse"];
+const research = [...getDirectoryEntries("research")].sort((left, right) => {
+  const leftRank = leadingResearchSlugs.indexOf(left.slug);
+  const rightRank = leadingResearchSlugs.indexOf(right.slug);
+  return (leftRank === -1 ? 99 : leftRank) - (rightRank === -1 ? 99 : rightRank);
+});
+const leadingResearch = leadingResearchSlugs.map((slug) => research.find((entry) => entry.slug === slug)).filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
 export default function ResearchPage() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -64,6 +70,19 @@ export default function ResearchPage() {
       </div>
       <div className="research-hero-note"><strong>{research.length}</strong><span>documented research records</span></div>
     </header>
+
+    <section className="leading-research section-wrap" aria-labelledby="leading-research">
+      <div className="section-heading split">
+        <div><p className="eyebrow">Leading research</p><h2 id="leading-research">Current work with the strongest public record.</h2></div>
+        <p>These records currently lead the Elixpo research program. They combine a defined research question with public implementation evidence, publication material, or runnable artifacts.</p>
+      </div>
+      <div className="leading-research-grid">
+        {leadingResearch.map((entry, index) => <Link href={`/research/${entry.slug}`} key={entry.slug}>
+          <div className={`leading-research-art leading-research-art-${index + 1}`} aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><i/><i/><ProjectMark seed={entry.slug} icon={entry.icon} size="large" /></div>
+          <div className="leading-research-copy"><p className="eyebrow">{entry.focus.slice(0, 2).join(" · ")}</p><h3>{entry.name}</h3><p>{entry.summary}</p><span>Open research record <ArrowRight size={15}/></span></div>
+        </Link>)}
+      </div>
+    </section>
 
     <section className="research-spaces section-wrap" aria-labelledby="live-experiments">
       <div className="section-heading split">

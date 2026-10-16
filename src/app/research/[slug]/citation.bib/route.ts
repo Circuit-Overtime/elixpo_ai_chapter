@@ -36,17 +36,26 @@ export async function GET(_request: Request, { params }: RouteContext<"/research
   const institution = "technicalReportInstitution" in record ? record.technicalReportInstitution : null;
   const reportNumber = "technicalReportNumber" in record ? record.technicalReportNumber : null;
   const doi = "doi" in record ? record.doi : null;
-  const fields = [
+  const journal = "journalTitle" in record ? record.journalTitle : null;
+  const volume = "volume" in record ? record.volume : null;
+  const issue = "issue" in record ? record.issue : null;
+  const firstPage = "firstPage" in record ? record.firstPage : null;
+  const lastPage = "lastPage" in record ? record.lastPage : null;
+  const fields: string[][] = [
     ["title", record.title],
     ["author", record.authors.map((author) => author.name).join(" and ")],
     ["year", record.releasedAt.slice(0, 4)],
     ["url", record.paperUrl],
     ...(doi ? [["doi", doi]] : []),
+    ...(journal ? [["journal", journal]] : []),
+    ...(volume ? [["volume", volume]] : []),
+    ...(issue ? [["number", issue]] : []),
+    ...(firstPage && lastPage ? [["pages", `${firstPage}--${lastPage}`]] : []),
     ...(institution ? [["institution", institution]] : []),
     ...(reportNumber ? [["number", reportNumber]] : []),
     ["note", `Elixpo record: ${absoluteUrl(`/research/${record.slug}`)}. Review status: ${record.reviewStatus.replaceAll("-", " ")}.`],
   ];
-  const type = record.researchStatus === "technical-report" || institution ? "techreport" : "misc";
+  const type = journal ? "article" : record.researchStatus === "technical-report" || institution ? "techreport" : "misc";
   const body = `@${type}{${citationKey(record.slug, record.authors, record.releasedAt)},\n${fields.map(([key, value]) => `  ${key} = {${bibValue(value)}},`).join("\n")}\n}\n`;
 
   return new Response(body, {

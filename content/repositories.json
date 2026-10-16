@@ -325,6 +325,22 @@
       "notes": "Active controlled research study preparing a technical report and preprint; it has not undergone peer review."
     },
     {
+      "name": "octabit",
+      "repositoryUrl": "https://github.com/elixpo/octabit",
+      "disposition": "public-entry",
+      "publicClass": "research",
+      "relationship": "core",
+      "lifecycle": "active",
+      "custody": "elixpo-owned",
+      "githubArchived": false,
+      "verificationState": "verified",
+      "statusVerifiedAt": "2026-10-16",
+      "statusOwner": "elixpo",
+      "researchStatus": "released",
+      "reviewStatus": "not-reviewed",
+      "notes": "Active open-hardware research repository for a programmable RISC-style 8-bit breadboard computer. Source and hardware material are MIT-licensed; the June 2025 paper states no reuse license, and its peer-review procedure has not been independently verified."
+    },
+    {
       "name": "search.elixpo",
       "repositoryUrl": "https://github.com/pollinations/search.elixpo",
       "disposition": "public-entry",

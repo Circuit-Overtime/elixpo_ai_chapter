@@ -4,6 +4,47 @@
   "lastVerified": "2026-10-16",
   "statusOwner": "elixpo",
   "entries": {
+    "octabit": {
+      "slug": "octabit",
+      "title": "Exploring Microcode CPU Instructions with RISC 8-Bit Breadboard Computer",
+      "abstract": "A documented RISC-style 8-bit breadboard computer built with transistor and TTL logic, a discrete arithmetic logic unit, Arduino-managed microcode, four-bit opcode and address fields, and a four-digit seven-segment output. The public record connects the implementation, schematics, hardware documentation, and published paper.",
+      "authors": [
+        { "name": "Ayushman Bhattacharya", "affiliation": "Department of Computer Science and Engineering, JIS University" },
+        { "name": "Anwesha Chakraborty", "affiliation": "Department of Computer Science and Engineering, JIS University" },
+        { "name": "Vivek Yadav", "affiliation": "Department of Computer Science and Engineering, JIS University" },
+        { "name": "Piyali Sarkar", "affiliation": "Department of Computer Science and Engineering, JIS University" },
+        { "name": "Sonali Bhowmik", "affiliation": "Department of Computer Science and Engineering, JIS University" },
+        { "name": "Dipankar Misra", "affiliation": "Department of Computer Science and Engineering, JIS University" },
+        { "name": "Sumit Nandi", "affiliation": "Harishchandrapur College, Malda" }
+      ],
+      "researchStatus": "released",
+      "reviewStatus": "not-reviewed",
+      "releasedAt": "2025-06-01",
+      "paperUrl": "https://artefacts-discovery.researcher.life/full_text/DA-2/32/326151b325b83d9cad2c965f7146b37b/full_text/6dd33d2ab3e8a75dd7c06626d2651050.pdf",
+      "doi": null,
+      "technicalReportInstitution": null,
+      "technicalReportNumber": null,
+      "journalTitle": "International Journal of Enhanced Research in Science, Technology & Engineering",
+      "issn": "2319-7463",
+      "volume": "14",
+      "issue": "6",
+      "firstPage": "212",
+      "lastPage": "226",
+      "pdfUrl": "https://artefacts-discovery.researcher.life/full_text/DA-2/32/326151b325b83d9cad2c965f7146b37b/full_text/6dd33d2ab3e8a75dd7c06626d2651050.pdf",
+      "codeUrl": "https://github.com/elixpo/octabit",
+      "artifacts": [
+        { "kind": "paper", "label": "Published 8-bit CPU paper", "url": "https://artefacts-discovery.researcher.life/full_text/DA-2/32/326151b325b83d9cad2c965f7146b37b/full_text/6dd33d2ab3e8a75dd7c06626d2651050.pdf", "license": null },
+        { "kind": "hardware", "label": "OctaBit source, schematics, and hardware documentation", "url": "https://github.com/elixpo/octabit", "license": "MIT" }
+      ],
+      "liveDemos": [],
+      "licenses": [
+        { "artifact": "source code and repository hardware material", "license": "MIT", "url": "https://github.com/elixpo/octabit/blob/main/LICENSE" },
+        { "artifact": "published paper", "license": "No reuse license stated in the supplied paper", "url": "https://artefacts-discovery.researcher.life/full_text/DA-2/32/326151b325b83d9cad2c965f7146b37b/full_text/6dd33d2ab3e8a75dd7c06626d2651050.pdf" }
+      ],
+      "reproducibility": { "status": "partial", "summary": "The repository publishes implementation code, component documentation, schematics, and EEPROM tooling, but Elixpo has not independently reproduced the complete paper-specific hardware build." },
+      "citation": { "text": "Bhattacharya, Chakraborty, Yadav, Sarkar, Bhowmik, Misra, and Nandi. Exploring Microcode CPU Instructions with RISC 8-Bit Breadboard Computer. International Journal of Enhanced Research in Science, Technology & Engineering 14(6), 212–226 (2025).", "cffUrl": null },
+      "metadataCompleteness": "verified"
+    },
     "emoji_transnetv1": {
       "slug": "emoji-transnet",
       "title": "Emoji Contextual Translator",
@@ -14,9 +55,9 @@
       "releasedAt": null,
       "paperUrl": null,
       "codeUrl": "https://github.com/elixpo/emoji_transnetv1",
-      "artifacts": [{ "kind": "model", "label": "Emoji Contextual Translator model", "url": "https://huggingface.co/Elixpo/Emoji-Contextual-Translator", "license": null }],
+      "artifacts": [{ "kind": "model", "label": "Emoji Contextual Translator model", "url": "https://huggingface.co/elixpo/Emoji-Contextual-Translator", "license": "MIT" }],
       "liveDemos": [],
-      "licenses": [],
+      "licenses": [{ "artifact": "released Hugging Face model", "license": "MIT", "url": "https://huggingface.co/elixpo/Emoji-Contextual-Translator" }],
       "reproducibility": { "status": "partial", "summary": "The repository documents dependencies, inference, training, and ROUGE evaluation, but does not provide a complete version-pinned reproduction environment." },
       "citation": null,
       "metadataCompleteness": "legacy-partial"

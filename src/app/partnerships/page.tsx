@@ -119,7 +119,7 @@ export default function PartnershipsPage() {
   };
 
   return (
-    <main className="page-shell partnership-page">
+    <main className="partnership-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
@@ -155,7 +155,7 @@ export default function PartnershipsPage() {
 
       <PartnershipImpact />
 
-      <section className="collaboration-section" aria-labelledby="past-collaborations">
+      <section className="collaboration-section section-wrap" aria-labelledby="past-collaborations">
         <div className="section-heading split">
           <div>
             <p className="eyebrow">Past collaborations</p>
@@ -197,7 +197,7 @@ export default function PartnershipsPage() {
         </div>
       </section>
 
-      <section className="partnership-options" aria-labelledby="partnership-options">
+      <section className="partnership-options section-wrap" aria-labelledby="partnership-options">
         <div className="section-heading split">
           <div>
             <p className="eyebrow">Current support options</p>
@@ -227,7 +227,7 @@ export default function PartnershipsPage() {
         </div>
       </section>
 
-      <section className="partnership-rules">
+      <section className="partnership-rules section-wrap">
         <div>
           <p className="eyebrow">What we need in a request</p>
           <h2>Provide enough detail for us to make a responsible commitment.</h2>
@@ -242,7 +242,7 @@ export default function PartnershipsPage() {
         </ul>
       </section>
 
-      <section className="method-panel">
+      <section className="method-panel partnership-method section-wrap">
         <p className="eyebrow">Independence</p>
         <h2>Visibility does not purchase authority inside Elixpo.</h2>
         <p>

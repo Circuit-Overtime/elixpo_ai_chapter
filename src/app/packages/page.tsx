@@ -60,6 +60,7 @@ export default function PackagesPage() {
           <a className="button secondary" href={PACKAGE_DISTRIBUTION.repository} target="_blank" rel="noreferrer"><Github size={16} /> View the repository</a>
         </div>
       </div>
+      <div className="packages-hero-orbits" aria-hidden="true"><span/><span/><span/></div>
       <div className="packages-hero-stack" aria-hidden="true">
         <div className="package-box package-box-back"><span>APT</span><b>signed repository</b></div>
         <div className="package-box package-box-middle"><PackageCheck size={32}/><b>screenbridge</b><span>.deb</span></div>
