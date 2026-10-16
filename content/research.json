@@ -86,9 +86,10 @@
       "authors": [{ "name": "Ayushman Bhattacharya", "affiliation": "Pollinations AI" }, { "name": "Anwesha Chakraborty", "affiliation": "JIS University" }, { "name": "Nihal Gazi", "affiliation": "IEM" }],
       "researchStatus": "preprint",
       "reviewStatus": "not-peer-reviewed",
-      "releasedAt": "2026-10-14",
-      "paperUrl": "https://github.com/elixpo/monodiffuse/blob/main/paper/v1_mnist_narrow/paper.pdf",
-      "doi": null,
+      "releasedAt": "2026-10-17",
+      "paperUrl": "https://doi.org/10.5281/zenodo.23424654",
+      "doi": "10.5281/zenodo.23424654",
+      "pdfUrl": "https://zenodo.org/records/23424654/files/monodiffuse-preprint.pdf",
       "technicalReportInstitution": "MonoDiffuse Project",
       "technicalReportNumber": "MonoDiffuse-TR-2026-01",
       "codeUrl": "https://github.com/elixpo/monodiffuse",
@@ -96,7 +97,7 @@
       "liveDemos": [{ "name": "Diffuino Live", "description": "Run the public MNIST diffusion demonstration backed by released ONNX and binary-network model artifacts.", "url": "https://huggingface.co/spaces/elixpo/diffuino", "tags": ["Diffusion", "ONNX", "Binary neural network"] }],
       "licenses": [{ "artifact": "software and model release", "license": "MIT", "url": "https://github.com/elixpo/monodiffuse/blob/main/LICENSE" }],
       "reproducibility": { "status": "documented", "summary": "The repository provides exact commands, controls, three-seed artifacts, hashes, publication packaging, and a versioned citation record." },
-      "citation": { "text": "Bhattacharya, Chakraborty, and Gazi. MonoDiffuse Technical Report 2026-01 (2026).", "cffUrl": "https://github.com/elixpo/monodiffuse/blob/main/CITATION.cff" },
+      "citation": { "text": "Bhattacharya, Chakraborty, and Gazi. Native Binary-Weight Training Outperforms Zero-Shot Sign Projection in MNIST Diffusion. MonoDiffuse Technical Report 2026-01 (2026). https://doi.org/10.5281/zenodo.23424654", "cffUrl": "https://github.com/elixpo/monodiffuse/blob/main/CITATION.cff" },
       "metadataCompleteness": "verified"
     },
     "search.elixpo": {
