@@ -16,12 +16,14 @@ interface PageMetadataOptions {
   title: string;
   description: string;
   path: `/${string}` | "/";
+  socialImage?: `/${string}`;
 }
 
 export function createPageMetadata({
   title,
   description,
   path,
+  socialImage,
 }: PageMetadataOptions): Metadata {
   const socialTitle = `${title} | ${SITE_NAME}`;
 
@@ -36,11 +38,13 @@ export function createPageMetadata({
       url: path,
       title: socialTitle,
       description,
+      ...(socialImage ? { images: [{ url: socialImage, width: 1200, height: 630, alt: `${title} — Elixpo` }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description,
+      ...(socialImage ? { images: [socialImage] } : {}),
     },
     robots: {
       index: true,

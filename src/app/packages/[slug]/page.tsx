@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${record.name} ${record.version} — Elixpo Packages`,
     description: `${record.description} Install version ${record.version}, review its source, license, supported environment, and connected Elixpo record.`,
     path: `/packages/${record.slug}`,
+    socialImage: `/social/package/${record.slug}`,
   });
 }
 
