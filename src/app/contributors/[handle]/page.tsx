@@ -46,7 +46,6 @@ export default async function ContributorRecordPage({ params }: PageProps) {
     "@type": "ProfilePage",
     name: `${person.name} — Elixpo contribution record`,
     url: canonicalUrl,
-    dateModified: contributors.lastVerified,
     mainEntity: {
       "@type": "Person",
       name: person.name,
