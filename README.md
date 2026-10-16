@@ -36,7 +36,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md), the
 [repository standard](docs/repository-standard/elixpo-repository-standard-v0.1.md)
 before changing canonical organization facts.
 
-<!-- BEGIN ELIXPO SHARED · sha256:ec0e289dda1877d35b329ffeeaa06e7a0c6f28ed50b695ab66b863e37e444ca2 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:798750bb4936ccd9801ebc99bf3bee1b84ee2caf1e79cba0d1870c88f51f7655 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -119,6 +119,7 @@ Feature placement is editorial and does not change these records.
 | Repository | Lifecycle | Relationship |
 | --- | --- | --- |
 | [`monodiffuse`](https://github.com/elixpo/monodiffuse) | Active | Core |
+| [`search.elixpo`](https://github.com/pollinations/search.elixpo) | Active | Connected |
 | [`wozformer`](https://github.com/elixpo/wozformer) | Paused | Core |
 | [`qfabric`](https://github.com/elixpo/qfabric) | Completed | Core |
 

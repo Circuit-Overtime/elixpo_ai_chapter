@@ -12,10 +12,11 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, licensing, sponsorship, contributors, history, brand] = await Promise.all([
+const [organization, taxonomy, repositories, directory, licensing, sponsorship, contributors, history, brand] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
+  readJson("content/directory.json"),
   readJson("content/licensing.json"),
   readJson("content/sponsorship.json"),
   readJson("content/contributors.json"),
@@ -45,6 +46,9 @@ if (organization.schemaVersion !== taxonomy.schemaVersion || taxonomy.schemaVers
 if (licensing.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "licensing and organization versions must match");
 }
+if (directory.schemaVersion !== organization.schemaVersion) {
+  addError("schemaVersion", "directory and organization versions must match");
+}
 if (sponsorship.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "sponsorship and organization versions must match");
 }
@@ -57,6 +61,7 @@ for (const [name, record] of Object.entries({ contributors, history, brand })) {
 if (!isDate(organization.lastVerified)) addError("organization.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(taxonomy.lastVerified)) addError("taxonomy.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(repositories.snapshotDate)) addError("repositories.snapshotDate", "expected YYYY-MM-DD");
+if (!isDate(directory.lastVerified)) addError("directory.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(licensing.lastVerified)) addError("licensing.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
@@ -194,6 +199,49 @@ for (const entry of repositories.entries) {
   }
 }
 
+const publicRepositoryNames = new Set(
+  repositories.entries
+    .filter((entry) => entry.disposition === "public-entry")
+    .map((entry) => entry.name),
+);
+const directorySlugs = new Set();
+
+for (const [repositoryName, detail] of Object.entries(directory.entries ?? {})) {
+  const location = `directory.entries.${repositoryName}`;
+  if (!publicRepositoryNames.has(repositoryName)) {
+    addError(location, "does not map to a public-entry repository");
+  }
+  if (!detail.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(detail.slug)) {
+    addError(`${location}.slug`, "expected a lowercase URL-safe slug");
+  } else if (directorySlugs.has(detail.slug)) {
+    addError(`${location}.slug`, "duplicate public slug");
+  }
+  directorySlugs.add(detail.slug);
+  for (const field of ["name", "summary", "description"]) {
+    if (typeof detail[field] !== "string" || detail[field].trim().length === 0) {
+      addError(`${location}.${field}`, "is required");
+    }
+  }
+  if (!Array.isArray(detail.focus) || detail.focus.length === 0) {
+    addError(`${location}.focus`, "at least one focus area is required");
+  }
+  if (detail.website) validateUrl(`${location}.website`, detail.website);
+  if (detail.icon && !detail.icon.startsWith("/")) {
+    addError(`${location}.icon`, "must be a root-relative public asset path");
+  }
+  for (const [evidenceIndex, evidence] of (detail.evidence ?? []).entries()) {
+    const evidenceLocation = `${location}.evidence[${evidenceIndex}]`;
+    if (!evidence.label) addError(`${evidenceLocation}.label`, "is required");
+    validateUrl(`${evidenceLocation}.url`, evidence.url);
+  }
+}
+
+for (const repositoryName of publicRepositoryNames) {
+  if (!directory.entries?.[repositoryName]) {
+    addError(`directory.entries.${repositoryName}`, "missing editorial record for public repository");
+  }
+}
+
 if (errors.length > 0) {
   console.error(`Registry validation failed with ${errors.length} error(s):`);
   for (const error of errors) console.error(`- ${error}`);
@@ -204,5 +252,6 @@ if (errors.length > 0) {
     return result;
   }, {});
   console.log(`Registry valid: ${repositories.entries.length} repository records.`);
+  console.log(`Public directory complete: ${Object.keys(directory.entries).length} editorial records.`);
   console.log(`Verification states: ${Object.entries(counts).map(([key, value]) => `${key}=${value}`).join(", ")}.`);
 }
