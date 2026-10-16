@@ -180,6 +180,35 @@ for (const [index, person] of (contributors.featured ?? []).entries()) {
   validateUrl(`${location}.github`, person.github);
   if (person.portfolio !== null) validateUrl(`${location}.portfolio`, person.portfolio);
   for (const [evidenceIndex, url] of (person.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
+  if (!Array.isArray(person.workRecords) || person.workRecords.length === 0) {
+    addError(`${location}.workRecords`, "requires at least one structured public outcome");
+  }
+  for (const [recordIndex, record] of (person.workRecords ?? []).entries()) {
+    const recordLocation = `${location}.workRecords[${recordIndex}]`;
+    if (!record.label || !record.role || !record.dateRange || !record.outcome) {
+      addError(recordLocation, "label, role, dateRange, and outcome are required");
+    }
+    for (const projectId of (record.projectIds ?? [])) {
+      if (!Object.hasOwn(directory.entries ?? {}, projectId)) {
+        addError(`${recordLocation}.projectIds`, `unknown canonical project ${projectId}`);
+      }
+    }
+    if (!Array.isArray(record.demonstratedSkills) || record.demonstratedSkills.length === 0) {
+      addError(`${recordLocation}.demonstratedSkills`, "requires at least one evidence-supported skill");
+    }
+    for (const evidenceIndex of (record.evidenceIndexes ?? [])) {
+      if (!Number.isInteger(evidenceIndex) || evidenceIndex < 0 || evidenceIndex >= (person.evidence?.length ?? 0)) {
+        addError(`${recordLocation}.evidenceIndexes`, `invalid evidence index ${evidenceIndex}`);
+      }
+    }
+    const attribution = record.reviewAttribution;
+    if (!attribution || !["named-reviewer", "repository-review-record", "not-publicly-attributed"].includes(attribution.status)) {
+      addError(`${recordLocation}.reviewAttribution.status`, "unknown review-attribution state");
+    }
+    if (attribution?.status === "named-reviewer" && !attribution.reviewer) {
+      addError(`${recordLocation}.reviewAttribution.reviewer`, "named-reviewer records require a reviewer");
+    }
+  }
 }
 
 validateUrl("people.correctionUrl", people.correctionUrl);

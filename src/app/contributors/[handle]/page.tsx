@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import contributors from "../../../../content/contributors.json";
+import { DIRECTORY_ENTRIES, familyPath } from "@/lib/directory";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ handle: string }> };
@@ -18,13 +19,17 @@ function getContributor(handle: string) {
   return contributors.featured.find((person) => person.handle === handle);
 }
 
+function getProjectRecord(projectId: string) {
+  return DIRECTORY_ENTRIES.find((entry) => entry.repository === projectId);
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { handle } = await params;
   const person = getContributor(handle);
   if (!person) return {};
   return createPageMetadata({
     title: `${person.name} — public contribution record`,
-    description: `${person.name}'s evidence-backed Elixpo contribution record for ${person.activeWindow}, with public outcomes, primary GitHub evidence, and profile links.`,
+    description: `${person.name}'s evidence-backed Elixpo contribution record for ${person.activeWindow}, including projects, role, demonstrated skills, review attribution, and primary GitHub evidence.`,
     path: `/contributors/${person.handle}`,
   });
 }
@@ -47,6 +52,8 @@ export default async function ContributorRecordPage({ params }: PageProps) {
       identifier: person.handle,
       url: canonicalUrl,
       sameAs: [person.github, ...(person.portfolio ? [person.portfolio] : [])],
+      knowsAbout: [...new Set(person.workRecords.flatMap((record) => record.demonstratedSkills))],
+      subjectOf: person.evidence.map((url) => ({ "@type": "WebPage", url })),
     },
   };
 
@@ -61,6 +68,24 @@ export default async function ContributorRecordPage({ params }: PageProps) {
     <section className="record-body">
       <article><p className="eyebrow">Public outcome</p><h2>What this record supports.</h2><p>{person.story}</p><p>The activity total comes from the dated Elixpo Chapter contributor snapshot. It provides selection context; the linked commits are the evidence for the described work.</p></article>
       <aside><p className="eyebrow">Profiles</p><a href={person.github} target="_blank" rel="noreferrer">GitHub profile <ArrowUpRight size={14} /></a>{person.portfolio && <a href={person.portfolio} target="_blank" rel="noreferrer">Portfolio on me.elixpo.com <ArrowUpRight size={14} /></a>}<a href={canonicalUrl}>Stable public record <ArrowUpRight size={14} /></a></aside>
+    </section>
+
+    <section className="contribution-work" aria-labelledby="structured-work-title">
+      <div className="section-heading split"><div><p className="eyebrow">Structured work record</p><h2 id="structured-work-title">Projects, role, outcome, and demonstrated skills.</h2></div><p>Each field is limited to what the linked public evidence supports. Missing reviewer attribution is shown explicitly rather than inferred.</p></div>
+      <div className="contribution-work-grid">{person.workRecords.map((record) => <article key={record.label}>
+        <div className="work-record-heading"><p className="eyebrow">{record.dateRange}</p><h3>{record.label}</h3><span>{record.role}</span></div>
+        <p>{record.outcome}</p>
+        <dl>
+          <div><dt>Projects</dt><dd>{record.projectIds.map((projectId) => {
+            const project = getProjectRecord(projectId);
+            if (!project || project.repository === "elixpo_chapter") return <span key={projectId}>{project?.name ?? projectId}</span>;
+            return <Link key={projectId} href={`${familyPath(project.family)}/${project.slug}`}>{project.name}</Link>;
+          })}</dd></div>
+          <div><dt>Demonstrated skills</dt><dd>{record.demonstratedSkills.map((skill) => <span key={skill}>{skill}</span>)}</dd></div>
+          <div><dt>Review attribution</dt><dd className="review-attribution"><b>{record.reviewAttribution.reviewer ?? "No individual reviewer recorded"}</b><small>{record.reviewAttribution.statement}</small></dd></div>
+        </dl>
+        <div className="work-evidence-links">{record.evidenceIndexes.map((evidenceIndex) => <a key={person.evidence[evidenceIndex]} href={person.evidence[evidenceIndex]} target="_blank" rel="noreferrer">Evidence {evidenceIndex + 1} <ArrowUpRight size={14} /></a>)}</div>
+      </article>)}</div>
     </section>
 
     <section className="record-evidence"><div className="section-heading split"><div><p className="eyebrow">Primary evidence</p><h2>Inspect the work directly.</h2></div><p>Evidence links point to the public source record. They are preserved independently from this summary so the claim can be checked.</p></div><div>{person.evidence.map((url, index) => <a key={url} href={url} target="_blank" rel="noreferrer"><span>{String(index + 1).padStart(2,"0")}</span><b>Chapter contribution evidence</b><small>{url}</small><ArrowUpRight size={16} /></a>)}</div></section>
