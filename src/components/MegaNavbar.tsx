@@ -9,6 +9,7 @@ import { ArrowUpRight, HeartHandshake, Menu, X } from "lucide-react";
 const links = [
   { label: "Projects", href: "/projects" },
   { label: "Research", href: "/research" },
+  { label: "Packages", href: "/packages" },
   { label: "Services", href: "/services" },
   { label: "People", href: "/contributors" },
   { label: "History", href: "/history" },

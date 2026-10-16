@@ -2,10 +2,14 @@
   "$schema": "./schemas/contributors.schema.json",
   "schemaVersion": 1,
   "lastVerified": "2026-10-16",
-  "methodology": "GitHub default-branch contributor totals across current public Elixpo repositories, with bots and the declared lead group excluded. Counts are evidence for selection, not a measure of human value.",
+  "methodology": "The snapshot uses GitHub's contributor listing for elixpo/elixpo_chapter, the master repository that preserves Chapter contributions. Declared leads and automation accounts are excluded before calculating the coverage floor. Counts are evidence for transparent selection, not a measure of human value.",
   "selectionPolicy": {
-    "basis": "A featured contributor must combine sustained public activity with at least one evidence-linked outcome that materially advanced an Elixpo project. Raw commit totals alone are not sufficient.",
-    "minimumObservedContributions": 50,
+    "basis": "At least 20 percent of the eligible human contributors in the Chapter snapshot are featured, ordered by observed contributions. Every entry also links a public outcome; raw totals are not presented as a measure of human value.",
+    "sourceRepository": "https://github.com/elixpo/elixpo_chapter",
+    "eligibleContributorCount": 49,
+    "minimumCoveragePercent": 20,
+    "minimumFeaturedCount": 10,
+    "minimumObservedContributions": 1,
     "reviewCadence": "Review at each major portal release and whenever the repository inventory changes materially.",
     "correctionUrl": "https://github.com/elixpo/elixpo/issues/new",
     "optOutUrl": "https://github.com/elixpo/elixpo/issues/new"
@@ -27,18 +31,18 @@
     {
       "handle": "karanray06",
       "name": "Karan Ray",
-      "observedContributions": 264,
+      "observedContributions": 68,
       "activeWindow": "March–September 2026",
       "story": "Contributed across the Chapter and multiple services, then continued as the independent maintainer of Member Project Kareixo.",
       "github": "https://github.com/karanray06",
       "portfolio": "https://me.elixpo.com/karan",
       "profileSource": "public-evidence-only",
-      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/719dcb484f0904f3c0b2349bd31de97e2dee573c", "https://github.com/elixpo/Kareixo/commit/723e55e5b4d74992d38e5aa2b3024cc72730a076"]
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/719dcb484f0904f3c0b2349bd31de97e2dee573c", "https://github.com/elixpo/elixpo_chapter/commit/9878e7542748aeacb5756ae909c5a77fb0056845"]
     },
     {
       "handle": "bhumikasudarshani-cmd",
       "name": "Bhumika Sudarshani",
-      "observedContributions": 67,
+      "observedContributions": 29,
       "activeWindow": "April–September 2026",
       "story": "Strengthened release automation and contributed across Accounts, LixBlogs, LixSketch, Open Source, Status, and the Chapter.",
       "github": "https://github.com/bhumikasudarshani-cmd",
@@ -49,13 +53,79 @@
     {
       "handle": "divyanshuj91",
       "name": "Divyanshu Jaiswal",
-      "observedContributions": 68,
+      "observedContributions": 29,
       "activeWindow": "June–September 2026",
       "story": "Worked across service interfaces, documentation, publishing, mail infrastructure, payouts, and the Chapter record.",
       "github": "https://github.com/divyanshuj91",
       "portfolio": null,
       "profileSource": "public-evidence-only",
-      "evidence": ["https://github.com/elixpo/accounts.elixpo/commit/01f5f36c4eab8f6e99db9f62dd50653627e1a678", "https://github.com/elixpo/blogs.elixpo/commit/d49b0c5cbd41b99814ac8979ba1ec36fbe78100f"]
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/d49b0c5cbd41b99814ac8979ba1ec36fbe78100f"]
+    },
+    {
+      "handle": "Senthil455",
+      "name": "Senthil Raja R",
+      "observedContributions": 24,
+      "activeWindow": "October 2026",
+      "story": "Strengthened public-service safety across collaboration, sessions, sitemap generation, content previews, and validation boundaries in the Chapter.",
+      "github": "https://github.com/Senthil455",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/7ee82ef69d3dc00dfdc502feedae96fa6cf515fb", "https://github.com/elixpo/elixpo_chapter/commit/95329b0e8ffdc91a96b54431473f072c9d1cf367"]
+    },
+    {
+      "handle": "shresthashim",
+      "name": "AsHim Shrestha",
+      "observedContributions": 23,
+      "activeWindow": "October 2025",
+      "story": "Worked across interface infrastructure, including PDF viewing, chat UI and API structure, timezone selection, and reusable DOM construction.",
+      "github": "https://github.com/shresthashim",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/746fe1684e55063cc7737b1149a48abe6a681c48", "https://github.com/elixpo/elixpo_chapter/commit/03cd63d27d3bef9fb8bf9302f6964586e032c813"]
+    },
+    {
+      "handle": "Itachi-1824",
+      "name": "Itachi",
+      "observedContributions": 22,
+      "activeWindow": "August–October 2025",
+      "story": "Built Discord integration for pull-request review and contributed the memory-core work used by the earlier Elixpo Chat experiment.",
+      "github": "https://github.com/Itachi-1824",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/be61f563284bfd503a072e91127d336a354e4ee9", "https://github.com/elixpo/elixpo_chapter/commit/245038e0918c8a9280be7403ca3570e2eaca7a9b"]
+    },
+    {
+      "handle": "dev-krish",
+      "name": "Krishnendu Dutta",
+      "observedContributions": 21,
+      "activeWindow": "May–August 2026",
+      "story": "Improved LixSketch Mermaid rendering so canvas output matches previews across themes, entity relationships, labels, arrows, and fills.",
+      "github": "https://github.com/dev-krish",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/36a1490d248db0cf153b8f97b85c699baa8bdcf2"]
+    },
+    {
+      "handle": "DeepSaha25",
+      "name": "Deep Saha",
+      "observedContributions": 17,
+      "activeWindow": "October 2025",
+      "story": "Reworked Chapter documentation for clearer setup, current runtime requirements, stronger structure, and a more reliable contributor entry point.",
+      "github": "https://github.com/DeepSaha25",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/b4e8109c8603b52bc55608624368589864a1d0d8", "https://github.com/elixpo/elixpo_chapter/commit/93ee6b22d54d10d5fd84807023177014dde7e2b4"]
+    },
+    {
+      "handle": "redac1ed",
+      "name": "redac1ed",
+      "observedContributions": 15,
+      "activeWindow": "August 2025",
+      "story": "Developed and refined the search-agent interface and behavior during an early Chapter contribution stream.",
+      "github": "https://github.com/redac1ed",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/fb8005ee3a8b6582107880d181c04203ff63aeb7", "https://github.com/elixpo/elixpo_chapter/commit/e9729e713cb0571d6ea25ec3307aed52a9586f85"]
     }
   ]
 }

@@ -53,7 +53,7 @@ export default function PackagesPage() {
     <header className="packages-hero">
       <div className="packages-hero-copy">
         <p className="eyebrow">Elixpo Packages</p>
-        <h1>Linux applications distributed through a signed package repository.</h1>
+        <h1>Packages, from source to <em>signed release.</em></h1>
         <p>Elixpo develops focused desktop utilities, publishes versioned Debian packages, and delivers stable updates through one shared APT source. Each application remains connected to its source, documentation, releases, and support history.</p>
         <div className="hero-actions">
           <a className="button primary" href={PACKAGE_DISTRIBUTION.website} target="_blank" rel="noreferrer">Open packages.elixpo.com <ArrowUpRight size={16} /></a>
@@ -71,20 +71,21 @@ export default function PackagesPage() {
 
     <section className="linux-catalog section-wrap" aria-labelledby="linux-applications">
       <div className="section-heading split">
-        <div><p className="eyebrow">Linux application catalog</p><h2 id="linux-applications">Install the application that matches your desktop task.</h2></div>
+        <div><p className="eyebrow">Maintained applications</p><h2 id="linux-applications">Install a documented Linux release.</h2></div>
         <p>The installers verify Elixpo’s repository key, register the shared APT source, and install the selected package. Normal system updates can then deliver later stable releases.</p>
       </div>
-      <div className="linux-package-list">
-        {LINUX_APPLICATIONS.map((item, index) => <article className={`linux-package linux-package-${item.slug}`} key={item.slug}>
-          <div className="linux-package-heading">
-            <span className="package-number">{String(index + 1).padStart(2, "0")}</span>
-            <Image src={item.icon} alt="" width={80} height={80} />
-            <div><p className="eyebrow">{item.category} · v{item.version}</p><h3><Link href={`/packages/${item.slug}`}>{item.name}</Link></h3><p>{item.summary}</p></div>
+      <div className="package-feature-grid">
+        {LINUX_APPLICATIONS.map((item, index) => <article className={`package-feature-card package-feature-${index + 1}`} key={item.slug}>
+          <div className="package-feature-art">
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {item.images[0] ? <Image src={item.images[0].src} alt={item.images[0].alt} width={920} height={620} /> : <div className="package-audio-art" aria-hidden="true"><i/><i/><i/><Terminal size={48}/></div>}
           </div>
-          {item.images.length > 0 ? <div className="package-screenshots">{item.images.map((image) => <Image key={image.src} src={image.src} alt={image.alt} width={920} height={620} />)}</div> : <div className="audio-diagram" aria-label="Illustration of ScreenBridge routing computer audio and microphone input"><span className="audio-source">Computer audio</span><i/><span className="audio-bridge">ScreenBridge</span><i/><span className="audio-target">Call or recording</span></div>}
-          <div className="linux-package-details">
-            <div><p className="eyebrow">Supported environments</p><p>{item.support}</p><ul>{item.capabilities.map((capability) => <li key={capability}>{capability}</li>)}</ul></div>
-            <div className="install-panel"><p><Terminal size={15}/> Install from Terminal</p><code>{item.install}</code><div><a href={item.page} target="_blank" rel="noreferrer">Package page <ArrowUpRight size={14}/></a><a href={item.source} target="_blank" rel="noreferrer">Source <ArrowUpRight size={14}/></a><a href={item.releases} target="_blank" rel="noreferrer">Releases <ArrowUpRight size={14}/></a></div></div>
+          <div className="package-feature-copy">
+            <div className="package-feature-title"><Image src={item.icon} alt="" width={58} height={58}/><div><p className="eyebrow">{item.category} · v{item.version}</p><h3>{item.name}</h3></div></div>
+            <p>{item.summary}</p>
+            <ul>{item.capabilities.slice(0,3).map((capability) => <li key={capability}>{capability}</li>)}</ul>
+            <div className="package-feature-install"><span><Terminal size={14}/> Install</span><code>{item.install}</code></div>
+            <div className="space-actions"><Link href={`/packages/${item.slug}`}>Package record <ArrowRight size={15}/></Link><a href={item.page} target="_blank" rel="noreferrer">Open package site <ArrowUpRight size={15}/></a></div>
           </div>
         </article>)}
       </div>

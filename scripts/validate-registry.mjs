@@ -101,6 +101,17 @@ const excludedContributorHandles = new Set([
   ...(contributors.excludedAutomationHandles ?? []),
 ]);
 if (!contributors.selectionPolicy?.basis) addError("contributors.selectionPolicy.basis", "is required");
+validateUrl("contributors.selectionPolicy.sourceRepository", contributors.selectionPolicy?.sourceRepository);
+const requiredFeaturedContributors = Math.ceil(
+  (contributors.selectionPolicy?.eligibleContributorCount ?? 0) *
+  (contributors.selectionPolicy?.minimumCoveragePercent ?? 0) / 100,
+);
+if (contributors.selectionPolicy?.minimumFeaturedCount !== requiredFeaturedContributors) {
+  addError("contributors.selectionPolicy.minimumFeaturedCount", `expected ${requiredFeaturedContributors} from the published population and coverage floor`);
+}
+if ((contributors.featured ?? []).length < requiredFeaturedContributors) {
+  addError("contributors.featured", `expected at least ${requiredFeaturedContributors} people to meet the published coverage floor`);
+}
 if (!Number.isInteger(contributors.selectionPolicy?.minimumObservedContributions) || contributors.selectionPolicy.minimumObservedContributions < 1) {
   addError("contributors.selectionPolicy.minimumObservedContributions", "expected a positive integer");
 }

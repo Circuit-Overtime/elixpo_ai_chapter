@@ -13,9 +13,13 @@
     "selectionPolicy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["basis", "minimumObservedContributions", "reviewCadence", "correctionUrl", "optOutUrl"],
+      "required": ["basis", "sourceRepository", "eligibleContributorCount", "minimumCoveragePercent", "minimumFeaturedCount", "minimumObservedContributions", "reviewCadence", "correctionUrl", "optOutUrl"],
       "properties": {
         "basis": { "type": "string", "minLength": 40 },
+        "sourceRepository": { "type": "string", "format": "uri" },
+        "eligibleContributorCount": { "type": "integer", "minimum": 1 },
+        "minimumCoveragePercent": { "type": "number", "minimum": 1, "maximum": 100 },
+        "minimumFeaturedCount": { "type": "integer", "minimum": 1 },
         "minimumObservedContributions": { "type": "integer", "minimum": 1 },
         "reviewCadence": { "type": "string", "minLength": 20 },
         "correctionUrl": { "type": "string", "format": "uri" },
