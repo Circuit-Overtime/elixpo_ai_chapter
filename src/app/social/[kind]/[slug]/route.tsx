@@ -19,10 +19,13 @@ export function generateStaticParams() {
   const directory = (["project", "research", "service"] as const).flatMap((kind) =>
     getDirectoryEntries(kind).map(({ slug }) => ({ kind, slug })),
   );
-  return [...directory, ...PACKAGE_RECORDS.map(({ slug }) => ({ kind: "package", slug }))];
+  return [{ kind: "research", slug: "index" }, ...directory, ...PACKAGE_RECORDS.map(({ slug }) => ({ kind: "package", slug }))];
 }
 
 function findRecord(kind: string, slug: string): SocialRecord | undefined {
+  if (kind === "research" && slug === "index") {
+    return { eyebrow: "Elixpo Open Research", title: "Research published with its source, evidence, and current status.", description: "Explore papers, experiments, released artifacts, public demonstrations, citations, and reproducibility records from Elixpo.", status: `${getDirectoryEntries("research").length} documented records`, accent: "#345fc3", wash: "#dce7ff" };
+  }
   if (kind === "package") {
     const record = getPackageRecord(slug);
     if (!record) return;

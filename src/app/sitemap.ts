@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: path === "/" ? "weekly" as const : "monthly" as const,
     priority: path === "/" ? 1 : path === "/projects" || path === "/research" || path === "/services" ? 0.9 : 0.7,
   }));
-  const directoryRoutes = DIRECTORY_ENTRIES.filter((entry) => entry.repository !== "elixpo_chapter").map((entry) => ({
+  const directoryRoutes = DIRECTORY_ENTRIES.filter((entry) => entry.repository !== "elixpo_chapter" && entry.family !== "research").map((entry) => ({
     url: absoluteUrl(`${familyPath(entry.family)}/${entry.slug}`),
     changeFrequency: entry.lifecycle === "archived" ? "yearly" as const : "monthly" as const,
     priority: entry.lifecycle === "archived" ? 0.4 : 0.7,

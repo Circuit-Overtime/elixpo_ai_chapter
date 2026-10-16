@@ -327,13 +327,13 @@ for (const field of ["verificationRule", "correctionRule", "fraudRule", "withdra
 validateUrl("people.correctionUrl", people.correctionUrl);
 validateUrl("people.majorContributors.url", people.majorContributors?.url);
 if (people.majorContributors?.source !== "contributors.json") addError("people.majorContributors.source", "must reference contributors.json");
-for (const roleCategory of ["currentTeam", "projectMaintainers", "majorContributors", "alumni", "advisors"]) {
+for (const roleCategory of ["currentTeam", "projectMaintainers", "researchContributors", "majorContributors", "alumni", "advisors"]) {
   if (typeof people.roleDefinitions?.[roleCategory] !== "string" || people.roleDefinitions[roleCategory].trim().length < 20) {
     addError(`people.roleDefinitions.${roleCategory}`, "requires a plain-language definition");
   }
 }
 const peopleHandles = new Set();
-for (const category of ["currentTeam", "projectMaintainers", "alumni", "advisors"]) {
+for (const category of ["currentTeam", "projectMaintainers", "researchContributors", "alumni", "advisors"]) {
   if (!Array.isArray(people[category])) {
     addError(`people.${category}`, "must be an array");
     continue;

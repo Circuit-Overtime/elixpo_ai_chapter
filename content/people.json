@@ -7,6 +7,7 @@
   "roleDefinitions": {
     "currentTeam": "People with continuing organization-level responsibility recorded in Elixpo's public materials.",
     "projectMaintainers": "People accountable for the direction, review, releases, and support of a named project; this is narrower than organization membership.",
+    "researchContributors": "People with attributable work in Elixpo research repositories who are not thereby presented as organization leads, employees, or formal reviewers.",
     "majorContributors": "People recognized through attributable public outcomes under the separate evidence-led contributor policy, excluding declared leads and automation.",
     "alumni": "People whose previously verified Elixpo role has ended; an alumni record never implies a reason for departure.",
     "advisors": "People with an explicitly acknowledged advisory relationship; informal help or one-time review does not create this role."
@@ -47,6 +48,23 @@
     }
   ],
   "projectMaintainers": [],
+  "researchContributors": [
+    {
+      "handle": "nihal-gazi",
+      "name": "Nihal Gazi",
+      "role": "Research contributor",
+      "summary": "Contributes to MonoDiffuse and Wozformer research work, including early research material, documentation, diagrams, and LaTeX publication fixes.",
+      "github": "https://github.com/nihal-gazi",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "rolePeriod": { "start": null, "end": null, "status": "current", "precision": "not-publicly-established" },
+      "evidence": [
+        "https://github.com/elixpo/monodiffuse/commit/109bda407938e8287ceca9d58d86d6f9d456f32f",
+        "https://github.com/elixpo/wozformer/commit/ab80d5d90da2bc4e39598d35f6827e2dd077a8f1"
+      ],
+      "relatedResearch": ["monodiffuse", "wozformer"]
+    }
+  ],
   "majorContributors": {
     "source": "contributors.json",
     "url": "https://elixpo.com/contributors"

@@ -1,14 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
 import { ProjectMark } from "@/components/ProjectMark";
 import { getDirectoryEntries } from "@/lib/directory";
 import { LIVE_RESEARCH_DEMOS, RESEARCH_LAST_VERIFIED, RESEARCH_RECORDS } from "@/lib/research";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
+import people from "../../../content/people.json";
 
 const pageMetadata = createPageMetadata({
   title: "Open research, experiments, and reproducibility",
   description: "Explore Elixpo research with papers, source code, lifecycle status, models, and reproducibility records, led by OctaBit, OreoLook, and MonoDiffuse.",
   path: "/research",
+  socialImage: "/social/research/index",
 });
 export const metadata = {
   ...pageMetadata,
@@ -25,6 +28,20 @@ const research = [...getDirectoryEntries("research")].sort((left, right) => {
   return (leftRank === -1 ? 99 : leftRank) - (rightRank === -1 ? 99 : rightRank);
 });
 const leadingResearch = leadingResearchSlugs.map((slug) => research.find((entry) => entry.slug === slug)).filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+const researchByAuthor = new Map<string, { slug: string; title: string }[]>();
+for (const record of RESEARCH_RECORDS) for (const author of record.authors) researchByAuthor.set(author.name, [...(researchByAuthor.get(author.name) ?? []), { slug: record.slug, title: record.title }]);
+const teamResearchers = people.currentTeam.flatMap((person) => {
+  const records = researchByAuthor.get(person.name);
+  return records?.length ? [{ ...person, records }] : [];
+});
+const researchContributors = people.researchContributors.map((person) => ({
+  ...person,
+  records: person.relatedResearch.flatMap((slug) => {
+    const record = RESEARCH_RECORDS.find((entry) => entry.slug === slug);
+    return record ? [{ slug: record.slug, title: record.title }] : [];
+  }),
+}));
+const researchPeople = [...teamResearchers, ...researchContributors];
 export default function ResearchPage() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -36,14 +53,14 @@ export default function ResearchPage() {
         url: "https://elixpo.com/research",
         mainEntity: {
           "@type": "ItemList",
-          itemListElement: research.map((entry, index) => ({ "@type": "ListItem", position: index + 1, name: entry.name, url: `https://elixpo.com/research/${entry.slug}` })),
+          itemListElement: research.map((entry, index) => ({ "@type": "ListItem", position: index + 1, name: entry.name, url: `https://research.elixpo.com/${entry.slug}` })),
         },
       },
       ...RESEARCH_RECORDS.map((record) => ({
         "@type": record.researchStatus === "technical-report" ? "TechArticle" : record.paperUrl ? "ScholarlyArticle" : "ResearchProject",
         name: record.title,
         description: record.abstract,
-        url: `https://elixpo.com/research/${record.slug}`,
+        url: `https://research.elixpo.com/${record.slug}`,
         codeRepository: record.codeUrl,
         ...(record.paperUrl ? { sameAs: record.paperUrl } : {}),
         ...(record.releasedAt ? { datePublished: record.releasedAt } : {}),
@@ -82,6 +99,11 @@ export default function ResearchPage() {
           <div className="leading-research-copy"><p className="eyebrow">{entry.focus.slice(0, 2).join(" · ")}</p><h3>{entry.name}</h3><p>{entry.summary}</p><span>Open research record <ArrowRight size={15}/></span></div>
         </Link>)}
       </div>
+    </section>
+
+    <section className="research-people section-wrap" aria-labelledby="research-people">
+      <div className="section-heading split"><div><p className="eyebrow">Research people</p><h2 id="research-people">The people connecting research to implementation.</h2></div><p>Each person appears through a verified Elixpo research role, authorship record, or attributable repository work. This is a public record of contribution, not a ranking of researchers.</p></div>
+      <div className="research-people-grid">{researchPeople.map((person, index) => <article key={person.handle}><div className={`research-person-mark research-person-mark-${index + 1}`} aria-hidden="true"><Image src={`https://github.com/${person.handle}.png`} alt="" width={128} height={128} unoptimized /><i/><i/></div><div className="research-person-copy"><p className="eyebrow">{person.role}</p><h3>{person.name}</h3><p>{person.summary}</p><div className="research-person-work"><span>Related research</span>{person.records.map((record) => <Link href={`/research/${record.slug}`} key={record.slug}>{record.title} <ArrowRight size={13}/></Link>)}</div><div className="research-person-links">{person.portfolio && <a href={person.portfolio}>Portfolio <ArrowUpRight size={13}/></a>}<a href={person.github}>GitHub <ArrowUpRight size={13}/></a></div></div></article>)}</div>
     </section>
 
     <section className="research-spaces section-wrap" aria-labelledby="live-experiments">

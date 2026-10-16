@@ -6,7 +6,7 @@ import { serializeJsonLd } from "@/lib/seo";
 import { ProjectMark } from "@/components/ProjectMark";
 
 export function ResearchRecordPage({ entry, record }: { entry: DirectoryEntry; record: ResearchRecord }) {
-  const canonicalUrl = `https://elixpo.com/research/${entry.slug}`;
+  const canonicalUrl = `https://research.elixpo.com/${entry.slug}`;
   const journalTitle = "journalTitle" in record ? record.journalTitle : null;
   const volume = "volume" in record ? record.volume : null;
   const issue = "issue" in record ? record.issue : null;
