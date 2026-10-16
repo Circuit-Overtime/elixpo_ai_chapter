@@ -12,7 +12,7 @@
     "Show and tell",
     "Q&A",
     "Polls",
-    "Chapter Proposals",
+    "Chapter Proposal",
     "Research",
     "Service Feedback"
   ],
@@ -20,6 +20,8 @@
   "refreshSeconds": 900,
   "moderation": {
     "excludeLocked": true,
+    "excludedDiscussionNumbers": [],
+    "excludedAuthors": [],
     "featuredRequiresEditorialSelection": true,
     "fallbackMessage": "The live discussion feed is temporarily unavailable. GitHub remains the canonical community record."
   }

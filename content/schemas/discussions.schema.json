@@ -20,9 +20,11 @@
     "moderation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["excludeLocked", "featuredRequiresEditorialSelection", "fallbackMessage"],
+      "required": ["excludeLocked", "excludedDiscussionNumbers", "excludedAuthors", "featuredRequiresEditorialSelection", "fallbackMessage"],
       "properties": {
         "excludeLocked": { "type": "boolean" },
+        "excludedDiscussionNumbers": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
+        "excludedAuthors": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
         "featuredRequiresEditorialSelection": { "const": true },
         "fallbackMessage": { "type": "string", "minLength": 40 }
       }

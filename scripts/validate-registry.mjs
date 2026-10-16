@@ -89,6 +89,12 @@ if (discussions.sourceRepository !== "https://github.com/elixpo/elixpo") {
 if (discussions.moderation?.featuredRequiresEditorialSelection !== true) {
   addError("discussions.moderation.featuredRequiresEditorialSelection", "must remain true");
 }
+if (!Array.isArray(discussions.moderation?.excludedDiscussionNumbers)) {
+  addError("discussions.moderation.excludedDiscussionNumbers", "must be an auditable list");
+}
+if (!Array.isArray(discussions.moderation?.excludedAuthors)) {
+  addError("discussions.moderation.excludedAuthors", "must be an auditable list");
+}
 
 if (
   sponsorship.organizationAcceptsFunds !== false ||
