@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import contributors from "../../content/contributors.json";
 import history from "../../content/history.json";
+import people from "../../content/people.json";
 import { DIRECTORY_ENTRIES, familyPath, getDirectoryEntries } from "@/lib/directory";
 import { ELIXPO_PACKAGES } from "@/lib/packages";
 import { ProjectMark } from "@/components/ProjectMark";
@@ -11,11 +12,7 @@ const featured = ["blogs", "lixsketch", "oreo", "oreolook", "kareixo", "lixrl"]
   .map((slug) => DIRECTORY_ENTRIES.find((entry) => entry.slug === slug))
   .filter((entry): entry is (typeof DIRECTORY_ENTRIES)[number] => Boolean(entry));
 const featuredContributors = [...contributors.featured].sort((a, b) => b.observedContributions - a.observedContributions);
-const leadDevelopers = [
-  { handle: "Circuit-Overtime", name: "Ayushman Bhattacharya", role: "Project lead and maintainer", summary: "Coordinates Elixpo’s technical direction, public releases, research surfaces, and organization-wide engineering work." },
-  { handle: "ez-vivek", name: "Vivek Yadav", role: "Lead developer", summary: "Works across Chapter engineering and project delivery, helping move shared implementation work into public releases." },
-  { handle: "anwe-ch", name: "Anwesha Chakraborty", role: "Research and engineering lead", summary: "Connects open research with implementation work through published studies, technical review, and project development." },
-];
+const leadDevelopers = people.currentTeam;
 const counts = {
   project: getDirectoryEntries("project").length,
   research: getDirectoryEntries("research").length,
@@ -74,6 +71,7 @@ export function StoryHome() {
               <div className="lead-developer-copy"><p className="eyebrow">{person.role}</p><h4>{person.name}</h4><p>{person.summary}</p><b>@{person.handle} <ArrowUpRight size={14}/></b></div>
             </a>)}
           </div>
+          <Link className="text-link" href="/people">See roles, evidence, and record boundaries <ArrowRight size={15} /></Link>
         </div>
       </section>
 

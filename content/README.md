@@ -13,6 +13,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `licensing.json` — approved defaults for new work and migration safeguards for existing work.
 - `sponsorship.json` — monetary no-solicitation boundary, project-owned funding separation, and in-kind event-partnership rules.
 - `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.
+- `people.json` — current organization roles, role definitions, evidence boundaries, and explicit maintainer, alumni, and advisor records.
 - `discussions.json` — verified GitHub Discussions source, eligible public categories, refresh policy, and editorial-feature boundary.
 - `history.json` — institutional timeline copy, designed to grow only through verifiable milestones.
 - `brand.json` — canonical public asset location, visual direction, palette, source inventory, duplicate audit, migration exclusions, and branding-migration state.

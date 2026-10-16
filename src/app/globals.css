@@ -115,6 +115,11 @@ svg { transition: transform .2s ease; }
 .lead-developer-copy h4 { margin: 0; font-size: clamp(1.7rem,3vw,2.7rem); letter-spacing: -.05em; }
 .lead-developer-copy > p:not(.eyebrow) { min-height: 105px; color: var(--muted); line-height: 1.6; }
 .lead-developer-copy b { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--leaf); font-size: .75rem; }
+.people-current-team { margin-bottom: 2rem; }
+.lead-developer-copy > small { display: block; min-height: 2.6rem; margin: 1rem 0; color: var(--muted); font: .62rem/1.5 var(--font-ui-mono); text-transform: uppercase; letter-spacing: .05em; }
+.people-role-links { display: grid; }
+.people-role-links a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .72rem 0; border-top: 1px solid var(--line); color: var(--leaf); font-size: .72rem; font-weight: 700; }
+.people-boundaries { margin-top: 5rem; }
 .chapter-flow ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--line); }
 .chapter-flow li { min-height: 230px; padding: 1.5rem 1.5rem 1.5rem 0; border-right: 1px solid var(--line); }
 .chapter-flow li + li { padding-left: 1.5rem; }

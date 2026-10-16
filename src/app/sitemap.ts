@@ -12,6 +12,7 @@ const ROUTES = [
   "/research",
   "/services",
   "/contributors",
+  "/people",
   "/history",
   "/chapter",
   "/partnerships",

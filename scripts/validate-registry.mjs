@@ -12,7 +12,7 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, history, brand, discussions, brandProvenance] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, people, history, brand, discussions, brandProvenance] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
@@ -22,6 +22,7 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
   readJson("content/licensing.json"),
   readJson("content/sponsorship.json"),
   readJson("content/contributors.json"),
+  readJson("content/people.json"),
   readJson("content/history.json"),
   readJson("content/brand.json"),
   readJson("content/discussions.json"),
@@ -62,7 +63,7 @@ if (research.schemaVersion !== organization.schemaVersion) {
 if (sponsorship.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "sponsorship and organization versions must match");
 }
-for (const [name, record] of Object.entries({ contributors, history, brand, discussions })) {
+for (const [name, record] of Object.entries({ contributors, people, history, brand, discussions })) {
   if (record.schemaVersion !== organization.schemaVersion) {
     addError("schemaVersion", `${name} and organization versions must match`);
   }
@@ -77,6 +78,7 @@ if (!isDate(research.lastVerified)) addError("research.lastVerified", "expected 
 if (!isDate(licensing.lastVerified)) addError("licensing.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(people.lastVerified)) addError("people.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(history.lastVerified)) addError("history.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.lastVerified)) addError("brand.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.audit?.auditedAt)) addError("brand.audit.auditedAt", "expected YYYY-MM-DD");
@@ -168,6 +170,40 @@ for (const [index, person] of (contributors.featured ?? []).entries()) {
   validateUrl(`${location}.github`, person.github);
   if (person.portfolio !== null) validateUrl(`${location}.portfolio`, person.portfolio);
   for (const [evidenceIndex, url] of (person.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
+}
+
+validateUrl("people.correctionUrl", people.correctionUrl);
+validateUrl("people.majorContributors.url", people.majorContributors?.url);
+if (people.majorContributors?.source !== "contributors.json") addError("people.majorContributors.source", "must reference contributors.json");
+for (const roleCategory of ["currentTeam", "projectMaintainers", "majorContributors", "alumni", "advisors"]) {
+  if (typeof people.roleDefinitions?.[roleCategory] !== "string" || people.roleDefinitions[roleCategory].trim().length < 20) {
+    addError(`people.roleDefinitions.${roleCategory}`, "requires a plain-language definition");
+  }
+}
+const peopleHandles = new Set();
+for (const category of ["currentTeam", "projectMaintainers", "alumni", "advisors"]) {
+  if (!Array.isArray(people[category])) {
+    addError(`people.${category}`, "must be an array");
+    continue;
+  }
+  for (const [index, person] of people[category].entries()) {
+    const location = `people.${category}[${index}]`;
+    if (!person.handle || !person.name || !person.role || !person.summary) addError(location, "handle, name, role, and summary are required");
+    const scopedHandle = `${category}:${person.handle.toLowerCase()}`;
+    if (peopleHandles.has(scopedHandle)) addError(`${location}.handle`, "duplicate handle within role category");
+    peopleHandles.add(scopedHandle);
+    validateUrl(`${location}.github`, person.github);
+    if (person.portfolio !== null) validateUrl(`${location}.portfolio`, person.portfolio);
+    if (!["public-evidence-only", "consented"].includes(person.profileSource)) addError(`${location}.profileSource`, "unknown value");
+    if (!["current", "ended"].includes(person.rolePeriod?.status)) addError(`${location}.rolePeriod.status`, "unknown value");
+    if (!["verified-day", "verified-month", "verified-year", "not-publicly-established"].includes(person.rolePeriod?.precision)) addError(`${location}.rolePeriod.precision`, "unknown value");
+    if (person.rolePeriod?.start !== null && !isDate(person.rolePeriod?.start)) addError(`${location}.rolePeriod.start`, "expected YYYY-MM-DD or null");
+    if (person.rolePeriod?.end !== null && !isDate(person.rolePeriod?.end)) addError(`${location}.rolePeriod.end`, "expected YYYY-MM-DD or null");
+    if (person.rolePeriod?.status === "current" && person.rolePeriod?.end !== null) addError(`${location}.rolePeriod.end`, "current roles cannot have an end date");
+    if (person.rolePeriod?.status === "ended" && person.rolePeriod?.end === null) addError(`${location}.rolePeriod.end`, "ended roles require an end date");
+    if (!Array.isArray(person.evidence) || person.evidence.length === 0) addError(`${location}.evidence`, "at least one public record is required");
+    for (const [evidenceIndex, url] of (person.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
+  }
 }
 
 for (const [index, milestone] of (history.entries ?? []).entries()) {
