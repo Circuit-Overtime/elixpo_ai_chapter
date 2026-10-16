@@ -2,7 +2,7 @@
   "$schema": "./schemas/history.schema.json",
   "schemaVersion": 1,
   "lastVerified": "2026-10-16",
-  "methodology": "Milestones are included only when a repository, release, paper, registry decision, or other public primary record supports the wording. Repository creation proves that a repository entered the GitHub record; it does not by itself prove a product launch. Date precision is stated for every entry.",
+  "methodology": "Milestones are included only when a repository, release, paper, merged pull request, registry decision, or other public record supports the wording. Repository creation proves that a repository entered the GitHub record; it does not by itself prove a product launch. Organization-reported chronology is identified as approximate when the surviving record does not establish an exact date. Date precision is stated for every entry.",
   "entries": [
     {
       "period": "26 December 2023",
@@ -29,6 +29,22 @@
       "evidence": [{ "label": "Elixpo Chapter repository", "url": "https://github.com/elixpo/elixpo_chapter" }]
     },
     {
+      "period": "October 2024",
+      "datePrecision": "verified-month",
+      "title": "Elixpo participates in its first recorded Hacktoberfest",
+      "description": "Elixpo maintainers open the Chapter to Hacktoberfest work, apply the programme labels, review submissions, and record accepted changes. Three Hacktoberfest-labelled pull requests are merged during the month; the record supports maintainer-led participation, not an official role within the Hacktoberfest programme itself.",
+      "kind": "stewardship",
+      "evidence": [{ "label": "2024 Hacktoberfest pull requests", "url": "https://github.com/elixpo/elixpo_chapter/pulls?q=is%3Apr+is%3Amerged+label%3Ahacktoberfest+merged%3A2024-10-01..2024-10-31" }, { "label": "Accepted pull request 30", "url": "https://github.com/elixpo/elixpo_chapter/pull/30" }]
+    },
+    {
+      "period": "2024 onward",
+      "datePrecision": "approximate",
+      "title": "The Pollinations relationship becomes part of Elixpo's infrastructure story",
+      "description": "Elixpo records 2024 as the beginning of its relationship with Pollinations.AI and currently identifies Pollinations as an infrastructure partner. The surviving public record verifies the partnership and later shared infrastructure, but does not establish an exact 2024 start day, so this date remains organization-reported and approximate.",
+      "kind": "systems",
+      "evidence": [{ "label": "Elixpo organization record", "url": "https://github.com/elixpo" }, { "label": "Pollinations-hosted search.elixpo", "url": "https://github.com/pollinations/search.elixpo" }]
+    },
+    {
       "period": "6 March 2025",
       "datePrecision": "verified-day",
       "title": "A versioned Chapter release is published",
@@ -39,10 +55,18 @@
     {
       "period": "June 2025",
       "datePrecision": "verified-month",
-      "title": "OctaBit becomes a published research record",
-      "description": "The RISC-style eight-bit breadboard computer is documented in a journal paper alongside its public implementation, schematics, component notes, and EEPROM tooling. The portal records the paper's stated venue without implying an independently verified peer-review process.",
+      "title": "Research becomes a public Elixpo workstream through OctaBit",
+      "description": "The RISC-style eight-bit breadboard computer is documented in a journal paper alongside its public implementation, schematics, component notes, and EEPROM tooling. It establishes the first surviving published research record in the Elixpo timeline; the portal records the paper's stated venue without implying an independently verified peer-review process.",
       "kind": "research",
       "evidence": [{ "label": "Published OctaBit paper", "url": "https://artefacts-discovery.researcher.life/full_text/DA-2/32/326151b325b83d9cad2c965f7146b37b/full_text/6dd33d2ab3e8a75dd7c06626d2651050.pdf" }, { "label": "OctaBit research dossier", "url": "https://elixpo.com/research/octabit" }]
+    },
+    {
+      "period": "October 2025",
+      "datePrecision": "verified-month",
+      "title": "A second Hacktoberfest opens a much larger contribution cycle",
+      "description": "The Chapter merges 47 Hacktoberfest-labelled pull requests from 24 GitHub accounts during October. Maintainers administer the repository programme by preparing work, reviewing submissions, applying acceptance labels, and merging eligible changes; the resulting record marks Elixpo's shift to sustained outside contribution at scale.",
+      "kind": "growth",
+      "evidence": [{ "label": "2025 Hacktoberfest pull requests", "url": "https://github.com/elixpo/elixpo_chapter/pulls?q=is%3Apr+is%3Amerged+label%3Ahacktoberfest+merged%3A2025-10-01..2025-10-31" }, { "label": "Accepted contribution example", "url": "https://github.com/elixpo/elixpo_chapter/pull/236" }]
     },
     {
       "period": "February–June 2026",
@@ -51,6 +75,14 @@
       "description": "Repositories for LixBlogs, LixSketch, member portfolios, Accounts, Lixrl, Oreo, Payouts, mail, administration, and service status are added to the organization. Their creation dates verify when they entered this record, not necessarily when every underlying project first began.",
       "kind": "growth",
       "evidence": [{ "label": "Elixpo repositories", "url": "https://github.com/orgs/elixpo/repositories" }, { "label": "Current service directory", "url": "https://elixpo.com/services" }]
+    },
+    {
+      "period": "2026",
+      "datePrecision": "verified-year",
+      "title": "Community support becomes a documented in-kind programme",
+      "description": "Elixpo formalizes event partnerships for stickers, artwork, social credit, and short project introductions, and publishes the terms openly. This programme is non-monetary: Elixpo does not currently solicit, accept, hold, or route organization-level sponsorship funds, and support cannot purchase selection, research outcomes, contributor credit, or governance authority.",
+      "kind": "stewardship",
+      "evidence": [{ "label": "Community partnership programme", "url": "https://elixpo.com/partnerships" }, { "label": "Canonical sponsorship policy", "url": "https://github.com/elixpo/elixpo/blob/main/content/sponsorship.json" }]
     },
     {
       "period": "12 August 2026",
