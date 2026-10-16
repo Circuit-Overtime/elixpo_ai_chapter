@@ -21,6 +21,7 @@ const counts = {
   research: getDirectoryEntries("research").length,
   service: getDirectoryEntries("service").length,
 };
+const yearsSinceFounded = new Date().getUTCFullYear() - 2023;
 
 export function StoryHome() {
   return (
@@ -46,6 +47,11 @@ export function StoryHome() {
             </div>
           </div>
         </div>
+        <aside className="hero-tenure" aria-label={`${yearsSinceFounded} years of Elixpo since 2023`}>
+          <span>OPEN SINCE</span>
+          <strong>{yearsSinceFounded}<sup>+</sup></strong>
+          <p>years of projects, research, releases, and public engineering since 2023</p>
+        </aside>
       </section>
 
       <section className="story-statement section-wrap">

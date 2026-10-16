@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/discussions.schema.json",
+  "title": "Elixpo public discussion source",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "lastVerified", "statusOwner", "sourceRepository", "organizationUrl", "apiUrl", "status", "eligibleCategories", "featuredDiscussionNumbers", "refreshSeconds", "moderation"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "lastVerified": { "type": "string", "format": "date" },
+    "statusOwner": { "type": "string", "minLength": 1 },
+    "sourceRepository": { "type": "string", "format": "uri" },
+    "organizationUrl": { "type": "string", "format": "uri" },
+    "apiUrl": { "type": "string", "format": "uri" },
+    "status": { "enum": ["active", "paused", "disabled"] },
+    "eligibleCategories": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "featuredDiscussionNumbers": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
+    "refreshSeconds": { "type": "integer", "minimum": 300 },
+    "moderation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["excludeLocked", "featuredRequiresEditorialSelection", "fallbackMessage"],
+      "properties": {
+        "excludeLocked": { "type": "boolean" },
+        "featuredRequiresEditorialSelection": { "const": true },
+        "fallbackMessage": { "type": "string", "minLength": 40 }
+      }
+    }
+  }
+}

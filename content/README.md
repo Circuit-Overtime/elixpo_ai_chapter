@@ -13,6 +13,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `licensing.json` — approved defaults for new work and migration safeguards for existing work.
 - `sponsorship.json` — monetary no-solicitation boundary, project-owned funding separation, and in-kind event-partnership rules.
 - `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.
+- `discussions.json` — verified GitHub Discussions source, eligible public categories, refresh policy, and editorial-feature boundary.
 - `history.json` — institutional timeline copy, designed to grow only through verifiable milestones.
 - `brand.json` — canonical public asset location, visual direction, palette, and branding-migration state.
 - `schemas/project-manifest.schema.json` — pilot contract for repository-owned `.elixpo/project.yml` manifests.

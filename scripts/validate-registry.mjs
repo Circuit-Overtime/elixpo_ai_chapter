@@ -12,7 +12,7 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, history, brand] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, history, brand, discussions] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
@@ -24,6 +24,7 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
   readJson("content/contributors.json"),
   readJson("content/history.json"),
   readJson("content/brand.json"),
+  readJson("content/discussions.json"),
 ]);
 
 const errors = [];
@@ -60,7 +61,7 @@ if (research.schemaVersion !== organization.schemaVersion) {
 if (sponsorship.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "sponsorship and organization versions must match");
 }
-for (const [name, record] of Object.entries({ contributors, history, brand })) {
+for (const [name, record] of Object.entries({ contributors, history, brand, discussions })) {
   if (record.schemaVersion !== organization.schemaVersion) {
     addError("schemaVersion", `${name} and organization versions must match`);
   }
@@ -77,6 +78,17 @@ if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "exp
 if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(history.lastVerified)) addError("history.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.lastVerified)) addError("brand.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
+
+validateUrl("discussions.sourceRepository", discussions.sourceRepository);
+validateUrl("discussions.organizationUrl", discussions.organizationUrl);
+validateUrl("discussions.apiUrl", discussions.apiUrl);
+if (discussions.sourceRepository !== "https://github.com/elixpo/elixpo") {
+  addError("discussions.sourceRepository", "must identify the repository currently backing organization Discussions");
+}
+if (discussions.moderation?.featuredRequiresEditorialSelection !== true) {
+  addError("discussions.moderation.featuredRequiresEditorialSelection", "must remain true");
+}
 
 if (
   sponsorship.organizationAcceptsFunds !== false ||

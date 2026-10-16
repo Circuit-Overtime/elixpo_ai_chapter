@@ -1,0 +1,18 @@
+{
+  "$schema": "./schemas/discussions.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "statusOwner": "elixpo",
+  "sourceRepository": "https://github.com/elixpo/elixpo",
+  "organizationUrl": "https://github.com/orgs/elixpo/discussions",
+  "apiUrl": "https://api.github.com/repos/elixpo/elixpo/discussions",
+  "status": "active",
+  "eligibleCategories": ["Announcements", "Show and tell", "Q&A", "Polls"],
+  "featuredDiscussionNumbers": [],
+  "refreshSeconds": 900,
+  "moderation": {
+    "excludeLocked": true,
+    "featuredRequiresEditorialSelection": true,
+    "fallbackMessage": "The live discussion feed is temporarily unavailable. GitHub remains the canonical community record."
+  }
+}

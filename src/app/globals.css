@@ -83,6 +83,10 @@ svg { transition: transform .2s ease; }
 .hero-data dt { color: rgba(255,255,255,.62); font-size: .68rem; }
 .hero-data > p { margin: 0; color: rgba(255,255,255,.62); font-size: .68rem; white-space: nowrap; }
 .hero-data > p span { margin-right: .5rem; color: #8be0b4; font: 650 .62rem var(--font-ui-mono); letter-spacing: .1em; }
+.hero-tenure { position: absolute; z-index: 3; width: 265px; right: clamp(2rem,7vw,7rem); top: 45%; padding: 1.4rem 0 0 1.4rem; border-top: 1px solid rgba(255,255,255,.35); border-left: 1px solid rgba(255,255,255,.35); color: white; }
+.hero-tenure > span { color: #8be0b4; font: 650 .63rem var(--font-ui-mono); letter-spacing: .15em; }
+.hero-tenure strong { display: block; margin: .8rem 0 .6rem; font-size: 6.8rem; line-height: .8; letter-spacing: -.09em; }.hero-tenure sup { margin-left: .08em; color: #efb37a; font: 500 .28em var(--font-ui-mono); vertical-align: top; }
+.hero-tenure p { max-width: 220px; margin: 0; color: rgba(255,255,255,.7); font-size: .76rem; line-height: 1.55; }
 
 .story-statement { border-bottom: 1px solid var(--line); }
 .story-statement h2 { max-width: 1120px; font-size: clamp(2.7rem,5vw,4.7rem); }
@@ -616,6 +620,7 @@ svg { transition: transform .2s ease; }
   .nav-links.mobile-open .mobile-sponsor-link { display: flex; align-items: center; justify-content: space-between; margin-top: .35rem; background: #e76043; color: white; }
   .hero-copy { grid-template-columns: 1fr; }
   .hero-identity { display: none; }
+  .hero-tenure { display: none; }
   .statement-layout { grid-template-columns: 1fr; }
   .statement-visual { min-height: 280px; }
   .lead-developers-heading { grid-template-columns: 1fr; gap: 1.5rem; }
