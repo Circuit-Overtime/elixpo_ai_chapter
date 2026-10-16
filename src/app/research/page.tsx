@@ -34,7 +34,7 @@ export default function ResearchPage() {
         },
       },
       ...RESEARCH_RECORDS.map((record) => ({
-        "@type": record.paperUrl ? "ScholarlyArticle" : "ResearchProject",
+        "@type": record.researchStatus === "technical-report" ? "TechArticle" : record.paperUrl ? "ScholarlyArticle" : "ResearchProject",
         name: record.title,
         description: record.abstract,
         url: `https://elixpo.com/research/${record.slug}`,

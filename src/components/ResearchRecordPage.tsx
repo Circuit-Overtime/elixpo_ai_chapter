@@ -7,8 +7,29 @@ import { ProjectMark } from "@/components/ProjectMark";
 
 export function ResearchRecordPage({ entry, record }: { entry: DirectoryEntry; record: ResearchRecord }) {
   const canonicalUrl = `https://elixpo.com/research/${entry.slug}`;
+  const artifactType = (kind: string) => kind === "dataset" || kind === "evaluation" ? "Dataset" : kind === "package" ? "SoftwareApplication" : kind === "paper" ? "ScholarlyArticle" : kind === "hardware" ? "Product" : "CreativeWork";
+  const artifactNodes = record.artifacts.map((artifact, index) => ({
+    "@type": artifactType(artifact.kind),
+    "@id": `${canonicalUrl}#artifact-${index + 1}`,
+    name: artifact.label,
+    url: artifact.url,
+    ...(artifact.license ? { license: artifact.license } : {}),
+    isPartOf: { "@id": `${canonicalUrl}#research` },
+  }));
+  const demoNodes = record.liveDemos.map((demo, index) => ({
+    "@type": "SoftwareApplication",
+    "@id": `${canonicalUrl}#demo-${index + 1}`,
+    name: demo.name,
+    description: demo.description,
+    url: demo.url,
+    applicationCategory: "ResearchApplication",
+    isPartOf: { "@id": `${canonicalUrl}#research` },
+  }));
   const jsonLd = { "@context": "https://schema.org", "@graph": [
-    { "@type": record.paperUrl ? "ScholarlyArticle" : "ResearchProject", name: record.title, headline: record.title, description: record.abstract, url: canonicalUrl, codeRepository: record.codeUrl, ...(record.paperUrl ? { sameAs: record.paperUrl } : {}), ...(record.releasedAt ? { datePublished: record.releasedAt } : {}), ...(record.authors.length ? { author: record.authors.map((author) => ({ "@type": "Person", name: author.name, ...(author.affiliation ? { affiliation: { "@type": "Organization", name: author.affiliation } } : {}) })) } : {}) },
+    { "@type": record.researchStatus === "technical-report" ? "TechArticle" : record.paperUrl ? "ScholarlyArticle" : "ResearchProject", "@id": `${canonicalUrl}#research`, name: record.title, headline: record.title, description: record.abstract, url: canonicalUrl, codeRepository: record.codeUrl, publisher: { "@type": "Organization", name: "Elixpo", url: "https://elixpo.com" }, ...(record.paperUrl ? { sameAs: record.paperUrl } : {}), ...(record.releasedAt ? { datePublished: record.releasedAt } : {}), ...("doi" in record && record.doi ? { identifier: { "@type": "PropertyValue", propertyID: "DOI", value: record.doi } } : {}), ...(record.authors.length ? { author: record.authors.map((author) => ({ "@type": "Person", name: author.name, ...(author.affiliation ? { affiliation: { "@type": "Organization", name: author.affiliation } } : {}) })) } : {}), ...((artifactNodes.length || demoNodes.length) ? { hasPart: [...artifactNodes, ...demoNodes].map((node) => ({ "@id": node["@id"] })) } : {}) },
+    { "@type": "SoftwareSourceCode", "@id": `${canonicalUrl}#source`, name: `${record.title} source code`, codeRepository: record.codeUrl, url: record.codeUrl, isPartOf: { "@id": `${canonicalUrl}#research` } },
+    ...artifactNodes,
+    ...demoNodes,
     { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Elixpo", item: "https://elixpo.com" }, { "@type": "ListItem", position: 2, name: "Research", item: "https://elixpo.com/research" }, { "@type": "ListItem", position: 3, name: entry.name, item: canonicalUrl }] },
   ] };
 
