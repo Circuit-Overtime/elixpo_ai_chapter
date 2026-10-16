@@ -77,9 +77,11 @@
     "audit": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["auditedAt", "standaloneTrackedFiles", "standaloneDiskSizeBytes", "portalBrandFiles", "portalBrandDiskSizeBytes", "exactMasterDuplicates", "sourceBreakdown", "exactDuplicateGroups", "excludedFromPublicMigration", "migrationPrinciples"],
+      "required": ["auditedAt", "sourceRevision", "sourceTreeClean", "standaloneTrackedFiles", "standaloneDiskSizeBytes", "portalBrandFiles", "portalBrandDiskSizeBytes", "exactMasterDuplicates", "sourceBreakdown", "exactDuplicateGroups", "excludedFromPublicMigration", "migrationPrinciples"],
       "properties": {
         "auditedAt": { "type": "string", "format": "date" },
+        "sourceRevision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "sourceTreeClean": { "type": "boolean" },
         "standaloneTrackedFiles": { "type": "integer", "minimum": 1 },
         "standaloneDiskSizeBytes": { "type": "integer", "minimum": 1 },
         "portalBrandFiles": { "type": "integer", "minimum": 1 },

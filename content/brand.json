@@ -52,6 +52,8 @@
   ],
   "audit": {
     "auditedAt": "2026-10-16",
+    "sourceRevision": "7c274b1ca900eb8f21f4ded811779963ba8f0c21",
+    "sourceTreeClean": true,
     "standaloneTrackedFiles": 618,
     "standaloneDiskSizeBytes": 779259920,
     "portalBrandFiles": 43,

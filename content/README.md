@@ -30,6 +30,8 @@ The portal-hosted canonical brand masters live under
 prompts, and the large sticker archive have not yet migrated.
 The approved organization-wide visual rules are documented in
 [`docs/brand-system.md`](../docs/brand-system.md).
+The staged, history-preserving consolidation procedure is documented in
+[`docs/brand-migration.md`](../docs/brand-migration.md).
 
 Canonical shared README prose and repository wrappers live under `readme/`.
 Generated artifacts under `docs/readme/generated/` are synchronized to the

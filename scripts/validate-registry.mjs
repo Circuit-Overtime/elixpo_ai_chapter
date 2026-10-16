@@ -79,6 +79,7 @@ if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "e
 if (!isDate(history.lastVerified)) addError("history.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.lastVerified)) addError("brand.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.audit?.auditedAt)) addError("brand.audit.auditedAt", "expected YYYY-MM-DD");
+if (!/^[0-9a-f]{40}$/.test(brand.audit?.sourceRevision ?? "")) addError("brand.audit.sourceRevision", "expected a full Git commit SHA");
 if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
 
 validateUrl("discussions.sourceRepository", discussions.sourceRepository);
