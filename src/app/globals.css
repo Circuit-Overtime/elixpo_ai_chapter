@@ -92,6 +92,25 @@ svg { transition: transform .2s ease; }
 .statement-grid { display: grid; grid-template-columns: 1fr; gap: 0; align-content: end; color: var(--muted); line-height: 1.7; border-top: 1px solid var(--line); }
 .statement-grid p { margin: 0; padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
 .statement-grid strong { display: block; margin-bottom: .45rem; color: var(--ink); font-size: .88rem; }
+.lead-developers { margin-top: clamp(5rem,9vw,8rem); padding-top: 2rem; border-top: 1px solid var(--line); }
+.lead-developers-heading { display: grid; grid-template-columns: minmax(0,1fr) minmax(260px,.55fr); gap: 3rem; align-items: end; margin-bottom: 2.5rem; }
+.lead-developers-heading .eyebrow { grid-column: 1 / -1; margin-bottom: -2rem; }
+.lead-developers-heading h3 { max-width: 800px; margin: 0; font-size: clamp(2.5rem,5vw,4.8rem); line-height: .97; letter-spacing: -.06em; }
+.lead-developers-heading > p:last-child { margin: 0; color: var(--muted); line-height: 1.65; }
+.lead-developer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.lead-developer { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 1.35rem; background: white; transition: transform .2s ease,box-shadow .2s ease; }
+.lead-developer:hover { transform: translateY(-3px); box-shadow: 0 18px 42px rgba(20,32,24,.09); }
+.lead-developer-art { position: relative; height: 230px; overflow: hidden; background: #f0c659; }
+.lead-developer-2 .lead-developer-art { background: #cbdcff; }.lead-developer-3 .lead-developer-art { background: #d8c8ed; }
+.lead-developer-art > span { position: absolute; z-index: 2; left: 1.2rem; top: 1.1rem; font: 650 .67rem var(--font-ui-mono); }
+.lead-developer-art > i { position: absolute; display: block; border: 1px solid rgba(20,32,24,.25); }
+.lead-developer-art > i:nth-child(2) { width: 280px; height: 280px; right: -70px; top: -130px; border-radius: 50%; }
+.lead-developer-art > i:nth-child(3) { width: 60px; height: 210px; left: 18%; bottom: -120px; border-radius: 999px; transform: rotate(38deg); background: rgba(255,255,255,.3); }
+.lead-developer-art img { position: absolute; z-index: 1; width: 128px; height: 128px; right: 1.5rem; bottom: 1.3rem; border: 7px solid rgba(255,255,255,.75); border-radius: 50%; object-fit: cover; filter: grayscale(1); }
+.lead-developer-copy { padding: 1.4rem; }
+.lead-developer-copy h4 { margin: 0; font-size: clamp(1.7rem,3vw,2.7rem); letter-spacing: -.05em; }
+.lead-developer-copy > p:not(.eyebrow) { min-height: 105px; color: var(--muted); line-height: 1.6; }
+.lead-developer-copy b { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--leaf); font-size: .75rem; }
 .chapter-flow ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--line); }
 .chapter-flow li { min-height: 230px; padding: 1.5rem 1.5rem 1.5rem 0; border-right: 1px solid var(--line); }
 .chapter-flow li + li { padding-left: 1.5rem; }
@@ -599,6 +618,11 @@ svg { transition: transform .2s ease; }
   .hero-identity { display: none; }
   .statement-layout { grid-template-columns: 1fr; }
   .statement-visual { min-height: 280px; }
+  .lead-developers-heading { grid-template-columns: 1fr; gap: 1.5rem; }
+  .lead-developers-heading .eyebrow { grid-column: auto; margin-bottom: 0; }
+  .lead-developer-grid { grid-template-columns: 1fr; }
+  .lead-developer { display: grid; grid-template-columns: minmax(240px,.7fr) 1fr; }
+  .lead-developer-copy > p:not(.eyebrow) { min-height: 0; }
   .section-heading.split, .closing-panel, .footer-lead { grid-template-columns: 1fr; gap: 1.5rem; }
   .chapter-flow ol, .family-grid, .people-grid, .timeline-strip { grid-template-columns: repeat(2,1fr); }
   .chapter-feature { min-height: 620px; grid-template-columns: 1fr; gap: 2.5rem; }
@@ -712,6 +736,9 @@ svg { transition: transform .2s ease; }
   .statement-layout { margin-top: 1.8rem; gap: 1.5rem; }
   .statement-visual { min-height: 250px; border-radius: 1.1rem; }
   .statement-grid { gap: 0; }
+  .lead-developers { margin-top: 4rem; }
+  .lead-developer { display: block; }
+  .lead-developer-art { height: 210px; }
   .chapter-flow li, .chapter-flow li + li { min-height: auto; padding: 1.5rem 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .chapter-flow h3, .family-grid h3 { margin-top: 2rem; }
   .chapter-feature { width: calc(100% - .7rem); min-height: 670px; padding: 2rem 1.25rem; border-radius: 1.3rem; }

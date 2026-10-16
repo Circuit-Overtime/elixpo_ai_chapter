@@ -11,6 +11,11 @@ const featured = ["blogs", "lixsketch", "oreo", "oreolook", "kareixo", "lixrl"]
   .map((slug) => DIRECTORY_ENTRIES.find((entry) => entry.slug === slug))
   .filter((entry): entry is (typeof DIRECTORY_ENTRIES)[number] => Boolean(entry));
 const featuredContributors = [...contributors.featured].sort((a, b) => b.observedContributions - a.observedContributions);
+const leadDevelopers = [
+  { handle: "Circuit-Overtime", name: "Ayushman Bhattacharya", role: "Project lead and maintainer", summary: "Coordinates Elixpo’s technical direction, public releases, research surfaces, and organization-wide engineering work." },
+  { handle: "ez-vivek", name: "Vivek Yadav", role: "Lead developer", summary: "Works across Chapter engineering and project delivery, helping move shared implementation work into public releases." },
+  { handle: "anwe-ch", name: "Anwesha Chakraborty", role: "Research and engineering lead", summary: "Connects open research with implementation work through published studies, technical review, and project development." },
+];
 const counts = {
   project: getDirectoryEntries("project").length,
   research: getDirectoryEntries("research").length,
@@ -53,6 +58,15 @@ export function StoryHome() {
           <div className="statement-grid">
             <p><strong>A repository is the beginning.</strong> Publishing code does not automatically provide clear documentation, prepared contribution paths, accountable review, or a release that people can use and cite. Elixpo coordinates that work with project maintainers.</p>
             <p><strong>A Chapter gives the work a boundary.</strong> Each Elixpo Chapter has a specific goal, named responsibilities, an expected release, and a permanent contribution record.</p>
+          </div>
+        </div>
+        <div className="lead-developers">
+          <div className="lead-developers-heading"><p className="eyebrow">Lead developers</p><h3>The people responsible for Elixpo’s current technical direction.</h3><p>Lead status is shown separately from contributor recognition. These profiles describe ongoing responsibility rather than ranking leads against community contributors.</p></div>
+          <div className="lead-developer-grid">
+            {leadDevelopers.map((person, index) => <a href={`https://github.com/${person.handle}`} target="_blank" rel="noreferrer" key={person.handle} className={`lead-developer lead-developer-${index + 1}`}>
+              <div className="lead-developer-art" aria-hidden="true"><span>{String(index + 1).padStart(2,"0")}</span><i/><i/><Image src={`https://github.com/${person.handle}.png`} alt="" width={128} height={128} unoptimized /></div>
+              <div className="lead-developer-copy"><p className="eyebrow">{person.role}</p><h4>{person.name}</h4><p>{person.summary}</p><b>@{person.handle} <ArrowUpRight size={14}/></b></div>
+            </a>)}
           </div>
         </div>
       </section>

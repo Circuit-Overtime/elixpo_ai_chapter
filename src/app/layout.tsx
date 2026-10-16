@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { MegaNavbar } from "@/components/MegaNavbar";
 import { Footer } from "@/components/Footer";
