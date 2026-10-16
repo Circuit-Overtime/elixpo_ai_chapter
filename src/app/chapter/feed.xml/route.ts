@@ -1,7 +1,7 @@
 import { DISCUSSIONS_CONFIG, getLatestDiscussions } from "@/lib/discussions";
 import { atomResponse, createAtomFeed, toAtomDate } from "@/lib/feeds";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export async function GET() {
   const proposals = await getLatestDiscussions(30, "Chapter Proposal");
