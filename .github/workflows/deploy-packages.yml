@@ -38,6 +38,9 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Synchronize canonical package snapshot
+        run: npm run registry:sync
+
       - name: Verify canonical package snapshot
         run: npm run registry:check
 
