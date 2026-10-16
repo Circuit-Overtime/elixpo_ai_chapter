@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 export const SITE_URL = "https://elixpo.com";
 export const SITE_NAME = "Elixpo";
-export const DEFAULT_OG_IMAGE = "/og-image.webp";
 
 export function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
@@ -17,14 +16,12 @@ interface PageMetadataOptions {
   title: string;
   description: string;
   path: `/${string}` | "/";
-  image?: string;
 }
 
 export function createPageMetadata({
   title,
   description,
   path,
-  image = DEFAULT_OG_IMAGE,
 }: PageMetadataOptions): Metadata {
   const socialTitle = `${title} | ${SITE_NAME}`;
 
@@ -39,13 +36,11 @@ export function createPageMetadata({
       url: path,
       title: socialTitle,
       description,
-      images: [{ url: image, width: 1852, height: 813, alt: `${title} — ${SITE_NAME}` }],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description,
-      images: [image],
     },
     robots: {
       index: true,

@@ -2,11 +2,10 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "motion/react";
-import { Star, Heart, ArrowRight, ExternalLink, ShieldCheck, Cpu } from "lucide-react";
+import { Star, ArrowRight, ExternalLink, ShieldCheck, Cpu } from "lucide-react";
 import { ELIXPO_LINKS } from "@/lib/elixpo-links";
 
 const ECOSYSTEM_STARS = "85+";
-const CONTRIBUTOR_COUNT = "45+";
 
 // Logos: Simple Icons CDN tinted cream (#E1E0CC) so they read on the dark card.
 // Pollinations isn't on Simple Icons, so we use its site favicon.
@@ -257,13 +256,12 @@ export function NominationSection() {
 
             <div className="pt-6 mt-4 border-t border-white/10">
               <a
-                href={ELIXPO_LINKS.sponsors}
+                href={ELIXPO_LINKS.fundingPolicy}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group/link inline-flex items-center gap-1.5 text-primary/90 hover:text-primary transition-colors uppercase tracking-wider font-mono text-[10px]"
               >
-                <Heart className="w-3 h-3" />
-                <span>Support via GitHub Sponsors</span>
+                <span>Read the funding policy</span>
                 <ExternalLink size={11} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
               </a>
             </div>
@@ -281,26 +279,26 @@ export function NominationSection() {
                 <ShieldCheck className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest block mb-1">Open Source License</span>
-                <h4 className="text-lg font-light text-white mb-2">MIT & CC-BY-4.0</h4>
+                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest block mb-1">Artifact-specific licensing</span>
+                <h4 className="text-lg font-light text-white mb-2">Clear terms for each kind of work</h4>
                 <p className="text-xs text-[#DEDBC8]/75 leading-relaxed">
-                  We believe in ethical, open development. Our code, packages, and systems are shared under permissive open-source standards to ensure derivatives remain free for everybody forever.
+                  The owning repository or artifact record controls. New code, papers, hardware, datasets, models, and brand assets follow separate documented policies.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-6 font-mono text-[11px] text-white/60 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-8 flex-shrink-0 w-full md:w-auto flex-wrap sm:flex-nowrap">
               <div>
-                <span className="text-white/40 block text-[9px] uppercase tracking-wider">Chapter Size</span>
-                <span className="text-white/90 font-medium block mt-0.5">{CONTRIBUTOR_COUNT} Contributors</span>
+                <span className="text-white/40 block text-[9px] uppercase tracking-wider">New code default</span>
+                <span className="text-white/90 font-medium block mt-0.5">MIT</span>
               </div>
               <div>
-                <span className="text-white/40 block text-[9px] uppercase tracking-wider text-primary">Ecosystem Stars</span>
-                <span className="text-primary font-bold block mt-0.5">{ECOSYSTEM_STARS} ★</span>
+                <span className="text-white/40 block text-[9px] uppercase tracking-wider text-primary">Papers and docs</span>
+                <span className="text-primary font-bold block mt-0.5">CC BY 4.0</span>
               </div>
               <div>
-                <span className="text-white/40 block text-[9px] uppercase tracking-wider">License Standards</span>
-                <span className="text-white/90 font-medium block mt-0.5">MIT & CC-BY-4.0</span>
+                <span className="text-white/40 block text-[9px] uppercase tracking-wider">Hardware source</span>
+                <span className="text-white/90 font-medium block mt-0.5">CERN-OHL-S-2.0</span>
               </div>
             </div>
           </motion.div>

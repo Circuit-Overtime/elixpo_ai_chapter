@@ -8,6 +8,7 @@ on:
       - "content/repositories.json"
       - "content/taxonomy.json"
       - "content/licensing.json"
+      - "content/sponsorship.json"
       - "content/readme/**"
       - "docs/readme/generated/**"
       - "scripts/render-readmes.mjs"

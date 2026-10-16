@@ -36,7 +36,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md), the
 [repository standard](docs/repository-standard/elixpo-repository-standard-v0.1.md)
 before changing canonical organization facts.
 
-<!-- BEGIN ELIXPO SHARED · sha256:4941e9784f5ae20bc8b7979286e89571ee92a27d43733a67046c59e890dfe9ed · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:ec0e289dda1877d35b329ffeeaa06e7a0c6f28ed50b695ab66b863e37e444ca2 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -162,6 +162,15 @@ research, design, documentation, or community operations. Repository history is
 the current evidence source. Elixpo will publish people and organization-history
 records only after roles, dates, consent, and evidence are verified; decorative
 contributor counts are intentionally omitted.
+
+## Funding boundary
+
+Elixpo does not currently solicit, accept, hold, or route organization-level
+sponsorship funds. Independently governed projects may publish their own funding
+routes under their own authority and accounting; listing through Elixpo does
+not make Elixpo the recipient or intermediary. Funding does not purchase Chapter
+selection, feature placement, research conclusions, contributor credit,
+governance authority, or favourable editorial treatment.
 
 ## Licensing and brand use
 

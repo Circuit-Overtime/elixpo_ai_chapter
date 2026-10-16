@@ -1,7 +1,7 @@
 {
   "name": "elixpo",
   "version": "2.1.2",
-  "description": "Elixpo — An open-source ecosystem of AI-powered tools for art, search, sketching, and more. Built by a global community.",
+  "description": "The public portal for Elixpo, an open-source project foundry for software, research, and operated services.",
   "author": {
     "name": "Ayushman Bhattacharya",
     "url": "https://github.com/Circuit-Overtime"
@@ -10,12 +10,13 @@
   "homepage": "https://elixpo.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elixpo/elixpo_chapter"
+    "url": "https://github.com/elixpo/elixpo"
   },
   "keywords": [
     "elixpo",
     "open-source",
-    "ai",
+    "project-foundry",
+    "open-research",
     "developer-tools",
     "next.js",
     "community"

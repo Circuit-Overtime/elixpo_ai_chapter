@@ -1,37 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import type { CSSProperties } from "react";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { MegaNavbar } from "@/components/MegaNavbar";
 import { Footer } from "@/components/Footer";
 import { SITE_URL } from "@/lib/seo";
 
-// Global dark shell - overrides the semantic theme tokens to dark so every
-// route matches, and applies the design font.
-const darkShell = {
-  "--background": "#000000",
-  "--foreground": "#E1E0CC",
-  "--card": "#161616",
-  "--card-hover": "#1d1d1d",
-  "--muted": "#9a988c",
-  "--border": "rgba(255,255,255,0.12)",
-  "--accent": "#DEDBC8",
-  "--accent-light": "#E1E0CC",
-  fontFamily: "var(--font-ui-sans)",
-} as CSSProperties;
-
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#f6f5f0",
+  colorScheme: "light",
 };
 
 const SITE_DESCRIPTION =
-  "Explore Elixpo's open-source tools for publishing, visual collaboration, AI-assisted search, portfolios, identity, short links, QR codes, and software packages.";
+  "Elixpo is an open-source project foundry where people build software, operate open services, share reproducible research, and release meaningful work together.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: "Elixpo",
   title: {
-    default: "Elixpo — Open-Source Tools for Creators and Developers",
+    default: "Elixpo — An Open-Source Project Foundry",
     template: "%s | Elixpo",
   },
   description: SITE_DESCRIPTION,
@@ -56,21 +42,11 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Elixpo",
-    title: "Elixpo — Open-Source Tools for Creators and Developers",
+    title: "Elixpo — An Open-Source Project Foundry",
     description: SITE_DESCRIPTION,
-    images: [
-      {
-        url: "/og-image.webp",
-        width: 1852,
-        height: 813,
-        type: "image/webp",
-        alt: "Elixpo — Developer-first open-source ecosystem"
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og-image.webp"],
     creator: "@elixpo",
   },
   robots: {
@@ -99,12 +75,9 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <SmoothScroll />
-        <div
-          className="bg-background text-foreground min-h-screen flex flex-col overflow-x-hidden antialiased selection:bg-primary selection:text-black"
-          style={darkShell}
-        >
+        <div className="site-frame selection:bg-[#bde8ce] selection:text-[#142018]">
           <MegaNavbar />
-          <div className="flex-1">{children}</div>
+          <div className="site-content">{children}</div>
           <Footer />
         </div>
       </body>

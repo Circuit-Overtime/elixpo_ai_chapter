@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "entries": [
+    {
+      "period": "2023",
+      "title": "Elixpo begins",
+      "description": "The organization begins as a college-era collection of open experiments and tools. That origin remains part of the record, but no longer limits what Elixpo can become.",
+      "kind": "origin",
+      "evidence": ["https://github.com/elixpo"]
+    },
+    {
+      "period": "2024–2025",
+      "title": "Experiments become an ecosystem",
+      "description": "Creative tools, search experiments, collaboration software, publishing work, infrastructure, and community contributions accumulate across many repositories.",
+      "kind": "growth",
+      "evidence": ["https://github.com/elixpo/elixpo_chapter"]
+    },
+    {
+      "period": "2025–2026",
+      "title": "Shared foundations emerge",
+      "description": "LixSketch, LixBlogs, Accounts, Lixrl, member portfolios, packages, Oreo, and research projects establish distinct public surfaces while sharing an organizational home.",
+      "kind": "systems",
+      "evidence": ["https://github.com/elixpo", "https://elixpo.com/projects", "https://elixpo.com/services"]
+    },
+    {
+      "period": "2026",
+      "title": "The foundry direction is adopted",
+      "description": "Elixpo defines itself as an open-source project foundry: a place for active work to build in public, release a meaningful chapter, and leave a durable, attributable record.",
+      "kind": "direction",
+      "evidence": ["https://github.com/elixpo/elixpo/blob/main/.plans/elixpo-direction.md"]
+    },
+    {
+      "period": "Next",
+      "title": "Chapters become the operating unit",
+      "description": "Repository standards, project dossiers, research records, public discussions, contributor credit, and release narratives are aligned around repeatable Chapters and independently stewarded Member Projects.",
+      "kind": "future",
+      "evidence": ["https://github.com/elixpo/elixpo/tree/main/docs/repository-standard"]
+    }
+  ]
+}

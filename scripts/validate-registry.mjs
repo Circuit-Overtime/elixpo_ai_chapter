@@ -12,11 +12,15 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, licensing] = await Promise.all([
+const [organization, taxonomy, repositories, licensing, sponsorship, contributors, history, brand] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
   readJson("content/licensing.json"),
+  readJson("content/sponsorship.json"),
+  readJson("content/contributors.json"),
+  readJson("content/history.json"),
+  readJson("content/brand.json"),
 ]);
 
 const errors = [];
@@ -41,11 +45,67 @@ if (organization.schemaVersion !== taxonomy.schemaVersion || taxonomy.schemaVers
 if (licensing.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "licensing and organization versions must match");
 }
+if (sponsorship.schemaVersion !== organization.schemaVersion) {
+  addError("schemaVersion", "sponsorship and organization versions must match");
+}
+for (const [name, record] of Object.entries({ contributors, history, brand })) {
+  if (record.schemaVersion !== organization.schemaVersion) {
+    addError("schemaVersion", `${name} and organization versions must match`);
+  }
+}
 
 if (!isDate(organization.lastVerified)) addError("organization.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(taxonomy.lastVerified)) addError("taxonomy.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(repositories.snapshotDate)) addError("repositories.snapshotDate", "expected YYYY-MM-DD");
 if (!isDate(licensing.lastVerified)) addError("licensing.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(history.lastVerified)) addError("history.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(brand.lastVerified)) addError("brand.lastVerified", "expected YYYY-MM-DD");
+
+if (
+  sponsorship.organizationAcceptsFunds !== false ||
+  sponsorship.organizationRoutesFunds !== false ||
+  sponsorship.publicSolicitationEnabled !== false
+) {
+  addError("sponsorship", "organization funding and solicitation must remain disabled until policy review");
+}
+if (sponsorship.legalRecipient !== null || sponsorship.accountingProcess !== null) {
+  addError("sponsorship", "legal recipient and accounting process must remain null while not accepting funds");
+}
+if (sponsorship.stickers?.sponsorshipRequestAllowed !== false) {
+  addError("sponsorship.stickers.sponsorshipRequestAllowed", "must remain false");
+}
+if (sponsorship.stickers?.eventPartnerships?.monetary !== false) {
+  addError("sponsorship.stickers.eventPartnerships.monetary", "event partnerships must remain non-monetary while organization sponsorship is closed");
+}
+
+const contributorHandles = new Set();
+const excludedContributorHandles = new Set([
+  ...(contributors.excludedLeadHandles ?? []),
+  ...(contributors.excludedAutomationHandles ?? []),
+]);
+for (const [index, person] of (contributors.featured ?? []).entries()) {
+  const location = `contributors.featured[${index}]`;
+  if (!person.handle) addError(`${location}.handle`, "is required");
+  if (contributorHandles.has(person.handle)) addError(`${location}.handle`, "duplicate handle");
+  contributorHandles.add(person.handle);
+  if (excludedContributorHandles.has(person.handle)) addError(`${location}.handle`, "lead or automation handle cannot be featured");
+  if (!Number.isInteger(person.observedContributions) || person.observedContributions < 1) addError(`${location}.observedContributions`, "expected a positive integer");
+  validateUrl(`${location}.github`, person.github);
+  if (person.portfolio !== null) validateUrl(`${location}.portfolio`, person.portfolio);
+  for (const [evidenceIndex, url] of (person.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
+}
+
+for (const [index, milestone] of (history.entries ?? []).entries()) {
+  const location = `history.entries[${index}]`;
+  if (!milestone.period || !milestone.title || !milestone.description) addError(location, "period, title, and description are required");
+  if (!Array.isArray(milestone.evidence) || milestone.evidence.length === 0) addError(`${location}.evidence`, "at least one evidence URL is required");
+  for (const [evidenceIndex, url] of (milestone.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
+}
+
+validateUrl("brand.canonicalHome", brand.canonicalHome);
+validateUrl("brand.sourceRepository", brand.sourceRepository);
 
 const licensingClasses = new Set();
 for (const [index, policy] of licensing.defaultsForNewWork.entries()) {

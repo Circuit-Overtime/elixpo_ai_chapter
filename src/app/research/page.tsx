@@ -1,0 +1,127 @@
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { ProjectMark } from "@/components/ProjectMark";
+import { getDirectoryEntries } from "@/lib/directory";
+import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Open research, experiments, and reproducibility",
+  description: "Explore Elixpo research projects with source code, lifecycle status, papers, datasets, models, reproducibility records, and live Hugging Face experiments including OreoLook and Diffuino.",
+  path: "/research",
+});
+
+const research = getDirectoryEntries("research");
+const liveSpaces = [
+  {
+    name: "OreoLook",
+    eyebrow: "AI search and deep research",
+    description: "Run cited web research and generate structured reports through the public OreoLook demonstration. The Space is connected to the project’s architecture paper and released evaluation dataset.",
+    href: "https://huggingface.co/spaces/Elixpo/OreoLook",
+    related: "/research/oreolook",
+    tags: ["Cited search", "Research agents", "Gradio"],
+    tone: "blue",
+  },
+  {
+    name: "Diffuino Live",
+    eyebrow: "Binary diffusion experiment",
+    description: "Run the public demonstration for MonoDiffuse, an MIT-licensed MNIST diffusion experiment with ONNX and binary-neural-network model artifacts.",
+    href: "https://huggingface.co/spaces/elixpo/diffuino",
+    related: "/research/monodiffuse",
+    tags: ["Diffusion", "ONNX", "Binary neural network"],
+    tone: "violet",
+  },
+] as const;
+
+export default function ResearchPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Elixpo Open Research",
+    description: metadata.description,
+    url: "https://elixpo.com/research",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: research.map((entry, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: entry.name,
+        url: `https://elixpo.com/research/${entry.slug}`,
+      })),
+    },
+  };
+
+  return <main className="research-page">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+
+    <header className="research-hero">
+      <div className="research-hero-copy">
+        <p className="eyebrow">Elixpo Research</p>
+        <h1>We publish research with its code, evidence, and <em>current status.</em></h1>
+        <p>Elixpo’s research directory connects experiments to their implementations, papers, datasets, models, demonstrations, and reproducibility records. Completed, paused, and archived work remains visible with an accurate lifecycle.</p>
+      </div>
+      <div className="research-hero-objects" aria-hidden="true">
+        <span className="research-orbit research-orbit-one" />
+        <span className="research-orbit research-orbit-two" />
+        <div className="research-object research-object-code"><i /><i /><i /><b>001101</b></div>
+        <div className="research-object research-object-model"><span>ONNX</span><b>W1A32</b></div>
+        <div className="research-object research-object-paper"><span>ARXIV</span><b>2609.05463</b></div>
+      </div>
+      <div className="research-hero-note"><strong>{research.length}</strong><span>documented research records</span></div>
+    </header>
+
+    <section className="research-spaces section-wrap" aria-labelledby="live-experiments">
+      <div className="section-heading split">
+        <div><p className="eyebrow">Live experiments</p><h2 id="live-experiments">Run the public demonstrations.</h2></div>
+        <p>These Hugging Face Spaces provide interactive access to current Elixpo research. Each demonstration links back to its project record and underlying artifacts.</p>
+      </div>
+      <div className="space-grid">
+        {liveSpaces.map((space, index) => <article className={`space-card space-card-${space.tone}`} key={space.href}>
+          <div className="space-card-art" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><i /><i /><i /></div>
+          <div className="space-card-copy">
+            <p className="eyebrow">{space.eyebrow}</p>
+            <div className="space-title-row"><h3>{space.name}</h3><span className="hf-badge">HF Space</span></div>
+            <p>{space.description}</p>
+            <ul>{space.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+            <div className="space-actions">
+              <a href={space.href} target="_blank" rel="noreferrer">Launch on Hugging Face <ArrowUpRight size={16} /></a>
+              <Link href={space.related}>View research record <ArrowRight size={15} /></Link>
+            </div>
+          </div>
+        </article>)}
+      </div>
+    </section>
+
+    <section className="research-directory section-wrap" aria-labelledby="research-index">
+      <div className="section-heading split">
+        <div><p className="eyebrow">Research index</p><h2 id="research-index">All research records and their current lifecycle.</h2></div>
+        <p>The directory includes active investigations, completed studies, paused work, and historical experiments. Lifecycle labels describe the present state rather than the importance of the work.</p>
+      </div>
+      <div className="research-list">
+        {research.map((entry, index) => <article key={entry.slug}>
+          <div className="research-list-index">{String(index + 1).padStart(2, "0")}</div>
+          <ProjectMark seed={entry.slug} icon={entry.icon} size="large" />
+          <div className="research-list-copy">
+            <div><p className="eyebrow">{entry.focus.slice(0, 2).join(" · ")}</p><span className={`status-pill status-${entry.lifecycle}`}>{entry.lifecycle}</span></div>
+            <h3>{entry.name}</h3>
+            <p>{entry.description}</p>
+          </div>
+          <div className="research-list-links">
+            <Link href={`/research/${entry.slug}`}>Research record <ArrowRight size={15} /></Link>
+            <a href={entry.repositoryUrl} target="_blank" rel="noreferrer"><Github size={14} /> Source repository</a>
+            {entry.evidence?.slice(0, 2).map((item) => <a key={item.url} href={item.url} target="_blank" rel="noreferrer">{item.label} <ArrowUpRight size={13} /></a>)}
+          </div>
+        </article>)}
+      </div>
+    </section>
+
+    <section className="research-method section-wrap">
+      <div><p className="eyebrow">Publication standard</p><h2>Research remains connected to the material needed to evaluate it.</h2></div>
+      <div className="research-method-grid">
+        <article><span>01</span><h3>Source</h3><p>The implementation and important revisions remain available through the linked repository.</p></article>
+        <article><span>02</span><h3>Evidence</h3><p>Papers, datasets, model files, and evaluation records are linked when they have been released.</p></article>
+        <article><span>03</span><h3>Reproduction</h3><p>Runnable demonstrations and documented environments make results easier to inspect independently.</p></article>
+        <article><span>04</span><h3>Status</h3><p>Every record states whether work is active, paused, completed, or archived.</p></article>
+      </div>
+    </section>
+  </main>;
+}

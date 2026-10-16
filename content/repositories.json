@@ -325,6 +325,22 @@
       "notes": "Active controlled research study preparing a technical report and preprint; it has not undergone peer review."
     },
     {
+      "name": "search.elixpo",
+      "repositoryUrl": "https://github.com/pollinations/search.elixpo",
+      "disposition": "public-entry",
+      "publicClass": "research",
+      "relationship": "connected",
+      "lifecycle": "active",
+      "custody": "externally-owned",
+      "githubArchived": false,
+      "verificationState": "verified",
+      "statusVerifiedAt": "2026-10-16",
+      "statusOwner": "elixpo",
+      "researchStatus": "preprint",
+      "reviewStatus": "not-peer-reviewed",
+      "notes": "OreoLook (formerly lixSearch) is a connected open implementation with a live Elixpo service, Hugging Face Space, released evaluation dataset, and arXiv preprint 2609.05463. Repository custody remains with pollinations."
+    },
+    {
       "name": "Nano28C64",
       "repositoryUrl": "https://github.com/elixpo/Nano28C64",
       "disposition": "public-entry",

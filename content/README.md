@@ -8,12 +8,21 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `taxonomy.json` — controlled public families and status vocabularies.
 - `repositories.json` — complete repository custody and lifecycle inventory, including historical tombstones.
 - `licensing.json` — approved defaults for new work and migration safeguards for existing work.
+- `sponsorship.json` — monetary no-solicitation boundary, project-owned funding separation, and in-kind event-partnership rules.
+- `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.
+- `history.json` — institutional timeline copy, designed to grow only through verifiable milestones.
+- `brand.json` — canonical public asset location, visual direction, palette, and branding-migration state.
 - `schemas/project-manifest.schema.json` — pilot contract for repository-owned `.elixpo/project.yml` manifests.
 
 The human-readable repository contract and adoption templates live under
 [`docs/repository-standard/`](../docs/repository-standard/).
 The human-readable licensing direction lives at
 [`docs/policies/licensing.md`](../docs/policies/licensing.md).
+The human-readable sponsorship policy lives at
+[`docs/policies/sponsorship.md`](../docs/policies/sponsorship.md).
+The portal-hosted canonical brand masters live under
+[`public/brand/source/`](../public/brand/source/); production pipelines,
+prompts, and the large sticker archive have not yet migrated.
 
 Canonical shared README prose and repository wrappers live under `readme/`.
 Generated artifacts under `docs/readme/generated/` are synchronized to the
