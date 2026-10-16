@@ -28,6 +28,7 @@
     "start": "next start",
     "lint": "eslint",
     "registry:check": "node scripts/validate-registry.mjs",
+    "registry:links": "node scripts/check-registry-links.mjs",
     "repository:check": "python3 scripts/check-repository-conformance.py",
     "readme:check": "node scripts/render-readmes.mjs --check",
     "readme:write": "node scripts/render-readmes.mjs --write",

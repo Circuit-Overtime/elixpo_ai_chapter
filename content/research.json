@@ -87,7 +87,7 @@
       "researchStatus": "preprint",
       "reviewStatus": "not-peer-reviewed",
       "releasedAt": "2026-10-14",
-      "paperUrl": "https://research.elixpo.com/monodiffuse/",
+      "paperUrl": "https://github.com/elixpo/monodiffuse/blob/main/paper/v1_mnist_narrow/paper.pdf",
       "doi": null,
       "technicalReportInstitution": "MonoDiffuse Project",
       "technicalReportNumber": "MonoDiffuse-TR-2026-01",

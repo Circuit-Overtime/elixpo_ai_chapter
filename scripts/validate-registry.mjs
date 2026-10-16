@@ -1,4 +1,4 @@
-import { readFile, readdir } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
@@ -34,6 +34,8 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
 const errors = [];
 const addError = (location, message) => errors.push(`${location}: ${message}`);
 const isDate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+const verificationMaxAgeDays = 183;
+const millisecondsPerDay = 86_400_000;
 
 const declaredSchemaRecords = [
   ["content/organization.json", organization],
@@ -103,6 +105,29 @@ function validateUrl(location, value) {
   }
 }
 
+function validateFreshness(location, value) {
+  if (!isDate(value)) return;
+  const verifiedAt = Date.parse(`${value}T23:59:59.999Z`);
+  const ageDays = (Date.now() - verifiedAt) / millisecondsPerDay;
+  if (ageDays < -1) addError(location, "verification date cannot be in the future");
+  else if (ageDays > verificationMaxAgeDays) addError(location, `verification is stale by policy (maximum ${verificationMaxAgeDays} days)`);
+}
+
+async function validatePublicAsset(location, publicPath) {
+  if (typeof publicPath !== "string" || !publicPath.startsWith("/")) return;
+  const publicRoot = resolve(root, "public");
+  const assetPath = resolve(publicRoot, publicPath.slice(1));
+  if (relative(publicRoot, assetPath).startsWith("..")) {
+    addError(location, "public asset path escapes the public directory");
+    return;
+  }
+  try {
+    await access(assetPath);
+  } catch {
+    addError(location, `public asset does not exist at ${publicPath}`);
+  }
+}
+
 if (organization.schemaVersion !== taxonomy.schemaVersion || taxonomy.schemaVersion !== repositories.schemaVersion) {
   addError("schemaVersion", "organization, taxonomy, and repository versions must match");
 }
@@ -156,6 +181,24 @@ for (const [index, group] of (brandProvenance.groups ?? []).entries()) {
 }
 if (provenanceFileCount !== brand.audit?.exactMasterDuplicates) addError("brandProvenance.groups", "verified group file count must match exactMasterDuplicates");
 if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
+
+for (const [location, value] of [
+  ["organization.lastVerified", organization.lastVerified],
+  ["taxonomy.lastVerified", taxonomy.lastVerified],
+  ["repositories.snapshotDate", repositories.snapshotDate],
+  ["directory.lastVerified", directory.lastVerified],
+  ["packages.lastVerified", packages.lastVerified],
+  ["research.lastVerified", research.lastVerified],
+  ["licensing.lastVerified", licensing.lastVerified],
+  ["sponsorship.lastVerified", sponsorship.lastVerified],
+  ["contributors.lastVerified", contributors.lastVerified],
+  ["people.lastVerified", people.lastVerified],
+  ["history.lastVerified", history.lastVerified],
+  ["brand.lastVerified", brand.lastVerified],
+  ["brand.audit.auditedAt", brand.audit?.auditedAt],
+  ["brandProvenance.verifiedAt", brandProvenance.verifiedAt],
+  ["discussions.lastVerified", discussions.lastVerified],
+]) validateFreshness(location, value);
 
 validateUrl("discussions.sourceRepository", discussions.sourceRepository);
 validateUrl("discussions.organizationUrl", discussions.organizationUrl);
@@ -409,6 +452,7 @@ for (const [index, entry] of repositories.entries.entries()) {
   if (entry.custody !== null && !custodyValues.has(entry.custody)) addError(`${location}.custody`, "unknown value");
   if (!verificationStates.has(entry.verificationState)) addError(`${location}.verificationState`, "unknown value");
   if (!isDate(entry.statusVerifiedAt)) addError(`${location}.statusVerifiedAt`, "expected YYYY-MM-DD");
+  validateFreshness(`${location}.statusVerifiedAt`, entry.statusVerifiedAt);
   if (!entry.statusOwner) addError(`${location}.statusOwner`, "is required");
 
   if (entry.disposition === "public-entry" && !publicFamilies.has(entry.publicClass)) {
@@ -475,6 +519,7 @@ for (const [repositoryName, detail] of Object.entries(directory.entries ?? {})) 
   if (detail.icon && !detail.icon.startsWith("/")) {
     addError(`${location}.icon`, "must be a root-relative public asset path");
   }
+  if (detail.icon?.startsWith("/")) await validatePublicAsset(`${location}.icon`, detail.icon);
   for (const [evidenceIndex, evidence] of (detail.evidence ?? []).entries()) {
     const evidenceLocation = `${location}.evidence[${evidenceIndex}]`;
     if (!evidence.label) addError(`${evidenceLocation}.label`, "is required");
@@ -520,6 +565,7 @@ for (const [index, item] of (packages.linuxApplications ?? []).entries()) {
   for (const key of ["page", "source", "releases"]) validateUrl(`${location}.${key}`, item[key]);
   if (item.icon?.startsWith("http")) validateUrl(`${location}.icon`, item.icon);
   else if (!item.icon?.startsWith("/")) addError(`${location}.icon`, "expected a URL or root-relative asset path");
+  else await validatePublicAsset(`${location}.icon`, item.icon);
   validateRelatedRecord(`${location}.related`, item.related);
   for (const [imageIndex, image] of (item.images ?? []).entries()) {
     validateUrl(`${location}.images[${imageIndex}].src`, image.src);
