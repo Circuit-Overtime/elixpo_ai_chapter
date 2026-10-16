@@ -12,6 +12,9 @@
   --card-hover: #f9fafb;
   /* Revamp (Remastered design) cream accent */
   --primary: #DEDBC8;
+  --font-ui-sans: "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-ui-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-display-serif: "Iowan Old Style", Baskerville, "Times New Roman", Times, serif;
 }
 
 @theme inline {
@@ -24,15 +27,15 @@
   --color-card: var(--card);
   --color-card-hover: var(--card-hover);
   --color-primary: var(--primary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-instrument);
+  --font-sans: var(--font-ui-sans);
+  --font-mono: var(--font-ui-mono);
+  --font-serif: var(--font-display-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-ui-sans);
 }
 
 /* Smooth scrolling */

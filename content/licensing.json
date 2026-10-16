@@ -1,0 +1,64 @@
+{
+  "$schema": "./schemas/licensing.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "statusOwner": "elixpo",
+  "policyStatus": "approved-direction",
+  "currentRepositoryRule": "The license published by the owning repository or artifact record controls. No organization-wide grant may be inferred, and existing work is not relicensed without a rights and contributor audit.",
+  "defaultsForNewWork": [
+    {
+      "artifactClass": "source-code",
+      "default": "MIT",
+      "alternatives": ["Apache-2.0"],
+      "selectionRule": "Use MIT by default. Apache-2.0 may be selected when an explicit patent grant is materially useful."
+    },
+    {
+      "artifactClass": "papers-and-documentation",
+      "default": "CC-BY-4.0",
+      "alternatives": [],
+      "selectionRule": "Use CC BY 4.0 for papers and general documentation unless upstream material requires compatible additional terms."
+    },
+    {
+      "artifactClass": "hardware-source",
+      "default": "CERN-OHL-S-2.0",
+      "alternatives": [],
+      "selectionRule": "Use CERN-OHL-S-2.0 for new hardware design sources after confirming the artifact is within its intended scope."
+    },
+    {
+      "artifactClass": "datasets",
+      "default": null,
+      "alternatives": [],
+      "selectionRule": "Select per dataset after provenance, consent, privacy, and upstream-license review."
+    },
+    {
+      "artifactClass": "models-and-weights",
+      "default": null,
+      "alternatives": [],
+      "selectionRule": "Select per model, weight, or checkpoint after training-data, upstream-model, and distribution-term review."
+    },
+    {
+      "artifactClass": "brand-assets-and-stickers",
+      "default": null,
+      "alternatives": [],
+      "selectionRule": "Use a dedicated brand-asset permission policy. Copyright permission and trademark or endorsement rules must remain separate."
+    }
+  ],
+  "memberProjects": {
+    "rule": "retain-existing-license",
+    "statement": "Joining Elixpo or transferring a repository does not silently relicense a Member Project or its contributor work."
+  },
+  "existingRepositories": {
+    "migrationRule": "rights-and-contributor-audit-required",
+    "unclearLicenseRule": "preserve-without-reuse-claim",
+    "statement": "Existing custom, missing, or mixed licenses remain in force until project authority and contributor permissions are established."
+  },
+  "trademarks": {
+    "separateFromCopyright": true,
+    "policyStatus": "pending",
+    "statement": "Copyright licenses do not grant a right to impersonate Elixpo, claim endorsement, or control official names, domains, registry identities, or distribution accounts."
+  },
+  "openSourceClaims": {
+    "rule": "artifact-specific",
+    "statement": "An artifact with field-of-use, competitor, royalty, or similar restrictions must not be described as open source merely because another artifact in the repository uses an open-source license."
+  }
+}

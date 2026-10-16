@@ -25,7 +25,11 @@
     "dev": "NEXT_PRIVATE_NO_CACHE=1 next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "registry:check": "node scripts/validate-registry.mjs",
+    "readme:check": "node scripts/render-readmes.mjs --check",
+    "readme:write": "node scripts/render-readmes.mjs --write",
+    "readme:sync-workspace": "node scripts/render-readmes.mjs --sync-workspace"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",

@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import type { CSSProperties } from "react";
-import { Geist, Geist_Mono, Almarai, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { MegaNavbar } from "@/components/MegaNavbar";
@@ -18,36 +17,12 @@ const darkShell = {
   "--border": "rgba(255,255,255,0.12)",
   "--accent": "#DEDBC8",
   "--accent-light": "#E1E0CC",
-  fontFamily: "var(--font-almarai), sans-serif",
+  fontFamily: "var(--font-ui-sans)",
 } as CSSProperties;
 
 export const viewport: Viewport = {
   themeColor: "#000000",
 };
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Display fonts for the revamped homepage design.
-const almarai = Almarai({
-  variable: "--font-almarai",
-  weight: ["300", "400", "700", "800"],
-  subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument",
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-});
 
 const SITE_DESCRIPTION =
   "Explore Elixpo's open-source tools for publishing, visual collaboration, AI-assisted search, portfolios, identity, short links, QR codes, and software packages.";
@@ -120,7 +95,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} ${almarai.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full">
         <SmoothScroll />
