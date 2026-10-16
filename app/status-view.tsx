@@ -133,12 +133,15 @@ function ServiceCard({
     hero = false,
 }: { p: ProductStatus; hero?: boolean }) {
     const h = HEALTH[p.health];
+    const healthAvailable = p.healthAvailable !== false;
+    const healthColor = healthAvailable ? h.color : L.muted;
+    const healthLabel = healthAvailable ? h.label : "Monitoring unavailable";
     const is90 = p.window === "90d";
     return (
         <Box
             sx={{
                 bgcolor: hero ? "#fbfdfc" : L.card,
-                border: `1px solid ${hero ? h.color : L.border}`,
+                border: `1px solid ${hero ? healthColor : L.border}`,
                 borderRadius: hero ? "12px" : "10px",
                 p: hero ? { xs: 2.5, md: 3 } : 2.5,
                 boxShadow: hero ? "0 1px 2px rgba(28,25,23,0.04)" : "none",
@@ -168,7 +171,7 @@ function ServiceCard({
                                 px: 1,
                                 py: 0.4,
                                 borderRadius: "6px",
-                                bgcolor: h.color,
+                                bgcolor: healthColor,
                                 color: "#fff",
                                 fontSize: "0.62rem",
                                 fontWeight: 800,
@@ -185,7 +188,7 @@ function ServiceCard({
                                 width: 9,
                                 height: 9,
                                 borderRadius: "50%",
-                                bgcolor: h.color,
+                                bgcolor: healthColor,
                                 flexShrink: 0,
                             }}
                         />
@@ -219,12 +222,12 @@ function ServiceCard({
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                     <Typography
                         sx={{
-                            color: h.color,
+                            color: healthColor,
                             fontWeight: 700,
                             fontSize: hero ? "0.98rem" : "0.88rem",
                         }}
                     >
-                        {h.label}
+                        {healthLabel}
                     </Typography>
                     <Box
                         component="a"
@@ -584,7 +587,7 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                                 }}
                             >
                                 {monitoringAvailable
-                                    ? "This page reports observed request health across Elixpo's public services using Cloudflare edge analytics. An idle service has no recent traffic and is not classified as an outage."
+                                    ? "This page reports observed request health across Elixpo's public services using Cloudflare edge analytics. Current labels use the most recent hour; the bars preserve longer history. An idle service has no recent traffic and is not classified as an outage."
                                     : "The service directory remains available while live analytics recover. No operational conclusion is shown when the monitoring source cannot be reached."}
                             </Typography>
                         </Box>

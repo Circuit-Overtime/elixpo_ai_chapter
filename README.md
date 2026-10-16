@@ -40,10 +40,11 @@ broken.
 - **Every Elixpo service in one place** — the main site plus Blogs, Sketch,
   Accounts, Payouts, Mail, Portfolio and more.
 - **A simple health label for each one:**
-  - 🟢 **Operational** — working normally.
-  - 🟠 **Degraded performance** — running, but with some errors or slowness.
-  - 🔴 **Outage** — significant problems right now.
-  - ⚪ **No traffic** — nobody's using it at the moment, so there's nothing to report.
+  - 🟢 **Operational** — the latest observed hour is working normally.
+  - 🟠 **Degraded performance** — the latest observed hour contains an elevated error rate.
+  - 🔴 **Outage** — the latest observed hour contains sustained, significant errors.
+  - ⚪ **No traffic** — the latest observed hour contains no requests, so no operational conclusion is inferred.
+  - **Monitoring unavailable** — the analytics query failed; this is never presented as an all-clear.
 - **90 days of history** — a bar showing how reliable the platform has been over
   the last three months, so you can see good days and bad days at a glance.
 - **Recent changes** — a short list of the latest updates and fixes.
@@ -51,10 +52,11 @@ broken.
 ### Where the numbers come from
 
 The status is measured automatically from real visitor traffic at Cloudflare's
-network (the layer that sits in front of every Elixpo service). When too many
-requests come back as errors, the service is marked as degraded or down. There's
-no manual switch to flip and no separate monitoring tool — the page reflects what
-real users are actually experiencing.
+network (the layer that sits in front of every Elixpo service). Current health
+uses the most recent hour, while the bars retain 24-hour or 90-day historical
+context. When too many requests come back as errors, the service is marked as
+degraded or down. There's no manual switch to flip and no separate monitoring
+tool — the page reflects what real users are actually experiencing.
 
 The page reports what the configured Cloudflare analytics source can observe.
 When that source cannot be reached, the public service directory remains
