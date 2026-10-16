@@ -16,18 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Check out this repository
-        uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-
-      - name: Check out the canonical source
-        uses: actions/checkout@v5
-        with:
-          repository: elixpo/elixpo
-          ref: main
-          path: _canonical
-          persist-credentials: false
-
       - name: Compare generated output
-        run: cmp _canonical/docs/readme/generated/chapter.md README.md
+        env:
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/elixpo/elixpo_chapter/${CANDIDATE_SHA}/README.md" \
+            --output candidate.md
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/elixpo/elixpo/main/docs/readme/generated/chapter.md" \
+            --output canonical.md
+          cmp canonical.md candidate.md
