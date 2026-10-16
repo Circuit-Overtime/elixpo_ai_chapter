@@ -1,104 +1,113 @@
-<p align="center">
-  <a href="https://packages.elixpo.com/">
-    <img src="web/og-image.png" alt="Linux Packages from Elixpo" width="900">
-  </a>
-</p>
+# Elixpo Packages
 
-<h1 align="center">Elixpo apps for Linux</h1>
+Elixpo Packages is the source, release, and signed distribution repository for
+focused Elixpo Linux applications. It also publishes the standalone package
+catalogue at [packages.elixpo.com](https://packages.elixpo.com), where Linux and
+developer packages remain connected to source, versions, licenses, installers,
+and support records.
 
-<p align="center">
-  Small, focused desktop tools that make Linux feel more complete.
-</p>
+## Published applications
 
-<p align="center">
-  <a href="https://packages.elixpo.com/"><strong>Browse all apps</strong></a>
-  ·
-  <a href="#install"><strong>Install</strong></a>
-  ·
-  <a href="https://github.com/elixpo/packages.elixpo/issues"><strong>Get help</strong></a>
-</p>
+| Application | Purpose | Current package route |
+| --- | --- | --- |
+| [Win Dot Panel](apps/win-dot-panel) | Emoji, symbols, kaomoji, and private clipboard history | [packages.elixpo.com/win-dot-panel](https://packages.elixpo.com/win-dot-panel/) |
+| [ScreenBridge](apps/screenbridge) | Share computer audio while retaining separate microphone control | [packages.elixpo.com/screenbridge](https://packages.elixpo.com/screenbridge/) |
 
----
-
-## Choose an app
-
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <a href="https://packages.elixpo.com/win-dot-panel/">
-        <img src="web/favicon.png" alt="Win Dot Panel icon" width="96">
-      </a>
-      <h3>Win Dot Panel</h3>
-      <p>A quick emoji picker and private clipboard history for Linux.</p>
-      <p>Open it with familiar keyboard shortcuts, find what you need, and continue typing.</p>
-      <p><a href="https://packages.elixpo.com/win-dot-panel/"><strong>See Win Dot Panel →</strong></a></p>
-    </td>
-    <td align="center" width="50%">
-      <a href="https://packages.elixpo.com/screenbridge/">
-        <img src="web/screenbridge/icon.svg" alt="ScreenBridge icon" width="96">
-      </a>
-      <h3>ScreenBridge</h3>
-      <p>Share sound from your computer during calls, recordings, and streams.</p>
-      <p>Your microphone stays separate, with an optional combined input for apps that need one.</p>
-      <p><a href="https://packages.elixpo.com/screenbridge/"><strong>See ScreenBridge →</strong></a></p>
-    </td>
-  </tr>
-</table>
-
-## Why these apps?
-
-- **Simple:** each app solves one everyday Linux problem.
-- **Private:** clipboard history stays on your computer, and no account is required.
-- **Native:** designed for modern Ubuntu, Debian, GNOME, KDE Plasma, Wayland, and X11 desktops.
-- **Easy to update:** normal system updates deliver new stable versions after installation.
-- **Open source:** inspect the code, report a problem, or help improve it.
+Both applications use independently versioned releases and one signed APT
+source. Their installers verify the repository key before configuring it.
 
 ## Install
 
-Choose the app you want and paste its command into Terminal.
-
-<details>
-<summary><strong>Install Win Dot Panel</strong></summary>
+Win Dot Panel:
 
 ```bash
-curl -fsSL -o /var/tmp/win-dot-panel-install.sh https://packages.elixpo.com/win-dot-panel/install.sh && bash /var/tmp/win-dot-panel-install.sh
+curl -fsSL -o /var/tmp/win-dot-panel-install.sh \
+  https://packages.elixpo.com/win-dot-panel/install.sh && \
+bash /var/tmp/win-dot-panel-install.sh
 ```
 
-After installation, set <kbd>Super</kbd> + <kbd>.</kbd> to open the picker and <kbd>Super</kbd> + <kbd>V</kbd> to open clipboard history. The installer prints the exact shortcut commands.
-
-</details>
-
-<details>
-<summary><strong>Install ScreenBridge</strong></summary>
+ScreenBridge:
 
 ```bash
-curl -fsSL -o /var/tmp/screenbridge-install.sh https://packages.elixpo.com/screenbridge/install.sh && bash /var/tmp/screenbridge-install.sh
+curl -fsSL -o /var/tmp/screenbridge-install.sh \
+  https://packages.elixpo.com/screenbridge/install.sh && \
+bash /var/tmp/screenbridge-install.sh
 ```
 
-Open **ScreenBridge** from your applications menu, choose where you listen and which microphone you use, then press **Start sharing audio**.
+Review an installer and the relevant application source before running software
+with system privileges.
 
-</details>
+## Repository structure
 
-Both installers verify the official Elixpo signing key before adding the shared package source.
+```text
+apps/                       Application source, tests, and package builders
+content/                    Reviewed snapshot of canonical Elixpo package metadata
+docs/                       Package operations and maintainer documentation
+public/                     Static response headers for the publication surface
+scripts/                    Registry, site, installer, and APT assembly tooling
+src/                        Static Next.js package catalogue
+tests/                      Shared package and repository tests
+web/                        Stable legacy assets and installer template
+packages.toml               Linux release namespace and artifact registry
+```
 
-## Preview
+The main Elixpo registry owns organization-level package classification. This
+repository owns application source, release artifacts, installers, signed APT
+metadata, package-specific documentation, and the package publication UI.
 
-<p align="center">
-  <a href="apps/win-dot-panel/docs/images/emoji-panel.png">
-    <img src="apps/win-dot-panel/docs/images/emoji-panel.png" alt="Win Dot Panel emoji picker" width="310">
-  </a>
-  &nbsp;
-  <a href="apps/win-dot-panel/docs/images/clipboard-panel.png">
-    <img src="apps/win-dot-panel/docs/images/clipboard-panel.png" alt="Win Dot Panel clipboard history" width="310">
-  </a>
-</p>
+## Development
 
-## Help and updates
+Frontend:
 
-Visit [packages.elixpo.com](https://packages.elixpo.com/) for current installation information. If something does not work, [open an issue](https://github.com/elixpo/packages.elixpo/issues) and include your Linux distribution and desktop environment.
+```bash
+npm ci
+npm run registry:check
+npm run lint
+npm run typecheck
+npm run build
+python3 scripts/prepare_site.py /tmp/elixpo-package-site
+python3 scripts/check_site.py /tmp/elixpo-package-site
+```
 
-Developers and maintainers can find the repository layout, test commands, release process, and signing documentation in the [technical guide](docs/maintainers.md).
+Application and Python checks are documented in
+[`docs/maintainers.md`](docs/maintainers.md).
+
+## Releases and deployment
+
+Stable product tags use independent namespaces:
+
+```text
+win-dot-panel/v1.0.0-10
+screenbridge/v1.0.0-2
+```
+
+Each product workflow builds and verifies its Debian package and checksums. The
+deployment workflow then downloads the latest stable release for every
+registered application, verifies package identity and checksums, builds one APT
+index, signs the release metadata, and publishes the catalogue and repository as
+one artifact.
+
+GitHub Pages remains the production host during the Cloudflare migration. The
+manual Cloudflare candidate workflow publishes the same artifact to the
+`packages-elixpo` Pages project. The custom domain moves only after the candidate
+passes route, installer, signature, and package-pool verification. Cloudflare
+and APT credentials are organization-managed and are not duplicated in the
+repository.
+
+See [`docs/apt-repository.md`](docs/apt-repository.md) for signing, release, and
+recovery operations, and [`docs/cloudflare-pages.md`](docs/cloudflare-pages.md)
+for candidate deployment, domain cutover, verification, and rollback.
+
+## Participation and support
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing changes. Public support
+boundaries are in [SUPPORT.md](SUPPORT.md), private vulnerability reporting is
+defined in [SECURITY.md](SECURITY.md), and repository authority is recorded in
+[GOVERNANCE.md](GOVERNANCE.md).
 
 ## License
 
-ScreenBridge and the repository tools use the MIT License. Win Dot Panel uses MIT-licensed application code and includes emoji data under the Unicode License v3.
+Repository automation, the catalogue, and ScreenBridge use the MIT License. Win
+Dot Panel includes MIT-licensed application code and Unicode data under the
+Unicode License v3. See [NOTICE](NOTICE) and each application directory for the
+complete terms.

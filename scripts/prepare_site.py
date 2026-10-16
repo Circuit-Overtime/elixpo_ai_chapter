@@ -1,4 +1,4 @@
-"""Prepare the multi-product packages.elixpo.com Pages artifact."""
+"""Assemble the static catalogue, installers, and legacy public assets."""
 
 from __future__ import annotations
 
@@ -17,9 +17,15 @@ def prepare_site(source: Path, destination: Path) -> None:
         raise FileExistsError(f"Destination already exists: {destination}")
     shutil.copytree(source, destination)
 
-    template_path = destination / "install.sh.in"
-    template = template_path.read_text(encoding="utf-8")
-    template_path.unlink()
+    template = Path("web/install.sh.in").read_text(encoding="utf-8")
+    (destination / "install.sh.in").unlink(missing_ok=True)
+
+    # These stable URLs predate the application frontend and remain part of
+    # the public package contract. The Next.js site references them directly.
+    for relative in ("favicon.ico", "favicon.png", "info.css", "og-image.png", "screenbridge/icon.svg"):
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(Path("web") / relative, target)
 
     for package, display_name in PRODUCTS.items():
         rendered = template.replace("@PACKAGE@", package).replace("@DISPLAY_NAME@", display_name)
@@ -35,7 +41,7 @@ def prepare_site(source: Path, destination: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("destination", type=Path)
-    parser.add_argument("--source", type=Path, default=Path("web"))
+    parser.add_argument("--source", type=Path, default=Path("out"))
     args = parser.parse_args()
     prepare_site(args.source, args.destination)
     return 0

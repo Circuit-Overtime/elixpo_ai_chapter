@@ -1,0 +1,28 @@
+{
+  "name": "@elixpo/packages-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The standalone catalogue and signed package distribution surface for Elixpo.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "registry:sync": "node scripts/sync-registry.mjs",
+    "registry:check": "node scripts/sync-registry.mjs --check"
+  },
+  "dependencies": {
+    "next": "16.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.0",
+    "typescript": "^5"
+  }
+}

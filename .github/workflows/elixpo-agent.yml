@@ -1,0 +1,330 @@
+name: Elixpo Agent
+
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, edited, review_requested]
+  pull_request_review:
+    types: [submitted]
+  pull_request_review_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      number:
+        description: Issue or pull request number
+        required: true
+        type: number
+      scope:
+        description: Target type
+        required: true
+        type: choice
+        options: [issue, pull_request]
+      request:
+        description: Work to perform
+        required: true
+        type: string
+
+concurrency:
+  group: elixpo-agent-${{ github.event.issue.number || github.event.pull_request.number || inputs.number }}
+  cancel-in-progress: false
+
+jobs:
+  agent:
+    if: |
+      github.event_name == 'workflow_dispatch' || (
+        github.actor != 'elixpoo' && (
+        (github.event_name == 'issues' && contains(format('{0} {1}', github.event.issue.title, github.event.issue.body), '@elixpoo')) ||
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@elixpoo') && !contains(github.event.comment.body, '@elixpoo retry')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@elixpoo')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@elixpoo')) ||
+        (github.event_name == 'pull_request' && (
+          github.event.requested_reviewer.login == 'elixpoo' ||
+          contains(format('{0} {1}', github.event.pull_request.title, github.event.pull_request.body), '@elixpoo')
+        ))
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      actions: read
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    env:
+      GH_TOKEN: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+      ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+
+    steps:
+      - name: Authorize and resolve scope
+        id: gate
+        uses: actions/github-script@v7
+        env:
+          INPUT_SCOPE: ${{ inputs.scope }}
+          INPUT_NUMBER: ${{ inputs.number }}
+          INPUT_REQUEST: ${{ inputs.request }}
+        with:
+          github-token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+          script: |
+            const allowed = new Set(['Circuit-Overtime', 'anwe-ch', 'elixpoo', 'ez-vivek']);
+            const actor = context.actor;
+            const event = context.eventName;
+            const payload = context.payload;
+            let scope = process.env.INPUT_SCOPE || '';
+            let number = Number(process.env.INPUT_NUMBER || 0);
+            let request = process.env.INPUT_REQUEST || '';
+            let structured = event === 'pull_request' && payload.action === 'review_requested' && payload.requested_reviewer?.login === 'elixpoo';
+
+            if (event === 'issues') {
+              scope = 'issue'; number = payload.issue.number;
+              request = `${payload.issue.title}\n\n${payload.issue.body || ''}`;
+            } else if (event === 'issue_comment') {
+              scope = payload.issue.pull_request ? 'pull_request' : 'issue';
+              number = payload.issue.number; request = payload.comment.body || '';
+            } else if (event === 'pull_request_review_comment') {
+              scope = 'pull_request'; number = payload.pull_request.number;
+              request = payload.comment.body || '';
+            } else if (event === 'pull_request_review') {
+              scope = 'pull_request'; number = payload.pull_request.number;
+              request = payload.review.body || '';
+            } else if (event === 'pull_request') {
+              scope = 'pull_request'; number = payload.pull_request.number;
+              request = structured ? 'Review this pull request and act on any blocking findings.' : `${payload.pull_request.title}\n\n${payload.pull_request.body || ''}`;
+            }
+
+            const mention = /(^|[^A-Za-z0-9_.+-])@elixpoo([^A-Za-z0-9_.+-]|$)/.test(request);
+            const authorized = allowed.has(actor) && (structured || event === 'workflow_dispatch' || mention);
+            core.setOutput('authorized', String(authorized));
+            core.setOutput('scope', scope);
+            core.setOutput('number', String(number));
+            core.setOutput('request_b64', Buffer.from(request).toString('base64'));
+
+            if (!authorized && mention && number) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: number,
+                body: `Sorry @${actor}, only Elixpo org members can invoke @elixpoo.`
+              });
+            }
+
+      - name: Checkout repository
+        if: steps.gate.outputs.authorized == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+          token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+
+      - name: Setup runtime
+        if: steps.gate.outputs.authorized == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Python
+        if: steps.gate.outputs.authorized == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache RTK
+        if: steps.gate.outputs.authorized == 'true'
+        id: rtk-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/bin/rtk
+          key: rtk-${{ runner.os }}-${{ runner.arch }}-v0.42.0
+
+      - name: Install RTK
+        if: steps.gate.outputs.authorized == 'true'
+        env:
+          RTK_VERSION: v0.42.0
+        run: |
+          mkdir -p "$HOME/.claude"
+          if [ "${{ steps.rtk-cache.outputs.cache-hit }}" != "true" ]; then
+            curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/v0.42.0/install.sh | sh
+          fi
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.local/bin:$PATH"
+          rtk init -g --auto-patch
+          rtk --version
+
+      - name: Configure and start CCR
+        if: steps.gate.outputs.authorized == 'true'
+        run: |
+          bash .github/scripts/setup_ccr.sh
+          bunx @musistudio/claude-code-router start &
+          for attempt in $(seq 1 120); do
+            if curl -fsS http://localhost:3456 >/dev/null; then exit 0; fi
+            sleep 0.5
+          done
+          echo "::error::CCR did not become ready within 60 seconds"
+          exit 1
+
+      - name: Verify CCR route
+        if: steps.gate.outputs.authorized == 'true' && github.event_name == 'workflow_dispatch'
+        run: |
+          STATUS=$(curl -sS -o /tmp/ccr-smoke.json -w '%{http_code}' \
+            http://127.0.0.1:3456/v1/messages \
+            -H 'x-api-key: ccr-pollinations' \
+            -H 'anthropic-version: 2023-06-01' \
+            -H 'content-type: application/json' \
+            --data '{"model":"deepseek","max_tokens":32,"messages":[{"role":"user","content":"Reply OK"}],"tools":[{"name":"read_file","description":"Read one file","input_schema":{"type":"object","properties":{"path":{"type":"string"}},"required":["path"]}}]}')
+          if [ "$STATUS" != "200" ]; then
+            echo "CCR smoke request failed with HTTP $STATUS"
+            python3 -c 'import json; data=json.load(open("/tmp/ccr-smoke.json")); print(str(data.get("error", data))[:1000])'
+            exit 1
+          fi
+          echo "CCR smoke request passed"
+
+      - name: Download repository context
+        if: steps.gate.outputs.authorized == 'true'
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: repo-context
+          workflow: artifact-update.yml
+          path: .elixpo-context
+          if_no_artifact_found: warn
+          github_token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+
+      - name: Prepare scoped task context
+        if: steps.gate.outputs.authorized == 'true'
+        env:
+          REPO: ${{ github.repository }}
+          TARGET_NUMBER: ${{ steps.gate.outputs.number }}
+          TARGET_SCOPE: ${{ steps.gate.outputs.scope }}
+          REQUEST_B64: ${{ steps.gate.outputs.request_b64 }}
+          GIST_ID: ${{ vars.CI_GIST_ID }}
+        run: |
+          set -euo pipefail
+          mkdir -p .elixpo-context
+          printf '%s' "$REQUEST_B64" | base64 --decode > .elixpo-context/request.txt
+          git fetch origin main --depth=50
+          gh issue view "$TARGET_NUMBER" --repo "$REPO" --comments \
+            --json number,title,body,author,labels,assignees,state,comments > .elixpo-context/thread.json
+
+          if [ -n "$GIST_ID" ]; then
+            gh api "gists/$GIST_ID" > .elixpo-context/gist.json
+            jq -r '.files[]?.content // empty' .elixpo-context/gist.json > .elixpo-context/changelog-full.md
+            head -c 80000 .elixpo-context/changelog-full.md > .elixpo-context/changelog.md
+            rm .elixpo-context/changelog-full.md
+          fi
+
+          if [ "$TARGET_SCOPE" = "pull_request" ]; then
+            gh pr view "$TARGET_NUMBER" --repo "$REPO" \
+              --json number,title,body,author,baseRefName,headRefName,headRepository,headRepositoryOwner,isCrossRepository,isDraft,mergeable,reviewDecision,statusCheckRollup,files > .elixpo-context/pull-request.json
+            HEAD_REF=$(jq -r '.headRefName' .elixpo-context/pull-request.json)
+            IS_FORK=$(jq -r '.isCrossRepository' .elixpo-context/pull-request.json)
+            if [ "$IS_FORK" = "false" ] && [ "$HEAD_REF" != "main" ]; then
+              git fetch origin "$HEAD_REF" --depth=50
+              git checkout -B "$HEAD_REF" "origin/$HEAD_REF"
+              WRITE_ALLOWED=true
+            else
+              WRITE_ALLOWED=false
+            fi
+          else
+            gh pr list --repo "$REPO" --state open --search "linked:issue-$TARGET_NUMBER" \
+              --json number,title,headRefName,url > .elixpo-context/linked-pull-requests.json
+            WRITE_ALLOWED=true
+          fi
+
+          jq -n \
+            --arg scope "$TARGET_SCOPE" \
+            --argjson number "$TARGET_NUMBER" \
+            --arg repo "$REPO" \
+            --argjson write_allowed "$WRITE_ALLOWED" \
+            '{scope:$scope, number:$number, repository:$repo, write_allowed:$write_allowed}' \
+            > .elixpo-context/task.json
+
+          git diff --stat origin/main...HEAD > .elixpo-context/diff-stat.txt || true
+          git diff --name-only origin/main...HEAD > .elixpo-context/changed-files.txt || true
+
+      - name: Add reaction
+        if: steps.gate.outputs.authorized == 'true' && github.event.comment.id
+        continue-on-error: true
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
+            gh api "repos/${{ github.repository }}/pulls/comments/${{ github.event.comment.id }}/reactions" -f content=rocket
+          else
+            gh api "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" -f content=rocket
+          fi
+
+      - name: Build task prompt
+        if: steps.gate.outputs.authorized == 'true'
+        id: prompt
+        env:
+          TARGET_NUMBER: ${{ steps.gate.outputs.number }}
+          TARGET_SCOPE: ${{ steps.gate.outputs.scope }}
+        run: |
+          {
+            echo 'body<<ELIXPO_PROMPT'
+            echo "You are @elixpoo, the repository agent for ${{ github.repository }}. Work only on $TARGET_SCOPE #$TARGET_NUMBER and this repository."
+            echo
+            echo "Read .elixpo-context/task.json, request.txt, thread.json, and context.md once if present. Read changelog.md once if present. For a pull request also read pull-request.json, diff-stat.txt, and changed-files.txt, then inspect only targeted per-file diffs with git diff origin/main...HEAD -- <path>. Never dump the entire PR diff. For an issue, inspect linked-pull-requests.json before deciding where code belongs."
+            echo
+            echo "Infer intent and finish the smallest complete path: answer a question; triage or clarify; update issue/PR title or description; inspect/review a PR; or implement requested repository changes. If an issue has a linked writable PR, update that branch. Otherwise implementation from an issue uses elixpo/issue-$TARGET_NUMBER-<hex>, pushes it, and opens one PR whose body ends with Fixes #$TARGET_NUMBER."
+            echo
+            echo "Tool policy: use tools only when they advance the request. Start from provided context instead of rediscovering the repository. Prefer rg and targeted reads. RTK compresses supported shell output. Use the background/code route only for actual code work, thinking only for complex reasoning, and web search only when repository context cannot answer a time-sensitive question. Run focused checks proportional to risk. For questions and reviews, use at most 12 tool calls and then publish the result. For implementation, use at most 30 tool calls. Do not inspect generated router configuration, credentials, workflow internals, or repeat checks already represented by the prepared context unless the request explicitly concerns them."
+            echo
+            echo "Repository safety: obey AGENTS.md and .claude/commands. Never push main, force-push, merge, expose secrets, modify another repository, or act outside this issue/PR. task.json.write_allowed must be true before changing an existing PR branch. Preserve closing references when editing PR bodies. One concise public comment/review is enough; avoid progress spam."
+            echo
+            echo "You have full sandbox tool access. Act autonomously within scope. In public text speak as a teammate and never mention the harness, models, routing, token optimization, or automation internals."
+            echo 'ELIXPO_PROMPT'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run repository agent
+        if: steps.gate.outputs.authorized == 'true'
+        uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_BASE_URL: http://localhost:3456
+          GIT_AUTHOR_NAME: elixpoo
+          GIT_AUTHOR_EMAIL: 269200728+elixpoo@users.noreply.github.com
+          GIT_COMMITTER_NAME: elixpoo
+          GIT_COMMITTER_EMAIL: 269200728+elixpoo@users.noreply.github.com
+        with:
+          anthropic_api_key: ccr-pollinations
+          github_token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+          branch_prefix: elixpo/
+          show_full_output: false
+          trigger_phrase: "@elixpoo"
+          prompt: ${{ steps.prompt.outputs.body }}
+          claude_args: --permission-mode bypassPermissions --max-turns 32
+          additional_permissions: |
+            actions: read
+
+      - name: Report RTK savings
+        if: always() && steps.gate.outputs.authorized == 'true'
+        run: rtk gain || true
+
+      - name: Report sanitized router error
+        if: failure() && steps.gate.outputs.authorized == 'true'
+        continue-on-error: true
+        run: |
+          grep -R -i -E 'error|failed|status.?400|bad.request|forbidden|invalid' \
+            "$HOME/.claude-code-router/logs" "$HOME/.claude-code-router/claude-code-router.log" 2>/dev/null \
+            | sed "s|$ELIXPO_POLLINATIONS_API_KEY|***|g" \
+            | tail -80
+
+      - name: Remove generated branding
+        if: always() && steps.gate.outputs.authorized == 'true'
+        continue-on-error: true
+        env:
+          TARGET_NUMBER: ${{ steps.gate.outputs.number }}
+        run: |
+          COMMENT_ID=$(gh api "repos/${{ github.repository }}/issues/$TARGET_NUMBER/comments" --paginate \
+            --jq '[.[] | select(.user.login=="elixpoo" and ((.body|contains("Claude finished")) or (.body|contains("Claude Code")) or (.body|contains("Generated with Claude"))))] | last | .id')
+          [ -z "$COMMENT_ID" ] || [ "$COMMENT_ID" = "null" ] && exit 0
+          BODY=$(gh api "repos/${{ github.repository }}/issues/comments/$COMMENT_ID" --jq .body)
+          CLEANED=$(printf '%s' "$BODY" | sed -E '/Claude finished/d; /Generated with Claude/d; /Claude Code is working/d; /\[Create .* PR .*\]/d')
+          gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$COMMENT_ID" -f body="$CLEANED" >/dev/null
+
+      - name: Report failure
+        if: failure() && steps.gate.outputs.authorized == 'true'
+        env:
+          TARGET_NUMBER: ${{ steps.gate.outputs.number }}
+        run: |
+          gh issue comment "$TARGET_NUMBER" --repo "${{ github.repository }}" --body "> The repository task did not complete. [View run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) and comment \`@elixpoo retry\` after the cause is resolved."

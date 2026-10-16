@@ -6,4 +6,11 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-
+node_modules/
+.next/
+out/
+site/
+*.tsbuildinfo
+*.log
+.env*
+!.env.example
