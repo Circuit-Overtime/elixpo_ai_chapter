@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import contributors from "../../content/contributors.json";
 import history from "../../content/history.json";
 import { DIRECTORY_ENTRIES, familyPath, getDirectoryEntries } from "@/lib/directory";
-import { ELIXPO_PACKAGES } from "@/lib/catalog";
+import { ELIXPO_PACKAGES } from "@/lib/packages";
 import { ProjectMark } from "@/components/ProjectMark";
 
 const featured = ["blogs", "lixsketch", "oreo", "oreolook", "kareixo", "lixrl"]

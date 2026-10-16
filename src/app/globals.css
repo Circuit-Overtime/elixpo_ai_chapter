@@ -226,6 +226,7 @@ svg { transition: transform .2s ease; }
 .apt-facts { display: grid; align-content: end; border-top: 1px solid rgba(20,32,24,.22); }.apt-facts article { display: grid; grid-template-columns: 32px 180px 1fr; gap: 1rem; align-items: start; padding: 1.3rem 0; border-bottom: 1px solid rgba(20,32,24,.22); }.apt-facts h3,.apt-facts p { margin: 0; }.apt-facts h3 { font-size: 1rem; }.apt-facts p { color: #596059; font-size: .82rem; line-height: 1.6; }
 
 .developer-packages { width: min(100% - 2rem,1450px); }
+.registry-date { margin: 1.25rem 0 0; color: var(--muted); font: .68rem var(--font-ui-mono); }
 .developer-package-list { border-top: 1px solid var(--line); }
 .developer-package-list > a { display: grid; grid-template-columns: 40px 48px minmax(0,1fr) 20px; gap: 1rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--line); transition: padding .2s ease; }.developer-package-list > a:hover { padding-left: .6rem; }.developer-package-list > a > span { color: #8a918c; font: 600 .67rem var(--font-ui-mono); }.developer-package-list .npm-mark { width: 42px; min-width: 42px; font-style: normal; }.developer-package-list > a > div { display: grid; grid-template-columns: 180px minmax(220px,1fr) minmax(220px,.7fr); gap: 1rem; align-items: center; }.developer-package-list small { color: var(--muted); }.developer-package-list strong,.developer-package-list code { font: .78rem var(--font-ui-mono); }.developer-package-list code { color: var(--muted); }
 

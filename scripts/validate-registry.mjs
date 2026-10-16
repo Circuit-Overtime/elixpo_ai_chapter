@@ -12,11 +12,12 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, licensing, sponsorship, contributors, history, brand] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, licensing, sponsorship, contributors, history, brand] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
   readJson("content/directory.json"),
+  readJson("content/packages.json"),
   readJson("content/licensing.json"),
   readJson("content/sponsorship.json"),
   readJson("content/contributors.json"),
@@ -49,6 +50,9 @@ if (licensing.schemaVersion !== organization.schemaVersion) {
 if (directory.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "directory and organization versions must match");
 }
+if (packages.schemaVersion !== organization.schemaVersion) {
+  addError("schemaVersion", "packages and organization versions must match");
+}
 if (sponsorship.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "sponsorship and organization versions must match");
 }
@@ -62,6 +66,7 @@ if (!isDate(organization.lastVerified)) addError("organization.lastVerified", "e
 if (!isDate(taxonomy.lastVerified)) addError("taxonomy.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(repositories.snapshotDate)) addError("repositories.snapshotDate", "expected YYYY-MM-DD");
 if (!isDate(directory.lastVerified)) addError("directory.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(packages.lastVerified)) addError("packages.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(licensing.lastVerified)) addError("licensing.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
@@ -271,6 +276,42 @@ for (const repositoryName of publicRepositoryNames) {
   }
 }
 
+for (const key of ["website", "repository", "aptDocumentation"]) {
+  validateUrl(`packages.distribution.${key}`, packages.distribution?.[key]);
+}
+const linuxPackageNames = new Set();
+const packageSlugs = new Set();
+for (const [index, item] of (packages.linuxApplications ?? []).entries()) {
+  const location = `packages.linuxApplications[${index}]`;
+  if (packageSlugs.has(item.slug)) addError(`${location}.slug`, "duplicate slug");
+  if (linuxPackageNames.has(item.packageName)) addError(`${location}.packageName`, "duplicate package name");
+  packageSlugs.add(item.slug);
+  linuxPackageNames.add(item.packageName);
+  if (!item.version) addError(`${location}.version`, "is required");
+  if (!["maintained", "deprecated", "unsupported", "archived"].includes(item.status)) addError(`${location}.status`, "unknown value");
+  for (const key of ["page", "source", "releases"]) validateUrl(`${location}.${key}`, item[key]);
+  if (item.icon?.startsWith("http")) validateUrl(`${location}.icon`, item.icon);
+  else if (!item.icon?.startsWith("/")) addError(`${location}.icon`, "expected a URL or root-relative asset path");
+  for (const [imageIndex, image] of (item.images ?? []).entries()) {
+    validateUrl(`${location}.images[${imageIndex}].src`, image.src);
+    if (!image.alt) addError(`${location}.images[${imageIndex}].alt`, "is required");
+  }
+}
+const npmPackageNames = new Set();
+for (const [index, item] of (packages.npmPackages ?? []).entries()) {
+  const location = `packages.npmPackages[${index}]`;
+  if (!item.name?.startsWith("@elixpo/")) addError(`${location}.name`, "must use the @elixpo scope");
+  if (npmPackageNames.has(item.name)) addError(`${location}.name`, "duplicate package name");
+  npmPackageNames.add(item.name);
+  if (!item.version) addError(`${location}.version`, "is required");
+  if (!["maintained", "deprecated", "unsupported", "archived"].includes(item.status)) addError(`${location}.status`, "unknown value");
+  validateUrl(`${location}.href`, item.href);
+  validateUrl(`${location}.source`, item.source);
+}
+if (npmPackageNames.has("@elixpo/claudeops")) {
+  addError("packages.npmPackages", "ClaudeOps is not maintained and must not appear in the maintained package catalog");
+}
+
 if (errors.length > 0) {
   console.error(`Registry validation failed with ${errors.length} error(s):`);
   for (const error of errors) console.error(`- ${error}`);
@@ -282,5 +323,6 @@ if (errors.length > 0) {
   }, {});
   console.log(`Registry valid: ${repositories.entries.length} repository records.`);
   console.log(`Public directory complete: ${Object.keys(directory.entries).length} editorial records.`);
+  console.log(`Package registry valid: ${packages.linuxApplications.length} Linux applications and ${packages.npmPackages.length} npm packages.`);
   console.log(`Verification states: ${Object.entries(counts).map(([key, value]) => `${key}=${value}`).join(", ")}.`);
 }
