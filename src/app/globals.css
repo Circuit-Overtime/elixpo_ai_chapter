@@ -496,6 +496,7 @@ svg { transition: transform .2s ease; }
 .inline-links { display: flex; flex-wrap: wrap; gap: 2rem; }
 .history-ledger article { display: grid; grid-template-columns: 140px 50px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--line); }
 .history-ledger span { color: var(--leaf); font: 650 .85rem var(--font-ui-mono); }
+.history-ledger span small { display: block; margin-top: .55rem; color: var(--muted); font: 500 .58rem/1.4 var(--font-ui-mono); text-transform: uppercase; letter-spacing: .06em; }
 .history-ledger i { color: #9aa19b; font: normal .65rem var(--font-ui-mono); }
 .history-ledger h2 { margin: 0 0 1rem; font-size: clamp(1.8rem,3vw,3rem); letter-spacing: -.045em; }
 .history-ledger p { max-width: 750px; color: var(--muted); line-height: 1.7; }

@@ -173,8 +173,12 @@ for (const [index, person] of (contributors.featured ?? []).entries()) {
 for (const [index, milestone] of (history.entries ?? []).entries()) {
   const location = `history.entries[${index}]`;
   if (!milestone.period || !milestone.title || !milestone.description) addError(location, "period, title, and description are required");
+  if (!["verified-day", "verified-month", "verified-year", "verified-range", "approximate"].includes(milestone.datePrecision)) addError(`${location}.datePrecision`, "unknown date precision");
   if (!Array.isArray(milestone.evidence) || milestone.evidence.length === 0) addError(`${location}.evidence`, "at least one evidence URL is required");
-  for (const [evidenceIndex, url] of (milestone.evidence ?? []).entries()) validateUrl(`${location}.evidence[${evidenceIndex}]`, url);
+  for (const [evidenceIndex, evidence] of (milestone.evidence ?? []).entries()) {
+    if (!evidence.label) addError(`${location}.evidence[${evidenceIndex}].label`, "is required");
+    validateUrl(`${location}.evidence[${evidenceIndex}].url`, evidence.url);
+  }
 }
 
 validateUrl("brand.canonicalHome", brand.canonicalHome);

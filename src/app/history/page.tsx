@@ -1,5 +1,35 @@
 import history from "../../../content/history.json";
 import { ArrowUpRight } from "lucide-react";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
-export const metadata = createPageMetadata({ title: "History of Elixpo", description: "Follow Elixpo from its 2023 college-era experiments to an open-source project foundry organized around Chapters, Member Projects, research, services, and durable public credit.", path: "/history" });
-export default function HistoryPage() { const jsonLd = { "@context": "https://schema.org", "@type": "AboutPage", name: "History of Elixpo", description: metadata.description, about: { "@type": "Organization", name: "Elixpo", foundingDate: "2023" } }; return <main className="page-shell history-page"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} /><header className="page-intro"><p className="eyebrow">History / an evolving commons</p><h1>The record is part<br />of the release.</h1><p className="lede">Elixpo began as a college-era collection of experiments. Graduation does not turn it into a conventional SaaS company; it clarifies the enduring work: helping active open projects become understandable, contributable, attributable releases.</p></header><section className="history-ledger">{history.entries.map((item, index) => <article key={`${item.period}-${item.title}`}><span>{item.period}</span><i>{String(index+1).padStart(2,"0")}</i><div><h2>{item.title}</h2><p>{item.description}</p><div className="history-evidence">{item.evidence.map((url,evidenceIndex)=><a key={url} href={url} target="_blank" rel="noreferrer">Evidence {evidenceIndex+1}<ArrowUpRight size={12}/></a>)}</div></div></article>)}</section><section className="method-panel"><p className="eyebrow">Living record</p><h2>“Complete” must mean verifiable.</h2><p>This first institutional timeline records the eras supported by the organization’s current repository history and decisions. It should grow through dated releases, accepted Chapters, stewardship changes, major contributors, and linked primary evidence—not retrospective mythology.</p></section></main>; }
+
+export const metadata = createPageMetadata({
+  title: "Verified history of Elixpo",
+  description: "Follow the evidence-backed history of Elixpo from its earliest surviving 2023 project through the GitHub organization, Chapter releases, research records, lifecycle decisions, and project-foundry direction.",
+  path: "/history",
+});
+
+const precisionLabel: Record<string, string> = {
+  "verified-day": "Exact day verified",
+  "verified-month": "Month verified",
+  "verified-year": "Year verified",
+  "verified-range": "Range verified",
+  approximate: "Approximate date",
+};
+
+export default function HistoryPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "History of Elixpo",
+    description: metadata.description,
+    about: { "@type": "Organization", name: "Elixpo", foundingDate: "2023" },
+    mainEntity: { "@type": "ItemList", itemListElement: history.entries.map((item, index) => ({ "@type": "ListItem", position: index + 1, name: item.title, description: item.description, url: item.evidence[0].url })) },
+  };
+
+  return <main className="page-shell history-page">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+    <header className="page-intro"><p className="eyebrow">History / evidence before mythology</p><h1>The record is part<br />of the release.</h1><p className="lede">Elixpo&apos;s history begins with surviving college-era project evidence, not a retrospective founding story. Every milestone below states its date precision and links to the public record supporting the wording.</p></header>
+    <section className="history-ledger">{history.entries.map((item, index) => <article key={`${item.period}-${item.title}`}><span>{item.period}<small>{precisionLabel[item.datePrecision]}</small></span><i>{String(index + 1).padStart(2,"0")}</i><div><p className="eyebrow">{item.kind}</p><h2>{item.title}</h2><p>{item.description}</p><div className="history-evidence">{item.evidence.map((evidence) => <a key={evidence.url} href={evidence.url} target="_blank" rel="noreferrer">{evidence.label}<ArrowUpRight size={12} /></a>)}</div></div></article>)}</section>
+    <section className="method-panel"><p className="eyebrow">Method and limits</p><h2>“Complete” must mean verifiable.</h2><p>{history.methodology}</p><p>Closures, pauses, and archival decisions remain in the lifecycle registry even when an exact historical transition date is unavailable. Future milestones should be added only with primary evidence and appropriately narrow wording.</p></section>
+  </main>;
+}
