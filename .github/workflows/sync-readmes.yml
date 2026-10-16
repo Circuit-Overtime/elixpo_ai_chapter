@@ -47,30 +47,31 @@ jobs:
           npm run registry:check
           npm run readme:check
 
-      - name: Require the scoped synchronization token
+      - name: Validate the scoped synchronization token
         env:
-          SYNC_TOKEN: ${{ secrets.ELIXPO_README_SYNC_TOKEN }}
+          GH_TOKEN: ${{ secrets.ELIXPO_README_SYNC_TOKEN }}
         run: |
-          if [ -z "$SYNC_TOKEN" ]; then
+          set -euo pipefail
+          if [ -z "$GH_TOKEN" ]; then
             echo "::error::ELIXPO_README_SYNC_TOKEN is not configured. See docs/readme/synchronization.md."
             exit 1
           fi
+          for repository in elixpo/.github elixpo/elixpo_chapter; do
+            if ! can_push=$(gh api "repos/$repository" --jq '.permissions.push // false'); then
+              echo "::error::ELIXPO_README_SYNC_TOKEN cannot access $repository. Grant the token repository access plus Contents and Pull requests read/write permissions."
+              exit 1
+            fi
+            if [ "$can_push" != "true" ]; then
+              echo "::error::ELIXPO_README_SYNC_TOKEN can read $repository but cannot push a synchronization branch. Grant Contents read/write permission."
+              exit 1
+            fi
+          done
 
-      - name: Check out the organization profile repository
-        uses: actions/checkout@v5
-        with:
-          repository: elixpo/.github
-          ref: main
-          path: _sync/organization
-          token: ${{ secrets.ELIXPO_README_SYNC_TOKEN }}
-
-      - name: Check out the Chapter repository
-        uses: actions/checkout@v5
-        with:
-          repository: elixpo/elixpo_chapter
-          ref: main
-          path: _sync/chapter
-          token: ${{ secrets.ELIXPO_README_SYNC_TOKEN }}
+      - name: Check out public downstream repositories
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch main https://github.com/elixpo/.github.git _sync/organization
+          git clone --depth 1 --branch main https://github.com/elixpo/elixpo_chapter.git _sync/chapter
 
       - name: Open or update downstream pull requests
         env:
@@ -78,6 +79,7 @@ jobs:
           SOURCE_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
+          gh auth setup-git
 
           sync_readme() {
             local repository="$1"
