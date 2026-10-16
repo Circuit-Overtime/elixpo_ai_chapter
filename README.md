@@ -11,7 +11,7 @@
 
 <p align="center">
   <strong>The live health and uptime page for everything Elixpo.</strong><br/>
-  Cloudflare-native, free and open source, built by a global community of 45+ contributors.
+  Cloudflare-native, open source, and maintained alongside the services it observes.
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
   <a href="https://elixpo.com">Website</a> ·
   <a href="https://github.com/orgs/elixpo/discussions">Discussions</a> ·
   <a href="https://github.com/elixpo/elixpo_chapter">Monorepo</a> ·
-  <a href="https://github.com/sponsors/Circuit-Overtime">Sponsor</a>
+  <a href="https://github.com/elixpo/status.elixpo/issues">Report a status problem</a>
 </p>
 
 ---
@@ -56,22 +56,23 @@ requests come back as errors, the service is marked as degraded or down. There's
 no manual switch to flip and no separate monitoring tool — the page reflects what
 real users are actually experiencing.
 
-This means the page is always honest and always up to date: it refreshes on its
-own, and a new Elixpo service shows up here as soon as it goes live.
+The page reports what the configured Cloudflare analytics source can observe.
+When that source cannot be reached, the public service directory remains
+available and the page explicitly withholds an operational conclusion.
 
 ## The ecosystem
 
 | Tool | What it does | Link |
 | --- | --- | --- |
-| 🎨 **Elixpo Art** | AI image generation _(under dev)_ | [art.elixpo.com](https://elixpo.com) |
 | ✍️ **Elixpo Blogs** | A rich, modern writing and publishing space | [blogs.elixpo.com](https://blogs.elixpo.com) |
 | 🖊️ **LixSketch** | A hand-drawn style whiteboard for ideas and diagrams | [sketch.elixpo.com](https://sketch.elixpo.com) |
-| 💬 **Elixpo Chat** | A fluid, real-time AI chat experience _(under dev)_ | [chat.elixpo.com](https://chat.elixpo.com) |
-| 🔎 **Elixpo Search** | Fast, AI-assisted search | [search.elixpo.com](https://search.elixpo.com) |
+| 🔎 **OreoLook** | Open research and cited web search | [search.elixpo.com](https://search.elixpo.com) |
 | 👤 **Elixpo Accounts** | One identity (SSO) across the ecosystem | [accounts.elixpo.com](https://accounts.elixpo.com) |
 | 🔗 **lixrl** | Our flagship URL shortener | [lixrl.com](https://lixrl.com) |
 | 🪪 **Portfolios** | Personal pages to showcase your work | [me.elixpo.com](https://me.elixpo.com) |
 | 🐼 **Oreo** | The mascot's home | [oreo.elixpo.com](https://oreo.elixpo.com) |
+| 🧪 **Elixpo Research** | Papers, artifacts, source, and reproducibility records | [research.elixpo.com](https://research.elixpo.com) |
+| 📦 **Elixpo Packages** | Signed Linux applications and developer packages | [packages.elixpo.com](https://packages.elixpo.com) |
 
 Developers can drop our editors into their own projects with the
 **`@elixpo/lixsketch`** and **`@elixpo/lixeditor`** packages, on npm and as VS
@@ -139,8 +140,9 @@ A rendered, interactive version lives at **[elixpo.com/architecture](https://eli
 
 ## Built by the community
 
-Elixpo is made by people, in the open. **45+ contributors** have shaped these
-tools, with a small core team steering the way:
+Elixpo is developed in public by maintainers and contributors across its active
+projects. Current roles and attributable work are published in the
+[organization people directory](https://elixpo.com/people).
 
 - **Ayushman Bhattacharya** - Founder & Lead ([@Circuit-Overtime](https://github.com/Circuit-Overtime))
 - **Vivek Yadav** - Lead Co-Dev ([@ez-vivek](https://github.com/ez-vivek))
@@ -149,17 +151,11 @@ tools, with a small core team steering the way:
 Everyone is welcome. See **[CONTRIBUTING.md](CONTRIBUTING.md)** and our
 **[Code of Conduct](CODE_OF_CONDUCT.md)**.
 
-## Recognition & programs
-
-Elixpo has taken part in and been supported by **GSSOC**, **Hacktoberfest**,
-**Pollinations.AI**, **MS Startup Foundations**, and **OSCI**.
-
 ## Get involved
 
 - 💬 **Join the conversation** in [GitHub Discussions](https://github.com/orgs/elixpo/discussions).
-- 🚀 **Submit your project** to be featured across the ecosystem.
-- 🛠️ **Contribute** - browse good first issues in the [monorepo](https://github.com/elixpo/elixpo_chapter).
-- ❤️ **Support us** via [GitHub Sponsors](https://github.com/sponsors/Circuit-Overtime).
+- 🛠️ **Contribute** through the public paths listed in the [project directory](https://elixpo.com/projects).
+- 📣 **Report a status problem** in this repository's [issue tracker](https://github.com/elixpo/status.elixpo/issues).
 
 ## Brand assets
 

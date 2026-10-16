@@ -36,6 +36,7 @@ export interface StatusPayload {
     products: ProductStatus[];
     changelogs: ChangeLogItem[];
     fetchedAt: number;
+    monitoringAvailable: boolean;
 }
 
 const BASE = "elixpo.com";
@@ -65,11 +66,30 @@ function health(total: number, fivexx: number): Health {
 }
 
 export async function buildStatus(): Promise<StatusPayload> {
-    const inv = await discoverAccount();
     const w = lastHours(24);
-    const zone = inv.zones.find((z) => z.name === BASE) || inv.zones[0];
+    const [inv, changelogs] = await Promise.all([
+        discoverAccount().catch(() => null),
+        fetchChangelogs(6).catch(() => []),
+    ]);
 
-    const changelogs = await fetchChangelogs(6);
+    if (!inv) {
+        return {
+            products: knownDomains().map((meta) => ({
+                label: meta.label,
+                domain: meta.domain,
+                repo: meta.repo,
+                health: "idle",
+                window: meta.domain === BASE ? "90d" : "24h",
+                days: [],
+                uptimePct: 100,
+                seriesAvailable: false,
+                total: 0,
+            })),
+            changelogs,
+            fetchedAt: Date.now(),
+            monitoringAvailable: false,
+        };
+    }
 
     // Canonical service list — built from the registry's known product domains
     // unioned with discovered Pages projects. This is INDEPENDENT of zone
@@ -84,7 +104,6 @@ export async function buildStatus(): Promise<StatusPayload> {
         byDomain.set(domain, { label: meta.label, repo: meta.repo });
     }
     for (const m of knownDomains()) {
-        if (m.domain !== BASE && !m.domain.endsWith(`.${BASE}`)) continue;
         if (EXCLUDE.has(m.domain)) continue;
         if (!byDomain.has(m.domain)) {
             byDomain.set(m.domain, { label: m.label, repo: m.repo });
@@ -94,6 +113,13 @@ export async function buildStatus(): Promise<StatusPayload> {
     const products: ProductStatus[] = await Promise.all(
         [...byDomain.entries()].map(async ([domain, meta]) => {
             const isBase = domain === BASE;
+            const zone = inv.zones
+                .filter(
+                    (candidate) =>
+                        domain === candidate.name ||
+                        domain.endsWith(`.${candidate.name}`),
+                )
+                .sort((a, b) => b.name.length - a.name.length)[0];
             // Current health from the last 24h; bars from the history window
             // appropriate to the service (90d for the base platform, 24h for
             // sub-services, which only retain short-window edge analytics).
@@ -137,5 +163,10 @@ export async function buildStatus(): Promise<StatusPayload> {
         return a.label.localeCompare(b.label);
     });
 
-    return { products, changelogs, fetchedAt: inv.fetchedAt };
+    return {
+        products,
+        changelogs,
+        fetchedAt: inv.fetchedAt,
+        monitoringAvailable: true,
+    };
 }
