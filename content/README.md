@@ -28,9 +28,8 @@ The human-readable sponsorship policy lives at
 The portal-hosted canonical brand masters live under
 [`public/brand/source/`](../public/brand/source/); production pipelines,
 prompts, and the large sticker archive have not yet migrated.
-The proposed organization-wide visual rules are documented in
-[`docs/brand-system.md`](../docs/brand-system.md) and remain explicitly
-unapproved until the visual-language gate is accepted.
+The approved organization-wide visual rules are documented in
+[`docs/brand-system.md`](../docs/brand-system.md).
 
 Canonical shared README prose and repository wrappers live under `readme/`.
 Generated artifacts under `docs/readme/generated/` are synchronized to the

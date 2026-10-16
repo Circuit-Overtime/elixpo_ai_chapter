@@ -1,18 +1,18 @@
 # Elixpo Open Field brand system
 
-**Status:** Proposed for organization-wide adoption  
+**Status:** Approved for organization-wide use on 2026-10-16  
 **Canonical record:** [`content/brand.json`](../content/brand.json)  
 **Public asset library:** [elixpo.com/assets](https://elixpo.com/assets)
 
-Open Field is the proposed visual language for Elixpo. It aims to make software,
+Open Field is the visual language for Elixpo. It aims to make software,
 research, services, people, and historical records feel related without forcing
 every project to look identical. It is an original system built around editorial
 clarity, warm institutional colour, lightweight geometry, and careful use of the
 Oreo mascot.
 
-This specification is intentionally marked **proposed**. It may guide current
-portal work, but the migration must not be declared complete and the standalone
-branding repository must not be archived until this direction is approved.
+This specification is approved as the organization-wide direction. Approval
+locks the shared visual grammar; it does not declare the asset migration complete
+or authorize archiving the standalone branding repository.
 
 ## Colour roles
 
@@ -95,11 +95,11 @@ These tiers must live in separate directories. Exact duplicates should not be
 copied again, and environment files, credentials, caches, and local generation
 state must never enter the public asset tree.
 
-## Approval gate
+## Approval record
 
-Approval means agreeing to the colour roles, typography roles, geometry,
-iconography, Oreo boundary, motion rules, and accessibility rules together. Once
-approved, representative README, research, package, Chapter, and timeline assets
-can be produced against one stable grammar. Approval does not settle copyright,
-trademark, resale, or modified-sticker permissions; those remain a separate
-policy and legal-review task.
+Open Field was approved on 2026-10-16 with its colour roles, typography roles,
+geometry, iconography, Oreo boundary, motion rules, and accessibility rules as a
+single system. Representative README, research, package, Chapter, and timeline
+components can now be produced against this stable grammar. Approval does not
+settle copyright, trademark, resale, or modified-sticker permissions; those
+remain a separate policy and legal-review task.

@@ -7,7 +7,7 @@
   "migrationStatus": "portal-canonical-assets-migrated",
   "visualDirection": {
     "name": "Open Field",
-    "approvalStatus": "proposed",
+    "approvalStatus": "approved",
     "principle": "Warm institutional clarity with the Oreo mascot used as a human signal, not as decoration on every surface.",
     "palette": [
       { "name": "Paper", "hex": "#F6F5F0" },

@@ -44,6 +44,17 @@ export default function AssetsPage() {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
     <header className="page-intro"><p className="eyebrow">Brand / Open Field</p><h1>A recognizable commons,<br />without the corporate costume.</h1><p className="lede">The Elixpo identity combines quiet institutional typography, warm paper, foundry green, and the Oreo mascot. This library is the canonical public source for organization and project assets.</p></header>
     <section className="brand-direction"><div><p className="eyebrow">Visual principle</p><h2>{brand.visualDirection.name}</h2><p>{brand.visualDirection.principle}</p></div><div className="swatches">{brand.visualDirection.palette.map((color) => <div key={color.hex}><i style={{ background: color.hex }} /><span>{color.name}<small>{color.hex}</small></span></div>)}</div></section>
+    <section className="asset-section brand-proof-section" aria-labelledby="brand-proofs-title">
+      <div className="section-heading split"><div><p className="eyebrow">System proofs</p><h2 id="brand-proofs-title">One grammar across six kinds of public record.</h2></div><p>These components test Open Field against the surfaces Elixpo actually maintains. They share structure without erasing the identity or evidence of each record.</p></div>
+      <div className="brand-proofs">
+        <article className="proof-readme"><span>README / ORGANIZATION</span><strong>Open work should reach<br/><em>a clear public release.</em></strong><p>Software · Research · Services · Chapters</p><i/><i/></article>
+        <article className="proof-ecosystem"><span>ECOSYSTEM</span><div><b>Projects</b><b>Research</b><b>Services</b><b>People</b><i>Elixpo</i></div></article>
+        <article className="proof-record proof-research"><span>RESEARCH / ACTIVE</span><b>OctaBit</b><p>Paper · source · reproducibility</p><small>2026 / VERIFIED RECORD</small></article>
+        <article className="proof-record proof-package"><span>PACKAGE / RELEASED</span><b>@elixpo/lixsketch</b><p>npm · source · install · license</p><small>VERSION 5.6.5</small></article>
+        <article className="proof-record proof-chapter"><span>CHAPTER / PROPOSAL</span><b>A bounded public outcome.</b><p>Goal · roles · review · release</p><small>DECISION RECORDED</small></article>
+        <article className="proof-timeline"><span>HISTORY / 2023</span><i/><div><b>Elixpo begins.</b><p>A college project origin, preserved as history rather than the present identity.</p></div></article>
+      </div>
+    </section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Primary marks</p><h2>Use the mark with room to breathe.</h2></div><DownloadGrid items={marks} /></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Project icon family</p><h2>One family, distinct tools.</h2></div><div className="icon-grid">{icons.map((name) => <a key={name} href={`/brand/source/icons/${name}.png`} download><Image src={`/brand/source/icons/${name}.png`} alt={`${name} project icon`} width={96} height={96} /><span>{name}</span><Download size={13} /></a>)}</div></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Social templates</p><h2>Stable artwork for public announcements.</h2></div><DownloadGrid items={socialAssets} /></section>
