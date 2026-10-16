@@ -37,6 +37,11 @@ The same source can install `screenbridge`; do not register the repository a sec
 - `elixpo/packages.elixpo` owns both application sources, GitHub Releases, the publication workflows, and the custom-domain deployment contract.
 - `APT_SIGNING_KEY` is organization-managed. Cloudflare credentials are repository-scoped during the current migration and exposed only to trusted workflows.
 - Stable package binaries use product-prefixed tags: `win-dot-panel/v...` and `screenbridge/v...`.
+- Changes on `main` run the complete validation and package build, then retain
+  the result as a workflow artifact. They do not create public GitHub Releases.
+- Public GitHub Releases are created only from explicit product version tags.
+  Historical `main-*` prereleases remain available as an audit record of the
+  earlier policy but are not selected by either publication workflow.
 - `.github/workflows/deploy-packages.yml` verifies both releases, builds the shared index, signs it, and deploys one Pages artifact.
 - Each stable product release invokes that shared deployment workflow directly.
 
