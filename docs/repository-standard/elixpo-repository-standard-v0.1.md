@@ -164,6 +164,11 @@ inputs and permissions required for its single responsibility.
 AI and agent automation is optional. A repository MUST remain buildable,
 reviewable, and governable when agent workflows are disabled.
 
+Cloudflare Pages repositories SHOULD follow the common
+[deployment workflow standard](deployment-workflow-standard.md). That standard
+shares review stages, safety boundaries, and stable labels while preserving
+repository-owned preparation, signing, smoke tests, and recovery logic.
+
 ## Branch protection baseline
 
 The recommended active-repository baseline is:
