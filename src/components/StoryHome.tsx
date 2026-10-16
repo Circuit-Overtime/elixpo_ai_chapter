@@ -23,17 +23,21 @@ export function StoryHome() {
       <section className="story-hero">
         <div className="hero-field" aria-hidden="true"><span /><span /><span /></div>
         <div className="hero-copy">
-          <p className="eyebrow">Open-source software, research, and public services</p>
-          <h1>Elixpo supports open-source work <em>through release.</em></h1>
-          <p className="hero-lede">We help maintainers and contributors develop active projects in public, document the work clearly, publish useful releases, and preserve an accurate record of who contributed.</p>
-          <div className="hero-actions">
-            <Link className="button primary" href="/projects">Browse the projects <ArrowRight size={16} /></Link>
-            <Link className="button secondary" href="/about">Learn about Elixpo</Link>
+          <div className="hero-copy-main">
+            <p className="eyebrow">Elixpo · open-source project foundry</p>
+            <h1>Open work should reach a <em>clear public release.</em></h1>
+            <p className="hero-lede">Elixpo brings maintainers and contributors together around active software, research, and public services. We prepare contribution paths, document decisions, publish releases, and preserve who did the work.</p>
+            <div className="hero-actions">
+              <Link className="button primary" href="/projects">Browse the projects <ArrowRight size={16} /></Link>
+              <Link className="button secondary" href="/about">How Elixpo works</Link>
+            </div>
           </div>
-        </div>
-        <div className="hero-note">
-          <span>Since 2023</span>
-          <p>Elixpo maintains open projects, publishes research, operates public services, and records each project’s current status.</p>
+          <aside className="hero-identity" aria-label="Elixpo organization summary">
+            <p>Elixpo</p>
+            <strong>Open-source<br/><em>project foundry</em></strong>
+            <dl><div><dt>Projects</dt><dd>{counts.project}</dd></div><div><dt>Research</dt><dd>{counts.research}</dd></div><div><dt>Services</dt><dd>{counts.service}</dd></div></dl>
+            <small>Building in public since 2023</small>
+          </aside>
         </div>
       </section>
 
@@ -42,11 +46,11 @@ export function StoryHome() {
         <h2>Elixpo helps open-source work become easier to understand, contribute to, and release.</h2>
         <div className="statement-layout">
           <figure className="statement-visual">
-            <Image src="/brand/source/social/elixpo-banner.bg.png" alt="Elixpo mascot carrying a paper plane along a path from source code to a growing project" width={1600} height={400} sizes="(max-width: 900px) 100vw, 52vw" />
+            <Image src="/brand/illustrations/open-source-release-path.webp" alt="Elixpo mascot connecting source code, contributors, review, packaging, and a public release" width={1670} height={940} sizes="(max-width: 900px) 100vw, 68vw" />
           </figure>
           <div className="statement-grid">
-            <p>Publishing a repository does not automatically give a project clear documentation, prepared contribution paths, accountable review, or a release that people can use and cite. Elixpo coordinates that work with project maintainers.</p>
-            <p>An Elixpo Chapter is a defined period of public development with a specific goal, named responsibilities, an expected release, and a permanent contribution record.</p>
+            <p><strong>A repository is the beginning.</strong> Publishing code does not automatically provide clear documentation, prepared contribution paths, accountable review, or a release that people can use and cite. Elixpo coordinates that work with project maintainers.</p>
+            <p><strong>A Chapter gives the work a boundary.</strong> Each Elixpo Chapter has a specific goal, named responsibilities, an expected release, and a permanent contribution record.</p>
           </div>
         </div>
       </section>

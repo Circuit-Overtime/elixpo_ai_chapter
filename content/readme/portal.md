@@ -36,4 +36,8 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md), the
 [repository standard](docs/repository-standard/elixpo-repository-standard-v0.1.md)
 before changing canonical organization facts.
 
+The maintenance boundary between the portal, `research.elixpo`,
+`packages.elixpo`, and individual project repositories is documented in
+[`docs/architecture/specialized-surfaces.md`](docs/architecture/specialized-surfaces.md).
+
 {{SHARED}}

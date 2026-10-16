@@ -61,6 +61,24 @@ Registry snapshot: **{{REGISTRY_DATE}}**. Archived work remains visible in the
 [GitHub organization](https://github.com/orgs/elixpo/repositories?q=archived%3Atrue)
 as history, not as currently supported work.
 
+## Specialized publication surfaces
+
+The main portal remains the organization directory and canonical source for
+classification, lifecycle, relationships, and cross-project links. Two
+specialized repositories operate deeper publication surfaces:
+
+- [`packages.elixpo`]({{PACKAGES_URL}}) owns package building, signed APT
+  distribution, release artifacts, installers, and the package catalogue.
+- [`research.elixpo`]({{RESEARCH_URL}}) is the planned research publisher for
+  papers, citations, datasets, models, demonstrations, and reproducibility
+  records. Research code and primary evidence stay in their owning project
+  repositories.
+
+The specialized sites must consume the shared schema or synchronize changes
+through reviewable pull requests. They do not maintain independent
+organization directories, silently change lifecycle status, or replace the
+owning repository as the source of technical evidence.
+
 ## Participate
 
 - **Contribute to a project:** use the owning repository's contribution guide,
@@ -73,8 +91,8 @@ as history, not as currently supported work.
   [Elixpo Chapter repository]({{CHAPTER_URL}}).
 - **Explore installable work:** visit [Elixpo Packages]({{PACKAGES_URL}}).
 - **Follow research:** the dedicated [Elixpo Research]({{RESEARCH_URL}}) surface
-  is planned; research records remain linked from their owning repositories
-  until it launches.
+  is planned as a separately maintained publisher; research records remain
+  available through the portal and owning repositories until it launches.
 
 ## Evidence, credit, and history
 
