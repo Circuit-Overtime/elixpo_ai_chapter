@@ -12,7 +12,7 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, history, brand, discussions] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, history, brand, discussions, brandProvenance] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
@@ -25,6 +25,7 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
   readJson("content/history.json"),
   readJson("content/brand.json"),
   readJson("content/discussions.json"),
+  readJson("brand/provenance.json"),
 ]);
 
 const errors = [];
@@ -80,6 +81,20 @@ if (!isDate(history.lastVerified)) addError("history.lastVerified", "expected YY
 if (!isDate(brand.lastVerified)) addError("brand.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(brand.audit?.auditedAt)) addError("brand.audit.auditedAt", "expected YYYY-MM-DD");
 if (!/^[0-9a-f]{40}$/.test(brand.audit?.sourceRevision ?? "")) addError("brand.audit.sourceRevision", "expected a full Git commit SHA");
+if (!isDate(brandProvenance.verifiedAt)) addError("brandProvenance.verifiedAt", "expected YYYY-MM-DD");
+if (brandProvenance.sourceRevision !== brand.audit?.sourceRevision) addError("brandProvenance.sourceRevision", "must match the audited brand source revision");
+if (brandProvenance.sourceRepository !== brand.sourceRepository) addError("brandProvenance.sourceRepository", "must match the canonical brand source repository");
+const provenanceGroupIds = new Set();
+let provenanceFileCount = 0;
+for (const [index, group] of (brandProvenance.groups ?? []).entries()) {
+  const location = `brandProvenance.groups[${index}]`;
+  if (provenanceGroupIds.has(group.id)) addError(`${location}.id`, "duplicate group identifier");
+  provenanceGroupIds.add(group.id);
+  if (group.files?.length !== group.fileCount) addError(`${location}.fileCount`, "must equal the number of listed files");
+  if (!/^[0-9a-f]{64}$/.test(group.treeSha256 ?? "")) addError(`${location}.treeSha256`, "expected a SHA-256 digest");
+  provenanceFileCount += group.fileCount ?? 0;
+}
+if (provenanceFileCount !== brand.audit?.exactMasterDuplicates) addError("brandProvenance.groups", "verified group file count must match exactMasterDuplicates");
 if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
 
 validateUrl("discussions.sourceRepository", discussions.sourceRepository);

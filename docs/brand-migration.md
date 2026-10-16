@@ -105,3 +105,11 @@ true:
 - the redirect README has been live long enough to catch missed consumers.
 
 Archiving is reversible. Deletion is not part of this migration.
+
+## Current provenance checkpoint
+
+[`brand/provenance.json`](../brand/provenance.json) records the first verified
+checkpoint: 15 project icons, three primary marks, and three social masters are
+byte-identical to their files at the audited source revision. Their deterministic
+group checksums prevent later source drift from being mistaken for a reviewed
+migration.
