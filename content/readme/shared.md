@@ -83,6 +83,10 @@ owning repository as the source of technical evidence.
 
 - **Contribute to a project:** use the owning repository's contribution guide,
   current issues, and maintainer review process.
+- **Follow current conversation:** use the moderated
+  [Elixpo community index]({{COMMUNITY_URL}}) or open the canonical forum on
+  GitHub. The website's latest feed is activity-ordered and is not an editorial
+  endorsement.
 - **Discuss a Chapter:** start with [Elixpo Discussions]({{DISCUSSIONS_URL}}) and
   describe the working artifact, accountable maintainer, next release objective,
   and availability to review contributions. A discussion is not automatic
@@ -98,9 +102,16 @@ owning repository as the source of technical evidence.
 
 Credit should point to attributable work—merged changes, reviews, releases,
 research, design, documentation, or community operations. Repository history is
-the current evidence source. Elixpo will publish people and organization-history
-records only after roles, dates, consent, and evidence are verified; decorative
-contributor counts are intentionally omitted.
+the current evidence source. The [People record]({{PEOPLE_URL}}) separates
+current organization responsibility from project maintenance, alumni, advisors,
+and community contribution. The [contributor records]({{CONTRIBUTORS_URL}})
+describe attributable public outcomes without presenting a commit total as a
+measure of human value. The [organization timeline]({{HISTORY_URL}}) states date
+precision and links the public evidence for every milestone.
+
+Unknown role dates and empty role categories remain explicit. Elixpo does not
+infer employment, certification, permanent affiliation, review, or consent for
+a private biography from a public contribution.
 
 ## Funding boundary
 
@@ -129,4 +140,5 @@ permission policy is still being consolidated.
 
 [Website]({{WEBSITE_URL}}) · [GitHub]({{GITHUB_URL}}) ·
 [Discussions]({{DISCUSSIONS_URL}}) · [Chapter]({{CHAPTER_URL}}) ·
-[Packages]({{PACKAGES_URL}})
+[Packages]({{PACKAGES_URL}}) · [People]({{PEOPLE_URL}}) ·
+[History]({{HISTORY_URL}})

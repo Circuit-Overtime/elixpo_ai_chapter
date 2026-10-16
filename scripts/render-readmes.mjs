@@ -35,6 +35,10 @@ function activeUrl(key) {
   return endpoint.url;
 }
 
+function portalUrl(pathname) {
+  return new URL(pathname, `${activeUrl("website")}/`).toString().replace(/\/$/, "");
+}
+
 function escapeCell(value) {
   return String(value).replaceAll("|", "\\|");
 }
@@ -106,6 +110,10 @@ const shared = replaceTokens(sharedTemplate, {
   PACKAGES_URL: activeUrl("packages"),
   RESEARCH_URL: activeUrl("research"),
   ASSETS_URL: activeUrl("assets"),
+  COMMUNITY_URL: portalUrl("community"),
+  PEOPLE_URL: portalUrl("people"),
+  CONTRIBUTORS_URL: portalUrl("contributors"),
+  HISTORY_URL: portalUrl("history"),
 });
 
 const sharedHash = createHash("sha256").update(shared).digest("hex");

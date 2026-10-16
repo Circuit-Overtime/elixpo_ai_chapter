@@ -40,7 +40,7 @@ The maintenance boundary between the portal, `research.elixpo`,
 `packages.elixpo`, and individual project repositories is documented in
 [`docs/architecture/specialized-surfaces.md`](docs/architecture/specialized-surfaces.md).
 
-<!-- BEGIN ELIXPO SHARED · sha256:a28f9092f071abdc191a69a59532e6ef600d7f9403dc3f81be52a1103140cd46 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:9167d256c26e6c22b3ed6d4c237cd6bf6226a5af334a4ee16394ba40281bd220 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -168,6 +168,10 @@ owning repository as the source of technical evidence.
 
 - **Contribute to a project:** use the owning repository's contribution guide,
   current issues, and maintainer review process.
+- **Follow current conversation:** use the moderated
+  [Elixpo community index](https://elixpo.com/community) or open the canonical forum on
+  GitHub. The website's latest feed is activity-ordered and is not an editorial
+  endorsement.
 - **Discuss a Chapter:** start with [Elixpo Discussions](https://github.com/orgs/elixpo/discussions) and
   describe the working artifact, accountable maintainer, next release objective,
   and availability to review contributions. A discussion is not automatic
@@ -183,9 +187,16 @@ owning repository as the source of technical evidence.
 
 Credit should point to attributable work—merged changes, reviews, releases,
 research, design, documentation, or community operations. Repository history is
-the current evidence source. Elixpo will publish people and organization-history
-records only after roles, dates, consent, and evidence are verified; decorative
-contributor counts are intentionally omitted.
+the current evidence source. The [People record](https://elixpo.com/people) separates
+current organization responsibility from project maintenance, alumni, advisors,
+and community contribution. The [contributor records](https://elixpo.com/contributors)
+describe attributable public outcomes without presenting a commit total as a
+measure of human value. The [organization timeline](https://elixpo.com/history) states date
+precision and links the public evidence for every milestone.
+
+Unknown role dates and empty role categories remain explicit. Elixpo does not
+infer employment, certification, permanent affiliation, review, or consent for
+a private biography from a public contribution.
 
 ## Funding boundary
 
@@ -214,6 +225,7 @@ permission policy is still being consolidated.
 
 [Website](https://elixpo.com) · [GitHub](https://github.com/elixpo) ·
 [Discussions](https://github.com/orgs/elixpo/discussions) · [Chapter](https://github.com/elixpo/elixpo_chapter) ·
-[Packages](https://packages.elixpo.com)
+[Packages](https://packages.elixpo.com) · [People](https://elixpo.com/people) ·
+[History](https://elixpo.com/history)
 
 <!-- END ELIXPO SHARED -->
