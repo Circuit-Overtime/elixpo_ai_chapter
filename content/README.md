@@ -9,6 +9,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `repositories.json` — complete repository custody and lifecycle inventory, including historical tombstones.
 - `directory.json` — public names, descriptions, focus areas, evidence links, websites, and display metadata for every public catalog entry.
 - `packages.json` — verified Linux application and npm package metadata, including versions, sources, installation commands, licenses, maintainers, and release state.
+- `research.json` — research-specific abstracts, authors, publication and review status, artifacts, demonstrations, licenses, citations, and reproducibility records.
 - `licensing.json` — approved defaults for new work and migration safeguards for existing work.
 - `sponsorship.json` — monetary no-solicitation boundary, project-owned funding separation, and in-kind event-partnership rules.
 - `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.

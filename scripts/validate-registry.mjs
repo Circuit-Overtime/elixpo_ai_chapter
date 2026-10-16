@@ -12,12 +12,13 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, packages, licensing, sponsorship, contributors, history, brand] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, history, brand] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
   readJson("content/directory.json"),
   readJson("content/packages.json"),
+  readJson("content/research.json"),
   readJson("content/licensing.json"),
   readJson("content/sponsorship.json"),
   readJson("content/contributors.json"),
@@ -53,6 +54,9 @@ if (directory.schemaVersion !== organization.schemaVersion) {
 if (packages.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "packages and organization versions must match");
 }
+if (research.schemaVersion !== organization.schemaVersion) {
+  addError("schemaVersion", "research and organization versions must match");
+}
 if (sponsorship.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "sponsorship and organization versions must match");
 }
@@ -67,6 +71,7 @@ if (!isDate(taxonomy.lastVerified)) addError("taxonomy.lastVerified", "expected 
 if (!isDate(repositories.snapshotDate)) addError("repositories.snapshotDate", "expected YYYY-MM-DD");
 if (!isDate(directory.lastVerified)) addError("directory.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(packages.lastVerified)) addError("packages.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(research.lastVerified)) addError("research.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(licensing.lastVerified)) addError("licensing.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(sponsorship.lastVerified)) addError("sponsorship.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(contributors.lastVerified)) addError("contributors.lastVerified", "expected YYYY-MM-DD");
@@ -312,6 +317,32 @@ if (npmPackageNames.has("@elixpo/claudeops")) {
   addError("packages.npmPackages", "ClaudeOps is not maintained and must not appear in the maintained package catalog");
 }
 
+const researchRepositoryNames = new Set(
+  repositories.entries.filter((entry) => entry.disposition === "public-entry" && entry.publicClass === "research").map((entry) => entry.name),
+);
+const researchSlugs = new Set();
+for (const [repositoryName, record] of Object.entries(research.entries ?? {})) {
+  const location = `research.entries.${repositoryName}`;
+  if (!researchRepositoryNames.has(repositoryName)) addError(location, "does not map to a research repository");
+  if (researchSlugs.has(record.slug)) addError(`${location}.slug`, "duplicate research slug");
+  researchSlugs.add(record.slug);
+  if (directory.entries?.[repositoryName]?.slug !== record.slug) addError(`${location}.slug`, "must match the public directory slug");
+  if (!record.title || !record.abstract) addError(location, "title and abstract are required");
+  if (!["proposal", "active-experiment", "technical-report", "preprint", "released", "reproduced", "archived"].includes(record.researchStatus)) addError(`${location}.researchStatus`, "unknown value");
+  if (!["not-reviewed", "editorially-reviewed", "not-peer-reviewed", "peer-reviewed"].includes(record.reviewStatus)) addError(`${location}.reviewStatus`, "unknown value");
+  validateUrl(`${location}.codeUrl`, record.codeUrl);
+  if (record.paperUrl) validateUrl(`${location}.paperUrl`, record.paperUrl);
+  if (record.releasedAt && !isDate(record.releasedAt)) addError(`${location}.releasedAt`, "expected YYYY-MM-DD");
+  if (record.paperUrl && (!record.authors?.length || !record.releasedAt)) addError(location, "paper records require at least one author and a publication date for Scholar metadata");
+  for (const [artifactIndex, artifact] of (record.artifacts ?? []).entries()) validateUrl(`${location}.artifacts[${artifactIndex}].url`, artifact.url);
+  for (const [demoIndex, demo] of (record.liveDemos ?? []).entries()) validateUrl(`${location}.liveDemos[${demoIndex}].url`, demo.url);
+  for (const [licenseIndex, license] of (record.licenses ?? []).entries()) validateUrl(`${location}.licenses[${licenseIndex}].url`, license.url);
+  if (record.citation?.cffUrl) validateUrl(`${location}.citation.cffUrl`, record.citation.cffUrl);
+}
+for (const repositoryName of researchRepositoryNames) {
+  if (!research.entries?.[repositoryName]) addError(`research.entries.${repositoryName}`, "missing research record");
+}
+
 if (errors.length > 0) {
   console.error(`Registry validation failed with ${errors.length} error(s):`);
   for (const error of errors) console.error(`- ${error}`);
@@ -324,5 +355,6 @@ if (errors.length > 0) {
   console.log(`Registry valid: ${repositories.entries.length} repository records.`);
   console.log(`Public directory complete: ${Object.keys(directory.entries).length} editorial records.`);
   console.log(`Package registry valid: ${packages.linuxApplications.length} Linux applications and ${packages.npmPackages.length} npm packages.`);
+  console.log(`Research registry complete: ${Object.keys(research.entries).length} records.`);
   console.log(`Verification states: ${Object.entries(counts).map(([key, value]) => `${key}=${value}`).join(", ")}.`);
 }

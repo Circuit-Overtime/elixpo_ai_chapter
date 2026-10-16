@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
 import { ProjectMark } from "@/components/ProjectMark";
 import { getDirectoryEntries } from "@/lib/directory";
+import { LIVE_RESEARCH_DEMOS, RESEARCH_LAST_VERIFIED, RESEARCH_RECORDS } from "@/lib/research";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
@@ -11,43 +12,31 @@ export const metadata = createPageMetadata({
 });
 
 const research = getDirectoryEntries("research");
-const liveSpaces = [
-  {
-    name: "OreoLook",
-    eyebrow: "AI search and deep research",
-    description: "Run cited web research and generate structured reports through the public OreoLook demonstration. The Space is connected to the project’s architecture paper and released evaluation dataset.",
-    href: "https://huggingface.co/spaces/Elixpo/OreoLook",
-    related: "/research/oreolook",
-    tags: ["Cited search", "Research agents", "Gradio"],
-    tone: "blue",
-  },
-  {
-    name: "Diffuino Live",
-    eyebrow: "Binary diffusion experiment",
-    description: "Run the public demonstration for MonoDiffuse, an MIT-licensed MNIST diffusion experiment with ONNX and binary-neural-network model artifacts.",
-    href: "https://huggingface.co/spaces/elixpo/diffuino",
-    related: "/research/monodiffuse",
-    tags: ["Diffusion", "ONNX", "Binary neural network"],
-    tone: "violet",
-  },
-] as const;
-
 export default function ResearchPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Elixpo Open Research",
-    description: metadata.description,
-    url: "https://elixpo.com/research",
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: research.map((entry, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: entry.name,
-        url: `https://elixpo.com/research/${entry.slug}`,
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Elixpo Open Research",
+        description: metadata.description,
+        url: "https://elixpo.com/research",
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: research.map((entry, index) => ({ "@type": "ListItem", position: index + 1, name: entry.name, url: `https://elixpo.com/research/${entry.slug}` })),
+        },
+      },
+      ...RESEARCH_RECORDS.map((record) => ({
+        "@type": record.paperUrl ? "ScholarlyArticle" : "ResearchProject",
+        name: record.title,
+        description: record.abstract,
+        url: `https://elixpo.com/research/${record.slug}`,
+        codeRepository: record.codeUrl,
+        ...(record.paperUrl ? { sameAs: record.paperUrl } : {}),
+        ...(record.releasedAt ? { datePublished: record.releasedAt } : {}),
+        ...(record.authors.length ? { author: record.authors.map((author) => ({ "@type": "Person", name: author.name, ...(author.affiliation ? { affiliation: { "@type": "Organization", name: author.affiliation } } : {}) })) } : {}),
       })),
-    },
+    ],
   };
 
   return <main className="research-page">
@@ -75,20 +64,21 @@ export default function ResearchPage() {
         <p>These Hugging Face Spaces provide interactive access to current Elixpo research. Each demonstration links back to its project record and underlying artifacts.</p>
       </div>
       <div className="space-grid">
-        {liveSpaces.map((space, index) => <article className={`space-card space-card-${space.tone}`} key={space.href}>
+        {LIVE_RESEARCH_DEMOS.map((space, index) => <article className={`space-card ${index % 2 === 1 ? "space-card-violet" : "space-card-blue"}`} key={space.url}>
           <div className="space-card-art" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><i /><i /><i /></div>
           <div className="space-card-copy">
-            <p className="eyebrow">{space.eyebrow}</p>
+            <p className="eyebrow">Interactive research artifact</p>
             <div className="space-title-row"><h3>{space.name}</h3><span className="hf-badge">HF Space</span></div>
             <p>{space.description}</p>
             <ul>{space.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
             <div className="space-actions">
-              <a href={space.href} target="_blank" rel="noreferrer">Launch on Hugging Face <ArrowUpRight size={16} /></a>
-              <Link href={space.related}>View research record <ArrowRight size={15} /></Link>
+              <a href={space.url} target="_blank" rel="noreferrer">Launch on Hugging Face <ArrowUpRight size={16} /></a>
+              <Link href={`/research/${space.relatedSlug}`}>View research record <ArrowRight size={15} /></Link>
             </div>
           </div>
         </article>)}
       </div>
+      <p className="registry-date">Research metadata last verified {RESEARCH_LAST_VERIFIED}.</p>
     </section>
 
     <section className="research-directory section-wrap" aria-labelledby="research-index">

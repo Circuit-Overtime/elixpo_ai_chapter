@@ -343,6 +343,14 @@ svg { transition: transform .2s ease; }
 .research-method-grid span { color: #79a7ff; font: 600 .67rem var(--font-ui-mono); }
 .research-method-grid h3 { margin: 3.5rem 0 1rem; font-size: 1.45rem; }
 .research-method-grid p { color: #b5c0b8; line-height: 1.65; font-size: .88rem; }
+.research-authors { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+.citation_author { margin: 1.25rem 0 0; color: var(--muted); font-size: 1rem; font-weight: 650; }
+.research-authors p:not(.eyebrow) { color: var(--muted); line-height: 1.55; }
+.research-record-grid, .research-publication-record { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 5rem; }
+.research-record-grid article, .research-publication-record > div { padding: clamp(1.5rem,3vw,2.5rem); border: 1px solid var(--line); border-radius: 1.2rem; background: white; }
+.research-record-grid h2 { margin: 2rem 0 1rem; font-size: clamp(2rem,4vw,3.5rem); text-transform: capitalize; letter-spacing: -.05em; }
+.research-record-grid p:not(.eyebrow), .research-publication-record p { color: var(--muted); line-height: 1.7; }
+.research-publication-record a { color: var(--leaf); }
 
 .chapter-page { padding: .4rem; }
 .chapter-page-hero { position: relative; min-height: min(900px,calc(100svh - .8rem)); padding: clamp(8rem,15vh,10rem) clamp(1.5rem,7vw,7rem) clamp(3rem,7vw,6rem); overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) 310px; gap: 5rem; align-items: end; border-radius: 2rem; background: #143d2b; color: white; }
