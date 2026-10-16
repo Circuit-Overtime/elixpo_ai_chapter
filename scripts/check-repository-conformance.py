@@ -225,12 +225,13 @@ def validate_registry_alignment(audit: Audit, manifest: dict[str, Any], registry
         return
     central = matches[0]
     comparisons = {
-        "project.family": (nested(manifest, "project", "family"), central.get("publicClass")),
         "project.lifecycle": (nested(manifest, "project", "lifecycle"), central.get("lifecycle")),
         "project.relationship": (nested(manifest, "project", "relationship"), central.get("relationship")),
         "project.custody": (nested(manifest, "project", "custody"), central.get("custody")),
         "project.repository": (nested(manifest, "project", "repository"), central.get("repositoryUrl")),
     }
+    if central.get("disposition") == "public-entry":
+        comparisons["project.family"] = (nested(manifest, "project", "family"), central.get("publicClass"))
     for location, (local_value, central_value) in comparisons.items():
         if local_value != central_value:
             audit.error("REGISTRY_DRIFT", location, f"Manifest value {local_value!r} differs from canonical value {central_value!r}.", "Resolve the factual difference with the maintainer; do not silently choose either source.")

@@ -455,6 +455,20 @@
       "notes": "Completed released research system with versioned software, an experimental evaluation, and a technical manuscript; no peer-review claim is made."
     },
     {
+      "name": "research.elixpo",
+      "repositoryUrl": "https://github.com/elixpo/research.elixpo",
+      "disposition": "supporting-repository",
+      "publicClass": null,
+      "relationship": "core",
+      "lifecycle": "active",
+      "custody": "elixpo-owned",
+      "githubArchived": false,
+      "verificationState": "verified",
+      "statusVerifiedAt": "2026-10-16",
+      "statusOwner": "elixpo",
+      "notes": "Standalone static publication surface for registry-backed Elixpo research records; it does not replace the owning research repositories or imply peer review."
+    },
+    {
       "name": "rewrite.elixpo",
       "repositoryUrl": "https://github.com/elixpo/rewrite.elixpo",
       "disposition": "public-entry",
