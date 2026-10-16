@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { DIRECTORY_ENTRIES, familyPath } from "@/lib/directory";
 import { PACKAGE_RECORDS, PACKAGES_LAST_VERIFIED } from "@/lib/packages";
 import { absoluteUrl } from "@/lib/seo";
+import contributors from "../../content/contributors.json";
 
 export const dynamic = "force-static";
 
@@ -46,6 +47,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: record.status === "maintained" ? "weekly" as const : "monthly" as const,
     priority: record.status === "maintained" ? 0.74 : 0.55,
   }));
+  const contributorRoutes = contributors.featured.map((person) => ({
+    url: absoluteUrl(`/contributors/${person.handle}`),
+    lastModified: contributors.lastVerified,
+    changeFrequency: "monthly" as const,
+    priority: 0.65,
+  }));
 
-  return [...staticRoutes, ...directoryRoutes, ...packageRoutes];
+  return [...staticRoutes, ...directoryRoutes, ...packageRoutes, ...contributorRoutes];
 }
