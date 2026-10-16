@@ -1,5 +1,7 @@
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { readFile, readdir } from "node:fs/promises";
+import { dirname, relative, resolve } from "node:path";
+import Ajv2020 from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
 
 const root = process.cwd();
 
@@ -32,6 +34,62 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
 const errors = [];
 const addError = (location, message) => errors.push(`${location}: ${message}`);
 const isDate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+
+const declaredSchemaRecords = [
+  ["content/organization.json", organization],
+  ["content/taxonomy.json", taxonomy],
+  ["content/repositories.json", repositories],
+  ["content/directory.json", directory],
+  ["content/packages.json", packages],
+  ["content/research.json", research],
+  ["content/licensing.json", licensing],
+  ["content/sponsorship.json", sponsorship],
+  ["content/contributors.json", contributors],
+  ["content/people.json", people],
+  ["content/history.json", history],
+  ["content/brand.json", brand],
+  ["content/discussions.json", discussions],
+  ["brand/provenance.json", brandProvenance],
+];
+const declaredSchemaPaths = new Set(declaredSchemaRecords.map(([recordPath]) => recordPath));
+for (const entry of await readdir(resolve(root, "content"), { withFileTypes: true })) {
+  if (entry.isFile() && entry.name.endsWith(".json")) {
+    const recordPath = `content/${entry.name}`;
+    if (!declaredSchemaPaths.has(recordPath)) addError(recordPath, "canonical JSON record is not included in schema validation");
+  }
+}
+
+const ajv = new Ajv2020({ allErrors: true, strict: true });
+addFormats(ajv);
+let schemaValidatedRecords = 0;
+
+for (const [recordPath, record] of declaredSchemaRecords) {
+  if (typeof record.$schema !== "string" || record.$schema.length === 0) {
+    addError(`${recordPath}.$schema`, "must declare its canonical JSON Schema");
+    continue;
+  }
+
+  const absoluteSchemaPath = resolve(dirname(resolve(root, recordPath)), record.$schema);
+  const schemaPath = relative(root, absoluteSchemaPath);
+  if (schemaPath.startsWith("..") || schemaPath.startsWith("/")) {
+    addError(`${recordPath}.$schema`, "must resolve inside this repository");
+    continue;
+  }
+  try {
+    const schema = await readJson(schemaPath);
+    const validate = ajv.compile(schema);
+    if (!validate(record)) {
+      for (const issue of validate.errors ?? []) {
+        const instancePath = issue.instancePath || "/";
+        addError(`${recordPath}${instancePath}`, `${issue.message ?? "failed schema validation"} (${issue.keyword})`);
+      }
+      continue;
+    }
+    schemaValidatedRecords += 1;
+  } catch (error) {
+    addError(`${recordPath}.$schema`, `could not compile ${schemaPath}: ${error.message}`);
+  }
+}
 
 function valuesOf(items, key) {
   return new Set(items.map((item) => item[key]));
@@ -526,5 +584,6 @@ if (errors.length > 0) {
   console.log(`Public directory complete: ${Object.keys(directory.entries).length} editorial records.`);
   console.log(`Package registry valid: ${packages.linuxApplications.length} Linux applications and ${packages.npmPackages.length} npm packages.`);
   console.log(`Research registry complete: ${Object.keys(research.entries).length} records.`);
+  console.log(`JSON Schema validation complete: ${schemaValidatedRecords} canonical records.`);
   console.log(`Verification states: ${Object.entries(counts).map(([key, value]) => `${key}=${value}`).join(", ")}.`);
 }

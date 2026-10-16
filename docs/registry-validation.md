@@ -1,0 +1,51 @@
+# Canonical registry validation
+
+The `content/` directory is Elixpo's canonical organization registry. Every
+top-level JSON record declares a Draft 2020-12 schema through its `$schema`
+property. `brand/provenance.json` follows the same contract for imported brand
+masters.
+
+Run the complete check with:
+
+```bash
+npm run registry:check
+```
+
+## What the check enforces
+
+The validator performs two layers of validation:
+
+1. **JSON Schema validation** checks required fields, types, enumerations,
+   formats, patterns, conditional requirements, unknown properties, and nested
+   records against each document's declared schema.
+2. **Cross-record validation** checks relationships that one schema cannot see,
+   including unique slugs and identifiers, directory coverage, lifecycle and
+   taxonomy membership, package relationships, research-directory alignment,
+   contributor evidence indexes, brand provenance totals, and policy invariants.
+
+The command fails if a new top-level `content/*.json` record is not included in
+the schema-validation set. This prevents a registry file from silently bypassing
+CI merely because its schema was forgotten.
+
+## Changing a record
+
+1. Update the canonical JSON record.
+2. Update its schema when the content contract genuinely changes.
+3. Run `npm run registry:check` and correct the record or schema; do not weaken a
+   constraint only to silence an unexplained failure.
+4. Regenerate dependent READMEs when shared organization facts changed.
+5. Review the site output and commit the record, schema, generated artifacts,
+   and implementation together.
+
+Schemas describe the shape of a record. Handwritten cross-record checks remain
+necessary for claims such as “this project exists in the public repository
+inventory” or “this evidence index points to a real URL in the same contributor
+record.” Both layers are required in CI.
+
+## Project manifests
+
+`content/schemas/project-manifest.schema.json` defines the contract used by
+individual repository manifests. It is a reusable input schema rather than a
+top-level canonical registry record, so the portal validator does not expect a
+single corresponding JSON file under `content/`. Repository conformance is
+checked separately with `npm run repository:check`.
