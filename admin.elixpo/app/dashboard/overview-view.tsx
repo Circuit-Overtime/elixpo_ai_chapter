@@ -132,7 +132,7 @@ export default function OverviewView({
                         p: 1.25,
                         borderRadius: "6px",
                         bgcolor: "rgba(245,158,11,0.08)",
-                        border: `1px solid rgba(245,158,11,0.3)`,
+                        border: "1px solid rgba(245,158,11,0.3)",
                     }}
                 >
                     <Warning sx={{ color: C.warn, fontSize: "1.1rem" }} />

@@ -12,7 +12,12 @@
 export const runtime = "edge";
 
 import { isAdminByRole } from "@/lib/admin";
-import { exchangeCode, fetchMe } from "@/lib/oauth";
+import {
+    type AccountsProfile,
+    type TokenResponse,
+    exchangeCode,
+    fetchMe,
+} from "@/lib/oauth";
 import {
     SESSION_COOKIE,
     SESSION_TTL_SECONDS,
@@ -44,8 +49,8 @@ export async function GET(request: NextRequest) {
         return redirectTo(request, "/denied?reason=bad_state");
     }
 
-    let profile;
-    let tokens;
+    let profile: AccountsProfile | null;
+    let tokens: TokenResponse;
     try {
         const redirect = new URL("/api/auth/callback", request.url).toString();
         tokens = await exchangeCode(code, redirect);
