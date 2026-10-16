@@ -1,0 +1,219 @@
+<p align="center">
+  <img src="public/brand/marks/elixpo_lock_up_text_mascot.webp" width="420" alt="Elixpo wordmark with the Oreo panda mascot" />
+</p>
+
+<h1 align="center">Elixpo Portal</h1>
+
+<p align="center">
+  <strong>The canonical public portal and organization-content source.</strong>
+</p>
+
+## About this repository
+
+This repository builds [elixpo.com](https://elixpo.com) and owns the canonical
+organization registry under [`content/`](content/). Project pages, structured
+data, sitemaps, shared README content, and future standalone surfaces should
+consume or validate against that registry rather than maintain independent
+lists.
+
+## Local development
+
+Use Node.js with the committed lockfile:
+
+```bash
+npm ci
+npm run registry:check
+npm run dev
+```
+
+Use `npm run lint` for source linting and `npm run build` for the production
+build. The README renderer supports `npm run readme:check` and
+`npm run readme:write`; `npm run readme:sync-workspace` additionally updates
+the sibling `.github` and `elixpo_chapter` clones.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md), the
+[Code of Conduct](CODE_OF_CONDUCT.md), and the
+[repository standard](docs/repository-standard/elixpo-repository-standard-v0.1.md)
+before changing canonical organization facts.
+
+The maintenance boundary between the portal, `research.elixpo`,
+`packages.elixpo`, and individual project repositories is documented in
+[`docs/architecture/specialized-surfaces.md`](docs/architecture/specialized-surfaces.md).
+
+<!-- BEGIN ELIXPO SHARED · sha256:a28f9092f071abdc191a69a59532e6ef600d7f9403dc3f81be52a1103140cd46 · generated from elixpo/elixpo -->
+
+## What Elixpo is
+
+**An open-source project foundry where people build in public and release meaningful projects together.**
+
+> **Build in public. Release as a project.**
+
+Elixpo works with active maintainers to build and release open software, reproducible research, and publicly operated services. Time-bounded Chapters give work a clear public story, prepared contribution pathways, accountable review, and a durable release record. Successful projects may continue as Elixpo Member Projects.
+
+Projects come to Elixpo to ship their next chapter—not archive their last one.
+Elixpo is not a SaaS portfolio, passive project directory, license authority,
+repository graveyard, or promise of permanent maintenance. Its services and
+infrastructure support public building and release work.
+
+## Projects, Research, and Services
+
+| Public family | Includes |
+| --- | --- |
+| **Open Projects** | Installable software, libraries, developer tools, hardware, packages, and creative projects. |
+| **Open Research** | Papers, experiments, datasets, models, protocols, and reproducible research artifacts. |
+| **Open Services** | Hosted applications and shared infrastructure operated by Elixpo. |
+
+Packages are a distribution surface for Open Projects, not a fourth family.
+Lifecycle describes the state of the work; Core, Chapter, Member, and Connected
+describe its relationship to Elixpo.
+
+```mermaid
+flowchart LR
+  E["Elixpo<br/>open-source project foundry"]
+  E --> P["Open Projects<br/>software · packages · hardware"]
+  E --> R["Open Research<br/>papers · experiments · datasets"]
+  E --> S["Open Services<br/>hosted apps · shared infrastructure"]
+```
+
+## How an Elixpo Chapter works
+
+A Chapter is a time-bounded public build-and-release cycle. It starts with an
+active maintainer, a credible artifact or prototype, and one meaningful next
+objective. It ends with a release, prototype, report, package, or an explicit
+documented closure.
+
+```mermaid
+flowchart LR
+  A[Selection] --> B[Readiness]
+  B --> C[Public build]
+  C --> D[Contribution window]
+  D --> E[Release or documented closure]
+  E --> F[Durable outcome record]
+  F -. optional .-> G[Member Project]
+```
+
+Repository transfer is not required. A project may remain with its owner while
+participating in a Chapter. Member Project status is an ongoing relationship
+earned through successful collaboration; it does not automatically transfer
+copyright, trademarks, packages, domains, or project authority.
+
+## Current public work
+
+This directory is generated from the canonical registry. It includes every
+non-archived public entry and states lifecycle separately from relationship.
+Feature placement is editorial and does not change these records.
+
+### Open Projects
+
+| Repository | Lifecycle | Relationship |
+| --- | --- | --- |
+| [`elixpo_chapter`](https://github.com/elixpo/elixpo_chapter) | Active | Core |
+| [`Kareixo`](https://github.com/elixpo/Kareixo) | Active | Member |
+| [`oreo`](https://github.com/elixpo/oreo) | Active | Core |
+| [`packages.elixpo`](https://github.com/elixpo/packages.elixpo) | Active | Core |
+| [`sketch.elixpo`](https://github.com/elixpo/sketch.elixpo) | Active | Core |
+| [`Cypher-3.0`](https://github.com/elixpo/Cypher-3.0) | Maintenance | Core |
+| [`Nano28C64`](https://github.com/elixpo/Nano28C64) | Maintenance | Core |
+| [`agent.elixpo`](https://github.com/elixpo/agent.elixpo) | Paused | Core |
+| [`crumb.elixpo`](https://github.com/elixpo/crumb.elixpo) | Paused | Core |
+| [`oreoPI`](https://github.com/elixpo/oreoPI) | Paused | Core |
+
+### Open Research
+
+| Repository | Lifecycle | Relationship |
+| --- | --- | --- |
+| [`monodiffuse`](https://github.com/elixpo/monodiffuse) | Active | Core |
+| [`octabit`](https://github.com/elixpo/octabit) | Active | Core |
+| [`search.elixpo`](https://github.com/pollinations/search.elixpo) | Active | Connected |
+| [`wozformer`](https://github.com/elixpo/wozformer) | Paused | Core |
+| [`qfabric`](https://github.com/elixpo/qfabric) | Completed | Core |
+
+### Open Services
+
+| Repository | Lifecycle | Relationship |
+| --- | --- | --- |
+| [`opensource.elixpo`](https://github.com/elixpo/opensource.elixpo) | Incubating | Core |
+| [`accounts.elixpo`](https://github.com/elixpo/accounts.elixpo) | Active | Core |
+| [`admin.elixpo`](https://github.com/elixpo/admin.elixpo) | Active | Core |
+| [`blogs.elixpo`](https://github.com/elixpo/blogs.elixpo) | Active | Core |
+| [`lixrl.com`](https://github.com/elixpo/lixrl.com) | Active | Core |
+| [`mails.elixpo`](https://github.com/elixpo/mails.elixpo) | Active | Core |
+| [`me.elixpo`](https://github.com/elixpo/me.elixpo) | Active | Core |
+| [`payouts.elixpo`](https://github.com/elixpo/payouts.elixpo) | Active | Core |
+| [`status.elixpo`](https://github.com/elixpo/status.elixpo) | Active | Core |
+
+Registry snapshot: **2026-10-16**. Archived work remains visible in the
+[GitHub organization](https://github.com/orgs/elixpo/repositories?q=archived%3Atrue)
+as history, not as currently supported work.
+
+## Specialized publication surfaces
+
+The main portal remains the organization directory and canonical source for
+classification, lifecycle, relationships, and cross-project links. Two
+specialized repositories operate deeper publication surfaces:
+
+- [`packages.elixpo`](https://packages.elixpo.com) owns package building, signed APT
+  distribution, release artifacts, installers, and the package catalogue.
+- [`research.elixpo`](https://research.elixpo.com) is the planned research publisher for
+  papers, citations, datasets, models, demonstrations, and reproducibility
+  records. Research code and primary evidence stay in their owning project
+  repositories.
+
+The specialized sites must consume the shared schema or synchronize changes
+through reviewable pull requests. They do not maintain independent
+organization directories, silently change lifecycle status, or replace the
+owning repository as the source of technical evidence.
+
+## Participate
+
+- **Contribute to a project:** use the owning repository's contribution guide,
+  current issues, and maintainer review process.
+- **Discuss a Chapter:** start with [Elixpo Discussions](https://github.com/orgs/elixpo/discussions) and
+  describe the working artifact, accountable maintainer, next release objective,
+  and availability to review contributions. A discussion is not automatic
+  acceptance or a request to transfer the repository.
+- **Follow Chapter operations:** use the
+  [Elixpo Chapter repository](https://github.com/elixpo/elixpo_chapter).
+- **Explore installable work:** visit [Elixpo Packages](https://packages.elixpo.com).
+- **Follow research:** the dedicated [Elixpo Research](https://research.elixpo.com) surface
+  is planned as a separately maintained publisher; research records remain
+  available through the portal and owning repositories until it launches.
+
+## Evidence, credit, and history
+
+Credit should point to attributable work—merged changes, reviews, releases,
+research, design, documentation, or community operations. Repository history is
+the current evidence source. Elixpo will publish people and organization-history
+records only after roles, dates, consent, and evidence are verified; decorative
+contributor counts are intentionally omitted.
+
+## Funding boundary
+
+Elixpo does not currently solicit, accept, hold, or route organization-level
+sponsorship funds. Independently governed projects may publish their own funding
+routes under their own authority and accounting; listing through Elixpo does
+not make Elixpo the recipient or intermediary. Funding does not purchase Chapter
+selection, feature placement, research conclusions, contributor credit,
+governance authority, or favourable editorial treatment.
+
+## Licensing and brand use
+
+Licenses vary by project and artifact. The terms in the owning repository or
+artifact record control, and existing work is not silently relicensed when it
+joins Elixpo. New Elixpo-owned code defaults to MIT, with Apache-2.0 available
+where its patent grant is useful; papers and general documentation default to
+CC BY 4.0; new hardware source defaults to CERN-OHL-S-2.0. Datasets, models,
+weights, and brand assets require artifact-specific review.
+
+Copyright permission does not grant permission to impersonate Elixpo or claim
+endorsement. The canonical brand destination is the
+[Elixpo asset library](https://elixpo.com/assets); its final standalone brand and sticker
+permission policy is still being consolidated.
+
+---
+
+[Website](https://elixpo.com) · [GitHub](https://github.com/elixpo) ·
+[Discussions](https://github.com/orgs/elixpo/discussions) · [Chapter](https://github.com/elixpo/elixpo_chapter) ·
+[Packages](https://packages.elixpo.com)
+
+<!-- END ELIXPO SHARED -->
