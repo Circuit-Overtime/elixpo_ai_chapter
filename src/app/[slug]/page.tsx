@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPackage, PACKAGE_RECORDS } from "@/lib/packages";
+import { getPackage, LAST_VERIFIED, PACKAGE_RECORDS } from "@/lib/packages";
 import { jsonLd, pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -11,7 +11,19 @@ export function generateStaticParams() { return PACKAGE_RECORDS.map(({ slug }) =
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const record = getPackage((await params).slug);
   if (!record) return {};
-  return { ...pageMetadata(`${record.name} ${record.version}`, record.summary, `/${record.slug}`, record.slug), keywords: [record.name, record.category, record.kind === "linux" ? "Debian package" : "npm package", "Elixpo", ...record.capabilities] };
+  return {
+    ...pageMetadata(`${record.name} ${record.version}`, record.summary, `/${record.slug}`, record.slug),
+    keywords: [record.name, record.category, record.kind === "linux" ? "Debian package" : "npm package", "Elixpo", ...record.capabilities],
+    other: {
+      "DC.title": record.name,
+      "DC.description": record.summary,
+      "DC.publisher": "Elixpo",
+      "DC.rights": record.license,
+      "DC.identifier": record.releaseUrl,
+      "software:version": record.version,
+      "software:registry": record.kind === "linux" ? "Elixpo signed APT repository" : "npm",
+    },
+  };
 }
 
 export default async function PackagePage({ params }: Props) {
@@ -20,7 +32,9 @@ export default async function PackagePage({ params }: Props) {
   const canonical = `https://packages.elixpo.com/${record.slug}/`;
   const type = record.kind === "linux" ? "SoftwareApplication" : "SoftwareSourceCode";
   const structured = { "@context": "https://schema.org", "@graph": [
-    { "@type": type, "@id": `${canonical}#package`, name: record.name, description: record.summary, url: canonical, version: record.version, codeRepository: record.source, license: record.license === "MIT" ? "https://opensource.org/license/mit" : record.license, maintainer: { "@id": "https://elixpo.com/#organization" }, ...(record.kind === "linux" ? { applicationCategory: "UtilitiesApplication", operatingSystem: "Linux", downloadUrl: record.releaseUrl, softwareVersion: record.version } : { programmingLanguage: "JavaScript", runtimePlatform: "npm" }) },
+    { "@type": type, "@id": `${canonical}#package`, name: record.name, description: record.summary, url: canonical, version: record.version, codeRepository: record.source, license: record.license === "MIT" ? "https://opensource.org/license/mit" : record.license, dateModified: LAST_VERIFIED, isAccessibleForFree: true, maintainer: { "@id": "https://elixpo.com/#organization" }, publisher: { "@id": "https://elixpo.com/#organization" }, featureList: record.capabilities, ...(record.images.length ? { image: record.images.map((image) => new URL(image.src, canonical).toString()) } : {}), ...(record.kind === "linux" ? { applicationCategory: "UtilitiesApplication", applicationSuite: "Elixpo Packages", operatingSystem: record.platform, downloadUrl: record.releaseUrl, installUrl: canonical, softwareVersion: record.version, softwareRequirements: record.platform } : { programmingLanguage: "TypeScript and JavaScript", runtimePlatform: "npm", targetProduct: { "@type": "SoftwareApplication", name: "npm-compatible JavaScript runtime" } }) },
+    { "@type": "WebPage", "@id": `${canonical}#webpage`, url: canonical, name: `${record.name} ${record.version}`, description: record.summary, dateModified: LAST_VERIFIED, mainEntity: { "@id": `${canonical}#package` }, isPartOf: { "@id": "https://packages.elixpo.com/#website" } },
+    { "@type": "WebSite", "@id": "https://packages.elixpo.com/#website", name: "Elixpo Packages", url: "https://packages.elixpo.com/", publisher: { "@id": "https://elixpo.com/#organization" } },
     { "@type": "Organization", "@id": "https://elixpo.com/#organization", name: "Elixpo", url: "https://elixpo.com", logo: "https://elixpo.com/logos/logo.png" },
     { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Elixpo", item: "https://elixpo.com/" }, { "@type": "ListItem", position: 2, name: "Elixpo Packages", item: "https://packages.elixpo.com/" }, { "@type": "ListItem", position: 3, name: record.name, item: canonical }] },
   ] };

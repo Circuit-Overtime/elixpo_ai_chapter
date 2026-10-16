@@ -10,7 +10,10 @@ export function pageMetadata(title: string, description: string, path: string, s
   return {
     title,
     description,
-    alternates: { canonical: canonicalPath },
+    alternates: {
+      canonical: canonicalPath,
+      types: { "application/atom+xml": "/feed.xml" },
+    },
     openGraph: { type: "website", siteName: "Elixpo Packages", title, description, url: canonicalPath, images: [{ url: socialImage, width: 1200, height: 630, alt: `${title} — Elixpo Packages` }] },
     twitter: { card: "summary_large_image", title, description, images: [socialImage] },
   };

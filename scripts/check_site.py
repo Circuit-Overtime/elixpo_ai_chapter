@@ -31,6 +31,9 @@ class HeadParser(HTMLParser):
         self.links: dict[str, str] = {}
         self.title = ""
         self._in_title = False
+        self._in_json_ld = False
+        self._json_ld_buffer: list[str] = []
+        self.json_ld: list[object] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
@@ -42,14 +45,22 @@ class HeadParser(HTMLParser):
             self.links[attributes["rel"]] = attributes.get("href") or ""
         elif tag == "title":
             self._in_title = True
+        elif tag == "script" and attributes.get("type") == "application/ld+json":
+            self._in_json_ld = True
+            self._json_ld_buffer = []
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
             self._in_title = False
+        elif tag == "script" and self._in_json_ld:
+            self._in_json_ld = False
+            self.json_ld.append(json.loads("".join(self._json_ld_buffer)))
 
     def handle_data(self, data: str) -> None:
         if self._in_title:
             self.title += data
+        elif self._in_json_ld:
+            self._json_ld_buffer.append(data)
 
 
 def check_site(site: Path) -> None:
@@ -92,6 +103,26 @@ def check_site(site: Path) -> None:
         assert head.meta.get("twitter:card") == "summary_large_image", (
             f"Unexpected Twitter card in {path}: {head.meta.get('twitter:card')!r}"
         )
+        assert head.json_ld, f"Missing structured data in {path}"
+
+        if expected_url.rstrip("/").split("/")[-1] in {*LINUX_SLUGS, *NPM_SLUGS}:
+            nodes = [
+                node
+                for document in head.json_ld
+                for node in (
+                    document.get("@graph", [])
+                    if isinstance(document, dict) and "@graph" in document
+                    else [document]
+                )
+                if isinstance(node, dict)
+            ]
+            package_types = {"SoftwareApplication", "SoftwareSourceCode"}
+            assert any(node.get("@type") in package_types for node in nodes), (
+                f"Missing package structured data in {path}"
+            )
+            assert any(node.get("@type") == "BreadcrumbList" for node in nodes), (
+                f"Missing breadcrumbs structured data in {path}"
+            )
 
     for name in (
         "favicon.ico",
