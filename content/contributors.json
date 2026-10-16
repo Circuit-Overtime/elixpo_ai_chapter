@@ -3,6 +3,13 @@
   "schemaVersion": 1,
   "lastVerified": "2026-10-16",
   "methodology": "The snapshot uses GitHub's contributor listing for elixpo/elixpo_chapter, the master repository that preserves Chapter contributions. Declared leads and automation accounts are excluded before calculating the coverage floor. Counts are evidence for transparent selection, not a measure of human value.",
+  "recordPolicy": {
+    "recordType": "public-evidence-record",
+    "verificationRule": "A contribution record is current only when its record ID, canonical elixpo.com URL, and evidence links agree with this registry. A printout or PDF is a portable view, not an independently issued credential.",
+    "correctionRule": "Corrections retain the stable record ID, update the reviewed date and public evidence, and remain reviewable through repository history. A disputed claim is narrowed or removed until it can be supported.",
+    "fraudRule": "Elixpo does not verify screenshots, edited PDFs, copied profile pages, or claims made without the canonical URL. Suspected impersonation or altered records should be reported through the correction route.",
+    "withdrawalRule": "A contributor may request removal. The canonical route then stops presenting the record; repository history remains subject to the repository's normal public-history and legal obligations."
+  },
   "selectionPolicy": {
     "basis": "At least 20 percent of the eligible human contributors in the Chapter snapshot are featured, ordered by observed contributions. Every entry also links a public outcome; raw totals are not presented as a measure of human value.",
     "sourceRepository": "https://github.com/elixpo/elixpo_chapter",
@@ -18,6 +25,7 @@
   "excludedAutomationHandles": ["elixpoo", "github-actions[bot]", "dependabot[bot]", "Copilot", "actions-user"],
   "featured": [
     {
+      "recordId": "ECR-2026-001",
       "handle": "IgYaHiko",
       "name": "IgYaHiko",
       "observedContributions": 282,
@@ -39,6 +47,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/b0585ce22d2ae7af5dc78464ab71fea08b015a88", "https://github.com/elixpo/elixpo_chapter/commit/b385748cde32f6413466474905277880433cfd0b"]
     },
     {
+      "recordId": "ECR-2026-002",
       "handle": "karanray06",
       "name": "Karan Ray",
       "observedContributions": 68,
@@ -60,6 +69,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/719dcb484f0904f3c0b2349bd31de97e2dee573c", "https://github.com/elixpo/elixpo_chapter/commit/9878e7542748aeacb5756ae909c5a77fb0056845"]
     },
     {
+      "recordId": "ECR-2026-003",
       "handle": "bhumikasudarshani-cmd",
       "name": "Bhumika Sudarshani",
       "observedContributions": 29,
@@ -81,6 +91,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/4703c65eab526f4b015c59c1b2e1d02729dcf627", "https://github.com/elixpo/elixpo_chapter/commit/96e1e16ff538e6d3954e38de0b15198b32a21e71"]
     },
     {
+      "recordId": "ECR-2026-004",
       "handle": "divyanshuj91",
       "name": "Divyanshu Jaiswal",
       "observedContributions": 29,
@@ -102,6 +113,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/d49b0c5cbd41b99814ac8979ba1ec36fbe78100f"]
     },
     {
+      "recordId": "ECR-2026-005",
       "handle": "Senthil455",
       "name": "Senthil Raja R",
       "observedContributions": 24,
@@ -123,6 +135,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/7ee82ef69d3dc00dfdc502feedae96fa6cf515fb", "https://github.com/elixpo/elixpo_chapter/commit/95329b0e8ffdc91a96b54431473f072c9d1cf367"]
     },
     {
+      "recordId": "ECR-2026-006",
       "handle": "shresthashim",
       "name": "AsHim Shrestha",
       "observedContributions": 23,
@@ -144,6 +157,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/746fe1684e55063cc7737b1149a48abe6a681c48", "https://github.com/elixpo/elixpo_chapter/commit/03cd63d27d3bef9fb8bf9302f6964586e032c813"]
     },
     {
+      "recordId": "ECR-2026-007",
       "handle": "Itachi-1824",
       "name": "Itachi",
       "observedContributions": 22,
@@ -165,6 +179,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/be61f563284bfd503a072e91127d336a354e4ee9", "https://github.com/elixpo/elixpo_chapter/commit/245038e0918c8a9280be7403ca3570e2eaca7a9b"]
     },
     {
+      "recordId": "ECR-2026-008",
       "handle": "dev-krish",
       "name": "Krishnendu Dutta",
       "observedContributions": 21,
@@ -186,6 +201,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/36a1490d248db0cf153b8f97b85c699baa8bdcf2"]
     },
     {
+      "recordId": "ECR-2026-009",
       "handle": "DeepSaha25",
       "name": "Deep Saha",
       "observedContributions": 17,
@@ -207,6 +223,7 @@
       "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/b4e8109c8603b52bc55608624368589864a1d0d8", "https://github.com/elixpo/elixpo_chapter/commit/93ee6b22d54d10d5fd84807023177014dde7e2b4"]
     },
     {
+      "recordId": "ECR-2026-010",
       "handle": "redac1ed",
       "name": "redac1ed",
       "observedContributions": 15,

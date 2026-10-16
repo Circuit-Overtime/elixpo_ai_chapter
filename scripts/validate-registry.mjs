@@ -143,6 +143,7 @@ if (brand.stickerAccess?.requestUrl !== "https://elixpo.com/partnerships") {
 }
 
 const contributorHandles = new Set();
+const contributorRecordIds = new Set();
 const excludedContributorHandles = new Set([
   ...(contributors.excludedLeadHandles ?? []),
   ...(contributors.excludedAutomationHandles ?? []),
@@ -166,6 +167,9 @@ validateUrl("contributors.selectionPolicy.correctionUrl", contributors.selection
 validateUrl("contributors.selectionPolicy.optOutUrl", contributors.selectionPolicy?.optOutUrl);
 for (const [index, person] of (contributors.featured ?? []).entries()) {
   const location = `contributors.featured[${index}]`;
+  if (!/^ECR-[0-9]{4}-[0-9]{3}$/.test(person.recordId ?? "")) addError(`${location}.recordId`, "expected ECR-YYYY-NNN");
+  if (contributorRecordIds.has(person.recordId)) addError(`${location}.recordId`, "duplicate stable record ID");
+  contributorRecordIds.add(person.recordId);
   if (!person.handle) addError(`${location}.handle`, "is required");
   if (contributorHandles.has(person.handle)) addError(`${location}.handle`, "duplicate handle");
   contributorHandles.add(person.handle);
@@ -208,6 +212,14 @@ for (const [index, person] of (contributors.featured ?? []).entries()) {
     if (attribution?.status === "named-reviewer" && !attribution.reviewer) {
       addError(`${recordLocation}.reviewAttribution.reviewer`, "named-reviewer records require a reviewer");
     }
+  }
+}
+if (contributors.recordPolicy?.recordType !== "public-evidence-record") {
+  addError("contributors.recordPolicy.recordType", "must distinguish the record from a certification or employment credential");
+}
+for (const field of ["verificationRule", "correctionRule", "fraudRule", "withdrawalRule"]) {
+  if (typeof contributors.recordPolicy?.[field] !== "string" || contributors.recordPolicy[field].trim().length < 60) {
+    addError(`contributors.recordPolicy.${field}`, "requires a substantive public rule");
   }
 }
 

@@ -4,12 +4,24 @@
   "title": "Elixpo evidence-led contributor recognition",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "lastVerified", "methodology", "selectionPolicy", "excludedLeadHandles", "excludedAutomationHandles", "featured"],
+  "required": ["schemaVersion", "lastVerified", "methodology", "recordPolicy", "selectionPolicy", "excludedLeadHandles", "excludedAutomationHandles", "featured"],
   "properties": {
     "$schema": { "type": "string" },
     "schemaVersion": { "type": "integer", "minimum": 1 },
     "lastVerified": { "type": "string", "format": "date" },
     "methodology": { "type": "string", "minLength": 40 },
+    "recordPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordType", "verificationRule", "correctionRule", "fraudRule", "withdrawalRule"],
+      "properties": {
+        "recordType": { "const": "public-evidence-record" },
+        "verificationRule": { "type": "string", "minLength": 60 },
+        "correctionRule": { "type": "string", "minLength": 60 },
+        "fraudRule": { "type": "string", "minLength": 60 },
+        "withdrawalRule": { "type": "string", "minLength": 60 }
+      }
+    },
     "selectionPolicy": {
       "type": "object",
       "additionalProperties": false,
@@ -33,8 +45,9 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["handle", "name", "observedContributions", "activeWindow", "story", "github", "portfolio", "profileSource", "workRecords", "evidence"],
+        "required": ["recordId", "handle", "name", "observedContributions", "activeWindow", "story", "github", "portfolio", "profileSource", "workRecords", "evidence"],
         "properties": {
+          "recordId": { "type": "string", "pattern": "^ECR-[0-9]{4}-[0-9]{3}$" },
           "handle": { "type": "string", "minLength": 1 },
           "name": { "type": "string", "minLength": 1 },
           "observedContributions": { "type": "integer", "minimum": 1 },
