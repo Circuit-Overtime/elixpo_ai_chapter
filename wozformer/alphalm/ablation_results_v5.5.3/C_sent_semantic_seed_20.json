@@ -1,0 +1,26 @@
+{
+  "seed": 20,
+  "condition": "C_sent_semantic",
+  "generated_text": "This helps to generate repeat business and foster long-term customer loyalty. Building rapport establishes trust, opens channels of communication, differentiates you from competitors, and leads to long-term customer relationships. Showing genuine interest in your customers' needs and aspirations will go a long way in building rapport and trust. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Anticipating objections and proactively addressing them is another effective strategy when handling trust or credibility-related concerns. Addressing Concerns and Objections: During your presentation, it is likely that the customer may raise concerns or objections. Objections can arise due to various reasons such as concerns about the product or service, budget constraints, or simply a lack of understanding.",
+  "path_indices": [
+    20,
+    23,
+    292,
+    2390,
+    2102,
+    2466,
+    1829,
+    3038
+  ],
+  "metrics": {
+    "total_score": 53.838555376417936,
+    "exact_matches": 3,
+    "avg_local": 0.7955534032412938,
+    "avg_global": 0.7823895130838666,
+    "avg_makes_sense": 0.7322895952633449,
+    "avg_validity": 0.6671124909605298,
+    "diversity": 0.3692224164094244,
+    "avg_topic_progress": 0.18111529520579747,
+    "runtime": 1.461987018585205
+  }
+}

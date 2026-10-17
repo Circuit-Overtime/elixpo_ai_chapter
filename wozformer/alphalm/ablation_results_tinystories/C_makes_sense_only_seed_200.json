@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "So, the bunny dug a hole in the ground and put the mushroom inside. The sun showed its face in the morning sky and it shone brightly. The sun shone in the sky and the ornaments glittered in the light. The light in the sky grows wider and wider. The sun shone brightly in the sky, making the grass very dry. Very high, like the sky. The sky was dark with pink and orange colors. The liquid was bright rainbow colors and smelled sweet like candies.",
+  "path_indices": [
+    200,
+    2939,
+    7942,
+    11284,
+    3465,
+    10989,
+    6148,
+    8582
+  ],
+  "metrics": {
+    "total_score": 37.81162087619305,
+    "avg_local": 0.8061964341572353,
+    "avg_global": 0.8086781331471035,
+    "avg_makes_sense": 0.8331320668969836,
+    "avg_policy": 0.0,
+    "avg_validity": 0.0,
+    "exact_matches": 2,
+    "diversity": 0.30519910688911167,
+    "repetition_rate": 0.0,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.19380356584276473,
+    "runtime": 4.024245262145996,
+    "evaluations": 678206,
+    "narrative_consistency": 0.3333333333333333
+  }
+}

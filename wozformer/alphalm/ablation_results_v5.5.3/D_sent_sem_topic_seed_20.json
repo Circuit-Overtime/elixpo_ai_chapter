@@ -1,0 +1,26 @@
+{
+  "seed": 20,
+  "condition": "D_sent_sem_topic",
+  "generated_text": "This helps to generate repeat business and foster long-term customer loyalty. Building rapport establishes trust, opens channels of communication, differentiates you from competitors, and leads to long-term customer relationships. When you show a sincere interest in your customers, they are more likely to reciprocate that interest, leading to a stronger rapport. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Price or Budget Objections: One of the most frequent objections in sales is related to price or budget. Timing or urgency objections can be managed by effectively communicating the potential consequences of delaying a decision.",
+  "path_indices": [
+    20,
+    23,
+    7,
+    2390,
+    2102,
+    332,
+    2085,
+    2436
+  ],
+  "metrics": {
+    "total_score": 33.4302779853344,
+    "exact_matches": 1,
+    "avg_local": 0.7445679392133441,
+    "avg_global": 0.7483289667538234,
+    "avg_makes_sense": 0.7679919600486755,
+    "avg_validity": 0.6760550098759788,
+    "diversity": 0.40307589141385897,
+    "avg_topic_progress": 0.2464911937713623,
+    "runtime": 1.4469802379608154
+  }
+}

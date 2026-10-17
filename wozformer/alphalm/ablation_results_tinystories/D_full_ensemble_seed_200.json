@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "So, the bunny dug a hole in the ground and put the mushroom inside. The small flag flew high and far. \"The sun is shining brightly and it's making the blossoms in the trees sparkle,\" said Jenny. Jenny watched it and waved goodbye. Frank laughed. Leo laughed. Leo laughed and laughed! Everyone laughed, smiled and cheered.",
+  "path_indices": [
+    200,
+    9270,
+    2732,
+    3615,
+    3385,
+    5200,
+    5205,
+    8909
+  ],
+  "metrics": {
+    "total_score": 48.46096362695098,
+    "avg_local": 0.6995115195001874,
+    "avg_global": 0.6092827320098877,
+    "avg_makes_sense": 0.8147681185177394,
+    "avg_policy": 0.3772948144802025,
+    "avg_validity": 0.9034348045076642,
+    "exact_matches": 2,
+    "diversity": 0.5801200157563601,
+    "repetition_rate": 0.25,
+    "topic_repetition": -0.12098471735204967,
+    "forward_progress": 0.3004884804998125,
+    "runtime": 3.5872793197631836,
+    "evaluations": 3100,
+    "narrative_consistency": 0.5
+  }
+}

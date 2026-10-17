@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "This helps to generate repeat business and foster long term customer loyalty. Put yourself in your customers shoes and consider the potential doubts or hesitations they may have. In some cases objections may arise due to trust or credibility issues. Anticipating objections requires thorough knowledge of your product or service as well as a deep understanding of your target audience. Keep yourself updated with the latest trends and developments and be well informed about your products or services. Offering limited time offers or exclusive deals can encourage potential customers to act swiftly to secure the best possible price or budget objections one of the most frequent objections in sales is related to price or budget. Timing or urgency objections can be managed by effectively communicating the potential consequences of delaying a decision.",
+  "path_indices": [
+    20,
+    1803,
+    2741,
+    2310,
+    1656,
+    305,
+    2085,
+    2436
+  ],
+  "metrics": {
+    "total_score": 32.108448296785355,
+    "exact_boundary_matches": 1,
+    "avg_local_coherence": 0.662435599735805,
+    "avg_global_coherence": 0.7016071677207947,
+    "avg_makes_sense_score": 0.7913385799952916,
+    "avg_policy_score": 0.11785826938492912,
+    "avg_validity_score": 0.5200831719807216,
+    "transitions_evaluated": 3100,
+    "search_runtime": 1.2013554573059082,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.39003102321709904,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.33756440026419504
+  }
+}

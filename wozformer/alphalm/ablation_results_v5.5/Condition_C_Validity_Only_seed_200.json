@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "In addition to testimonials and endorsements you can also utilize case studies to showcase the real world impact of your product or service. Timing or urgency objections can be managed by effectively communicating the potential consequences of delaying a decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Addressing potential doubts even with evidence and testimonials some potential customers may still have doubts or objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding the nature of objections when dealing with objections in written communication or over the phone it is crucial to recognize that objections usually stem from concerns uncertainties or misunderstandings. Price or budget objections one of the most frequent objections in sales is related to price or budget.",
+  "path_indices": [
+    200,
+    2436,
+    2102,
+    332,
+    2255,
+    3038,
+    2858,
+    2085
+  ],
+  "metrics": {
+    "total_score": 42.74571815133095,
+    "exact_boundary_matches": 3,
+    "avg_local_coherence": 0.7816815972328186,
+    "avg_global_coherence": 0.7842151096888951,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.5206683959279742,
+    "transitions_evaluated": 105109,
+    "search_runtime": 16.87217354774475,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.281252030815397,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.2183184027671814
+  }
+}

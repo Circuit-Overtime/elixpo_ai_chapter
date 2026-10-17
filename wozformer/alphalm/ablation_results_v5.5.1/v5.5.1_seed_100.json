@@ -1,0 +1,29 @@
+{
+  "seed": 100,
+  "generated_text": "In conclusion effective questioning techniques are vital for building rapport and capturing the attention of potential customers. Consistency and reliability consistency and reliability are vital in building trust and credibility trust and credibility are fundamental elements in any successful sales relationship. Using emotional appeals humans are emotional beings and emotions play a significant role in decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding the nature of objections when dealing with objections in written communication or over the phone it is crucial to recognize that objections usually stem from concerns uncertainties or misunderstandings.",
+  "path_indices": [
+    100,
+    702,
+    1728,
+    798,
+    2102,
+    332,
+    3038,
+    2858
+  ],
+  "metrics": {
+    "total_score": 54.84163093701419,
+    "exact_boundary_matches": 3,
+    "avg_local_coherence": 0.7510602985109601,
+    "avg_global_coherence": 0.7470862354551043,
+    "avg_makes_sense_score": 0.7047814556530544,
+    "avg_policy_score": 0.1159423745370337,
+    "avg_validity_score": 0.6695693859032222,
+    "search_runtime": 1.8505003452301025,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.40438799985817503,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.24893970148903982
+  }
+}
