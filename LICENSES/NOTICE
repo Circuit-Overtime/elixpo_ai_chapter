@@ -1,0 +1,58 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        elixpo (elixpo.com)
+  What it is:  The source for the elixpo.com website - the public face of the
+               Elixpo ecosystem.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. It is the website source.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/brand/ and brand/MASCOT.md are provided under
+  CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest E-badge, and the
+  Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+---------------------------------------------------------------------------
+TEMPLATE - how other Elixpo repositories use this notice board
+---------------------------------------------------------------------------
+
+Every Elixpo repository ships this same LICENSE. When a repository also ships
+an EXCLUSIVE artifact, declare it here so the reservation is explicit. Examples:
+
+  npm package
+    @elixpo/<pkg> is published from this repository. The published package
+    name on the npm registry is reserved to Elixpo; forks must publish under a
+    different name (the MIT-licensed source may of course be reused).
+
+  VS Code extension
+    <publisher>.<ext> on the VS Code Marketplace is reserved to Elixpo. The
+    extension source is MIT; the Marketplace listing and publisher identity
+    are not transferred.
+
+  Hosted SaaS
+    <name>.elixpo.com is an official hosted service. The brand, the hosted
+    deployment, and the operational data are reserved; the source is MIT.
+
+  Paid / pro tier
+    Any paid tier, license key, or commercial offering tied to the Elixpo
+    brand is reserved.
+
+Keep this file short and specific. If there is nothing exclusive, say so (as
+above) so downstream users know they have the full MIT / CC-BY-4.0 grant.
+
+Contact: hello@elixpo.com

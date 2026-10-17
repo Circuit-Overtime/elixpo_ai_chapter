@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title description">
+  <title id="title">The Elixpo public ecosystem</title>
+  <desc id="description">Elixpo connects open projects, open research, and open services through public Chapters that lead to releases and durable contribution records.</desc>
+  <style>
+    :root{color-scheme:light dark}.paper{fill:#f6f5f0}.ink{fill:#142018}.muted{fill:#526059}.line{stroke:#93a59a}.field{fill:#0b623c}.warm{fill:#f0e6d3}.white{fill:#fff}.label{font:700 15px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:2px}.title{font:650 34px ui-sans-serif,system-ui,sans-serif;letter-spacing:-1px}.body{font:500 18px ui-sans-serif,system-ui,sans-serif}.small{font:500 15px ui-sans-serif,system-ui,sans-serif}@media(prefers-color-scheme:dark){.paper{fill:#101712}.ink{fill:#f6f5f0}.muted{fill:#bdc8c0}.line{stroke:#637269}.warm{fill:#29342c}.field{fill:#18a466}}
+  </style>
+  <rect class="paper" width="1200" height="560" rx="36"/>
+  <circle class="warm" cx="1030" cy="80" r="210" opacity=".65"/>
+  <circle cx="1030" cy="80" r="150" fill="none" class="line" opacity=".45"/>
+  <text x="64" y="70" class="label muted">ELIXPO / OPEN FIELD</text>
+  <text x="64" y="119" class="title ink">Open work moves through a public release.</text>
+  <path d="M264 277H441M759 277H936" fill="none" class="line" stroke-width="2"/>
+  <path d="M431 269l12 8-12 8M926 269l12 8-12 8" fill="none" class="line" stroke-width="2"/>
+  <rect x="64" y="181" width="300" height="192" rx="28" class="warm"/>
+  <text x="92" y="219" class="label muted">PUBLIC WORK</text>
+  <text x="92" y="264" class="title ink">Projects</text>
+  <text x="92" y="297" class="body ink">Software · packages · hardware</text>
+  <text x="92" y="337" class="small muted">Research and operated services enter</text>
+  <text x="92" y="359" class="small muted">through the same evidence boundary.</text>
+  <circle cx="600" cy="277" r="159" class="field"/>
+  <circle cx="600" cy="277" r="120" fill="none" stroke="#fff" opacity=".25"/>
+  <text x="600" y="237" text-anchor="middle" class="label white">ELIXPO CHAPTER</text>
+  <text x="600" y="289" text-anchor="middle" class="title white">Frame · build</text>
+  <text x="600" y="329" text-anchor="middle" class="title white">review · release</text>
+  <rect x="836" y="181" width="300" height="192" rx="28" class="warm"/>
+  <text x="864" y="219" class="label muted">PUBLIC OUTCOME</text>
+  <text x="864" y="264" class="title ink">A durable record</text>
+  <text x="864" y="297" class="body ink">Artifact · status · attribution</text>
+  <text x="864" y="337" class="small muted">The release remains useful, citable,</text>
+  <text x="864" y="359" class="small muted">and honest about its current state.</text>
+  <line x1="64" y1="430" x2="1136" y2="430" class="line"/>
+  <text x="64" y="470" class="label muted">THREE PUBLIC FAMILIES</text>
+  <text x="64" y="510" class="body ink">Open Projects</text>
+  <circle cx="254" cy="504" r="5" class="field"/>
+  <text x="286" y="510" class="body ink">Open Research</text>
+  <circle cx="480" cy="504" r="5" class="field"/>
+  <text x="512" y="510" class="body ink">Open Services</text>
+  <text x="1136" y="510" text-anchor="end" class="small muted">Build in public. Release as a project.</text>
+</svg>
