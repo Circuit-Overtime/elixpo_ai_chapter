@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /apt/
+
+Sitemap: https://packages.elixpo.com/sitemap.xml

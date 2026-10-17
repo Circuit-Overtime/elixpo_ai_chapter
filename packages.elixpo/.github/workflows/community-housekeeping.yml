@@ -1,0 +1,47 @@
+name: Community housekeeping
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: community-housekeeping
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Review inactive issues and pull requests
+        uses: actions/stale@5bef64f19d7facfb25b37b414482c7164d639639 # v9
+        with:
+          days-before-issue-stale: 60
+          days-before-issue-close: 14
+          stale-issue-message: >-
+            This issue has been automatically marked as stale because it has not
+            had recent activity. It will be closed in 14 days if no further
+            activity occurs.
+          close-issue-message: >-
+            This issue was closed because it remained inactive after the stale
+            notice. Reopen it if the work is still relevant.
+          days-before-pr-stale: 30
+          days-before-pr-close: 7
+          stale-pr-message: >-
+            This pull request has been automatically marked as stale because it
+            has not had recent activity. It will be closed in 7 days if no
+            further activity occurs.
+          close-pr-message: >-
+            This pull request was closed because it remained inactive after the
+            stale notice. Reopen it if the work is still relevant.
+          stale-issue-label: stale
+          stale-pr-label: stale
+          exempt-issue-labels: pinned,security,elixpo
+          exempt-pr-labels: pinned,security,elixpo
+          operations-per-run: 30
