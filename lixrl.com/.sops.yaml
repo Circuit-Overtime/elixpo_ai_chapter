@@ -1,9 +1,0 @@
-creation_rules:
-  - path_regex: '\.env$'
-    age: >-
-      age1zptpgxhs9chnkudu69qut2hn706pmyngasvaz4ppf452un2x7p2ss6j96f,
-      age10wglql3khh8jywavqpkkqvsa9gm7qv4rc2jdax0mp6cxjwu5c9msjwtznd
-
-
-# 1. Ayushman
-# 2. Ayushman RPI5
