@@ -2,7 +2,7 @@
 
 **Status:** Approved for organization-wide use on 2026-10-16  
 **Canonical record:** [`content/brand.json`](../content/brand.json)  
-**Public asset library:** [elixpo.com/assets](https://elixpo.com/assets)
+**Public brand library:** [elixpo.com/branding](https://elixpo.com/branding)
 
 Open Field is the visual language for Elixpo. It aims to make software,
 research, services, people, and historical records feel related without forcing

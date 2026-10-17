@@ -4,11 +4,18 @@ import { ArrowRight, Download, ShieldCheck } from "lucide-react";
 import brand from "../../../content/brand.json";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
-export const metadata = createPageMetadata({
+export const BRAND_DESCRIPTION = "Use Elixpo's Open Field colours, typography guidance, canonical marks, project icons, social artwork, diagrams, and protected sticker previews.";
+
+const assetsMetadata = createPageMetadata({
   title: "Elixpo brand kit, usage guidance, and sticker previews",
-  description: "Use Elixpo's Open Field colours, typography guidance, canonical marks, project icons, and social artwork. View protected sticker previews and request approved event materials.",
+  description: BRAND_DESCRIPTION,
   path: "/assets",
 });
+export const metadata = {
+  ...assetsMetadata,
+  alternates: { canonical: "/branding" },
+  robots: { index: false, follow: true },
+};
 
 const marks = [
   { name: "Elixpo lock-up with Oreo", file: "/brand/source/marks/elixpo_lock_up_text_mascot.png" },
@@ -44,8 +51,8 @@ function DownloadGrid({ items }: { items: Array<{ name: string; file: string }> 
   </article>)}</div>;
 }
 
-export default function AssetsPage() {
-  const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", name: "Elixpo brand assets", description: metadata.description, url: "https://elixpo.com/assets" };
+export function BrandingContent({ canonicalPath = "/branding" }: { canonicalPath?: "/branding" | "/assets" }) {
+  const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", name: "Elixpo brand assets", description: BRAND_DESCRIPTION, url: `https://elixpo.com${canonicalPath}` };
   return <main className="page-shell brand-page">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
     <header className="page-intro"><p className="eyebrow">Brand / Open Field</p><h1>A consistent identity for Elixpo&apos;s public work.</h1><p className="lede">The Elixpo identity combines clear institutional typography, warm paper, foundry green, and the Oreo mascot. This library provides the public colour system, typography guidance, reviewed organization marks, project assets, and the access rules for protected event material.</p></header>
@@ -83,4 +90,8 @@ export default function AssetsPage() {
     <section className="brand-audit" aria-labelledby="brand-audit-title"><div><p className="eyebrow">Source audit</p><h2 id="brand-audit-title">A curated public library, not a raw repository dump.</h2><p>The private production workspace contains generation tools, prompts, restricted masters, outputs, and historical material. Only reviewed public assets become canonical here.</p></div><dl><div><dt>Production source</dt><dd>{brand.audit.standaloneTrackedFiles}</dd><small>tracked files · {formatMegabytes(brand.audit.standaloneDiskSizeBytes)}</small></div><div><dt>Portal library</dt><dd>{brand.audit.portalBrandFiles}</dd><small>reviewed files · {formatMegabytes(brand.audit.portalBrandDiskSizeBytes)}</small></div><div><dt>Exact masters</dt><dd>{brand.audit.exactMasterDuplicates}</dd><small>verified byte-for-byte</small></div></dl></section>
     <section className="method-panel"><p className="eyebrow">Migration status</p><h2>The reviewed public library has moved; restricted production material has not.</h2><p>{brand.note}</p><p>Colour tokens, typography guidance, and general usage guidance remain public. Copyright licenses and trademark permissions are separate, and download availability does not grant permission to imply endorsement, impersonate Elixpo, or present a modified mark as official.</p></section>
   </main>;
+}
+
+export default function AssetsPage() {
+  return <BrandingContent canonicalPath="/assets" />;
 }

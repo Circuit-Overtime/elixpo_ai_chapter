@@ -2,7 +2,7 @@
   "$schema": "./schemas/brand.schema.json",
   "schemaVersion": 1,
   "lastVerified": "2026-10-17",
-  "canonicalHome": "https://elixpo.com/assets",
+  "canonicalHome": "https://elixpo.com/branding",
   "sourceRepository": "urn:github:repository:elixpo/brand-production",
   "migrationStatus": "complete",
   "visualDirection": {

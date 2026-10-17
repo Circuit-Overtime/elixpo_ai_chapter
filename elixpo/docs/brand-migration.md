@@ -75,7 +75,7 @@ derivative recorded in the provenance manifest.
 8. Validate checksums, licences, links, asset dimensions, open public downloads,
    and the watermark on every public sticker preview.
 9. Update every known consumer to the stable `https://elixpo.com/brand/...` or
-   `https://elixpo.com/assets` destination as appropriate.
+   `https://elixpo.com/branding` destination as appropriate.
 10. Publish a boundary notice in the production README, verify consumers again,
     rename the repository, and make it private while retaining active generation
     capability.

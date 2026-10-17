@@ -14,7 +14,7 @@ const resources = [
   {title:"People and profile consent",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/people-and-profile-consent.md",text:"Public-evidence profiles, explicit opt-in material, corrections, and removal."},
   {title:"Contributor record policy",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/contributor-records.md",text:"Stable record IDs, canonical verification, correction, dispute, altered-copy, and withdrawal rules."},
   {title:"Event partnerships",href:"/partnerships",text:"Request approved sticker material and review the visibility exchange, requirements, and independence rules."},
-  {title:"Brand assets",href:"/assets",text:"Public colours, typography guidance, canonical marks, project icons, and protected sticker previews."},
+  {title:"Brand system",href:"/branding",text:"Public colours, typography guidance, canonical marks, project icons, and protected sticker previews."},
 ];
 
 export default function ResourcesPage() {

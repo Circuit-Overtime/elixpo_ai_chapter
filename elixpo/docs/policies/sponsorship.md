@@ -64,7 +64,7 @@ organizer responsible for confirming delivery and outcomes.
 The public explanation and request route live at
 [`elixpo.com/partnerships`](https://elixpo.com/partnerships). Elixpo's colour
 tokens, typography guidance, and general brand guidance remain openly
-accessible in the [asset library](https://elixpo.com/assets). This access
+accessible in the [brand library](https://elixpo.com/branding). This access
 boundary does not settle the broader copyright or trademark policy, which
 remains a separate legal-review task.
 

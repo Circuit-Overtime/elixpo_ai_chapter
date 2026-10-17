@@ -11,8 +11,12 @@ import { ProjectMark } from "@/components/ProjectMark";
 const featured = ["blogs", "lixsketch", "oreo", "oreolook", "kareixo", "lixrl"]
   .map((slug) => DIRECTORY_ENTRIES.find((entry) => entry.slug === slug))
   .filter((entry): entry is (typeof DIRECTORY_ENTRIES)[number] => Boolean(entry));
-const featuredContributors = [...contributors.featured].sort((a, b) => b.observedContributions - a.observedContributions);
 const leadDevelopers = people.currentTeam;
+const leadHandles = new Set(leadDevelopers.map((person) => person.handle.toLowerCase()));
+const featuredContributors = [...contributors.featured]
+  .filter((person) => !leadHandles.has(person.handle.toLowerCase()))
+  .sort((a, b) => b.observedContributions - a.observedContributions)
+  .slice(0, 10);
 const counts = {
   project: getDirectoryEntries("project").length,
   research: getDirectoryEntries("research").length,
@@ -24,7 +28,7 @@ export function StoryHome() {
   return (
     <main className="story-home">
       <section className="story-hero">
-        <div className="hero-field" aria-hidden="true"><span /><span /><span /></div>
+        <div className="hero-field" aria-hidden="true"><span /><span /><span /><span /><span /></div>
         <div className="hero-copy">
           <div className="hero-copy-main">
             <p className="eyebrow">Elixpo · open-source project foundry</p>
@@ -149,9 +153,10 @@ export function StoryHome() {
           <div><p className="eyebrow">Contributor recognition</p><h2>Contributor records explain who worked on each release.</h2></div>
           <p>Recognition is based on repository evidence, excludes declared project leads and automation, and describes the period and type of work rather than presenting a contribution count without context.</p>
         </div>
-        <div className="people-grid">
-          {featuredContributors.map((person) => (
-            <article key={person.handle}>
+        <div className="people-rail" role="list" aria-label="Ten featured non-lead Elixpo contributors" tabIndex={0}>
+          {featuredContributors.map((person, index) => (
+            <article key={person.handle} role="listitem">
+              <span className="contributor-position">{String(index + 1).padStart(2,"0")}</span>
               <a href={person.github} target="_blank" rel="noreferrer"><Image src={`https://github.com/${person.handle}.png`} alt={`${person.name} on GitHub`} width={72} height={72} unoptimized /></a>
               <p className="eyebrow">{person.activeWindow}</p>
               <h3>{person.name}</h3>

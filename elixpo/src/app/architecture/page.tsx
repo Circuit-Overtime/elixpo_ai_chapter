@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { createPageMetadata } from "@/lib/seo";
 import { PageStructuredData } from "@/components/PageStructuredData";
+import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
 
 export const metadata = createPageMetadata({
   title: "Elixpo organizational architecture",
@@ -21,6 +22,7 @@ export default function ArchitecturePage() {
   return <main className="page-shell architecture-page">
     <PageStructuredData name="Elixpo organizational architecture" description="How Elixpo's registry, Chapters, repositories, publications, services, and shared standards divide responsibility." path="/architecture" />
     <header className="page-intro"><p className="eyebrow">Organizational architecture</p><h1>One registry.<br/>Several accountable surfaces.</h1><p className="lede">Elixpo is organized around evidence and responsibility, not a claim that every project shares one technical stack. The registry provides shared identity; each project and publication surface retains the architecture it actually needs.</p></header>
+    <section className="architecture-diagram" aria-labelledby="architecture-diagram-title"><div className="section-heading split"><div><p className="eyebrow">System map</p><h2 id="architecture-diagram-title">How work moves through Elixpo.</h2></div><p>The diagram separates owning repositories, the Chapter coordination layer, specialized publishers, and the public record. Arrows describe information and release flow—not automatic ownership transfer.</p></div><ArchitectureDiagram /></section>
     <section className="architecture-stack">{layers.map((layer,index)=><article key={layer.title}><span>{String(index+1).padStart(2,"0")}</span><h2>{layer.title}</h2><p>{layer.text}</p></article>)}</section>
     <section className="architecture-contract">
       <div><p className="eyebrow">Specialized repositories</p><h2>Research publishing and package distribution are maintained separately.</h2><p>The main portal owns organization-level discovery and classification. The specialized repositories own their publication and distribution operations while consuming shared identifiers and metadata contracts.</p></div>
