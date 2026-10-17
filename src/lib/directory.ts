@@ -1,5 +1,6 @@
 import registry from "../../content/repositories.json";
 import directory from "../../content/directory.json";
+import repositoryLicenses from "../../content/repository-licenses.json";
 
 export type PublicFamily = "project" | "research" | "service";
 export type Lifecycle = "incubating" | "active" | "maintenance" | "paused" | "completed" | "archived";
@@ -19,12 +20,21 @@ export interface DirectoryEntry {
   featured?: boolean;
   icon?: string;
   evidence?: { label: string; url: string }[];
+  licenseEvidence: {
+    detection: string;
+    classification: "spdx-recognized" | "external-spdx" | "custom-mixed" | "missing";
+    spdxId: string | null;
+    evidenceUrl: string | null;
+    summary: string;
+    verifiedAt: string;
+  };
 }
 
 type RegistryEntry = (typeof registry.entries)[number];
 
-type DirectoryDetails = Omit<DirectoryEntry, "repository" | "repositoryUrl" | "family" | "lifecycle" | "relationship">;
+type DirectoryDetails = Omit<DirectoryEntry, "repository" | "repositoryUrl" | "family" | "lifecycle" | "relationship" | "licenseEvidence">;
 const DETAILS = directory.entries as Record<string, DirectoryDetails>;
+const LICENSES = repositoryLicenses.entries as Record<string, DirectoryEntry["licenseEvidence"]>;
 
 function isPublicEntry(entry: RegistryEntry): entry is RegistryEntry & { publicClass: PublicFamily } {
   return entry.disposition === "public-entry" && entry.publicClass !== null;
@@ -35,8 +45,11 @@ export const DIRECTORY_ENTRIES: DirectoryEntry[] = registry.entries
   .map((entry) => {
     const detail = DETAILS[entry.name];
     if (!detail) throw new Error(`Missing public directory copy for ${entry.name}`);
+    const licenseEvidence = LICENSES[entry.name];
+    if (!licenseEvidence) throw new Error(`Missing repository license evidence for ${entry.name}`);
     return {
       ...detail,
+      licenseEvidence,
       repository: entry.name,
       repositoryUrl: entry.repositoryUrl,
       family: entry.publicClass,

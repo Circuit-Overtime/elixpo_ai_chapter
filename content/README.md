@@ -11,6 +11,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `packages.json` — verified Linux application and npm package metadata, including versions, sources, installation commands, licenses, maintainers, and release state.
 - `research.json` — research-specific abstracts, authors, publication and review status, artifacts, demonstrations, licenses, citations, and reproducibility records.
 - `licensing.json` — approved defaults for new work and migration safeguards for existing work.
+- `repository-licenses.json` — current repository-level license detection, controlling evidence links, and explicit missing/custom-license warnings for every public dossier.
 - `sponsorship.json` — monetary no-solicitation boundary, project-owned funding separation, and in-kind event-partnership rules.
 - `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.
 - `people.json` — current organization roles, role definitions, evidence boundaries, and explicit maintainer, alumni, and advisor records.

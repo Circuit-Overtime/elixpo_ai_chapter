@@ -14,7 +14,7 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, packages, research, licensing, sponsorship, contributors, people, history, brand, discussions, brandProvenance] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, research, licensing, repositoryLicenses, sponsorship, contributors, people, history, brand, discussions, brandProvenance] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
@@ -22,6 +22,7 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
   readJson("content/packages.json"),
   readJson("content/research.json"),
   readJson("content/licensing.json"),
+  readJson("content/repository-licenses.json"),
   readJson("content/sponsorship.json"),
   readJson("content/contributors.json"),
   readJson("content/people.json"),
@@ -45,6 +46,7 @@ const declaredSchemaRecords = [
   ["content/packages.json", packages],
   ["content/research.json", research],
   ["content/licensing.json", licensing],
+  ["content/repository-licenses.json", repositoryLicenses],
   ["content/sponsorship.json", sponsorship],
   ["content/contributors.json", contributors],
   ["content/people.json", people],
@@ -190,6 +192,7 @@ for (const [location, value] of [
   ["packages.lastVerified", packages.lastVerified],
   ["research.lastVerified", research.lastVerified],
   ["licensing.lastVerified", licensing.lastVerified],
+  ["repositoryLicenses.lastVerified", repositoryLicenses.lastVerified],
   ["sponsorship.lastVerified", sponsorship.lastVerified],
   ["contributors.lastVerified", contributors.lastVerified],
   ["people.lastVerified", people.lastVerified],
@@ -506,6 +509,28 @@ const publicRepositoryNames = new Set(
     .filter((entry) => entry.disposition === "public-entry")
     .map((entry) => entry.name),
 );
+const licensedRepositoryNames = new Set(Object.keys(repositoryLicenses.entries ?? {}));
+for (const repositoryName of publicRepositoryNames) {
+  if (!licensedRepositoryNames.has(repositoryName)) {
+    addError(`repositoryLicenses.entries.${repositoryName}`, "every public repository requires current license evidence");
+  }
+}
+for (const [repositoryName, evidence] of Object.entries(repositoryLicenses.entries ?? {})) {
+  const location = `repositoryLicenses.entries.${repositoryName}`;
+  if (!publicRepositoryNames.has(repositoryName)) addError(location, "does not map to a public-entry repository");
+  if (!isDate(evidence.verifiedAt)) addError(`${location}.verifiedAt`, "expected YYYY-MM-DD");
+  validateFreshness(`${location}.verifiedAt`, evidence.verifiedAt);
+  if (evidence.evidenceUrl) validateUrl(`${location}.evidenceUrl`, evidence.evidenceUrl);
+  if (evidence.classification === "missing" && (evidence.spdxId !== null || evidence.evidenceUrl !== null)) {
+    addError(location, "missing licenses must not imply an SPDX identifier or evidence file");
+  }
+  if (["spdx-recognized", "external-spdx"].includes(evidence.classification) && !evidence.spdxId) {
+    addError(`${location}.spdxId`, "recognized license evidence requires an SPDX identifier");
+  }
+  if (evidence.classification === "custom-mixed" && evidence.spdxId !== null) {
+    addError(`${location}.spdxId`, "custom mixed terms must not be presented as a recognized SPDX expression");
+  }
+}
 const directorySlugs = new Set();
 
 for (const [repositoryName, detail] of Object.entries(directory.entries ?? {})) {

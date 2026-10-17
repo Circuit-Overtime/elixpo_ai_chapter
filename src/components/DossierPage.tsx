@@ -28,6 +28,7 @@ export function DossierPage({ entry }: { entry: DirectoryEntry }) {
             <div><dt>Lifecycle</dt><dd><span className={`status-pill status-${entry.lifecycle}`}>{entry.lifecycle}</span></dd></div>
             <div><dt>Stewardship</dt><dd>{entry.relationship}</dd></div>
             <div><dt>Repository</dt><dd>{entry.repository}</dd></div>
+            <div><dt>Repository license</dt><dd>{entry.licenseEvidence.spdxId ?? entry.licenseEvidence.classification.replaceAll("-", " ")}</dd></div>
           </dl>
         </header>
 
@@ -46,6 +47,7 @@ export function DossierPage({ entry }: { entry: DirectoryEntry }) {
               <a href={discussionUrl(entry)} target="_blank" rel="noreferrer"><MessageCircle size={16} /> Discuss this {entry.family}</a>
             </div>
             {entry.evidence && <div className="evidence-links"><p className="eyebrow">Research record</p>{entry.evidence.map((item) => <a key={item.url} href={item.url} target="_blank" rel="noreferrer">{item.label} <ArrowUpRight size={13} /></a>)}</div>}
+            <div className="evidence-links"><p className="eyebrow">License evidence</p><p>{entry.licenseEvidence.summary}</p>{entry.licenseEvidence.evidenceUrl && <a href={entry.licenseEvidence.evidenceUrl} target="_blank" rel="noreferrer">Open controlling license <ArrowUpRight size={13} /></a>}<small>Verified {entry.licenseEvidence.verifiedAt}</small></div>
           </aside>
         </section>
 
