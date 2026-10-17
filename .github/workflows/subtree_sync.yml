@@ -101,14 +101,20 @@ jobs:
           sync_one() {
             local name="$1" url="$2"
             local remote_tip prev_tip before_tip op_label upstream_log files_changed short_tip
-            echo "==> $name"
+            echo "::group::Sync $name"
+            echo "[$(date -u +'%Y-%m-%dT%H:%M:%SZ')] Fetching $url"
 
             if ! git remote get-url "$name" >/dev/null 2>&1; then
               git remote add "$name" "$url"
             fi
-            if ! git fetch --quiet "$name"; then
-              echo "    fetch failed — skipping"
+            # Fetch only the current main snapshot. A normal remote fetch can
+            # download an upstream's entire history and make this aggregate
+            # job appear hung (or exhaust the runner) for very large projects.
+            if ! timeout --signal=TERM 180s git fetch --progress --depth=1 "$name" \
+              "+refs/heads/main:refs/remotes/${name}/main"; then
+              echo "    fetch failed or exceeded three minutes — skipping"
               FAILED=$((FAILED + 1))
+              echo "::endgroup::"
               return 0
             fi
 
@@ -116,6 +122,7 @@ jobs:
             if [ -z "$remote_tip" ]; then
               echo "    remote has no main branch — skipping"
               FAILED=$((FAILED + 1))
+              echo "::endgroup::"
               return 0
             fi
 
@@ -123,34 +130,31 @@ jobs:
             [ -f "$STATE_DIR/${name}" ] && prev_tip=$(cat "$STATE_DIR/${name}")
             if [ "$prev_tip" = "$remote_tip" ]; then
               echo "    up to date ($remote_tip)"
+              echo "::endgroup::"
               return 0
             fi
 
             before_tip=$(git rev-parse HEAD)
+            # Refresh from the fetched snapshot rather than asking
+            # `git subtree pull` to perform a second, unbounded history fetch.
+            # The aggregate PR is squash-merged, so this retains a compact
+            # canonical snapshot while its source SHA remains auditable below.
             if [ -d "$name" ] && git ls-tree --name-only HEAD | grep -qx "$name"; then
-              op_label="pull"
-              if ! git subtree pull --prefix="$name" "$name" main -m "Sync ${name} from upstream"; then
-                echo "    subtree pull failed — retrying as a clean re-add"
-                git merge --abort 2>/dev/null || true
-                git reset --hard "$before_tip"
-                git rm -rf "$name/" 2>/dev/null || true
-                git commit -m "Reset ${name} subtree for re-sync" || true
-                if ! git subtree add --prefix="$name" "$name" main -m "Re-add ${name} subtree"; then
-                  echo "    re-add failed — restoring the aggregate branch"
-                  git reset --hard "$before_tip"
-                  FAILED=$((FAILED + 1))
-                  return 0
-                fi
-                op_label="re-add"
-              fi
+              op_label="snapshot refresh"
+              git rm -rf "$name/"
+              git commit -m "Reset ${name} subtree for snapshot refresh"
             else
-              op_label="add"
-              if ! git subtree add --prefix="$name" "$name" main -m "Add ${name} subtree"; then
-                echo "    add failed — restoring the aggregate branch"
-                git reset --hard "$before_tip"
-                FAILED=$((FAILED + 1))
-                return 0
-              fi
+              op_label="snapshot add"
+            fi
+
+            echo "[$(date -u +'%Y-%m-%dT%H:%M:%SZ')] Applying $remote_tip"
+            if ! timeout --signal=TERM 180s git subtree add --prefix="$name" \
+              --squash "$remote_tip" -m "Sync ${name} snapshot from upstream"; then
+              echo "    subtree snapshot failed or exceeded three minutes — restoring aggregate branch"
+              git reset --hard "$before_tip"
+              FAILED=$((FAILED + 1))
+              echo "::endgroup::"
+              return 0
             fi
 
             files_changed=$(git diff --shortstat "$before_tip" HEAD -- "$name" | sed 's/^[[:space:]]*//')
@@ -179,6 +183,8 @@ jobs:
               printf '%s\n\n' "$upstream_log"
             } >> "$SUMMARY_FILE"
             UPDATED=$((UPDATED + 1))
+            echo "[$(date -u +'%Y-%m-%dT%H:%M:%SZ')] Finished $name"
+            echo "::endgroup::"
           }
 
           for entry in "${repos[@]}"; do
