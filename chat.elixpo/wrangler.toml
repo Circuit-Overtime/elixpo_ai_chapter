@@ -1,0 +1,20 @@
+name = "elixpo-chat"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+main = ".open-next/worker.js"
+assets = { directory = ".open-next/assets", binding = "ASSETS" }
+
+[vars]
+CORS_ORIGIN = "https://chat.elixpo.com"
+
+# Cloudflare D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "elixpochat"
+database_id = "62f2c78e-330c-49c5-97fc-f671eba36a50"
+migrations_dir = "worker/migrations"
+
+# Cloudflare KV Namespace (caching)
+[[kv_namespaces]]
+binding = "KV"
+id = "cec2921bc4e645efa43ecdd8b0db9796"

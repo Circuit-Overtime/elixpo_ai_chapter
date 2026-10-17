@@ -1,0 +1,43 @@
+# Categorize new PRs and file them into the matching Project V2 board.
+# Org members → default to "Dev"; external contributors → LLM picks based on
+# PR title, body, and changed files.
+#
+# Labels applied: FEATURE / BUGS / SUPPORT / DEV (uppercase, matching issues).
+
+name: PR Triage
+
+# Share concurrency group with pr-assign so they run sequentially on the
+# same PR and don't race on label creation / assignees.
+concurrency:
+  group: pr-open-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+    branches: [main]
+
+jobs:
+  triage:
+    if: github.event.pull_request.user.login != 'elixpoo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Triage PR
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          REPO: ${{ github.repository }}
+        run: python .github/scripts/triage_pr.py

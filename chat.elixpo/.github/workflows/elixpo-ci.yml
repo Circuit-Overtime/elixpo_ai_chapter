@@ -1,0 +1,91 @@
+# Elixpo CI — Drop-in workflow for all elixpo projects.
+# Copy this file to .github/workflows/elixpo-ci.yml in your project.
+# Configure your project in .elixpo/project.yml
+#
+# What this does:
+#   push/PR to main   → quality gate (lint, test, build)
+#   PR opened          → auto-label, auto-assign
+#   issue opened       → LLM triage + assign maintainer
+#   issue labeled      → agent solves issue (label: elixpo) [COMING SOON]
+#   @elixpo in PR      → agent deep review [COMING SOON]
+#   PR merged          → LLM summary → public Gist changelog
+#   weekly cron        → stale issue/PR cleanup
+
+name: Elixpo CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches: [main]
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: "0 9 * * 1"  # Weekly Monday 9 AM UTC — stale cleanup
+
+jobs:
+  # ── Common CI (no LLM) ──────────────────────────────
+
+  quality:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed')
+    uses: elixpo/agent.elixpo/.github/workflows/quality-gate.yml@main
+    secrets: inherit
+
+  pr-manage:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action != 'closed'
+    uses: elixpo/agent.elixpo/.github/workflows/pr-management.yml@main
+    secrets: inherit
+
+  stale:
+    if: github.event_name == 'schedule'
+    uses: elixpo/agent.elixpo/.github/workflows/stale-management.yml@main
+    secrets: inherit
+
+  # ── LLM-Powered CI (claude-fast via Pollinations) ───
+
+  triage:
+    if: >-
+      github.event_name == 'issues' &&
+      github.event.action == 'opened'
+    uses: elixpo/agent.elixpo/.github/workflows/issue-triage.yml@main
+    with:
+      issue_number: ${{ github.event.issue.number }}
+    secrets:
+      POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+
+  merge-gist:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.merged == true
+    uses: elixpo/agent.elixpo/.github/workflows/merge-gist.yml@main
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+    secrets:
+      POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+      GIST_TOKEN: ${{ secrets.CI_GIST_TOKEN }}
+
+  # ── Agentic (full agent engine) — COMING SOON ───────
+  #
+  # solve-issue:
+  #   if: github.event_name == 'issues' && github.event.label.name == 'elixpo'
+  #   uses: elixpo/agent.elixpo/.github/workflows/issue-solver.yml@main
+  #   with:
+  #     issue_number: ${{ github.event.issue.number }}
+  #   secrets: inherit
+  #
+  # review-pr:
+  #   if: |
+  #     github.event_name == 'issue_comment' &&
+  #     github.event.issue.pull_request &&
+  #     contains(github.event.comment.body, '@elixpo')
+  #   uses: elixpo/agent.elixpo/.github/workflows/pr-review.yml@main
+  #   with:
+  #     pr_number: ${{ github.event.issue.number }}
+  #   secrets: inherit

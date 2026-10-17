@@ -1,0 +1,421 @@
+# Elixpo Auto Code — handle issue work
+# Triggers:
+#   - ELIXPO label added (from triage or manually)
+#   - @elixpoo mentioned in a comment on an issue (NOT a PR — pr-review-request.yml owns that)
+# Whitelist: Elixpo org members (Circuit-Overtime, anwe-ch, elixpoo, ez-vivek)
+#
+# The bot reads the issue, then either:
+#   - Answers in a comment (question / discussion / LGTM), or
+#   - Commits to the existing linked PR's branch if one is open, or
+#   - Creates a new branch + PR (if no PR exists yet)
+
+name: Elixpo Auto Code
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: elixpo-auto-code-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  auto-code:
+    # Fire on ELIXPO label add OR @elixpoo mention on an ISSUE (not a PR).
+    # Loop-prevention: skip comments authored by elixpoo itself.
+    if: |
+      (github.event_name == 'issues' && github.event.label.name == 'ELIXPO') ||
+      (github.event_name == 'issue_comment'
+        && !github.event.issue.pull_request
+        && github.event.comment.user.login != 'elixpoo'
+        && github.actor != 'elixpoo'
+        && contains(github.event.comment.body, '@elixpoo'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    env:
+      POLLINATIONS_TOKEN: ${{ secrets.CI_POLLINATIONS_KEY }}
+      POLLINATIONS_TOKEN_CODER: ${{ secrets.CI_POLLINATIONS_KEY_CODER }}
+      AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+    steps:
+      - name: Check Authorization
+        id: whitelist
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CI_AGENT_TOKEN }}
+          script: |
+            const whitelist = ['Circuit-Overtime', 'anwe-ch', 'elixpoo', 'ez-vivek'];
+            const actor = context.payload.sender.login;
+
+            // For comment triggers, enforce strict @elixpoo (reject substring matches like @elixpoooo).
+            if (context.eventName === 'issue_comment') {
+              const body = context.payload.comment?.body || '';
+              if (!/(^|[^A-Za-z0-9_.+-])@elixpoo([^A-Za-z0-9_.+-]|$)/.test(body)) {
+                console.log('@elixpoo substring only — skipping.');
+                core.setOutput('authorized', 'false');
+                return;
+              }
+            }
+
+            if (!whitelist.includes(actor)) {
+              if (context.eventName === 'issues') {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  name: 'ELIXPO'
+                });
+              }
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Sorry @${actor}, only Elixpo org members can invoke @elixpoo.`
+              });
+              core.setOutput('authorized', 'false');
+            } else {
+              core.setOutput('authorized', 'true');
+            }
+
+      - name: Setup Bun
+        if: steps.whitelist.outputs.authorized == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Checkout early so we can read .github/ci_config.py for the model config
+      - name: Checkout for config read
+        if: steps.whitelist.outputs.authorized == 'true'
+        uses: actions/checkout@v4
+        with:
+          path: config-src
+          sparse-checkout: .github
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        if: steps.whitelist.outputs.authorized == 'true'
+        with:
+          python-version: "3.11"
+
+      - name: Setup router + rocket reaction
+        if: steps.whitelist.outputs.authorized == 'true'
+        id: setup
+        run: |
+          # rocket reaction on the triggering comment (or the issue itself for label events)
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f content=rocket || true
+          else
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions -f content=rocket || true
+          fi
+
+          # Pull models from ci_config.py — single source of truth
+          cd config-src
+          AGENT_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_AGENT; print(LLM_MODEL_AGENT)")
+          CODE_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_CODE; print(LLM_MODEL_CODE)")
+          THINK_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_THINKING; print(LLM_MODEL_THINKING)")
+          SEARCH_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_SEARCH; print(LLM_MODEL_SEARCH)")
+          cd ..
+
+          # Router wiring (models come from ci_config.py, NOT hardcoded here):
+          #   default    → AGENT_MODEL  — main agentic thread
+          #   background → CODE_MODEL   — delegated code-heavy subagent work
+          #   rocket   → THINK_MODEL  — reasoning-heavy steps
+          #   webSearch  → SEARCH_MODEL — when explicit web lookup is needed
+          echo "Router models: default=$AGENT_MODEL, background=$CODE_MODEL, rocket=$THINK_MODEL, webSearch=$SEARCH_MODEL"
+
+          mkdir -p $HOME/.claude-code-router
+          # Copy custom CCR adapters (gemini rocket-disable, etc.) so the
+          # router can load them by absolute path.
+          cp config-src/.github/ccr-adapters/*.js $HOME/.claude-code-router/ 2>/dev/null || true
+          NORMALIZE_ADAPTER="$HOME/.claude-code-router/openai-normalize.js"
+          # Two providers — main (cheap key) + coder (separate key for qwen-coder).
+          # Transformer order: openai-normalize → openai → maxtoken.
+          # openai-normalize flattens Anthropic-style structured content
+          # (multi-block text arrays, cache_control, tool_use/tool_result) to
+          # the plain OpenAI shape that Pollinations' non-Anthropic models
+          # (kimi, qwen-coder, perplexity-*, gemini, glm) require. Anthropic-
+          # native models pass through unchanged.
+          # Custom transformers MUST be registered at top-level "transformers"
+          # — CCR resolves strings in "use" as registered names, not paths.
+          cat > $HOME/.claude-code-router/config.json <<EOF
+          {
+            "LOG": false,
+            "NON_INTERACTIVE_MODE": true,
+            "API_TIMEOUT_MS": 600000,
+            "transformers": [
+              {"path": "${NORMALIZE_ADAPTER}"}
+            ],
+            "Providers": [
+              {
+                "name": "pollinations-main",
+                "api_base_url": "https://gen.pollinations.ai/v1/chat/completions",
+                "api_key": "${POLLINATIONS_TOKEN}",
+                "models": ["${AGENT_MODEL}", "${THINK_MODEL}", "${SEARCH_MODEL}"],
+                "transformer": {
+                  "use": ["openai-normalize", "openai", ["maxtoken", {"max_tokens": 9000}]]
+                }
+              },
+              {
+                "name": "pollinations-coder",
+                "api_base_url": "https://gen.pollinations.ai/v1/chat/completions",
+                "api_key": "${POLLINATIONS_TOKEN_CODER}",
+                "models": ["${CODE_MODEL}"],
+                "transformer": {
+                  "use": ["openai", ["maxtoken", {"max_tokens": 9000}]]
+                }
+              }
+            ],
+            "Router": {
+              "default": "pollinations-main,${AGENT_MODEL}",
+              "background": "pollinations-coder,${CODE_MODEL}",
+              "rocket": "pollinations-main,${THINK_MODEL}",
+              "webSearch": "pollinations-main,${SEARCH_MODEL}"
+            }
+          }
+          EOF
+
+          # Start router
+          bunx @musistudio/claude-code-router start &
+          # Wait up to 60s for the router to be ready — fail fast if bunx
+          # couldn't install or exited.
+          for i in $(seq 1 120); do
+            curl -s http://localhost:3456 >/dev/null && break
+            sleep 0.5
+            if [ "$i" = "120" ]; then
+              echo "::error::claude-code-router did not come up within 60s"
+              exit 1
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+
+      - uses: actions/checkout@v4
+        if: steps.whitelist.outputs.authorized == 'true'
+        with:
+          fetch-depth: 0
+          repository: ${{ github.repository }}
+          token: ${{ secrets.CI_AGENT_TOKEN }}
+
+      # ─────────────────────────────────────────────────────────────────
+      # Pull the pre-built repo-context artifact (.elixpo-context/context.md)
+      # produced by artifact-update.yml on every push to main. Injected
+      # inline into the agent's prompt below so the model never has to
+      # ls/tree/Glob-to-discover — it already has the cold repo context
+      # the way a human using ccr in their terminal does.
+      - name: Download repo-context artifact
+        if: steps.whitelist.outputs.authorized == 'true'
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: repo-context
+          workflow: artifact-update.yml
+          path: .elixpo-context
+          if_no_artifact_found: warn
+          github_token: ${{ secrets.CI_AGENT_TOKEN }}
+
+      # Build the prompt by inlining the repo context snapshot.
+      - name: Build prompt body
+        if: steps.whitelist.outputs.authorized == 'true'
+        id: build_prompt
+        run: |
+          CTX="(context artifact missing — fall back to Glob/Grep discovery)"
+          if [ -f .elixpo-context/context.md ]; then
+            CTX=$(cat .elixpo-context/context.md)
+          fi
+          {
+            echo 'prompt<<PROMPT_EOF'
+            echo "Issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}"
+            echo ""
+            echo "## Cold repo context (pre-built snapshot)"
+            echo "$CTX"
+            echo ""
+            echo "## Your task"
+            echo ""
+            echo "Fetch the full issue body + comments once:"
+            echo "  gh issue view ${{ github.event.issue.number }} --comments"
+            echo ""
+            echo "Then pick ONE of four paths. Aim to finish in under 3 minutes — pick the tool that minimises CCR roundtrips."
+            echo ""
+            echo "1. **IMPLEMENT (small PR)** — only if the ask is small and clear: up to ~10 files, mechanical or surgical, no ambiguous design choices."
+            echo "   - Bulk find/replace / renames / theme swaps → python .github/scripts/apply_refactor.py with a JSON plan on stdin (one call, deterministic, no per-file roundtrip)."
+            echo "   - 1-3 file surgical edits → Read + Edit/MultiEdit."
+            echo "   - Branch: elixpo/issue-${{ github.event.issue.number }}-<hex>. Commit, push, open PR titled '[ELIXPO] <title>' with body ending 'Fixes #${{ github.event.issue.number }}'."
+            echo "   - Do NOT run ./biome.sh — the CI biome workflow checks the PR separately."
+            echo ""
+            echo "2. **DECLINE (too big / needs judgement)** — multi-module features, architectural changes, security-sensitive logic, DB-migration-heavy work. Anything you can't confidently ship in <3 min."
+            echo "   - Post ONE 'gh issue comment ${{ github.event.issue.number }}' politely saying the scope needs manual implementation, with a 1-2 sentence reason. Stop."
+            echo ""
+            echo "3. **CONVERSE** — the ask is a question, discussion, clarification, or a request to improve the issue itself."
+            echo "   - For a question / LGTM / explanation → post ONE 'gh issue comment ${{ github.event.issue.number }}' with a helpful reply."
+            echo "   - To improve the ISSUE DESCRIPTION (the reporter asks you to rewrite, tighten, or enrich it) → use 'gh issue edit ${{ github.event.issue.number }} --body \"<new body>\"'. Preserve anything the reporter explicitly wrote; do NOT tag the reporter inside the body. End the body with: '### Questions from @elixpoo' (only if any), then tag '@elixpoo' (not the reporter) and say 'answering these will make the description richer, or label the issue with ELIXPO to let elixpoo solve it.'"
+            echo "   - To add supplementary information → post ONE 'gh issue comment' with the extra info."
+            echo "   - After the single action, STOP."
+            echo ""
+            echo "4. **CLARIFY (ambiguous ask)** — you cannot tell what the user wants."
+            echo "   - Post ONE 'gh issue comment' with the specific questions needed to proceed. Stop."
+            echo ""
+            echo "Never commit to main. Never fabricate test results. The repo context above is cold but current — prefer it over re-exploring the tree."
+            echo 'PROMPT_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: anthropics/claude-code-action@v1
+        if: steps.whitelist.outputs.authorized == 'true'
+        env:
+          ANTHROPIC_BASE_URL: http://localhost:3456
+          GIT_AUTHOR_NAME: "elixpoo"
+          GIT_AUTHOR_EMAIL: "269200728+elixpoo@users.noreply.github.com"
+          GIT_COMMITTER_NAME: "elixpoo"
+          GIT_COMMITTER_EMAIL: "269200728+elixpoo@users.noreply.github.com"
+        with:
+          anthropic_api_key: "ccr-pollinations"
+          show_full_output: true
+          github_token: ${{ secrets.CI_AGENT_TOKEN }}
+          branch_prefix: "elixpo/"
+          # No allowed_tools cap — every Claude Code tool is available
+          # (Read / Edit / Write / MultiEdit / Glob / Grep / Bash / BashOutput /
+          # TodoWrite / Task / WebFetch / WebSearch / NotebookEdit / Skill / ...).
+          # Task routes to CCR 'background' = qwen-coder, so code-heavy
+          # multi-file work can be delegated to the coder-tuned model.
+          prompt: ${{ steps.build_prompt.outputs.prompt }}
+          # Required for CI — without this, claude-code's default permission
+          # mode prompts for approval on Bash/Edit/Write and the agent stalls
+          # with `"This command requires approval"`. Safe here: ephemeral
+          # sandbox, branch-protected main, every change lands through a PR.
+          claude_args: |
+            --permission-mode bypassPermissions
+          additional_permissions: |
+            actions: read
+
+      # ─────────────────────────────────────────────────────────────────
+      # Post-strip the "Claude finished …" / "Generated with Claude Code"
+      # footer the runtime appends to its tracking comment.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Strip Claude branding from tracking comment
+        if: always() && steps.whitelist.outputs.authorized == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set +e
+          [ -z "$ISSUE_NUMBER" ] && exit 0
+
+          COMMENT_ID=$(gh api "repos/$REPO/issues/$ISSUE_NUMBER/comments" --paginate \
+            --jq '[.[] | select(.user.login=="elixpoo" and ((.body|contains("Claude finished")) or (.body|contains("Claude Code")) or (.body|contains("Generated with Claude"))))] | last | .id')
+          if [ -z "$COMMENT_ID" ] || [ "$COMMENT_ID" = "null" ]; then
+            echo "No Claude-branded comment found — nothing to strip."
+            exit 0
+          fi
+
+          BODY=$(gh api "repos/$REPO/issues/comments/$COMMENT_ID" --jq .body)
+          CLEANED=$(printf '%s' "$BODY" \
+            | sed -E '/Claude finished/d; /Generated with Claude/d; /Claude Code is working/d; /\[Create .* PR .*\]/d; /^---[[:space:]]*$/d' \
+            | sed -e 's/[[:space:]]*$//')
+
+          if [ "$BODY" != "$CLEANED" ]; then
+            gh api -X PATCH "/repos/$REPO/issues/comments/$COMMENT_ID" -f body="$CLEANED" >/dev/null
+            echo "Stripped Claude branding from comment $COMMENT_ID"
+          else
+            echo "Comment $COMMENT_ID already clean."
+          fi
+
+      # ─────────────────────────────────────────────────────────────────
+      # Post-guard: ensure a PR exists for the branch the bot created,
+      # linked to the issue via "Fixes #N" so it appears in the
+      # Development tab.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Ensure PR exists for any new elixpo/* branch
+        if: steps.whitelist.outputs.authorized == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          set -e
+
+          # Pick the first elixpo/* branch for this issue that has no OPEN PR.
+          # Closed/merged PRs don't count — those represent previous attempts,
+          # so we create a fresh PR for the new branch.
+          BRANCHES=$(gh api "repos/$REPO/branches?per_page=100" --paginate \
+            --jq ".[] | select(.name | startswith(\"elixpo/\") and contains(\"issue-$ISSUE_NUMBER\")) | .name")
+
+          BRANCH=""
+          for b in $BRANCHES; do
+            OPEN_PR=$(gh pr list --repo "$REPO" --head "$b" --state open --json number --jq 'length')
+            if [ "$OPEN_PR" = "0" ]; then
+              BRANCH="$b"
+              break
+            fi
+          done
+
+          if [ -z "$BRANCH" ]; then
+            echo "No elixpo/issue-$ISSUE_NUMBER-* branch without an open PR — nothing to do."
+            exit 0
+          fi
+          echo "Found branch: $BRANCH (no open PR)"
+
+          CHANGES=$(gh api "repos/$REPO/compare/main...$BRANCH" \
+            --jq '.commits | map("- " + (.commit.message | split("\n")[0])) | join("\n")')
+
+          ISSUE_AUTHOR=$(gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json author --jq '.author.login')
+
+          # Fallback body (when the model forgot to open the PR itself).
+          PR_BODY=$(cat <<EOF
+          Hey @$ISSUE_AUTHOR, opened this PR automatically from the branch I pushed.
+
+          ## 🛠️ Changes
+          $CHANGES
+
+          ## 🧪 How to verify
+          - Pull the branch and run \\\`npm run build\\\` / biome check.
+          - Review the diff against the issue's expected behavior.
+
+          ---
+          @$ISSUE_AUTHOR Fixes #$ISSUE_NUMBER
+          EOF
+          )
+          PR_BODY=$(printf '%s\n' "$PR_BODY" | sed 's/^          //')
+
+          PR_URL=$(gh pr create --repo "$REPO" \
+            --head "$BRANCH" --base main \
+            --title "[ELIXPO] $ISSUE_TITLE" \
+            --body "$PR_BODY")
+          echo "Opened PR: $PR_URL"
+
+          PR_NUM=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
+            --body "Opened #$PR_NUM with the changes."
+
+      # ─────────────────────────────────────────────────────────────────
+      # Failure fallback: post a blockquote on the issue if anything in
+      # this workflow errored (claude-code-action, PR scaffold, etc.)
+      # ─────────────────────────────────────────────────────────────────
+      - name: Post failure notice
+        if: failure() && steps.whitelist.outputs.authorized == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set +e
+          BODY=$(cat <<EOF
+          > ⚠️ Something went wrong on my end while handling this issue.
+
+          **What you can do:**
+
+          <kbd>🔄 [**Re-run this workflow**]($RUN_URL)</kbd> &nbsp;·&nbsp; [View logs]($RUN_URL) &nbsp;·&nbsp; Or comment \`@elixpoo retry\` once the cause is fixed
+
+          <sub>Run ID: \`$RUN_ID\`</sub>
+          EOF
+          )
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$BODY"

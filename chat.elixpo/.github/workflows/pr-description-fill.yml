@@ -1,0 +1,64 @@
+# Rewrite a PR body when a whitelisted author embeds `@elixpoo fill` in it.
+# Single LLM call (no CCR, no tracking comments) — see scripts/pr_fill_description.py.
+
+name: Elixpo PR Description Fill
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+concurrency:
+  group: elixpo-pr-fill-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  fill:
+    # Fire only if:
+    #  - actor is a whitelisted org member (no external PRs),
+    #  - actor is not elixpoo itself (loop prevention on our own edits),
+    #  - the PR body mentions @elixpoo (any phrasing: "fill", "write",
+    #    "draft the description", etc.). The Python script does a word-bounded
+    #    recheck and strips the trigger line from the rewritten body.
+    if: |
+      github.event.pull_request.user.login != 'elixpoo' &&
+      contains(fromJSON('["Circuit-Overtime","anwe-ch","elixpoo","ez-vivek"]'), github.event.pull_request.user.login) &&
+      contains(github.event.pull_request.body, '@elixpoo')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: React on the PR
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/reactions" \
+            -f content=rocket || true
+
+      - name: Generate + patch PR body
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python .github/scripts/pr_fill_description.py
+
+      - name: Post failure notice
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh pr comment "$PR_NUMBER" --repo "$REPO" --body "> ⚠️ Couldn't auto-fill the PR description. [View logs]($RUN_URL)"
