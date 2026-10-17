@@ -26,6 +26,7 @@ export function createPageMetadata({
   socialImage,
 }: PageMetadataOptions): Metadata {
   const socialTitle = `${title} | ${SITE_NAME}`;
+  const image = socialImage ?? "/opengraph-image";
 
   return {
     title,
@@ -38,13 +39,13 @@ export function createPageMetadata({
       url: path,
       title: socialTitle,
       description,
-      ...(socialImage ? { images: [{ url: socialImage, width: 1200, height: 630, alt: `${title} — Elixpo` }] } : {}),
+      images: [{ url: image, width: 1200, height: 630, alt: `${title} — Elixpo` }],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description,
-      ...(socialImage ? { images: [socialImage] } : {}),
+      images: [image],
     },
     robots: {
       index: true,

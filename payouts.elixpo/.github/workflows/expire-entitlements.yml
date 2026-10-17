@@ -1,5 +1,11 @@
 name: Expire entitlements
 
+permissions: {}
+
+concurrency:
+  group: expire-entitlements
+  cancel-in-progress: false
+
 # Daily sweep that downgrades lapsed memberships and fires the
 # entitlement.updated webhook to the consuming app. Hits the protected
 # Elixpo Pay cron endpoint with the shared CRON_SECRET.
@@ -11,6 +17,7 @@ on:
 jobs:
   expire:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Trigger entitlement expiry
         env:

@@ -16,10 +16,15 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: publish-lixsketch-vscode
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Publish to VS Code Marketplace
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     # Skip when the triggering commit is the bot's own bump (loop guard).
     if: |
       github.event_name == 'workflow_dispatch' ||

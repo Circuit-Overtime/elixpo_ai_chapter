@@ -26,6 +26,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: release-win-dot-panel-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   checks:
     name: Lint and test

@@ -6,6 +6,7 @@ const repository = "elixpo/elixpo";
 const branch = "main";
 const sourcePaths = ["content/packages.json", "content/schemas/packages.schema.json"];
 const headers = { Accept: "application/vnd.github+json", "User-Agent": "Elixpo-Packages-Registry-Sync/1.0" };
+if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
 async function fetchJson(url, requestHeaders = headers) {
   const response = await fetch(url, { headers: requestHeaders });
@@ -22,8 +23,8 @@ const commit = pathCommits.sort((left, right) =>
   Date.parse(right.commit.committer.date) - Date.parse(left.commit.committer.date)
 )[0];
 const rawBase = `https://raw.githubusercontent.com/${repository}/${commit.sha}/content`;
-const packages = await fetchJson(`${rawBase}/packages.json`, { "User-Agent": headers["User-Agent"] });
-const schema = await fetchJson(`${rawBase}/schemas/packages.schema.json`, { "User-Agent": headers["User-Agent"] });
+const packages = await fetchJson(`${rawBase}/packages.json`, headers);
+const schema = await fetchJson(`${rawBase}/schemas/packages.schema.json`, headers);
 if (packages?.$schema !== "./schemas/packages.schema.json" || !Array.isArray(packages.linuxApplications) || !Array.isArray(packages.npmPackages)) {
   throw new Error("Canonical package registry does not satisfy the expected publication contract.");
 }

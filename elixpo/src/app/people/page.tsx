@@ -7,7 +7,7 @@ import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
   title: "People, maintainers, and contributors",
-  description: "Meet Elixpo's current team and explore evidence-backed contributor records, with explicit boundaries for project maintainers, alumni, advisors, role dates, corrections, and consent.",
+  description: "Meet Elixpo's current team and explore evidence-backed contributor records with clear boundaries for roles, dates, corrections, and consent.",
   path: "/people",
 });
 

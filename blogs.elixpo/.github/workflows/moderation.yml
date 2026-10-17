@@ -7,9 +7,15 @@
 
 name: Moderation Action
 
+permissions: {}
+
 on:
   issues:
     types: [labeled]
+
+concurrency:
+  group: moderation-${{ github.event.issue.number || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   act:

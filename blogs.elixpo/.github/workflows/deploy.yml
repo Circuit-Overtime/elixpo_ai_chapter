@@ -36,6 +36,7 @@ jobs:
       (github.ref == 'refs/heads/main' &&
        !contains(github.event.head_commit.message, '[skip deploy]'))
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       pages: ${{ steps.select.outputs.pages }}
       worker: ${{ steps.select.outputs.worker }}
@@ -106,6 +107,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.lixeditor == 'true' || needs.changes.outputs.cli == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     environment: npm
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -245,6 +247,7 @@ jobs:
       needs.changes.outputs.vscode == 'true' &&
       (needs.packages.result == 'success' || needs.packages.result == 'skipped')
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     environment: production
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -280,6 +283,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.worker == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     environment: production
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -303,6 +307,7 @@ jobs:
       needs.changes.outputs.pages == 'true' &&
       (needs.worker.result == 'success' || needs.worker.result == 'skipped')
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     environment: production
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -352,6 +357,7 @@ jobs:
       always() && needs.changes.result == 'success' &&
       (needs.changes.outputs.catalog == 'true' || needs.pages.result == 'success')
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment: production
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

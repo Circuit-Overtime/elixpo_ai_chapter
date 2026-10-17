@@ -45,10 +45,12 @@ export const metadata: Metadata = {
     siteName: "Elixpo",
     title: "Elixpo — An Open-Source Project Foundry",
     description: SITE_DESCRIPTION,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Elixpo — open-source project foundry" }],
   },
   twitter: {
     card: "summary_large_image",
     creator: "@elixpo",
+    images: ["/twitter-image"],
   },
   robots: {
     index: true,

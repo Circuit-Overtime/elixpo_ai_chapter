@@ -20,7 +20,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 classifications and custody decisions are published from the canonical registry
 maintained by `elixpo/elixpo`.
 
-<!-- BEGIN ELIXPO SHARED · sha256:bbe23d7298855563ca1adf1f7133f2eaca055a638227ae7b493425d6b48bd5bf · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:675ae05cc057ea6495c5b73898adde51b2c2faf79134820d8149348ed9792495 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -122,7 +122,7 @@ Feature placement is editorial and does not change these records.
 | [`payouts.elixpo`](https://github.com/elixpo/payouts.elixpo) | Active | Core |
 | [`status.elixpo`](https://github.com/elixpo/status.elixpo) | Active | Core |
 
-Registry snapshot: **2026-10-16**. Archived work remains visible in the
+Registry snapshot: **2026-10-17**. Archived work remains visible in the
 [GitHub organization](https://github.com/orgs/elixpo/repositories?q=archived%3Atrue)
 as history, not as currently supported work.
 

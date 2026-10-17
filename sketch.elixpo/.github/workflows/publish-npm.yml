@@ -19,10 +19,15 @@ permissions:
   contents: write
   packages: write
 
+concurrency:
+  group: publish-lixsketch-npm
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Publish to NPM + GitHub Packages
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:

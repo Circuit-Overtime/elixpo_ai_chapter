@@ -57,6 +57,12 @@ export function PackageRecordPage({ record, related }: { record: PackageRecord; 
         </dl>
       </header>
 
+      {record.status !== "maintained" && <section className={`package-lifecycle-notice package-lifecycle-${record.status}`} role="status">
+        <p className="eyebrow">Release lifecycle</p>
+        <h2>This package is {record.status}.</h2>
+        <p>{record.status === "deprecated" ? "Existing releases remain documented, but new adoption is discouraged. Review the source and release record for migration guidance before installing it." : record.status === "unsupported" ? "No support or maintenance response is promised. Existing artifacts remain visible for reproducibility and historical use." : "This package is preserved as a historical release and is not presented as currently supported software."}</p>
+      </section>}
+
       <section className="package-install-section">
         <div><p className="eyebrow">Installation</p><h2>Install the published release.</h2><p>The command below comes from the verified Elixpo package registry. Review the linked package and source records before installing software in a sensitive environment.</p></div>
         <div className="package-command"><span><Terminal size={16}/> Terminal</span><code>{record.install}</code></div>

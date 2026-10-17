@@ -4,7 +4,7 @@ import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
   title: "Verified history of Elixpo",
-  description: "Follow the evidence-backed history of Elixpo from its earliest surviving 2023 project through Hacktoberfest, open research, community partnerships, Chapter releases, contributor growth, and the project-foundry direction.",
+  description: "Follow Elixpo's evidence-backed history from its earliest surviving 2023 project through open research, Hacktoberfest, community work, and public releases.",
   path: "/history",
 });
 

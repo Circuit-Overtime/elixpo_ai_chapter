@@ -6,7 +6,7 @@ import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Community event partnerships and sticker support",
   description:
-    "See Elixpo's community partnership record, including more than 3,500 stickers distributed, and learn how aligned events can request speakers, artwork, and transparent in-kind support.",
+    "Review Elixpo's community partnership record, including more than 3,500 stickers distributed, and the terms for transparent non-monetary event support.",
   path: "/partnerships",
 });
 

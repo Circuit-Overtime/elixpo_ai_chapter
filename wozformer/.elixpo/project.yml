@@ -1,0 +1,66 @@
+schema_version: '1.0'
+project:
+  id: wozformer
+  name: wozformer
+  title: WozFormer
+  description: A paused open research project with its work preserved publicly.
+  family: research
+  artifact_type: model
+  profile: paused-research
+  technologies:
+  - Python
+  - machine learning
+  - language models
+  chapter_status: null
+  lifecycle: paused
+  relationship: core
+  custody: elixpo-owned
+  stack: paused-research
+  repository: https://github.com/elixpo/wozformer
+  deployment: null
+  discussions: https://github.com/orgs/elixpo/discussions
+  status_owner: elixpo
+  status_verified_at: '2026-10-17'
+publication:
+  public: true
+  featured: false
+  canonical_slug: wozformer
+  canonical_url: https://elixpo.com/research/wozformer
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: '2026-10-17'
+license:
+  current_file: null
+  notice_file: null
+  migration_status: review-required
+  target_code_license: not-designated
+  trademark_policy: https://elixpo.com/terms
+ci:
+  lint_cmd: ''
+  test_cmd: ''
+  build_cmd: ''
+maintainers:
+- github: Circuit-Overtime
+  skills:
+  - Python
+  - machine learning
+  - language models
+  lead: true
+governance:
+  model: maintainer-led
+  document: GOVERNANCE.md
+support:
+  document: SUPPORT.md
+security:
+  document: SECURITY.md
+conformance:
+  standard: '1.0'
+  status: conformant-with-exceptions
+  assessed_at: '2026-10-17'
+  exceptions:
+  - id: license-missing
+    reason: No repository license is currently published; reuse permission must not
+      be inferred until maintainer review is complete.
+    owner: Circuit-Overtime
+    review_at: '2027-01-17'

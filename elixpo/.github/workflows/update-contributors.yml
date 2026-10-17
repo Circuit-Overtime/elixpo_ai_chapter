@@ -8,6 +8,9 @@
 
 name: Update Contributors Roster
 
+permissions:
+  contents: read
+
 concurrency:
   group: update-contributors
   cancel-in-progress: true

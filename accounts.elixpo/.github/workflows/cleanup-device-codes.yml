@@ -14,6 +14,8 @@
 
 name: Cleanup expired device codes
 
+permissions: {}
+
 concurrency:
   group: cleanup-device-codes
   cancel-in-progress: false

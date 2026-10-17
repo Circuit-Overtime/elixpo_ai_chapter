@@ -1,4 +1,4 @@
-schema_version: "0.1"
+schema_version: "1.0"
 
 project:
   id: packages
@@ -7,6 +7,9 @@ project:
   description: "Monorepo and signed distribution surface for Elixpo Linux applications and their public package catalogue."
   family: project
   artifact_type: package
+  profile: package
+  technologies: [Python, Debian, APT, Next.js, Cloudflare Pages]
+  chapter_status: null
   lifecycle: active
   relationship: core
   custody: elixpo-owned
@@ -22,6 +25,12 @@ publication:
   public: true
   featured: true
   canonical_slug: packages
+  canonical_url: https://elixpo.com/projects/packages
+
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: "2026-10-17"
 
 license:
   current_file: LICENSE
@@ -42,6 +51,7 @@ operations:
   release_workflow: .github/workflows/release-deb.yml
   privileged_workflows_repo_specific: true
   fork_prs_receive_secrets: false
+  rollback: "Keep the signed GitHub Pages APT host available until the Cloudflare candidate, installers, indexes, and signatures are verified."
 
 maintainers:
   - github: Circuit-Overtime
@@ -59,8 +69,11 @@ security:
   document: SECURITY.md
 
 conformance:
-  standard: "0.1"
-  status: migration-in-progress
+  standard: "1.0"
+  status: conformant-with-exceptions
   assessed_at: "2026-10-17"
   exceptions:
-    - "GitHub Pages remains the production host until the Cloudflare candidate and custom-domain migration are verified."
+    - id: github-pages-rollback
+      reason: "GitHub Pages remains the signed APT rollback host until Cloudflare package, installer, index, and signature verification is complete."
+      owner: elixpo
+      review_at: "2027-01-17"

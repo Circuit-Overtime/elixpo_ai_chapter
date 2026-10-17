@@ -21,9 +21,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: sync-icons-to-assets
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout upstream (badgr)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

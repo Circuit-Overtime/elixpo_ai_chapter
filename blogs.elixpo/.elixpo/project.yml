@@ -1,4 +1,4 @@
-schema_version: "0.1"
+schema_version: "1.0"
 
 project:
   id: blogs
@@ -7,6 +7,9 @@ project:
   description: "Open-source collaborative publishing platform with rich editing, multi-tenant publications, API and CLI automation."
   family: service
   artifact_type: hosted-service
+  profile: hosted-service
+  technologies: [Next.js, TypeScript, Cloudflare Workers, Cloudflare D1]
+  chapter_status: null
   lifecycle: active
   relationship: core
   custody: elixpo-owned
@@ -16,12 +19,18 @@ project:
   deployment: https://blogs.elixpo.com
   discussions: https://github.com/orgs/elixpo/discussions
   status_owner: elixpo
-  status_verified_at: "2026-10-16"
+  status_verified_at: "2026-10-17"
 
 publication:
   public: true
   featured: true
   canonical_slug: blogs
+  canonical_url: https://elixpo.com/services/blogs
+
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: "2026-10-17"
 
 license:
   current_file: LICENSE
@@ -42,6 +51,7 @@ operations:
   preview_workflow: .github/workflows/pr-build.yml
   privileged_workflows_repo_specific: true
   fork_prs_receive_secrets: false
+  rollback: "Redeploy the last verified Cloudflare revision and restore the previous migration state when a schema or Worker release fails."
 
 maintainers:
   - github: Circuit-Overtime
@@ -61,3 +71,13 @@ security:
 gist:
   id: ""
   account: elixpoo
+
+conformance:
+  standard: "1.0"
+  status: conformant-with-exceptions
+  assessed_at: "2026-10-17"
+  exceptions:
+    - id: license-review
+      reason: "Existing mixed repository terms remain controlling until contributor authority and artifact boundaries are reviewed."
+      owner: elixpo
+      review_at: "2027-01-17"

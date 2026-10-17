@@ -1,4 +1,4 @@
-schema_version: "0.1"
+schema_version: "1.0"
 
 project:
   id: example-project
@@ -7,6 +7,9 @@ project:
   description: "A factual, verifiable description of the project's purpose and primary artifact."
   family: project
   artifact_type: application
+  profile: software
+  technologies: []
+  chapter_status: proposed
   lifecycle: incubating
   relationship: chapter
   custody: elixpo-owned
@@ -21,6 +24,12 @@ publication:
   public: true
   featured: false
   canonical_slug: example-project
+  canonical_url: https://elixpo.com/projects/example-project
+
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: "2026-10-17"
 
 license:
   current_file: LICENSE
@@ -50,7 +59,7 @@ security:
   document: SECURITY.md
 
 conformance:
-  standard: "0.1"
+  standard: "1.0"
   status: migration-in-progress
-  assessed_at: "2026-10-16"
+  assessed_at: "2026-10-17"
   exceptions: []

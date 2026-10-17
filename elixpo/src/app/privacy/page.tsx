@@ -1,5 +1,6 @@
 import { createPageMetadata } from "@/lib/seo";
 import { ELIXPO_LINKS } from "@/lib/elixpo-links";
+import { PageStructuredData } from "@/components/PageStructuredData";
 
 export const metadata = createPageMetadata({
   title: "Privacy Policy",
@@ -10,6 +11,7 @@ export const metadata = createPageMetadata({
 export default function PrivacyPage() {
   return (
     <main className="page-shell legal-page">
+      <PageStructuredData name="Elixpo privacy policy" description="The portal-level privacy boundary for Elixpo accounts, hosted services, open-source tools, analytics, and third-party integrations." path="/privacy" />
       <header className="page-intro"><p className="eyebrow">Policy / last reviewed October 2026</p><h1>Privacy policy</h1><p className="lede">This portal-level notice describes Elixpo’s general approach. A hosted service may process different data and should publish a service-specific notice where its behavior differs.</p></header>
       <article className="prose prose-lg max-w-3xl prose-headings:tracking-tight prose-a:text-[#0b623c] prose-a:no-underline hover:prose-a:underline">
         <h2>Our approach</h2>

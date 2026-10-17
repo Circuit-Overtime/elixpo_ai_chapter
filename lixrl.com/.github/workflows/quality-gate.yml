@@ -6,12 +6,16 @@
 
 name: Quality Gate
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
 
 jobs:
   quality-gate:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       # ── Checkout the calling repo ──────────────────────────────────

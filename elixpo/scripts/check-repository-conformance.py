@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit one repository against the Elixpo Repository Standard 0.1."""
+"""Audit one repository against the Elixpo Repository Standard."""
 
 from __future__ import annotations
 
@@ -21,7 +21,8 @@ except ImportError:  # pragma: no cover - operator environment failure
     raise SystemExit(2)
 
 
-STANDARD_VERSION = "0.1"
+STANDARD_VERSION = "1.0"
+SUPPORTED_VERSIONS = {"0.1", STANDARD_VERSION}
 ACTIVE_LIFECYCLES = {"incubating", "active", "maintenance", "paused", "completed"}
 FAMILIES = {"project", "research", "service"}
 LIFECYCLES = ACTIVE_LIFECYCLES | {"archived"}
@@ -99,9 +100,31 @@ def require_value(audit: Audit, manifest: dict[str, Any], path: tuple[str, ...])
     return value
 
 
+def reviewed_exception(manifest: dict[str, Any], exception_id: str) -> bool:
+    conformance = manifest.get("conformance")
+    if not isinstance(conformance, dict) or conformance.get("status") not in {"conformant-with-exceptions", "migration-in-progress"}:
+        return False
+    exceptions = conformance.get("exceptions")
+    if not isinstance(exceptions, list):
+        return False
+    return any(
+        isinstance(item, dict)
+        and item.get("id") == exception_id
+        and isinstance(item.get("reason"), str)
+        and bool(item["reason"].strip())
+        and isinstance(item.get("owner"), str)
+        and bool(item["owner"].strip())
+        and is_iso_date(item.get("review_at"))
+        for item in exceptions
+    )
+
+
 def validate_manifest(audit: Audit, manifest: dict[str, Any], repo: Path) -> None:
-    if manifest.get("schema_version") != STANDARD_VERSION:
-        audit.error("SCHEMA_VERSION", "schema_version", f"Expected {STANDARD_VERSION!r}, found {manifest.get('schema_version')!r}.", f"Migrate the manifest to repository standard {STANDARD_VERSION} before claiming conformance.")
+    manifest_version = manifest.get("schema_version")
+    if manifest_version not in SUPPORTED_VERSIONS:
+        audit.error("SCHEMA_VERSION", "schema_version", f"Unsupported version {manifest_version!r}.", f"Use repository standard {STANDARD_VERSION} or a supported migration version.")
+    elif manifest_version != STANDARD_VERSION:
+        audit.warn("SCHEMA_VERSION", "schema_version", f"Version {manifest_version!r} remains readable for migration but is not current.", f"Migrate the manifest to repository standard {STANDARD_VERSION} before claiming current conformance.")
 
     for section in ["project", "publication", "license", "ci", "maintainers", "governance", "support", "security"]:
         require_value(audit, manifest, (section,))
@@ -109,6 +132,15 @@ def validate_manifest(audit: Audit, manifest: dict[str, Any], repo: Path) -> Non
     project_fields = ["id", "name", "title", "description", "family", "artifact_type", "lifecycle", "relationship", "custody", "repository", "status_owner", "status_verified_at"]
     for field in project_fields:
         require_value(audit, manifest, ("project", field))
+
+    if manifest_version == STANDARD_VERSION:
+        for field in ["profile", "technologies", "chapter_status"]:
+            if field not in (manifest.get("project") or {}):
+                audit.error("PROJECT_PROFILE", f"project.{field}", "Repository Standard 1.0 requires this profile field.", f"Add `project.{field}` using the applicable repository profile.")
+        if "canonical_url" not in (manifest.get("publication") or {}):
+            audit.error("CANONICAL_URL", "publication.canonical_url", "Repository Standard 1.0 requires the canonical public record URL.", "Add the canonical elixpo.com dossier URL.")
+        for field in ["classification_decision", "license_evidence", "status_checked_at"]:
+            require_value(audit, manifest, ("provenance", field))
 
     project_id = nested(manifest, "project", "id")
     if isinstance(project_id, str) and not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", project_id):
@@ -171,7 +203,10 @@ def validate_manifest(audit: Audit, manifest: dict[str, Any], repo: Path) -> Non
     if lifecycle in ACTIVE_LIFECYCLES:
         for filename, remediation in REQUIRED_FILES.items():
             if not (repo / filename).is_file():
-                audit.error("REQUIRED_FILE", filename, "Required repository document is missing.", remediation.capitalize() + ".")
+                if filename == "LICENSE" and reviewed_exception(manifest, "license-missing"):
+                    audit.warn("LICENSE_EXCEPTION", filename, "No license is published; reuse permission must not be inferred.", "Resolve the recorded legal review before claiming full conformance.")
+                else:
+                    audit.error("REQUIRED_FILE", filename, "Required repository document is missing.", remediation.capitalize() + ".")
 
     license_file = nested(manifest, "license", "current_file")
     if isinstance(license_file, str) and not (repo / license_file).is_file():
@@ -202,12 +237,23 @@ def validate_manifest(audit: Audit, manifest: dict[str, Any], repo: Path) -> Non
         if conformance.get("standard") != STANDARD_VERSION:
             audit.error("CONFORMANCE_VERSION", "conformance.standard", "Conformance version does not match the manifest schema.", f"Set it to {STANDARD_VERSION!r} after reassessment.")
         if conformance.get("status") not in {"conformant", "conformant-with-exceptions", "migration-in-progress", "not-assessed"}:
-            audit.error("CONFORMANCE_STATUS", "conformance.status", "Unknown conformance state.", "Use a state defined by standard 0.1.")
+            audit.error("CONFORMANCE_STATUS", "conformance.status", "Unknown conformance state.", f"Use a state defined by standard {STANDARD_VERSION}.")
         if not is_iso_date(conformance.get("assessed_at")):
             audit.error("CONFORMANCE_DATE", "conformance.assessed_at", "Assessment date must use YYYY-MM-DD.", "Record the date of the latest conformance review.")
         exceptions = conformance.get("exceptions", [])
         if conformance.get("status") == "conformant-with-exceptions" and not exceptions:
             audit.error("EXCEPTIONS_REQUIRED", "conformance.exceptions", "The status claims exceptions but none are recorded.", "Record every exception with an owner, reason, and review date.")
+        if isinstance(exceptions, list):
+            for index, exception in enumerate(exceptions):
+                location = f"conformance.exceptions[{index}]"
+                if not isinstance(exception, dict):
+                    audit.error("EXCEPTION_FORMAT", location, "Exception must be a mapping.", "Record id, reason, owner, and review_at.")
+                    continue
+                for field in ["id", "reason", "owner"]:
+                    if not isinstance(exception.get(field), str) or not exception[field].strip():
+                        audit.error("EXCEPTION_FORMAT", f"{location}.{field}", "Required exception field is missing.", f"Add `{field}` to the reviewed exception.")
+                if not is_iso_date(exception.get("review_at")):
+                    audit.error("EXCEPTION_DATE", f"{location}.review_at", "Exception review date must use YYYY-MM-DD.", "Record a future review date.")
 
 
 def validate_registry_alignment(audit: Audit, manifest: dict[str, Any], registry_root: Path) -> None:
@@ -241,7 +287,7 @@ def validate_registry_alignment(audit: Audit, manifest: dict[str, Any], registry
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Audit a repository against the Elixpo Repository Standard 0.1.")
+    parser = argparse.ArgumentParser(description=f"Audit a repository against the Elixpo Repository Standard {STANDARD_VERSION}.")
     parser.add_argument("repository", nargs="?", default=".", help="repository checkout to audit")
     parser.add_argument("--registry-root", default=str(Path(__file__).resolve().parents[1]), help="elixpo/elixpo checkout containing content/")
     parser.add_argument("--strict", action="store_true", help="treat warnings as a failing result")
@@ -279,7 +325,7 @@ def main() -> int:
     if not audit.findings:
         print("PASS: no conformance findings.")
     elif not errors:
-        print("\nPASS WITH WARNINGS: required 0.1 checks passed.")
+        print(f"\nPASS WITH WARNINGS: applicable {manifest.get('schema_version')} checks passed.")
 
     return 1 if errors or (args.strict and warnings) else 0
 

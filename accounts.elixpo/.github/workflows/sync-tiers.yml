@@ -21,6 +21,8 @@
 
 name: Sync tier catalog to payouts.elixpo
 
+permissions: {}
+
 concurrency:
   group: sync-tiers
   cancel-in-progress: false

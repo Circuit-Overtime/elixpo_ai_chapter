@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { createPageMetadata } from "@/lib/seo";
+import { PageStructuredData } from "@/components/PageStructuredData";
 
 export const metadata = createPageMetadata({
   title: "Elixpo organizational architecture",
@@ -18,6 +19,7 @@ const layers = [
 
 export default function ArchitecturePage() {
   return <main className="page-shell architecture-page">
+    <PageStructuredData name="Elixpo organizational architecture" description="How Elixpo's registry, Chapters, repositories, publications, services, and shared standards divide responsibility." path="/architecture" />
     <header className="page-intro"><p className="eyebrow">Organizational architecture</p><h1>One registry.<br/>Several accountable surfaces.</h1><p className="lede">Elixpo is organized around evidence and responsibility, not a claim that every project shares one technical stack. The registry provides shared identity; each project and publication surface retains the architecture it actually needs.</p></header>
     <section className="architecture-stack">{layers.map((layer,index)=><article key={layer.title}><span>{String(index+1).padStart(2,"0")}</span><h2>{layer.title}</h2><p>{layer.text}</p></article>)}</section>
     <section className="architecture-contract">

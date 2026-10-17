@@ -22,3 +22,5 @@ yarn-error.log*
 .wrangler
 *.tsbuildinfo
 next-env.d.ts
+.lighthouseci/
+/audit/

@@ -5,6 +5,13 @@
 
 name: Seed Discussions
 
+permissions:
+  contents: read
+
+concurrency:
+  group: seed-discussions
+  cancel-in-progress: false
+
 on:
   workflow_dispatch:
 

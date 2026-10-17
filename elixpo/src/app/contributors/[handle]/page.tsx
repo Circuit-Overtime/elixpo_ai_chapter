@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!person) return {};
   return createPageMetadata({
     title: `${person.name} — public contribution record`,
-    description: `${person.name}'s evidence-backed Elixpo contribution record for ${person.activeWindow}, including projects, role, demonstrated skills, review attribution, and primary GitHub evidence.`,
+    description: `${person.name}'s evidence-backed Elixpo contribution record for ${person.activeWindow}, with projects, outcomes, skills, attribution boundaries, and primary source links.`,
     path: `/contributors/${person.handle}`,
   });
 }

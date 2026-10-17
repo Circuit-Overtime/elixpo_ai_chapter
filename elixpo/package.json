@@ -30,6 +30,8 @@
     "registry:check": "node scripts/validate-registry.mjs",
     "registry:links": "node scripts/check-registry-links.mjs",
     "repository:check": "python3 scripts/check-repository-conformance.py",
+    "repository:migrate": "python3 scripts/prepare-repository-migrations.py",
+    "audit:public": "python3 scripts/audit-public-surfaces.py --json audit/public-surfaces.json --markdown audit/public-surfaces.md",
     "workflow:deploy:check": "python3 scripts/check-deployment-workflow.py",
     "readme:check": "node scripts/render-readmes.mjs --check",
     "readme:write": "node scripts/render-readmes.mjs --write",

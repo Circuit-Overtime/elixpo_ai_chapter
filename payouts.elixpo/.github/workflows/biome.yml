@@ -1,6 +1,8 @@
 # Biome lint + format check on PRs to main
 name: Biome
 
+permissions: {}
+
 # Rapid force-pushes shouldn't queue up a backlog of lints.
 concurrency:
   group: biome-${{ github.ref }}

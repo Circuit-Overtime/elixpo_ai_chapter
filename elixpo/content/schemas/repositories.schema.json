@@ -8,6 +8,7 @@
     "schemaVersion",
     "snapshotDate",
     "statusOwner",
+    "verificationMethodology",
     "entries"
   ],
   "properties": {
@@ -25,6 +26,43 @@
     "statusOwner": {
       "type": "string",
       "minLength": 2
+    },
+    "verificationMethodology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkedAt",
+        "classificationDecisionUrl",
+        "organizationStateSource",
+        "externalStateSources",
+        "licenseEvidenceUrl"
+      ],
+      "properties": {
+        "checkedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "classificationDecisionUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "organizationStateSource": {
+          "type": "string",
+          "format": "uri"
+        },
+        "externalStateSources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "uniqueItems": true
+        },
+        "licenseEvidenceUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
     },
     "entries": {
       "type": "array",

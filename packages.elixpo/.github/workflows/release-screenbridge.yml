@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: release-screenbridge-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Build, validate, and publish

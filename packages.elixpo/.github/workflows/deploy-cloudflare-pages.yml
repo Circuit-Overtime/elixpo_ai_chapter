@@ -22,6 +22,8 @@ jobs:
     name: Validate and deploy
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
     environment:
       name: cloudflare-pages-candidate
       url: https://packages-elixpo.pages.dev

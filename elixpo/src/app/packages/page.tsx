@@ -5,7 +5,7 @@ import { ELIXPO_PACKAGES, LINUX_APPLICATIONS, PACKAGE_DISTRIBUTION, PACKAGES_LAS
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 const pageMetadata = createPageMetadata({
-  title: "Elixpo Packages — signed Linux applications and developer packages",
+  title: "Elixpo Packages — Linux and npm releases",
   description: "Install Win Dot Panel and ScreenBridge from Elixpo's signed Debian APT repository, review supported Linux environments, or browse maintained Elixpo npm libraries and command-line tools.",
   path: "/packages",
 });
@@ -18,6 +18,8 @@ export const metadata = {
 };
 
 export default function PackagesPage() {
+  const maintainedLinux = LINUX_APPLICATIONS.filter((item) => item.status === "maintained").length;
+  const maintainedNpm = ELIXPO_PACKAGES.filter((item) => item.status === "maintained").length;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -66,7 +68,7 @@ export default function PackagesPage() {
         <div className="package-box package-box-middle"><PackageCheck size={32}/><b>screenbridge</b><span>.deb</span></div>
         <div className="package-box package-box-front"><PackageCheck size={32}/><b>win-dot-panel</b><span>.deb</span></div>
       </div>
-      <div className="packages-hero-facts"><span><b>{LINUX_APPLICATIONS.length}</b> maintained applications</span><span><b>{ELIXPO_PACKAGES.length}</b> maintained npm packages</span><span><b>{PACKAGE_DISTRIBUTION.license}</b> open-source software</span></div>
+      <div className="packages-hero-facts"><span><b>{maintainedLinux}</b> maintained applications</span><span><b>{maintainedNpm}</b> maintained npm packages</span><span><b>{PACKAGE_DISTRIBUTION.license}</b> distribution license</span></div>
     </header>
 
     <section className="linux-catalog section-wrap" aria-labelledby="linux-applications">
@@ -75,13 +77,13 @@ export default function PackagesPage() {
         <p>The installers verify Elixpo’s repository key, register the shared APT source, and install the selected package. Normal system updates can then deliver later stable releases.</p>
       </div>
       <div className="package-feature-grid">
-        {LINUX_APPLICATIONS.map((item, index) => <article className={`package-feature-card package-feature-${index + 1}`} key={item.slug}>
+        {LINUX_APPLICATIONS.map((item, index) => <article className={`package-feature-card package-feature-${index + 1} package-lifecycle-${item.status}`} key={item.slug}>
           <div className="package-feature-art">
             <span>{String(index + 1).padStart(2, "0")}</span>
             {item.images[0] ? <Image src={item.images[0].src} alt={item.images[0].alt} width={920} height={620} /> : <div className="package-audio-art" aria-hidden="true"><i/><i/><i/><Terminal size={48}/></div>}
           </div>
           <div className="package-feature-copy">
-            <div className="package-feature-title"><Image src={item.icon} alt="" width={58} height={58}/><div><p className="eyebrow">{item.category} · v{item.version}</p><h3>{item.name}</h3></div></div>
+            <div className="package-feature-title"><Image src={item.icon} alt="" width={58} height={58}/><div><p className="eyebrow">{item.category} · v{item.version}</p><h3>{item.name}</h3><span className={`status-pill status-${item.status === "maintained" ? "active" : item.status}`}>{item.status}</span></div></div>
             <p>{item.summary}</p>
             <ul>{item.capabilities.slice(0,3).map((capability) => <li key={capability}>{capability}</li>)}</ul>
             <div className="package-feature-install"><span><Terminal size={14}/> Install</span><code>{item.install}</code></div>
@@ -103,7 +105,7 @@ export default function PackagesPage() {
     <section className="developer-packages section-wrap" aria-labelledby="developer-package-index">
       <div className="section-heading split"><div><p className="eyebrow">JavaScript and command-line tooling</p><h2 id="developer-package-index">Developer packages published separately through npm.</h2><a className="text-link" href="/packages/feed.xml">Subscribe to package releases <ArrowUpRight size={14}/></a></div><p>These libraries and command-line tools support Elixpo’s canvas, publishing, identity, and link services. They are separate from the Linux application repository above.</p></div>
       <div className="developer-package-list">
-        {ELIXPO_PACKAGES.map((item, index) => <Link href={`/packages/${item.slug}`} key={item.name}><span>{String(index + 1).padStart(2,"0")}</span><i className="npm-mark">npm</i><div><small>{item.type} · v{item.version} · {item.license}</small><strong>{item.name}</strong><code>{item.install}</code></div><ArrowRight size={16}/></Link>)}
+        {ELIXPO_PACKAGES.map((item, index) => <Link className={`package-lifecycle-${item.status}`} href={`/packages/${item.slug}`} key={item.name}><span>{String(index + 1).padStart(2,"0")}</span><i className="npm-mark">npm</i><div><small>{item.type} · v{item.version} · {item.license}</small><strong>{item.name}</strong><code>{item.install}</code><span className={`status-pill status-${item.status === "maintained" ? "active" : item.status}`}>{item.status}</span></div><ArrowRight size={16}/></Link>)}
       </div>
       <p className="registry-date">Package metadata last verified {PACKAGES_LAST_VERIFIED}.</p>
     </section>

@@ -9,7 +9,7 @@ A quick map of where to take what:
 | Read the docs | [README](README.md) → [HARDWARE.md](docs/HARDWARE.md) → [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Disclose a security issue | [Security policy](SECURITY.md) |
 | Ask a general question | Email **hello@elixpo.com** |
-| Sponsor / partner | Email **hello@elixpo.com** |
+| Propose a non-monetary event partnership | Read the [Elixpo partnership policy](https://elixpo.com/partnerships), then email **hello@elixpo.com** |
 | Read the rules | [Code of Conduct](CODE_OF_CONDUCT.md) |
 
 ## Response times

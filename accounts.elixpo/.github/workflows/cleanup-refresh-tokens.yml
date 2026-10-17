@@ -1,5 +1,11 @@
 name: Cleanup Expired Refresh Tokens
 
+permissions: {}
+
+concurrency:
+  group: cleanup-refresh-tokens
+  cancel-in-progress: false
+
 on:
   schedule:
     - cron: '*/30 * * * *' # Run every 30 minutes
@@ -8,6 +14,7 @@ on:
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Invoke Cleanup Cron
         run: |
