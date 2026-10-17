@@ -10,6 +10,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: readme-drift-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     name: Verify canonical Chapter README
