@@ -1,0 +1,28 @@
+name = "admin"
+compatibility_date = "2025-12-16"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Pages project
+pages_build_output_dir = ".vercel/output/static"
+
+# Cloudflare KV — admin-cache (discovery cache, analytics cache, audit log).
+# Create with `wrangler kv namespace create admin-cache` then paste the id below.
+[[kv_namespaces]]
+binding = "KV"
+id = "92aaca7caf75412e82f749549971e3c8"
+
+# Production environment
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+  [[env.production.kv_namespaces]]
+  binding = "KV"
+  id = "92aaca7caf75412e82f749549971e3c8"
+
+# Preview environment
+[env.preview]
+vars = { ENVIRONMENT = "preview" }
+
+  [[env.preview.kv_namespaces]]
+  binding = "KV"
+  id = "92aaca7caf75412e82f749549971e3c8"
