@@ -1,0 +1,11 @@
+name = "mail-elixpo-smtp-spike"
+main = "src/index.js"
+compatibility_date = "2025-09-23"
+# nodejs_compat is NOT required — cloudflare:sockets is a native Workers API.
+# We keep this a plain Worker (not Pages) because Pages *edge* routes can't do TCP.
+
+# Creds are injected as secrets, never committed:
+#   wrangler secret put SMTP_USER
+#   wrangler secret put SMTP_PASS
+#   wrangler secret put MAIL_TO
+# Optional: SMTP_HOST (default smtp.gmail.com), SMTP_PORT (default 465), SMTP_FROM.
