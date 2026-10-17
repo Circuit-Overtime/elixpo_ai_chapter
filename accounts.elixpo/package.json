@@ -1,0 +1,100 @@
+{
+  "name": "elixpo-accounts",
+  "version": "1.2.15",
+  "private": true,
+  "description": "Elixpo Accounts — open OAuth 2.0 single sign-on built on Cloudflare's edge. One identity for the Elixpo ecosystem and any third-party app.",
+  "homepage": "https://accounts.elixpo.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elixpo/accounts.elixpo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elixpo/accounts.elixpo/issues"
+  },
+  "author": {
+    "name": "Elixpo",
+    "url": "https://elixpo.com"
+  },
+  "contributors": [
+    {
+      "name": "Circuit-Overtime",
+      "url": "https://github.com/Circuit-Overtime"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "oauth",
+    "oauth2",
+    "sso",
+    "single-sign-on",
+    "authentication",
+    "identity-provider",
+    "cloudflare",
+    "edge",
+    "nextjs",
+    "elixpo"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "start": "next start",
+    "lint": "./biome.sh check",
+    "db:create": "wrangler d1 create elixpo_auth",
+    "db:list": "wrangler d1 list",
+    "db:info": "wrangler d1 info elixpo_auth",
+    "db:migrate": "wrangler d1 migrations apply elixpo_auth --remote",
+    "db:migrate:local": "wrangler d1 migrations apply elixpo_auth --local",
+    "db:query": "wrangler d1 execute elixpo_auth",
+    "db:query:remote": "wrangler d1 execute elixpo_auth --remote",
+    "db:tables": "wrangler d1 execute elixpo_auth \"SELECT name FROM sqlite_master WHERE type='table';\" --remote",
+    "seed:admin": "npx tsx scripts/seed-admin.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sdk:build": "tsc -p packages/accounts/tsconfig.build.json",
+    "sdk:pack": "npm run sdk:build && npm pack ./packages/accounts --dry-run"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20240905.0",
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "7.0.2",
+    "@mui/material": "7.0.2",
+    "@mui/system": "7.0.2",
+    "@simplewebauthn/browser": "^13.3.0",
+    "@simplewebauthn/server": "^13.3.1",
+    "@types/qrcode": "^1.5.6",
+    "biome": "^0.2.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "framer-motion": "^12.41.0",
+    "fs": "^0.0.1-security",
+    "gsap": "^3.15.0",
+    "jose": "^5.9.6",
+    "lucide-react": "^1.21.0",
+    "next": "15.2.4",
+    "nodemailer": "^8.0.1",
+    "otpauth": "^9.5.1",
+    "prom-client": "^15.1.3",
+    "qrcode": "^1.5.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
+    "@cloudflare/vitest-pool-workers": "^0.16.20",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/nodemailer": "^6.4.14",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.1.5",
+    "wrangler": "^4.67.0"
+  }
+}
