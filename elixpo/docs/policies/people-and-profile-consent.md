@@ -32,6 +32,19 @@ Consent records are administrative evidence and are not published merely to
 prove consent. Public registry entries state `profileSource: consented` when
 consent, rather than public evidence alone, is the publication basis.
 
+## Current publication resolution
+
+The current people and contributor edition does not publish any consent-gated
+material. Every listed profile uses `profileSource: public-evidence-only`, a
+public GitHub identity or profile image, and linked public work. Custom
+biographies, supplied photography, private contact information, non-public role
+dates, departure explanations, testimonials, and private affiliation details
+are withheld. They may be added only after an administrative opt-in record is
+created and the public registry changes to `profileSource: consented`.
+
+This is a deliberate resolution, not implied consent. Elixpo does not need to
+solicit personal material merely to make the directory appear complete.
+
 ## Corrections, disputes, and removal
 
 A person may request correction or removal through the issue route recorded in

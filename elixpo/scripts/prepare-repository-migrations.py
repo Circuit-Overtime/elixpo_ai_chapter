@@ -26,7 +26,7 @@ REVIEW_AT = "2027-01-17"
 PROFILES: dict[str, dict[str, Any]] = {
     "accounts.elixpo": {"local": "accounts.elixpo", "artifact": "hosted-service", "profile": "hosted-service", "technologies": ["Next.js", "TypeScript", "Cloudflare"]},
     "admin.elixpo": {"local": "admin.elixpo", "artifact": "hosted-service", "profile": "hosted-service", "technologies": ["Next.js", "TypeScript", "Cloudflare"]},
-    "Cypher-3.0": {"local": "cypher", "artifact": "application", "profile": "maintenance-software", "technologies": ["Python", "browser automation"]},
+    "cypher": {"local": "cypher", "artifact": "application", "profile": "incubating-software", "technologies": ["Python", "Firebase", "web application"]},
     "elixpo_chapter": {"local": "elixpo_chapter", "artifact": "community", "profile": "chapter-collection", "technologies": ["Git", "GitHub Actions", "documentation"]},
     "Kareixo": {"local": "Kareixo", "artifact": "application", "profile": "member-project", "technologies": ["software", "web application"], "maintainer": "karanray06"},
     "lixrl.com": {"local": "lixrl.com", "artifact": "hosted-service", "profile": "hosted-service", "technologies": ["Next.js", "TypeScript", "Cloudflare"]},
@@ -41,7 +41,7 @@ PROFILES: dict[str, dict[str, Any]] = {
     "qfabric": {"local": "qfabric", "artifact": "framework", "profile": "open-research", "technologies": ["Python", "quantum computing", "simulation"]},
     "sketch.elixpo": {"local": "sketch.elixpo", "artifact": "application", "profile": "software-monorepo", "technologies": ["Next.js", "TypeScript", "SVG", "Cloudflare"]},
     "status.elixpo": {"local": "status.elixpo", "artifact": "hosted-service", "profile": "hosted-service", "technologies": ["Next.js", "TypeScript", "Cloudflare"]},
-    "wozformer": {"local": "wozformer", "artifact": "model", "profile": "paused-research", "technologies": ["Python", "machine learning", "language models"]},
+    "wozformer": {"local": "wozformer", "artifact": "model", "profile": "open-research", "technologies": ["Python", "machine learning", "language models"]},
 }
 
 

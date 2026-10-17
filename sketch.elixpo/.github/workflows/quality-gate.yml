@@ -76,16 +76,20 @@ jobs:
         if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'static'
         run: echo "Static project — no build needed."
 
-      # ── Node.js setup (nextjs) ─────────────────────────────────────
+      # ── Node.js setup ───────────────────────────────────────────────
       - name: Setup Node.js
-        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'nextjs'
+        if: >-
+          steps.manifest.outputs.exists == 'true'
+          && contains(fromJSON('["nextjs", "software-monorepo", "hosted-service", "incubating-service"]'), steps.manifest.outputs.stack)
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: ${{ steps.manifest.outputs.node_version }}
           cache: npm
 
       - name: Install Node dependencies
-        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'nextjs'
+        if: >-
+          steps.manifest.outputs.exists == 'true'
+          && contains(fromJSON('["nextjs", "software-monorepo", "hosted-service", "incubating-service"]'), steps.manifest.outputs.stack)
         run: npm ci
 
       # ── Python setup ───────────────────────────────────────────────

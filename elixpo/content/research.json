@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/research.schema.json",
   "schemaVersion": 1,
-  "lastVerified": "2026-10-16",
+  "lastVerified": "2026-10-17",
   "statusOwner": "elixpo",
   "entries": {
     "octabit": {
@@ -123,7 +123,7 @@
     "qfabric": {
       "slug": "qfabric",
       "title": "QFabric: Contract-Driven Cross-Domain Task Recovery",
-      "abstract": "A research prototype for empirical timing-contract recovery across Linux and RTOS execution domains on the Arduino UNO Q, with safe-boundary migration, probation, commit, rollback, and replayable decision evidence.",
+      "abstract": "QFabric studies empirical timing-contract recovery across Linux and RTOS domains on Arduino UNO Q, with safe-boundary migration, rollback, and replayable decisions.",
       "authors": [{ "name": "Ayushman Bhattacharya", "affiliation": null }, { "name": "Anwesha Chakraborty", "affiliation": null }],
       "researchStatus": "technical-report",
       "reviewStatus": "not-peer-reviewed",
@@ -142,20 +142,20 @@
     },
     "wozformer": {
       "slug": "wozformer",
-      "title": "Wozformer",
-      "abstract": "A paused proposal to train and port a tiny attention-based language model to a 1 MHz 6502 with 8 KB each of SRAM and EEPROM, implementing the inference path in 8-bit assembly for educational inspection.",
-      "authors": [],
-      "researchStatus": "proposal",
-      "reviewStatus": "not-reviewed",
+      "title": "WozFormer: Language-Model Inference on Constrained 6502 Hardware",
+      "abstract": "An active investigation of compact transformer, retrieval, recurrent, and hyperdimensional architectures for language-model inference on a 1 MHz 6502 with tightly constrained SRAM and EEPROM. The public record includes progressive notebooks, model exports, reference implementations, hardware work, empirical findings, and an in-progress manuscript.",
+      "authors": [{ "name": "Nihal Gazi", "affiliation": null }, { "name": "Ayushman Bhattacharya", "affiliation": null }],
+      "researchStatus": "active-experiment",
+      "reviewStatus": "not-peer-reviewed",
       "releasedAt": null,
       "paperUrl": null,
       "codeUrl": "https://github.com/elixpo/wozformer",
-      "artifacts": [],
+      "artifacts": [{ "kind": "model", "label": "WozFormer research implementation and reproducibility artifacts", "url": "https://github.com/elixpo/wozformer", "license": "MIT" }],
       "liveDemos": [],
-      "licenses": [],
-      "reproducibility": { "status": "not-started", "summary": "The repository documents the proposed hardware, model, memory map, and staged notebook plan; implementation stages are explicitly not started." },
+      "licenses": [{ "artifact": "source code and repository research artifacts", "license": "MIT", "url": "https://github.com/elixpo/wozformer/blob/main/LICENSE" }],
+      "reproducibility": { "status": "partial", "summary": "The repository publishes progressive notebooks, implementation code, exported models, reference paths, empirical findings, and hardware documentation. The complete 6502 hardware result and formal paper release are still in progress." },
       "citation": null,
-      "metadataCompleteness": "proposal"
+      "metadataCompleteness": "verified"
     }
   }
 }

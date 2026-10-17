@@ -22,6 +22,11 @@ const socialAssets = [
   { name: "Dotted social background", file: "/brand/source/social/elixpo-dotted-background.png" },
 ];
 
+const diagrams = [
+  { name: "Elixpo ecosystem infographic", file: "/brand/diagrams/elixpo-ecosystem.svg" },
+  { name: "Verified Elixpo history strip", file: "/brand/diagrams/elixpo-history-strip.svg" },
+];
+
 const stickers = [
   { name: "Ship it", file: "/brand/stickers/previews/ship-it-preview.webp" },
   { name: "Commit", file: "/brand/stickers/previews/commit-preview.webp" },
@@ -59,6 +64,7 @@ export default function AssetsPage() {
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Primary marks</p><h2>Use the mark with room to breathe.</h2></div><DownloadGrid items={marks} /></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Project icon family</p><h2>One family, distinct tools.</h2></div><div className="icon-grid">{icons.map((name) => <a key={name} href={`/brand/source/icons/${name}.png`} download><Image src={`/brand/source/icons/${name}.png`} alt={`${name} project icon`} width={96} height={96} /><span>{name}</span><Download size={13} /></a>)}</div></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Social templates</p><h2>Stable artwork for public announcements.</h2></div><DownloadGrid items={socialAssets} /></section>
+    <section className="asset-section"><div className="section-heading"><p className="eyebrow">README and history diagrams</p><h2>Evidence-led diagrams for the primary public READMEs.</h2></div><DownloadGrid items={diagrams} /></section>
     <section className="asset-section sticker-preview-section" aria-labelledby="sticker-previews-title">
       <div className="section-heading split">
         <div><p className="eyebrow">Protected event material</p><h2 id="sticker-previews-title">Official stickers are available by approved request.</h2></div>

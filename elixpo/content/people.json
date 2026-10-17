@@ -9,7 +9,8 @@
     "defaultBasis": "public-evidence-only",
     "publicEvidenceRule": "Names, public GitHub profile images, public handles, and attributable public work may be summarized conservatively when the source is linked and no sensitive or non-public detail is added.",
     "explicitConsentRule": "Custom biographies, non-public role details, private contact information, supplied photography, and any statement extending beyond public evidence require recorded opt-in consent before publication.",
-    "removalRule": "A person may request correction or removal through the published correction route; disputed optional profile material is hidden while reviewed."
+    "removalRule": "A person may request correction or removal through the published correction route; disputed optional profile material is hidden while reviewed.",
+    "currentPublicationResolution": "Every currently published person record uses public-evidence-only as its basis. Images are public GitHub profile images, summaries are bounded by linked public work, and no supplied photography, private contact information, non-public role date, departure explanation, testimonial, or private biography is published. Optional material remains withheld until recorded opt-in exists."
   },
   "roleDefinitions": {
     "currentTeam": "People with continuing organization-level responsibility recorded in Elixpo's public materials.",

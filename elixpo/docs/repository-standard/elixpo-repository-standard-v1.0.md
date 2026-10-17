@@ -74,6 +74,11 @@ Stable check names MUST be chosen before rulesets depend on them. A migration
 MUST preserve a rollback route and MUST NOT expose secrets to fork-controlled
 code.
 
+The versioned responsibility matrix is published in
+[`workflow-responsibilities.md`](workflow-responsibilities.md). Its recurring
+review schedule and rollback record satisfy the baseline without forcing every
+repository to share privileged implementation details.
+
 ## Adoption and migration
 
 Version 0.1 remains readable solely to make migrations reviewable. It is not
@@ -91,6 +96,12 @@ current conformance. Adoption of 1.0 requires:
 Bulk tooling may prepare branches and pull requests, but it must never silently
 rewrite default branches or decide lifecycle, licensing, research claims, or
 maintainer authority.
+
+Archived and deleted repositories use a central archival-only baseline. Their
+lifecycle, custody, support boundary, and observed license remain in the
+canonical registry; their frozen default branches are not reopened merely to
+add current templates. Restoration or renewed maintenance requires a fresh
+repository-specific review.
 
 The portal migration tool is dry-run by default, refuses dirty repositories,
 does not overwrite current 1.0 manifests or existing policy documents, and

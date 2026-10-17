@@ -26,6 +26,7 @@ html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-ui-sans); }
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
+:where(a, button, input, select, textarea):focus-visible { outline: 3px solid #e76043; outline-offset: 4px; }
 .site-frame { min-height: 100vh; display: flex; flex-direction: column; overflow-x: clip; }
 .site-content { flex: 1; }
 .section-wrap, .page-shell { width: min(100% - 2rem, 1240px); margin-inline: auto; }
@@ -957,7 +958,12 @@ svg { transition: transform .2s ease; }
   .brand-audit { margin-top: 4rem; padding: 1.5rem; }.brand-audit dl { grid-template-columns: 1fr; }.brand-audit dl > div { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }.brand-audit dl > div:last-child { border-bottom: 0; }
   .brand-proofs { grid-template-columns: 1fr; }.proof-readme,.proof-ecosystem,.proof-record,.proof-timeline { grid-column: 1; }.proof-readme strong { margin-top: 5rem; }.proof-timeline { grid-template-columns: 1fr!important; gap: 1rem; }.proof-timeline > i { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  video[aria-hidden="true"] { display: none !important; }
+  .impact-sticker, .hero-field::before, .hero-field span { transform: none !important; }
+}
 
 @media print {
   @page { size: A4; margin: 14mm; }

@@ -4,6 +4,8 @@ import "lenis/dist/lenis.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { MegaNavbar } from "@/components/MegaNavbar";
 import { Footer } from "@/components/Footer";
+import { MotionPreferences } from "@/components/MotionPreferences";
+import { PortalAnalytics } from "@/components/PortalAnalytics";
 import { SITE_URL } from "@/lib/seo";
 
 export const viewport: Viewport = {
@@ -77,12 +79,15 @@ export default function RootLayout({
       className="h-full antialiased"
     >
       <body className="min-h-full">
-        <SmoothScroll />
-        <div className="site-frame selection:bg-[#bde8ce] selection:text-[#142018]">
-          <MegaNavbar />
-          <div className="site-content">{children}</div>
-          <Footer />
-        </div>
+        <MotionPreferences>
+          <SmoothScroll />
+          <PortalAnalytics />
+          <div className="site-frame selection:bg-[#bde8ce] selection:text-[#142018]">
+            <MegaNavbar />
+            <div className="site-content">{children}</div>
+            <Footer />
+          </div>
+        </MotionPreferences>
       </body>
     </html>
   );

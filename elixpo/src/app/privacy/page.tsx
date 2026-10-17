@@ -47,8 +47,14 @@ export default function PrivacyPage() {
 
         <h2>Cookies &amp; analytics</h2>
         <p>
-          We keep cookies to the minimum required for functionality. We avoid
-          invasive cross-site tracking.
+          The portal records a small set of public-action categories—such as
+          opening a project, package, research artifact, discussion, or task—to
+          understand whether its directories are useful. These events contain
+          the current route, destination host, and action category only. They do
+          not contain a profile handle, query string, free-form field, persistent
+          identifier, or cross-site advertising cookie. Do Not Track and Global
+          Privacy Control disable this collection. Individual operated services
+          document any additional functional cookies in their own notices.
         </p>
 
         <h2>Your rights</h2>

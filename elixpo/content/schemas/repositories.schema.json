@@ -35,7 +35,8 @@
         "classificationDecisionUrl",
         "organizationStateSource",
         "externalStateSources",
-        "licenseEvidenceUrl"
+        "licenseEvidenceUrl",
+        "repositoryStandardAssessment"
       ],
       "properties": {
         "checkedAt": {
@@ -61,6 +62,30 @@
         "licenseEvidenceUrl": {
           "type": "string",
           "format": "uri"
+        },
+        "repositoryStandardAssessment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "version",
+            "assessedAt",
+            "conformantRepositories",
+            "conformantWithExceptions",
+            "deferredAgentRepositories",
+            "outOfScopeRepositories",
+            "centrallyRecordedArchives",
+            "archivalRule"
+          ],
+          "properties": {
+            "version": { "const": "1.0" },
+            "assessedAt": { "type": "string", "format": "date" },
+            "conformantRepositories": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "conformantWithExceptions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "deferredAgentRepositories": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "outOfScopeRepositories": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "centrallyRecordedArchives": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "archivalRule": { "type": "string", "minLength": 80 }
+          }
         }
       }
     },

@@ -1,6 +1,6 @@
 # Elixpo deployment workflow standard
 
-**Status:** Pilot contract  
+**Status:** Accepted contract  
 **Reference implementations:** `research.elixpo`, `packages.elixpo`  
 **Last reviewed:** 2026-10-17
 
@@ -111,9 +111,9 @@ Do not copy this workflow into repositories that deploy Workers, databases,
 containers, signed packages, or services without first defining their own
 candidate and recovery boundary.
 
-## Pilot acceptance
+## Acceptance evidence
 
-The pilot is accepted when both reference repositories demonstrate:
+Both reference repositories have demonstrated:
 
 - deterministic local validation;
 - a successful candidate deployment;
@@ -121,5 +121,7 @@ The pilot is accepted when both reference repositories demonstrate:
 - an intentional production-domain promotion; and
 - a documented recovery path after a deliberately failed candidate.
 
-Only then should the deployment contract be proposed to the next group of
-active repositories.
+Research and Packages now operate the accepted contract. The portal follows the
+same candidate, production-stamp, and remote-verification boundary while
+retaining its own registry and README checks. New adopters still require a
+repository-specific recovery review before promotion.

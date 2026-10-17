@@ -157,6 +157,7 @@ for (const [name, record] of Object.entries({ contributors, people, history, bra
 if (!isDate(organization.lastVerified)) addError("organization.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(taxonomy.lastVerified)) addError("taxonomy.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(repositories.snapshotDate)) addError("repositories.snapshotDate", "expected YYYY-MM-DD");
+if (!isDate(repositories.verificationMethodology?.repositoryStandardAssessment?.assessedAt)) addError("repositories.verificationMethodology.repositoryStandardAssessment.assessedAt", "expected YYYY-MM-DD");
 if (!isDate(directory.lastVerified)) addError("directory.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(packages.lastVerified)) addError("packages.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(research.lastVerified)) addError("research.lastVerified", "expected YYYY-MM-DD");
@@ -455,8 +456,22 @@ const verificationStates = new Set(taxonomy.verificationStates);
 const names = new Set();
 const repositoryUrls = new Set();
 
+const standardAssessment = repositories.verificationMethodology?.repositoryStandardAssessment;
+const standardBuckets = [
+  ...(standardAssessment?.conformantRepositories ?? []),
+  ...(standardAssessment?.conformantWithExceptions ?? []),
+  ...(standardAssessment?.deferredAgentRepositories ?? []),
+  ...(standardAssessment?.outOfScopeRepositories ?? []),
+  ...(standardAssessment?.centrallyRecordedArchives ?? []),
+];
+const standardBucketSet = new Set(standardBuckets);
+if (standardBucketSet.size !== standardBuckets.length) {
+  addError("repositories.verificationMethodology.repositoryStandardAssessment", "a repository may appear in only one assessment bucket");
+}
+
 for (const [index, entry] of repositories.entries.entries()) {
   const location = `repositories.entries[${index}](${entry.name ?? "unnamed"})`;
+  if (!standardBucketSet.has(entry.name)) addError(`${location}.repositoryStandard`, "repository is missing from the Standard 1.0 assessment");
   if (!entry.name || typeof entry.name !== "string") addError(`${location}.name`, "is required");
   if (names.has(entry.name)) addError(`${location}.name`, "duplicate repository name");
   names.add(entry.name);

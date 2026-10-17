@@ -10,7 +10,54 @@
     "externalStateSources": [
       "https://api.github.com/repos/pollinations/search.elixpo"
     ],
-    "licenseEvidenceUrl": "https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json"
+    "licenseEvidenceUrl": "https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json",
+    "repositoryStandardAssessment": {
+      "version": "1.0",
+      "assessedAt": "2026-10-17",
+      "conformantRepositories": [
+        "accounts.elixpo",
+        "admin.elixpo",
+        "blogs.elixpo",
+        "cypher",
+        "elixpo",
+        "elixpo_chapter",
+        "Kareixo",
+        "lixrl.com",
+        "mails.elixpo",
+        "me.elixpo",
+        "monodiffuse",
+        "octabit",
+        "Nano28C64",
+        "opensource.elixpo",
+        "oreo",
+        "packages.elixpo",
+        "payouts.elixpo",
+        "qfabric",
+        "research.elixpo",
+        "sketch.elixpo",
+        "status.elixpo",
+        "wozformer"
+      ],
+      "conformantWithExceptions": [],
+      "deferredAgentRepositories": ["agent.elixpo", "crumb.elixpo", "oreoPI"],
+      "outOfScopeRepositories": [".github", "brand-production", "search.elixpo"],
+      "centrallyRecordedArchives": [
+        "art.elixpo",
+        "chat.elixpo",
+        "claudeOps.elixpo",
+        "clock.elixpo",
+        "emoji_transnetv1",
+        "falcon",
+        "jackey",
+        "jackey.elixpo",
+        "rewrite.elixpo",
+        "romhost32",
+        "tommy.elixpo",
+        "videolize",
+        "wish.elixpo"
+      ],
+      "archivalRule": "Archived and deleted repositories retain their frozen history. Their lifecycle, custody, support boundary, and license evidence are maintained centrally instead of reopening default branches solely to add templates."
+    }
   },
   "entries": [
     {
@@ -166,12 +213,12 @@
       "statusOwner": "elixpo"
     },
     {
-      "name": "Cypher-3.0",
-      "repositoryUrl": "https://github.com/elixpo/Cypher-3.0",
+      "name": "cypher",
+      "repositoryUrl": "https://github.com/elixpo/cypher",
       "disposition": "public-entry",
       "publicClass": "project",
       "relationship": "core",
-      "lifecycle": "maintenance",
+      "lifecycle": "incubating",
       "custody": "elixpo-owned",
       "githubArchived": false,
       "verificationState": "verified",
@@ -562,15 +609,15 @@
       "disposition": "public-entry",
       "publicClass": "research",
       "relationship": "core",
-      "lifecycle": "paused",
+      "lifecycle": "active",
       "custody": "elixpo-owned",
       "githubArchived": false,
       "verificationState": "verified",
       "statusVerifiedAt": "2026-10-17",
       "statusOwner": "elixpo",
-      "researchStatus": "proposal",
-      "reviewStatus": "not-reviewed",
-      "notes": "Paused research proposal for running a tiny attention model on a 1 MHz 6502; the repository records that implementation stages have not started."
+      "researchStatus": "active-experiment",
+      "reviewStatus": "not-peer-reviewed",
+      "notes": "Active research into language-model inference on constrained 6502 hardware. The repository publishes notebooks, model exports, experimental findings, hardware work, and an unreleased paper draft."
     },
     {
       "name": "romhost32",

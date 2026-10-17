@@ -11,6 +11,10 @@ Elixpo is not a SaaS portfolio, passive project directory, license authority,
 repository graveyard, or promise of permanent maintenance. Its services and
 infrastructure support public building and release work.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/elixpo/elixpo/main/public/brand/diagrams/elixpo-ecosystem.svg" width="100%" alt="Elixpo connects open projects, research, and services through public Chapters that lead to releases and durable contribution records." />
+</p>
+
 ## Projects, Research, and Services
 
 {{PUBLIC_FAMILIES}}
@@ -18,14 +22,6 @@ infrastructure support public building and release work.
 Packages are a distribution surface for Open Projects, not a fourth family.
 Lifecycle describes the state of the work; Core, Chapter, Member, and Connected
 describe its relationship to Elixpo.
-
-```mermaid
-flowchart LR
-  E["Elixpo<br/>open-source project foundry"]
-  E --> P["Open Projects<br/>software · packages · hardware"]
-  E --> R["Open Research<br/>papers · experiments · datasets"]
-  E --> S["Open Services<br/>hosted apps · shared infrastructure"]
-```
 
 ## How an Elixpo Chapter works
 
@@ -111,6 +107,10 @@ and community contribution. The [contributor records]({{CONTRIBUTORS_URL}})
 describe attributable public outcomes without presenting a commit total as a
 measure of human value. The [organization timeline]({{HISTORY_URL}}) states date
 precision and links the public evidence for every milestone.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/elixpo/elixpo/main/public/brand/diagrams/elixpo-history-strip.svg" width="100%" alt="Verified Elixpo history: the earliest surviving project record in 2023, organization and Chapter formation in 2024, expanded contribution and research in 2025, and the project-foundry direction in 2026." />
+</p>
 
 Unknown role dates and empty role categories remain explicit. Elixpo does not
 infer employment, certification, permanent affiliation, review, or consent for

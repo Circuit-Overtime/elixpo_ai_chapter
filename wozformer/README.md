@@ -74,6 +74,15 @@ After the notebooks: port to C (`reference/`), then to 6502 assembly (`firmware/
 | 6502 assembly inference | not started |
 | Hardware bring-up | not started |
 
+## Research status
+
+WozFormer is an active Elixpo research project. Its notebooks, exported model
+artifacts, hardware work, experimental findings, and paper draft are public so
+that the work can be inspected and reproduced while research continues. No
+paper from this project is currently represented as peer reviewed or formally
+released.
+
 ## License
 
-MIT (to be added).
+The source code and repository research artifacts are released under the
+[MIT License](LICENSE), unless an individual artifact states different terms.

@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: "3.13"
       - name: Audit all public surfaces
-        run: python3 scripts/audit-public-surfaces.py --json audit/public-surfaces.json --markdown audit/public-surfaces.md
+        run: python3 scripts/audit-public-surfaces.py --strict --json audit/public-surfaces.json --markdown audit/public-surfaces.md
       - name: Upload audit evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7

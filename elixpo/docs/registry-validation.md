@@ -78,3 +78,10 @@ individual repository manifests. It is a reusable input schema rather than a
 top-level canonical registry record, so the portal validator does not expect a
 single corresponding JSON file under `content/`. Repository conformance is
 checked separately with `npm run repository:check`.
+
+The canonical repository inventory also publishes the current Standard 1.0
+assessment. It distinguishes conformant repositories, reviewed exceptions,
+the deferred agent stack, deliberately out-of-scope support or external
+repositories, and centrally recorded archives. Validation rejects missing or
+duplicate assessment membership so a repository cannot silently disappear from
+the rollout record.

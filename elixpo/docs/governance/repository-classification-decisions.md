@@ -33,6 +33,12 @@ Each `verified` inventory record has passed all applicable checks below:
   verified registry status does not approve or begin repository consolidation.
 - `Kareixo` remains a transferred Member Project whose original maintainer
   retains project and administrative authority.
+- `cypher` is an incubating core application. The rename from `Cypher-3.0`
+  preserves repository history; it does not imply that the prototype is a
+  production-ready security service.
+- `wozformer` is an active research project. Its implementation and paper draft
+  are public, but no WozFormer paper is currently represented as released or
+  peer reviewed.
 - `search.elixpo` remains externally owned by Pollinations and connected to
   Elixpo; it is not represented as Elixpo-owned custody.
 - Archived repositories remain historical records and are not presented as

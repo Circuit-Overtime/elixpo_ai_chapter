@@ -6,7 +6,7 @@ import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 const pageMetadata = createPageMetadata({
   title: "Elixpo Packages — Linux and npm releases",
-  description: "Install Win Dot Panel and ScreenBridge from Elixpo's signed Debian APT repository, review supported Linux environments, or browse maintained Elixpo npm libraries and command-line tools.",
+  description: "Install Win Dot Panel and ScreenBridge from Elixpo's signed Debian APT repository, review supported Linux systems, and browse maintained npm libraries and command-line tools.",
   path: "/packages",
 });
 export const metadata = {

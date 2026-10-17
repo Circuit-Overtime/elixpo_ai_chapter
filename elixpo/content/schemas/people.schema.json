@@ -14,13 +14,14 @@
     "consentPolicy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["url", "defaultBasis", "publicEvidenceRule", "explicitConsentRule", "removalRule"],
+      "required": ["url", "defaultBasis", "publicEvidenceRule", "explicitConsentRule", "removalRule", "currentPublicationResolution"],
       "properties": {
         "url": { "type": "string", "format": "uri" },
         "defaultBasis": { "const": "public-evidence-only" },
         "publicEvidenceRule": { "type": "string", "minLength": 40 },
         "explicitConsentRule": { "type": "string", "minLength": 40 },
-        "removalRule": { "type": "string", "minLength": 40 }
+        "removalRule": { "type": "string", "minLength": 40 },
+        "currentPublicationResolution": { "type": "string", "minLength": 120 }
       }
     },
     "roleDefinitions": {

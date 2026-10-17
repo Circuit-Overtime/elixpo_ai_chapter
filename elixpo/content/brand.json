@@ -48,6 +48,7 @@
     { "name": "Primary marks", "path": "/brand/source/marks", "status": "canonical" },
     { "name": "Project icons", "path": "/brand/source/icons", "status": "canonical" },
     { "name": "Social templates", "path": "/brand/source/social", "status": "canonical" },
+    { "name": "README and history diagrams", "path": "/brand/diagrams", "status": "canonical" },
     { "name": "Watermarked sticker previews", "path": "/brand/stickers/previews", "status": "canonical" }
   ],
   "stickerAccess": {
