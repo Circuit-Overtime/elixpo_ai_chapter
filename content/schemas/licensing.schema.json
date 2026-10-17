@@ -65,11 +65,15 @@
     "trademarks": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["separateFromCopyright", "policyStatus", "statement"],
+      "required": ["separateFromCopyright", "policyStatus", "policyUrl", "statement", "referentialUse", "permissionRequired", "prohibitedUse"],
       "properties": {
         "separateFromCopyright": {"const": true},
         "policyStatus": {"enum": ["pending", "published"]},
-        "statement": {"type": "string", "minLength": 20}
+        "policyUrl": {"type": "string", "format": "uri"},
+        "statement": {"type": "string", "minLength": 20},
+        "referentialUse": {"type": "string", "minLength": 40},
+        "permissionRequired": {"type": "string", "minLength": 40},
+        "prohibitedUse": {"type": "string", "minLength": 40}
       }
     },
     "openSourceClaims": {"$ref": "#/$defs/ruleStatement"}

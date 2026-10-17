@@ -114,7 +114,7 @@ general brand-usage guidance published by the portal.
 Open Field was approved on 2026-10-16 with its colour roles, typography roles,
 geometry, iconography, Oreo boundary, motion rules, and accessibility rules as a
 single system. Representative README, research, package, Chapter, and timeline
-components can now be produced against this stable grammar. Approval does not
-settle the broader copyright, trademark, resale, or modification policy; those
-remain a separate legal-review task. The interim sticker-access boundary above
-remains controlling until that review is complete.
+components can now be produced against this stable grammar. Copyright and
+identity permissions remain artifact-specific and are governed by the published
+[trademark and brand-use policy](policies/trademark-and-brand-use.md). The
+sticker-access boundary above remains controlling.

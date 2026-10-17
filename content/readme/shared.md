@@ -138,8 +138,8 @@ endorsement. The canonical brand destination is the
 [Elixpo asset library]({{ASSETS_URL}}). Colour tokens, typography guidance, and
 general usage guidance are public. Official sticker artwork is shown only as a
 watermarked preview; print-ready files or physical packs are released through
-an approved written event partnership. The final standalone brand and trademark
-permission policy is still being consolidated.
+an approved written event partnership. Accurate referential use and protected
+uses are defined by the published [trademark and brand-use policy]({{TRADEMARK_POLICY_URL}}).
 
 ---
 

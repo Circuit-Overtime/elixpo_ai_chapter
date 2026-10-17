@@ -1,7 +1,8 @@
 # Elixpo licensing direction
 
-**Status:** Approved direction; repository migrations pending  
-**Last verified:** 2026-10-16  
+**Status:** Published operating policy; repository migrations remain artifact-specific
+
+**Last verified:** 2026-10-17
 **Machine-readable source:** [`content/licensing.json`](../../content/licensing.json)
 
 Elixpo publishes different kinds of work. Code, papers, hardware designs,
@@ -65,12 +66,13 @@ license does not automatically grant a right to impersonate Elixpo, claim
 endorsement, or control official names, domains, registry identities, or
 distribution accounts.
 
-The final general brand and trademark permission policy remains pending. In the
-interim, public colour tokens, typography guidance, and general usage guidance
-may be consulted openly. Official sticker previews do not grant reproduction,
-printing, distribution, modification, or resale permission. Print-ready sticker
-material is released only under the written terms of an approved event
-partnership.
+The published [trademark and brand-use policy](trademark-and-brand-use.md)
+permits narrow, accurate referential use while reserving official identity,
+co-branding, merchandise, sticker production, and uses that imply endorsement.
+Public colour tokens, typography guidance, and general usage guidance may be
+consulted openly. Official sticker previews do not grant reproduction, printing,
+distribution, modification, or resale permission. Print-ready sticker material
+is released only under the written terms of an approved event partnership.
 
 ## Existing unclear or missing licenses
 

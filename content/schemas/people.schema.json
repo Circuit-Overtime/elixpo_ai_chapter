@@ -4,13 +4,25 @@
   "title": "Elixpo people and role registry",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "lastVerified", "methodology", "correctionUrl", "roleDefinitions", "currentTeam", "projectMaintainers", "researchContributors", "majorContributors", "alumni", "advisors"],
+  "required": ["schemaVersion", "lastVerified", "methodology", "correctionUrl", "consentPolicy", "roleDefinitions", "currentTeam", "projectMaintainers", "researchContributors", "majorContributors", "alumni", "advisors"],
   "properties": {
     "$schema": { "type": "string" },
     "schemaVersion": { "type": "integer", "minimum": 1 },
     "lastVerified": { "type": "string", "format": "date" },
     "methodology": { "type": "string", "minLength": 80 },
     "correctionUrl": { "type": "string", "format": "uri" },
+    "consentPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "defaultBasis", "publicEvidenceRule", "explicitConsentRule", "removalRule"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "defaultBasis": { "const": "public-evidence-only" },
+        "publicEvidenceRule": { "type": "string", "minLength": 40 },
+        "explicitConsentRule": { "type": "string", "minLength": 40 },
+        "removalRule": { "type": "string", "minLength": 40 }
+      }
+    },
     "roleDefinitions": {
       "type": "object",
       "additionalProperties": false,

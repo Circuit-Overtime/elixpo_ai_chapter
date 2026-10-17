@@ -110,6 +110,7 @@ const shared = replaceTokens(sharedTemplate, {
   PACKAGES_URL: activeUrl("packages"),
   RESEARCH_INDEX_URL: portalUrl("research"),
   ASSETS_URL: activeUrl("assets"),
+  TRADEMARK_POLICY_URL: "https://github.com/elixpo/elixpo/blob/main/docs/policies/trademark-and-brand-use.md",
   COMMUNITY_URL: portalUrl("community"),
   PEOPLE_URL: portalUrl("people"),
   CONTRIBUTORS_URL: portalUrl("contributors"),

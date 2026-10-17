@@ -14,7 +14,7 @@ This directory is the canonical data layer for organization facts. Presentation 
 - `repository-licenses.json` — current repository-level license detection, controlling evidence links, and explicit missing/custom-license warnings for every public dossier.
 - `sponsorship.json` — monetary no-solicitation boundary, project-owned funding separation, and in-kind event-partnership rules.
 - `contributors.json` — dated, evidence-linked non-lead contributor recognition records and audit methodology.
-- `people.json` — current organization roles, role definitions, evidence boundaries, and explicit maintainer, alumni, and advisor records.
+- `people.json` — current organization roles, role definitions, evidence and consent boundaries, and explicit maintainer, alumni, and advisor records.
 - `discussions.json` — verified GitHub Discussions source, eligible public categories, refresh policy, and editorial-feature boundary.
 - `history.json` — institutional timeline copy, designed to grow only through verifiable milestones.
 - `brand.json` — canonical public asset location, visual direction, palette, source inventory, duplicate audit, migration exclusions, and branding-migration state.
@@ -25,6 +25,10 @@ The human-readable repository contract and adoption templates live under
 [`docs/repository-standard/`](../docs/repository-standard/).
 The human-readable licensing direction lives at
 [`docs/policies/licensing.md`](../docs/policies/licensing.md).
+Trademark and referential brand-use boundaries live at
+[`docs/policies/trademark-and-brand-use.md`](../docs/policies/trademark-and-brand-use.md).
+People and profile publication consent is defined at
+[`docs/policies/people-and-profile-consent.md`](../docs/policies/people-and-profile-consent.md).
 The human-readable sponsorship policy lives at
 [`docs/policies/sponsorship.md`](../docs/policies/sponsorship.md).
 The portal-hosted canonical brand masters live under
