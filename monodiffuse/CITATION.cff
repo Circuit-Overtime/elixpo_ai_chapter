@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: >-
   If you use MonoDiffuse, please cite the associated preprint and this software
-  release. Add the preprint DOI once engrXiv assigns it.
+  release. The preferred citation below identifies the archived preprint.
 title: "MonoDiffuse: controlled one-bit-weight diffusion experiments and Diffuino artifact"
 type: software
 version: 1.0.0
@@ -43,4 +43,5 @@ preferred-citation:
     name: MonoDiffuse Project
   number: MonoDiffuse-TR-2026-01
   year: 2026
-  url: "https://research.elixpo.com/monodiffuse/"
+  doi: "10.5281/zenodo.23424654"
+  url: "https://doi.org/10.5281/zenodo.23424654"

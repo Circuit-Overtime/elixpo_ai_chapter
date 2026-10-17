@@ -24,5 +24,4 @@ Scientific scope:
 This release does not claim packed binary execution, measured acceleration,
 energy savings, FP32 parity, or a general teacher-free binary-diffusion method.
 
-After engrXiv assigns the paper DOI, add it to this release description and to
-the repository's `CITATION.cff` before publishing the GitHub release.
+Associated preprint: <https://doi.org/10.5281/zenodo.23424654>.
