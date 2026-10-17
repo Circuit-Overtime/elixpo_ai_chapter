@@ -29,9 +29,8 @@ jobs:
           git config user.name "elixpoo"
           git config user.email "elixpoo@gmail.com"
 
-      # Each subtree gets its own branch + PR + merge-commit (squash is
-      # disabled on this repo, so we use a regular merge). Sync state is
-      # persisted at .github/.sync-state/<name> so the next run can tell
+      # Each subtree gets its own branch and squash-auto-merge PR. Sync state
+      # is persisted at .github/.sync-state/<name> so the next run can tell
       # what upstream commits were pulled in without relying on merge parents.
       - name: Sync each subtree via PR + auto-merge
         env:
@@ -215,39 +214,43 @@ jobs:
             fi
             echo "    opened $pr_url"
 
-            # Pull the latest main into this branch before merging. In steady
-            # state main is already our parent (we branched from it this run),
-            # but a concurrent workflow or direct push could have advanced main
-            # between branch creation and this point. Defensive merge.
-            git fetch --quiet origin main
-            if ! git merge --no-edit origin/main; then
-              echo "    conflict merging main into ${branch} — closing PR for manual resolution"
-              git merge --abort 2>/dev/null || true
-              gh pr close "$pr_url" --comment "Closed automatically — conflict when bringing \`main\` up to date on the sync branch. Needs manual resolution." || true
-              git push origin --delete "$branch" 2>/dev/null || true
+            # The repository permits squash merges only. Queue the PR, then
+            # wait for the required README check and resulting merge before
+            # starting the next subtree. The ruleset requires each branch to
+            # be current with main, so parallel queued PRs would deadlock as
+            # soon as the first one advanced the base branch.
+            if ! gh pr merge "$pr_url" --auto --squash --delete-branch --subject "$title" --body "$body"; then
+              echo "    unable to queue squash auto-merge — leaving PR open for manual intervention"
               git checkout main
-              git branch -D "$branch" 2>/dev/null || true
               return 0
             fi
-            if ! git diff --quiet "origin/${branch}" HEAD; then
-              git push origin "$branch"
-              echo "    updated ${branch} with latest main"
-            fi
+            echo "    squash auto-merge queued; waiting for the merge"
 
-            if ! gh pr merge "$pr_url" --auto --merge --delete-branch --subject "$title" --body "$body"; then
-              echo "    --auto merge refused (likely auto-merge disabled on repo) — trying direct merge"
-              if ! gh pr merge "$pr_url" --merge --delete-branch --subject "$title" --body "$body"; then
-                echo "    direct merge failed — leaving PR open for manual intervention"
+            local pr_state waited
+            waited=0
+            while true; do
+              pr_state=$(gh pr view "$pr_url" --json state --jq .state)
+              if [ "$pr_state" = "MERGED" ]; then
+                break
+              fi
+              if [ "$pr_state" = "CLOSED" ]; then
+                echo "    PR closed without merging — continuing without recording the subtree as synchronized"
                 git checkout main
                 return 0
               fi
-            fi
-            echo "    merged (or queued for auto-merge) and branch scheduled for deletion"
+              if [ "$waited" -ge 300 ]; then
+                echo "    merge did not complete within five minutes — leaving the queued PR open"
+                git checkout main
+                return 0
+              fi
+              sleep 5
+              waited=$((waited + 5))
+            done
+            echo "    squash merge completed"
 
-            # Pull the merge commit into local main so the next subtree
-            # branches off the latest state (including the state file).
             git checkout main
-            git pull --ff-only origin main
+            git fetch --quiet origin main
+            git reset --hard origin/main
           }
 
           for entry in "${repos[@]}"; do
