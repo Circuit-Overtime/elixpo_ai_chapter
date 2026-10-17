@@ -1,0 +1,23 @@
+{
+  "seed": 500,
+  "generated_text": "These cues not only demonstrate active listening but also signal to the customer that their thoughts and opinions are valued. Empathy is the ability to understand and share the feelings of others while understanding involves comprehending the needs desires and perspectives of your potential customers are often bombarded with information so it is vital to present information in a succinct manner that captures their attention and keeps them engaged customers are more likely to be attentive interested and receptive to your message leading to a higher likelihood of a successful sale. Remember effective sales and convincing techniques are not about simply pushing products or services onto customers. Oftentimes customers may become overwhelmed with information during a sales presentation or they may need a gentle nudge to solidify their decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks.",
+  "path_indices": [
+    500,
+    809,
+    756,
+    2052,
+    1768,
+    2028,
+    2102,
+    332
+  ],
+  "metrics": {
+    "total_score": 54.13718758523464,
+    "search_runtime": 1.9875924587249756,
+    "avg_rendered_sentence_length": 31.4,
+    "max_rendered_sentence_length": 71,
+    "boundary_fusion_count": 3,
+    "mean_render_validity": 0.5040229856967926,
+    "min_render_validity": 0.1270197033882141
+  }
+}

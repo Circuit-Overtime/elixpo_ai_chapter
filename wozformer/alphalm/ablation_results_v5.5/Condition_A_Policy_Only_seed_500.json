@@ -1,0 +1,30 @@
+{
+  "seed": 500,
+  "generated_text": "These cues not only demonstrate active listening but also signal to the customer that their thoughts and opinions are valued. Empathy is the ability to understand and share the feelings of others while understanding involves comprehending the needs desires and perspectives of your potential customers are often bombarded with information so it is vital to present information in a succinct manner that captures their attention and keeps them engaged customers are more likely to be attentive interested and receptive to your message leading to a higher likelihood of a successful sale. Trust and credibility are crucial factors in any purchasing decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Exploring potential upselling or cross selling opportunities if a customer is hesitant about the price of a particular product or service consider exploring potential upselling or cross selling opportunities.",
+  "path_indices": [
+    500,
+    809,
+    756,
+    2052,
+    2390,
+    2102,
+    332,
+    2360
+  ],
+  "metrics": {
+    "total_score": 39.1494210138917,
+    "exact_boundary_matches": 3,
+    "avg_local_coherence": 0.7488401276724679,
+    "avg_global_coherence": 0.7474014929362706,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.1546421359692301,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 3100,
+    "search_runtime": 2.1245217323303223,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.3917105570435524,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.25115987232753206
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "seed": 40,
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Summarize and confirm understanding before providing a response summarize the objections once again and confirm your understanding with the customer. Encouraging customer engagement to maximize the impact of your presentation it is crucial to encourage customer engagement and participation. Consistency and reliability consistency and reliability are vital in building trust and credibility trust and credibility are fundamental elements in any successful sales relationship. Trust and credibility are crucial factors in any purchasing decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks.",
+  "path_indices": [
+    40,
+    2783,
+    1836,
+    702,
+    1728,
+    2390,
+    2102,
+    332
+  ],
+  "metrics": {
+    "total_score": 30.150808760896325,
+    "exact_boundary_matches": 2,
+    "avg_local_coherence": 0.7882753525461469,
+    "avg_global_coherence": 0.7470017330987113,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.10952260371829782,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 3100,
+    "search_runtime": 1.757612943649292,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.3793659635952541,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.21172464745385305
+  }
+}
