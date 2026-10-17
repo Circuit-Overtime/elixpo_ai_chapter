@@ -1,0 +1,48 @@
+==================================================
+  FP16 Native
+==================================================
+c:\Users\user\Desktop\AI projects\1 bit diffusion models\GitHub\Native-Binarization\Native-Binarization\run_all_benchmarks.py:133: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(cfg["path"], map_location=DEVICE))
+  FID gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [02:34<00:00,  3.86s/it] 
+  Leg gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [01:36<00:00,  9.67s/it]
+  FID: 29.82  |  Legibility: 90.42%
+
+==================================================
+  W1A16 Native
+==================================================
+  FID gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [03:21<00:00,  5.04s/it]
+  Leg gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [01:37<00:00,  9.78s/it]
+  FID: 23.33  |  Legibility: 89.77%
+
+==================================================
+  W1A16 PTQ
+==================================================
+  FID gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [03:16<00:00,  4.90s/it]
+  Leg gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [01:37<00:00,  9.75s/it]
+  FID: 193.50  |  Legibility: 64.29%
+
+==================================================
+  W1A1 Native
+==================================================
+  FID gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [03:28<00:00,  5.22s/it]
+  Leg gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [01:35<00:00,  9.52s/it]
+  FID: 83.90  |  Legibility: 81.58%
+
+==================================================
+  W1A1 PTQ
+==================================================
+  FID gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [02:49<00:00,  4.25s/it]
+  Leg gen: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [01:36<00:00,  9.62s/it]
+  FID: 225.01  |  Legibility: 63.82%
+
+============================================================
+  FINAL RESULTS SUMMARY
+============================================================
+Model                       FID   Legibility
+------------------------------------------
+FP16 Native               29.82       90.42%
+W1A16 Native              23.33       89.77%
+W1A16 PTQ                193.50       64.29%
+W1A1 Native               83.90       81.58%
+W1A1 PTQ                 225.01       63.82%
+============================================================

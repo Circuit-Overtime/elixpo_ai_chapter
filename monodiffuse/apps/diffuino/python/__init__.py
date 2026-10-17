@@ -1,0 +1,1 @@
+"""UNO Q inference application."""

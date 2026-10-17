@@ -1,0 +1,161 @@
+{
+  "dataset": "cifar10",
+  "history": [
+    {
+      "accuracy": 0.5817999839782715,
+      "epoch": 1,
+      "expected_calibration_error_10_bin": 0.11356184615379442,
+      "mean_confidence": 0.6953619122505188,
+      "train_loss": 1.381240364227295
+    },
+    {
+      "accuracy": 0.656000018119812,
+      "epoch": 2,
+      "expected_calibration_error_10_bin": 0.10275325096245828,
+      "mean_confidence": 0.7587532997131348,
+      "train_loss": 0.8751094345092774
+    },
+    {
+      "accuracy": 0.7759000062942505,
+      "epoch": 3,
+      "expected_calibration_error_10_bin": 0.042731219184007435,
+      "mean_confidence": 0.8185999393463135,
+      "train_loss": 0.6795149891662597
+    },
+    {
+      "accuracy": 0.791100025177002,
+      "epoch": 4,
+      "expected_calibration_error_10_bin": 0.0629787362728394,
+      "mean_confidence": 0.8518485426902771,
+      "train_loss": 0.5559526305389404
+    },
+    {
+      "accuracy": 0.8216000199317932,
+      "epoch": 5,
+      "expected_calibration_error_10_bin": 0.036064138629785095,
+      "mean_confidence": 0.85721355676651,
+      "train_loss": 0.48452734413146975
+    },
+    {
+      "accuracy": 0.8452000021934509,
+      "epoch": 6,
+      "expected_calibration_error_10_bin": 0.028135439015499895,
+      "mean_confidence": 0.8730349540710449,
+      "train_loss": 0.4262859353637695
+    },
+    {
+      "accuracy": 0.8410999774932861,
+      "epoch": 7,
+      "expected_calibration_error_10_bin": 0.04782079983109563,
+      "mean_confidence": 0.888920783996582,
+      "train_loss": 0.37076040184021
+    },
+    {
+      "accuracy": 0.8618999719619751,
+      "epoch": 8,
+      "expected_calibration_error_10_bin": 0.04416982628270709,
+      "mean_confidence": 0.9060697555541992,
+      "train_loss": 0.3287611098861694
+    },
+    {
+      "accuracy": 0.8654000163078308,
+      "epoch": 9,
+      "expected_calibration_error_10_bin": 0.037642192425229634,
+      "mean_confidence": 0.9028101563453674,
+      "train_loss": 0.2940714456939697
+    },
+    {
+      "accuracy": 0.8812999725341797,
+      "epoch": 10,
+      "expected_calibration_error_10_bin": 0.03775838691119894,
+      "mean_confidence": 0.9185064435005188,
+      "train_loss": 0.26440204231262204
+    },
+    {
+      "accuracy": 0.8833000063896179,
+      "epoch": 11,
+      "expected_calibration_error_10_bin": 0.037283979833271114,
+      "mean_confidence": 0.9205412864685059,
+      "train_loss": 0.2246241930770874
+    },
+    {
+      "accuracy": 0.8871999979019165,
+      "epoch": 12,
+      "expected_calibration_error_10_bin": 0.03897883022976027,
+      "mean_confidence": 0.9261786937713623,
+      "train_loss": 0.19928937213897704
+    },
+    {
+      "accuracy": 0.8956000208854675,
+      "epoch": 13,
+      "expected_calibration_error_10_bin": 0.041173472888827944,
+      "mean_confidence": 0.936773419380188,
+      "train_loss": 0.16973996807098388
+    },
+    {
+      "accuracy": 0.8967999815940857,
+      "epoch": 14,
+      "expected_calibration_error_10_bin": 0.04620307944474985,
+      "mean_confidence": 0.9430031180381775,
+      "train_loss": 0.14537026033878325
+    },
+    {
+      "accuracy": 0.9039999842643738,
+      "epoch": 15,
+      "expected_calibration_error_10_bin": 0.041950310509405404,
+      "mean_confidence": 0.9459502100944519,
+      "train_loss": 0.12093603199958801
+    },
+    {
+      "accuracy": 0.9100000262260437,
+      "epoch": 16,
+      "expected_calibration_error_10_bin": 0.0417773392464103,
+      "mean_confidence": 0.9516803622245789,
+      "train_loss": 0.10325708869457245
+    },
+    {
+      "accuracy": 0.9121999740600586,
+      "epoch": 17,
+      "expected_calibration_error_10_bin": 0.042656256622845556,
+      "mean_confidence": 0.9547666311264038,
+      "train_loss": 0.0871619561624527
+    },
+    {
+      "accuracy": 0.9139000177383423,
+      "epoch": 18,
+      "expected_calibration_error_10_bin": 0.04396997917413429,
+      "mean_confidence": 0.957830548286438,
+      "train_loss": 0.07323744406938552
+    },
+    {
+      "accuracy": 0.9144999980926514,
+      "epoch": 19,
+      "expected_calibration_error_10_bin": 0.045075144910060774,
+      "mean_confidence": 0.9595751166343689,
+      "train_loss": 0.06700614636659623
+    },
+    {
+      "accuracy": 0.9150999784469604,
+      "epoch": 20,
+      "expected_calibration_error_10_bin": 0.044797539848932845,
+      "mean_confidence": 0.959664523601532,
+      "train_loss": 0.06216787234067917
+    }
+  ],
+  "provenance": {
+    "cuda": "12.4",
+    "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "git_commit": "b2e1cd4c57612cdb745fb3a5cf11925983fa6edc",
+    "python": "3.11.15",
+    "pytorch": "2.5.1+cu124"
+  },
+  "seed": 2026,
+  "sha256": "e0481c4a6fb0f65c845af2e7cc59ecbf3c6975fea734e2c09abe32ed017bf5c6",
+  "test": {
+    "accuracy": 0.9150999784469604,
+    "epoch": 20,
+    "expected_calibration_error_10_bin": 0.044797539848932845,
+    "mean_confidence": 0.959664523601532,
+    "train_loss": 0.06216787234067917
+  }
+}

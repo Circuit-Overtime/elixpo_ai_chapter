@@ -1,0 +1,317 @@
+{
+  "controls": {
+    "gaussian_noise": {
+      "class_js_divergence": 0.5326884590782393,
+      "coverage": 0.0,
+      "density": 0.0,
+      "feature_fid": 2278.23979415025,
+      "feature_kid": 9461.099549804776,
+      "mean_classifier_confidence": 1.0
+    },
+    "real_real": {
+      "class_js_divergence": 0.0009528597977841372,
+      "coverage": 0.9710000157356262,
+      "density": 0.969,
+      "feature_fid": 0.07604648709799906,
+      "feature_kid": -0.00014560898116933174,
+      "mean_classifier_confidence": 0.9601383209228516
+    }
+  },
+  "encoder_test": {
+    "accuracy": 0.9803000092506409,
+    "epoch": 10,
+    "expected_calibration_error_10_bin": 0.014389911051590737,
+    "mean_confidence": 0.966517984867096,
+    "train_loss": 0.05376631627877553
+  },
+  "variants": {
+    "fp": {
+      "class_js_divergence": {
+        "mean": 0.032931384996999796,
+        "sample_std": 0.009051832251228735,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.1948333332935969,
+        "sample_std": 0.016660829182996204,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.2839,
+        "sample_std": 0.013598897014096395,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 3.1471540408941334,
+        "sample_std": 0.383876831195124,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 0.055516232921165365,
+        "sample_std": 0.012746721939518325,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.675879160563151,
+        "sample_std": 0.0048513252348376945,
+        "training_seeds": 3
+      }
+    },
+    "native_centered_post": {
+      "class_js_divergence": {
+        "mean": 0.2529566715712936,
+        "sample_std": 0.08678478749194103,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.031499999575316906,
+        "sample_std": 0.025342651024537817,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.0373,
+        "sample_std": 0.04339274132847567,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 82.46404341774415,
+        "sample_std": 61.38791628754886,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 7.9431494599748165,
+        "sample_std": 8.042600760314896,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.884905199209849,
+        "sample_std": 0.083487977914312,
+        "training_seeds": 3
+      }
+    },
+    "native_centered_pre": {
+      "class_js_divergence": {
+        "mean": 0.3081098444212094,
+        "sample_std": 0.04743539943277635,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.01716666715219617,
+        "sample_std": 0.013787071378904748,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.0104,
+        "sample_std": 0.008328865468957941,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 99.5038538870137,
+        "sample_std": 25.77086484177484,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 7.597976332182294,
+        "sample_std": 3.223061246932882,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.948949376742045,
+        "sample_std": 0.03015664514684697,
+        "training_seeds": 3
+      }
+    },
+    "native_uncentered_post": {
+      "class_js_divergence": {
+        "mean": 0.2864069362784367,
+        "sample_std": 0.11339984758254512,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.02783333354940017,
+        "sample_std": 0.033620430678170714,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.032966666666666665,
+        "sample_std": 0.05062275509425908,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 84.26142607257061,
+        "sample_std": 61.38712075443292,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 6.880756228253225,
+        "sample_std": 6.8973019764528125,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.9306234916051229,
+        "sample_std": 0.07256331050543684,
+        "training_seeds": 3
+      }
+    },
+    "native_uncentered_pre": {
+      "class_js_divergence": {
+        "mean": 0.29460748647476337,
+        "sample_std": 0.020158108936340385,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.03250000004967054,
+        "sample_std": 0.010037429785898574,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.021933333333333332,
+        "sample_std": 0.004552288801617637,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 46.32712281026712,
+        "sample_std": 17.241023946785646,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 1.286488121449372,
+        "sample_std": 0.8159036877685868,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.9479504625002543,
+        "sample_std": 0.018396380718321455,
+        "training_seeds": 3
+      }
+    },
+    "native_w1a1_core": {
+      "class_js_divergence": {
+        "mean": 0.339472698288852,
+        "sample_std": 0.026771534371251463,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.00916666661699613,
+        "sample_std": 0.004010403312056062,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.005366666666666666,
+        "sample_std": 0.002454248017893329,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 204.55169586268366,
+        "sample_std": 69.76817023832771,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 41.027323427942406,
+        "sample_std": 25.013545364190858,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.9520859122276306,
+        "sample_std": 0.009109463513582926,
+        "training_seeds": 3
+      }
+    },
+    "ptq_centered": {
+      "class_js_divergence": {
+        "mean": 0.5325987208673042,
+        "sample_std": 0.0001530832087240313,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 871.1199997852524,
+        "sample_std": 717.3404048898084,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 1581.3149577475472,
+        "sample_std": 2433.1612088425004,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.999978224436442,
+        "sample_std": 3.740709501336146e-05,
+        "training_seeds": 3
+      }
+    },
+    "ptq_uncentered": {
+      "class_js_divergence": {
+        "mean": 0.5313672652118285,
+        "sample_std": 0.0022882561756119744,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 1314.1956229978775,
+        "sample_std": 314.95527107564135,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 2467.49657336273,
+        "sample_std": 1549.5071417110353,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.9996491273244222,
+        "sample_std": 0.0006077293010883804,
+        "training_seeds": 3
+      }
+    },
+    "warm_qat_centered": {
+      "class_js_divergence": {
+        "mean": 0.31958775705429426,
+        "sample_std": 0.05934908872625455,
+        "training_seeds": 3
+      },
+      "coverage": {
+        "mean": 0.03200000027815501,
+        "sample_std": 0.003999998793006088,
+        "training_seeds": 3
+      },
+      "density": {
+        "mean": 0.0193,
+        "sample_std": 0.0036510272527057364,
+        "training_seeds": 3
+      },
+      "feature_fid": {
+        "mean": 66.44956818722196,
+        "sample_std": 28.48769193335909,
+        "training_seeds": 3
+      },
+      "feature_kid": {
+        "mean": 4.945430710619047,
+        "sample_std": 3.6855447821108447,
+        "training_seeds": 3
+      },
+      "mean_classifier_confidence": {
+        "mean": 0.917925755182902,
+        "sample_std": 0.05490853435712218,
+        "training_seeds": 3
+      }
+    }
+  }
+}
