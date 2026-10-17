@@ -1,0 +1,57 @@
+# Handle newly opened issues:
+#   1. Generate a structured description if the body is empty (issue_description.py)
+#   2. Categorize, set priority, assign to the right project board (triage_issue.py)
+#
+# Both run sequentially on the same runner so triage always sees the final
+# body — triage_issue.py re-fetches title/body from the API to get the fresh
+# value written by the description step.
+
+name: Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage:
+    if: github.event.issue.user.login != 'elixpoo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Download repo-context artifact
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: repo-context
+          workflow: artifact-update.yml
+          path: .elixpo-context
+          if_no_artifact_found: warn
+
+      - name: Generate description if empty
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          REPO: ${{ github.repository }}
+          CONTEXT_PATH: .elixpo-context/context.md
+        run: python .github/scripts/issue_description.py
+
+      - name: Triage issue
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          REPO: ${{ github.repository }}
+        run: python .github/scripts/triage_issue.py

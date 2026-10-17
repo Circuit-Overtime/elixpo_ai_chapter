@@ -1,0 +1,28 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository depends on third-party components, each distributed under its
+own license. The application code in this repository is licensed under the
+Elixpo standard (MIT for code, CC-BY-4.0 for assets); see ../../LICENSE.
+
+Primary runtime dependencies (see package.json for the authoritative list and
+versions):
+
+  * Next.js, React, React DOM        - MIT
+  * ai (Vercel AI SDK), @ai-sdk/*    - Apache-2.0
+  * framer-motion                    - MIT
+  * gsap                             - GreenSock Standard "No Charge"
+  * lucide-react                     - ISC
+  * marked                           - MIT
+  * nanoid                           - MIT
+  * next-themes                      - MIT
+  * sonner                           - MIT
+  * cloudinary                       - MIT
+  * dotenv                           - BSD-2-Clause
+
+Platform / deployment:
+
+  * @opennextjs/cloudflare, wrangler - MIT / Apache-2.0
+
+If you believe a component is missing from this list, please open an issue or
+email hello@elixpo.com.
