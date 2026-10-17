@@ -1,7 +1,0 @@
-.venv/
-__pycache__/
-.pytest_cache/
-*.py[cod]
-build/
-dist/
-firmware/28c64_programmer/build/
