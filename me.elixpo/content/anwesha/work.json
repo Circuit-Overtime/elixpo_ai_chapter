@@ -1,0 +1,37 @@
+[
+  {
+    "jobTitle": "Contributor",
+    "timeline": "Sep 2025 - Present",
+    "description": "Contributing to open-source projects through GirlScript Summer of Code (GSSoC '25), focusing on DevOps workflows and collaborative development across remote teams."
+  },
+  {
+    "jobTitle": "Content Team Lead",
+    "timeline": "Sep 2025 - Present",
+    "description": "Leading the content team at GDG JIS University, overseeing content strategy, event documentation, and community engagement for Google Developer Group initiatives on-site in Kolkata."
+  },
+  {
+    "jobTitle": "GDG Member",
+    "timeline": "Jun 2023 - Present",
+    "description": "Active member of GDG Kolkata, participating in developer meetups, tech talks, and community-driven events around Google technologies and open-source development."
+  },
+  {
+    "jobTitle": "OSCI Contributor",
+    "timeline": "Jul 2025 - Oct 2025",
+    "description": "Contributed to Open Source Connect as a part-time contributor, working on DevOps tooling and version control workflows across open-source projects in India."
+  },
+  {
+    "jobTitle": "UI/UX Designer & ML Developer",
+    "timeline": "2024 - Present",
+    "description": "Designing user interfaces and building machine learning pipelines using TensorFlow and PyTorch. Combines design thinking with deep learning to create intuitive, AI-powered experiences."
+  },
+  {
+    "jobTitle": "Research Paper Writer",
+    "timeline": "2024 - Present",
+    "description": "Authoring research papers in computer science, exploring intersections of machine learning, open-source software, and emerging technologies as a pre-final year CSE undergraduate."
+  },
+  {
+    "jobTitle": "Co-developer at Elixpo",
+    "timeline": "2025 - Present",
+    "description": "Co-developing the Elixpo portfolio platform - a unified, content-driven showcase for organization members built with Next.js, Tailwind CSS, and Framer Motion."
+  }
+]
