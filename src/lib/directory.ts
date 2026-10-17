@@ -55,3 +55,12 @@ export const getDirectoryEntry = (family: PublicFamily, slug: string) =>
 
 export const familyPath = (family: PublicFamily) =>
   family === "project" ? "/projects" : family === "research" ? "/research" : "/services";
+
+const discussionCategory: Record<PublicFamily, string> = {
+  project: "show-and-tell",
+  research: "research",
+  service: "service-feedback",
+};
+
+export const discussionUrl = (entry: Pick<DirectoryEntry, "family">) =>
+  `https://github.com/orgs/elixpo/discussions/new?category=${discussionCategory[entry.family]}`;

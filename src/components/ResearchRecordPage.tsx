@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Download, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, Github, MessageCircle } from "lucide-react";
 import type { DirectoryEntry } from "@/lib/directory";
+import { discussionUrl } from "@/lib/directory";
 import type { ResearchRecord } from "@/lib/research";
 import { serializeJsonLd } from "@/lib/seo";
 import { ProjectMark } from "@/components/ProjectMark";
@@ -48,7 +49,7 @@ export function ResearchRecordPage({ entry, record }: { entry: DirectoryEntry; r
       </header>
       <section className="dossier-body">
         <div><p className="eyebrow">Research context</p><h2>Scope and public claim</h2><p className="body-copy">{entry.description}</p>{record.authors.length > 0 && <div className="research-authors"><p className="eyebrow">Authors and affiliations</p>{record.authors.map((author) => <p key={author.name}><strong>{author.name}</strong>{author.affiliation ? ` · ${author.affiliation}` : ""}</p>)}</div>}</div>
-        <aside><p className="eyebrow">Primary record</p><div className="dossier-actions"><a href={record.codeUrl} target="_blank" rel="noreferrer"><Github size={16}/> Source repository</a>{record.paperUrl && <a href={record.paperUrl} target="_blank" rel="noreferrer">Paper or report <ArrowUpRight size={15}/></a>}</div>{record.artifacts.length > 0 && <div className="evidence-links"><p className="eyebrow">Artifacts</p>{record.artifacts.map((artifact) => <a key={artifact.url} href={artifact.url} target="_blank" rel="noreferrer">{artifact.label} <ArrowUpRight size={13}/></a>)}</div>}</aside>
+        <aside><p className="eyebrow">Primary record</p><div className="dossier-actions"><a href={record.codeUrl} target="_blank" rel="noreferrer"><Github size={16}/> Source repository</a>{record.paperUrl && <a href={record.paperUrl} target="_blank" rel="noreferrer">Paper or report <ArrowUpRight size={15}/></a>}<a href={discussionUrl(entry)} target="_blank" rel="noreferrer"><MessageCircle size={16}/> Discuss this research</a></div>{record.artifacts.length > 0 && <div className="evidence-links"><p className="eyebrow">Artifacts</p>{record.artifacts.map((artifact) => <a key={artifact.url} href={artifact.url} target="_blank" rel="noreferrer">{artifact.label} <ArrowUpRight size={13}/></a>)}</div>}</aside>
       </section>
       <section className="research-record-grid">
         <article><p className="eyebrow">Reproducibility</p><h2>{record.reproducibility.status.replaceAll("-", " ")}</h2><p>{record.reproducibility.summary}</p></article>

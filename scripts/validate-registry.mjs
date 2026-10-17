@@ -206,6 +206,18 @@ validateUrl("discussions.apiUrl", discussions.apiUrl);
 if (discussions.sourceRepository !== "https://github.com/elixpo/elixpo") {
   addError("discussions.sourceRepository", "must identify the repository currently backing organization Discussions");
 }
+for (const category of ["Announcements", "Show and tell", "Q&A"]) {
+  if (!discussions.eligibleCategories.includes(category)) {
+    addError("discussions.eligibleCategories", `must preserve the established ${category} category`);
+  }
+}
+if (discussions.responsePolicy?.commitment !== "best-effort-public-review") {
+  addError("discussions.responsePolicy.commitment", "must not imply a guaranteed support SLA");
+}
+if (!Number.isInteger(discussions.responsePolicy?.unansweredReviewDays)) {
+  addError("discussions.responsePolicy.unansweredReviewDays", "must define the review window");
+}
+validateUrl("discussions.responsePolicy.escalationUrl", discussions.responsePolicy?.escalationUrl);
 if (discussions.moderation?.featuredRequiresEditorialSelection !== true) {
   addError("discussions.moderation.featuredRequiresEditorialSelection", "must remain true");
 }

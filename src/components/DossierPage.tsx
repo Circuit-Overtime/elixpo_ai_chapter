@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github, MessageCircle } from "lucide-react";
 import type { DirectoryEntry } from "@/lib/directory";
-import { familyPath } from "@/lib/directory";
+import { discussionUrl, familyPath } from "@/lib/directory";
 import { serializeJsonLd } from "@/lib/seo";
 import { ProjectMark } from "@/components/ProjectMark";
 
@@ -43,6 +43,7 @@ export function DossierPage({ entry }: { entry: DirectoryEntry }) {
             <div className="dossier-actions">
               <a href={entry.repositoryUrl} target="_blank" rel="noreferrer"><Github size={16} /> View repository</a>
               {entry.website && <a href={entry.website} target="_blank" rel="noreferrer">Visit live site <ArrowUpRight size={15} /></a>}
+              <a href={discussionUrl(entry)} target="_blank" rel="noreferrer"><MessageCircle size={16} /> Discuss this {entry.family}</a>
             </div>
             {entry.evidence && <div className="evidence-links"><p className="eyebrow">Research record</p>{entry.evidence.map((item) => <a key={item.url} href={item.url} target="_blank" rel="noreferrer">{item.label} <ArrowUpRight size={13} /></a>)}</div>}
           </aside>
