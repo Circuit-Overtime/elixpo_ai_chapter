@@ -1,0 +1,44 @@
+/* Elixpo Mails — theme fixes for the BlockNote/lixeditor surface.
+   Imported AFTER the package styles in lix-editor-inner.tsx so these win.
+   Colors use the app CSS vars (--fg/--border) so the editor tracks the
+   light/dark toggle instead of assuming a dark canvas. */
+
+/* 1. Visible, blinking text caret (the BlockNote theme washes it out). */
+.lix-editor,
+.lix-editor .ProseMirror,
+.lix-editor-wrapper [contenteditable="true"] {
+    caret-color: var(--fg) !important;
+}
+
+/* 1b. Slightly smaller default body size so more of the email is on screen.
+   This is the editing surface only — the sent email keeps its own styles. */
+.lix-editor .ProseMirror,
+.lix-editor .bn-block-content,
+.lix-editor .bn-inline-content {
+    font-size: 0.9rem;
+}
+
+/* 2. Horizontal rule (the `---` divider) — lift contrast on either canvas. */
+.lix-editor hr,
+.lix-editor-wrapper hr,
+.lix-divider,
+.bn-block-content[data-content-type="divider"] {
+    border: none !important;
+    border-top: 2px solid var(--border) !important;
+    background: transparent !important;
+    opacity: 1 !important;
+}
+
+/* 3. Slash (/) command menu + editor toolbars must sit ABOVE body content
+      (and our sticky top nav). BlockNote portals these to <body>. */
+.bn-suggestion-menu,
+[class*="bn-suggestion-menu"],
+.bn-formatting-toolbar,
+.bn-side-menu,
+.bn-link-toolbar,
+.bn-color-picker-dropdown,
+.mantine-Menu-dropdown,
+.mantine-Popover-dropdown,
+.bn-mantine .mantine-Popover-dropdown {
+    z-index: 6000 !important;
+}
