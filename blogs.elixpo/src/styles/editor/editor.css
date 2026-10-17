@@ -1,0 +1,80 @@
+@import './base.css';
+@import './menus.css';
+@import './blocks.css';
+@import './mentions.css';
+@import './ai.css';
+@import './blog-image.css';
+@import './preview.css';
+
+/* "Hide highlights" — strip text colors and highlight backgrounds from the
+   rendered blog content (client-side toggle in the reader "..." menu). */
+.hide-highlights [style*="color"],
+.hide-highlights [data-text-color],
+.hide-highlights mark {
+  color: var(--text-body) !important;
+}
+.hide-highlights [style*="background"],
+.hide-highlights [data-background-color],
+.hide-highlights mark {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Prevent wide content (code, tables, images, embeds) from overflowing the
+   viewport on mobile in the blog reader. */
+.blog-preview-content img,
+.blog-preview-content table,
+.blog-preview-content iframe,
+.blog-preview-content video,
+.blog-preview-content pre {
+  max-width: 100%;
+}
+.blog-preview-content pre {
+  overflow-x: auto;
+}
+.blog-preview-content {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+@keyframes cover-upload-spin {
+  to { transform: rotate(360deg); }
+}
+
+.cover-upload-overlay {
+  overflow: hidden;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--bg-surface) 28%, transparent);
+  backdrop-filter: blur(1.5px);
+}
+
+.cover-upload-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 38px;
+  padding: 0 15px;
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: 999px;
+  color: var(--text-primary, #24202a);
+  background: color-mix(in srgb, var(--bg-app) 94%, transparent);
+  box-shadow: 0 6px 22px rgba(24, 18, 35, 0.14);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.cover-upload-spinner {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  border: 2px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: cover-upload-spin 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-upload-spinner {
+    animation: none;
+  }
+}
