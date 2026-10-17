@@ -1,0 +1,13 @@
+name = "lixblogs"
+compatibility_date = "2025-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lixblogs"
+database_id = "86566b22-37bb-4a62-a79c-dd19889d8c60"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "cd4aa712b0d843e599ca667544f87813"

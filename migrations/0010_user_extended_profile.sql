@@ -1,0 +1,7 @@
+-- Extended user profile fields
+ALTER TABLE users ADD COLUMN location TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN timezone TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN pronouns TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN website TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN company TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN links TEXT DEFAULT '[]';

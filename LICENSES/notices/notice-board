@@ -1,0 +1,39 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository depends on third-party components, each distributed under its
+own license. The application code in this repository is licensed under the
+Elixpo standard (MIT for code, CC-BY-4.0 for assets); see ../../LICENSE.
+
+Primary runtime dependencies (see package.json for the authoritative list and
+versions):
+
+  * Next.js, React, React DOM             - MIT
+  * @cloudflare/next-on-pages, wrangler   - MIT / Apache-2.0
+  * @blocknote/core, /react, /mantine     - MPL-2.0
+  * @mantine/core, @mantine/hooks         - MIT
+  * framer-motion                         - MIT
+  * yjs, y-websocket                      - MIT
+  * mermaid                               - MIT
+  * KaTeX                                 - MIT
+  * shiki                                 - MIT
+  * marked                                - MIT
+  * cropperjs                             - MIT
+  * Tailwind CSS, autoprefixer, postcss   - MIT
+
+Workspace packages (this monorepo, licensed under the Elixpo standard / MIT):
+
+  * @elixpo/lixeditor   (packages/lixeditor)        - the LixEditor npm package
+  * lixeditor           (packages/vscode-lixeditor)  - the VS Code extension
+  * @elixpo/lixsketch   (packages/lixsketch)         - the LixSketch editor
+
+Fonts:
+
+  * KaTeX math fonts (bundled with KaTeX)            - SIL OFL 1.1
+  * Lix brand fonts (public/fonts/lix*.*)            - CC-BY-4.0 WITH
+                                                       Oreo-trademarks
+  * Google Fonts loaded via the Fonts API
+    (Inter, Onest, Funnel Display, et al.)           - SIL OFL 1.1
+
+If you believe a component is missing from this list, please open an issue or
+email hello@elixpo.com.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "LixBlogs Publish"
+  short_description: "Publish and recover posts with approval"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $lixblogs-publish to safely change a LixBlogs post's publication state."
+policy:
+  allow_implicit_invocation: true
