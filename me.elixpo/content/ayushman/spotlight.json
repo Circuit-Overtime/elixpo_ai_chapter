@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Three-Layer Caching Research",
+    "date": "2026-08-12",
+    "description": "Co-authored arXiv:2609.05463 on the caching architecture behind OreoLook, with a linked Hugging Face Space and open evaluation dataset.",
+    "image": "/assets/ayushman/spotlight/elixpo-search.webp"
+  },
+  {
+    "title": "Speaking at GitHub",
+    "date": "2026-07-10",
+    "description": "Delivered sessions at GitHub Maintainer Month and GitHub Open Source Friday on contributor experience and the systems behind sustainable open-source participation.",
+    "image": "/assets/ayushman/spotlight/speaking-github.webp"
+  },
+  {
+    "title": "GitHub Maintainer Advisory",
+    "date": "2026-03-01",
+    "description": "Joined GitHub's Maintainer Advisory community through my work maintaining contributor systems and developer tooling at Pollinations.ai.",
+    "image": "/assets/ayushman/spotlight/maintainer-advisory.webp"
+  },
+  {
+    "title": "OWASP JIS University",
+    "date": "2026-02-01",
+    "description": "Helped establish a second technical community at JIS University and support its outreach, partnerships, and cross-community programming as Community Strategist.",
+    "image": "/assets/ayushman/spotlight/owasp-jisu.webp"
+  },
+  {
+    "title": "Kolkata Hacktoberfest",
+    "date": "2025-10-27",
+    "description": "Co-hosted Kolkata's 2025 Hacktoberfest meetup for approximately 270 participants across open-source talks, contribution guidance, and community networking.",
+    "image": "/assets/ayushman/spotlight/kolkata-hacktoberfest.webp"
+  },
+  {
+    "title": "OreoLook",
+    "date": "2025-04-06",
+    "description": "An open-source agentic search and deep-research engine with Redis-backed memory, semantic caching, cited results, MCP tools, and PDF reports.",
+    "image": "/assets/ayushman/spotlight/elixpo-search.webp"
+  }
+]

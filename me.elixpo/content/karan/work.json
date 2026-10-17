@@ -1,0 +1,22 @@
+[
+  {
+    "jobTitle": "Frontend AI Developer Intern",
+    "timeline": "2026 - Present",
+    "description": "Working at FlyRank AI building frontend interfaces for AI-driven product features integrated with LLM-powered workflows."
+  },
+  {
+    "jobTitle": "Contributor - Elixpo",
+    "timeline": "2025 - Present",
+    "description": "Contributing to product features and development tasks alongside the core team (chat.elixpo, sketch.elixpo, opensource.elixpo, blogs.elixpo)."
+  },
+  {
+    "jobTitle": "Google Gemini Student Ambassador",
+    "timeline": "2025 - Present",
+    "description": "Driving campus awareness and adoption of Gemini AI tools through events and hands-on sessions."
+  },
+  {
+    "jobTitle": "Open Source Contributor - Pollination AI",
+    "timeline": "2025",
+    "description": "Enhanced openai.yml schemas for Scalet API integration; fixed CI/CD and backend stability issues (S3-compatible media API)."
+  }
+]

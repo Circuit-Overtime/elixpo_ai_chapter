@@ -1,0 +1,17 @@
+{
+  "heading": "PROJECTS",
+  "subText": "System Architect",
+  "description": "Welcome to Anwesha's Portfolio, where the real project is engineering a digital world that feels a intuitive as nature itself. Click on the project titles to see what she's been building, and remember: In the world of code, every bug is just a feature waiting to be discovered!",
+  "projects": [
+    {
+      "name": "elixpo_chapter",
+      "description": "Co-Developer and Maintainer of the Elixpo Chapter Repository, a community-driven project that serves as a hub for resources, discussions, and collaborations related to cloud computing and open-source technologies. The repository includes a variety of tools, guides, and projects that empower developers to learn, share, and contribute to the world of cloud computing. With a focus on fostering a collaborative environment, the Elixpo Chapter Repository is a space where developers can connect, learn, and grow together in their cloud computing journey.",
+      "stars": 85,
+      "url": "https://github.com/elixpo/elixpo_chapter",
+      "owner": "Citcuit-Overtime",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/161109909?v=4",
+      "topics": ["cloud-computing", "community-driven", "discord-bot", "docker", "full-stack", "hacktoberfest", "open-source", "search-engine"],
+      "language": "Typescript"
+    }
+  ]
+}
