@@ -1,0 +1,32 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        status.elixpo (status.elixpo.com)
+  What it is:  Elixpo Status - the public, Cloudflare-native status and uptime
+               page for every Elixpo service. It reports live operational
+               health straight from Cloudflare edge analytics.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. It is the source for a hosted
+  status page.
+
+BRAND ASSETS
+------------
+
+  The brand marks under public/ (logo.png, icon*.png, apple-icon.png,
+  favicon.ico, og-image.png) are provided under CC-BY-4.0 WITH Oreo-trademarks.
+  The Oreo mascot, the chest E-badge, and the Elixpo / Oreo names and palette
+  remain reserved (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com

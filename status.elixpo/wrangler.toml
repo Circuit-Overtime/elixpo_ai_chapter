@@ -1,0 +1,10 @@
+# Cloudflare Pages configuration for the Elixpo Status page.
+# Built with @cloudflare/next-on-pages (`npm run pages:build`), which emits the
+# static + edge bundle into .vercel/output/static. Deployed at status.pages.dev
+# and mapped to the custom domain status.elixpo.com.
+
+name = "status"
+compatibility_date = "2025-06-26"
+# next-on-pages runs the app on the Workers runtime; Node built-ins must resolve.
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"

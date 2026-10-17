@@ -1,0 +1,66 @@
+{
+    "name": "status.elixpo",
+    "version": "1.2.10",
+    "private": true,
+    "description": "Elixpo Status — the public, Cloudflare-native status page for every Elixpo service. Auto-discovers each Pages project and Worker-backed domain (elixpo.com, blogs, sketch, accounts, payouts, mail, portfolio and more) and reports live operational health and uptime history straight from Cloudflare edge analytics — no third-party uptime tool. Deployed on Cloudflare Pages at status.elixpo.com.",
+    "homepage": "https://status.elixpo.com",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elixpo/status.elixpo.git"
+    },
+    "bugs": {
+        "url": "https://github.com/elixpo/status.elixpo/issues"
+    },
+    "author": {
+        "name": "Elixpo",
+        "email": "hello@elixpo.com",
+        "url": "https://elixpo.com"
+    },
+    "contributors": [
+        {
+            "name": "Ayushman Bhattacharya",
+            "url": "https://github.com/Circuit-Overtime"
+        }
+    ],
+    "license": "MIT",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "pages:build": "npx @cloudflare/next-on-pages",
+        "pages:deploy": "npm run pages:build && wrangler pages deploy",
+        "pages:preview": "npm run pages:build && wrangler pages dev",
+        "start": "next start",
+        "lint": "biome check .",
+        "typecheck": "tsc --noEmit",
+        "format": "biome check --write ."
+    },
+    "dependencies": {
+        "@emotion/cache": "^11.14.0",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@mui/icons-material": "7.0.2",
+        "@mui/material": "7.0.2",
+        "@mui/system": "7.0.2",
+        "cobe": "^2.0.1",
+        "html-to-image": "^1.11.13",
+        "jose": "^5.9.6",
+        "next": "15.2.4",
+        "react": "19.2.3",
+        "react-dom": "19.2.3"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^1.9.4",
+        "@cloudflare/next-on-pages": "^1.13.16",
+        "@cloudflare/workers-types": "^4.20240905.0",
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "tailwindcss": "^4",
+        "typescript": "^5",
+        "wrangler": "^4.67.0"
+    }
+}
