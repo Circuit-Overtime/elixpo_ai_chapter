@@ -1,0 +1,35 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        elixpo-mail (mails.elixpo.com)
+  What it is:  The source for Elixpo Mails - the multi-tenant, event-based
+               transactional email service for the Elixpo ecosystem, providing
+               shared mailing infrastructure (bring-your-own sender, branded
+               templates, HMAC-signed webhooks) on Cloudflare's edge.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. mails.elixpo.com is the official
+  hosted deployment of this source; the brand, the hosted deployment, and the
+  operational data are reserved (see BRAND ASSETS), but the source itself
+  carries the full MIT / CC-BY-4.0 grant.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ (og-image.png, logo.png, mark.png, the icon
+  set) are provided under CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the
+  chest E-badge, and the Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com
