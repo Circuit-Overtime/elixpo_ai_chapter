@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/brand-provenance.schema.json",
+  "title": "Elixpo brand provenance manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "verifiedAt", "sourceRepository", "sourceRevision", "licenseNotice", "groups"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "verifiedAt": { "type": "string", "format": "date" },
+    "sourceRepository": { "type": "string", "format": "uri" },
+    "sourceRevision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "licenseNotice": { "type": "string", "minLength": 40 },
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "classification", "sourcePath", "destinationPath", "fileCount", "treeSha256", "exactSourceMatch", "files"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "classification": { "enum": ["import", "already-canonical", "project-owned", "historical-only", "excluded"] },
+          "sourcePath": { "type": "string", "minLength": 1 },
+          "destinationPath": { "type": "string", "minLength": 1 },
+          "fileCount": { "type": "integer", "minimum": 1 },
+          "treeSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "exactSourceMatch": { "type": "boolean" },
+          "files": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    }
+  }
+}
