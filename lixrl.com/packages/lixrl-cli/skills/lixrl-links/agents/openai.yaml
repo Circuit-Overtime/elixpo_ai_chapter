@@ -1,0 +1,5 @@
+interface:
+  display_name: "Lixrl Links"
+  short_description: "Manage production short links from the CLI"
+  brand_color: "#9b7bf7"
+  default_prompt: "Use $lixrl-links to create and manage my Lixrl short links."
