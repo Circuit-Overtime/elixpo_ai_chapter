@@ -1,0 +1,27 @@
+{
+  "intro": {
+    "heading": "VIVEK",
+    "subheading": "ABOUT!",
+    "description": "I am a 3rd-year Computer Science Engineering student at JIS University with a strong focus on frontend development and AI integration. I enjoy building scalable web applications, experimenting with LLMs, and crafting intuitive user experiences.",
+    "portraitImage": "/assets/vivek/about/ptr-11.webp"
+  },
+  "fancySection": {
+    "banner": "PROFILE",
+    "subtitle": "Experience & Interests",
+    "content": "I have worked as a Frontend Developer & AI Integrator at Pollinations AI, where I built modern UI systems and integrated AI-powered features. I actively contribute to developer communities and enjoy solving real-world problems using technology.",
+    "highlights": [
+      "Frontend Developer (React / Next.js)",
+      "AI Integrator (LLMs, LangChain, RAG)",
+      "UI/UX Enthusiast"
+    ],
+    "contactNote": "Interested in collaboration, internships, or freelance work? Feel free to reach out.",
+    "shoutouts": ["Pollinations AI", "GDG on Campus", "OWASP JIS University"],
+    "shoutoutText": "for shaping my technical journey and growth."
+  },
+  "images": {
+    "gallery": [
+      "/assets/vivek/about/sq-11.webp",
+      "/assets/vivek/about/sq-22.webp"
+    ]
+  }
+}

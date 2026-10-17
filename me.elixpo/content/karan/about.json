@@ -1,0 +1,27 @@
+{
+  "intro": {
+    "heading": "KARAN",
+    "subheading": "ABOUT!",
+    "description": "I am a 2nd-year B.Tech CSE student (MAKAUT-affiliated, West Bengal) and a T-shaped developer who works across the full stack. From frontend to AI integrations to DevOps — I build and ship real products. Ayushman, the founder of Elixpo, guided me into open source and shaped my understanding of collaborative development.",
+    "portraitImage": "/assets/karan/karan-sepia-hero.jpg"
+  },
+  "fancySection": {
+    "banner": "PROFILE",
+    "subtitle": "Experience & Interests",
+    "content": "I am currently a Frontend AI Engineering Intern at FlyRank AI and a core contributor at Elixpo. Ayushman introduced me to open source when I was confused about what direction to take — and that changed everything. Since then, I've contributed to Pollinations, built Kareixo (an AI code reviewer), shipped Nirmaan MUN, and worked across multiple Elixpo products.",
+    "highlights": [
+      "T-Shaped / Full-Stack Developer",
+      "AI Integrator (OpenAI, Groq, Multi-model)",
+      "Open Source Contributor"
+    ],
+    "contactNote": "Interested in collaboration, internships, or freelance work? Feel free to reach out.",
+    "shoutouts": ["Ayushman & Elixpo", "FlyRank AI", "Google Gemini Student Ambassador"],
+    "shoutoutText": "for shaping my technical journey and growth."
+  },
+  "images": {
+    "gallery": [
+      "/assets/ayushman/about/sq-22.webp",
+      "/assets/ayushman/about/sq-11.webp"
+    ]
+  }
+}
