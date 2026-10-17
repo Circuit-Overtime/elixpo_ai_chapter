@@ -1,0 +1,9 @@
+{
+  "headline": "Built in the open, growing fast",
+  "items": [
+    { "value": "13+", "label": "Projects Built" },
+    { "value": "45+", "label": "Global Contributors" },
+    { "value": "20+", "label": "Hackathons" },
+    { "value": "100%", "label": "Open Source" }
+  ]
+}

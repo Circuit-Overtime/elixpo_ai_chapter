@@ -1,0 +1,78 @@
+schema_version: "1.0"
+
+project:
+  id: elixpo
+  name: elixpo
+  title: Elixpo Portal
+  description: "Public portal, canonical registry, policy library, and cross-project discovery surface for the Elixpo open-source project foundry."
+  family: service
+  artifact_type: hosted-service
+  profile: hosted-service
+  technologies: [Next.js, React, TypeScript, Cloudflare Pages]
+  chapter_status: null
+  lifecycle: active
+  relationship: core
+  custody: elixpo-owned
+  stack: nextjs
+  node_version: "24"
+  repository: https://github.com/elixpo/elixpo
+  deployment: https://elixpo.com
+  discussions: https://github.com/orgs/elixpo/discussions
+  status_owner: elixpo
+  status_verified_at: "2026-10-17"
+
+publication:
+  public: true
+  featured: false
+  canonical_slug: elixpo
+  canonical_url: https://elixpo.com
+
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: "2026-10-17"
+
+license:
+  current_file: LICENSE
+  notice_file: LICENSES/NOTICE
+  migration_status: review-required
+  target_code_license: MIT
+  trademark_policy: docs/policies/trademark-and-brand-use.md
+
+ci:
+  lint_cmd: "npm run lint"
+  test_cmd: "npm run registry:check && npm run readme:check"
+  build_cmd: "npm run build"
+
+operations:
+  quality_workflow: .github/workflows/code-quality.yml
+  build_workflow: .github/workflows/production-build.yml
+  registry_workflow: .github/workflows/content-registry.yml
+  privileged_workflows_repo_specific: true
+  fork_prs_receive_secrets: false
+  rollback: "Redeploy the previously verified Cloudflare Pages commit and keep registry synchronization changes reviewable through pull requests."
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [governance, registry, nextjs, seo, cloudflare]
+    lead: true
+
+governance:
+  model: maintainer-led
+  document: GOVERNANCE.md
+
+support:
+  document: SUPPORT.md
+
+security:
+  document: SECURITY.md
+
+conformance:
+  standard: "1.0"
+  status: conformant-with-exceptions
+  assessed_at: "2026-10-17"
+  exceptions:
+    - id: existing-license-review
+      reason: "The repository retains its existing mixed license while contributor authority and artifact boundaries are reviewed; Standard 1.0 does not silently relicense it."
+      owner: elixpo
+      review_at: "2027-01-17"
