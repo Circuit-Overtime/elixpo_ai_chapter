@@ -1,0 +1,30 @@
+{
+  "seed": 40,
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Addressing concerns and objections during your presentation it is likely that the customer may raise concerns or objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding the nature of objections when dealing with objections in written communication or over the phone it is crucial to recognize that objections usually stem from concerns uncertainties or misunderstandings. Timing or urgency objections prospects may raise concerns about the timing of a purchase or the urgency to make a decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Exploring potential upselling or cross selling opportunities if a customer is hesitant about the price of a particular product or service consider exploring potential upselling or cross selling opportunities.",
+  "path_indices": [
+    40,
+    1829,
+    3038,
+    2858,
+    2099,
+    2102,
+    332,
+    2360
+  ],
+  "metrics": {
+    "total_score": 42.823014974594116,
+    "exact_boundary_matches": 3,
+    "avg_local_coherence": 0.7708202430180141,
+    "avg_global_coherence": 0.7683949896267482,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.5190080744879586,
+    "transitions_evaluated": 105109,
+    "search_runtime": 18.1902437210083,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.31193080970219206,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.22917975698198592
+  }
+}

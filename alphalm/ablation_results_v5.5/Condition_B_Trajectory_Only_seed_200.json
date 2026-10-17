@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "In addition to testimonials and endorsements you can also utilize case studies to showcase the real world impact of your product or service. Or what are your goals when it comes to solving this problem. This requires active listening and empathetic understanding and adapting to the customer 's preferences and communication style requires careful observation and active listening involves not only hearing what the customer says but also paying attention to their tone emotions and non verbal cues such as saying i understand or tell me more can encourage the customer to elaborate on their objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding what they aim to achieve allows us to present our products or services in a way that aligns with their ambitions making it more likely for them to see the value in what we offer.",
+  "path_indices": [
+    200,
+    1194,
+    2267,
+    1884,
+    92,
+    2769,
+    3038,
+    1297
+  ],
+  "metrics": {
+    "total_score": 67.5228274166584,
+    "exact_boundary_matches": 5,
+    "avg_local_coherence": 0.6658412728990827,
+    "avg_global_coherence": 0.6140245624950954,
+    "avg_makes_sense_score": 0.6236809747559684,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 105109,
+    "search_runtime": 43.8369927406311,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.4499794532145773,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.33415872710091726
+  }
+}

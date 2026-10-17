@@ -1,0 +1,30 @@
+{
+  "seed": 500,
+  "generated_text": "These cues not only demonstrate active listening but also signal to the customer that their thoughts and opinions are valued. Here are some key strategies to help sales professionals maintain a positive and confident attitude during objections 1. Anticipate objections in advance experienced salespeople often anticipate common objections in their industry and prepare effective responses in advance. In addition to evidence persuasive techniques play a vital role in addressing objections and concerns another aspect of persuasive language is effectively addressing objections and concerns raised by potential customers may have reservations about the reliability or authenticity of a product or service making it crucial for sales professionals to effectively handle these objections may come in the form of skepticism doubts concerns or outright disagreements from potential customers are often skeptical and require evidence to support your assertions.",
+  "path_indices": [
+    500,
+    2635,
+    2003,
+    2122,
+    263,
+    2455,
+    2886,
+    2233
+  ],
+  "metrics": {
+    "total_score": 56.034192234277725,
+    "exact_boundary_matches": 4,
+    "avg_local_coherence": 0.7318937182426453,
+    "avg_global_coherence": 0.7472257784434727,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.523205007825579,
+    "transitions_evaluated": 105109,
+    "search_runtime": 16.470150470733643,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.3426529158438955,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.26810628175735474
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "seed": 40,
+  "condition": "E_full_system",
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Objections can arise due to various reasons such as concerns about the product or service, budget constraints, or simply a lack of understanding. Understanding the nature of objections: When dealing with objections in written communication or over the phone, it is crucial to recognize that objections usually stem from concerns, uncertainties, or misunderstandings. To effectively leverage testimonials, it is crucial to collect them from a diverse range of customers. Customers are often bombarded with information, so it is vital to present information in a succinct manner that captures their attention and keeps them engaged.",
+  "path_indices": [
+    40,
+    2390,
+    2102,
+    332,
+    3038,
+    2858,
+    190,
+    756
+  ],
+  "metrics": {
+    "total_score": 53.07377824228671,
+    "exact_matches": 3,
+    "avg_local": 0.7425794771739415,
+    "avg_global": 0.6910089935575213,
+    "avg_makes_sense": 0.6742533998829978,
+    "avg_validity": 0.6411253597055163,
+    "diversity": 0.3707012917314257,
+    "avg_topic_progress": 0.25742052282605854,
+    "runtime": 1.4917891025543213
+  }
+}

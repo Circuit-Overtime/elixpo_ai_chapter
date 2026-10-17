@@ -1,0 +1,30 @@
+{
+  "seed": 500,
+  "generated_text": "These cues not only demonstrate active listening but also signal to the customer that their thoughts and opinions are valued. Active listening also involves reflecting and summarizing the customer 's responses. Attentiveness further complements responsiveness by requiring sales professionals to actively listen and observe the customer 's cues and signals. Clarifying and validating the customer 's needs further solidifies your understanding of their unique situation. Adapt your tone and language tailor your tone and language to match the personality of your prospect. Your level of enthusiasm can be contagious and can greatly impact the customer 's perception of you and your offering alternative solutions sometimes objections arise because the customer perceives a mismatch between their needs and the features of your product or service. Timing or urgency objections can be managed by effectively communicating the potential consequences of delaying a decision.",
+  "path_indices": [
+    500,
+    1029,
+    444,
+    1566,
+    2844,
+    48,
+    2324,
+    2436
+  ],
+  "metrics": {
+    "total_score": 32.3492743447423,
+    "exact_boundary_matches": 1,
+    "avg_local_coherence": 0.7888918008123126,
+    "avg_global_coherence": 0.7888047865458897,
+    "avg_makes_sense_score": 0.665400505065918,
+    "avg_policy_score": 0.16400142120463507,
+    "avg_validity_score": 0.529975141797747,
+    "transitions_evaluated": 3100,
+    "search_runtime": 1.0791468620300293,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.3531224344457899,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.21110819918768747
+  }
+}

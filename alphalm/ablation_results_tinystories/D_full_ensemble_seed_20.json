@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "When it was time to go home, Beep knew he needed more fuel. Be careful next time.\". Next time, blow less and share more. Friends have fun together.\". Together, they put away all the clothes in the closet. The cloud was growing bigger and bigger. And Beep lived happily ever after. After a while, Rachel felt better and wanted to spin some more.",
+  "path_indices": [
+    20,
+    19483,
+    19176,
+    16876,
+    14865,
+    3937,
+    23,
+    6468
+  ],
+  "metrics": {
+    "total_score": 53.17127719335258,
+    "avg_local": 0.43463602662086487,
+    "avg_global": 0.411316522530147,
+    "avg_makes_sense": 0.4205197500331061,
+    "avg_policy": 0.19980105837540968,
+    "avg_validity": 0.8741047212055751,
+    "exact_matches": 3,
+    "diversity": 0.7060053389120314,
+    "repetition_rate": 0.0,
+    "topic_repetition": -0.26832091382571627,
+    "forward_progress": 0.5653639733791351,
+    "runtime": 3.471642255783081,
+    "evaluations": 3100,
+    "narrative_consistency": 0.4166666666666667
+  }
+}
