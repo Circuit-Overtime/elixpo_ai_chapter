@@ -16,6 +16,8 @@ REQUIRED_SNIPPETS = (
     "concurrency:",
     "timeout-minutes:",
     "name: Validate and deploy",
+    "npm run registry:sync",
+    "npm run registry:check",
 )
 ORDERED_STEPS = (
     "Ensure Cloudflare Pages project exists",

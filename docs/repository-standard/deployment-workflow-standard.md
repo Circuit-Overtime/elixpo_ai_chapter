@@ -16,7 +16,8 @@ Cloudflare Pages is its destination and MUST contain these stages in order:
 
 1. check out the trusted revision;
 2. install the pinned project runtime and lockfile dependencies;
-3. run the repository's canonical source or registry validation;
+3. synchronize the repository's canonical registry snapshot, then verify that
+   the generated snapshot has no remaining drift;
 4. build the static publication artifact;
 5. perform repository-specific preparation, signing, or packaging;
 6. verify that the named Cloudflare Pages project exists;
