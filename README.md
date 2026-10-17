@@ -20,7 +20,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 classifications and custody decisions are published from the canonical registry
 maintained by `elixpo/elixpo`.
 
-<!-- BEGIN ELIXPO SHARED · sha256:4f2e02ad8de1f5396f533afa5b7309f226613a00be84058384c7313851adb034 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:5a08107ff38b26bcf4ad478c98e35036b619ddc609ed9f600606e185abc01755 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -84,13 +84,13 @@ Feature placement is editorial and does not change these records.
 | Repository | Lifecycle | Relationship |
 | --- | --- | --- |
 | [`cypher`](https://github.com/elixpo/cypher) | Incubating | Core |
+| [`agent.elixpo`](https://github.com/elixpo/agent.elixpo) | Active | Core |
 | [`elixpo_chapter`](https://github.com/elixpo/elixpo_chapter) | Active | Core |
 | [`Kareixo`](https://github.com/elixpo/Kareixo) | Active | Member |
 | [`oreo`](https://github.com/elixpo/oreo) | Active | Core |
 | [`packages.elixpo`](https://github.com/elixpo/packages.elixpo) | Active | Core |
 | [`sketch.elixpo`](https://github.com/elixpo/sketch.elixpo) | Active | Core |
 | [`Nano28C64`](https://github.com/elixpo/Nano28C64) | Maintenance | Core |
-| [`agent.elixpo`](https://github.com/elixpo/agent.elixpo) | Paused | Core |
 | [`crumb.elixpo`](https://github.com/elixpo/crumb.elixpo) | Paused | Core |
 | [`oreoPI`](https://github.com/elixpo/oreoPI) | Paused | Core |
 
