@@ -2,9 +2,6 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { ECOSYSTEM_PRODUCTS } from "@/lib/catalog";
 
-const featuredSlugs = new Set(["blogs", "sketch", "search", "lixrl", "accounts", "oreo"]);
-const featuredProducts = ECOSYSTEM_PRODUCTS.filter((product) => featuredSlugs.has(product.slug));
-
 export function ProductDirectoryTeaser() {
   return (
     <div>

@@ -7,8 +7,8 @@
 #   issue/PR agent work is owned by the separately gated OreoFlow workflows
 #   weekly cron        → stale issue/PR cleanup
 #
-# Code validation belongs to ci.yml so contributors receive one authoritative
-# quality gate instead of overlapping builds.
+# Code validation belongs to pr-tests.yml and pr-build.yml. Each required check
+# has one responsibility and can fail or rerun independently.
 
 name: Repository automation
 

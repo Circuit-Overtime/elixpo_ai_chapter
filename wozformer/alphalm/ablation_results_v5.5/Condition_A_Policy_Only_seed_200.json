@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "In addition to testimonials and endorsements you can also utilize case studies to showcase the real world impact of your product or service. Offering limited time offers or exclusive deals can encourage potential customers to act swiftly to secure the best possible price or budget objections one of the most frequent objections in sales is related to price or budget. Timing or urgency objections can be managed by effectively communicating the potential consequences of delaying a decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Addressing potential doubts even with evidence and testimonials some potential customers may still have doubts or objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding.",
+  "path_indices": [
+    200,
+    305,
+    2085,
+    2436,
+    2102,
+    332,
+    2255,
+    3038
+  ],
+  "metrics": {
+    "total_score": 39.807034976780415,
+    "exact_boundary_matches": 3,
+    "avg_local_coherence": 0.7507837755339486,
+    "avg_global_coherence": 0.7861675534929548,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.13766322497810637,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 3100,
+    "search_runtime": 1.835792064666748,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.27265710490090506,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.24921622446605138
+  }
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8Bit-CPU Research Paper Viewer</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+      .header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 2em;
+      }
+      .toolbar {
+        background-color: #34495e;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      button:disabled {
+        background-color: #7f8c8d;
+        cursor: not-allowed;
+      }
+      #page-info {
+        font-size: 16px;
+      }
+      #pdf-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+      canvas {
+        max-width: 100%;
+        height: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      .loading {
+        text-align: center;
+        padding: 50px;
+        font-size: 1.2em;
+      }
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 1.5em;
+        }
+        .toolbar {
+          padding: 10px 5px;
+          gap: 10px;
+        }
+        button {
+          padding: 6px 10px;
+          font-size: 12px;
+        }
+        #pdf-container {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>8Bit-CPU Research Paper</h1>
+    </div>
+    <div class="toolbar">
+      <button id="prev-page">Previous</button>
+      <span id="page-info">Page 1 of 1</span>
+      <button id="next-page">Next</button>
+      <button id="zoom-out">-</button>
+      <span id="zoom-info">100%</span>
+      <button id="zoom-in">+</button>
+    </div>
+    <div id="pdf-container">
+      <div class="loading">Loading PDF...</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+      const url = "./research-paper.pdf";
+      const container = document.getElementById("pdf-container");
+      const loading = document.querySelector(".loading");
+      const prevButton = document.getElementById("prev-page");
+      const nextButton = document.getElementById("next-page");
+      const pageInfo = document.getElementById("page-info");
+      const zoomInButton = document.getElementById("zoom-in");
+      const zoomOutButton = document.getElementById("zoom-out");
+      const zoomInfo = document.getElementById("zoom-info");
+
+      let pdfDoc = null;
+      let pageNum = 1;
+      let pageRendering = false;
+      let pageNumPending = null;
+      let scale = 1.0;
+      const maxScale = 3.0;
+      const minScale = 0.5;
+
+      function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(function (page) {
+          const viewport = page.getViewport({ scale: scale });
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+          };
+
+          const renderTask = page.render(renderContext);
+
+          renderTask.promise.then(function () {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+              renderPage(pageNumPending);
+              pageNumPending = null;
+            }
+            container.innerHTML = "";
+            container.appendChild(canvas);
+          });
+        });
+
+        pageInfo.textContent = `Page ${num} of ${pdfDoc.numPages}`;
+      }
+
+      function queueRenderPage(num) {
+        if (pageRendering) {
+          pageNumPending = num;
+        } else {
+          renderPage(num);
+        }
+      }
+
+      function onPrevPage() {
+        if (pageNum <= 1) {
+          return;
+        }
+        pageNum--;
+        queueRenderPage(pageNum);
+      }
+
+      function onNextPage() {
+        if (pageNum >= pdfDoc.numPages) {
+          return;
+        }
+        pageNum++;
+        queueRenderPage(pageNum);
+      }
+
+      function onZoomIn() {
+        if (scale >= maxScale) {
+          return;
+        }
+        scale += 0.25;
+        zoomInfo.textContent = `${Math.round(scale * 100)}%`;
+        queueRenderPage(pageNum);
+      }
+
+      function onZoomOut() {
+        if (scale <= minScale) {
+          return;
+        }
+        scale -= 0.25;
+        zoomInfo.textContent = `${Math.round(scale * 100)}%`;
+        queueRenderPage(pageNum);
+      }
+
+      pdfjsLib
+        .getDocument(url)
+        .promise.then(function (pdf) {
+          pdfDoc = pdf;
+          loading.style.display = "none";
+
+          // Set initial scale to fit width
+          pdfDoc.getPage(1).then(function (page) {
+            const viewport = page.getViewport({ scale: 1 });
+            const containerWidth = container.clientWidth - 40;
+            scale = Math.min(containerWidth / viewport.width, 1.5);
+            zoomInfo.textContent = `${Math.round(scale * 100)}%`;
+            renderPage(pageNum);
+          });
+
+          prevButton.addEventListener("click", onPrevPage);
+          nextButton.addEventListener("click", onNextPage);
+          zoomInButton.addEventListener("click", onZoomIn);
+          zoomOutButton.addEventListener("click", onZoomOut);
+        })
+        .catch(function (error) {
+          loading.innerHTML = "Error loading PDF: " + error.message;
+        });
+    </script>
+  </body>
+</html>

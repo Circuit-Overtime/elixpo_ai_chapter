@@ -1,0 +1,26 @@
+{
+  "seed": 20,
+  "condition": "E_full_system",
+  "generated_text": "This helps to generate repeat business and foster long-term customer loyalty. Building long-term relationships: Credibility and trust are not built overnight. This personal touch will reinforce the positive impression they have of your company and make them feel appreciated. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Objections can arise due to various reasons such as concerns about the product or service, budget constraints, or simply a lack of understanding. Understanding the nature of objections: When dealing with objections in written communication or over the phone, it is crucial to recognize that objections usually stem from concerns, uncertainties, or misunderstandings.",
+  "path_indices": [
+    20,
+    340,
+    3345,
+    2390,
+    2102,
+    332,
+    3038,
+    2858
+  ],
+  "metrics": {
+    "total_score": 43.88940038666543,
+    "exact_matches": 2,
+    "avg_local": 0.711703726223537,
+    "avg_global": 0.7355837225914001,
+    "avg_makes_sense": 0.7516837120056152,
+    "avg_validity": 0.686362202678408,
+    "diversity": 0.4228620156645775,
+    "avg_topic_progress": 0.2414369753428868,
+    "runtime": 1.41756272315979
+  }
+}

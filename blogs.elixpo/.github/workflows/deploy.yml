@@ -45,7 +45,7 @@ jobs:
       catalog: ${{ steps.select.outputs.catalog }}
       bump: ${{ steps.select.outputs.bump }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 2
       - name: Detect changed targets
@@ -108,11 +108,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN || github.token }}
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
       - name: Use a provenance-capable npm
@@ -170,7 +170,7 @@ jobs:
             "$RUNNER_TEMP/lixblogs-smoke/node_modules/.bin/lixblogs" skill list --json --no-input
           fi
       - name: Attest exact package artifacts
-        uses: actions/attest@v4
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
           subject-path: .release/packages/**/*.tgz
       - name: Publish exact artifacts to npm
@@ -247,12 +247,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN || github.token }}
           fetch-depth: 0
           ref: main
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
       - run: npm ci
@@ -260,7 +260,7 @@ jobs:
       - name: Build VS Code package
         run: ./deploy.sh --package --vs --${{ needs.changes.outputs.bump }} build
       - name: Attest VS Code package
-        uses: actions/attest@v4
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
           subject-path: packages/vscode-lixeditor/*.vsix
       - name: Publish VS Code package
@@ -282,8 +282,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -305,8 +305,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -354,8 +354,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
       - name: Sync pricing catalog

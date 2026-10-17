@@ -46,6 +46,7 @@ export default function ListView({
                     items.map((it) => {
                         const row = (
                             <Box
+                                key={it.id}
                                 sx={{
                                     display: "flex",
                                     alignItems: "center",

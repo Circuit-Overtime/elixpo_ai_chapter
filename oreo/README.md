@@ -16,7 +16,6 @@
 [![Made by Elixpo](https://img.shields.io/badge/made_by-Elixpo-FF5D68?style=flat-square)](https://elixpo.com)
 [![Issues welcome](https://img.shields.io/badge/issues-welcome-00B4A5?style=flat-square)](https://github.com/elixpo/oreo/issues)
 [![Stars](https://img.shields.io/github/stars/elixpo/oreo?style=flat-square&color=FFBE1E)](https://github.com/elixpo/oreo/stargazers)
-[![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-FF5D68?style=flat-square)](https://github.com/sponsors/Circuit-Overtime)
 
 </div>
 
@@ -471,7 +470,6 @@ Elixpo has taken part in and been supported by **GSSOC**, **Hacktoberfest**,
 - 💬 **Join the conversation** in [GitHub Discussions](https://github.com/orgs/elixpo/discussions).
 - 🚀 **Submit your project** to be featured across the ecosystem.
 - 🛠️ **Contribute** - browse good first issues in the [monorepo](https://github.com/elixpo/elixpo_chapter).
-- ❤️ **Support us** via [GitHub Sponsors](https://github.com/sponsors/Circuit-Overtime).
 
 ## Brand assets
 

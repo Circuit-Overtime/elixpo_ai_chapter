@@ -1,0 +1,93 @@
+% HDC-RWKV compact architecture — clean horizontal pipeline (v2).
+%
+% Compile:  pdflatex architecture_hdc_rwkv.tex
+
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{tikz}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,shapes.geometric}
+
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bipset}{\{-1,+1\}}
+
+\definecolor{cBipolar}{HTML}{2C5282}
+\definecolor{cCont}{HTML}{B7791F}
+\definecolor{cSampler}{HTML}{6B46C1}
+\definecolor{cArrow}{HTML}{1A202C}
+
+\tikzset{
+  bip/.style   = {draw=cBipolar, fill=cBipolar!8, thick, rounded corners=3pt,
+                  minimum height=13mm, minimum width=28mm, align=center,
+                  font=\small},
+  cont/.style  = {draw=cCont,    fill=cCont!10,    thick, rounded corners=3pt,
+                  minimum height=13mm, minimum width=28mm, align=center,
+                  font=\small},
+  samp/.style  = {draw=cSampler, fill=cSampler!10, thick, rounded corners=3pt,
+                  minimum height=13mm, minimum width=28mm, align=center,
+                  font=\small},
+  io/.style    = {draw=black!70, thick, rounded corners=3pt,
+                  minimum height=13mm, minimum width=20mm,
+                  font=\small\ttfamily, align=center},
+  flow/.style  = {-{Stealth[length=2.6mm]}, thick, draw=cArrow},
+  loop/.style  = {-{Stealth[length=2.6mm]}, thick, draw=cCont!80!black, dashed},
+  lbl/.style   = {font=\scriptsize\itshape, text=black!60, align=center},
+  dflow/.style = {font=\scriptsize, text=black!60, align=center},
+}
+
+\begin{document}
+\begin{tikzpicture}[node distance=8mm and 20mm]
+
+% --- Main pipeline (single row, left-to-right) --------------------------
+\node[io]                       (tok)     {token\\$x_t$};
+\node[bip,  right=of tok]       (lookup)  {$\widetilde\bV_{x_t}$\\\scriptsize bipolar lookup};
+\node[bip,  right=of lookup]    (rot)     {$\rho^{t}$\\\scriptsize cyclic right-rotation};
+\node[cont, right=of rot]       (rec)     {$\bs_t = \tanh(\cdot)$\\\scriptsize linear recurrence};
+\node[bip,  right=of rec]       (proto)   {$\langle\!\bs_t,\widetilde\bP_v\!\rangle$\\\scriptsize prototype similarity};
+\node[samp, right=of proto]     (samp)    {softmax + top-$k$\\\scriptsize $\tau = e^{\log\tau}$};
+\node[io,   right=of samp]      (next)    {next\\$x_{t+1}$};
+
+% inter-block arrows with labelled dataflow
+\draw[flow] (tok)    -- node[dflow, above=1pt] {$\in \{0..V\!-\!1\}$} (lookup);
+\draw[flow] (lookup) -- node[dflow, above=1pt] {$\in \bipset^d$} (rot);
+\draw[flow] (rot)    -- node[dflow, above=1pt] {$\bh_t$} (rec);
+\draw[flow] (rec)    -- node[dflow, above=1pt] {$\in (-1,+1)^d$} (proto);
+\draw[flow] (proto)  -- node[dflow, above=1pt] {logits $\in \mathbb{R}^V$} (samp);
+\draw[flow] (samp)   -- (next);
+
+% recurrence self-loop (dashed, curving under the recurrence box)
+\draw[loop] (rec.south) -- ++(0,-0.64)
+                        -- ++(-2.0,0)
+                        node[dflow, midway, above] {$\bs_{t-1}$}
+                        |- ($(rec.west)+(-2mm,0)$)
+                        -- (rec.west);
+
+% autoregressive feedback (dashed, under the whole pipeline)
+\draw[loop] (next.south) -- ++(0,-14mm) -| (tok.south);
+\node[dflow, above=1pt] at ($(rec.south)+(0,-14mm)$) {
+autoregressive feedback};
+
+% --- Legend below --------------------------------------------------------
+\begin{scope}[shift={(0,-30mm)}]
+  \node[bip, minimum width=26mm, minimum height=6mm, font=\scriptsize]
+      (lgB) at (0,0) {bipolar tensor};
+  \node[cont, right=4mm of lgB, minimum width=26mm, minimum height=6mm,
+        font=\scriptsize] (lgC) {continuous $\tanh$ state};
+  \node[samp, right=4mm of lgC, minimum width=26mm, minimum height=6mm,
+        font=\scriptsize] (lgS) {sampler};
+\end{scope}
+
+\node[font=\scriptsize\itshape, text=cCont!80!black, anchor=east]
+      (lgL) at ($(next.east)+(0,-30mm)$) {dashed = state / feedback};
+\draw[loop, semithick] ($(lgL.west)+(-12mm, 0)$) -- ($(lgL.west)+(-2mm, 0)$);
+
+% Title
+\node[font=\bfseries, anchor=south]
+     at ($(current bounding box.north)+(0,1mm)$)
+     {HDC-RWKV --- shipping architecture, $V{=}256$, $d{=}256$, $L{=}1$, $16{,}434$~B};
+
+% Math command shortcuts
+\end{tikzpicture}
+\end{document}

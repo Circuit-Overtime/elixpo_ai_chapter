@@ -1,164 +1,80 @@
-import { Download } from "lucide-react";
-import { PageHero } from "@/components/PageHero";
-import { VIDEOS } from "@/lib/media";
-import { ELIXPO_LINKS } from "@/lib/elixpo-links";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Download, ShieldCheck } from "lucide-react";
+import brand from "../../../content/brand.json";
+import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
-export const metadata = {
-  title: "Brand Assets",
-  description:
-    "Download the Elixpo brand kit - the Oreo mascot marks, the wordmark and lockup, per-service icons, and the brand palette. CC-BY-4.0 with the Oreo-trademark exception.",
-  alternates: { canonical: "/assets" },
-  openGraph: {
-    title: "Brand Assets | Elixpo",
-    description: "The Elixpo brand kit - marks, icons, and palette.",
-    images: ["/og-image.webp"],
-  },
-};
+export const metadata = createPageMetadata({
+  title: "Elixpo brand kit, usage guidance, and sticker previews",
+  description: "Use Elixpo's Open Field colours, typography guidance, canonical marks, project icons, and social artwork. View protected sticker previews and request approved event materials.",
+  path: "/assets",
+});
 
 const marks = [
-  { name: "Mascot mark", file: "/brand/marks/mascot_elixpo_oreo.webp", note: "Oreo, the panda mascot" },
-  { name: "Wordmark", file: "/brand/marks/elixpo_word_mask_text.webp", note: "The Elixpo wordmark" },
-  { name: "Lockup", file: "/brand/marks/elixpo_lock_up_text_mascot.webp", note: "Mascot + wordmark lockup" },
-  { name: "Site Partnership", file: "/brand/marks/elixpo_partnership_banner.webp", note: "Mascot + Wordmark Partnership"}
+  { name: "Elixpo lock-up with Oreo", file: "/brand/source/marks/elixpo_lock_up_text_mascot.png" },
+  { name: "Elixpo word mark", file: "/brand/source/marks/elixpo_word_mask_text.png" },
+  { name: "Oreo mascot", file: "/brand/source/marks/mascot_elixpo_oreo.png" },
 ];
 
-const icons = [
-  "elixpo.com", "accounts.elixpo", "blogs.elixpo", "sketch.elixpo", "chat.elixpo",
-  "art.elixpo", "me.elixpo", "oreo.elixpo", "url.elixpo",
-  "mail.elixpo", "payouts.elixpo", "admin.elixpo", "agent.elixpo",
+const socialAssets = [
+  { name: "Elixpo social banner", file: "/brand/source/social/elixpo-banner.png" },
+  { name: "Social banner background", file: "/brand/source/social/elixpo-banner.bg.png" },
+  { name: "Dotted social background", file: "/brand/source/social/elixpo-dotted-background.png" },
 ];
 
-// Oreo brand palette (brand/MASCOT.md)
-const palette = [
-  { name: "BG", hex: "#FFF8EB" },
-  { name: "Card", hex: "#FFF0D2" },
-  { name: "Primary", hex: "#FF5D68" },
-  { name: "Teal", hex: "#00B4A5" },
-  { name: "Gold", hex: "#FFBE1E" },
-  { name: "Orange", hex: "#FF8C1E" },
-  { name: "Purple", hex: "#B450DC" },
-  { name: "Green", hex: "#3CC864" },
-  { name: "Text", hex: "#262630" },
-  { name: "Muted", hex: "#A07864" },
+const stickers = [
+  { name: "Ship it", file: "/brand/stickers/previews/ship-it-preview.webp" },
+  { name: "Commit", file: "/brand/stickers/previews/commit-preview.webp" },
+  { name: "LGTM", file: "/brand/stickers/previews/lgtm-preview.webp" },
 ];
+
+const icons = ["accounts.elixpo", "admin.elixpo", "agent.elixpo", "art.elixpo", "blogs.elixpo", "chat.elixpo", "crumb.elixpo", "elixpo.com", "mail.elixpo", "me.elixpo", "oreo.elixpo", "payouts.elixpo", "search.elixpo", "sketch.elixpo", "url.elixpo"];
+const formatMegabytes = (bytes: number) => `${Math.round(bytes / 1_000_000)} MB`;
+
+function DownloadGrid({ items }: { items: Array<{ name: string; file: string }> }) {
+  return <div className="mark-grid">{items.map((item) => <article key={item.file}>
+    <div><Image src={item.file} alt={item.name} width={560} height={320} /></div>
+    <h3>{item.name}</h3>
+    <a href={item.file} download>Download source <Download size={14} /></a>
+  </article>)}</div>;
+}
 
 export default function AssetsPage() {
-  return (
-    <div className="bg-black text-[#E1E0CC] select-none">
-      <PageHero
-        eyebrow="Brand Kit"
-        title="Assets"
-        subtitle="The Elixpo brand kit - Oreo, the wordmark and lockup, per-service icons, and the palette. Free to use under CC-BY-4.0 (mascot and names reserved)."
-        video={VIDEOS.about}
-      />
-
-      <section className="max-w-7xl mx-auto px-6 py-20 space-y-20">
-        {/* Brand marks */}
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-white mb-2">
-            Brand <span className="italic font-serif text-primary">marks</span>
-          </h2>
-          <p className="text-sm text-[#DEDBC8]/60 font-mono mb-8">The core identity. Click to download.</p>
-          <div className="flex flex-wrap justify-center gap-5">
-            {marks.map((m) => (
-              <a
-                key={m.file}
-                href={m.file}
-                download
-                className="group rounded-2xl bg-[#141414] border border-white/10 p-6 hover:border-primary/30 transition-colors flex flex-col w-full sm:w-85"
-              >
-                <div className="aspect-video rounded-xl bg-[#0d0d0d] border border-white/5 flex items-center justify-center mb-4 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.file} alt={m.name} className="max-h-[80%] max-w-[80%] object-contain" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-white">{m.name}</p>
-                    <p className="text-[11px] text-[#DEDBC8]/50 font-mono">{m.note}</p>
-                  </div>
-                  <Download size={15} className="text-[#DEDBC8]/50 group-hover:text-primary transition-colors" />
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Service icons */}
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-white mb-2">
-            Service <span className="italic font-serif text-primary">icons</span>
-          </h2>
-          <p className="text-sm text-[#DEDBC8]/60 font-mono mb-8">One icon per Elixpo service. Click to download.</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
-            {icons.map((name) => (
-              <a
-                key={name}
-                href={`/brand/icons/${name}.webp`}
-                download
-                title={`Download ${name}`}
-                className="group rounded-2xl bg-[#141414] border border-white/10 p-4 hover:border-primary/30 transition-colors flex flex-col items-center text-center gap-2"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/brand/icons/${name}.webp`}
-                  alt={name}
-                  className="w-16 h-16 object-contain rounded-xl"
-                />
-                <span className="text-[10px] font-mono text-[#DEDBC8]/60 group-hover:text-primary transition-colors truncate w-full">
-                  {name}
-                </span>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Palette */}
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-white mb-2">
-            Brand <span className="italic font-serif text-primary">palette</span>
-          </h2>
-          <p className="text-sm text-[#DEDBC8]/60 font-mono mb-8">Oreo is a celebration brand: warm, bright, festive.</p>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-            {palette.map((c) => (
-              <div key={c.name} className="rounded-2xl bg-[#141414] border border-white/10 overflow-hidden">
-                <div className="h-20" style={{ backgroundColor: c.hex }} />
-                <div className="p-3">
-                  <p className="text-sm font-medium text-white">{c.name}</p>
-                  <p className="text-[11px] font-mono text-[#DEDBC8]/55 uppercase">{c.hex}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Guidelines */}
-        <div className="rounded-2xl bg-[#141414] border border-white/10 p-8 text-center">
-          <p className="text-sm text-[#DEDBC8]/70 leading-relaxed max-w-2xl mx-auto">
-            These assets are licensed under <strong className="text-white">CC-BY-4.0</strong>.
-            The Oreo mascot, the chest E-badge, and the &ldquo;Elixpo&rdquo; and
-            &ldquo;Oreo&rdquo; names are reserved. Full rules live in the brand
-            source of truth.
-          </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href={`${ELIXPO_LINKS.githubChapter.replace("elixpo_chapter", "elixpo")}/blob/main/brand/MASCOT.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-black text-sm font-semibold hover:opacity-90 transition-opacity"
-            >
-              Brand guidelines
-            </a>
-            <a
-              href={`${ELIXPO_LINKS.githubChapter.replace("elixpo_chapter", "elixpo")}/blob/main/LICENSE`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/10 text-[#DEDBC8]/80 text-sm hover:text-white hover:border-white/25 transition-colors"
-            >
-              License
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+  const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", name: "Elixpo brand assets", description: metadata.description, url: "https://elixpo.com/assets" };
+  return <main className="page-shell brand-page">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+    <header className="page-intro"><p className="eyebrow">Brand / Open Field</p><h1>A consistent identity for Elixpo&apos;s public work.</h1><p className="lede">The Elixpo identity combines clear institutional typography, warm paper, foundry green, and the Oreo mascot. This library provides the public colour system, typography guidance, reviewed organization marks, project assets, and the access rules for protected event material.</p></header>
+    <section className="brand-direction"><div><p className="eyebrow">Visual principle</p><h2>{brand.visualDirection.name}</h2><p>{brand.visualDirection.principle}</p></div><div className="swatches">{brand.visualDirection.palette.map((color) => <div key={color.hex}><i style={{ background: color.hex }} /><span>{color.name}<small>{color.hex}</small></span></div>)}</div></section>
+    <section className="asset-section brand-proof-section" aria-labelledby="brand-proofs-title">
+      <div className="section-heading split"><div><p className="eyebrow">System proofs</p><h2 id="brand-proofs-title">One grammar across six kinds of public record.</h2></div><p>These components test Open Field against the surfaces Elixpo actually maintains. They share structure without erasing the identity or evidence of each record.</p></div>
+      <div className="brand-proofs">
+        <article className="proof-readme"><span>README / ORGANIZATION</span><strong>Open work should reach<br/><em>a clear public release.</em></strong><p>Software · Research · Services · Chapters</p><i/><i/></article>
+        <article className="proof-ecosystem"><span>ECOSYSTEM</span><div><b>Projects</b><b>Research</b><b>Services</b><b>People</b><i>Elixpo</i></div></article>
+        <article className="proof-record proof-research"><span>RESEARCH / ACTIVE</span><b>OctaBit</b><p>Paper · source · reproducibility</p><small>2026 / VERIFIED RECORD</small></article>
+        <article className="proof-record proof-package"><span>PACKAGE / RELEASED</span><b>@elixpo/lixsketch</b><p>npm · source · install · license</p><small>VERSION 5.6.5</small></article>
+        <article className="proof-record proof-chapter"><span>CHAPTER / PROPOSAL</span><b>A bounded public outcome.</b><p>Goal · roles · review · release</p><small>DECISION RECORDED</small></article>
+        <article className="proof-timeline"><span>HISTORY / 2023</span><i/><div><b>Elixpo begins.</b><p>A college project origin, preserved as history rather than the present identity.</p></div></article>
+      </div>
+    </section>
+    <section className="asset-section"><div className="section-heading"><p className="eyebrow">Primary marks</p><h2>Use the mark with room to breathe.</h2></div><DownloadGrid items={marks} /></section>
+    <section className="asset-section"><div className="section-heading"><p className="eyebrow">Project icon family</p><h2>One family, distinct tools.</h2></div><div className="icon-grid">{icons.map((name) => <a key={name} href={`/brand/source/icons/${name}.png`} download><Image src={`/brand/source/icons/${name}.png`} alt={`${name} project icon`} width={96} height={96} /><span>{name}</span><Download size={13} /></a>)}</div></section>
+    <section className="asset-section"><div className="section-heading"><p className="eyebrow">Social templates</p><h2>Stable artwork for public announcements.</h2></div><DownloadGrid items={socialAssets} /></section>
+    <section className="asset-section sticker-preview-section" aria-labelledby="sticker-previews-title">
+      <div className="section-heading split">
+        <div><p className="eyebrow">Protected event material</p><h2 id="sticker-previews-title">Official stickers are available by approved request.</h2></div>
+        <p>The images below are watermarked, screen-resolution previews. They are not print sources and do not grant permission to reproduce, distribute, modify, or sell the artwork.</p>
+      </div>
+      <div className="sticker-preview-grid">{stickers.map((sticker) => <article key={sticker.file}>
+        <div><Image src={sticker.file} alt={`Watermarked preview of the ${sticker.name} Elixpo sticker`} width={480} height={480} /></div>
+        <span><ShieldCheck size={15} /> Watermarked preview</span>
+        <h3>{sticker.name}</h3>
+      </article>)}</div>
+      <div className="sticker-access-note">
+        <div><p className="eyebrow">Request access</p><h3>Planning a community event?</h3><p>Approved partners may receive physical sticker packs or print-ready artwork for the agreed event. Elixpo records the scope and permitted use in writing before release.</p></div>
+        <Link className="button" href="/partnerships">Review the partnership process <ArrowRight size={16} /></Link>
+      </div>
+    </section>
+    <section className="brand-audit" aria-labelledby="brand-audit-title"><div><p className="eyebrow">Source audit</p><h2 id="brand-audit-title">A curated public library, not a raw repository dump.</h2><p>The private production workspace contains generation tools, prompts, restricted masters, outputs, and historical material. Only reviewed public assets become canonical here.</p></div><dl><div><dt>Production source</dt><dd>{brand.audit.standaloneTrackedFiles}</dd><small>tracked files · {formatMegabytes(brand.audit.standaloneDiskSizeBytes)}</small></div><div><dt>Portal library</dt><dd>{brand.audit.portalBrandFiles}</dd><small>reviewed files · {formatMegabytes(brand.audit.portalBrandDiskSizeBytes)}</small></div><div><dt>Exact masters</dt><dd>{brand.audit.exactMasterDuplicates}</dd><small>verified byte-for-byte</small></div></dl></section>
+    <section className="method-panel"><p className="eyebrow">Migration status</p><h2>The reviewed public library has moved; restricted production material has not.</h2><p>{brand.note}</p><p>Colour tokens, typography guidance, and general usage guidance remain public. Copyright licenses and trademark permissions are separate, and download availability does not grant permission to imply endorsement, impersonate Elixpo, or present a modified mark as official.</p></section>
+  </main>;
 }

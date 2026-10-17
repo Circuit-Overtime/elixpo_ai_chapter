@@ -1,9 +1,9 @@
 # Contributing to Elixpo
 
-Thank you for your interest in contributing! Elixpo is built in the open by a
-community of 45+ contributors, and we welcome developers, designers, writers,
-and first-time contributors alike. This guide is the **standard** used across
-every Elixpo repository.
+Thank you for your interest in contributing. LixBlogs is developed in public,
+and contributions to code, documentation, design, testing, and issue triage are
+welcome. This guide applies to this repository; organization-wide participation
+is described at [elixpo.com](https://elixpo.com).
 
 ## Ways to contribute
 
@@ -61,12 +61,16 @@ workflow after automated checks and human review are complete.
 
 ## Licensing of contributions
 
-By submitting a contribution you agree it is licensed inbound under the Elixpo
-standard (**MIT** for code, **CC-BY-4.0** for assets) and that you have the
-right to submit it. The
-[Developer Certificate of Origin](https://developercertificate.org) applies to
-every commit. We do not require a CLA. See [LICENSE](LICENSE) and
-[NOTICE](LICENSES/NOTICE) for details, including the reserved Elixpo/Oreo brand.
+By submitting a contribution, you confirm that you have the right to submit it
+under the terms that apply to the affected files. Read [LICENSE](LICENSE), the
+[notice board](LICENSES/NOTICE), and applicable third-party notices before
+contributing. The [Developer Certificate of Origin](https://developercertificate.org)
+applies to every commit. This repository does not currently require a CLA.
+
+Copyright licenses do not grant permission to impersonate Elixpo or use its
+marks as the identity of another service. The organization is separating its
+future code, content, hardware, and trademark policies; no organization-wide
+license should be inferred from this repository.
 
 ## Questions?
 

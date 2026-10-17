@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/research.schema.json",
+  "title": "Elixpo research records",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "lastVerified", "statusOwner", "entries"],
+  "properties": {
+    "$schema": { "type": "string" }, "schemaVersion": { "type": "integer", "minimum": 1 }, "lastVerified": { "type": "string", "format": "date" }, "statusOwner": { "type": "string" },
+    "entries": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/record" } }
+  },
+  "$defs": {
+    "url": { "type": "string", "format": "uri" },
+    "person": { "type": "object", "additionalProperties": false, "required": ["name", "affiliation"], "properties": { "name": { "type": "string" }, "affiliation": { "type": ["string", "null"] } } },
+    "artifact": { "type": "object", "additionalProperties": false, "required": ["kind", "label", "url", "license"], "properties": { "kind": { "enum": ["dataset", "model", "package", "paper", "hardware", "evaluation"] }, "label": { "type": "string" }, "url": { "$ref": "#/$defs/url" }, "license": { "type": ["string", "null"] } } },
+    "record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["slug", "title", "abstract", "authors", "researchStatus", "reviewStatus", "releasedAt", "paperUrl", "codeUrl", "artifacts", "liveDemos", "licenses", "reproducibility", "citation", "metadataCompleteness"],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "title": { "type": "string", "minLength": 2 }, "abstract": { "type": "string", "minLength": 60 }, "authors": { "type": "array", "items": { "$ref": "#/$defs/person" } },
+        "researchStatus": { "enum": ["proposal", "active-experiment", "technical-report", "preprint", "released", "reproduced", "archived"] }, "reviewStatus": { "enum": ["not-reviewed", "editorially-reviewed", "not-peer-reviewed", "peer-reviewed"] }, "releasedAt": { "type": ["string", "null"], "format": "date" }, "paperUrl": { "type": ["string", "null"], "format": "uri" }, "codeUrl": { "$ref": "#/$defs/url" },
+        "doi": { "type": ["string", "null"] }, "technicalReportInstitution": { "type": ["string", "null"] }, "technicalReportNumber": { "type": ["string", "null"] },
+        "journalTitle": { "type": ["string", "null"] }, "issn": { "type": ["string", "null"] }, "volume": { "type": ["string", "null"] }, "issue": { "type": ["string", "null"] }, "firstPage": { "type": ["string", "null"] }, "lastPage": { "type": ["string", "null"] }, "pdfUrl": { "type": ["string", "null"], "format": "uri" },
+        "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifact" } },
+        "liveDemos": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name", "description", "url", "tags"], "properties": { "name": { "type": "string" }, "description": { "type": "string", "minLength": 30 }, "url": { "$ref": "#/$defs/url" }, "tags": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } } } } },
+        "licenses": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["artifact", "license", "url"], "properties": { "artifact": { "type": "string" }, "license": { "type": "string" }, "url": { "$ref": "#/$defs/url" } } } },
+        "reproducibility": { "type": "object", "additionalProperties": false, "required": ["status", "summary"], "properties": { "status": { "enum": ["not-started", "not-documented", "partial", "documented", "independently-reproduced"] }, "summary": { "type": "string", "minLength": 40 } } },
+        "citation": { "type": ["object", "null"], "additionalProperties": false, "required": ["text", "cffUrl"], "properties": { "text": { "type": "string" }, "cffUrl": { "type": ["string", "null"], "format": "uri" } } },
+        "metadataCompleteness": { "enum": ["proposal", "legacy-partial", "verified"] }
+      }
+    }
+  }
+}
