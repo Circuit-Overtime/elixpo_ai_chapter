@@ -1,0 +1,70 @@
+name: Content registry
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "19 4 * * 1"
+  pull_request:
+    paths:
+      - "content/**"
+      - "readme/**"
+      - "docs/readme/generated/**"
+      - "scripts/validate-registry.mjs"
+      - "scripts/check-registry-links.mjs"
+      - "scripts/render-readmes.mjs"
+      - "src/lib/directory.ts"
+      - ".github/workflows/content-registry.yml"
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "readme/**"
+      - "docs/readme/generated/**"
+      - "scripts/validate-registry.mjs"
+      - "scripts/check-registry-links.mjs"
+      - "scripts/render-readmes.mjs"
+      - "src/lib/directory.ts"
+      - ".github/workflows/content-registry.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-registry-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate canonical content
+        run: npm run registry:check
+      - name: Verify generated READMEs
+        run: npm run readme:check
+
+  link-health:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check canonical external links
+        run: npm run registry:links

@@ -1,0 +1,21 @@
+{
+  "headline": "How It All Connects",
+  "subheadline": "The Elixpo ecosystem is a series of interconnected platforms that leverage a central API binding layer.",
+  "layers": [
+    {
+      "label": "User-Facing Platforms",
+      "color": "#7C3AED",
+      "items": ["Elixpo Art", "Elixpo Blogs", "LixSearch", "Elixpo Chat", "LixSketch", "Elixpo Verse"]
+    },
+    {
+      "label": "API & Core Logic",
+      "color": "#10B981",
+      "items": ["Pollinations API Provider", "Elixpo Accounts SSO", "Elixpo URL"]
+    },
+    {
+      "label": "Backend & Infrastructure",
+      "color": "#3B82F6",
+      "items": ["AI/ML Models (Scaleway, RPi, GCP)", "Cloud Infra (Cloudflare, Firebase, AWS)"]
+    }
+  ]
+}

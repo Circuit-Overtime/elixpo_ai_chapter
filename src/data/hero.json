@@ -1,0 +1,20 @@
+{
+  "headline": "Enhanced Learning and Intelligence Process Optimization",
+  "subheadline": "A developer-first open-source ecosystem of interconnected projects - AI art, intelligent search, collaborative sketching, and more. 100% free, forever.",
+  "primaryCta": {
+    "label": "Explore Projects",
+    "href": "/projects"
+  },
+  "secondaryCta": {
+    "label": "Star on GitHub",
+    "href": "https://github.com/elixpo/elixpo_chapter"
+  },
+  "nodes": [
+    { "icon": "brain", "color": "#7C3AED", "label": "AI" },
+    { "icon": "code", "color": "#3B82F6", "label": "Code" },
+    { "icon": "palette", "color": "#EC4899", "label": "Art" },
+    { "icon": "search", "color": "#10B981", "label": "Search" },
+    { "icon": "chat", "color": "#F59E0B", "label": "Chat" },
+    { "icon": "bolt", "color": "#EF4444", "label": "Deploy" }
+  ]
+}
