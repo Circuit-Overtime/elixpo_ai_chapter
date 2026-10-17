@@ -1,0 +1,88 @@
+{
+    "name": "elixpo-pay",
+    "version": "1.1.12",
+    "private": true,
+    "description": "Elixpo Pay — the multi-tenant payments & payouts SaaS for the Elixpo ecosystem and any developer. A hosted, branded checkout, a unified ledger, entitlement grants with signed webhooks, per-app API credentials with rotation, code-managed pricing catalogs, and creator payouts — built edge-native on Cloudflare Pages, D1 & KV with Razorpay (INR) and Elixpo Accounts SSO.",
+    "homepage": "https://payouts.elixpo.com",
+    "author": {
+        "name": "Elixpo",
+        "email": "hello@elixpo.com",
+        "url": "https://elixpo.com"
+    },
+    "contributors": [
+        {
+            "name": "Ayushman Bhattacharya",
+            "url": "https://github.com/Circuit-Overtime"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elixpo/payouts.elixpo.git"
+    },
+    "bugs": {
+        "url": "https://github.com/elixpo/payouts.elixpo/issues"
+    },
+    "keywords": [
+        "elixpo",
+        "elixpo-pay",
+        "payments",
+        "payouts",
+        "checkout",
+        "billing",
+        "subscriptions",
+        "entitlements",
+        "razorpay",
+        "webhooks",
+        "saas",
+        "multi-tenant",
+        "cloudflare",
+        "cloudflare-pages",
+        "d1",
+        "edge",
+        "nextjs"
+    ],
+    "license": "MIT",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "pages:build": "npx @cloudflare/next-on-pages",
+        "start": "next start",
+        "lint": "biome check .",
+        "format": "biome check --write .",
+        "db:create": "wrangler d1 create elixpo_pay",
+        "db:migrate": "wrangler d1 migrations apply elixpo_pay --remote",
+        "db:migrate:local": "wrangler d1 migrations apply elixpo_pay --local",
+        "db:query:remote": "wrangler d1 execute elixpo_pay --remote",
+        "db:tables": "wrangler d1 execute elixpo_pay --remote --command \"SELECT name FROM sqlite_master WHERE type='table';\""
+    },
+    "dependencies": {
+        "@emotion/cache": "^11.14.0",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@mui/icons-material": "7.0.2",
+        "@mui/material": "7.0.2",
+        "@mui/system": "7.0.2",
+        "biome": "^0.3.3",
+        "gsap": "^3.15.0",
+        "jose": "^5.9.6",
+        "lenis": "^1.3.25",
+        "next": "15.2.4",
+        "react": "19.2.3",
+        "react-dom": "19.2.3"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.5.0",
+        "@cloudflare/next-on-pages": "^1.13.16",
+        "@cloudflare/workers-types": "^4.20240905.0",
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "tailwindcss": "^4",
+        "typescript": "^5",
+        "wrangler": "^4.67.0"
+    }
+}

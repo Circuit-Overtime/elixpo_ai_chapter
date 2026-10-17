@@ -1,0 +1,57 @@
+Oreo-trademarks exception
+=========================
+
+SPDX-Exception-Identifier: Oreo-trademarks
+SPDX-Licenses: MIT, CC-BY-4.0
+
+This exception qualifies the MIT and CC-BY-4.0 grants used across the Elixpo
+ecosystem. It is referenced via `WITH Oreo-trademarks` in the
+SPDX-License-Identifier of affected files and in the root LICENSE.
+
+WHAT IS RESERVED
+----------------
+
+The following are reserved trademarks and brand property of the Elixpo project
+and are NOT licensed by the MIT or CC-BY-4.0 grants:
+
+  * The names "Elixpo" and "Oreo".
+  * The Oreo mascot character (the kawaii pixel-art panda) and the mandatory
+    chest "E-badge".
+  * The Elixpo brand palette and identity rules defined in brand/MASCOT.md.
+  * The domain identifiers elixpo.com and any *.elixpo.com subdomain.
+  * Official product names of the form "Elixpo <Name>" and the "Lix*" /
+    "@elixpo/*" package names.
+
+WHAT YOU MAY DO
+---------------
+
+You may use, copy, modify, merge, publish, distribute, and sublicense the
+licensed code and asset files, including for commercial purposes, subject to
+the terms of the MIT / CC-BY-4.0 license that applies to those files.
+
+Referential ("nominative") use is permitted: you may truthfully state that
+your project uses, integrates with, or is built on Elixpo, provided you do not
+imply sponsorship or endorsement.
+
+WHAT YOU MAY NOT DO (royalty protection)
+----------------------------------------
+
+Without prior written permission from Elixpo, you may NOT:
+
+  1. Use the "Elixpo" or "Oreo" names, the Oreo mascot, or the E-badge to
+     brand, market, or imply endorsement of any product or service that is not
+     an official Elixpo project.
+  2. Offer a competing hosted product or service under the Elixpo or Oreo
+     brand, or under a confusingly similar name or palette.
+  3. Register or attempt to register trademarks, domains, package names, or
+     marketplace listings that are identical or confusingly similar to the
+     reserved marks above.
+  4. Remove or alter this exception, the attribution required by CC-BY-4.0, or
+     the notices that accompany the brand assets.
+
+This exception exists to keep the code and assets free and open while
+protecting the integrity and royalties of the Elixpo brand. Nothing here
+restricts your rights under the underlying MIT or CC-BY-4.0 license to the
+code/asset files themselves.
+
+For permissions or questions: hello@elixpo.com
