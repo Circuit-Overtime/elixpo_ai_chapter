@@ -1,0 +1,52 @@
+{
+  "$schema": "./schemas/sponsorship.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "statusOwner": "elixpo",
+  "policyStatus": "not-accepting",
+  "organizationAcceptsFunds": false,
+  "organizationRoutesFunds": false,
+  "publicSolicitationEnabled": false,
+  "legalRecipient": null,
+  "accountingProcess": null,
+  "statement": "Elixpo does not currently solicit, accept, hold, or route organization-level sponsorship funds.",
+  "projectOwnedFunding": {
+    "allowed": true,
+    "statement": "A project may publish its own funding route under its own authority and accounting. Listing the project through Elixpo does not make Elixpo the recipient, intermediary, guarantor, or endorser."
+  },
+  "independence": {
+    "selection": "Funding does not purchase Chapter selection, Member Project status, or feature placement.",
+    "research": "Funding does not control research conclusions, review labels, or reproducibility records.",
+    "credit": "Funding does not purchase contributor credit or governance authority.",
+    "editorial": "Funding does not purchase favourable editorial treatment."
+  },
+  "stickers": {
+    "sponsorshipRequestAllowed": true,
+    "statement": "The public site shows watermarked sticker previews only. Print-ready artwork or physical sticker packs are released only after Elixpo approves a non-monetary event partnership request in writing; viewing a preview does not grant permission to print or distribute it.",
+    "eventPartnerships": {
+      "enabled": true,
+      "monetary": false,
+      "upTo100": "Community-partner credit and a linked social mention are requested in exchange for the agreed pack or print-ready artwork.",
+      "over100": "Community-partner credit and a linked social mention remain required, together with an on-stage Elixpo introduction of no more than ten minutes.",
+      "around200OrMore": "Requires a written custom agreement. The ten-minute introduction remains; any additional visibility or venue space must be agreed before production.",
+      "requestRequirements": [
+        "event identity, date, venue, organizer, and public page",
+        "expected attendance and requested quantity",
+        "delivery location, deadline, and printing responsibility",
+        "distribution plan",
+        "proposed social credit, brand placement, and speaking arrangement",
+        "named organizer responsible for confirming delivery and outcomes"
+      ]
+    }
+  },
+  "futureReview": {
+    "requiredBeforeAcceptance": true,
+    "requirements": [
+      "identified legal recipient",
+      "documented accounting and reporting process",
+      "conflict-of-interest and independence rules",
+      "public description of what support funds",
+      "approval recorded in the canonical policy"
+    ]
+  }
+}

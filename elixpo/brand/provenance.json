@@ -1,0 +1,40 @@
+{
+  "$schema": "./provenance.schema.json",
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-16",
+  "sourceRepository": "urn:github:repository:elixpo/brand-production",
+  "sourceRevision": "7c274b1ca900eb8f21f4ded811779963ba8f0c21",
+  "licenseNotice": "Copyright permissions are artifact-specific. The source repository records CC BY 4.0 for these files alongside separate Oreo and Elixpo trademark and false-endorsement restrictions.",
+  "groups": [
+    {
+      "id": "project-icons",
+      "classification": "already-canonical",
+      "sourcePath": "branding/icons/web",
+      "destinationPath": "public/brand/source/icons",
+      "fileCount": 15,
+      "treeSha256": "d754a26232bf9f15e9f01902b19d4e4aba85e97792bf6dbf5db78b21191b9e0a",
+      "exactSourceMatch": true,
+      "files": ["accounts.elixpo.png", "admin.elixpo.png", "agent.elixpo.png", "art.elixpo.png", "blogs.elixpo.png", "chat.elixpo.png", "crumb.elixpo.png", "elixpo.com.png", "mail.elixpo.png", "me.elixpo.png", "oreo.elixpo.png", "payouts.elixpo.png", "search.elixpo.png", "sketch.elixpo.png", "url.elixpo.png"]
+    },
+    {
+      "id": "primary-marks",
+      "classification": "already-canonical",
+      "sourcePath": "branding/brand",
+      "destinationPath": "public/brand/source/marks",
+      "fileCount": 3,
+      "treeSha256": "1aa34805a31b447e2fc5bf1cb5e318f0e788d950029a660f8bfbcb1e7c75cfcf",
+      "exactSourceMatch": true,
+      "files": ["elixpo_lock_up_text_mascot.png", "elixpo_word_mask_text.png", "mascot_elixpo_oreo.png"]
+    },
+    {
+      "id": "social-masters",
+      "classification": "already-canonical",
+      "sourcePath": "branding/brand/social/linkedin",
+      "destinationPath": "public/brand/source/social",
+      "fileCount": 3,
+      "treeSha256": "6e5d4c6ed5bf77a9765cbbad556f3f99c8a7d7193f876409849de9cfa9baf024",
+      "exactSourceMatch": true,
+      "files": ["elixpo-banner.bg.png", "elixpo-banner.png", "elixpo-dotted-background.png"]
+    }
+  ]
+}
