@@ -1,0 +1,92 @@
+# Instant acknowledgement when @elixpoo is tagged.
+# Minimal bash + curl: no checkout, no setup-node, no github-script.
+# Round-robin through 5 variants based on comment ID for deterministic variety.
+#
+# NOTE: GitHub Actions runners have an unavoidable 5-10s cold-start delay
+# between webhook receipt and the first step running. To beat that, a long-
+# running webhook listener (GitHub App on a server) would be needed. Within
+# pure Actions, this is as fast as it gets.
+
+name: Elixpoo Ack
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+concurrency:
+  group: elixpoo-ack-${{ github.event.comment.id }}
+  cancel-in-progress: false
+
+jobs:
+  ack:
+    if: |
+      github.actor != 'elixpoo' &&
+      github.event.comment.user.login != 'elixpoo' &&
+      contains(github.event.comment.body, '@elixpoo')
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Append round-robin ack blockquote
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -e
+
+          # Word-boundary check: contains() at the job level matches substrings
+          # like '@elixpoooo', so re-verify with a proper regex here.
+          if ! echo "$COMMENT_BODY" | grep -qE '(^|[^A-Za-z0-9_.+-])@elixpoo([^A-Za-z0-9_.+-]|$)'; then
+            echo "False positive (@elixpoo is a substring of another token), skipping."
+            exit 0
+          fi
+
+          # Idempotency marker — prevents double-append on re-run
+          MARKER="<!-- elixpoo-ack -->"
+          if [[ "$COMMENT_BODY" == *"$MARKER"* ]]; then
+            echo "Ack marker already present, skipping."
+            exit 0
+          fi
+
+          # Round-robin: 5 variants, pick by comment ID % 5
+          ACKS=(
+            "Hold up! Looking into it."
+            "Just a minute, reading the comment."
+            "On my way — give me a sec."
+            "Pulling up the context, be right with you."
+            "One moment — scanning things now."
+          )
+          IDX=$(( COMMENT_ID % 5 ))
+          ACK="${ACKS[$IDX]}"
+          echo "Chose ack variant $IDX: $ACK"
+
+          # Build new body (append blockquote + marker)
+          NEW_BODY=$(printf '%s\n\n> %s\n%s' "$COMMENT_BODY" "$ACK" "$MARKER")
+
+          # Determine the PATCH endpoint based on event type
+          if [[ "$EVENT_NAME" == "issue_comment" ]]; then
+            ENDPOINT="/repos/$REPO/issues/comments/$COMMENT_ID"
+          elif [[ "$EVENT_NAME" == "pull_request_review_comment" ]]; then
+            ENDPOINT="/repos/$REPO/pulls/comments/$COMMENT_ID"
+          else
+            echo "Unsupported event: $EVENT_NAME"
+            exit 0
+          fi
+
+          # Single curl PATCH — no deps, no setup
+          echo "{}" | jq --arg body "$NEW_BODY" '{body: $body}' | \
+            curl -sS -X PATCH \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              -H "Content-Type: application/json" \
+              --data @- \
+              "https://api.github.com$ENDPOINT" \
+              -o /dev/null -w "HTTP %{http_code}\n"
