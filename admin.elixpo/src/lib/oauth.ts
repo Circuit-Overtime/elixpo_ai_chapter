@@ -41,7 +41,10 @@ async function resolveRedirect(explicit?: string): Promise<string> {
     return explicit || (await redirectUri());
 }
 
-export async function buildAuthorizeUrl(state: string, redirect?: string): Promise<string> {
+export async function buildAuthorizeUrl(
+    state: string,
+    redirect?: string,
+): Promise<string> {
     const clientId = await requireEnv("ELIXPO_CLIENT_ID");
     const url = new URL(`${await accountsUrl()}/oauth/authorize`);
     url.searchParams.set("response_type", "code");
@@ -52,7 +55,10 @@ export async function buildAuthorizeUrl(state: string, redirect?: string): Promi
     return url.toString();
 }
 
-export async function exchangeCode(code: string, redirect?: string): Promise<TokenResponse> {
+export async function exchangeCode(
+    code: string,
+    redirect?: string,
+): Promise<TokenResponse> {
     const res = await fetch(`${await accountsUrl()}/api/auth/token`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
