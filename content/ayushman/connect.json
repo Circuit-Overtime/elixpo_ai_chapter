@@ -1,0 +1,14 @@
+{
+  "heading": "CONNECT",
+  "description": "Let's connect! Find me on your favorite platforms or drop me a message directly.",
+  "emails": [
+    "ayushman@elixpo.com"
+  ],
+  "contactImage": "/assets/ayushman/publication/sq-1.webp",
+  "socialLinks": [
+    { "platform": "GitHub", "url": "https://github.com/Circuit-Overtime", "icon": "logo-github", "hoverColor": "#333" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/in/elixpo", "icon": "logo-linkedin", "hoverColor": "#0077b5" },
+    { "platform": "Instagram", "url": "https://instagram.com/elixpo_", "icon": "logo-instagram", "hoverColor": "#E1306C" },
+    { "platform": "YouTube", "url": "https://youtube.com/@elixpo", "icon": "logo-youtube", "hoverColor": "#FF0000" }
+  ]
+}
