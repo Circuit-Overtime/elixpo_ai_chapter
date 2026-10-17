@@ -1,4 +1,0 @@
-numpy
-pillow
-onnxruntime==1.30.0
-arduino-router-bridge==0.5.1
