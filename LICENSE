@@ -1,0 +1,85 @@
+ELIXPO LICENSE
+==============
+
+This repository is part of the Elixpo ecosystem and is licensed under the
+Elixpo licensing standard. The same standard applies to every repository in
+the ecosystem. Any product-specific terms for this repository are declared in
+the NOTICE file at the repository root (the "notice board"), which must be read
+together with this LICENSE.
+
+The structure of the LICENSES/ directory mirrors the Linux kernel's LICENSES/
+tree: canonical license texts live under LICENSES/, this file is the pointer.
+
+CODE
+====
+
+All source code in this repository (application code, scripts, tooling,
+configuration, and CI) is provided under:
+
+	SPDX-License-Identifier: MIT WITH Oreo-trademarks
+
+Being under the terms of the MIT License, as set out in:
+
+	LICENSES/preferred/MIT
+
+ASSETS
+======
+
+All visual and brand assets and their prompts (everything under brand/ and
+public/brand/, plus any banner, splash, sticker, icon or mascot art) is
+provided under:
+
+	SPDX-License-Identifier: CC-BY-4.0 WITH Oreo-trademarks
+
+Being under the terms of the Creative Commons Attribution 4.0 International
+License, as set out in:
+
+	LICENSES/preferred/CC-BY-4.0
+
+EXCEPTION (names, mascot, and royalties)
+========================================
+
+Both grants above carry an explicit trademark, naming, and royalty exception:
+
+	LICENSES/exceptions/Oreo-trademarks
+
+The Oreo mascot character, the chest "E-badge", the "Elixpo" and "Oreo" names,
+the elixpo.com and *.elixpo.com identifiers, and the brand palette in
+brand/MASCOT.md are reserved trademarks of the Elixpo project. The licenses
+above grant rights to the code and asset files as files. They do NOT grant
+rights to the Elixpo or Oreo brand, nor the right to offer a competing
+product or service under the Elixpo or Oreo name. This is what protects the
+ecosystem's royalties while keeping the code and assets free and open. See the
+exception for the full terms (including permitted referential use).
+
+NOTICE BOARD (per-product reservations)
+=======================================
+
+Some Elixpo products ship exclusive artifacts on top of their source - a
+published npm package, a VS Code Marketplace extension, a hosted SaaS service,
+a paid tier, and so on. Any such product-specific reservation is declared in:
+
+	LICENSES/NOTICE   (the notice board, at the repository root)
+
+Where the NOTICE file adds a reservation for an exclusive artifact, that
+reservation governs that artifact, in addition to this LICENSE.
+
+THIRD-PARTY NOTICES
+===================
+
+Other licenses may apply to third-party components used by this project:
+
+	LICENSES/notices/notice-board
+	LICENSES/README.md
+
+CONTRIBUTIONS
+=============
+
+By submitting a contribution to this repository you agree that it is licensed
+inbound under this standard (MIT for code, CC-BY-4.0 for assets) and that you
+have the right to submit it. The Developer Certificate of Origin
+(https://developercertificate.org) applies to every commit. We do not require
+a CLA.
+
+Copyright (c) 2023 Elixpo and the Elixpo contributors.
+SPDX-License-Identifier: MIT WITH Oreo-trademarks
