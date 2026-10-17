@@ -1,0 +1,56 @@
+{
+  "protocol_version": 1,
+  "types": {
+    "AddRequest": {
+      "kind": "struct",
+      "fields": [
+        {"name": "a", "type": "i32"},
+        {"name": "b", "type": "i32"}
+      ]
+    },
+    "AddResponse": {
+      "kind": "struct",
+      "fields": [
+        {"name": "value", "type": "i32"}
+      ]
+    },
+    "Offsets": {
+      "kind": "array",
+      "element": "i16",
+      "length": 3
+    },
+    "ProbeRequest": {
+      "kind": "struct",
+      "fields": [
+        {"name": "sequence", "type": "u64"},
+        {"name": "temperature", "type": "f32"},
+        {"name": "gain", "type": "f64"},
+        {"name": "offsets", "type": "Offsets"},
+        {"name": "enabled", "type": "bool"}
+      ]
+    },
+    "ProbeResponse": {
+      "kind": "struct",
+      "fields": [
+        {"name": "accepted", "type": "bool"},
+        {"name": "checksum", "type": "u32"}
+      ]
+    }
+  },
+  "tasks": [
+    {
+      "name": "add",
+      "task_id": 1,
+      "effect": "pure",
+      "request": "AddRequest",
+      "response": "AddResponse"
+    },
+    {
+      "name": "abi_probe",
+      "task_id": 2,
+      "effect": "pure",
+      "request": "ProbeRequest",
+      "response": "ProbeResponse"
+    }
+  ]
+}

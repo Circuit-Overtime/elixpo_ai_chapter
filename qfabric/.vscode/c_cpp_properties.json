@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "name": "Arduino UNO Q (Zephyr)",
+      "compileCommands": "${workspaceFolder}/build/stage1-probe/compile_commands.json",
+      "compilerPath": "${env:HOME}/.arduino15/packages/zephyr/tools/arm-zephyr-eabi/1.0.1/bin/arm-zephyr-eabi-g++",
+      "includePath": [
+        "${workspaceFolder}/benchmarks/stage1/mcu/stage1_probe",
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/cores/arduino",
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/cores/arduino/api/deprecated",
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/cores/arduino/api/deprecated-avr-comp",
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/variants/arduino_uno_q_stm32u585xx",
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/variants/arduino_uno_q_stm32u585xx/llext-edk/include/**",
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/libraries/Arduino_LED_Matrix/src",
+        "${env:HOME}/Arduino/libraries/Arduino_RouterBridge/src",
+        "${env:HOME}/Arduino/libraries/Arduino_RPClite/src",
+        "${env:HOME}/Arduino/libraries/MsgPack",
+        "${env:HOME}/Arduino/libraries/ArxContainer",
+        "${env:HOME}/Arduino/libraries/ArxTypeTraits",
+        "${env:HOME}/Arduino/libraries/DebugLog"
+      ],
+      "defines": [
+        "ARDUINO=10607",
+        "ARDUINO_UNO_Q",
+        "ARDUINO_ARCH_ZEPHYR",
+        "_PICOLIBC_CTYPE_SMALL=1"
+      ],
+      "forcedInclude": [
+        "${env:HOME}/.arduino15/packages/arduino/hardware/zephyr/1.0.0/cores/arduino/Arduino.h"
+      ],
+      "cppStandard": "gnu++17",
+      "intelliSenseMode": "linux-gcc-arm"
+    }
+  ],
+  "version": 4
+}

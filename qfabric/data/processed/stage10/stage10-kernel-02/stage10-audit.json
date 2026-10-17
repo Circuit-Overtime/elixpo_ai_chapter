@@ -1,0 +1,62 @@
+{
+  "accuracy": {
+    "absolute_tolerance_ns": 1000000,
+    "baseline_non_cpu_median_p50_ns": 1344461.0,
+    "error_ns": 2374.0,
+    "injected_delay_ns": 5000000,
+    "injected_non_cpu_p50_ns": 6346835.0,
+    "observed_delay_ns": 5002374.0
+  },
+  "captured_utc": "2026-10-09T08:43:12.599815+00:00",
+  "checks": {
+    "attribution_complete": true,
+    "before_after_reports_valid": true,
+    "existing_kernel_interface_selected": true,
+    "known_delay_accuracy_within_tolerance": true,
+    "measured_deficiency_addressed": true,
+    "no_custom_kernel_module": true,
+    "overhead_within_budget": true,
+    "policy_remains_userspace": true,
+    "scheduler_event_privilege_declared": true,
+    "scheduler_events_observed_under_load": true,
+    "unavailable_metrics_declared": true,
+    "userspace_fallback_safe": true
+  },
+  "failures": [],
+  "measurement_gap": {
+    "perf_non_cpu_median_p95_ns": 1502623.8,
+    "ratio": 757.9247938261328,
+    "stage4_adjacent_timestamp_queueing_p95_ns": 1982.5500000000006
+  },
+  "overhead": {
+    "baseline_median_p95_ns": 9643117.5,
+    "budget_pct": 15.0,
+    "p95_delta_pct": 3.7581720849092553,
+    "perf_median_p95_ns": 10005522.45,
+    "repetitions": 3
+  },
+  "schema_version": 1,
+  "sources": {
+    "accuracy": "data/processed/stage10/stage10-kernel-02/accuracy-5ms.json",
+    "baseline": [
+      "data/processed/stage10/stage10-kernel-02/baseline-01.json",
+      "data/processed/stage10/stage10-kernel-02/baseline-02.json",
+      "data/processed/stage10/stage10-kernel-02/baseline-03.json"
+    ],
+    "capabilities": "data/processed/stage10/stage10-kernel-02/capabilities.json",
+    "fallback": "data/processed/stage10/stage10-kernel-02/fallback.json",
+    "loaded_perf": [
+      "data/processed/stage10/stage10-kernel-02/perf-loaded-01.json",
+      "data/processed/stage10/stage10-kernel-02/perf-loaded-02.json",
+      "data/processed/stage10/stage10-kernel-02/perf-loaded-03.json"
+    ],
+    "perf": [
+      "data/processed/stage10/stage10-kernel-02/perf-01.json",
+      "data/processed/stage10/stage10-kernel-02/perf-02.json",
+      "data/processed/stage10/stage10-kernel-02/perf-03.json"
+    ],
+    "stage4_profile": "data/processed/stage4/profile-overhead.json"
+  },
+  "stage": 10,
+  "status": "pass"
+}

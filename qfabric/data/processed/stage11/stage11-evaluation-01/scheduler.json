@@ -1,0 +1,19 @@
+{
+  "captured_utc": "2026-10-09T08:57:46.963767+00:00",
+  "kernel_release": "6.16.7-g0dd6551ae96b",
+  "preempt_rt": {
+    "available": false,
+    "reason": "running-kernel-is-not-PREEMPT_RT"
+  },
+  "sched_deadline": {
+    "available": false,
+    "reason": "not-selected-SCHED_FIFO-is-the-predeclared-tuned-baseline"
+  },
+  "sched_fifo": {
+    "active_for_capture": true,
+    "available": true,
+    "priority": 50,
+    "reason": null
+  },
+  "schema_version": 1
+}
