@@ -1,10 +1,10 @@
 name: Verify Chapter README source
 
 on:
+  # This check is required by the main-branch ruleset, so it must report for
+  # every pull request. The comparison is cheap and keeps non-README changes
+  # from waiting forever on a path-filtered check that never starts.
   pull_request:
-    paths:
-      - "README.md"
-      - ".github/workflows/readme-drift.yml"
   workflow_dispatch:
 
 permissions:
