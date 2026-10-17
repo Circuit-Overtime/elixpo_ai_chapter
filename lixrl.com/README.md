@@ -91,7 +91,6 @@ suggest an improvement, or help with the project:
 - Read [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
 - Follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 - Start or join a conversation in [GitHub Discussions](https://github.com/orgs/elixpo/discussions).
-- Support ongoing work through [GitHub Sponsors](https://github.com/sponsors/Circuit-Overtime).
 
 Thank you to [Karan](https://github.com/karanray06) and the
 [GDG JIS University](https://gdg.community.dev/gdg-on-campus-jis-university-kolkata-india/)
