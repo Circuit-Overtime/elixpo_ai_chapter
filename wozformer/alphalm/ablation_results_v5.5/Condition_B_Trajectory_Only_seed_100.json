@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In conclusion effective questioning techniques are vital for building rapport and capturing the attention of potential customers are often skeptical and require evidence to support your assertions. Simplify your message without oversimplifying it ensuring that your customers grasp the essence of your offering limited time offers or exclusive deals can encourage potential customers to act swiftly to secure the best possible price or budget objections one of the most frequent objections in sales is related to price or budget. Ambiguity or vague statements can lead to confusion and misunderstanding. Honesty and transparency one of the fundamental pillars of building trust is being honest and transparent with your customers want to buy from someone who knows what they are talking about.",
+  "path_indices": [
+    100,
+    2233,
+    553,
+    305,
+    2085,
+    888,
+    1648,
+    324
+  ],
+  "metrics": {
+    "total_score": 54.61958721652627,
+    "exact_boundary_matches": 4,
+    "avg_local_coherence": 0.5847768442971366,
+    "avg_global_coherence": 0.61617397410529,
+    "avg_makes_sense_score": 0.44000889893089024,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 105109,
+    "search_runtime": 39.701334953308105,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.44903962846313206,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.41522315570286344
+  }
+}

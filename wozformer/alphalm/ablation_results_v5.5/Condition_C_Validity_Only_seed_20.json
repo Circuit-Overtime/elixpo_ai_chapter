@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "This helps to generate repeat business and foster long term customer loyalty. Identifying customer goals and objectives by engaging in meaningful conversations with our customers we can uncover their goals and objectives 1. Chapter 1 building rapport and capturing attention subpoint establishing common ground and shared interests establishing common ground and shared interests is a crucial step in building rapport and capturing the attention of potential customers are often skeptical and require evidence to support your assertions. Simplify your message without oversimplifying it ensuring that your customers grasp the essence of your offering limited time offers or exclusive deals can encourage potential customers to act swiftly to secure the best possible price or budget objections one of the most frequent objections in sales is related to price or budget.",
+  "path_indices": [
+    20,
+    1296,
+    2881,
+    346,
+    2233,
+    553,
+    305,
+    2085
+  ],
+  "metrics": {
+    "total_score": 53.74705791473389,
+    "exact_boundary_matches": 4,
+    "avg_local_coherence": 0.6567435945783343,
+    "avg_global_coherence": 0.6303676962852478,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.5311782360076904,
+    "transitions_evaluated": 105109,
+    "search_runtime": 32.080262660980225,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.4791066864771502,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.34325640542166574
+  }
+}

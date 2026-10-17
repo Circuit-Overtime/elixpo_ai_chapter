@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "When it was time to go home, Beep knew he needed more fuel. Be careful next time.\". Next time, blow less and share more. \"Be careful,\" Ben said. \". Ben said. \". Ben said, feeling bad. \". Anna felt sorry for Ben. Mia starts to cry.",
+  "path_indices": [
+    20,
+    19483,
+    19176,
+    11302,
+    11129,
+    18048,
+    17771,
+    12797
+  ],
+  "metrics": {
+    "total_score": 41.45968120545149,
+    "avg_local": 0.5608837817396436,
+    "avg_global": 0.4890565744468144,
+    "avg_makes_sense": 0.0,
+    "avg_policy": 0.29185204952955246,
+    "avg_validity": 0.0,
+    "exact_matches": 3,
+    "diversity": 0.6876639614679984,
+    "repetition_rate": 0.0,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.43911621826035635,
+    "runtime": 3.480332851409912,
+    "evaluations": 3100,
+    "narrative_consistency": 0.3333333333333333
+  }
+}

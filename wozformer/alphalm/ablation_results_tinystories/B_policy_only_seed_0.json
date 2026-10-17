@@ -1,0 +1,30 @@
+{
+  "seed": 0,
+  "generated_text": "One day, a little girl named Lily found a needle in her room. Whenever Molly said the word \"yield\", ghosts appeared from the trees! The cable has a hook at the end. The groom smiled and nodded. Leo laughed. Leo laughed and laughed! And Beep lived happily ever after. After some time, Lila felt tired.",
+  "path_indices": [
+    0,
+    3957,
+    20221,
+    15665,
+    5200,
+    5205,
+    23,
+    17642
+  ],
+  "metrics": {
+    "total_score": 30.97507305443287,
+    "avg_local": 0.5082737718309674,
+    "avg_global": 0.37600618600845337,
+    "avg_makes_sense": 0.0,
+    "avg_policy": 0.43617029062339235,
+    "avg_validity": 0.0,
+    "exact_matches": 2,
+    "diversity": 0.72169105575553,
+    "repetition_rate": 0.25,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.4917262281690325,
+    "runtime": 3.820261001586914,
+    "evaluations": 3100,
+    "narrative_consistency": 0.5833333333333334
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "seed": 40,
+  "generated_text": "And so, Fin and the crab played and became good friends. They played and danced together every day. Every day, they would match rocks, leaves, and sticks. Skip and Bob would go on adventures every day. Every day, the mole would wake up early and chat with the ants. The village was filled with happy whistling every day! Every day, the little plant grew taller and taller. Fred and the giant had a wonderful time exploring the enormous planet.",
+  "path_indices": [
+    40,
+    410,
+    2147,
+    7712,
+    6437,
+    8811,
+    9581,
+    4697
+  ],
+  "metrics": {
+    "total_score": 50.4442743062973,
+    "avg_local": 0.7067309021949768,
+    "avg_global": 0.7044819082532611,
+    "avg_makes_sense": 0.8505857331412179,
+    "avg_policy": 0.0,
+    "avg_validity": 0.0,
+    "exact_matches": 3,
+    "diversity": 0.403236696762698,
+    "repetition_rate": 0.0,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.2932690978050232,
+    "runtime": 3.9444165229797363,
+    "evaluations": 678206,
+    "narrative_consistency": 0.25
+  }
+}

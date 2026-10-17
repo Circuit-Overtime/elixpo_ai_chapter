@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In the end, Tim won the race and Sarah came in second. The lawyer watched from outside the pool. The lizard said, \"I'm moving around the garden.\". The garden became gloomy. Jen was careful and kept on the path. Suddenly, the ghost said, \"Stop! Leo laughed. Leo laughed and laughed!",
+  "path_indices": [
+    100,
+    5913,
+    1719,
+    20049,
+    5710,
+    5096,
+    5200,
+    5205
+  ],
+  "metrics": {
+    "total_score": 46.60777082741261,
+    "avg_local": 0.4356517695954868,
+    "avg_global": 0.44872609206608366,
+    "avg_makes_sense": 0.6620147824287415,
+    "avg_policy": 0.38542566342013224,
+    "avg_validity": 0.8497808660779681,
+    "exact_matches": 2,
+    "diversity": 0.6989204490756882,
+    "repetition_rate": 0.25,
+    "topic_repetition": -0.21900232093674796,
+    "forward_progress": 0.5643482304045132,
+    "runtime": 3.585073471069336,
+    "evaluations": 3100,
+    "narrative_consistency": 0.5833333333333334
+  }
+}
