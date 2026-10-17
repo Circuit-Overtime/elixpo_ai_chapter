@@ -64,8 +64,15 @@ jobs:
             "claudeOps.elixpo https://github.com/elixpo/claudeOps.elixpo.git"
             "packages.elixpo https://github.com/elixpo/packages.elixpo"
             "oreo https://github.com/elixpo/oreo"
+            # Open Research records are projects in their own right. Mirroring
+            # them here preserves the combined source collection; it does not
+            # imply that a formal, time-bounded Chapter has been opened.
+            "octabit https://github.com/elixpo/octabit"
+            "emoji_transnetv1 https://github.com/elixpo/emoji_transnetv1"
+            "falcon https://github.com/elixpo/falcon"
             "qfabric https://github.com/elixpo/qfabric"
             "monodiffuse https://github.com/elixpo/monodiffuse"
+            "wozformer https://github.com/elixpo/wozformer"
             "nano28C64 https://github.com/elixpo/nano28C64"
           )
 
