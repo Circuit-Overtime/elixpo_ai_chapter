@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+
+body 
+{
+    overflow: hidden;
+}
+
+.pseudo::before,
+.pseudo::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 3%;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg, 
+        #8888889c, #2e242471 2px,
+        transparent 1px, transparent 8px
+    );
+    z-index: 1;
+}
+
+.pseudo::before {
+    left: 0;
+}
+
+.pseudo::after {
+    right: 0;
+}
+
+.topic 
+{
+    font-family: "Funnel Display", serif;
+}
+
+.trendingTopics::-webkit-scrollbar
+{
+    display: none;
+}
+
+.controlButton.selected::before
+{
+    content: "";
+    position: relative;
+    top: 0;
+    left: 0px;
+    width: 3px;
+    height: 80%;
+    background-color: #7ba8f0;
+    opacity: 0.5;
+    z-index: 1;
+}
+.picksHeader,
+.organization,
+.author,
+.date,
+.views,
+.comments
+{
+    font-family: "Funnel Display", serif;
+    
+}
+
+.topPicksContainer::-webkit-scrollbar
+{
+    display: none;
+}
+.recommendationContainer::-webkit-scrollbar 
+{
+    display: none;
+}
+

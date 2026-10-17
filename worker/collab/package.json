@@ -1,0 +1,14 @@
+{
+  "name": "elixpoblogs-collab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "yjs": "^13.6.29",
+    "y-protocols": "^1.0.6",
+    "lib0": "^0.2.94"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
