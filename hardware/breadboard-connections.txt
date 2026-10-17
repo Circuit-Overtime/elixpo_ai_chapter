@@ -1,0 +1,59 @@
+This is the original breadboard connection notebook. The schematic and README
+are the authoritative wiring references for programmer v10.
+
+This project is a 28C64 EEPROM programmer using an Arduino Nano and two
+74HC595 shift registers.
+
+here's the connections on the breadboard  arduino to i/o
+
+d12 - i/o 7 
+d11 - i/0 6
+d10 - i/0 5
+d9 - i/0 4
+d8 - i/0 3
+d7 - i/0 2
+d6 - i/0 1
+d5 - i/0 0
+
+OE - A0
+WE - D13
+CE - A3 with 10k pull-up to +5v (not directly to GND)
+PWR GND connected
+
+here's the connection of the hc595s
+
+frist hc595 
+has pwr and gnd
+qh' NC
+SRCLR +5v 
+SRCLK - TIED SHORT WITH SRCLK of 2nd hc595 D3 of arduino
+RCLK - TIED SHORT WITH RCLK of 2nd HC595 D4 arduino
+OE - GND
+SER - QH' second HC595
+qa - A8 of 28C64
+qb - A9 of 28C64
+qc - A10 of 28C64
+qd - A11 of 28C64
+qe - A12 of 28C64
+qf - 
+qg
+qh
+
+
+
+second hc595
+
+SER - D2 of arduino
+qh' SER of first HC595
+qh - A7 of 28C64
+qg - A6 of 28c64
+qf - A5 of 28C64
+qe - A4 of 28C64 
+qd - A3 OF 28c64
+qc - A2 of 28C64
+qb - A1 of 28C64
+qa - A0 of 28C64
+SLCLR - +5v
+OE - GND
+SRCLK - TIED SHORT WITH SRCLK of 2nd hc595 D3 of arduino
+RCLK - TIED SHORT WITH RCLK of 2nd HC595 D4 arduino
