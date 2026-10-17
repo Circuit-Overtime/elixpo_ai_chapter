@@ -51,9 +51,9 @@ than being presented as a new binary-training algorithm.
 ## Preprint and citation
 
 The manuscript is released as **MonoDiffuse Technical Report 2026-01** and is a
-preprint that has not undergone peer review. Publication metadata, the engrXiv
-upload checklist, the Zenodo software-release fields, and the deterministic
-packaging command are in [`publication/`](publication/README.md).
+preprint that has not undergone peer review. Publication metadata, Zenodo
+records, software-release fields, and the deterministic packaging command are
+in [`publication/`](publication/README.md).
 
 Build the local upload bundles with:
 
@@ -61,10 +61,12 @@ Build the local upload bundles with:
 python scripts/package_publication.py
 ```
 
-The canonical paper DOI will point to the engrXiv record once assigned. Zenodo
-is used separately for the versioned software release, preventing duplicate
-paper DOIs from fragmenting citations. Until the DOI is assigned, cite the
-technical report using [`CITATION.cff`](CITATION.cff).
+The archived preprint has the version-specific DOI
+<https://doi.org/10.5281/zenodo.23424654>. The concept DOI
+<https://doi.org/10.5281/zenodo.23424653> resolves to the latest version. Cite
+the version-specific DOI for the reported results; [`CITATION.cff`](CITATION.cff)
+contains the corresponding citation metadata. The software release is archived
+separately so that paper and software citations remain distinct.
 
 The Scholar-readable manuscript landing page is
 <https://research.elixpo.com/monodiffuse/>. It mirrors the canonical preprint and
