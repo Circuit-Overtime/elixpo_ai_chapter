@@ -1,0 +1,18 @@
+{
+  "admission": {
+    "linux": true,
+    "rt": true
+  },
+  "basis": "single-managed-task-static-policy",
+  "chain_edges": [],
+  "cooldown_active": false,
+  "current_domain": "linux",
+  "mcu": {
+    "reserved_headroom_pct": 25.0,
+    "utilization_without_task_pct": 0.0
+  },
+  "minimum_evidence": 1000,
+  "rate_hz": 100.0,
+  "schema_version": 1,
+  "task": "add"
+}

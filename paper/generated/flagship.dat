@@ -1,0 +1,8 @@
+baseline p95_ms miss_rate_pct
+ordinary-linux 111.300953 67.300000
+tuned-linux 23.906757 0.000000
+static-mcu-first 43.448101 0.000000
+manual-expert 100.934643 58.300000
+qfabric-static 111.300953 67.300000
+qfabric-recovery 70.614178 3.700000
+offline-oracle 43.448101 0.000000
