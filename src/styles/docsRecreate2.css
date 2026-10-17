@@ -1,0 +1,288 @@
+*
+{
+    caret-color: #fff !important;
+}
+@font-face
+{
+    font-family: 'lixCode';
+    src: url(./fonts/lixCode.ttf);
+    font-weight: normal;
+    font-size: normal;
+}
+@font-face
+{
+    font-family: 'lixDocs';
+    src: url(./fonts/lixDocs.ttf);
+    font-weight: normal;
+    font-size: normal;
+}
+.container 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: top;
+    background-color: #121212;
+}
+.editor 
+{
+    position: absolute;
+    max-height: 90%;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    padding: 50px 120px;
+    box-sizing: border-box;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+.editor::-webkit-scrollbar
+{
+    display: none;
+}
+
+.editor section 
+{
+    outline: none;
+    border: none;
+}
+
+
+
+.editor .headerSection > [data-slate-node="element"] 
+{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    color: #F6F6F6;
+    font-family: "lixDocs";
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+
+
+.editor section > h1[data-slate-node="element"],
+.editor section > h2[data-slate-node="element"],
+.editor section > h3[data-slate-node="element"],
+.editor section > h4[data-slate-node="element"],
+.editor section > h5[data-slate-node="element"],
+.editor section > h6[data-slate-node="element"]
+{
+        
+    font-size: 36px;
+    color: #F6F6F6;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 30px;
+    font-family: "lixDocs";
+}
+.editor section > h2[data-slate-node="element"]
+{
+    font-size: 32px;
+}
+.editor section > h3[data-slate-node="element"]
+{
+    font-size: 28px;
+}
+.editor section > h4[data-slate-node="element"]
+{
+    font-size: 24px;
+}
+.editor section > h5[data-slate-node="element"]
+{
+    font-size: 20px;
+}
+.editor section > h6[data-slate-node="element"]
+{
+    font-size: 18px;
+}
+
+
+
+
+.editor section > p > span[data-slate-node="text"]
+{
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.5;
+    font-family: "lixDocs";
+}
+.editor section > p > span[data-slate-node="text"] > .data-slate-advertisement
+{
+    text-decoration: none;
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+    color: #fff;
+}
+.editor section > p > span[data-slate-node="text"] > span[data-slate-leaf="true"]
+{
+    font-family: "lixCode";
+    font-size: 15px;
+    line-height: 1.5;
+}
+.editor section p 
+{
+    margin-bottom: 20px;
+    outline: none;
+    border: none;
+}
+.editor section > p > span[data-slate-node="text"].bold,
+.editor section > h1 > span[data-slate-node="text"].bold,
+.editor section > h2 > span[data-slate-node="text"].bold,
+.editor section > h3 > span[data-slate-node="text"].bold,
+.editor section > h4 > span[data-slate-node="text"].bold,
+.editor section > h5 > span[data-slate-node="text"].bold,
+.editor section > h6 > span[data-slate-node="text"].bold,
+.editor section > blockquote > span[data-slate-node="text"].bold
+{
+    font-family: "lixDocs";
+    font-weight: bold;
+}
+.editor section > p > span[data-slate-node="text"].italic,
+.editor section > h1 > span[data-slate-node="text"].italic,
+.editor section > h2 > span[data-slate-node="text"].italic,
+.editor section > h3 > span[data-slate-node="text"].italic,
+.editor section > h4 > span[data-slate-node="text"].italic,
+.editor section > h5 > span[data-slate-node="text"].italic,
+.editor section > h6 > span[data-slate-node="text"].italic,
+.editor section > blockquote > span[data-slate-node="text"].italic
+{
+    font-family: "lixDocs";
+    font-style: italic;
+}
+.editor section > p > span[data-slate-node="text"].inline_code,
+.editor section > h1 > span[data-slate-node="text"].inline_code,
+.editor section > h2 > span[data-slate-node="text"].inline_code,
+.editor section > h3 > span[data-slate-node="text"].inline_code,
+.editor section > h4 > span[data-slate-node="text"].inline_code,
+.editor section > h5 > span[data-slate-node="text"].inline_code,
+.editor section > h6 > span[data-slate-node="text"].inline_code,
+.editor section > blockquote > span[data-slate-node="text"].inline_code
+{
+    font-family: "lixCode";
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 30px;
+}
+
+.editor section > p > span[data-slate-node="text"].highlight,
+.editor section > h1 > span[data-slate-node="text"].highlight,
+.editor section > h2 > span[data-slate-node="text"].highlight,
+.editor section > h3 > span[data-slate-node="text"].highlight,
+.editor section > h4 > span[data-slate-node="text"].highlight,
+.editor section > h5 > span[data-slate-node="text"].highlight,
+.editor section > h6 > span[data-slate-node="text"].highlight,
+.editor section > blockquote > span[data-slate-node="text"].highlight
+
+{
+    background-color: rgba(63, 214, 3, 0.089);
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline;
+    height: 30px;
+    border: 1px solid #ffc;
+    margin-right: 20px;
+    margin-left: 20px;
+    box-shadow: 0 0 15px rgba(63, 214, 3, 0.089);
+}
+
+.editor section > p > span[data-slate-node="text"].underline,
+.editor section > h1 > span[data-slate-node="text"].underline,
+.editor section > h2 > span[data-slate-node="text"].underline,
+.editor section > h3 > span[data-slate-node="text"].underline,
+.editor section > h4 > span[data-slate-node="text"].underline,
+.editor section > h5 > span[data-slate-node="text"].underline,
+.editor section > h6 > span[data-slate-node="text"].underline,
+.editor section > blockquote > span[data-slate-node="text"].underline
+{
+    text-decoration: underline;
+}
+
+.editor section > p > span[data-slate-node="text"].link,
+.editor section > h1 > span[data-slate-node="text"].link,
+.editor section > h2 > span[data-slate-node="text"].link,
+.editor section > h3 > span[data-slate-node="text"].link,
+.editor section > h4 > span[data-slate-node="text"].link,
+.editor section > h5 > span[data-slate-node="text"].link,
+.editor section > h6 > span[data-slate-node="text"].link,
+.editor section > blockquote > span[data-slate-node="text"].link
+{
+    color: rgb(52, 156, 241);
+    cursor: pointer;
+}
+
+.editor section pre 
+{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: start;
+    padding: 5px 5px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    background-color: #242424;
+    border: 1px solid #666;
+}
+.editor section pre i 
+{
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 5px;
+    margin-top: 10px;
+} 
+.editor section pre .code_block 
+{
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background: transparent;
+    color: #ffffff;
+    display: block;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    outline: none;
+    border: none;
+    width: 100%;
+}
+
+[data-copy-btn] {
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+[data-copy-btn].copied {
+  color: green;
+  transform: scale(1.3);
+}
+
+
+.editor section blockquote {
+    margin: 0 0 0 0;
+    padding: 12px 18px;
+    border-left: 4px solid #e8d443;
+    background: #232323;
+    color: #f5f5f5;
+    border-radius: 8px;
+    font-size: 1.05em;
+    font-style: italic;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    line-height: 1.7;
+}
