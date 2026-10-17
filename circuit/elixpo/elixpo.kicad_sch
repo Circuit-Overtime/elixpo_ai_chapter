@@ -1,0 +1,71 @@
+(kicad_sch
+  (version 20250114)
+  (generator "oreo_badge_generator")
+  (generator_version "1.0")
+  (uuid "437c7978-44d4-5146-9b67-eaf1728b0a2f")
+  (paper "A3")
+  (title_block (title "Oreo badge complete hardware") (rev "0.1")
+    (company "OreoOS open hardware badge"))
+  (lib_symbols)
+  (text "OREO BADGE — COMPLETE HARDWARE" (exclude_from_sim no) (at 25 25 0) (effects (font (size 2.5 2.5) (bold yes)) (justify left bottom)) (uuid "600011d7-d355-5f3a-ac3d-880cddb97bd8"))
+  (text "ESP32-S3R8 bare-chip design / 16 MB flash / 8 MB in-package PSRAM" (exclude_from_sim no) (at 25 34 0) (effects (font (size 1.35 1.35)) (justify left bottom)) (uuid "807c72e3-5c66-57e7-8d13-0173704ce7c1"))
+  (text "Open each sheet for component-level wiring and assigned footprints." (exclude_from_sim no) (at 25 42 0) (effects (font (size 1.15 1.15)) (justify left bottom)) (uuid "297ac894-fdfa-5653-90e4-57f02ee5695e"))
+  (sheet
+    (at 35 65)
+    (size 110 60)
+    (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no)
+    (stroke (width 0.4) (type solid))
+    (fill (color 245 230 220 1))
+    (uuid "1918421a-51ac-5390-bfc2-b915bf30d891")
+    (property "Sheetname" "Oreo badge — ESP32-S3R8 core, flash, clock and RF" (at 35 64 0) (effects (font (size 1.15 1.15) (bold yes)) (justify left bottom)))
+    (property "Sheetfile" "core_compute.kicad_sch" (at 35 126 0) (effects (font (size 1.0 1.0)) (justify left top)))
+    (instances
+      (project "elixpo"
+        (path "/1918421a-51ac-5390-bfc2-b915bf30d891" (page "2")))
+    )
+  )
+  (sheet
+    (at 175 65)
+    (size 110 60)
+    (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no)
+    (stroke (width 0.4) (type solid))
+    (fill (color 245 230 220 1))
+    (uuid "b7a5c141-1bd0-5eca-9147-013546ab968e")
+    (property "Sheetname" "Oreo badge — USB-C, Li-ion charger and regulated rails" (at 175 64 0) (effects (font (size 1.15 1.15) (bold yes)) (justify left bottom)))
+    (property "Sheetfile" "power_usb.kicad_sch" (at 175 126 0) (effects (font (size 1.0 1.0)) (justify left top)))
+    (instances
+      (project "elixpo"
+        (path "/b7a5c141-1bd0-5eca-9147-013546ab968e" (page "3")))
+    )
+  )
+  (sheet
+    (at 35 155)
+    (size 110 60)
+    (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no)
+    (stroke (width 0.4) (type solid))
+    (fill (color 245 230 220 1))
+    (uuid "5d5c251b-5f21-5085-9b9d-0f14b3450606")
+    (property "Sheetname" "Oreo badge — display supply, ST7789 and controls" (at 35 154 0) (effects (font (size 1.15 1.15) (bold yes)) (justify left bottom)))
+    (property "Sheetfile" "display_controls.kicad_sch" (at 35 216 0) (effects (font (size 1.0 1.0)) (justify left top)))
+    (instances
+      (project "elixpo"
+        (path "/5d5c251b-5f21-5085-9b9d-0f14b3450606" (page "4")))
+    )
+  )
+  (sheet
+    (at 175 155)
+    (size 110 60)
+    (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no)
+    (stroke (width 0.4) (type solid))
+    (fill (color 245 230 220 1))
+    (uuid "f1a55271-7b42-5efb-9c99-f876ba69095f")
+    (property "Sheetname" "Oreo badge — motion, infrared, LEDs, microSD and expansion" (at 175 154 0) (effects (font (size 1.15 1.15) (bold yes)) (justify left bottom)))
+    (property "Sheetfile" "peripherals_expansion.kicad_sch" (at 175 216 0) (effects (font (size 1.0 1.0)) (justify left top)))
+    (instances
+      (project "elixpo"
+        (path "/f1a55271-7b42-5efb-9c99-f876ba69095f" (page "5")))
+    )
+  )
+  (sheet_instances (path "/" (page "1")))
+  (embedded_fonts no)
+)
