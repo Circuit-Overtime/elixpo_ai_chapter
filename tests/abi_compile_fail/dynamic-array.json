@@ -1,0 +1,7 @@
+{
+  "protocol_version": 1,
+  "types": {
+    "Dynamic": {"kind": "dynamic_array", "element": "u8"}
+  },
+  "tasks": []
+}

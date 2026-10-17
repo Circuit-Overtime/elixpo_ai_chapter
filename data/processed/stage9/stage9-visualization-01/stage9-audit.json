@@ -1,0 +1,80 @@
+{
+  "captured_utc": "2026-10-09T08:11:44.179168+00:00",
+  "checks": {
+    "contract_state_coverage_complete": true,
+    "event_coverage_complete": true,
+    "hardware_campaign_passed": true,
+    "linux_system_leds_preserved": true,
+    "mode_coverage_complete": true,
+    "off_mode_verified": true,
+    "overhead_within_budget": true,
+    "protected_contracts_healthy": true,
+    "refresh_rate_bounded": true
+  },
+  "comparisons": [
+    {
+      "disabled_median_mean_ns": 7734011.814,
+      "disabled_median_p95_ns": 8016256.75,
+      "domain": "linux",
+      "enabled_median_mean_ns": 7730796.824,
+      "enabled_median_p95_ns": 7973502.2,
+      "mean_delta_pct": -0.041569499469608945,
+      "p95_delta_pct": -0.5333480617371669,
+      "p95_regression_budget_pct": 15.0,
+      "protected_contract_healthy": true,
+      "repetitions": 3,
+      "within_budget": true
+    },
+    {
+      "disabled_median_mean_ns": 10408758.764,
+      "disabled_median_p95_ns": 11305611.4,
+      "domain": "rt",
+      "enabled_median_mean_ns": 10549354.71,
+      "enabled_median_p95_ns": 11537607.1,
+      "mean_delta_pct": 1.350746512507036,
+      "p95_delta_pct": 2.0520402815189565,
+      "p95_regression_budget_pct": 15.0,
+      "protected_contract_healthy": true,
+      "repetitions": 3,
+      "within_budget": true
+    }
+  ],
+  "coverage": {
+    "contract_states": [
+      "AT_RISK",
+      "SATISFIED",
+      "UNKNOWN",
+      "VIOLATED"
+    ],
+    "events": [
+      "infeasible",
+      "rollback",
+      "stable",
+      "transition"
+    ],
+    "modes": [
+      "contracts",
+      "ipc",
+      "jitter",
+      "placement"
+    ]
+  },
+  "failures": [],
+  "maximum_draw_us": 8,
+  "schema_version": 1,
+  "sources": {
+    "campaign": "data/processed/stage9/stage9-visualization-01/campaign.json",
+    "disabled_profiles": [
+      "data/processed/stage9/stage9-visualization-01/profile-disabled-1.json",
+      "data/processed/stage9/stage9-visualization-01/profile-disabled-2.json",
+      "data/processed/stage9/stage9-visualization-01/profile-disabled-3.json"
+    ],
+    "enabled_profiles": [
+      "data/processed/stage9/stage9-visualization-01/profile-enabled-1.json",
+      "data/processed/stage9/stage9-visualization-01/profile-enabled-2.json",
+      "data/processed/stage9/stage9-visualization-01/profile-enabled-3.json"
+    ]
+  },
+  "stage": 9,
+  "status": "pass"
+}

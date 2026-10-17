@@ -1,0 +1,7 @@
+{
+  "protocol_version": 1,
+  "types": {
+    "Pointer": {"kind": "pointer", "element": "u8"}
+  },
+  "tasks": []
+}

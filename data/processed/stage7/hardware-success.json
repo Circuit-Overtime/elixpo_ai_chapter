@@ -1,0 +1,3354 @@
+{
+  "campaign": "bounded-hardware-recovery-v1",
+  "captured_utc": "2026-10-09T07:20:19.597904+00:00",
+  "checks": {
+    "commits": true,
+    "epoch_consistency": true,
+    "final_domain": true,
+    "final_state": true,
+    "rollbacks": true,
+    "safe_boundaries": true
+  },
+  "configuration": {
+    "deadline_ns": 20000000,
+    "initial_epoch": 1791530416,
+    "invocations_per_window": 20,
+    "maximum_windows": 9,
+    "protected_contracts_declared": false,
+    "task": "add"
+  },
+  "evidence": {
+    "contract": {
+      "at_risk_miss_rate_pct": 0.5,
+      "deadline_ns": 20000000,
+      "infeasible_windows": 5,
+      "max_miss_rate_pct": 1.0,
+      "minimum_samples": 20,
+      "recovery_miss_rate_pct": 0.25,
+      "recovery_windows": 3,
+      "violation_windows": 3,
+      "warmup_samples": 0,
+      "window_size": 20
+    },
+    "decisions": [
+      {
+        "contract": {
+          "classification": "violating",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 100.0,
+            "miss_rate_low_pct": 83.88748419471807
+          },
+          "estimator_valid": true,
+          "evidence_count": 20,
+          "minimum_samples": 20,
+          "miss_rate_pct": 100.0,
+          "misses": 20,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "AT_RISK",
+          "state_before": "UNKNOWN",
+          "streaks": {
+            "infeasible": 1,
+            "recovery": 0,
+            "violating": 1
+          },
+          "timed_samples": 20,
+          "transitioned": true,
+          "window_index": 1
+        },
+        "domain": "linux",
+        "observation": {
+          "admission_allowed": true,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": true,
+          "protected_contracts_healthy": true,
+          "recommended_domain": "rt",
+          "safe_boundary": true,
+          "semantic_eligible": true,
+          "source_contract_state": "AT_RISK",
+          "target_contract_state": null,
+          "transient_misses": 20
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "AT_RISK",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28987464,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28987464,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "AT_RISK"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28987464
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 11265205,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 11265205,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "linux",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "ef7c8aa01c0bd7bf3d1d6bf7e117983a1fa4e172956f2a97eefbfd22dc35aa46",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 1
+      },
+      {
+        "contract": {
+          "classification": "violating",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 100.0,
+            "miss_rate_low_pct": 83.88748419471807
+          },
+          "estimator_valid": true,
+          "evidence_count": 40,
+          "minimum_samples": 20,
+          "miss_rate_pct": 100.0,
+          "misses": 20,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "AT_RISK",
+          "state_before": "AT_RISK",
+          "streaks": {
+            "infeasible": 2,
+            "recovery": 0,
+            "violating": 2
+          },
+          "timed_samples": 20,
+          "transitioned": false,
+          "window_index": 2
+        },
+        "domain": "linux",
+        "observation": {
+          "admission_allowed": true,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": true,
+          "protected_contracts_healthy": true,
+          "recommended_domain": "rt",
+          "safe_boundary": true,
+          "semantic_eligible": true,
+          "source_contract_state": "AT_RISK",
+          "target_contract_state": null,
+          "transient_misses": 20
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "AT_RISK",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28758252,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28758252,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "AT_RISK"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28758252
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 11265205,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 11265205,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "linux",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "2ccb221c8d6dc3b8e8a385f6bb3ddd6aa835860be2b3b53c72e894026a3b1a24",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 2
+      },
+      {
+        "contract": {
+          "classification": "violating",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 100.0,
+            "miss_rate_low_pct": 83.88748419471807
+          },
+          "estimator_valid": true,
+          "evidence_count": 60,
+          "minimum_samples": 20,
+          "miss_rate_pct": 100.0,
+          "misses": 20,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "VIOLATED",
+          "state_before": "AT_RISK",
+          "streaks": {
+            "infeasible": 3,
+            "recovery": 0,
+            "violating": 3
+          },
+          "timed_samples": 20,
+          "transitioned": true,
+          "window_index": 3
+        },
+        "domain": "linux",
+        "observation": {
+          "admission_allowed": true,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": true,
+          "protected_contracts_healthy": true,
+          "recommended_domain": "rt",
+          "safe_boundary": true,
+          "semantic_eligible": true,
+          "source_contract_state": "VIOLATED",
+          "target_contract_state": null,
+          "transient_misses": 20
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 11265205,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 11265205,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "linux",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "a1420f957019048e0f647c448f8f2ee5f189e3191400465b958f4bd79b8d78b8",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 3
+      },
+      {
+        "contract": {
+          "classification": "healthy",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 16.112515805281937,
+            "miss_rate_low_pct": 0.0
+          },
+          "estimator_valid": true,
+          "evidence_count": 20,
+          "minimum_samples": 20,
+          "miss_rate_pct": 0.0,
+          "misses": 0,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "SATISFIED",
+          "state_before": "UNKNOWN",
+          "streaks": {
+            "infeasible": 0,
+            "recovery": 1,
+            "violating": 0
+          },
+          "timed_samples": 20,
+          "transitioned": true,
+          "window_index": 1
+        },
+        "domain": "rt",
+        "observation": {
+          "admission_allowed": false,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": false,
+          "protected_contracts_healthy": true,
+          "recommended_domain": null,
+          "safe_boundary": true,
+          "semantic_eligible": false,
+          "source_contract_state": "SATISFIED",
+          "target_contract_state": "SATISFIED",
+          "transient_misses": 0
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 10845796,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 10845796,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "rt",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "f6e8de487b7b5aac6f406e720ee01842f20a30150303a2ea33c7d22462fe503d",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 4
+      },
+      {
+        "contract": {
+          "classification": "healthy",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 16.112515805281937,
+            "miss_rate_low_pct": 0.0
+          },
+          "estimator_valid": true,
+          "evidence_count": 40,
+          "minimum_samples": 20,
+          "miss_rate_pct": 0.0,
+          "misses": 0,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "SATISFIED",
+          "state_before": "SATISFIED",
+          "streaks": {
+            "infeasible": 0,
+            "recovery": 2,
+            "violating": 0
+          },
+          "timed_samples": 20,
+          "transitioned": false,
+          "window_index": 2
+        },
+        "domain": "rt",
+        "observation": {
+          "admission_allowed": false,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": false,
+          "protected_contracts_healthy": true,
+          "recommended_domain": null,
+          "safe_boundary": true,
+          "semantic_eligible": false,
+          "source_contract_state": "SATISFIED",
+          "target_contract_state": "SATISFIED",
+          "transient_misses": 0
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 11346478,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 11346478,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "rt",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "2fb802853a7530cac2631ddb7ad294bd6f94858d874d83cc28af287941b77846",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 5
+      },
+      {
+        "contract": {
+          "classification": "healthy",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 16.112515805281937,
+            "miss_rate_low_pct": 0.0
+          },
+          "estimator_valid": true,
+          "evidence_count": 60,
+          "minimum_samples": 20,
+          "miss_rate_pct": 0.0,
+          "misses": 0,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "SATISFIED",
+          "state_before": "SATISFIED",
+          "streaks": {
+            "infeasible": 0,
+            "recovery": 3,
+            "violating": 0
+          },
+          "timed_samples": 20,
+          "transitioned": false,
+          "window_index": 3
+        },
+        "domain": "rt",
+        "observation": {
+          "admission_allowed": false,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": false,
+          "protected_contracts_healthy": true,
+          "recommended_domain": null,
+          "safe_boundary": true,
+          "semantic_eligible": false,
+          "source_contract_state": "SATISFIED",
+          "target_contract_state": "SATISFIED",
+          "transient_misses": 0
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 11559200,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 11559200,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "rt",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "23a9782be35f788973f5e9f010e5bdbee8a24232892ae65aeecda50cb185f569",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 6
+      },
+      {
+        "contract": {
+          "classification": "healthy",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 16.112515805281937,
+            "miss_rate_low_pct": 0.0
+          },
+          "estimator_valid": true,
+          "evidence_count": 80,
+          "minimum_samples": 20,
+          "miss_rate_pct": 0.0,
+          "misses": 0,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "SATISFIED",
+          "state_before": "SATISFIED",
+          "streaks": {
+            "infeasible": 0,
+            "recovery": 4,
+            "violating": 0
+          },
+          "timed_samples": 20,
+          "transitioned": false,
+          "window_index": 4
+        },
+        "domain": "rt",
+        "observation": {
+          "admission_allowed": false,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": false,
+          "protected_contracts_healthy": true,
+          "recommended_domain": null,
+          "safe_boundary": true,
+          "semantic_eligible": false,
+          "source_contract_state": "SATISFIED",
+          "target_contract_state": null,
+          "transient_misses": 0
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    },
+                    {
+                      "code": "cooldown_active"
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 11153746,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 11153746,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "rt",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "b79b12332aed8855bbbc58f79cdc758660676d79e87acf112402a49fca887b38",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 7
+      },
+      {
+        "contract": {
+          "classification": "healthy",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 16.112515805281937,
+            "miss_rate_low_pct": 0.0
+          },
+          "estimator_valid": true,
+          "evidence_count": 100,
+          "minimum_samples": 20,
+          "miss_rate_pct": 0.0,
+          "misses": 0,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "SATISFIED",
+          "state_before": "SATISFIED",
+          "streaks": {
+            "infeasible": 0,
+            "recovery": 5,
+            "violating": 0
+          },
+          "timed_samples": 20,
+          "transitioned": false,
+          "window_index": 5
+        },
+        "domain": "rt",
+        "observation": {
+          "admission_allowed": false,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": false,
+          "protected_contracts_healthy": true,
+          "recommended_domain": null,
+          "safe_boundary": true,
+          "semantic_eligible": false,
+          "source_contract_state": "SATISFIED",
+          "target_contract_state": null,
+          "transient_misses": 0
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    },
+                    {
+                      "code": "cooldown_active"
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 10693128,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 10693128,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "rt",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "ccc1b0b586c0d3db377ee109139cf7c07b6b9e13c0a3ddce39bf5abb44a37128",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 8
+      },
+      {
+        "contract": {
+          "classification": "healthy",
+          "confidence": {
+            "level_pct": 95.0,
+            "method": "wilson-score",
+            "miss_rate_high_pct": 16.112515805281937,
+            "miss_rate_low_pct": 0.0
+          },
+          "estimator_valid": true,
+          "evidence_count": 120,
+          "minimum_samples": 20,
+          "miss_rate_pct": 0.0,
+          "misses": 0,
+          "missing_samples": 0,
+          "sample_count": 20,
+          "state_after": "SATISFIED",
+          "state_before": "SATISFIED",
+          "streaks": {
+            "infeasible": 0,
+            "recovery": 6,
+            "violating": 0
+          },
+          "timed_samples": 20,
+          "transitioned": false,
+          "window_index": 6
+        },
+        "domain": "rt",
+        "observation": {
+          "admission_allowed": false,
+          "alternatives_exhausted": false,
+          "evidence_valid": true,
+          "predicted_feasible": false,
+          "protected_contracts_healthy": true,
+          "recommended_domain": null,
+          "safe_boundary": true,
+          "semantic_eligible": false,
+          "source_contract_state": "SATISFIED",
+          "target_contract_state": null,
+          "transient_misses": 0
+        },
+        "recommendation": {
+          "advisory_only": true,
+          "placement_changes": 0,
+          "policy": "gated-static-end-to-end-v1",
+          "records": [
+            {
+              "advisory_only": true,
+              "candidates": [
+                {
+                  "admissible": false,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "VIOLATED",
+                  "domain": "linux",
+                  "end_to_end_p95_ns": 28785550,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 468,
+                  "mcu": {
+                    "projected_utilization_pct": 0.0,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.0,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 100.0,
+                  "predicted_end_to_end_ns": 28785550,
+                  "rejection_reasons": [
+                    {
+                      "code": "contract_not_satisfied",
+                      "state": "VIOLATED"
+                    },
+                    {
+                      "code": "observed_miss_rate_exceeds_contract",
+                      "maximum_pct": 1.0,
+                      "observed_pct": 100.0
+                    },
+                    {
+                      "code": "predicted_deadline_miss",
+                      "deadline_ns": 20000000,
+                      "predicted_ns": 28785550
+                    },
+                    {
+                      "code": "cooldown_active"
+                    }
+                  ],
+                  "selected": false
+                },
+                {
+                  "admissible": true,
+                  "chain_boundary_cost_ns": 0,
+                  "chain_edges": [],
+                  "contract_state": "SATISFIED",
+                  "domain": "rt",
+                  "end_to_end_p95_ns": 10498091,
+                  "evidence_count": 1000,
+                  "local_execution_p95_ns": 331,
+                  "mcu": {
+                    "projected_utilization_pct": 0.00331,
+                    "reserved_headroom_pct": 25.0,
+                    "task_utilization_pct": 0.00331,
+                    "usable_utilization_pct": 75.0,
+                    "utilization_without_task_pct": 0.0
+                  },
+                  "observed_miss_rate_pct": 0.0,
+                  "predicted_end_to_end_ns": 10498091,
+                  "rejection_reasons": [],
+                  "selected": true
+                }
+              ],
+              "current_domain": "rt",
+              "evidence_gate_passed": true,
+              "placement_changed": false,
+              "recommended_domain": "rt",
+              "record_id": "89dd20c0769ec222e49355968d5c00763f1c4296c9aeac88a95d220138e0162c",
+              "status": "recommendation",
+              "task": "add"
+            }
+          ],
+          "schema_version": 1
+        },
+        "window_index": 9
+      }
+    ],
+    "live_domains": {
+      "linux": {
+        "report": {
+          "claim": "empirical-soft-real-time",
+          "contract": {
+            "at_risk_miss_rate_pct": 0.5,
+            "deadline_ns": 20000000,
+            "infeasible_windows": 5,
+            "max_miss_rate_pct": 1.0,
+            "minimum_samples": 20,
+            "recovery_miss_rate_pct": 0.25,
+            "recovery_windows": 3,
+            "violation_windows": 3,
+            "warmup_samples": 0,
+            "window_size": 20
+          },
+          "evidence_count": 60,
+          "missing_sample_policy": "count-as-deadline-miss",
+          "observations": 60,
+          "pending_samples": 0,
+          "schema_version": 1,
+          "state": "VIOLATED",
+          "warmup_observed": 0,
+          "windowing": "non-overlapping",
+          "windows": [
+            {
+              "classification": "violating",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 100.0,
+                "miss_rate_low_pct": 83.88748419471807
+              },
+              "estimator_valid": true,
+              "evidence_count": 20,
+              "minimum_samples": 20,
+              "miss_rate_pct": 100.0,
+              "misses": 20,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "AT_RISK",
+              "state_before": "UNKNOWN",
+              "streaks": {
+                "infeasible": 1,
+                "recovery": 0,
+                "violating": 1
+              },
+              "timed_samples": 20,
+              "transitioned": true,
+              "window_index": 1
+            },
+            {
+              "classification": "violating",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 100.0,
+                "miss_rate_low_pct": 83.88748419471807
+              },
+              "estimator_valid": true,
+              "evidence_count": 40,
+              "minimum_samples": 20,
+              "miss_rate_pct": 100.0,
+              "misses": 20,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "AT_RISK",
+              "state_before": "AT_RISK",
+              "streaks": {
+                "infeasible": 2,
+                "recovery": 0,
+                "violating": 2
+              },
+              "timed_samples": 20,
+              "transitioned": false,
+              "window_index": 2
+            },
+            {
+              "classification": "violating",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 100.0,
+                "miss_rate_low_pct": 83.88748419471807
+              },
+              "estimator_valid": true,
+              "evidence_count": 60,
+              "minimum_samples": 20,
+              "miss_rate_pct": 100.0,
+              "misses": 20,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "VIOLATED",
+              "state_before": "AT_RISK",
+              "streaks": {
+                "infeasible": 3,
+                "recovery": 0,
+                "violating": 3
+              },
+              "timed_samples": 20,
+              "transitioned": true,
+              "window_index": 3
+            }
+          ]
+        },
+        "state": "VIOLATED"
+      },
+      "rt": {
+        "report": {
+          "claim": "empirical-soft-real-time",
+          "contract": {
+            "at_risk_miss_rate_pct": 0.5,
+            "deadline_ns": 20000000,
+            "infeasible_windows": 5,
+            "max_miss_rate_pct": 1.0,
+            "minimum_samples": 20,
+            "recovery_miss_rate_pct": 0.25,
+            "recovery_windows": 3,
+            "violation_windows": 3,
+            "warmup_samples": 0,
+            "window_size": 20
+          },
+          "evidence_count": 120,
+          "missing_sample_policy": "count-as-deadline-miss",
+          "observations": 120,
+          "pending_samples": 0,
+          "schema_version": 1,
+          "state": "SATISFIED",
+          "warmup_observed": 0,
+          "windowing": "non-overlapping",
+          "windows": [
+            {
+              "classification": "healthy",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 16.112515805281937,
+                "miss_rate_low_pct": 0.0
+              },
+              "estimator_valid": true,
+              "evidence_count": 20,
+              "minimum_samples": 20,
+              "miss_rate_pct": 0.0,
+              "misses": 0,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "SATISFIED",
+              "state_before": "UNKNOWN",
+              "streaks": {
+                "infeasible": 0,
+                "recovery": 1,
+                "violating": 0
+              },
+              "timed_samples": 20,
+              "transitioned": true,
+              "window_index": 1
+            },
+            {
+              "classification": "healthy",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 16.112515805281937,
+                "miss_rate_low_pct": 0.0
+              },
+              "estimator_valid": true,
+              "evidence_count": 40,
+              "minimum_samples": 20,
+              "miss_rate_pct": 0.0,
+              "misses": 0,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "SATISFIED",
+              "state_before": "SATISFIED",
+              "streaks": {
+                "infeasible": 0,
+                "recovery": 2,
+                "violating": 0
+              },
+              "timed_samples": 20,
+              "transitioned": false,
+              "window_index": 2
+            },
+            {
+              "classification": "healthy",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 16.112515805281937,
+                "miss_rate_low_pct": 0.0
+              },
+              "estimator_valid": true,
+              "evidence_count": 60,
+              "minimum_samples": 20,
+              "miss_rate_pct": 0.0,
+              "misses": 0,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "SATISFIED",
+              "state_before": "SATISFIED",
+              "streaks": {
+                "infeasible": 0,
+                "recovery": 3,
+                "violating": 0
+              },
+              "timed_samples": 20,
+              "transitioned": false,
+              "window_index": 3
+            },
+            {
+              "classification": "healthy",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 16.112515805281937,
+                "miss_rate_low_pct": 0.0
+              },
+              "estimator_valid": true,
+              "evidence_count": 80,
+              "minimum_samples": 20,
+              "miss_rate_pct": 0.0,
+              "misses": 0,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "SATISFIED",
+              "state_before": "SATISFIED",
+              "streaks": {
+                "infeasible": 0,
+                "recovery": 4,
+                "violating": 0
+              },
+              "timed_samples": 20,
+              "transitioned": false,
+              "window_index": 4
+            },
+            {
+              "classification": "healthy",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 16.112515805281937,
+                "miss_rate_low_pct": 0.0
+              },
+              "estimator_valid": true,
+              "evidence_count": 100,
+              "minimum_samples": 20,
+              "miss_rate_pct": 0.0,
+              "misses": 0,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "SATISFIED",
+              "state_before": "SATISFIED",
+              "streaks": {
+                "infeasible": 0,
+                "recovery": 5,
+                "violating": 0
+              },
+              "timed_samples": 20,
+              "transitioned": false,
+              "window_index": 5
+            },
+            {
+              "classification": "healthy",
+              "confidence": {
+                "level_pct": 95.0,
+                "method": "wilson-score",
+                "miss_rate_high_pct": 16.112515805281937,
+                "miss_rate_low_pct": 0.0
+              },
+              "estimator_valid": true,
+              "evidence_count": 120,
+              "minimum_samples": 20,
+              "miss_rate_pct": 0.0,
+              "misses": 0,
+              "missing_samples": 0,
+              "sample_count": 20,
+              "state_after": "SATISFIED",
+              "state_before": "SATISFIED",
+              "streaks": {
+                "infeasible": 0,
+                "recovery": 6,
+                "violating": 0
+              },
+              "timed_samples": 20,
+              "transitioned": false,
+              "window_index": 6
+            }
+          ]
+        },
+        "state": "SATISFIED"
+      }
+    }
+  },
+  "expected": {
+    "commits": 1,
+    "final_domain": "rt",
+    "final_state": "MONITORING",
+    "rollbacks": 0
+  },
+  "failures": [],
+  "injection": {
+    "delay_ns": 20000000,
+    "provenance": "controlled-delay-injection",
+    "windows": [
+      1,
+      2,
+      3
+    ]
+  },
+  "mode": "success",
+  "observed": {
+    "commits": 1,
+    "final_domain": "rt",
+    "final_state": "MONITORING",
+    "rollbacks": 0
+  },
+  "runtime": {
+    "recovery": {
+      "final": {
+        "blacklist_remaining": {},
+        "cooldown_remaining": 0,
+        "domain": "rt",
+        "epoch": 1791530417,
+        "origin_domain": null,
+        "pending_domain": null,
+        "probation_healthy_streak": 3,
+        "probation_observed": 3,
+        "state": "MONITORING"
+      },
+      "metrics": {
+        "commits": 1,
+        "credible_violations": 1,
+        "detection_delay_windows": [
+          1
+        ],
+        "detections": 1,
+        "domain_changes": 1,
+        "false_switches": 0,
+        "oscillations": 0,
+        "protected_contract_regressions": 0,
+        "rollback_rate_pct": 0.0,
+        "rollbacks": 0,
+        "successful_recovery_rate_pct": 100.0,
+        "switch_attempts": 1,
+        "transient_misses": 60,
+        "verified_recovery_windows": [
+          4
+        ]
+      },
+      "policy": {
+        "blacklist_windows": 5,
+        "cooldown_windows": 3,
+        "probation_max_windows": 5,
+        "probation_windows": 3
+      },
+      "protocol": "safe-closed-loop-recovery-v1",
+      "schema_version": 1,
+      "steps": [
+        {
+          "actions": [
+            {
+              "reason": "no_credible_violation",
+              "type": "monitor"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "observation": {
+            "admission_allowed": true,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": true,
+            "protected_contracts_healthy": true,
+            "recommended_domain": "rt",
+            "safe_boundary": true,
+            "semantic_eligible": true,
+            "source_contract_state": "AT_RISK",
+            "target_contract_state": null,
+            "transient_misses": 20
+          },
+          "window_index": 1
+        },
+        {
+          "actions": [
+            {
+              "reason": "no_credible_violation",
+              "type": "monitor"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "observation": {
+            "admission_allowed": true,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": true,
+            "protected_contracts_healthy": true,
+            "recommended_domain": "rt",
+            "safe_boundary": true,
+            "semantic_eligible": true,
+            "source_contract_state": "AT_RISK",
+            "target_contract_state": null,
+            "transient_misses": 20
+          },
+          "window_index": 2
+        },
+        {
+          "actions": [
+            {
+              "destination": "rt",
+              "type": "recovery_armed"
+            },
+            {
+              "destination": "rt",
+              "epoch": 1791530417,
+              "origin": "linux",
+              "safe_boundary": true,
+              "type": "switch"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "PROBATION"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "observation": {
+            "admission_allowed": true,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": true,
+            "protected_contracts_healthy": true,
+            "recommended_domain": "rt",
+            "safe_boundary": true,
+            "semantic_eligible": true,
+            "source_contract_state": "VIOLATED",
+            "target_contract_state": null,
+            "transient_misses": 20
+          },
+          "window_index": 3
+        },
+        {
+          "actions": [
+            {
+              "healthy_streak": 1,
+              "observed_windows": 1,
+              "type": "probation"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 1,
+            "probation_observed": 1,
+            "state": "PROBATION"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "PROBATION"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": "SATISFIED",
+            "transient_misses": 0
+          },
+          "window_index": 4
+        },
+        {
+          "actions": [
+            {
+              "healthy_streak": 2,
+              "observed_windows": 2,
+              "type": "probation"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 2,
+            "probation_observed": 2,
+            "state": "PROBATION"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 1,
+            "probation_observed": 1,
+            "state": "PROBATION"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": "SATISFIED",
+            "transient_misses": 0
+          },
+          "window_index": 5
+        },
+        {
+          "actions": [
+            {
+              "healthy_streak": 3,
+              "observed_windows": 3,
+              "type": "probation"
+            },
+            {
+              "domain": "rt",
+              "epoch": 1791530417,
+              "type": "commit"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 3,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 2,
+            "probation_observed": 2,
+            "state": "PROBATION"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": "SATISFIED",
+            "transient_misses": 0
+          },
+          "window_index": 6
+        },
+        {
+          "actions": [
+            {
+              "remaining_windows": 2,
+              "type": "cooldown"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 2,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 3,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": null,
+            "transient_misses": 0
+          },
+          "window_index": 7
+        },
+        {
+          "actions": [
+            {
+              "remaining_windows": 1,
+              "type": "cooldown"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 1,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 2,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": null,
+            "transient_misses": 0
+          },
+          "window_index": 8
+        },
+        {
+          "actions": [
+            {
+              "remaining_windows": 0,
+              "type": "cooldown"
+            },
+            {
+              "type": "cooldown_complete"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "MONITORING"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 1,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": null,
+            "transient_misses": 0
+          },
+          "window_index": 9
+        }
+      ]
+    },
+    "runtime": "boundary-safe-sequential-v1",
+    "schema_version": 1,
+    "transitions": [
+      {
+        "domain": "rt",
+        "epoch": 1791530417,
+        "safe_boundary": true,
+        "type": "switch",
+        "window_index": 3
+      }
+    ],
+    "window_count": 9,
+    "windows": [
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "linux",
+          "epoch": 1791530416,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 26836766,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 27195516,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 27691090,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 27635152,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28282809,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28406924,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28465414,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28274475,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28993748,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28452757,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28425779,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28296872,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28182704,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28130830,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28055621,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28128642,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28169215,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28571508,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28987134,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28252132,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 1
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "reason": "no_credible_violation",
+              "type": "monitor"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "observation": {
+            "admission_allowed": true,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": true,
+            "protected_contracts_healthy": true,
+            "recommended_domain": "rt",
+            "safe_boundary": true,
+            "semantic_eligible": true,
+            "source_contract_state": "AT_RISK",
+            "target_contract_state": null,
+            "transient_misses": 20
+          },
+          "window_index": 1
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "linux",
+          "epoch": 1791530416,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28676403,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28317705,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28191038,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28457340,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28227914,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28309216,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28144424,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28544060,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28523070,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28744737,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28252758,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28509008,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28308018,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28140622,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28055986,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28026559,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28337445,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 27893017,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28579893,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 29015050,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 2
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "reason": "no_credible_violation",
+              "type": "monitor"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "observation": {
+            "admission_allowed": true,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": true,
+            "protected_contracts_healthy": true,
+            "recommended_domain": "rt",
+            "safe_boundary": true,
+            "semantic_eligible": true,
+            "source_contract_state": "AT_RISK",
+            "target_contract_state": null,
+            "transient_misses": 20
+          },
+          "window_index": 2
+        }
+      },
+      {
+        "applied_transitions": [
+          {
+            "domain": "rt",
+            "epoch": 1791530417,
+            "safe_boundary": true,
+            "type": "switch",
+            "window_index": 3
+          }
+        ],
+        "execution": {
+          "domain": "linux",
+          "epoch": 1791530416,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28256403,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28033798,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28506300,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28343278,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28324476,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28507914,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28925675,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28309007,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28148330,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28399059,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28469060,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28207913,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28227393,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28049945,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28239893,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28778175,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28616977,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28313121,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28126090,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 20000000,
+              "latency_ns": 28261143,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 3
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "destination": "rt",
+              "type": "recovery_armed"
+            },
+            {
+              "destination": "rt",
+              "epoch": 1791530417,
+              "origin": "linux",
+              "safe_boundary": true,
+              "type": "switch"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "PROBATION"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "linux",
+            "epoch": 1791530416,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "MONITORING"
+          },
+          "observation": {
+            "admission_allowed": true,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": true,
+            "protected_contracts_healthy": true,
+            "recommended_domain": "rt",
+            "safe_boundary": true,
+            "semantic_eligible": true,
+            "source_contract_state": "VIOLATED",
+            "target_contract_state": null,
+            "transient_misses": 20
+          },
+          "window_index": 3
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "rt",
+          "epoch": 1791530417,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10810747,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9322308,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9883871,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10303143,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9284964,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9741996,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9381423,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9425381,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9782569,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9132568,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9754132,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9662673,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9331161,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9811371,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9149963,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9902830,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9306058,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11511739,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10276528,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9997569,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 4
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "healthy_streak": 1,
+              "observed_windows": 1,
+              "type": "probation"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 1,
+            "probation_observed": 1,
+            "state": "PROBATION"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 0,
+            "probation_observed": 0,
+            "state": "PROBATION"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": "SATISFIED",
+            "transient_misses": 0
+          },
+          "window_index": 4
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "rt",
+          "epoch": 1791530417,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11055957,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10532987,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10236476,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9917153,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9444704,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11098873,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10705279,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10563456,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11338301,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11477103,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10515435,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11204707,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10599550,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11339603,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9200277,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10101476,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9489183,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9913455,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10448039,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9153297,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 5
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "healthy_streak": 2,
+              "observed_windows": 2,
+              "type": "probation"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 2,
+            "probation_observed": 2,
+            "state": "PROBATION"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 1,
+            "probation_observed": 1,
+            "state": "PROBATION"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": "SATISFIED",
+            "transient_misses": 0
+          },
+          "window_index": 5
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "rt",
+          "epoch": 1791530417,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10417205,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11690073,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11011738,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11552312,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10219185,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11116009,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11305332,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8963141,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9728923,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9665955,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10267153,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9553559,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8798766,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10014809,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9547256,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8812828,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10192935,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10608039,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10245591,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9955642,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 6
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "healthy_streak": 3,
+              "observed_windows": 3,
+              "type": "probation"
+            },
+            {
+              "domain": "rt",
+              "epoch": 1791530417,
+              "type": "commit"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 3,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": "linux",
+            "pending_domain": null,
+            "probation_healthy_streak": 2,
+            "probation_observed": 2,
+            "state": "PROBATION"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": "SATISFIED",
+            "transient_misses": 0
+          },
+          "window_index": 6
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "rt",
+          "epoch": 1791530417,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10462102,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8975380,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9885590,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10947311,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9146995,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9819757,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10721060,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11897468,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10727623,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11114603,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10907207,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11027155,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10865071,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9153454,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10386216,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9560590,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9735642,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9659287,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11058405,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10947050,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 7
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "remaining_windows": 2,
+              "type": "cooldown"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 2,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 3,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": null,
+            "transient_misses": 0
+          },
+          "window_index": 7
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "rt",
+          "epoch": 1791530417,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9980642,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10149393,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9850486,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9535433,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9672621,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9073089,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8994287,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 11022363,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10675800,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10498716,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9392933,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9167776,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9159338,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8568765,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9105277,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9679340,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9682465,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9882204,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10447257,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9237933,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 8
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "remaining_windows": 1,
+              "type": "cooldown"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 1,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 2,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": null,
+            "transient_misses": 0
+          },
+          "window_index": 8
+        }
+      },
+      {
+        "applied_transitions": [],
+        "execution": {
+          "domain": "rt",
+          "epoch": 1791530417,
+          "in_flight_after": 0,
+          "protected_contracts_healthy": true,
+          "safe_boundary": true,
+          "samples": [
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10618820,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9350537,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9662881,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10305487,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10491737,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10090278,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9943403,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10074184,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9795485,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9801736,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10365434,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10347882,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10428404,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9608610,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10090174,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 8775431,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 10050018,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9058922,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9383975,
+              "outcome": "ok"
+            },
+            {
+              "injected_delay_ns": 0,
+              "latency_ns": 9705642,
+              "outcome": "ok"
+            }
+          ],
+          "window_index": 9
+        },
+        "recovery_step": {
+          "actions": [
+            {
+              "remaining_windows": 0,
+              "type": "cooldown"
+            },
+            {
+              "type": "cooldown_complete"
+            }
+          ],
+          "after": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 0,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "MONITORING"
+          },
+          "before": {
+            "blacklist_remaining": {},
+            "cooldown_remaining": 1,
+            "domain": "rt",
+            "epoch": 1791530417,
+            "origin_domain": null,
+            "pending_domain": null,
+            "probation_healthy_streak": 3,
+            "probation_observed": 3,
+            "state": "COOLDOWN"
+          },
+          "observation": {
+            "admission_allowed": false,
+            "alternatives_exhausted": false,
+            "evidence_valid": true,
+            "predicted_feasible": false,
+            "protected_contracts_healthy": true,
+            "recommended_domain": null,
+            "safe_boundary": true,
+            "semantic_eligible": false,
+            "source_contract_state": "SATISFIED",
+            "target_contract_state": null,
+            "transient_misses": 0
+          },
+          "window_index": 9
+        }
+      }
+    ]
+  },
+  "schema_version": 1,
+  "status": "pass"
+}

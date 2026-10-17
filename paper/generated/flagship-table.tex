@@ -1,0 +1,13 @@
+\begin{tabular}{lrrr}
+\toprule
+Baseline & p95 (ms) & Miss rate (\%) & Placement \\
+\midrule
+ordinary-linux & 111.30 & 67.3 & L/L/L/L \\
+tuned-linux & 23.91 & 0.0 & L/L/L/L \\
+static-mcu-first & 43.45 & 0.0 & R/R/R/R \\
+manual-expert & 100.93 & 58.3 & L/R/R/L \\
+qfabric-static & 111.30 & 67.3 & L/L/L/L \\
+qfabric-recovery & 70.61 & 3.7 & adaptive \\
+offline-oracle & 43.45 & 0.0 & per observation \\
+\bottomrule
+\end{tabular}

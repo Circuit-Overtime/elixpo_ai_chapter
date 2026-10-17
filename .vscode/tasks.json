@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Arduino: refresh UNO Q IntelliSense",
+      "type": "shell",
+      "command": "arduino-cli",
+      "args": [
+        "compile",
+        "--fqbn",
+        "arduino:zephyr:unoq",
+        "--only-compilation-database",
+        "--build-path",
+        "${workspaceFolder}/build/stage1-probe",
+        "${workspaceFolder}/benchmarks/stage1/mcu/stage1_probe"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Arduino: compile Stage 1 probe",
+      "type": "shell",
+      "command": "arduino-cli",
+      "args": [
+        "compile",
+        "--fqbn",
+        "arduino:zephyr:unoq",
+        "${workspaceFolder}/benchmarks/stage1/mcu/stage1_probe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}
