@@ -24,6 +24,9 @@ export function SmoothScroll() {
       smoothWheel: true,
       syncTouch: false,
       wheelMultiplier: 0.9,
+      autoResize: true,
+      anchors: true,
+      stopInertiaOnNavigate: true,
     });
 
     let frame = 0;
