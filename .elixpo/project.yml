@@ -1,0 +1,61 @@
+schema_version: '1.0'
+project:
+  id: elixpo-chapter
+  name: elixpo_chapter
+  title: Elixpo Chapter
+  description: The master collection where public build chapters become durable releases.
+  family: project
+  artifact_type: community
+  profile: chapter-collection
+  technologies:
+  - Git
+  - GitHub Actions
+  - documentation
+  chapter_status: null
+  lifecycle: active
+  relationship: core
+  custody: elixpo-owned
+  stack: chapter-collection
+  repository: https://github.com/elixpo/elixpo_chapter
+  deployment: null
+  discussions: https://github.com/orgs/elixpo/discussions
+  status_owner: elixpo
+  status_verified_at: '2026-10-17'
+publication:
+  public: true
+  featured: true
+  canonical_slug: elixpo-chapter
+  canonical_url: https://elixpo.com/chapter
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: '2026-10-17'
+license:
+  current_file: LICENSE
+  notice_file: LICENSES/NOTICE
+  migration_status: review-required
+  target_code_license: not-designated
+  trademark_policy: https://elixpo.com/terms
+ci:
+  lint_cmd: ''
+  test_cmd: ''
+  build_cmd: ''
+maintainers:
+- github: Circuit-Overtime
+  skills:
+  - Git
+  - GitHub Actions
+  - documentation
+  lead: true
+governance:
+  model: maintainer-led
+  document: GOVERNANCE.md
+support:
+  document: SUPPORT.md
+security:
+  document: SECURITY.md
+conformance:
+  standard: '1.0'
+  status: conformant
+  assessed_at: '2026-10-17'
+  exceptions: []
