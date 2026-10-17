@@ -1,0 +1,35 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        Elixpo Accounts (accounts.elixpo.com)
+  What it is:  The single sign-on / identity provider (OAuth 2.0) for the whole
+               Elixpo ecosystem. One identity that signs users in across every
+               Elixpo product and any third-party app that integrates it.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  Paid / pro tiers. Elixpo Accounts offers paid subscription tiers (Indie and
+  Studio) on top of the free Hobby plan, billed in INR via the Elixpo payments
+  infrastructure. These paid tiers, their pricing, license keys, and the
+  commercial offering tied to the Elixpo Accounts brand are reserved to Elixpo.
+  The source code remains MIT; the hosted service at accounts.elixpo.com, its
+  paid tiers, and the operational data are reserved.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ (logos, icons, og-images, mascot artwork) are
+  provided under CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest
+  E-badge, and the Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com
