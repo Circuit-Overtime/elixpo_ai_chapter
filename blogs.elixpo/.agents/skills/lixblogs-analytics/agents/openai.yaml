@@ -1,0 +1,7 @@
+interface:
+  display_name: "LixBlogs Analytics"
+  short_description: "Read bounded creator performance data"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $lixblogs-analytics to retrieve and explain creator analytics without making changes."
+policy:
+  allow_implicit_invocation: true

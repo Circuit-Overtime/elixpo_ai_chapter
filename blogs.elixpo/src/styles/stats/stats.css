@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+.monthOptions > div.selected 
+{
+    color: #fff;
+}
+.monthOptions::-webkit-scrollbar
+{
+    display: none;
+}
+
+
+.statsControl
+{
+    font-family: "Funnel Display", serif;
+
+}
+.statsNavItem.selected
+{
+    color: #7ba8f0;
+    text-underline-offset: 12px;
+}
+.statsControl::-webkit-scrollbar
+{
+    display: none;
+}
