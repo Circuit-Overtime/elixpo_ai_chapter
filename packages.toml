@@ -1,0 +1,15 @@
+[[package]]
+name = "win-dot-panel"
+display_name = "Win Dot Panel"
+source = "apps/win-dot-panel"
+release_prefix = "win-dot-panel/v"
+asset_pattern = "win-dot-panel_*.deb"
+route = "win-dot-panel"
+
+[[package]]
+name = "screenbridge"
+display_name = "ScreenBridge"
+source = "apps/screenbridge"
+release_prefix = "screenbridge/v"
+asset_pattern = "screenbridge_[0-9]*_all.deb"
+route = "screenbridge"

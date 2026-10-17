@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111525">
+  <meta name="description" content="About ScreenBridge, the open source Linux app for sharing computer audio while keeping the microphone separate.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://packages.elixpo.com/screenbridge/about/">
+  <link rel="icon" type="image/svg+xml" href="/screenbridge/icon.svg">
+  <link rel="stylesheet" href="/info.css">
+  <meta property="og:title" content="About ScreenBridge | Elixpo Linux Packages">
+  <meta property="og:description" content="Why ScreenBridge exists, how it respects your system, and where the project is going.">
+  <meta property="og:url" content="https://packages.elixpo.com/screenbridge/about/">
+  <meta property="og:image" content="https://packages.elixpo.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://packages.elixpo.com/og-image.png">
+  <title>About ScreenBridge | Elixpo Linux Packages</title>
+</head>
+<body>
+  <div class="wrap">
+    <nav><a class="brand" href="/screenbridge/"><img src="/screenbridge/icon.svg" alt="">ScreenBridge</a><div class="nav-links"><a href="/screenbridge/">Overview</a><a href="/screenbridge/docs/">Guide</a><a href="/">All apps</a></div></nav>
+    <header class="hero"><div class="eyebrow">About ScreenBridge</div><h1>Linux audio sharing should feel like a button, not a project.</h1><p class="lead">ScreenBridge turns the repeated virtual-sink setup into a small desktop application that can start, restore, and recover an audio-sharing session.</p></header>
+    <main>
+      <section class="section"><h2>The problem</h2><p>Linux can share computer sound, but many calling and recording apps only show microphone inputs. Getting desktop audio into those apps often means creating virtual devices by hand, moving application streams, and remembering how to undo everything afterward.</p><p>ScreenBridge packages that workflow into a clear interface: choose where you listen, choose your microphone, and start sharing.</p></section>
+      <section class="section"><h2>Designed around control</h2><div class="grid"><article class="card"><h3>Temporary changes</h3><p>Audio routes and virtual inputs exist only while a ScreenBridge session is active.</p></article><article class="card"><h3>Recoverable sessions</h3><p>Setup state is saved locally so interrupted sessions can still be cleaned up.</p></article><article class="card"><h3>Separate by default</h3><p>Computer audio and microphone audio remain distinct unless you choose to mix them.</p></article><article class="card"><h3>Open source</h3><p>The application, tests, packaging, and release automation are available for review.</p></article></div></section>
+      <section class="section"><h2>Privacy</h2><p>ScreenBridge does not create an account, upload audio, or connect to an Elixpo service. It configures the audio server running in your own desktop session. The call, recording, or streaming application you select receives the resulting input and remains responsible for its own privacy behavior.</p></section>
+      <section class="section"><h2>Project</h2><dl><dt>Release</dt><dd>ScreenBridge 1.0 “Aurora”</dd><dt>License</dt><dd>MIT</dd><dt>Maintained by</dt><dd>Elixpo and open source contributors</dd><dt>Source</dt><dd><a href="https://github.com/elixpo/packages.elixpo/tree/main/apps/screenbridge">Browse the ScreenBridge code</a></dd></dl><div class="actions"><a class="button primary" href="/screenbridge/docs/">Read the guide</a><a class="button" href="https://github.com/elixpo/packages.elixpo/issues">Report a problem</a></div></section>
+    </main>
+    <footer><span>ScreenBridge · Free and open source</span><span><a href="/screenbridge/docs/">Guide</a> · <a href="/screenbridge/">Install</a> · <a href="/">All apps</a></span></footer>
+  </div>
+</body>
+</html>

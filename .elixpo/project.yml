@@ -1,0 +1,79 @@
+schema_version: "1.0"
+
+project:
+  id: packages
+  name: packages.elixpo
+  title: Elixpo Packages
+  description: "Monorepo and signed distribution surface for Elixpo Linux applications and their public package catalogue."
+  family: project
+  artifact_type: package
+  profile: package
+  technologies: [Python, Debian, APT, Next.js, Cloudflare Pages]
+  chapter_status: null
+  lifecycle: active
+  relationship: core
+  custody: elixpo-owned
+  stack: python-nextjs
+  node_version: "24"
+  repository: https://github.com/elixpo/packages.elixpo
+  deployment: https://packages.elixpo.com
+  discussions: https://github.com/orgs/elixpo/discussions
+  status_owner: elixpo
+  status_verified_at: "2026-10-17"
+
+publication:
+  public: true
+  featured: true
+  canonical_slug: packages
+  canonical_url: https://elixpo.com/projects/packages
+
+provenance:
+  classification_decision: https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md
+  license_evidence: https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json
+  status_checked_at: "2026-10-17"
+
+license:
+  current_file: LICENSE
+  notice_file: NOTICE
+  migration_status: complete
+  target_code_license: MIT
+  trademark_policy: pending-separation
+
+ci:
+  lint_cmd: "npm run lint && ruff check scripts tests"
+  test_cmd: "npm run typecheck && python -m pytest -q tests"
+  build_cmd: "npm run build"
+
+operations:
+  deployment_workflow: .github/workflows/deploy-packages.yml
+  preview_workflow: .github/workflows/deploy-cloudflare-pages.yml
+  test_workflow: .github/workflows/checks.yml
+  release_workflow: .github/workflows/release-deb.yml
+  privileged_workflows_repo_specific: true
+  fork_prs_receive_secrets: false
+  rollback: "Keep the signed GitHub Pages APT host available until the Cloudflare candidate, installers, indexes, and signatures are verified."
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [linux-packaging, apt, python, nextjs, release-engineering]
+    lead: true
+
+governance:
+  model: maintainer-led
+  document: GOVERNANCE.md
+
+support:
+  document: SUPPORT.md
+
+security:
+  document: SECURITY.md
+
+conformance:
+  standard: "1.0"
+  status: conformant-with-exceptions
+  assessed_at: "2026-10-17"
+  exceptions:
+    - id: github-pages-rollback
+      reason: "GitHub Pages remains the signed APT rollback host until Cloudflare package, installer, index, and signature verification is complete."
+      owner: elixpo
+      review_at: "2027-01-17"
