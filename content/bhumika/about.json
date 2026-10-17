@@ -1,0 +1,30 @@
+{
+  "intro": {
+    "heading": "BHUMIKA",
+    "subheading": "ABOUT!",
+    "description": "I am a Computer Science undergraduate at JIS University, Kolkata, working as a Digital Product Developer and a core contributor at Elixpo \u2014 skilled across frontend and back-end development, API integration, database design, and dashboard/reporting tools. I like translating real-world problems into working, data-driven products.",
+    "portraitImage": "/assets/bhumika/bhumika-hero.jpg"
+  },
+  "fancySection": {
+    "banner": "PROFILE",
+    "subtitle": "Experience & Interests",
+    "content": "I am currently a core contributor at Elixpo, working across multiple products including accounts.elixpo, blogs.elixpo, sketch.elixpo, opensource.elixpo, and payouts.elixpo alongside the core team, and a GSSoC 2026 contributor on NexaSphere. My hands-on experience also spans applied AI product-building (VAANI, a real-time sign-language-to-speech accessibility tool), full-stack data applications (Financial-Log), and dashboard/UI design (CampusPulse). I'm comfortable presenting technical work to non-technical audiences, having pitched a product to judges at a hackathon, and enjoy collaborating in fast-paced, cross-functional team settings.",
+    "highlights": [
+      "Core Contributor @ Elixpo",
+      "GSSoC 2026 Contributor",
+      "Applied AI & Accessibility Products",
+      "Full-Stack Data Applications",
+      "Dashboard & Reporting Tools",
+      "Database Design & RESTful APIs"
+    ],
+    "contactNote": "Interested in digital, data, or AI-focused initiatives with real-world impact? Feel free to reach out.",
+    "shoutouts": [
+      "Elixpo Core Team",
+      "GSSoC 2026"
+    ],
+    "shoutoutText": "for the environment to build and ship real, collaborative open-source projects."
+  },
+  "images": {
+    "gallery": []
+  }
+}
