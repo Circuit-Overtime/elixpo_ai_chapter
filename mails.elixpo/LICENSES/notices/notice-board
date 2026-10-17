@@ -1,0 +1,31 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository depends on third-party components, each distributed under its
+own license. The application code in this repository is licensed under the
+Elixpo standard (MIT for code, CC-BY-4.0 for assets); see ../../LICENSE.
+
+Primary runtime dependencies (see package.json for the authoritative list and
+versions):
+
+  * Next.js, React, React DOM        - MIT
+  * @mui/material, @mui/system,
+    @mui/icons-material               - MIT
+  * @mantine/core, @mantine/hooks     - MIT
+  * @blocknote/core, @blocknote/react,
+    @blocknote/mantine                - MPL-2.0
+  * @emotion/react, @emotion/styled,
+    @emotion/cache                    - MIT
+  * jose                              - MIT
+  * @elixpo/lixeditor                 - MIT (Elixpo standard)
+
+Build / tooling dependencies:
+
+  * @cloudflare/next-on-pages,
+    wrangler, @cloudflare/workers-types - MIT / Apache-2.0
+  * Tailwind CSS, @tailwindcss/postcss  - MIT
+  * @biomejs/biome                      - MIT
+  * TypeScript                          - Apache-2.0
+
+If you believe a component is missing from this list, please open an issue or
+email hello@elixpo.com.

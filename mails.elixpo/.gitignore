@@ -1,0 +1,20 @@
+/node_modules
+/.next
+/.vercel
+/.wrangler
+/out
+/build
+
+# env / secrets
+# .env is SOPS-encrypted ciphertext and IS committed (safe to be public).
+# .env.local is plaintext dev secrets — never commit.
+.env.local
+.env*.local
+.dev.vars
+*.tmp
+
+# OS
+.DS_Store
+*.log
+
+next-env.d.ts
