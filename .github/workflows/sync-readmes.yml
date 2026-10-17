@@ -1,0 +1,147 @@
+name: Synchronize public READMEs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/organization.json"
+      - "content/repositories.json"
+      - "content/taxonomy.json"
+      - "content/licensing.json"
+      - "content/sponsorship.json"
+      - "content/readme/**"
+      - "docs/readme/generated/**"
+      - "scripts/render-readmes.mjs"
+      - "scripts/validate-registry.mjs"
+      - "package.json"
+      - ".github/workflows/sync-readmes.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+
+concurrency:
+  group: synchronize-public-readmes
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  synchronize:
+    name: Open synchronization pull requests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the canonical source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate registry and generated outputs
+        run: |
+          npm run registry:check
+          npm run readme:check
+
+      - name: Validate the scoped synchronization token
+        env:
+          GH_TOKEN: ${{ secrets.ELIXPO_README_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::ELIXPO_README_SYNC_TOKEN is not configured. See docs/readme/synchronization.md."
+            exit 1
+          fi
+          for repository in elixpo/.github elixpo/elixpo_chapter; do
+            if ! can_push=$(gh api "repos/$repository" --jq '.permissions.push // false'); then
+              echo "::error::ELIXPO_README_SYNC_TOKEN cannot access $repository. Grant the token repository access plus Contents and Pull requests read/write permissions."
+              exit 1
+            fi
+            if [ "$can_push" != "true" ]; then
+              echo "::error::ELIXPO_README_SYNC_TOKEN can read $repository but cannot push a synchronization branch. Grant Contents read/write permission."
+              exit 1
+            fi
+          done
+
+      - name: Check out public downstream repositories
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch main https://github.com/elixpo/.github.git _sync/organization
+          git clone --depth 1 --branch main https://github.com/elixpo/elixpo_chapter.git _sync/chapter
+
+      - name: Open or update downstream pull requests
+        env:
+          GH_TOKEN: ${{ secrets.ELIXPO_README_SYNC_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          gh auth setup-git
+
+          sync_readme() {
+            local repository="$1"
+            local checkout_path="$2"
+            local generated_readme="$3"
+            local destination="$4"
+            local branch="automation/sync-elixpo-readme-${SOURCE_SHA:0:12}-${GITHUB_RUN_ID}"
+
+            cd "$GITHUB_WORKSPACE/$checkout_path"
+            git config user.name "elixpo-readme-sync[bot]"
+            git config user.email "elixpo-readme-sync[bot]@users.noreply.github.com"
+            git fetch origin main
+            git checkout -B "$branch" origin/main
+
+            close_stale_sync_prs() {
+              local stale
+              while IFS= read -r stale; do
+                [ -z "$stale" ] && continue
+                gh pr close "$stale" --repo "$repository" --delete-branch \
+                  --comment "Superseded by the README generated from elixpo/elixpo@${SOURCE_SHA}." || true
+              done < <(
+                gh pr list --repo "$repository" --state open --limit 100 \
+                  --json number,headRefName \
+                  --jq ".[] | select(.headRefName | startswith(\"automation/sync-elixpo-readme\")) | select(.headRefName != \"$branch\") | .number"
+              )
+            }
+
+            cp "$GITHUB_WORKSPACE/$generated_readme" "$destination"
+            if git diff --quiet -- "$destination"; then
+              echo "$repository is already synchronized."
+              close_stale_sync_prs
+              return
+            fi
+
+            git add "$destination"
+            git commit -m "docs: synchronize Elixpo public brief"
+            git push --set-upstream origin "$branch"
+
+            local body
+            body=$(printf '%s\n\n%s\n\n%s' \
+              'Synchronizes the generated Elixpo organization brief from the canonical portal registry.' \
+              "Source commit: elixpo/elixpo@$SOURCE_SHA" \
+              'Do not edit the generated shared block directly; update the canonical registry or README source instead.')
+
+            close_stale_sync_prs
+            gh pr create --repo "$repository" --base main --head "$branch" \
+              --title "docs: synchronize Elixpo public brief" \
+              --body "$body"
+          }
+
+          sync_readme \
+            "elixpo/.github" \
+            "_sync/organization" \
+            "docs/readme/generated/organization.md" \
+            "profile/README.md"
+
+          sync_readme \
+            "elixpo/elixpo_chapter" \
+            "_sync/chapter" \
+            "docs/readme/generated/chapter.md" \
+            "README.md"

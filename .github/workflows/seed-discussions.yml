@@ -1,0 +1,33 @@
+# Seeds ecosystem-fit welcome/onboarding GitHub Discussions as @elixpoo.
+# Run manually (workflow_dispatch) after Discussions has been enabled on the
+# source repo (elixpo/elixpo_chapter) and set as the org Discussions source.
+# Idempotent - re-running only adds seeds that don't already exist.
+
+name: Seed Discussions
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seed-discussions
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Seed discussions
+        env:
+          AGENT_TOKEN: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+          DISCUSSIONS_REPO: elixpo/elixpo_chapter
+        run: python .github/scripts/seed_discussions.py

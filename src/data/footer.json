@@ -1,0 +1,35 @@
+{
+  "brand": {
+    "name": "Elixpo",
+    "tagline": "Open, Ethical, Accessible AI for Everyone."
+  },
+  "contact": {
+    "email": "hello@elixpo.com"
+  },
+  "columns": [
+    {
+      "title": "Community",
+      "links": [
+        { "label": "GitHub", "href": "https://github.com/elixpo/elixpo_chapter" },
+        { "label": "Discussions", "href": "https://github.com/orgs/elixpo/discussions" },
+        { "label": "Contributing Guide", "href": "/contributing" },
+        { "label": "Code of Conduct", "href": "/code-of-conduct" }
+      ]
+    },
+    {
+      "title": "Resources",
+      "links": [
+        { "label": "About", "href": "/about" },
+        { "label": "Open Source", "href": "/resources" },
+        { "label": "Hacktoberfest", "href": "https://hacktoberfest.com" },
+        { "label": "Funding Policy", "href": "https://github.com/elixpo/elixpo/blob/main/docs/policies/sponsorship.md" }
+      ]
+    }
+  ],
+  "socials": [
+    { "platform": "github", "href": "https://github.com/elixpo/elixpo_chapter" },
+    { "platform": "discussions", "href": "https://github.com/orgs/elixpo/discussions" },
+    { "platform": "twitter", "href": "https://twitter.com/elixpo" }
+  ],
+  "copyright": "2023-2026 Elixpo. Licenses vary by project and artifact."
+}

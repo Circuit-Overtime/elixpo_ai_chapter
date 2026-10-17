@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/people.schema.json",
+  "title": "Elixpo people and role registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "lastVerified", "methodology", "correctionUrl", "consentPolicy", "roleDefinitions", "currentTeam", "projectMaintainers", "researchContributors", "majorContributors", "alumni", "advisors"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "lastVerified": { "type": "string", "format": "date" },
+    "methodology": { "type": "string", "minLength": 80 },
+    "correctionUrl": { "type": "string", "format": "uri" },
+    "consentPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "defaultBasis", "publicEvidenceRule", "explicitConsentRule", "removalRule", "currentPublicationResolution"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "defaultBasis": { "const": "public-evidence-only" },
+        "publicEvidenceRule": { "type": "string", "minLength": 40 },
+        "explicitConsentRule": { "type": "string", "minLength": 40 },
+        "removalRule": { "type": "string", "minLength": 40 },
+        "currentPublicationResolution": { "type": "string", "minLength": 120 }
+      }
+    },
+    "roleDefinitions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currentTeam", "projectMaintainers", "researchContributors", "majorContributors", "alumni", "advisors"],
+      "properties": {
+        "currentTeam": { "type": "string", "minLength": 20 },
+        "projectMaintainers": { "type": "string", "minLength": 20 },
+        "researchContributors": { "type": "string", "minLength": 20 },
+        "majorContributors": { "type": "string", "minLength": 20 },
+        "alumni": { "type": "string", "minLength": 20 },
+        "advisors": { "type": "string", "minLength": 20 }
+      }
+    },
+    "currentTeam": { "$ref": "#/$defs/people" },
+    "projectMaintainers": { "$ref": "#/$defs/people" },
+    "researchContributors": { "$ref": "#/$defs/people" },
+    "majorContributors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "url"],
+      "properties": {
+        "source": { "type": "string", "const": "contributors.json" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "alumni": { "$ref": "#/$defs/people" },
+    "advisors": { "$ref": "#/$defs/people" }
+  },
+  "$defs": {
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["handle", "name", "role", "summary", "github", "portfolio", "profileSource", "rolePeriod", "evidence"],
+        "properties": {
+          "handle": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 3 },
+          "summary": { "type": "string", "minLength": 40 },
+          "github": { "type": "string", "format": "uri" },
+          "portfolio": { "type": ["string", "null"], "format": "uri" },
+          "profileSource": { "enum": ["public-evidence-only", "consented"] },
+          "rolePeriod": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["start", "end", "status", "precision"],
+            "properties": {
+              "start": { "type": ["string", "null"], "format": "date" },
+              "end": { "type": ["string", "null"], "format": "date" },
+              "status": { "enum": ["current", "ended"] },
+              "precision": { "enum": ["verified-day", "verified-month", "verified-year", "not-publicly-established"] }
+            }
+          },
+          "evidence": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "format": "uri" } },
+          "relatedResearch": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    }
+  }
+}
