@@ -11,8 +11,6 @@ import { discoverAccount } from "@/lib/discovery";
 import { knownDomains, metaFor } from "@/lib/enrich";
 import {
     type DayPoint,
-    lastHours,
-    zoneBreakdown,
     zoneDailyUptime,
     zoneHourlyUptime,
 } from "@/lib/metrics";
@@ -28,6 +26,8 @@ export interface ProductStatus {
     window: "90d" | "24h";
     days: DayPoint[];
     uptimePct: number;
+    /** Whether the recent health query succeeded. Distinct from zero traffic. */
+    healthAvailable: boolean;
     seriesAvailable: boolean;
     total: number;
 }
@@ -36,40 +36,47 @@ export interface StatusPayload {
     products: ProductStatus[];
     changelogs: ChangeLogItem[];
     fetchedAt: number;
+    monitoringAvailable: boolean;
 }
 
 const BASE = "elixpo.com";
 /** Domains we never surface on the public status page. */
 const EXCLUDE = new Set(["url.elixpo.com", "career.elixpo.com"]);
 
-function classify(status: { label: string; count: number }[]): {
-    total: number;
-    fivexx: number;
-} {
-    let total = 0;
-    let fivexx = 0;
-    for (const s of status) {
-        const n = Number(s.label);
-        total += s.count;
-        if (n >= 500) fivexx += s.count;
-    }
-    return { total, fivexx };
-}
-
 function health(total: number, fivexx: number): Health {
     if (total === 0) return "idle";
     const ratio = fivexx / total;
     if (ratio < 0.02) return "operational";
-    if (ratio < 0.1) return "degraded";
+    // A tiny sample must not turn one failed request into a declared outage.
+    if (ratio < 0.1 || total < 20 || fivexx < 10) return "degraded";
     return "outage";
 }
 
 export async function buildStatus(): Promise<StatusPayload> {
-    const inv = await discoverAccount();
-    const w = lastHours(24);
-    const zone = inv.zones.find((z) => z.name === BASE) || inv.zones[0];
+    const [inv, changelogs] = await Promise.all([
+        discoverAccount().catch(() => null),
+        fetchChangelogs(6).catch(() => []),
+    ]);
 
-    const changelogs = await fetchChangelogs(6);
+    if (!inv) {
+        return {
+            products: knownDomains().map((meta) => ({
+                label: meta.label,
+                domain: meta.domain,
+                repo: meta.repo,
+                health: "idle",
+                window: meta.domain === BASE ? "90d" : "24h",
+                days: [],
+                uptimePct: 100,
+                healthAvailable: false,
+                seriesAvailable: false,
+                total: 0,
+            })),
+            changelogs,
+            fetchedAt: Date.now(),
+            monitoringAvailable: false,
+        };
+    }
 
     // Canonical service list — built from the registry's known product domains
     // unioned with discovered Pages projects. This is INDEPENDENT of zone
@@ -84,7 +91,6 @@ export async function buildStatus(): Promise<StatusPayload> {
         byDomain.set(domain, { label: meta.label, repo: meta.repo });
     }
     for (const m of knownDomains()) {
-        if (m.domain !== BASE && !m.domain.endsWith(`.${BASE}`)) continue;
         if (EXCLUDE.has(m.domain)) continue;
         if (!byDomain.has(m.domain)) {
             byDomain.set(m.domain, { label: m.label, repo: m.repo });
@@ -94,24 +100,35 @@ export async function buildStatus(): Promise<StatusPayload> {
     const products: ProductStatus[] = await Promise.all(
         [...byDomain.entries()].map(async ([domain, meta]) => {
             const isBase = domain === BASE;
-            // Current health from the last 24h; bars from the history window
-            // appropriate to the service (90d for the base platform, 24h for
-            // sub-services, which only retain short-window edge analytics).
+            const zone = inv.zones
+                .filter(
+                    (candidate) =>
+                        domain === candidate.name ||
+                        domain.endsWith(`.${candidate.name}`),
+                )
+                .sort((a, b) => b.name.length - a.name.length)[0];
+            // Current health comes from the most recent hour. The longer series
+            // is historical context, not a statement that an old incident is
+            // still active. Both queries use the same response-status source.
             let total = 0;
             let fivexx = 0;
+            let healthAvailable = false;
             let series = {
                 available: false,
                 days: [] as DayPoint[],
                 uptimePct: 100,
             };
             if (zone) {
-                const [b, s] = await Promise.all([
-                    zoneBreakdown(zone.id, w, domain),
+                const [current, s] = await Promise.all([
+                    zoneHourlyUptime(zone.id, domain, 1),
                     isBase
                         ? zoneDailyUptime(zone.id, 90)
                         : zoneHourlyUptime(zone.id, domain, 24),
                 ]);
-                ({ total, fivexx } = classify(b.status));
+                healthAvailable = current.available;
+                const latest = current.days.at(-1);
+                total = latest?.total ?? 0;
+                fivexx = latest?.errors ?? 0;
                 series = s;
             }
             return {
@@ -122,6 +139,7 @@ export async function buildStatus(): Promise<StatusPayload> {
                 window: isBase ? "90d" : "24h",
                 days: series.days,
                 uptimePct: series.uptimePct,
+                healthAvailable,
                 seriesAvailable: series.available,
                 total,
             } satisfies ProductStatus;
@@ -137,5 +155,12 @@ export async function buildStatus(): Promise<StatusPayload> {
         return a.label.localeCompare(b.label);
     });
 
-    return { products, changelogs, fetchedAt: inv.fetchedAt };
+    return {
+        products,
+        changelogs,
+        fetchedAt: inv.fetchedAt,
+        monitoringAvailable: products.some(
+            (product) => product.healthAvailable,
+        ),
+    };
 }
