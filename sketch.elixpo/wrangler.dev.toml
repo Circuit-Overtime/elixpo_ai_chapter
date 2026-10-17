@@ -1,0 +1,34 @@
+name = "lixsketch-collab-dev"
+main = "worker/src/index.ts"
+compatibility_date = "2025-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[durable_objects]
+bindings = [
+  { name = "ROOM", class_name = "RoomDurableObject" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RoomDurableObject"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lixsketch"
+database_id = "65fc6d04-d659-4cb6-b34c-750a763693e4"
+migrations_dir = "worker/migrations"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "aa3a1466b15e443a8f0858c3b9a776c8"
+
+[vars]
+ENVIRONMENT = "development"
+ROOM_TTL_HOURS = "3"
+IDLE_TIMEOUT_MINS = "40"
+ELIXPO_AUTH_URL = "https://accounts.elixpo.com"
+APP_ORIGIN = "http://localhost:3000"
+
+# Production cron triggers intentionally stay in wrangler.toml. The local
+# collaboration process does not need a scheduler, so `npm run dev` starts
+# without Wrangler's scheduled-event warning.
