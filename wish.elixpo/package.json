@@ -11,7 +11,7 @@
   "dependencies": {
     "@cloudflare/workers-types": "^4.20260217.0",
     "lucide-react": "^0.408.0",
-    "next": "16.1.6",
+    "next": "16.2.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
