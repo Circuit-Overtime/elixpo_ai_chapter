@@ -1,0 +1,44 @@
+{
+  "protocol_version": 1,
+  "schema_sha256": "677a92704da9e3dd60d632a67be61908aa1a1943e1590e8b69b03d88058726cf",
+  "schema_version": 1,
+  "vectors": [
+    {
+      "frame_hex": "5146414201010100000000010102030405060708000000070000000b0000c35000080000800000007fffffff",
+      "name": "add-request-integer-boundaries",
+      "payload_hex": "800000007fffffff",
+      "type": "AddRequest",
+      "value": {
+        "a": -2147483648,
+        "b": 2147483647
+      }
+    },
+    {
+      "frame_hex": "514641420101010000000002ffffffffffffffffffffffff0000000000000000001b0000ffffffffffffffff41480000bfd0000000000000800000007fff01",
+      "name": "probe-request-composite",
+      "payload_hex": "ffffffffffffffff41480000bfd0000000000000800000007fff01",
+      "type": "ProbeRequest",
+      "value": {
+        "enabled": true,
+        "gain": -0.25,
+        "offsets": [
+          -32768,
+          0,
+          32767
+        ],
+        "sequence": 18446744073709551615,
+        "temperature": 12.5
+      }
+    },
+    {
+      "frame_hex": "514641420102010000000002ffffffffffffffffffffffff0000000000000000000500000189abcdef",
+      "name": "probe-response",
+      "payload_hex": "0189abcdef",
+      "type": "ProbeResponse",
+      "value": {
+        "accepted": true,
+        "checksum": 2309737967
+      }
+    }
+  ]
+}
