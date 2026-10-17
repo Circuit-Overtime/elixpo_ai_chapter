@@ -616,7 +616,7 @@ async function zoneBreakdownUncached(
     };
     try {
         // Optional host filter lets per-project pages scope breakdowns to one domain.
-        const hf = host ? `,clientRequestHTTPHost:$h` : "";
+        const hf = host ? ",clientRequestHTTPHost:$h" : "";
         const grp = (alias: string, dim: string, limit = 10) =>
             `${alias}:httpRequestsAdaptiveGroups(limit:${limit},filter:{datetime_geq:$s,datetime_leq:$u${hf}},orderBy:[count_DESC]){count dimensions{${dim}}}`;
         const data = await run<any>(
