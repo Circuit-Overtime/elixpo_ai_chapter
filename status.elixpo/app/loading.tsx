@@ -6,10 +6,10 @@
  */
 
 const C = {
-    bg: "#faf9f7",
+    bg: "#f7f7f2",
     card: "#ffffff",
-    border: "#e7e5e4",
-    bone: "#ece9e6",
+    border: "#d9ddd8",
+    bone: "#e3e7e2",
 };
 
 const shimmer: React.CSSProperties = {
@@ -21,9 +21,9 @@ const shimmer: React.CSSProperties = {
 function Bars() {
     return (
         <div style={{ display: "flex", gap: 2, height: 34, marginTop: 12 }}>
-            {Array.from({ length: 60 }, (_, i) => (
+            {Array.from({ length: 24 }, (_, i) => `bar-${i}`).map((key, i) => (
                 <div
-                    key={i}
+                    key={key}
                     style={{
                         flex: 1,
                         borderRadius: 2,
@@ -76,12 +76,14 @@ function Card() {
 export default function Loading() {
     return (
         <div style={{ minHeight: "100dvh", background: C.bg }}>
-            <style>{"@keyframes elxpulse{0%,100%{opacity:1}50%{opacity:.45}}"}</style>
+            <style>
+                {"@keyframes elxpulse{0%,100%{opacity:1}50%{opacity:.45}}"}
+            </style>
             <div
                 style={{
-                    maxWidth: 880,
+                    maxWidth: 1180,
                     margin: "0 auto",
-                    padding: "56px 24px",
+                    padding: "32px 24px 64px",
                 }}
             >
                 {/* header */}
@@ -90,7 +92,12 @@ export default function Loading() {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        marginBottom: 40,
+                        minHeight: 68,
+                        padding: "8px 16px",
+                        marginBottom: 28,
+                        border: `1px solid ${C.border}`,
+                        borderRadius: 999,
+                        background: C.card,
                     }}
                 >
                     <div
@@ -101,35 +108,65 @@ export default function Loading() {
                         }}
                     >
                         <div
-                            style={{ ...shimmer, width: 30, height: 30, borderRadius: 7 }}
+                            style={{
+                                ...shimmer,
+                                width: 30,
+                                height: 30,
+                                borderRadius: 7,
+                            }}
                         />
                         <div style={{ ...shimmer, width: 150, height: 22 }} />
                     </div>
-                    <div style={{ ...shimmer, width: 170, height: 40, borderRadius: 8 }} />
+                    <div
+                        style={{
+                            ...shimmer,
+                            width: 150,
+                            height: 38,
+                            borderRadius: 999,
+                        }}
+                    />
                 </div>
 
-                {/* banner */}
                 <div
                     style={{
                         ...shimmer,
-                        height: 84,
-                        borderRadius: 10,
-                        marginBottom: 40,
+                        height: 430,
+                        borderRadius: 30,
+                        marginBottom: 16,
+                    }}
+                />
+
+                <div
+                    style={{
+                        ...shimmer,
+                        height: 92,
+                        borderRadius: 18,
+                        marginBottom: 48,
                     }}
                 />
 
                 {/* services */}
-                <div style={{ ...shimmer, width: 80, height: 14, marginBottom: 12 }} />
                 <div
                     style={{
-                        display: "flex",
-                        flexDirection: "column",
+                        ...shimmer,
+                        width: 80,
+                        height: 14,
+                        marginBottom: 12,
+                    }}
+                />
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
                         gap: 12,
                     }}
                 >
-                    {Array.from({ length: 6 }, (_, i) => (
-                        <Card key={i} />
-                    ))}
+                    {["one", "two", "three", "four", "five", "six"].map(
+                        (key) => (
+                            <Card key={key} />
+                        ),
+                    )}
                 </div>
             </div>
         </div>

@@ -518,7 +518,11 @@ export async function zoneHourlyUptime(
                     .toISOString()
                     .slice(0, 13);
                 const v = byHour.get(key) || { total: 0, errors: 0 };
-                days.push({ date: `${key}:00Z`, total: v.total, errors: v.errors });
+                days.push({
+                    date: `${key}:00Z`,
+                    total: v.total,
+                    errors: v.errors,
+                });
             }
             const t = days.reduce((a, d) => a + d.total, 0);
             const e = days.reduce((a, d) => a + d.errors, 0);
@@ -682,7 +686,7 @@ async function zoneBreakdownUncached(
     };
     try {
         // Optional host filter lets per-project pages scope breakdowns to one domain.
-        const hf = host ? `,clientRequestHTTPHost:$h` : "";
+        const hf = host ? ",clientRequestHTTPHost:$h" : "";
         const grp = (alias: string, dim: string, limit = 10) =>
             `${alias}:httpRequestsAdaptiveGroups(limit:${limit},filter:{datetime_geq:$s,datetime_leq:$u${hf}},orderBy:[count_DESC]){count dimensions{${dim}}}`;
         const data = await run<any>(
