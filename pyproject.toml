@@ -1,0 +1,72 @@
+# OreoOS as a distributable Python package.
+#
+# This file exists so the OS can be uploaded as a GitHub Package (visible
+# on the repo's "Packages" sidebar). The badge does NOT pip-install from
+# this — flashing is done with tools/deploy.py over USB / mpremote. The
+# package is purely a discoverability artefact + a way to bundle the OS
+# tree for downstream tooling, mirror sites, and the OTA manifest.
+#
+# Build locally:
+#     pip install --upgrade build
+#     python -m build
+# That produces dist/oreoos-<version>.tar.gz + a .whl. CI publishes both
+# to GitHub Packages on every release tag.
+
+[build-system]
+requires      = ["setuptools >= 68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name            = "oreoos"
+dynamic         = ["version"]
+description     = "OreoOS — the friendly MicroPython operating system for the Elixpo Oreo Badge."
+readme          = "README.md"
+requires-python = ">=3.9"
+license         = { file = "LICENSE" }
+keywords        = ["esp32", "esp32-s3", "micropython", "badge", "conference-badge", "oreoos", "elixpo"]
+authors         = [
+    { name = "Ayushman Bhattacharya", email = "hello@elixpo.com" },
+]
+maintainers     = [
+    { name = "Elixpo", email = "hello@elixpo.com" },
+]
+classifiers     = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: Implementation :: MicroPython",
+    "Topic :: Home Automation",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+    "Topic :: System :: Operating System",
+]
+
+[project.urls]
+Homepage       = "https://elixpo.com"
+Repository     = "https://github.com/elixpo/oreo"
+Issues         = "https://github.com/elixpo/oreo/issues"
+Documentation  = "https://github.com/elixpo/oreo/blob/main/docs/HARDWARE.md"
+
+
+# ── setuptools layout ─────────────────────────────────────────────────────────
+[tool.setuptools]
+# We ship the on-device source tree (oreoOS + oreoWare + apps) plus the host-
+# side tooling. The `package-data` block bundles the optimised RGB565 assets
+# so a downstream mirror has everything needed to reproduce a flash.
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where   = ["."]
+include = ["oreoOS*", "oreoWare*", "apps*"]
+exclude = ["tests*", "dist*", ".venv*", "**/__pycache__"]
+
+[tool.setuptools.package-data]
+"*" = ["*.py", "*.json", "*.md", "*.txt", "manifest.json"]
+
+# Version pulled live from oreoOS/config.py so this single-source-of-truth
+# pattern stays intact.
+[tool.setuptools.dynamic]
+version = { attr = "oreoOS.config.VERSION" }

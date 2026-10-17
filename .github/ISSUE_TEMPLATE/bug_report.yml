@@ -1,0 +1,64 @@
+name: 🐛 Bug report
+description: Something on the badge isn't behaving the way you'd expect.
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file this. The more specific you can
+        be, the faster we can help. Screenshots / phone photos of the
+        badge welcome.
+
+  - type: input
+    id: version
+    attributes:
+      label: OS version
+      description: Settings → Version (or About → Version).
+      placeholder: "e.g. v1.2.55"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: hardware
+    attributes:
+      label: Hardware
+      options:
+        - ESP32-S3-DevKitC-1-N16R8 (reference)
+        - Custom PCB
+        - Breadboard prototype
+        - Other / unsure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect to see?
+      placeholder: |
+        Opened the Racer app, tilted right, the car drove left instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps if you can. "Boot → Apps → Racer → press A → tilt right" is perfect.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / serial output (optional)
+      render: shell
+      placeholder: |
+        # paste anything from mpremote / serial monitor here
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow the project's [Code of Conduct](https://github.com/elixpo/oreo/blob/main/CODE_OF_CONDUCT.md).
+          required: true

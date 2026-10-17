@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Email us
+    url: mailto:hello@elixpo.com
+    about: Questions, sponsorship, partnership, or anything that doesn't fit a template.
+  - name: 🛡 Security issue
+    url: https://github.com/elixpo/oreo/security/advisories/new
+    about: Please use a private security advisory instead of a public issue.
+  - name: 🤝 Code of Conduct
+    url: https://github.com/elixpo/oreo/blob/main/CODE_OF_CONDUCT.md
+    about: Read before posting your first issue.
