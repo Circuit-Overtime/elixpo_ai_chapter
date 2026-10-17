@@ -1,0 +1,36 @@
+{
+  "$schema": "./schemas/discussions.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "statusOwner": "elixpo",
+  "sourceRepository": "https://github.com/elixpo/elixpo",
+  "organizationUrl": "https://github.com/orgs/elixpo/discussions",
+  "apiUrl": "https://api.github.com/repos/elixpo/elixpo/discussions",
+  "status": "active",
+  "eligibleCategories": [
+    "Announcements",
+    "Show and tell",
+    "Q&A",
+    "Polls",
+    "Chapter Proposal",
+    "Research",
+    "Service Feedback"
+  ],
+  "featuredDiscussionNumbers": [],
+  "refreshSeconds": 900,
+  "responsePolicy": {
+    "serviceAndProjectOwner": "The maintainer named by the owning repository is responsible for technical responses and lifecycle corrections.",
+    "researchOwner": "The authors or research maintainers are responsible for claims, methods, artifacts, citations, and reproduction questions.",
+    "chapterOwner": "The Chapter steward is responsible for scope, contribution paths, review decisions, attribution, and the release record.",
+    "unansweredReviewDays": 7,
+    "commitment": "best-effort-public-review",
+    "escalationUrl": "https://github.com/orgs/elixpo/discussions/categories/q-a"
+  },
+  "moderation": {
+    "excludeLocked": true,
+    "excludedDiscussionNumbers": [],
+    "excludedAuthors": [],
+    "featuredRequiresEditorialSelection": true,
+    "fallbackMessage": "The live discussion feed is temporarily unavailable. GitHub remains the canonical community record."
+  }
+}
