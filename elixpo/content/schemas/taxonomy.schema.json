@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/taxonomy.schema.json",
+  "title": "Elixpo controlled taxonomy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "lastVerified",
+    "publicFamilies",
+    "repositoryDispositions",
+    "relationships",
+    "lifecycles",
+    "custody",
+    "verificationStates",
+    "artifactTypes",
+    "operationalStates",
+    "maturities",
+    "chapterStatuses"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date"
+    },
+    "publicFamilies": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "project",
+              "research",
+              "service"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 20
+          }
+        }
+      }
+    },
+    "repositoryDispositions": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "public-entry",
+          "supporting-repository",
+          "duplicate-or-redirect",
+          "exclude"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "core",
+          "chapter",
+          "member",
+          "connected"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "lifecycles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "incubating",
+          "active",
+          "maintenance",
+          "paused",
+          "completed",
+          "archived"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "custody": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "elixpo-owned",
+          "transferred-to-elixpo",
+          "externally-owned",
+          "mirrored"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "verificationStates": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "verified",
+          "decision-recorded",
+          "needs-decision"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "artifactTypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2
+      },
+      "uniqueItems": true
+    },
+    "operationalStates": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "online",
+          "limited",
+          "offline",
+          "sunset",
+          "not-applicable"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "maturities": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "experimental",
+          "alpha",
+          "beta",
+          "stable",
+          "mature",
+          "not-applicable"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "chapterStatuses": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "proposed",
+          "selected",
+          "active",
+          "released",
+          "closed",
+          "withdrawn"
+        ]
+      },
+      "uniqueItems": true
+    }
+  }
+}
