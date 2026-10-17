@@ -8,36 +8,30 @@
 #   issue/PR agent work is owned by the separately gated OreoFlow workflows
 #   weekly cron        → stale issue/PR cleanup
 
-name: Elixpo CI
+name: Elixpo community automation
 
 on:
-  workflow_dispatch:  
-  push:
-    branches: [main]
+  workflow_dispatch:
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
   schedule:
     - cron: "0 9 * * 1"  # Weekly Monday 9 AM UTC — stale cleanup
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: community-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  # ── Common CI (no LLM) ──────────────────────────────
-
-  quality:
-    if: >-
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' && github.event.action != 'closed')
-    uses: ./.github/workflows/quality-gate.yml
-    secrets: inherit
-
   pr-manage:
-    if: >-
-      github.event_name == 'pull_request' &&
-      github.event.action != 'closed'
+    if: github.event_name == 'pull_request'
     uses: ./.github/workflows/pr-management.yml
-    secrets: inherit
 
   stale:
     if: github.event_name == 'schedule'
     uses: ./.github/workflows/stale-management.yml
-    secrets: inherit
