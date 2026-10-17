@@ -14,14 +14,15 @@ jobs:
   build:
     name: Build and validate package
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: apps/win-dot-panel
     outputs:
       release_tag: ${{ steps.version.outputs.release_tag }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - name: Set package version
@@ -77,7 +78,7 @@ jobs:
           test -f extracted/usr/share/doc/win-dot-panel/copyright
           PYTHONPATH="$PWD/extracted/usr/lib/python3/dist-packages" extracted/usr/bin/win-dot-panel --help
           (cd dist && sha256sum win-dot-panel_*.deb > SHA256SUMS && sha256sum -c SHA256SUMS)
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: validated-debian-package
           path: |
