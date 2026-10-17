@@ -1,0 +1,19 @@
+project:
+  name: elixpo
+  description: "Elixpo Landing/Portfolio Site"
+  stack: nextjs
+  node_version: "20"
+
+ci:
+  lint_cmd: "npx eslint ."
+  test_cmd: ""
+  build_cmd: "npm run build"
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [frontend, nextjs, ui, cloudflare]
+    lead: true
+
+gist:
+  id: ""
+  account: elixpoo

@@ -1,0 +1,11 @@
+{
+  "label": "Backed & Featured By",
+  "partners": [
+    { "name": "Pollinations", "logo": "https://myceli.ai/favicon.ico" },
+    { "name": "Google", "logo": "https://www.google.com/favicon.ico" },
+    { "name": "Cloudflare", "logo": "https://www.cloudflare.com/favicon.ico" },
+    { "name": "Firebase", "logo": "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_center,h_32,q_auto:good,w_32/v1/gcs/platform-data-goog/contentbuilder/GDG_Bevy_Favicon_y29LtMy.png" },
+    { "name": "GitHub", "logo": "https://github.com/favicon.ico" },
+    { "name": "Vercel", "logo": "https://vercel.com/favicon.ico" }
+  ]
+}
