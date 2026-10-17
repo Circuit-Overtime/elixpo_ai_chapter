@@ -1,0 +1,27 @@
+# MonoDiffuse — Python dependencies  (Python 3.11, NVIDIA GPU / CUDA 12.4)
+#
+# The line below adds PyTorch's CUDA 12.4 wheel index. The "+cu124" pins force the
+# GPU builds from that index; everything else resolves from PyPI as normal.
+#   pip install -r requirements.txt
+#
+# CPU-only or a different CUDA version? Delete the +cu124 pins (and the line below)
+# and grab the right command from https://pytorch.org/get-started/locally/.
+--extra-index-url https://download.pytorch.org/whl/cu124
+
+# --- Core: needed by P1 (logic-gate diffusion) and the Phase 0 baseline ---
+torch==2.5.1+cu124
+torchvision==0.20.1+cu124
+
+# --- Phase 0 benchmark / eval scripts (experiments/v0_mnist) ---
+numpy
+scipy            # FID / Frechet distance (sqrtm), nearest-neighbour metrics
+pyarrow          # CIFAR-10 parquet mirror fallback when the upstream tarball is throttled
+matplotlib       # sample grids and plots
+tqdm             # progress bars
+pytest            # reproducibility/unit checks for the controlled study
+onnx==1.23.2      # Diffuino deployment export
+onnxruntime==1.30.0 # Diffuino parity checks and CPU inference
+
+# --- Optional, for later phases (not required to run P1) ---
+# difflogic       # official CUDA logic-gate kernels — faster than the bundled
+#                 # pure-PyTorch layers; needs a CUDA toolchain. Add when scaling P2/P3.
