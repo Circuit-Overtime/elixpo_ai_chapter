@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "focusTags": ["Platform Engineering", "Open Source", "DevRel"],
+    "name": "AYUSHMAN",
+    "headline": "Open-Source Maintainer & DevRel Engineer",
+    "subhead": "GitHub Maintainer Advisory for Pollinations.ai · DevRel Engineer @ Myceli AI",
+    "intro": "I build the automation, release engineering, and developer tooling that keep large open-source projects running, contributor pipelines, CI/CD, and deployment infrastructure.",
+    "credentials": [
+      { "label": "GitHub Maintainer Advisory", "org": "Pollinations.ai" },
+      { "label": "DevRel Engineer", "org": "Myceli AI" }
+    ],
+    "ctas": [
+      { "label": "View Work", "href": "projects" },
+      { "label": "Read Research", "href": "publications" },
+      { "label": "Connect", "href": "connect" }
+    ],
+    "portrait": "/assets/ayushman/punchlineSection/vr-pic1.webp"
+  },
+  "intro": {
+    "heroName": "AYUSHMAN",
+    "tagline": "PLATFORM",
+    "taglineSuffix": "ENGINEER!",
+    "description": "I work across open-source maintainership, platform engineering, research, and developer communities. I care about systems that are understandable to contributors, dependable for users, and documented well enough for someone else to operate.",
+    "highlights": [
+      "Maintainer at Pollinations.ai",
+      "Co-author of arXiv:2609.05463",
+      "GitHub Open Source Friday speaker",
+      "21-event GDG campus season",
+      "Builder of OreoLook"
+    ],
+    "images": {
+      "portrait": "/assets/ayushman/punchlineSection/vr-pic1.webp",
+      "landscape": "/assets/ayushman/punchlineSection/hz-pic1.webp"
+    }
+  },
+  "websiteSection": {
+    "designedBy": "This portfolio is part of the Elixpo project ecosystem and was built to keep my projects, talks, research, and community work in one public place. Its visual direction was inspired by Nicolo Miranda, with artwork from Elixpo Art.",
+    "futurePlans": "I am continuing to grow this site as a record of what I build and learn. The next steps are deeper engineering notes, reproducible research artifacts, and clearer links between project source code, talks, and the operational lessons behind them.",
+    "codeStory": "Elixpo began as a way for friends to build together during university. It has since grown into a collection of open-source services and experiments spanning search, identity, publishing, developer tooling, and creative applications. Vivek Yadav and Anwesha Chakraborty have contributed to that journey, along with the wider community that has tested, documented, and improved these projects.",
+    "images": {
+      "owl": "/assets/ayushman/websiteSection/hz-owl1.webp",
+      "humanThink": "/assets/ayushman/websiteSection/human-think1.webp",
+      "seal": "/assets/ayushman/websiteSection/sq-seal1.webp"
+    }
+  },
+
+  
+  "techSection": {
+    "heading": "THE TECHY SYNAPSE",
+    "subheading": "SYSTEMS",
+    "description": "My current focus is platform engineering for open-source and AI products: CI/CD, containers, cloud deployment, Redis-backed systems, contributor automation, developer experience, and the boundaries between model output and application control. I learn these topics by building, operating, documenting, and then teaching the parts that failed or surprised me.",
+    "reading": [
+      { "title": "Microprocessors and Microcontrollers", "author": "Krishna Kant", "status": "Reading", "note": "Architechture Programming and System Design" },
+      { "title": "Site Reliability Engineering", "author": "Google SRE Team", "status": "Reading", "note": "How Google runs production systems." },
+      { "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "status": "Next Up", "note": "Craft, habits, and thinking like an engineer." }
+    ],
+    "explore": [
+      { "label": "Talks", "caption": "Speaking and sessions", "href": "talks" },
+      { "label": "Writing", "caption": "Engineering and community notes", "href": "blogs" },
+      { "label": "Papers", "caption": "Research and publications", "href": "publications" }
+    ],
+    "images": {
+      "wand": "/assets/ayushman/techTracks/wand-1.webp",
+      "landscape": "/assets/ayushman/techTracks/hz-image1.webp",
+      "banner": "/assets/ayushman/hrz-image1.webp"
+    }
+  }
+}

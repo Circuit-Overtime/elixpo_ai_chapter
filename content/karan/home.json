@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "focusTags": ["Full-Stack", "AI/MLOps", "Open Source"],
+    "name": "KARAN",
+    "headline": "Open Source Contributor & T-Shaped Developer",
+    "subhead": "FlyRank AI Intern · Core Contributor @ Elixpo · 2nd-year B.Tech CSE Student",
+    "intro": "Building and deploying software from first year, focused on full-stack development, AI-powered products, automation, and scalable system design. I turn ideas into practical products while continuously exploring modern developer tooling.",
+    "credentials": [
+      { "label": "Frontend AI Intern", "org": "FlyRank AI" },
+      { "label": "Contributor", "org": "Elixpo" }
+    ],
+    "ctas": [
+      { "label": "View Work", "href": "projects" },
+      { "label": "Connect", "href": "connect" }
+    ],
+    "portrait": "/assets/karan/karan-sepia-hero.jpg"
+  },
+  "intro": {
+    "heroName": "KARAN",
+    "tagline": "AI",
+    "taglineSuffix": "ENGINEER",
+    "description": "I build modern, scalable, and AI-powered web applications with a focus on performance, usability, and clean design.",
+    "highlights": [
+      "Full-Stack Development",
+      "AI & MLOps",
+      "Open Source Contributor",
+      "Scalable System Design"
+    ],
+    "images": {
+      "portrait": "/assets/karan/karan-avatar.jpg",
+      "landscape": "/assets/karan/punchlineSection/hz-pic1.webp"
+    }
+  },
+  "websiteSection": {
+    "designedBy": "Huge shoutout to Ayushman, the founder of Elixpo, who guided me into the world of open source. He showed me what it truly means to contribute, collaborate, and build in the open. Without his mentorship, I wouldn't be where I am today.",
+    "futurePlans": "I want to go deeper into scalable system design, AI-native developer tooling, and multi-model architectures. My goal is to build products that solve real problems at scale — and to keep learning by building, shipping, and contributing to open-source projects that matter.",
+    "codeStory": "My journey started in first year when I was confused about what to build and where to start. Ayushman introduced me to Elixpo and open source, and everything clicked. I went from learning React to shipping full-stack apps with AI integrations, contributing to Pollinations, building Kareixo, and interning at FlyRank AI — all within a year. The mentality is simple: build real things, ship fast, learn from feedback, and never stop exploring.",
+    "images": {
+      "owl": "/assets/karan/websiteSection/hz-owl1.webp",
+      "humanThink": "/assets/karan/websiteSection/human-think1.webp",
+      "seal": "/assets/karan/websiteSection/sq-seal1.webp"
+    }
+  },
+  "techSection": {
+    "heading": "TECH STACK",
+    "subheading": "DEV-S",
+    "description": "Technologies and tools I use to build efficient and scalable applications.",
+    "skills": [
+      { "type": "text", "label": "React" },
+      { "type": "text", "label": "Next.js" },
+      { "type": "text", "label": "Node.js" },
+      { "type": "text", "label": "PostgreSQL" },
+      { "type": "text", "label": "Python" },
+      { "type": "text", "label": "TypeScript" },
+      { "type": "text", "label": "Docker" },
+      { "type": "text", "label": "Git" },
+      { "type": "text", "label": "OpenAI API" }
+    ],
+    "explore": [
+      { "label": "Talks", "caption": "Speaking & sessions", "href": "talks" },
+      { "label": "Writing", "caption": "Notes & blog posts", "href": "blogs" },
+      { "label": "Papers", "caption": "Research & publications", "href": "publications" }
+    ],
+    "images": {
+      "wand": "/assets/karan/techTracks/wand-1.webp",
+      "landscape": "/assets/karan/techTracks/karan-sepia.png",
+      "banner": "/assets/karan/hrz-image1.webp"
+    }
+  }
+}
