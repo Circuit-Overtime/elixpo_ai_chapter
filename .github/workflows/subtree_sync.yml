@@ -9,9 +9,14 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: subtree-sync-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Checkout monorepo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -36,11 +41,12 @@ jobs:
           set -u
 
           repos=(
+            # Agent, Crumb, and OreoPI remain outside ordinary subtree updates
+            # until their shared architecture and repository boundaries settle.
             "payouts.elixpo https://github.com/elixpo/payouts.elixpo"
             "status.elixpo https://github.com/elixpo/status.elixpo"
             "mails.elixpo https://github.com/elixpo/mail.elixpo"
             "admin.elixpo https://github.com/elixpo/admin.elixpo"
-            "agent.elixpo https://github.com/elixpo/agent.elixpo.git"
             "elixpo https://github.com/elixpo/elixpo.git"
             "art.elixpo https://github.com/elixpo/art.elixpo.git"
             "jackey.elixpo https://github.com/elixpo/jackey.elixpo.git"
