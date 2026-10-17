@@ -1,0 +1,13 @@
+{
+  "heading": "CONNECT",
+  "description": "Let's connect for opportunities, collaborations, or discussions around frontend development and AI.",
+  "emails": [
+    "2006karanray@gmail.com"
+  ],
+  "contactImage": "/assets/karan/karan-avatar.jpg",
+  "socialLinks": [
+    { "platform": "GitHub", "url": "https://github.com/karanray06", "icon": "logo-github", "hoverColor": "#333" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/in/karan-ray-370150351", "icon": "logo-linkedin", "hoverColor": "#0077b5" },
+    { "platform": "Instagram", "url": "https://instagram.com/karanray06", "icon": "logo-instagram", "hoverColor": "#E1306C" }
+  ]
+}

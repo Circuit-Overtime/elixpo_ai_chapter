@@ -1,0 +1,15 @@
+{
+  "heading": "PUBLICATIONS",
+  "description": "Explore my latest publications, showcasing the innovative research and insights from Vivek",
+  "images": [
+    "/assets/vivek/publication/sq-1.webp",
+    "/assets/vivek/about/ptr-11.webp"
+  ],
+  "papers": [
+    {
+      "title": "Exploring Microcode CPU Instructions with RISC-V Breadboard Computer",
+      "year": "2025",
+      "isNew": true
+    }
+  ]
+}

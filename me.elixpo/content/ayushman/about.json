@@ -1,0 +1,27 @@
+{
+  "intro": {
+    "heading": "AYUSHMAN",
+    "subheading": "ABOUT!",
+    "description": "I am an open-source maintainer and platform engineer from Kolkata. At Pollinations.ai, I work on contributor systems, automation, release workflows, application onboarding, and developer tooling. I also build the Elixpo project ecosystem, co-author systems research, organise developer communities, and turn what I learn into talks and practical documentation.",
+    "portraitImage": "/assets/ayushman/about/ptr-11.webp"
+  },
+  "fancySection": {
+    "banner": "BUILD. DOCUMENT. SHARE.",
+    "subtitle": "Systems & Communities",
+    "content": "My work moves between engineering and community practice. I have maintained infrastructure for a large open-source AI platform, built the caching architecture behind OreoLook, led a 21-event GDG campus season, helped establish OWASP JIS University, and spoken about maintainership and contributor systems. The common thread is making technical work easier for other people to understand, use, and continue.",
+    "highlights": [
+      "Maintainer at Pollinations.ai",
+      "Co-authored an arXiv systems preprint",
+      "GitHub and community speaker"
+    ],
+    "contactNote": "I am open to conversations about platform engineering, open-source maintainership, developer relations, research, and technical speaking.",
+    "shoutouts": ["Vivek Yadav", "Anwesha Chakraborty", "Nihal Gazi"],
+    "shoutoutText": "for building, reviewing, researching, and learning alongside me across Elixpo and OreoLook."
+  },
+  "images": {
+    "gallery": [
+      "/assets/ayushman/about/sq-22.webp",
+      "/assets/ayushman/about/sq-11.webp"
+    ]
+  }
+}

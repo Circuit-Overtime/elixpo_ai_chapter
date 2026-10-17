@@ -1,0 +1,57 @@
+{
+  "heading": "PROJECTS",
+  "description": "Selected open-source systems I maintain or build across generative AI, search, contributor infrastructure, identity, and developer tooling. Star counts are a snapshot from 20 September 2026.",
+  "projects": [
+    {
+      "name": "pollinations",
+      "description": "An open-source generative AI platform where I maintain contributor rewards, triage automation, application workflows, model curation, and developer tooling.",
+      "stars": 5101,
+      "url": "https://github.com/pollinations/pollinations",
+      "owner": "pollinations",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/86964862?v=4",
+      "topics": ["generative-ai", "open-source", "developer-tools", "automation"],
+      "language": "TypeScript"
+    },
+    {
+      "name": "search.elixpo",
+      "displayName": "OreoLook",
+      "description": "An open-source, OpenAI-compatible agentic web-search and deep-research engine with Redis memory, Qdrant retrieval, MCP tools, streaming, citations, and PDF exports.",
+      "stars": 22,
+      "url": "https://github.com/pollinations/search.elixpo",
+      "owner": "pollinations",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/86964862?v=4",
+      "topics": ["agentic-search", "deep-research", "redis", "mcp-server", "rag"],
+      "language": "Python"
+    },
+    {
+      "name": "elixpo_chapter",
+      "description": "A collaborative open-source repository where community members learn by contributing projects spanning software, cloud, AI, and developer tooling.",
+      "stars": 86,
+      "url": "https://github.com/elixpo/elixpo_chapter",
+      "owner": "elixpo",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/161109909?v=4",
+      "topics": ["community-driven", "hacktoberfest", "open-source", "full-stack"],
+      "language": "JavaScript"
+    },
+    {
+      "name": "accounts.elixpo",
+      "description": "An open identity and user-management platform with SSO, OAuth/OIDC, passkeys, social login, webhooks, and an edge-safe TypeScript SDK.",
+      "stars": 8,
+      "url": "https://github.com/elixpo/accounts.elixpo",
+      "owner": "elixpo",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/161109909?v=4",
+      "topics": ["authentication", "cloudflare", "identity-provider", "openid-connect", "passkeys"],
+      "language": "TypeScript"
+    },
+    {
+      "name": "terminal-ascii",
+      "description": "An experimental terminal renderer that converts image and video media into ANSI representations.",
+      "stars": 2,
+      "url": "https://github.com/Circuit-Overtime/terminal-ascii",
+      "owner": "Circuit-Overtime",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/74301576?v=4",
+      "topics": ["ascii-art", "python", "terminal"],
+      "language": "Jupyter Notebook"
+    }
+  ]
+}

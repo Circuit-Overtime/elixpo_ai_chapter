@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Started AI Integration Journey",
+    "date": "2025-01-10",
+    "description": "Began working on integrating LLMs and AI tools into real-world applications, focusing on LangChain and RAG systems.",
+    "image": "/assets/common/spotlight/elixpo-art.webp"
+  },
+  {
+    "title": "Frontend Developer at Pollinations AI",
+    "date": "2024-06-01",
+    "description": "Worked as a Frontend Developer & AI Integrator, contributing to UI systems and integrating AI-powered features into production environments.",
+    "image": "/assets/common/spotlight/elixpo-hackathon.webp"
+  },
+  {
+    "title": "Built Semantic Search Engine",
+    "date": "2025-02-15",
+    "description": "Developed Elixpo Search using LangChain and vector embeddings to enable natural language-based semantic search.",
+    "image": "/assets/common/spotlight/elixpoSearchPicture.webp"
+  },
+  {
+    "title": "Full Stack Blogging Platform",
+    "date": "2025-03-10",
+    "description": "Built a full stack blog platform using React, Node.js, and PostgreSQL with REST API integration for scalable data handling.",
+    "image": "/assets/common/spotlight/asciiArt.webp"
+  },
+  {
+    "title": "Inkflow Canvas Project",
+    "date": "2024-12-01",
+    "description": "Developed a browser-based collaborative whiteboard using HTML5 Canvas API with real-time drawing features.",
+    "image": "/assets/common/spotlight/elixpo-art.webp"
+  },
+  {
+    "title": "GDG Web Facilitator Role",
+    "date": "2025-08-01",
+    "description": "Leading web development sessions and helping students build real-world projects as part of GDG on Campus.",
+    "image": "/assets/common/spotlight/elixpo-hackathon.webp"
+  },
+  {
+    "title": "OWASP Tech Operations Lead",
+    "date": "2026-02-01",
+    "description": "Managing technical operations and organizing security-focused events in OWASP JIS University chapter.",
+    "image": "/assets/common/spotlight/elixpoSearchPicture.webp"
+  },
+  {
+    "title": "MEAN Stack Certification",
+    "date": "2025-07-28",
+    "description": "Completed 36-hour Full Stack Development training with MEAN Stack from Ardent Computech Pvt. Ltd.",
+    "image": "/assets/common/spotlight/asciiArt.webp"
+  },
+  {
+    "title": "NPTEL Java Certification (Elite)",
+    "date": "2025-04-01",
+    "description": "Achieved Elite certification in Programming in Java from IIT Kharagpur under NPTEL.",
+    "image": "/assets/common/spotlight/elixpo-art.webp"
+  },
+  {
+    "title": "Python Programming Training",
+    "date": "2025-03-24",
+    "description": "Completed 30-hour training program in Python Programming from Euphoria GenX.",
+    "image": "/assets/common/spotlight/elixpo-hackathon.webp"
+  },
+  {
+    "title": "AWS Cloud Certification",
+    "date": "2026-01-01",
+    "description": "Completed AWS Training & Certification on Job Roles in the Cloud.",
+    "image": "/assets/common/spotlight/elixpoSearchPicture.webp"
+  },
+  {
+    "title": "Codesprint 2.0 Hackathon",
+    "date": "2025-01-20",
+    "description": "Participated in Codesprint 2.0 organized by IEEE ComSoc & Signal Processing Society, showcasing problem-solving and development skills.",
+    "image": "/assets/common/spotlight/asciiArt.webp"
+  },
+  {
+    "title": "Google Solution Challenge",
+    "date": "2025-02-10",
+    "description": "Participated in GDG Solution Challenge, contributing to impactful solutions using technology.",
+    "image": "/assets/common/spotlight/elixpo-art.webp"
+  },
+  {
+    "title": "Open Source Contributor",
+    "date": "2024-10-01",
+    "description": "Actively contributed to Hacktoberfest with multiple open-source contributions and collaborations.",
+    "image": "/assets/common/spotlight/elixpo-hackathon.webp"
+  }
+]
