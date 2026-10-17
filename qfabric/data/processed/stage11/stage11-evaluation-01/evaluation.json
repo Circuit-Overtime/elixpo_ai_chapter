@@ -1,0 +1,1297 @@
+{
+  "applications": [
+    {
+      "kind": "controlled-synthetic-chain",
+      "manual_expert": [
+        "linux",
+        "rt",
+        "rt",
+        "linux"
+      ],
+      "name": "synthetic-chain",
+      "nodes": [
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "source"
+        },
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "filter"
+        },
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "aggregate"
+        },
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "sink"
+        }
+      ]
+    },
+    {
+      "kind": "signal-processing-pipeline",
+      "manual_expert": [
+        "rt",
+        "rt",
+        "rt"
+      ],
+      "name": "signal-pipeline",
+      "nodes": [
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "sample"
+        },
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "smooth"
+        },
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "feature"
+        }
+      ]
+    },
+    {
+      "kind": "closed-loop-control-simulation",
+      "manual_expert": [
+        "rt",
+        "rt",
+        "linux"
+      ],
+      "name": "control-loop",
+      "nodes": [
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "estimate"
+        },
+        {
+          "effect": "Q_STATEFUL",
+          "linux_only": false,
+          "name": "controller",
+          "transition_hooks_declared": true
+        },
+        {
+          "effect": "Q_STATEFUL",
+          "linux_only": false,
+          "name": "plant",
+          "transition_hooks_declared": true
+        }
+      ]
+    },
+    {
+      "kind": "network-connected-linux-edge-pipeline",
+      "manual_expert": [
+        "linux",
+        "rt",
+        "linux"
+      ],
+      "name": "network-pipeline",
+      "nodes": [
+        {
+          "effect": "Q_STATEFUL",
+          "linux_only": true,
+          "name": "socket-receive"
+        },
+        {
+          "effect": "Q_PURE",
+          "linux_only": false,
+          "name": "transform"
+        },
+        {
+          "effect": "Q_STATEFUL",
+          "linux_only": true,
+          "name": "socket-publish"
+        }
+      ]
+    }
+  ],
+  "captured_utc": "2026-10-09T09:01:53.177365+00:00",
+  "claim": "safe-closed-loop-recovery-of-empirical-timing-contracts",
+  "configuration": {
+    "baseline_order": [
+      "ordinary-linux",
+      "tuned-linux",
+      "static-mcu-first",
+      "manual-expert",
+      "qfabric-static",
+      "qfabric-recovery",
+      "offline-oracle"
+    ],
+    "cross_domain_edge_cost_ns": 9110536,
+    "deadline_derivation": {
+      "deadline_ns": 20000000,
+      "maximum_ns": 13664374.059999997,
+      "metric": "maximum idle rpc-roundtrip p99 across repetitions",
+      "post_hoc_tuned": false,
+      "rounding_quantum_ns": 5000000,
+      "safety_factor": 1.25,
+      "source_values_ns": [
+        13664374.059999997,
+        8961872.19,
+        9110536.63
+      ]
+    },
+    "observations_per_cell": 1000,
+    "seed": 11012026
+  },
+  "coverage": {
+    "application_cells": 28,
+    "flagship_cells": 7,
+    "infeasible_scenario": true,
+    "negative_safety_scenarios": true,
+    "positive_hardware_recovery": true,
+    "rollback_hardware_recovery": true
+  },
+  "evidence_scope": {
+    "application_evaluation": "deterministic replay of measured hardware traces over declared workload graphs",
+    "direct_hardware": "Stage 1-10 source reports and scheduler campaign",
+    "hard_real_time_claimed": false
+  },
+  "flagship": {
+    "hardware_detection_delay_windows": [
+      1
+    ],
+    "hardware_rollback_status": "pass",
+    "hardware_rollbacks": 1,
+    "hardware_success_status": "pass",
+    "hardware_verified_recovery_windows": [
+      4
+    ],
+    "recovery_switch_observation": 60,
+    "results": [
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "ordinary-linux",
+        "chosen_node_executions": {
+          "linux": 4000,
+          "rt": 0
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 167242753,
+        "mean_ns": 87630086.002,
+        "miss_rate_pct": 67.30000000000001,
+        "misses": 673,
+        "observations": 1000,
+        "p50_ns": 87740115.0,
+        "p95_ns": 111300953.35,
+        "p99_ns": 123789966.83,
+        "placement": [
+          "linux",
+          "linux",
+          "linux",
+          "linux"
+        ],
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      },
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "tuned-linux",
+        "chosen_node_executions": {
+          "linux": 4000,
+          "rt": 0
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 24924688,
+        "mean_ns": 23232072.185,
+        "miss_rate_pct": 0.0,
+        "misses": 0,
+        "observations": 1000,
+        "p50_ns": 23234033.0,
+        "p95_ns": 23906757.3,
+        "p99_ns": 24171939.95,
+        "placement": [
+          "linux",
+          "linux",
+          "linux",
+          "linux"
+        ],
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      },
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "static-mcu-first",
+        "chosen_node_executions": {
+          "linux": 0,
+          "rt": 4000
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 45322678,
+        "mean_ns": 41240995.179,
+        "miss_rate_pct": 0.0,
+        "misses": 0,
+        "observations": 1000,
+        "p50_ns": 41260716.5,
+        "p95_ns": 43448100.6,
+        "p99_ns": 44143947.5,
+        "placement": [
+          "rt",
+          "rt",
+          "rt",
+          "rt"
+        ],
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      },
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "manual-expert",
+        "chosen_node_executions": {
+          "linux": 2000,
+          "rt": 2000
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 139861756,
+        "mean_ns": 82448500.548,
+        "miss_rate_pct": 58.3,
+        "misses": 583,
+        "observations": 1000,
+        "p50_ns": 82214119.5,
+        "p95_ns": 100934642.55,
+        "p99_ns": 107120471.59,
+        "placement": [
+          "linux",
+          "rt",
+          "rt",
+          "linux"
+        ],
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      },
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "qfabric-static",
+        "chosen_node_executions": {
+          "linux": 4000,
+          "rt": 0
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 167242753,
+        "mean_ns": 87630086.002,
+        "miss_rate_pct": 67.30000000000001,
+        "misses": 673,
+        "observations": 1000,
+        "p50_ns": 87740115.0,
+        "p95_ns": 111300953.35,
+        "p99_ns": 123789966.83,
+        "placement": [
+          "linux",
+          "linux",
+          "linux",
+          "linux"
+        ],
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      },
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "qfabric-recovery",
+        "chosen_node_executions": {
+          "linux": 240,
+          "rt": 3760
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 116127871,
+        "mean_ns": 43979287.282,
+        "miss_rate_pct": 3.6999999999999997,
+        "misses": 37,
+        "observations": 1000,
+        "p50_ns": 41332045.0,
+        "p95_ns": 70614177.84999996,
+        "p99_ns": 103541683.23999998,
+        "placement": [
+          "linux",
+          "linux",
+          "linux",
+          "linux"
+        ],
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      },
+      {
+        "application": "flagship-linux-load-shift",
+        "baseline": "offline-oracle",
+        "chosen_node_executions": {
+          "linux": 4,
+          "rt": 3996
+        },
+        "deadline_ns": 80000000,
+        "evidence_mode": "measured-trace-replay",
+        "loaded": true,
+        "maximum_ns": 45322678,
+        "mean_ns": 41240080.068,
+        "miss_rate_pct": 0.0,
+        "misses": 0,
+        "observations": 1000,
+        "p50_ns": 41259154.5,
+        "p95_ns": 43448100.6,
+        "p99_ns": 44143947.5,
+        "placement": "per-observation-oracle",
+        "seed": 11013026,
+        "status": "measured-trace-replay"
+      }
+    ]
+  },
+  "overheads": {
+    "communication": {
+      "linux": {
+        "p50_ns": 7793190.0,
+        "p95_ns": 8047189.7
+      },
+      "rt": {
+        "p50_ns": 10290441.0,
+        "p95_ns": 11417088.3
+      }
+    },
+    "kernel_instrumentation_mode": "optional",
+    "optional_kernel_instrumentation_p95_delta_pct": 3.7581720849092553,
+    "policy": {
+      "cpu_time_ns": {
+        "mean": 165662.891,
+        "p95": 170052.05
+      },
+      "iterations": 1000,
+      "measurement": "in-process static recommendation evaluation",
+      "scope": "Python allocations observed by tracemalloc; excludes interpreter baseline and native allocator memory",
+      "traced_peak_bytes_single_decision": 3138,
+      "wall_time_ns": {
+        "mean": 170132.981,
+        "p95": 177197.8
+      }
+    },
+    "policy_location": "userspace",
+    "profiling": {
+      "linux": {
+        "disabled_p95_ns": 8246005.300000001,
+        "full_p95_ns": 8047401.25,
+        "p95_delta_pct": -2.4084880226793053
+      },
+      "rt": {
+        "disabled_p95_ns": 11261440.6,
+        "full_p95_ns": 11417419.3,
+        "p95_delta_pct": 1.3850687983915764
+      }
+    },
+    "stabilization": {
+      "commit_window": 6,
+      "invocations_per_window": 20,
+      "switch_window": 3
+    },
+    "visualization_p95_delta_pct": 2.0520402815189565
+  },
+  "programmer_effort": {
+    "line_reduction_pct": 90.9090909090909,
+    "manual_bridge_logical_lines": 44,
+    "manual_bridge_path": "baselines/manual_bridge_add.cpp",
+    "method": "nonblank noncomment maintained source lines; illustrative implementation proxy, not a user study",
+    "qfabric_declaration_logical_lines": 4,
+    "qfabric_declaration_path": "qtasks/add.qtask.h"
+  },
+  "research_questions": {
+    "RQ1": {
+      "answer": "yes-with-bounded-window-delay-in-the-controlled-hardware-scenario",
+      "detection_delay_windows": [
+        1
+      ],
+      "false_switches": 0
+    },
+    "RQ2": {
+      "answer": "yes-for-the-tested-feasible-alternate",
+      "flagship_p95_improvement_pct": 36.555639709621616,
+      "verified_recovery_windows": [
+        4
+      ]
+    },
+    "RQ3": {
+      "answer": "yes-for-the-enumerated-negative-scenarios",
+      "rejection_codes": [
+        "contract_not_satisfied",
+        "cooldown_active",
+        "destination_not_admitted",
+        "higher_predicted_end_to_end",
+        "insufficient_evidence",
+        "mcu_headroom_exceeded",
+        "observed_miss_rate_exceeds_contract",
+        "predicted_deadline_miss",
+        "semantic_ineligible"
+      ]
+    },
+    "RQ4": {
+      "answer": "improves-on-ordinary-linux-but-trails-tuned-linux-and-oracle",
+      "recovery_to_oracle_p95_ratio": 1.6252535064789453,
+      "recovery_to_tuned_linux_p95_ratio": 2.953732995398751
+    },
+    "RQ5": {
+      "answer": "quantified-for-policy-profiling-communication-stabilization-and-visualization",
+      "policy_cpu_p95_ns": 170052.05,
+      "policy_peak_traced_bytes": 3138,
+      "profile_overhead_pct": {
+        "linux": {
+          "disabled_p95_ns": 8246005.300000001,
+          "full_p95_ns": 8047401.25,
+          "p95_delta_pct": -2.4084880226793053
+        },
+        "rt": {
+          "disabled_p95_ns": 11261440.6,
+          "full_p95_ns": 11417419.3,
+          "p95_delta_pct": 1.3850687983915764
+        }
+      },
+      "visualization_overhead_pct": 2.0520402815189565
+    },
+    "RQ6": {
+      "answer": "fewer-maintained-lines-in-the-declared-proxy-comparison",
+      "line_reduction_pct": 90.9090909090909,
+      "user_study": false
+    }
+  },
+  "results": [
+    {
+      "application": "synthetic-chain",
+      "baseline": "ordinary-linux",
+      "chosen_node_executions": {
+        "linux": 4000,
+        "rt": 0
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 32364218,
+      "mean_ns": 31020617.582,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 31056223.0,
+      "p95_ns": 31715074.55,
+      "p99_ns": 31972633.18,
+      "placement": [
+        "linux",
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "synthetic-chain",
+      "baseline": "tuned-linux",
+      "chosen_node_executions": {
+        "linux": 4000,
+        "rt": 0
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 25920905,
+      "mean_ns": 24262311.809,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 24222857.0,
+      "p95_ns": 25080843.95,
+      "p99_ns": 25459816.26,
+      "placement": [
+        "linux",
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "synthetic-chain",
+      "baseline": "static-mcu-first",
+      "chosen_node_executions": {
+        "linux": 0,
+        "rt": 4000
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 46042156,
+      "mean_ns": 41251877.977,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 41238061.0,
+      "p95_ns": 43525425.45,
+      "p99_ns": 44231654.68,
+      "placement": [
+        "rt",
+        "rt",
+        "rt",
+        "rt"
+      ],
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "synthetic-chain",
+      "baseline": "manual-expert",
+      "chosen_node_executions": {
+        "linux": 2000,
+        "rt": 2000
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 57081551,
+      "mean_ns": 54337908.702,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 54337328.0,
+      "p95_ns": 56041972.2,
+      "p99_ns": 56498761.58,
+      "placement": [
+        "linux",
+        "rt",
+        "rt",
+        "linux"
+      ],
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "synthetic-chain",
+      "baseline": "qfabric-static",
+      "chosen_node_executions": {
+        "linux": 4000,
+        "rt": 0
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 32364218,
+      "mean_ns": 31020617.582,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 31056223.0,
+      "p95_ns": 31715074.55,
+      "p99_ns": 31972633.18,
+      "placement": [
+        "linux",
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "synthetic-chain",
+      "baseline": "qfabric-recovery",
+      "chosen_node_executions": {
+        "linux": 4000,
+        "rt": 0
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 32364218,
+      "mean_ns": 31020617.582,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 31056223.0,
+      "p95_ns": 31715074.55,
+      "p99_ns": 31972633.18,
+      "placement": [
+        "linux",
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "synthetic-chain",
+      "baseline": "offline-oracle",
+      "chosen_node_executions": {
+        "linux": 4000,
+        "rt": 0
+      },
+      "deadline_ns": 80000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 32364218,
+      "mean_ns": 31020617.582,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 31056223.0,
+      "p95_ns": 31715074.55,
+      "p99_ns": 31972633.18,
+      "placement": "per-observation-oracle",
+      "seed": 11012026,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "ordinary-linux",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24408269,
+      "mean_ns": 23271347.243,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23324803.5,
+      "p95_ns": 23822299.0,
+      "p99_ns": 24039953.45,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "tuned-linux",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 20045702,
+      "mean_ns": 18208263.161,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 18151894.0,
+      "p95_ns": 18946996.4,
+      "p99_ns": 19325543.5,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "static-mcu-first",
+      "chosen_node_executions": {
+        "linux": 0,
+        "rt": 3000
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 34107087,
+      "mean_ns": 30927284.643,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 30933461.0,
+      "p95_ns": 32940543.3,
+      "p99_ns": 33479786.72,
+      "placement": [
+        "rt",
+        "rt",
+        "rt"
+      ],
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "manual-expert",
+      "chosen_node_executions": {
+        "linux": 0,
+        "rt": 3000
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 34107087,
+      "mean_ns": 30927284.643,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 30933461.0,
+      "p95_ns": 32940543.3,
+      "p99_ns": 33479786.72,
+      "placement": [
+        "rt",
+        "rt",
+        "rt"
+      ],
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "qfabric-static",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24408269,
+      "mean_ns": 23271347.243,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23324803.5,
+      "p95_ns": 23822299.0,
+      "p99_ns": 24039953.45,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "qfabric-recovery",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24408269,
+      "mean_ns": 23271347.243,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23324803.5,
+      "p95_ns": 23822299.0,
+      "p99_ns": 24039953.45,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "signal-pipeline",
+      "baseline": "offline-oracle",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24408269,
+      "mean_ns": 23271347.243,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23324803.5,
+      "p95_ns": 23822299.0,
+      "p99_ns": 24039953.45,
+      "placement": "per-observation-oracle",
+      "seed": 11012126,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "ordinary-linux",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24447332,
+      "mean_ns": 23281035.408,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23311729.0,
+      "p95_ns": 23852799.35,
+      "p99_ns": 24034573.08,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "tuned-linux",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 19655696,
+      "mean_ns": 18200761.777,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 18132727.5,
+      "p95_ns": 18912062.7,
+      "p99_ns": 19356235.04,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "static-mcu-first",
+      "chosen_node_executions": {
+        "linux": 0,
+        "rt": 3000
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 34227710,
+      "mean_ns": 30958250.894,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 30961612.0,
+      "p95_ns": 32958653.1,
+      "p99_ns": 33785740.92,
+      "placement": [
+        "rt",
+        "rt",
+        "rt"
+      ],
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "manual-expert",
+      "chosen_node_executions": {
+        "linux": 1000,
+        "rt": 2000
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 40166888,
+      "mean_ns": 37515732.054,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 37499696.0,
+      "p95_ns": 39157045.35,
+      "p99_ns": 39705134.94,
+      "placement": [
+        "rt",
+        "rt",
+        "linux"
+      ],
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "qfabric-static",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24447332,
+      "mean_ns": 23281035.408,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23311729.0,
+      "p95_ns": 23852799.35,
+      "p99_ns": 24034573.08,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "qfabric-recovery",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24447332,
+      "mean_ns": 23281035.408,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23311729.0,
+      "p95_ns": 23852799.35,
+      "p99_ns": 24034573.08,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "control-loop",
+      "baseline": "offline-oracle",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24447332,
+      "mean_ns": 23281035.408,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23311729.0,
+      "p95_ns": 23852799.35,
+      "p99_ns": 24034573.08,
+      "placement": "per-observation-oracle",
+      "seed": 11012226,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "ordinary-linux",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24294415,
+      "mean_ns": 23285677.676,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23325220.0,
+      "p95_ns": 23840612.7,
+      "p99_ns": 24049316.29,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "tuned-linux",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 19634028,
+      "mean_ns": 18197395.048,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 18142439.5,
+      "p95_ns": 18927543.6,
+      "p99_ns": 19257846.8,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "static-mcu-first",
+      "chosen_node_executions": {
+        "linux": 2000,
+        "rt": 1000
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 45964919,
+      "mean_ns": 44080278.789,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 44083092.5,
+      "p95_ns": 45305309.8,
+      "p99_ns": 45635254.38,
+      "placement": [
+        "linux",
+        "rt",
+        "linux"
+      ],
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "manual-expert",
+      "chosen_node_executions": {
+        "linux": 2000,
+        "rt": 1000
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 45964919,
+      "mean_ns": 44080278.789,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 44083092.5,
+      "p95_ns": 45305309.8,
+      "p99_ns": 45635254.38,
+      "placement": [
+        "linux",
+        "rt",
+        "linux"
+      ],
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "qfabric-static",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24294415,
+      "mean_ns": 23285677.676,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23325220.0,
+      "p95_ns": 23840612.7,
+      "p99_ns": 24049316.29,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "qfabric-recovery",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24294415,
+      "mean_ns": 23285677.676,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23325220.0,
+      "p95_ns": 23840612.7,
+      "p99_ns": 24049316.29,
+      "placement": [
+        "linux",
+        "linux",
+        "linux"
+      ],
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    },
+    {
+      "application": "network-pipeline",
+      "baseline": "offline-oracle",
+      "chosen_node_executions": {
+        "linux": 3000,
+        "rt": 0
+      },
+      "deadline_ns": 60000000,
+      "evidence_mode": "measured-trace-replay",
+      "loaded": false,
+      "maximum_ns": 24294415,
+      "mean_ns": 23285677.676,
+      "miss_rate_pct": 0.0,
+      "misses": 0,
+      "observations": 1000,
+      "p50_ns": 23325220.0,
+      "p95_ns": 23840612.7,
+      "p99_ns": 24049316.29,
+      "placement": "per-observation-oracle",
+      "seed": 11012326,
+      "status": "measured-trace-replay"
+    }
+  ],
+  "safety_rejections": {
+    "communication_dominated": true,
+    "inadmissible": true,
+    "mcu_headroom": true,
+    "observed_codes": [
+      "contract_not_satisfied",
+      "cooldown_active",
+      "destination_not_admitted",
+      "higher_predicted_end_to_end",
+      "insufficient_evidence",
+      "mcu_headroom_exceeded",
+      "observed_miss_rate_exceeds_contract",
+      "predicted_deadline_miss",
+      "semantic_ineligible"
+    ],
+    "unsafe_effect": true
+  },
+  "scheduler_baselines": {
+    "captured_utc": "2026-10-09T08:57:46.963767+00:00",
+    "kernel_release": "6.16.7-g0dd6551ae96b",
+    "preempt_rt": {
+      "available": false,
+      "reason": "running-kernel-is-not-PREEMPT_RT"
+    },
+    "sched_deadline": {
+      "available": false,
+      "reason": "not-selected-SCHED_FIFO-is-the-predeclared-tuned-baseline"
+    },
+    "sched_fifo": {
+      "active_for_capture": true,
+      "available": true,
+      "priority": 50,
+      "reason": null
+    },
+    "schema_version": 1
+  },
+  "schema_version": 1,
+  "source_manifest": [
+    {
+      "path": "config/stage11-applications.json",
+      "sha256": "c51e211d73b8064459fb59913cfc226806f56582e8fdb98d9893996d0886eaa3"
+    },
+    {
+      "path": "data/processed/campaigns/idle/initial-idle-04/repetition-01/roundtrip.json",
+      "sha256": "62c47859ee55cec4c6eabb52f914e3db2a3f77402ab2f1d142d124d6f4df5894"
+    },
+    {
+      "path": "data/processed/campaigns/idle/initial-idle-04/repetition-02/roundtrip.json",
+      "sha256": "d1f0b27b51a5fa1fba3fb43053689e7c06462a2cea789baa6eb3af0945f5e114"
+    },
+    {
+      "path": "data/processed/campaigns/idle/initial-idle-04/repetition-03/roundtrip.json",
+      "sha256": "939148ba9a3a9a13ad6ad0c879fde2ee41c0d1b7aeeb78dbfb553542f0b05ac3"
+    },
+    {
+      "path": "data/processed/stage4/profile-overhead.json",
+      "sha256": "a5d765933efffcf4b31c8369471d1b94d3b3633e794510048b2639f930947fb4"
+    },
+    {
+      "path": "data/processed/stage10/stage10-kernel-02/perf-loaded-01.json",
+      "sha256": "9dca4f71da4661ffaa462bac301917f20bd0d522d905b4684b458d70395462ee"
+    },
+    {
+      "path": "data/processed/stage10/stage10-kernel-02/perf-loaded-02.json",
+      "sha256": "8379981091fcc286cc0c6117e8df3ba2050920da4b23ea1f775715ed914c590b"
+    },
+    {
+      "path": "data/processed/stage10/stage10-kernel-02/perf-loaded-03.json",
+      "sha256": "78bb866eb44ea93ac54b47785bd7312864971bc7572c505cf4118b47520c78bb"
+    },
+    {
+      "path": "data/processed/stage7/hardware-success.json",
+      "sha256": "7224a877273555e41265d4187fa27e23788278d51aee2af9c810f6693df13fb9"
+    },
+    {
+      "path": "data/processed/stage7/hardware-rollback.json",
+      "sha256": "bc3bcd7661608510c9e3c00defd54da7edb5de25600e680bc4464e873b2915ec"
+    },
+    {
+      "path": "data/processed/stage6/stage6-recommendations-01/recommendation-input.json",
+      "sha256": "a4aef9ff7ca8f8e837e42d5b1339554a2fb6c4d9c0b4098fc76de6ce9b0cc81d"
+    },
+    {
+      "path": "data/processed/stage11/stage11-evaluation-01/recommendation-scenarios.json",
+      "sha256": "ed4f8f588e63c18412cecb5f9afb83a8843ac90cf30ab54e06d3f735cb6e971f"
+    },
+    {
+      "path": "data/processed/stage9/stage9-visualization-01/stage9-audit.json",
+      "sha256": "a92feaedae42a2f2cf48380a93adc63eadc1c21abdb979692012913f2b8b3794"
+    },
+    {
+      "path": "data/processed/stage10/stage10-kernel-02/stage10-audit.json",
+      "sha256": "e9d02b56837cdf37f4a5a13bc48a72050ecc0dc31418e89bc672ad3e2bf5e3ce"
+    },
+    {
+      "path": "data/processed/stage11/stage11-evaluation-01/tuned-linux-idle.json",
+      "sha256": "f151132c495440ee71cef9e2016fb6687cc1f5820c372ea2c5f2f519a57e0a66"
+    },
+    {
+      "path": "data/processed/stage11/stage11-evaluation-01/tuned-linux-loaded.json",
+      "sha256": "aa72fcb5428764ac0d84b99909138cddf499c9eb537a0dd8a67d2d968e571637"
+    },
+    {
+      "path": "data/processed/stage11/stage11-evaluation-01/scheduler.json",
+      "sha256": "8aff6b08b3e55e5db3b35c51ec843a4edd2347f68d2f4a8661d8d852540acfbc"
+    }
+  ],
+  "stage": 11
+}

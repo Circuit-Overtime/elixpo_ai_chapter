@@ -1,0 +1,4571 @@
+{
+  "captured_utc": "2026-10-09T08:39:35.117413+00:00",
+  "configuration": {
+    "include_kernel": true,
+    "iterations": 500,
+    "timeout": 2.0,
+    "warmup": 50
+  },
+  "failures": 0,
+  "metrics": {
+    "context_switches": {
+      "count": 500,
+      "maximum": 6,
+      "mean": 1.36,
+      "minimum": 0,
+      "p50": 1.0,
+      "p95": 2.0,
+      "p99": 5.0,
+      "stdev": 0.7525955088890712
+    },
+    "cpu_migrations": {
+      "count": 500,
+      "maximum": 2,
+      "mean": 0.238,
+      "minimum": 0,
+      "p50": 0.0,
+      "p95": 1.0,
+      "p99": 1.0,
+      "stdev": 0.43052990604602603
+    },
+    "end_to_end_ns": {
+      "count": 500,
+      "maximum": 41888528,
+      "mean": 23833111.09,
+      "minimum": 11558605,
+      "p50": 23962418.0,
+      "p95": 34217507.65,
+      "p99": 38025797.33,
+      "stdev": 6321641.588303902
+    },
+    "non_cpu_ns": {
+      "count": 500,
+      "maximum": 34319101,
+      "mean": 16760533.852,
+      "minimum": 4815844,
+      "p50": 16936453.5,
+      "p95": 27462755.6,
+      "p99": 30707535.9,
+      "stdev": 6302486.79427323
+    },
+    "task_clock_ns": {
+      "count": 500,
+      "maximum": 9360367,
+      "mean": 7072577.238,
+      "minimum": 6300834,
+      "p50": 7075234.5,
+      "p95": 7550147.5,
+      "p99": 7633758.7299999995,
+      "stdev": 350172.95903913735
+    }
+  },
+  "mode": "perf",
+  "perf_error": null,
+  "policy_location": "userspace",
+  "samples": [
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30229976,
+      "non_cpu_ns": 23323309,
+      "outcome": "ok",
+      "sequence": 1,
+      "task_clock_ns": 6906667
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22229083,
+      "non_cpu_ns": 15790280,
+      "outcome": "ok",
+      "sequence": 2,
+      "task_clock_ns": 6438803
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26311638,
+      "non_cpu_ns": 19725075,
+      "outcome": "ok",
+      "sequence": 3,
+      "task_clock_ns": 6586563
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25141794,
+      "non_cpu_ns": 18735856,
+      "outcome": "ok",
+      "sequence": 4,
+      "task_clock_ns": 6405938
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26304503,
+      "non_cpu_ns": 19959867,
+      "outcome": "ok",
+      "sequence": 5,
+      "task_clock_ns": 6344636
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26351691,
+      "non_cpu_ns": 20050857,
+      "outcome": "ok",
+      "sequence": 6,
+      "task_clock_ns": 6300834
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17132464,
+      "non_cpu_ns": 10811943,
+      "outcome": "ok",
+      "sequence": 7,
+      "task_clock_ns": 6320521
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 38326598,
+      "non_cpu_ns": 31786546,
+      "outcome": "ok",
+      "sequence": 8,
+      "task_clock_ns": 6540052
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30285809,
+      "non_cpu_ns": 23847319,
+      "outcome": "ok",
+      "sequence": 9,
+      "task_clock_ns": 6438490
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22189760,
+      "non_cpu_ns": 15549030,
+      "outcome": "ok",
+      "sequence": 10,
+      "task_clock_ns": 6640730
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 22043041,
+      "non_cpu_ns": 15322364,
+      "outcome": "ok",
+      "sequence": 11,
+      "task_clock_ns": 6720677
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26072472,
+      "non_cpu_ns": 19086534,
+      "outcome": "ok",
+      "sequence": 12,
+      "task_clock_ns": 6985938
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30211695,
+      "non_cpu_ns": 23581331,
+      "outcome": "ok",
+      "sequence": 13,
+      "task_clock_ns": 6630364
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25971013,
+      "non_cpu_ns": 18940805,
+      "outcome": "ok",
+      "sequence": 14,
+      "task_clock_ns": 7030208
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25671117,
+      "non_cpu_ns": 18742941,
+      "outcome": "ok",
+      "sequence": 15,
+      "task_clock_ns": 6928176
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 38025764,
+      "non_cpu_ns": 30706701,
+      "outcome": "ok",
+      "sequence": 16,
+      "task_clock_ns": 7319063
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25565544,
+      "non_cpu_ns": 18337888,
+      "outcome": "ok",
+      "sequence": 17,
+      "task_clock_ns": 7227656
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16169234,
+      "non_cpu_ns": 8883506,
+      "outcome": "ok",
+      "sequence": 18,
+      "task_clock_ns": 7285728
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21862468,
+      "non_cpu_ns": 14536374,
+      "outcome": "ok",
+      "sequence": 19,
+      "task_clock_ns": 7326094
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17463453,
+      "non_cpu_ns": 10069807,
+      "outcome": "ok",
+      "sequence": 20,
+      "task_clock_ns": 7393646
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16117411,
+      "non_cpu_ns": 8776160,
+      "outcome": "ok",
+      "sequence": 21,
+      "task_clock_ns": 7341251
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23673668,
+      "non_cpu_ns": 16040127,
+      "outcome": "ok",
+      "sequence": 22,
+      "task_clock_ns": 7633541
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16732359,
+      "non_cpu_ns": 9077045,
+      "outcome": "ok",
+      "sequence": 23,
+      "task_clock_ns": 7655314
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29337214,
+      "non_cpu_ns": 21886692,
+      "outcome": "ok",
+      "sequence": 24,
+      "task_clock_ns": 7450522
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 20685800,
+      "non_cpu_ns": 13181008,
+      "outcome": "ok",
+      "sequence": 25,
+      "task_clock_ns": 7504792
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17077672,
+      "non_cpu_ns": 9756109,
+      "outcome": "ok",
+      "sequence": 26,
+      "task_clock_ns": 7321563
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17202360,
+      "non_cpu_ns": 9776891,
+      "outcome": "ok",
+      "sequence": 27,
+      "task_clock_ns": 7425469
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25416795,
+      "non_cpu_ns": 17792471,
+      "outcome": "ok",
+      "sequence": 28,
+      "task_clock_ns": 7624324
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34120917,
+      "non_cpu_ns": 26589303,
+      "outcome": "ok",
+      "sequence": 29,
+      "task_clock_ns": 7531614
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 32380342,
+      "non_cpu_ns": 24614561,
+      "outcome": "ok",
+      "sequence": 30,
+      "task_clock_ns": 7765781
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25421847,
+      "non_cpu_ns": 18019868,
+      "outcome": "ok",
+      "sequence": 31,
+      "task_clock_ns": 7401979
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 33966125,
+      "non_cpu_ns": 26475969,
+      "outcome": "ok",
+      "sequence": 32,
+      "task_clock_ns": 7490156
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17381630,
+      "non_cpu_ns": 9991265,
+      "outcome": "ok",
+      "sequence": 33,
+      "task_clock_ns": 7390365
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17428610,
+      "non_cpu_ns": 10101631,
+      "outcome": "ok",
+      "sequence": 34,
+      "task_clock_ns": 7326979
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16207358,
+      "non_cpu_ns": 8817358,
+      "outcome": "ok",
+      "sequence": 35,
+      "task_clock_ns": 7390000
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23676324,
+      "non_cpu_ns": 16120335,
+      "outcome": "ok",
+      "sequence": 36,
+      "task_clock_ns": 7555989
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17376057,
+      "non_cpu_ns": 9966266,
+      "outcome": "ok",
+      "sequence": 37,
+      "task_clock_ns": 7409791
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17394860,
+      "non_cpu_ns": 10050485,
+      "outcome": "ok",
+      "sequence": 38,
+      "task_clock_ns": 7344375
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29376537,
+      "non_cpu_ns": 22095757,
+      "outcome": "ok",
+      "sequence": 39,
+      "task_clock_ns": 7280780
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25312002,
+      "non_cpu_ns": 18361689,
+      "outcome": "ok",
+      "sequence": 40,
+      "task_clock_ns": 6950313
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25667940,
+      "non_cpu_ns": 18671793,
+      "outcome": "ok",
+      "sequence": 41,
+      "task_clock_ns": 6996147
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18182725,
+      "non_cpu_ns": 11681840,
+      "outcome": "ok",
+      "sequence": 42,
+      "task_clock_ns": 6500885
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26056743,
+      "non_cpu_ns": 19255441,
+      "outcome": "ok",
+      "sequence": 43,
+      "task_clock_ns": 6801302
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30322111,
+      "non_cpu_ns": 23513360,
+      "outcome": "ok",
+      "sequence": 44,
+      "task_clock_ns": 6808751
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26328566,
+      "non_cpu_ns": 19735493,
+      "outcome": "ok",
+      "sequence": 45,
+      "task_clock_ns": 6593073
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 32051436,
+      "non_cpu_ns": 25087218,
+      "outcome": "ok",
+      "sequence": 46,
+      "task_clock_ns": 6964218
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25689398,
+      "non_cpu_ns": 18643304,
+      "outcome": "ok",
+      "sequence": 47,
+      "task_clock_ns": 7046094
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26275024,
+      "non_cpu_ns": 19817576,
+      "outcome": "ok",
+      "sequence": 48,
+      "task_clock_ns": 6457448
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37362639,
+      "non_cpu_ns": 30480244,
+      "outcome": "ok",
+      "sequence": 49,
+      "task_clock_ns": 6882395
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25530388,
+      "non_cpu_ns": 18353096,
+      "outcome": "ok",
+      "sequence": 50,
+      "task_clock_ns": 7177292
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26268409,
+      "non_cpu_ns": 19700440,
+      "outcome": "ok",
+      "sequence": 51,
+      "task_clock_ns": 6567969
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19452882,
+      "non_cpu_ns": 12615747,
+      "outcome": "ok",
+      "sequence": 52,
+      "task_clock_ns": 6837135
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34366385,
+      "non_cpu_ns": 27750501,
+      "outcome": "ok",
+      "sequence": 53,
+      "task_clock_ns": 6615884
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19334757,
+      "non_cpu_ns": 12653091,
+      "outcome": "ok",
+      "sequence": 54,
+      "task_clock_ns": 6681666
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30071903,
+      "non_cpu_ns": 23629664,
+      "outcome": "ok",
+      "sequence": 55,
+      "task_clock_ns": 6442239
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26022055,
+      "non_cpu_ns": 19390805,
+      "outcome": "ok",
+      "sequence": 56,
+      "task_clock_ns": 6631250
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26067889,
+      "non_cpu_ns": 19401118,
+      "outcome": "ok",
+      "sequence": 57,
+      "task_clock_ns": 6666771
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26360649,
+      "non_cpu_ns": 19895024,
+      "outcome": "ok",
+      "sequence": 58,
+      "task_clock_ns": 6465625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30312736,
+      "non_cpu_ns": 23957893,
+      "outcome": "ok",
+      "sequence": 59,
+      "task_clock_ns": 6354843
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 24256845,
+      "non_cpu_ns": 17836585,
+      "outcome": "ok",
+      "sequence": 60,
+      "task_clock_ns": 6420260
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34252740,
+      "non_cpu_ns": 27798156,
+      "outcome": "ok",
+      "sequence": 61,
+      "task_clock_ns": 6454584
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26296535,
+      "non_cpu_ns": 19692211,
+      "outcome": "ok",
+      "sequence": 62,
+      "task_clock_ns": 6604324
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30230392,
+      "non_cpu_ns": 23835964,
+      "outcome": "ok",
+      "sequence": 63,
+      "task_clock_ns": 6394428
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30237736,
+      "non_cpu_ns": 23842320,
+      "outcome": "ok",
+      "sequence": 64,
+      "task_clock_ns": 6395416
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22153302,
+      "non_cpu_ns": 15421218,
+      "outcome": "ok",
+      "sequence": 65,
+      "task_clock_ns": 6732084
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22038874,
+      "non_cpu_ns": 15365697,
+      "outcome": "ok",
+      "sequence": 66,
+      "task_clock_ns": 6673177
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22252780,
+      "non_cpu_ns": 15702937,
+      "outcome": "ok",
+      "sequence": 67,
+      "task_clock_ns": 6549843
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18286632,
+      "non_cpu_ns": 11719704,
+      "outcome": "ok",
+      "sequence": 68,
+      "task_clock_ns": 6566928
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18056632,
+      "non_cpu_ns": 11460225,
+      "outcome": "ok",
+      "sequence": 69,
+      "task_clock_ns": 6596407
+    },
+    {
+      "context_switches": 5,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18160017,
+      "non_cpu_ns": 11299756,
+      "outcome": "ok",
+      "sequence": 70,
+      "task_clock_ns": 6860261
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17992724,
+      "non_cpu_ns": 11163192,
+      "outcome": "ok",
+      "sequence": 71,
+      "task_clock_ns": 6829532
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26056274,
+      "non_cpu_ns": 18655388,
+      "outcome": "ok",
+      "sequence": 72,
+      "task_clock_ns": 7400886
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29571017,
+      "non_cpu_ns": 22217944,
+      "outcome": "ok",
+      "sequence": 73,
+      "task_clock_ns": 7353073
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29469506,
+      "non_cpu_ns": 22000183,
+      "outcome": "ok",
+      "sequence": 74,
+      "task_clock_ns": 7469323
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29553205,
+      "non_cpu_ns": 22204924,
+      "outcome": "ok",
+      "sequence": 75,
+      "task_clock_ns": 7348281
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 33904562,
+      "non_cpu_ns": 26160967,
+      "outcome": "ok",
+      "sequence": 76,
+      "task_clock_ns": 7743595
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29383933,
+      "non_cpu_ns": 22010651,
+      "outcome": "ok",
+      "sequence": 77,
+      "task_clock_ns": 7373282
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 33997218,
+      "non_cpu_ns": 26481593,
+      "outcome": "ok",
+      "sequence": 78,
+      "task_clock_ns": 7515625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25385857,
+      "non_cpu_ns": 17987576,
+      "outcome": "ok",
+      "sequence": 79,
+      "task_clock_ns": 7398281
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18003923,
+      "non_cpu_ns": 10542517,
+      "outcome": "ok",
+      "sequence": 80,
+      "task_clock_ns": 7461406
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18248298,
+      "non_cpu_ns": 10751215,
+      "outcome": "ok",
+      "sequence": 81,
+      "task_clock_ns": 7497083
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17938245,
+      "non_cpu_ns": 10511891,
+      "outcome": "ok",
+      "sequence": 82,
+      "task_clock_ns": 7426354
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17983350,
+      "non_cpu_ns": 10466632,
+      "outcome": "ok",
+      "sequence": 83,
+      "task_clock_ns": 7516718
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18128923,
+      "non_cpu_ns": 10594391,
+      "outcome": "ok",
+      "sequence": 84,
+      "task_clock_ns": 7534532
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18045329,
+      "non_cpu_ns": 10556475,
+      "outcome": "ok",
+      "sequence": 85,
+      "task_clock_ns": 7488854
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18316683,
+      "non_cpu_ns": 10794027,
+      "outcome": "ok",
+      "sequence": 86,
+      "task_clock_ns": 7522656
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18327360,
+      "non_cpu_ns": 10788141,
+      "outcome": "ok",
+      "sequence": 87,
+      "task_clock_ns": 7539219
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18172725,
+      "non_cpu_ns": 10572674,
+      "outcome": "ok",
+      "sequence": 88,
+      "task_clock_ns": 7600051
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22046999,
+      "non_cpu_ns": 14555280,
+      "outcome": "ok",
+      "sequence": 89,
+      "task_clock_ns": 7491719
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22092156,
+      "non_cpu_ns": 14555594,
+      "outcome": "ok",
+      "sequence": 90,
+      "task_clock_ns": 7536562
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22011114,
+      "non_cpu_ns": 14431270,
+      "outcome": "ok",
+      "sequence": 91,
+      "task_clock_ns": 7579844
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21898457,
+      "non_cpu_ns": 14444186,
+      "outcome": "ok",
+      "sequence": 92,
+      "task_clock_ns": 7454271
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18437048,
+      "non_cpu_ns": 10814080,
+      "outcome": "ok",
+      "sequence": 93,
+      "task_clock_ns": 7622968
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17941787,
+      "non_cpu_ns": 10348923,
+      "outcome": "ok",
+      "sequence": 94,
+      "task_clock_ns": 7592864
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21767468,
+      "non_cpu_ns": 14271219,
+      "outcome": "ok",
+      "sequence": 95,
+      "task_clock_ns": 7496249
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18108402,
+      "non_cpu_ns": 11114288,
+      "outcome": "ok",
+      "sequence": 96,
+      "task_clock_ns": 6994114
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18226006,
+      "non_cpu_ns": 11136943,
+      "outcome": "ok",
+      "sequence": 97,
+      "task_clock_ns": 7089063
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17932777,
+      "non_cpu_ns": 11008090,
+      "outcome": "ok",
+      "sequence": 98,
+      "task_clock_ns": 6924687
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18247933,
+      "non_cpu_ns": 11390173,
+      "outcome": "ok",
+      "sequence": 99,
+      "task_clock_ns": 6857760
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26192368,
+      "non_cpu_ns": 19397315,
+      "outcome": "ok",
+      "sequence": 100,
+      "task_clock_ns": 6795053
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 14006419,
+      "non_cpu_ns": 7338867,
+      "outcome": "ok",
+      "sequence": 101,
+      "task_clock_ns": 6667552
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15615639,
+      "non_cpu_ns": 8774338,
+      "outcome": "ok",
+      "sequence": 102,
+      "task_clock_ns": 6841301
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17570849,
+      "non_cpu_ns": 10869233,
+      "outcome": "ok",
+      "sequence": 103,
+      "task_clock_ns": 6701616
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 33944927,
+      "non_cpu_ns": 27019719,
+      "outcome": "ok",
+      "sequence": 104,
+      "task_clock_ns": 6925208
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25330336,
+      "non_cpu_ns": 18639868,
+      "outcome": "ok",
+      "sequence": 105,
+      "task_clock_ns": 6690468
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19806894,
+      "non_cpu_ns": 12806738,
+      "outcome": "ok",
+      "sequence": 106,
+      "task_clock_ns": 7000156
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30075288,
+      "non_cpu_ns": 23341120,
+      "outcome": "ok",
+      "sequence": 107,
+      "task_clock_ns": 6734168
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25536846,
+      "non_cpu_ns": 18641221,
+      "outcome": "ok",
+      "sequence": 108,
+      "task_clock_ns": 6895625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34080291,
+      "non_cpu_ns": 27567322,
+      "outcome": "ok",
+      "sequence": 109,
+      "task_clock_ns": 6512969
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25510649,
+      "non_cpu_ns": 18593566,
+      "outcome": "ok",
+      "sequence": 110,
+      "task_clock_ns": 6917083
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26265024,
+      "non_cpu_ns": 19313775,
+      "outcome": "ok",
+      "sequence": 111,
+      "task_clock_ns": 6951249
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19416268,
+      "non_cpu_ns": 12680643,
+      "outcome": "ok",
+      "sequence": 112,
+      "task_clock_ns": 6735625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30347423,
+      "non_cpu_ns": 23928308,
+      "outcome": "ok",
+      "sequence": 113,
+      "task_clock_ns": 6419115
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19457049,
+      "non_cpu_ns": 12747831,
+      "outcome": "ok",
+      "sequence": 114,
+      "task_clock_ns": 6709218
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 31732633,
+      "non_cpu_ns": 24447893,
+      "outcome": "ok",
+      "sequence": 115,
+      "task_clock_ns": 7284740
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26100649,
+      "non_cpu_ns": 19235545,
+      "outcome": "ok",
+      "sequence": 116,
+      "task_clock_ns": 6865104
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19498820,
+      "non_cpu_ns": 12658664,
+      "outcome": "ok",
+      "sequence": 117,
+      "task_clock_ns": 6840156
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34205656,
+      "non_cpu_ns": 27656333,
+      "outcome": "ok",
+      "sequence": 118,
+      "task_clock_ns": 6549323
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 24043251,
+      "non_cpu_ns": 17506793,
+      "outcome": "ok",
+      "sequence": 119,
+      "task_clock_ns": 6536458
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15430535,
+      "non_cpu_ns": 8708191,
+      "outcome": "ok",
+      "sequence": 120,
+      "task_clock_ns": 6722344
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 21374550,
+      "non_cpu_ns": 14768977,
+      "outcome": "ok",
+      "sequence": 121,
+      "task_clock_ns": 6605573
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19921946,
+      "non_cpu_ns": 13301945,
+      "outcome": "ok",
+      "sequence": 122,
+      "task_clock_ns": 6620001
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15580587,
+      "non_cpu_ns": 8712359,
+      "outcome": "ok",
+      "sequence": 123,
+      "task_clock_ns": 6868228
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18129495,
+      "non_cpu_ns": 11565068,
+      "outcome": "ok",
+      "sequence": 124,
+      "task_clock_ns": 6564427
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16401734,
+      "non_cpu_ns": 9648349,
+      "outcome": "ok",
+      "sequence": 125,
+      "task_clock_ns": 6753385
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18087829,
+      "non_cpu_ns": 11643454,
+      "outcome": "ok",
+      "sequence": 126,
+      "task_clock_ns": 6444375
+    },
+    {
+      "context_switches": 5,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19833247,
+      "non_cpu_ns": 12958768,
+      "outcome": "ok",
+      "sequence": 127,
+      "task_clock_ns": 6874479
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15616889,
+      "non_cpu_ns": 8630639,
+      "outcome": "ok",
+      "sequence": 128,
+      "task_clock_ns": 6986250
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19694654,
+      "non_cpu_ns": 12906061,
+      "outcome": "ok",
+      "sequence": 129,
+      "task_clock_ns": 6788593
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15826577,
+      "non_cpu_ns": 8850482,
+      "outcome": "ok",
+      "sequence": 130,
+      "task_clock_ns": 6976095
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19132257,
+      "non_cpu_ns": 12432674,
+      "outcome": "ok",
+      "sequence": 131,
+      "task_clock_ns": 6699583
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15993452,
+      "non_cpu_ns": 8766003,
+      "outcome": "ok",
+      "sequence": 132,
+      "task_clock_ns": 7227449
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18103298,
+      "non_cpu_ns": 10931007,
+      "outcome": "ok",
+      "sequence": 133,
+      "task_clock_ns": 7172291
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17467881,
+      "non_cpu_ns": 10142050,
+      "outcome": "ok",
+      "sequence": 134,
+      "task_clock_ns": 7325831
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17475329,
+      "non_cpu_ns": 9993245,
+      "outcome": "ok",
+      "sequence": 135,
+      "task_clock_ns": 7482084
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17662673,
+      "non_cpu_ns": 10488767,
+      "outcome": "ok",
+      "sequence": 136,
+      "task_clock_ns": 7173906
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 18233975,
+      "non_cpu_ns": 10644184,
+      "outcome": "ok",
+      "sequence": 137,
+      "task_clock_ns": 7589791
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21927416,
+      "non_cpu_ns": 14477468,
+      "outcome": "ok",
+      "sequence": 138,
+      "task_clock_ns": 7449948
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 41888528,
+      "non_cpu_ns": 34319101,
+      "outcome": "ok",
+      "sequence": 139,
+      "task_clock_ns": 7569427
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37992326,
+      "non_cpu_ns": 30467743,
+      "outcome": "ok",
+      "sequence": 140,
+      "task_clock_ns": 7524583
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34103521,
+      "non_cpu_ns": 26673156,
+      "outcome": "ok",
+      "sequence": 141,
+      "task_clock_ns": 7430365
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25284086,
+      "non_cpu_ns": 18015232,
+      "outcome": "ok",
+      "sequence": 142,
+      "task_clock_ns": 7268854
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25459450,
+      "non_cpu_ns": 18200960,
+      "outcome": "ok",
+      "sequence": 143,
+      "task_clock_ns": 7258490
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25537680,
+      "non_cpu_ns": 18335909,
+      "outcome": "ok",
+      "sequence": 144,
+      "task_clock_ns": 7201771
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25381742,
+      "non_cpu_ns": 18038722,
+      "outcome": "ok",
+      "sequence": 145,
+      "task_clock_ns": 7343020
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25467992,
+      "non_cpu_ns": 18055752,
+      "outcome": "ok",
+      "sequence": 146,
+      "task_clock_ns": 7412240
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25453305,
+      "non_cpu_ns": 18242264,
+      "outcome": "ok",
+      "sequence": 147,
+      "task_clock_ns": 7211041
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25507107,
+      "non_cpu_ns": 18211898,
+      "outcome": "ok",
+      "sequence": 148,
+      "task_clock_ns": 7295209
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25377471,
+      "non_cpu_ns": 17997888,
+      "outcome": "ok",
+      "sequence": 149,
+      "task_clock_ns": 7379583
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25378148,
+      "non_cpu_ns": 17828149,
+      "outcome": "ok",
+      "sequence": 150,
+      "task_clock_ns": 7549999
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25448357,
+      "non_cpu_ns": 18099295,
+      "outcome": "ok",
+      "sequence": 151,
+      "task_clock_ns": 7349062
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25377783,
+      "non_cpu_ns": 18059657,
+      "outcome": "ok",
+      "sequence": 152,
+      "task_clock_ns": 7318126
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18202152,
+      "non_cpu_ns": 10686319,
+      "outcome": "ok",
+      "sequence": 153,
+      "task_clock_ns": 7515833
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17890225,
+      "non_cpu_ns": 10570121,
+      "outcome": "ok",
+      "sequence": 154,
+      "task_clock_ns": 7320104
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18300381,
+      "non_cpu_ns": 11181995,
+      "outcome": "ok",
+      "sequence": 155,
+      "task_clock_ns": 7118386
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17937725,
+      "non_cpu_ns": 10723090,
+      "outcome": "ok",
+      "sequence": 156,
+      "task_clock_ns": 7214635
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18125277,
+      "non_cpu_ns": 11380903,
+      "outcome": "ok",
+      "sequence": 157,
+      "task_clock_ns": 6744374
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18179808,
+      "non_cpu_ns": 11679443,
+      "outcome": "ok",
+      "sequence": 158,
+      "task_clock_ns": 6500365
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18166006,
+      "non_cpu_ns": 11515277,
+      "outcome": "ok",
+      "sequence": 159,
+      "task_clock_ns": 6650729
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22204395,
+      "non_cpu_ns": 15626947,
+      "outcome": "ok",
+      "sequence": 160,
+      "task_clock_ns": 6577448
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15203295,
+      "non_cpu_ns": 8739909,
+      "outcome": "ok",
+      "sequence": 161,
+      "task_clock_ns": 6463386
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18144288,
+      "non_cpu_ns": 11606320,
+      "outcome": "ok",
+      "sequence": 162,
+      "task_clock_ns": 6537968
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15286003,
+      "non_cpu_ns": 8690326,
+      "outcome": "ok",
+      "sequence": 163,
+      "task_clock_ns": 6595677
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23267990,
+      "non_cpu_ns": 16423249,
+      "outcome": "ok",
+      "sequence": 164,
+      "task_clock_ns": 6844741
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15479962,
+      "non_cpu_ns": 8765223,
+      "outcome": "ok",
+      "sequence": 165,
+      "task_clock_ns": 6714739
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 28134036,
+      "non_cpu_ns": 21294349,
+      "outcome": "ok",
+      "sequence": 166,
+      "task_clock_ns": 6839687
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25936222,
+      "non_cpu_ns": 18544764,
+      "outcome": "ok",
+      "sequence": 167,
+      "task_clock_ns": 7391458
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17549078,
+      "non_cpu_ns": 10677411,
+      "outcome": "ok",
+      "sequence": 168,
+      "task_clock_ns": 6871667
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18323038,
+      "non_cpu_ns": 11389600,
+      "outcome": "ok",
+      "sequence": 169,
+      "task_clock_ns": 6933438
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17561631,
+      "non_cpu_ns": 10235953,
+      "outcome": "ok",
+      "sequence": 170,
+      "task_clock_ns": 7325678
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16885484,
+      "non_cpu_ns": 9876003,
+      "outcome": "ok",
+      "sequence": 171,
+      "task_clock_ns": 7009481
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23250906,
+      "non_cpu_ns": 16528927,
+      "outcome": "ok",
+      "sequence": 172,
+      "task_clock_ns": 6721979
+    },
+    {
+      "context_switches": 5,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16000692,
+      "non_cpu_ns": 8853141,
+      "outcome": "ok",
+      "sequence": 173,
+      "task_clock_ns": 7147551
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15469233,
+      "non_cpu_ns": 9019181,
+      "outcome": "ok",
+      "sequence": 174,
+      "task_clock_ns": 6450052
+    },
+    {
+      "context_switches": 5,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 14790326,
+      "non_cpu_ns": 7961627,
+      "outcome": "ok",
+      "sequence": 175,
+      "task_clock_ns": 6828699
+    },
+    {
+      "context_switches": 4,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17244651,
+      "non_cpu_ns": 10214025,
+      "outcome": "ok",
+      "sequence": 176,
+      "task_clock_ns": 7030626
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 15609649,
+      "non_cpu_ns": 8656003,
+      "outcome": "ok",
+      "sequence": 177,
+      "task_clock_ns": 6953646
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16620693,
+      "non_cpu_ns": 9841005,
+      "outcome": "ok",
+      "sequence": 178,
+      "task_clock_ns": 6779688
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20123508,
+      "non_cpu_ns": 13457934,
+      "outcome": "ok",
+      "sequence": 179,
+      "task_clock_ns": 6665574
+    },
+    {
+      "context_switches": 6,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19192935,
+      "non_cpu_ns": 12354863,
+      "outcome": "ok",
+      "sequence": 180,
+      "task_clock_ns": 6838072
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21957833,
+      "non_cpu_ns": 15070958,
+      "outcome": "ok",
+      "sequence": 181,
+      "task_clock_ns": 6886875
+    },
+    {
+      "context_switches": 6,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21925645,
+      "non_cpu_ns": 15014864,
+      "outcome": "ok",
+      "sequence": 182,
+      "task_clock_ns": 6910781
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26002941,
+      "non_cpu_ns": 19038723,
+      "outcome": "ok",
+      "sequence": 183,
+      "task_clock_ns": 6964218
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26314659,
+      "non_cpu_ns": 19783045,
+      "outcome": "ok",
+      "sequence": 184,
+      "task_clock_ns": 6531614
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25566586,
+      "non_cpu_ns": 18729554,
+      "outcome": "ok",
+      "sequence": 185,
+      "task_clock_ns": 6837032
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 32093675,
+      "non_cpu_ns": 25222841,
+      "outcome": "ok",
+      "sequence": 186,
+      "task_clock_ns": 6870834
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26108774,
+      "non_cpu_ns": 19460128,
+      "outcome": "ok",
+      "sequence": 187,
+      "task_clock_ns": 6648646
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29814037,
+      "non_cpu_ns": 22565443,
+      "outcome": "ok",
+      "sequence": 188,
+      "task_clock_ns": 7248594
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34141802,
+      "non_cpu_ns": 27276854,
+      "outcome": "ok",
+      "sequence": 189,
+      "task_clock_ns": 6864948
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25884659,
+      "non_cpu_ns": 18887992,
+      "outcome": "ok",
+      "sequence": 190,
+      "task_clock_ns": 6996667
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34329719,
+      "non_cpu_ns": 27300084,
+      "outcome": "ok",
+      "sequence": 191,
+      "task_clock_ns": 7029635
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29309506,
+      "non_cpu_ns": 22138517,
+      "outcome": "ok",
+      "sequence": 192,
+      "task_clock_ns": 7170989
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29393517,
+      "non_cpu_ns": 21979142,
+      "outcome": "ok",
+      "sequence": 193,
+      "task_clock_ns": 7414375
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29416955,
+      "non_cpu_ns": 22025601,
+      "outcome": "ok",
+      "sequence": 194,
+      "task_clock_ns": 7391354
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25463878,
+      "non_cpu_ns": 18096170,
+      "outcome": "ok",
+      "sequence": 195,
+      "task_clock_ns": 7367708
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29421433,
+      "non_cpu_ns": 22039193,
+      "outcome": "ok",
+      "sequence": 196,
+      "task_clock_ns": 7382240
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29446485,
+      "non_cpu_ns": 22032213,
+      "outcome": "ok",
+      "sequence": 197,
+      "task_clock_ns": 7414272
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37956077,
+      "non_cpu_ns": 30435661,
+      "outcome": "ok",
+      "sequence": 198,
+      "task_clock_ns": 7520416
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16194441,
+      "non_cpu_ns": 8844701,
+      "outcome": "ok",
+      "sequence": 199,
+      "task_clock_ns": 7349740
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18580017,
+      "non_cpu_ns": 11191788,
+      "outcome": "ok",
+      "sequence": 200,
+      "task_clock_ns": 7388229
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17508036,
+      "non_cpu_ns": 10311838,
+      "outcome": "ok",
+      "sequence": 201,
+      "task_clock_ns": 7196198
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25416169,
+      "non_cpu_ns": 17968252,
+      "outcome": "ok",
+      "sequence": 202,
+      "task_clock_ns": 7447917
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19633143,
+      "non_cpu_ns": 12119029,
+      "outcome": "ok",
+      "sequence": 203,
+      "task_clock_ns": 7514114
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17497308,
+      "non_cpu_ns": 10282985,
+      "outcome": "ok",
+      "sequence": 204,
+      "task_clock_ns": 7214323
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16310692,
+      "non_cpu_ns": 8837046,
+      "outcome": "ok",
+      "sequence": 205,
+      "task_clock_ns": 7473646
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19608977,
+      "non_cpu_ns": 12041372,
+      "outcome": "ok",
+      "sequence": 206,
+      "task_clock_ns": 7567605
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19159652,
+      "non_cpu_ns": 11630537,
+      "outcome": "ok",
+      "sequence": 207,
+      "task_clock_ns": 7529115
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17138037,
+      "non_cpu_ns": 9863402,
+      "outcome": "ok",
+      "sequence": 208,
+      "task_clock_ns": 7274635
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23738408,
+      "non_cpu_ns": 16339032,
+      "outcome": "ok",
+      "sequence": 209,
+      "task_clock_ns": 7399376
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17414703,
+      "non_cpu_ns": 10083193,
+      "outcome": "ok",
+      "sequence": 210,
+      "task_clock_ns": 7331510
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17418871,
+      "non_cpu_ns": 10208871,
+      "outcome": "ok",
+      "sequence": 211,
+      "task_clock_ns": 7210000
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16214442,
+      "non_cpu_ns": 8759130,
+      "outcome": "ok",
+      "sequence": 212,
+      "task_clock_ns": 7455312
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23670386,
+      "non_cpu_ns": 16086271,
+      "outcome": "ok",
+      "sequence": 213,
+      "task_clock_ns": 7584115
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17191266,
+      "non_cpu_ns": 10029859,
+      "outcome": "ok",
+      "sequence": 214,
+      "task_clock_ns": 7161407
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 20167466,
+      "non_cpu_ns": 12738299,
+      "outcome": "ok",
+      "sequence": 215,
+      "task_clock_ns": 7429167
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26127419,
+      "non_cpu_ns": 18796585,
+      "outcome": "ok",
+      "sequence": 216,
+      "task_clock_ns": 7330834
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18007204,
+      "non_cpu_ns": 11312621,
+      "outcome": "ok",
+      "sequence": 217,
+      "task_clock_ns": 6694583
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15871005,
+      "non_cpu_ns": 8719546,
+      "outcome": "ok",
+      "sequence": 218,
+      "task_clock_ns": 7151459
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23575438,
+      "non_cpu_ns": 16249553,
+      "outcome": "ok",
+      "sequence": 219,
+      "task_clock_ns": 7325885
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25308929,
+      "non_cpu_ns": 18405231,
+      "outcome": "ok",
+      "sequence": 220,
+      "task_clock_ns": 6903698
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25349294,
+      "non_cpu_ns": 18665336,
+      "outcome": "ok",
+      "sequence": 221,
+      "task_clock_ns": 6683958
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26105441,
+      "non_cpu_ns": 19561587,
+      "outcome": "ok",
+      "sequence": 222,
+      "task_clock_ns": 6543854
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34051073,
+      "non_cpu_ns": 27217323,
+      "outcome": "ok",
+      "sequence": 223,
+      "task_clock_ns": 6833750
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26335962,
+      "non_cpu_ns": 19426222,
+      "outcome": "ok",
+      "sequence": 224,
+      "task_clock_ns": 6909740
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25322158,
+      "non_cpu_ns": 18611116,
+      "outcome": "ok",
+      "sequence": 225,
+      "task_clock_ns": 6711042
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 27706067,
+      "non_cpu_ns": 20417420,
+      "outcome": "ok",
+      "sequence": 226,
+      "task_clock_ns": 7288647
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19597466,
+      "non_cpu_ns": 12671164,
+      "outcome": "ok",
+      "sequence": 227,
+      "task_clock_ns": 6926302
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26038931,
+      "non_cpu_ns": 19119347,
+      "outcome": "ok",
+      "sequence": 228,
+      "task_clock_ns": 6919584
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26677368,
+      "non_cpu_ns": 19515597,
+      "outcome": "ok",
+      "sequence": 229,
+      "task_clock_ns": 7161771
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25510284,
+      "non_cpu_ns": 18426638,
+      "outcome": "ok",
+      "sequence": 230,
+      "task_clock_ns": 7083646
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26061691,
+      "non_cpu_ns": 19127316,
+      "outcome": "ok",
+      "sequence": 231,
+      "task_clock_ns": 6934375
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25325856,
+      "non_cpu_ns": 18703669,
+      "outcome": "ok",
+      "sequence": 232,
+      "task_clock_ns": 6622187
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30254767,
+      "non_cpu_ns": 23372110,
+      "outcome": "ok",
+      "sequence": 233,
+      "task_clock_ns": 6882657
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26225805,
+      "non_cpu_ns": 19376898,
+      "outcome": "ok",
+      "sequence": 234,
+      "task_clock_ns": 6848907
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 11594021,
+      "non_cpu_ns": 4815844,
+      "outcome": "ok",
+      "sequence": 235,
+      "task_clock_ns": 6778177
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 24660439,
+      "non_cpu_ns": 17824865,
+      "outcome": "ok",
+      "sequence": 236,
+      "task_clock_ns": 6835574
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25022211,
+      "non_cpu_ns": 18065128,
+      "outcome": "ok",
+      "sequence": 237,
+      "task_clock_ns": 6957083
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 22453510,
+      "non_cpu_ns": 15378093,
+      "outcome": "ok",
+      "sequence": 238,
+      "task_clock_ns": 7075417
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26064920,
+      "non_cpu_ns": 18934450,
+      "outcome": "ok",
+      "sequence": 239,
+      "task_clock_ns": 7130470
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34151073,
+      "non_cpu_ns": 27383469,
+      "outcome": "ok",
+      "sequence": 240,
+      "task_clock_ns": 6767604
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30283205,
+      "non_cpu_ns": 23533465,
+      "outcome": "ok",
+      "sequence": 241,
+      "task_clock_ns": 6749740
+    },
+    {
+      "context_switches": 4,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29829923,
+      "non_cpu_ns": 22622268,
+      "outcome": "ok",
+      "sequence": 242,
+      "task_clock_ns": 7207655
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29857423,
+      "non_cpu_ns": 22772839,
+      "outcome": "ok",
+      "sequence": 243,
+      "task_clock_ns": 7084584
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34217479,
+      "non_cpu_ns": 27458261,
+      "outcome": "ok",
+      "sequence": 244,
+      "task_clock_ns": 6759218
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 18006943,
+      "non_cpu_ns": 11076161,
+      "outcome": "ok",
+      "sequence": 245,
+      "task_clock_ns": 6930782
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34146594,
+      "non_cpu_ns": 27264979,
+      "outcome": "ok",
+      "sequence": 246,
+      "task_clock_ns": 6881615
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18227568,
+      "non_cpu_ns": 10856318,
+      "outcome": "ok",
+      "sequence": 247,
+      "task_clock_ns": 7371250
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18293298,
+      "non_cpu_ns": 11115850,
+      "outcome": "ok",
+      "sequence": 248,
+      "task_clock_ns": 7177448
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15931629,
+      "non_cpu_ns": 8474755,
+      "outcome": "ok",
+      "sequence": 249,
+      "task_clock_ns": 7456874
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19872518,
+      "non_cpu_ns": 12651685,
+      "outcome": "ok",
+      "sequence": 250,
+      "task_clock_ns": 7220833
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16348973,
+      "non_cpu_ns": 8789858,
+      "outcome": "ok",
+      "sequence": 251,
+      "task_clock_ns": 7559115
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19904706,
+      "non_cpu_ns": 12319081,
+      "outcome": "ok",
+      "sequence": 252,
+      "task_clock_ns": 7585625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25201013,
+      "non_cpu_ns": 17945492,
+      "outcome": "ok",
+      "sequence": 253,
+      "task_clock_ns": 7255521
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 33458780,
+      "non_cpu_ns": 26005552,
+      "outcome": "ok",
+      "sequence": 254,
+      "task_clock_ns": 7453228
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25574555,
+      "non_cpu_ns": 18255962,
+      "outcome": "ok",
+      "sequence": 255,
+      "task_clock_ns": 7318593
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29346849,
+      "non_cpu_ns": 21949401,
+      "outcome": "ok",
+      "sequence": 256,
+      "task_clock_ns": 7397448
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21273248,
+      "non_cpu_ns": 13918249,
+      "outcome": "ok",
+      "sequence": 257,
+      "task_clock_ns": 7354999
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21866010,
+      "non_cpu_ns": 14377833,
+      "outcome": "ok",
+      "sequence": 258,
+      "task_clock_ns": 7488177
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21901322,
+      "non_cpu_ns": 14442259,
+      "outcome": "ok",
+      "sequence": 259,
+      "task_clock_ns": 7459063
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17448141,
+      "non_cpu_ns": 9970174,
+      "outcome": "ok",
+      "sequence": 260,
+      "task_clock_ns": 7477967
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17577933,
+      "non_cpu_ns": 10343506,
+      "outcome": "ok",
+      "sequence": 261,
+      "task_clock_ns": 7234427
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29555027,
+      "non_cpu_ns": 22249402,
+      "outcome": "ok",
+      "sequence": 262,
+      "task_clock_ns": 7305625
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 33559770,
+      "non_cpu_ns": 26043208,
+      "outcome": "ok",
+      "sequence": 263,
+      "task_clock_ns": 7516562
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 38029097,
+      "non_cpu_ns": 30507431,
+      "outcome": "ok",
+      "sequence": 264,
+      "task_clock_ns": 7521666
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34084875,
+      "non_cpu_ns": 26718313,
+      "outcome": "ok",
+      "sequence": 265,
+      "task_clock_ns": 7366562
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29603569,
+      "non_cpu_ns": 22249246,
+      "outcome": "ok",
+      "sequence": 266,
+      "task_clock_ns": 7354323
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18142777,
+      "non_cpu_ns": 10774182,
+      "outcome": "ok",
+      "sequence": 267,
+      "task_clock_ns": 7368595
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18038298,
+      "non_cpu_ns": 10702673,
+      "outcome": "ok",
+      "sequence": 268,
+      "task_clock_ns": 7335625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17850589,
+      "non_cpu_ns": 10572672,
+      "outcome": "ok",
+      "sequence": 269,
+      "task_clock_ns": 7277917
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18081579,
+      "non_cpu_ns": 11135120,
+      "outcome": "ok",
+      "sequence": 270,
+      "task_clock_ns": 6946459
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25872160,
+      "non_cpu_ns": 18811066,
+      "outcome": "ok",
+      "sequence": 271,
+      "task_clock_ns": 7061094
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26187732,
+      "non_cpu_ns": 19023461,
+      "outcome": "ok",
+      "sequence": 272,
+      "task_clock_ns": 7164271
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19899289,
+      "non_cpu_ns": 12713351,
+      "outcome": "ok",
+      "sequence": 273,
+      "task_clock_ns": 7185938
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15672566,
+      "non_cpu_ns": 8852723,
+      "outcome": "ok",
+      "sequence": 274,
+      "task_clock_ns": 6819843
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19668247,
+      "non_cpu_ns": 13000070,
+      "outcome": "ok",
+      "sequence": 275,
+      "task_clock_ns": 6668177
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 14292305,
+      "non_cpu_ns": 7325273,
+      "outcome": "ok",
+      "sequence": 276,
+      "task_clock_ns": 6967032
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15977567,
+      "non_cpu_ns": 9483296,
+      "outcome": "ok",
+      "sequence": 277,
+      "task_clock_ns": 6494271
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15652567,
+      "non_cpu_ns": 8686473,
+      "outcome": "ok",
+      "sequence": 278,
+      "task_clock_ns": 6966094
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20213143,
+      "non_cpu_ns": 13491683,
+      "outcome": "ok",
+      "sequence": 279,
+      "task_clock_ns": 6721460
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15735536,
+      "non_cpu_ns": 8681994,
+      "outcome": "ok",
+      "sequence": 280,
+      "task_clock_ns": 7053542
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19207049,
+      "non_cpu_ns": 12665538,
+      "outcome": "ok",
+      "sequence": 281,
+      "task_clock_ns": 6541511
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 22397312,
+      "non_cpu_ns": 15387260,
+      "outcome": "ok",
+      "sequence": 282,
+      "task_clock_ns": 7010052
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17671891,
+      "non_cpu_ns": 10501059,
+      "outcome": "ok",
+      "sequence": 283,
+      "task_clock_ns": 7170832
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16034441,
+      "non_cpu_ns": 8850586,
+      "outcome": "ok",
+      "sequence": 284,
+      "task_clock_ns": 7183855
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19460018,
+      "non_cpu_ns": 12171528,
+      "outcome": "ok",
+      "sequence": 285,
+      "task_clock_ns": 7288490
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 20121477,
+      "non_cpu_ns": 12971529,
+      "outcome": "ok",
+      "sequence": 286,
+      "task_clock_ns": 7149948
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15748452,
+      "non_cpu_ns": 8727827,
+      "outcome": "ok",
+      "sequence": 287,
+      "task_clock_ns": 7020625
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19771945,
+      "non_cpu_ns": 12889654,
+      "outcome": "ok",
+      "sequence": 288,
+      "task_clock_ns": 6882291
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15835588,
+      "non_cpu_ns": 8810639,
+      "outcome": "ok",
+      "sequence": 289,
+      "task_clock_ns": 7024949
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19904029,
+      "non_cpu_ns": 13298612,
+      "outcome": "ok",
+      "sequence": 290,
+      "task_clock_ns": 6605417
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 22160177,
+      "non_cpu_ns": 15574187,
+      "outcome": "ok",
+      "sequence": 291,
+      "task_clock_ns": 6585990
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15699910,
+      "non_cpu_ns": 8787670,
+      "outcome": "ok",
+      "sequence": 292,
+      "task_clock_ns": 6912240
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19468664,
+      "non_cpu_ns": 12371112,
+      "outcome": "ok",
+      "sequence": 293,
+      "task_clock_ns": 7097552
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15555379,
+      "non_cpu_ns": 8736213,
+      "outcome": "ok",
+      "sequence": 294,
+      "task_clock_ns": 6819166
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 23889918,
+      "non_cpu_ns": 17265439,
+      "outcome": "ok",
+      "sequence": 295,
+      "task_clock_ns": 6624479
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 27088774,
+      "non_cpu_ns": 20431899,
+      "outcome": "ok",
+      "sequence": 296,
+      "task_clock_ns": 6656875
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25869190,
+      "non_cpu_ns": 19055596,
+      "outcome": "ok",
+      "sequence": 297,
+      "task_clock_ns": 6813594
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26213878,
+      "non_cpu_ns": 19440753,
+      "outcome": "ok",
+      "sequence": 298,
+      "task_clock_ns": 6773125
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26093461,
+      "non_cpu_ns": 19344085,
+      "outcome": "ok",
+      "sequence": 299,
+      "task_clock_ns": 6749376
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 11558605,
+      "non_cpu_ns": 4872563,
+      "outcome": "ok",
+      "sequence": 300,
+      "task_clock_ns": 6686042
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 24081689,
+      "non_cpu_ns": 17143669,
+      "outcome": "ok",
+      "sequence": 301,
+      "task_clock_ns": 6938020
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15736525,
+      "non_cpu_ns": 8691890,
+      "outcome": "ok",
+      "sequence": 302,
+      "task_clock_ns": 7044635
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20003769,
+      "non_cpu_ns": 13183039,
+      "outcome": "ok",
+      "sequence": 303,
+      "task_clock_ns": 6820730
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15756004,
+      "non_cpu_ns": 8774806,
+      "outcome": "ok",
+      "sequence": 304,
+      "task_clock_ns": 6981198
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 35698991,
+      "non_cpu_ns": 28762950,
+      "outcome": "ok",
+      "sequence": 305,
+      "task_clock_ns": 6936041
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 31950134,
+      "non_cpu_ns": 24589768,
+      "outcome": "ok",
+      "sequence": 306,
+      "task_clock_ns": 7360366
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34012843,
+      "non_cpu_ns": 26776646,
+      "outcome": "ok",
+      "sequence": 307,
+      "task_clock_ns": 7236197
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26132107,
+      "non_cpu_ns": 18944450,
+      "outcome": "ok",
+      "sequence": 308,
+      "task_clock_ns": 7187657
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34111282,
+      "non_cpu_ns": 26979354,
+      "outcome": "ok",
+      "sequence": 309,
+      "task_clock_ns": 7131928
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 11792406,
+      "non_cpu_ns": 4846730,
+      "outcome": "ok",
+      "sequence": 310,
+      "task_clock_ns": 6945676
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30002059,
+      "non_cpu_ns": 22714923,
+      "outcome": "ok",
+      "sequence": 311,
+      "task_clock_ns": 7287136
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37995868,
+      "non_cpu_ns": 30575191,
+      "outcome": "ok",
+      "sequence": 312,
+      "task_clock_ns": 7420677
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34040604,
+      "non_cpu_ns": 26866489,
+      "outcome": "ok",
+      "sequence": 313,
+      "task_clock_ns": 7174115
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37500919,
+      "non_cpu_ns": 29951649,
+      "outcome": "ok",
+      "sequence": 314,
+      "task_clock_ns": 7549270
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29811642,
+      "non_cpu_ns": 22500808,
+      "outcome": "ok",
+      "sequence": 315,
+      "task_clock_ns": 7310834
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34015917,
+      "non_cpu_ns": 26547480,
+      "outcome": "ok",
+      "sequence": 316,
+      "task_clock_ns": 7468437
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29354871,
+      "non_cpu_ns": 22118881,
+      "outcome": "ok",
+      "sequence": 317,
+      "task_clock_ns": 7235990
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34030083,
+      "non_cpu_ns": 26586124,
+      "outcome": "ok",
+      "sequence": 318,
+      "task_clock_ns": 7443959
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 29609871,
+      "non_cpu_ns": 22319089,
+      "outcome": "ok",
+      "sequence": 319,
+      "task_clock_ns": 7290782
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25480648,
+      "non_cpu_ns": 18043618,
+      "outcome": "ok",
+      "sequence": 320,
+      "task_clock_ns": 7437030
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25564086,
+      "non_cpu_ns": 18217941,
+      "outcome": "ok",
+      "sequence": 321,
+      "task_clock_ns": 7346145
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 33946281,
+      "non_cpu_ns": 26885656,
+      "outcome": "ok",
+      "sequence": 322,
+      "task_clock_ns": 7060625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37991180,
+      "non_cpu_ns": 30624461,
+      "outcome": "ok",
+      "sequence": 323,
+      "task_clock_ns": 7366719
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29489975,
+      "non_cpu_ns": 22030756,
+      "outcome": "ok",
+      "sequence": 324,
+      "task_clock_ns": 7459219
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 30302006,
+      "non_cpu_ns": 22822578,
+      "outcome": "ok",
+      "sequence": 325,
+      "task_clock_ns": 7479428
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25352263,
+      "non_cpu_ns": 18128669,
+      "outcome": "ok",
+      "sequence": 326,
+      "task_clock_ns": 7223594
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25763929,
+      "non_cpu_ns": 18615440,
+      "outcome": "ok",
+      "sequence": 327,
+      "task_clock_ns": 7148489
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19732518,
+      "non_cpu_ns": 12657466,
+      "outcome": "ok",
+      "sequence": 328,
+      "task_clock_ns": 7075052
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 38226285,
+      "non_cpu_ns": 31238055,
+      "outcome": "ok",
+      "sequence": 329,
+      "task_clock_ns": 6988230
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25910857,
+      "non_cpu_ns": 18728878,
+      "outcome": "ok",
+      "sequence": 330,
+      "task_clock_ns": 7181979
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19486737,
+      "non_cpu_ns": 12690643,
+      "outcome": "ok",
+      "sequence": 331,
+      "task_clock_ns": 6796094
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19941372,
+      "non_cpu_ns": 13281320,
+      "outcome": "ok",
+      "sequence": 332,
+      "task_clock_ns": 6660052
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15587045,
+      "non_cpu_ns": 8717515,
+      "outcome": "ok",
+      "sequence": 333,
+      "task_clock_ns": 6869530
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 21451217,
+      "non_cpu_ns": 14781581,
+      "outcome": "ok",
+      "sequence": 334,
+      "task_clock_ns": 6669636
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20070227,
+      "non_cpu_ns": 13437206,
+      "outcome": "ok",
+      "sequence": 335,
+      "task_clock_ns": 6633021
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15553191,
+      "non_cpu_ns": 8721004,
+      "outcome": "ok",
+      "sequence": 336,
+      "task_clock_ns": 6832187
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18150277,
+      "non_cpu_ns": 11113871,
+      "outcome": "ok",
+      "sequence": 337,
+      "task_clock_ns": 7036406
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17218818,
+      "non_cpu_ns": 10182829,
+      "outcome": "ok",
+      "sequence": 338,
+      "task_clock_ns": 7035989
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17156995,
+      "non_cpu_ns": 10305225,
+      "outcome": "ok",
+      "sequence": 339,
+      "task_clock_ns": 6851770
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16885953,
+      "non_cpu_ns": 10026785,
+      "outcome": "ok",
+      "sequence": 340,
+      "task_clock_ns": 6859168
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23673824,
+      "non_cpu_ns": 16761479,
+      "outcome": "ok",
+      "sequence": 341,
+      "task_clock_ns": 6912345
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15813608,
+      "non_cpu_ns": 8824910,
+      "outcome": "ok",
+      "sequence": 342,
+      "task_clock_ns": 6988698
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19892831,
+      "non_cpu_ns": 13206165,
+      "outcome": "ok",
+      "sequence": 343,
+      "task_clock_ns": 6686666
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15340274,
+      "non_cpu_ns": 8848765,
+      "outcome": "ok",
+      "sequence": 344,
+      "task_clock_ns": 6491509
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 15726212,
+      "non_cpu_ns": 8710483,
+      "outcome": "ok",
+      "sequence": 345,
+      "task_clock_ns": 7015729
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20690540,
+      "non_cpu_ns": 14008093,
+      "outcome": "ok",
+      "sequence": 346,
+      "task_clock_ns": 6682447
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18283611,
+      "non_cpu_ns": 11446581,
+      "outcome": "ok",
+      "sequence": 347,
+      "task_clock_ns": 6837030
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15552931,
+      "non_cpu_ns": 8677046,
+      "outcome": "ok",
+      "sequence": 348,
+      "task_clock_ns": 6875885
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 31509247,
+      "non_cpu_ns": 24788622,
+      "outcome": "ok",
+      "sequence": 349,
+      "task_clock_ns": 6720625
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26196691,
+      "non_cpu_ns": 19536951,
+      "outcome": "ok",
+      "sequence": 350,
+      "task_clock_ns": 6659740
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34175813,
+      "non_cpu_ns": 27595032,
+      "outcome": "ok",
+      "sequence": 351,
+      "task_clock_ns": 6580781
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 27133983,
+      "non_cpu_ns": 20296379,
+      "outcome": "ok",
+      "sequence": 352,
+      "task_clock_ns": 6837604
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 23795387,
+      "non_cpu_ns": 16738825,
+      "outcome": "ok",
+      "sequence": 353,
+      "task_clock_ns": 7056562
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30252684,
+      "non_cpu_ns": 23644350,
+      "outcome": "ok",
+      "sequence": 354,
+      "task_clock_ns": 6608334
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 35854564,
+      "non_cpu_ns": 29034043,
+      "outcome": "ok",
+      "sequence": 355,
+      "task_clock_ns": 6820521
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25915649,
+      "non_cpu_ns": 18760233,
+      "outcome": "ok",
+      "sequence": 356,
+      "task_clock_ns": 7155416
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29872111,
+      "non_cpu_ns": 22708621,
+      "outcome": "ok",
+      "sequence": 357,
+      "task_clock_ns": 7163490
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26151170,
+      "non_cpu_ns": 19052940,
+      "outcome": "ok",
+      "sequence": 358,
+      "task_clock_ns": 7098230
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26937264,
+      "non_cpu_ns": 19963566,
+      "outcome": "ok",
+      "sequence": 359,
+      "task_clock_ns": 6973698
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26208201,
+      "non_cpu_ns": 19215649,
+      "outcome": "ok",
+      "sequence": 360,
+      "task_clock_ns": 6992552
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34116230,
+      "non_cpu_ns": 27134303,
+      "outcome": "ok",
+      "sequence": 361,
+      "task_clock_ns": 6981927
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29448047,
+      "non_cpu_ns": 22016433,
+      "outcome": "ok",
+      "sequence": 362,
+      "task_clock_ns": 7431614
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25336429,
+      "non_cpu_ns": 18242419,
+      "outcome": "ok",
+      "sequence": 363,
+      "task_clock_ns": 7094010
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 20148248,
+      "non_cpu_ns": 12574967,
+      "outcome": "ok",
+      "sequence": 364,
+      "task_clock_ns": 7573281
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17421214,
+      "non_cpu_ns": 10070536,
+      "outcome": "ok",
+      "sequence": 365,
+      "task_clock_ns": 7350678
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16191265,
+      "non_cpu_ns": 8901109,
+      "outcome": "ok",
+      "sequence": 366,
+      "task_clock_ns": 7290156
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23574292,
+      "non_cpu_ns": 16295698,
+      "outcome": "ok",
+      "sequence": 367,
+      "task_clock_ns": 7278594
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17388246,
+      "non_cpu_ns": 9971059,
+      "outcome": "ok",
+      "sequence": 368,
+      "task_clock_ns": 7417187
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15978817,
+      "non_cpu_ns": 8749234,
+      "outcome": "ok",
+      "sequence": 369,
+      "task_clock_ns": 7229583
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23620022,
+      "non_cpu_ns": 16135283,
+      "outcome": "ok",
+      "sequence": 370,
+      "task_clock_ns": 7484739
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25187887,
+      "non_cpu_ns": 17688355,
+      "outcome": "ok",
+      "sequence": 371,
+      "task_clock_ns": 7499532
+    },
+    {
+      "context_switches": 6,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 30821382,
+      "non_cpu_ns": 21461015,
+      "outcome": "ok",
+      "sequence": 372,
+      "task_clock_ns": 9360367
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34029302,
+      "non_cpu_ns": 26496854,
+      "outcome": "ok",
+      "sequence": 373,
+      "task_clock_ns": 7532448
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26142211,
+      "non_cpu_ns": 18766534,
+      "outcome": "ok",
+      "sequence": 374,
+      "task_clock_ns": 7375677
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 29130339,
+      "non_cpu_ns": 21779609,
+      "outcome": "ok",
+      "sequence": 375,
+      "task_clock_ns": 7350730
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34087584,
+      "non_cpu_ns": 26499042,
+      "outcome": "ok",
+      "sequence": 376,
+      "task_clock_ns": 7588542
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 2,
+      "end_to_end_ns": 33547010,
+      "non_cpu_ns": 25994041,
+      "outcome": "ok",
+      "sequence": 377,
+      "task_clock_ns": 7552969
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 30287111,
+      "non_cpu_ns": 22682632,
+      "outcome": "ok",
+      "sequence": 378,
+      "task_clock_ns": 7604479
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25282888,
+      "non_cpu_ns": 17990387,
+      "outcome": "ok",
+      "sequence": 379,
+      "task_clock_ns": 7292501
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29464350,
+      "non_cpu_ns": 22149037,
+      "outcome": "ok",
+      "sequence": 380,
+      "task_clock_ns": 7315313
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37928211,
+      "non_cpu_ns": 30402169,
+      "outcome": "ok",
+      "sequence": 381,
+      "task_clock_ns": 7526042
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 33976125,
+      "non_cpu_ns": 26728104,
+      "outcome": "ok",
+      "sequence": 382,
+      "task_clock_ns": 7248021
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25621951,
+      "non_cpu_ns": 18524087,
+      "outcome": "ok",
+      "sequence": 383,
+      "task_clock_ns": 7097864
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25262107,
+      "non_cpu_ns": 18665856,
+      "outcome": "ok",
+      "sequence": 384,
+      "task_clock_ns": 6596251
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34045917,
+      "non_cpu_ns": 27521646,
+      "outcome": "ok",
+      "sequence": 385,
+      "task_clock_ns": 6524271
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22243510,
+      "non_cpu_ns": 15644968,
+      "outcome": "ok",
+      "sequence": 386,
+      "task_clock_ns": 6598542
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 31942790,
+      "non_cpu_ns": 25251488,
+      "outcome": "ok",
+      "sequence": 387,
+      "task_clock_ns": 6691302
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19366164,
+      "non_cpu_ns": 12623976,
+      "outcome": "ok",
+      "sequence": 388,
+      "task_clock_ns": 6742188
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 38064879,
+      "non_cpu_ns": 31290399,
+      "outcome": "ok",
+      "sequence": 389,
+      "task_clock_ns": 6774480
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34277011,
+      "non_cpu_ns": 27497844,
+      "outcome": "ok",
+      "sequence": 390,
+      "task_clock_ns": 6779167
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25881378,
+      "non_cpu_ns": 18636221,
+      "outcome": "ok",
+      "sequence": 391,
+      "task_clock_ns": 7245157
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25403617,
+      "non_cpu_ns": 18498773,
+      "outcome": "ok",
+      "sequence": 392,
+      "task_clock_ns": 6904844
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29985757,
+      "non_cpu_ns": 22765653,
+      "outcome": "ok",
+      "sequence": 393,
+      "task_clock_ns": 7220104
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22018249,
+      "non_cpu_ns": 15061583,
+      "outcome": "ok",
+      "sequence": 394,
+      "task_clock_ns": 6956666
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18242256,
+      "non_cpu_ns": 10955797,
+      "outcome": "ok",
+      "sequence": 395,
+      "task_clock_ns": 7286459
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18038766,
+      "non_cpu_ns": 11217516,
+      "outcome": "ok",
+      "sequence": 396,
+      "task_clock_ns": 6821250
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18108975,
+      "non_cpu_ns": 11244341,
+      "outcome": "ok",
+      "sequence": 397,
+      "task_clock_ns": 6864634
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22145281,
+      "non_cpu_ns": 15505958,
+      "outcome": "ok",
+      "sequence": 398,
+      "task_clock_ns": 6639323
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 22212937,
+      "non_cpu_ns": 15507571,
+      "outcome": "ok",
+      "sequence": 399,
+      "task_clock_ns": 6705366
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17508714,
+      "non_cpu_ns": 10572986,
+      "outcome": "ok",
+      "sequence": 400,
+      "task_clock_ns": 6935728
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21954395,
+      "non_cpu_ns": 15112000,
+      "outcome": "ok",
+      "sequence": 401,
+      "task_clock_ns": 6842395
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 25883774,
+      "non_cpu_ns": 19401638,
+      "outcome": "ok",
+      "sequence": 402,
+      "task_clock_ns": 6482136
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34184510,
+      "non_cpu_ns": 26996281,
+      "outcome": "ok",
+      "sequence": 403,
+      "task_clock_ns": 7188229
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 32000966,
+      "non_cpu_ns": 25314248,
+      "outcome": "ok",
+      "sequence": 404,
+      "task_clock_ns": 6686718
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25837471,
+      "non_cpu_ns": 18950596,
+      "outcome": "ok",
+      "sequence": 405,
+      "task_clock_ns": 6886875
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25897263,
+      "non_cpu_ns": 18941950,
+      "outcome": "ok",
+      "sequence": 406,
+      "task_clock_ns": 6955313
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30224559,
+      "non_cpu_ns": 23334976,
+      "outcome": "ok",
+      "sequence": 407,
+      "task_clock_ns": 6889583
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25478721,
+      "non_cpu_ns": 18671325,
+      "outcome": "ok",
+      "sequence": 408,
+      "task_clock_ns": 6807396
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 33985552,
+      "non_cpu_ns": 27002217,
+      "outcome": "ok",
+      "sequence": 409,
+      "task_clock_ns": 6983335
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 27507108,
+      "non_cpu_ns": 20381691,
+      "outcome": "ok",
+      "sequence": 410,
+      "task_clock_ns": 7125417
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26131274,
+      "non_cpu_ns": 19131325,
+      "outcome": "ok",
+      "sequence": 411,
+      "task_clock_ns": 6999949
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30123048,
+      "non_cpu_ns": 22896486,
+      "outcome": "ok",
+      "sequence": 412,
+      "task_clock_ns": 7226562
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29867423,
+      "non_cpu_ns": 22719611,
+      "outcome": "ok",
+      "sequence": 413,
+      "task_clock_ns": 7147812
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25878669,
+      "non_cpu_ns": 18724920,
+      "outcome": "ok",
+      "sequence": 414,
+      "task_clock_ns": 7153749
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25415179,
+      "non_cpu_ns": 18407315,
+      "outcome": "ok",
+      "sequence": 415,
+      "task_clock_ns": 7007864
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26040128,
+      "non_cpu_ns": 18665336,
+      "outcome": "ok",
+      "sequence": 416,
+      "task_clock_ns": 7374792
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 21950645,
+      "non_cpu_ns": 14405802,
+      "outcome": "ok",
+      "sequence": 417,
+      "task_clock_ns": 7544843
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16321109,
+      "non_cpu_ns": 8822620,
+      "outcome": "ok",
+      "sequence": 418,
+      "task_clock_ns": 7498489
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26153774,
+      "non_cpu_ns": 18656066,
+      "outcome": "ok",
+      "sequence": 419,
+      "task_clock_ns": 7497708
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17266266,
+      "non_cpu_ns": 9907932,
+      "outcome": "ok",
+      "sequence": 420,
+      "task_clock_ns": 7358334
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16137202,
+      "non_cpu_ns": 8786630,
+      "outcome": "ok",
+      "sequence": 421,
+      "task_clock_ns": 7350572
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 22842104,
+      "non_cpu_ns": 15344344,
+      "outcome": "ok",
+      "sequence": 422,
+      "task_clock_ns": 7497760
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16115796,
+      "non_cpu_ns": 8815223,
+      "outcome": "ok",
+      "sequence": 423,
+      "task_clock_ns": 7300573
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34011229,
+      "non_cpu_ns": 26436073,
+      "outcome": "ok",
+      "sequence": 424,
+      "task_clock_ns": 7575156
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30002840,
+      "non_cpu_ns": 22638673,
+      "outcome": "ok",
+      "sequence": 425,
+      "task_clock_ns": 7364167
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18150641,
+      "non_cpu_ns": 10665328,
+      "outcome": "ok",
+      "sequence": 426,
+      "task_clock_ns": 7485313
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 26057836,
+      "non_cpu_ns": 18720128,
+      "outcome": "ok",
+      "sequence": 427,
+      "task_clock_ns": 7337708
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25146846,
+      "non_cpu_ns": 17843929,
+      "outcome": "ok",
+      "sequence": 428,
+      "task_clock_ns": 7302917
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29482527,
+      "non_cpu_ns": 22183621,
+      "outcome": "ok",
+      "sequence": 429,
+      "task_clock_ns": 7298906
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30037996,
+      "non_cpu_ns": 22623830,
+      "outcome": "ok",
+      "sequence": 430,
+      "task_clock_ns": 7414166
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17560328,
+      "non_cpu_ns": 10273244,
+      "outcome": "ok",
+      "sequence": 431,
+      "task_clock_ns": 7287084
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17764339,
+      "non_cpu_ns": 10465536,
+      "outcome": "ok",
+      "sequence": 432,
+      "task_clock_ns": 7298803
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17424964,
+      "non_cpu_ns": 10010797,
+      "outcome": "ok",
+      "sequence": 433,
+      "task_clock_ns": 7414167
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16036942,
+      "non_cpu_ns": 8788869,
+      "outcome": "ok",
+      "sequence": 434,
+      "task_clock_ns": 7248073
+    },
+    {
+      "context_switches": 3,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 16795901,
+      "non_cpu_ns": 9702985,
+      "outcome": "ok",
+      "sequence": 435,
+      "task_clock_ns": 7092916
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 16090639,
+      "non_cpu_ns": 8703608,
+      "outcome": "ok",
+      "sequence": 436,
+      "task_clock_ns": 7387031
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19664966,
+      "non_cpu_ns": 12564966,
+      "outcome": "ok",
+      "sequence": 437,
+      "task_clock_ns": 7100000
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17549860,
+      "non_cpu_ns": 10267100,
+      "outcome": "ok",
+      "sequence": 438,
+      "task_clock_ns": 7282760
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 23831012,
+      "non_cpu_ns": 16330907,
+      "outcome": "ok",
+      "sequence": 439,
+      "task_clock_ns": 7500105
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17765746,
+      "non_cpu_ns": 10736319,
+      "outcome": "ok",
+      "sequence": 440,
+      "task_clock_ns": 7029427
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 15604597,
+      "non_cpu_ns": 8643347,
+      "outcome": "ok",
+      "sequence": 441,
+      "task_clock_ns": 6961250
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 22498614,
+      "non_cpu_ns": 15895853,
+      "outcome": "ok",
+      "sequence": 442,
+      "task_clock_ns": 6602761
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15700691,
+      "non_cpu_ns": 8743608,
+      "outcome": "ok",
+      "sequence": 443,
+      "task_clock_ns": 6957083
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20007883,
+      "non_cpu_ns": 13241372,
+      "outcome": "ok",
+      "sequence": 444,
+      "task_clock_ns": 6766511
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15799650,
+      "non_cpu_ns": 8674650,
+      "outcome": "ok",
+      "sequence": 445,
+      "task_clock_ns": 7125000
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 24158563,
+      "non_cpu_ns": 17085802,
+      "outcome": "ok",
+      "sequence": 446,
+      "task_clock_ns": 7072761
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25249138,
+      "non_cpu_ns": 18492991,
+      "outcome": "ok",
+      "sequence": 447,
+      "task_clock_ns": 6756147
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34260865,
+      "non_cpu_ns": 27486802,
+      "outcome": "ok",
+      "sequence": 448,
+      "task_clock_ns": 6774063
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15014754,
+      "non_cpu_ns": 8514442,
+      "outcome": "ok",
+      "sequence": 449,
+      "task_clock_ns": 6500312
+    },
+    {
+      "context_switches": 0,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18041475,
+      "non_cpu_ns": 11542517,
+      "outcome": "ok",
+      "sequence": 450,
+      "task_clock_ns": 6498958
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15709962,
+      "non_cpu_ns": 8686785,
+      "outcome": "ok",
+      "sequence": 451,
+      "task_clock_ns": 7023177
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19344236,
+      "non_cpu_ns": 12259029,
+      "outcome": "ok",
+      "sequence": 452,
+      "task_clock_ns": 7085207
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15987671,
+      "non_cpu_ns": 8684078,
+      "outcome": "ok",
+      "sequence": 453,
+      "task_clock_ns": 7303593
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19969966,
+      "non_cpu_ns": 13303456,
+      "outcome": "ok",
+      "sequence": 454,
+      "task_clock_ns": 6666510
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19800435,
+      "non_cpu_ns": 12851425,
+      "outcome": "ok",
+      "sequence": 455,
+      "task_clock_ns": 6949010
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 17732360,
+      "non_cpu_ns": 10735797,
+      "outcome": "ok",
+      "sequence": 456,
+      "task_clock_ns": 6996563
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15700848,
+      "non_cpu_ns": 8629545,
+      "outcome": "ok",
+      "sequence": 457,
+      "task_clock_ns": 7071303
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 20070904,
+      "non_cpu_ns": 13338091,
+      "outcome": "ok",
+      "sequence": 458,
+      "task_clock_ns": 6732813
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15688556,
+      "non_cpu_ns": 8728869,
+      "outcome": "ok",
+      "sequence": 459,
+      "task_clock_ns": 6959687
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34218052,
+      "non_cpu_ns": 27394875,
+      "outcome": "ok",
+      "sequence": 460,
+      "task_clock_ns": 6823177
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19506216,
+      "non_cpu_ns": 12644758,
+      "outcome": "ok",
+      "sequence": 461,
+      "task_clock_ns": 6861458
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26222419,
+      "non_cpu_ns": 19433981,
+      "outcome": "ok",
+      "sequence": 462,
+      "task_clock_ns": 6788438
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34178677,
+      "non_cpu_ns": 27461490,
+      "outcome": "ok",
+      "sequence": 463,
+      "task_clock_ns": 6717187
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25827784,
+      "non_cpu_ns": 18843773,
+      "outcome": "ok",
+      "sequence": 464,
+      "task_clock_ns": 6984011
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26420598,
+      "non_cpu_ns": 19849609,
+      "outcome": "ok",
+      "sequence": 465,
+      "task_clock_ns": 6570989
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19698924,
+      "non_cpu_ns": 12681372,
+      "outcome": "ok",
+      "sequence": 466,
+      "task_clock_ns": 7017552
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29436902,
+      "non_cpu_ns": 22591694,
+      "outcome": "ok",
+      "sequence": 467,
+      "task_clock_ns": 6845208
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 26293982,
+      "non_cpu_ns": 19537889,
+      "outcome": "ok",
+      "sequence": 468,
+      "task_clock_ns": 6756093
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 19644914,
+      "non_cpu_ns": 12667363,
+      "outcome": "ok",
+      "sequence": 469,
+      "task_clock_ns": 6977551
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 30022110,
+      "non_cpu_ns": 23069349,
+      "outcome": "ok",
+      "sequence": 470,
+      "task_clock_ns": 6952761
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25903357,
+      "non_cpu_ns": 18696221,
+      "outcome": "ok",
+      "sequence": 471,
+      "task_clock_ns": 7207136
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25786482,
+      "non_cpu_ns": 18665075,
+      "outcome": "ok",
+      "sequence": 472,
+      "task_clock_ns": 7121407
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34237376,
+      "non_cpu_ns": 27102637,
+      "outcome": "ok",
+      "sequence": 473,
+      "task_clock_ns": 7134739
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 33221228,
+      "non_cpu_ns": 25675966,
+      "outcome": "ok",
+      "sequence": 474,
+      "task_clock_ns": 7545262
+    },
+    {
+      "context_switches": 4,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 33958052,
+      "non_cpu_ns": 26430240,
+      "outcome": "ok",
+      "sequence": 475,
+      "task_clock_ns": 7527812
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34146854,
+      "non_cpu_ns": 26568833,
+      "outcome": "ok",
+      "sequence": 476,
+      "task_clock_ns": 7578021
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25418513,
+      "non_cpu_ns": 17911377,
+      "outcome": "ok",
+      "sequence": 477,
+      "task_clock_ns": 7507136
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25717992,
+      "non_cpu_ns": 18321741,
+      "outcome": "ok",
+      "sequence": 478,
+      "task_clock_ns": 7396251
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17414651,
+      "non_cpu_ns": 10178140,
+      "outcome": "ok",
+      "sequence": 479,
+      "task_clock_ns": 7236511
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18449601,
+      "non_cpu_ns": 10633143,
+      "outcome": "ok",
+      "sequence": 480,
+      "task_clock_ns": 7816458
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18241319,
+      "non_cpu_ns": 10680277,
+      "outcome": "ok",
+      "sequence": 481,
+      "task_clock_ns": 7561042
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 17993298,
+      "non_cpu_ns": 10495434,
+      "outcome": "ok",
+      "sequence": 482,
+      "task_clock_ns": 7497864
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 18156787,
+      "non_cpu_ns": 10817827,
+      "outcome": "ok",
+      "sequence": 483,
+      "task_clock_ns": 7338960
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 34234459,
+      "non_cpu_ns": 26791751,
+      "outcome": "ok",
+      "sequence": 484,
+      "task_clock_ns": 7442708
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25626169,
+      "non_cpu_ns": 18464346,
+      "outcome": "ok",
+      "sequence": 485,
+      "task_clock_ns": 7161823
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29589506,
+      "non_cpu_ns": 22207736,
+      "outcome": "ok",
+      "sequence": 486,
+      "task_clock_ns": 7381770
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 24084397,
+      "non_cpu_ns": 16787105,
+      "outcome": "ok",
+      "sequence": 487,
+      "task_clock_ns": 7297292
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37613316,
+      "non_cpu_ns": 30148524,
+      "outcome": "ok",
+      "sequence": 488,
+      "task_clock_ns": 7464792
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34113885,
+      "non_cpu_ns": 26995240,
+      "outcome": "ok",
+      "sequence": 489,
+      "task_clock_ns": 7118645
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25598305,
+      "non_cpu_ns": 18156533,
+      "outcome": "ok",
+      "sequence": 490,
+      "task_clock_ns": 7441772
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25438357,
+      "non_cpu_ns": 17917784,
+      "outcome": "ok",
+      "sequence": 491,
+      "task_clock_ns": 7520573
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 29673257,
+      "non_cpu_ns": 22219142,
+      "outcome": "ok",
+      "sequence": 492,
+      "task_clock_ns": 7454115
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 25172627,
+      "non_cpu_ns": 17997367,
+      "outcome": "ok",
+      "sequence": 493,
+      "task_clock_ns": 7175260
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 37989983,
+      "non_cpu_ns": 30790191,
+      "outcome": "ok",
+      "sequence": 494,
+      "task_clock_ns": 7199792
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 34060187,
+      "non_cpu_ns": 27009405,
+      "outcome": "ok",
+      "sequence": 495,
+      "task_clock_ns": 7050782
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 34134771,
+      "non_cpu_ns": 27405500,
+      "outcome": "ok",
+      "sequence": 496,
+      "task_clock_ns": 6729271
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15801681,
+      "non_cpu_ns": 8692775,
+      "outcome": "ok",
+      "sequence": 497,
+      "task_clock_ns": 7108906
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 19914862,
+      "non_cpu_ns": 13197674,
+      "outcome": "ok",
+      "sequence": 498,
+      "task_clock_ns": 6717188
+    },
+    {
+      "context_switches": 1,
+      "cpu_migrations": 0,
+      "end_to_end_ns": 15498973,
+      "non_cpu_ns": 8647931,
+      "outcome": "ok",
+      "sequence": 499,
+      "task_clock_ns": 6851042
+    },
+    {
+      "context_switches": 2,
+      "cpu_migrations": 1,
+      "end_to_end_ns": 24034918,
+      "non_cpu_ns": 17298667,
+      "outcome": "ok",
+      "sequence": 500,
+      "task_clock_ns": 6736251
+    }
+  ],
+  "schema_version": 1,
+  "stage": 10,
+  "status": "pass",
+  "successful_samples": 500
+}
