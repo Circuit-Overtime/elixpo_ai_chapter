@@ -1,18 +1,62 @@
+schema_version: "0.1"
+
 project:
+  id: blogs
   name: blogs.elixpo
-  description: "LixBlogs — Modern blogging platform"
+  title: LixBlogs
+  description: "Open-source collaborative publishing platform with rich editing, multi-tenant publications, API and CLI automation."
+  family: service
+  artifact_type: hosted-service
+  lifecycle: active
+  relationship: core
+  custody: elixpo-owned
   stack: nextjs
-  node_version: "20"
+  node_version: "22"
+  repository: https://github.com/elixpo/blogs.elixpo
+  deployment: https://blogs.elixpo.com
+  discussions: https://github.com/orgs/elixpo/discussions
+  status_owner: elixpo
+  status_verified_at: "2026-10-16"
+
+publication:
+  public: true
+  featured: true
+  canonical_slug: blogs
+
+license:
+  current_file: LICENSE
+  notice_file: LICENSES/NOTICE
+  migration_status: review-required
+  target_code_license: MIT
+  trademark_policy: pending-separation
 
 ci:
   lint_cmd: ""
-  test_cmd: ""
-  build_cmd: "npx @cloudflare/next-on-pages"
+  test_cmd: "npm test"
+  build_cmd: "npm run pages:build"
+
+operations:
+  deployment_workflow: .github/workflows/deploy.yml
+  test_workflow: .github/workflows/pr-tests.yml
+  build_workflow: .github/workflows/pr-build.yml
+  preview_workflow: .github/workflows/pr-build.yml
+  privileged_workflows_repo_specific: true
+  fork_prs_receive_secrets: false
 
 maintainers:
   - github: Circuit-Overtime
     skills: [frontend, nextjs, ui, cloudflare, d1]
     lead: true
+
+governance:
+  model: maintainer-led
+  document: GOVERNANCE.md
+
+support:
+  document: SUPPORT.md
+
+security:
+  document: SECURITY.md
 
 gist:
   id: ""
