@@ -1,0 +1,14 @@
+name = "elixpourl"
+compatibility_date = "2025-06-20"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "elixpourl"
+database_id = "50a21a28-62de-4787-81ad-3740e05ca2b5"
+migrations_dir = "workers/migrations"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "e86dbfebc3114c748cc8557edc95948a"

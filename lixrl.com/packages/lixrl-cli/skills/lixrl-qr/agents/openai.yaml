@@ -1,0 +1,5 @@
+interface:
+  display_name: "Lixrl QR"
+  short_description: "Generate styled and tracked QR codes"
+  brand_color: "#9b7bf7"
+  default_prompt: "Use $lixrl-qr to generate a QR code for this link."
