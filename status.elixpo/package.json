@@ -34,6 +34,7 @@
         "pages:preview": "npm run pages:build && wrangler pages dev",
         "start": "next start",
         "lint": "biome check .",
+        "typecheck": "tsc --noEmit",
         "format": "biome check --write ."
     },
     "dependencies": {
