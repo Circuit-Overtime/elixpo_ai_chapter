@@ -573,6 +573,7 @@ export function TopList({
             {shown.map((it) => {
                 const row = (
                     <Box
+                        key={it.label}
                         sx={{
                             position: "relative",
                             py: 0.8,
