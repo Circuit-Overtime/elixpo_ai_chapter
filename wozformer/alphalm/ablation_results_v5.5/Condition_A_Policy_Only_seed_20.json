@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "This helps to generate repeat business and foster long term customer loyalty. Oftentimes customers may become overwhelmed with information during a sales presentation or they may need a gentle nudge to solidify their decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Addressing potential doubts even with evidence and testimonials some potential customers may still have doubts or objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding. Addressing concerns and objections during your presentation it is likely that the customer may raise concerns or objections. Anticipating objections and proactively addressing them is another effective strategy when handling trust or credibility related concerns.",
+  "path_indices": [
+    20,
+    2028,
+    2102,
+    332,
+    2255,
+    3038,
+    1829,
+    2466
+  ],
+  "metrics": {
+    "total_score": 28.87251995317638,
+    "exact_boundary_matches": 2,
+    "avg_local_coherence": 0.7695592556680951,
+    "avg_global_coherence": 0.7668220145361764,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.09253050360296454,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 3100,
+    "search_runtime": 1.7843565940856934,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.33282353409699034,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.2304407443319048
+  }
+}

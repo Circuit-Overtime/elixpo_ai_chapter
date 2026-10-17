@@ -1,0 +1,26 @@
+{
+  "seed": 100,
+  "condition": "E_full_system",
+  "generated_text": "In conclusion, effective questioning techniques are vital for building rapport and capturing the attention of potential customers. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Price or Budget Objections: One of the most frequent objections in sales is related to price or budget. These objections may come in the form of skepticism, doubts, concerns, or outright disagreements from potential customers. Customers may have reservations about the reliability or authenticity of a product or service, making it crucial for sales professionals to effectively handle these objections. These objections can come in various forms, and some may not be immediately apparent.",
+  "path_indices": [
+    100,
+    2390,
+    2102,
+    332,
+    2085,
+    2886,
+    2455,
+    2595
+  ],
+  "metrics": {
+    "total_score": 54.575066577643156,
+    "exact_matches": 3,
+    "avg_local": 0.7198031714984349,
+    "avg_global": 0.7256642665181842,
+    "avg_makes_sense": 0.6985590543065753,
+    "avg_validity": 0.6874879726341793,
+    "diversity": 0.369538497711931,
+    "avg_topic_progress": 0.2553936753954206,
+    "runtime": 1.468384027481079
+  }
+}

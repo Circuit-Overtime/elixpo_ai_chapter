@@ -1,0 +1,30 @@
+{
+  "seed": 500,
+  "generated_text": "They went to the river, and Benny asked Elly to use her long nose to spray water on the dry plants. Moo, oink, baa, cluck!\". Whoosh, whoosh, whoosh. Whoosh, whoosh! \"Ow, ow, ow!\". \"Ow, ow, ow! \"Hello, Halley!\". \"Hello, Halley!\".",
+  "path_indices": [
+    500,
+    10223,
+    20699,
+    19313,
+    16397,
+    17767,
+    17318,
+    17320
+  ],
+  "metrics": {
+    "total_score": 61.9723153963685,
+    "avg_local": 0.7765945536749703,
+    "avg_global": 0.5280323901346752,
+    "avg_makes_sense": 0.960322984627315,
+    "avg_policy": 0.4573946978364672,
+    "avg_validity": 0.8639896256583077,
+    "exact_matches": 3,
+    "diversity": 0.5135421412331718,
+    "repetition_rate": 0.75,
+    "topic_repetition": 0.08563855886459353,
+    "forward_progress": 0.22340544632502965,
+    "runtime": 3.5813233852386475,
+    "evaluations": 3100,
+    "narrative_consistency": 0.8333333333333334
+  }
+}

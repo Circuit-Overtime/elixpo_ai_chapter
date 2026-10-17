@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.python-version
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# PyTorch artifacts
+*.pt
+*.pth
+*.ckpt
+runs/
+wandb/
+
+# Exported weights (regenerable)
+export/*.bin
+export/*.hex
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Build artifacts
+*.o
+*.lst
+*.map
+firmware/6502/build/
+firmware/arduino/build/
+
+# Data — keep tiny corpora in git, ignore large ones
+data/*.txt.gz
+data/raw/
+.pip-tmp
+*.aux
+*.bbl
+*.log
+*.out
+*.blg

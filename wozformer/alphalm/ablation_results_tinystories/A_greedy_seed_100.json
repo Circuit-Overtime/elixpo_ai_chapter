@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In the end, Tim won the race and Sarah came in second. The lawyer watched from outside the pool. The lizard said, \"I'm moving around the garden.\". The garden became gloomy. It flew around looking for food. It drove around the country at a careful speed. It liked to go so fast it felt like it was flying! Fred was so happy and grateful to have found this amazing planet.",
+  "path_indices": [
+    100,
+    5913,
+    1719,
+    20049,
+    8252,
+    1293,
+    21580,
+    4699
+  ],
+  "metrics": {
+    "total_score": 35.6739440637175,
+    "avg_local": 0.41032593165125164,
+    "avg_global": 0.4776919441563742,
+    "avg_makes_sense": 0.8370598214013236,
+    "avg_policy": 0.24677339063159057,
+    "avg_validity": 0.839931743485587,
+    "exact_matches": 1,
+    "diversity": 0.7169064197888864,
+    "repetition_rate": 0.0,
+    "topic_repetition": -0.261491664818355,
+    "forward_progress": 0.5896740683487484,
+    "runtime": 0.8397524356842041,
+    "evaluations": 700,
+    "narrative_consistency": 0.5
+  }
+}

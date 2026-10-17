@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In the end, Tim won the race and Sarah came in second. The lawyer watched from outside the pool. The cable has a hook at the end. The groom smiled and nodded. Leo laughed. Leo laughed and laughed! And Beep lived happily ever after. After some time, Lila felt tired.",
+  "path_indices": [
+    100,
+    5913,
+    20221,
+    15665,
+    5200,
+    5205,
+    23,
+    17642
+  ],
+  "metrics": {
+    "total_score": 30.380219984799623,
+    "avg_local": 0.5461052145276751,
+    "avg_global": 0.439617572086198,
+    "avg_makes_sense": 0.0,
+    "avg_policy": 0.37200225463935305,
+    "avg_validity": 0.0,
+    "exact_matches": 2,
+    "diversity": 0.7041386035270989,
+    "repetition_rate": 0.25,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.4538947854723249,
+    "runtime": 3.538422107696533,
+    "evaluations": 3100,
+    "narrative_consistency": 0.5833333333333334
+  }
+}

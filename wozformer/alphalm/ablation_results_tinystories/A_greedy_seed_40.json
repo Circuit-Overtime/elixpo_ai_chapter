@@ -1,0 +1,30 @@
+{
+  "seed": 40,
+  "generated_text": "And so, Fin and the crab played and became good friends. Leo laughed and laughed! Frank laughed. Leo laughed. Everyone laughed, smiled and cheered. Everyone cheered and thanked the wise tank for his help. Timmy smiled and continued to enjoy his hot soup, feeling proud of himself for being a smart student. Dad became impatient. \".",
+  "path_indices": [
+    40,
+    5205,
+    3385,
+    5200,
+    8909,
+    8303,
+    21144,
+    2852
+  ],
+  "metrics": {
+    "total_score": 27.26041021440178,
+    "avg_local": 0.6880241164139339,
+    "avg_global": 0.6165676414966583,
+    "avg_makes_sense": 0.923894362790244,
+    "avg_policy": 0.37891437978084597,
+    "avg_validity": 0.8669810039656503,
+    "exact_matches": 0,
+    "diversity": 0.4851076251694134,
+    "repetition_rate": 0.25,
+    "topic_repetition": -0.09537885146481649,
+    "forward_progress": 0.3119758835860661,
+    "runtime": 0.8745336532592773,
+    "evaluations": 700,
+    "narrative_consistency": 0.3333333333333333
+  }
+}

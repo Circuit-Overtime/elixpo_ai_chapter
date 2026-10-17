@@ -1,0 +1,30 @@
+{
+  "seed": 500,
+  "generated_text": "They went to the river, and Benny asked Elly to use her long nose to spray water on the dry plants. The people laughed but they decided to add it to the yacht. The family wanted to help him, so they looked for the wallet together. Together, they came up with a plan to talk to the humans who owned the factory and ask them to be more humble and stop polluting the air. The ant colony even chose the mole to be their leader. Their moms say yes, but they have to stay together and be careful. Be careful and have fun.\". Have fun reading your mail.",
+  "path_indices": [
+    500,
+    8246,
+    15744,
+    15340,
+    6440,
+    19017,
+    11877,
+    11481
+  ],
+  "metrics": {
+    "total_score": 45.85380578786135,
+    "avg_local": 0.7207850813865662,
+    "avg_global": 0.6861819880349296,
+    "avg_makes_sense": 0.5079391236816134,
+    "avg_policy": 0.0,
+    "avg_validity": 0.0,
+    "exact_matches": 3,
+    "diversity": 0.5165250216211591,
+    "repetition_rate": 0.0,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.27921491861343384,
+    "runtime": 4.303987741470337,
+    "evaluations": 678206,
+    "narrative_consistency": 0.16666666666666666
+  }
+}
