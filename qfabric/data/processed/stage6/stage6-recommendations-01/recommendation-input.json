@@ -1,0 +1,50 @@
+{
+  "mcu": {
+    "reserved_headroom_pct": 25.0,
+    "utilization_without_task_pct": 0.0
+  },
+  "policy": {
+    "cooldown_active": false,
+    "minimum_evidence": 1000
+  },
+  "provenance": {
+    "abi_schema": "config/qfabric-abi.json",
+    "contract_schema_version": 1,
+    "operations_basis": "single-managed-task-static-policy",
+    "profile_schema_version": 1,
+    "stage5_root": "data/processed/stage5/stage5-contracts-01"
+  },
+  "schema_version": 1,
+  "tasks": [
+    {
+      "candidates": {
+        "linux": {
+          "admission_allowed": true,
+          "contract_state": "SATISFIED",
+          "end_to_end_p95_ns": 8047425.35,
+          "evidence_count": 1000,
+          "local_execution_p95_ns": 468.0,
+          "observed_miss_rate_pct": 0.0
+        },
+        "rt": {
+          "admission_allowed": true,
+          "contract_state": "SATISFIED",
+          "end_to_end_p95_ns": 11265205.45,
+          "evidence_count": 1000,
+          "local_execution_p95_ns": 331.0,
+          "observed_miss_rate_pct": 0.0
+        }
+      },
+      "chain_edges": [],
+      "contract": {
+        "deadline_ns": 20000000,
+        "max_miss_rate_pct": 1.0
+      },
+      "current_domain": "linux",
+      "effect": "Q_PURE",
+      "name": "add",
+      "rate_hz": 100.0,
+      "transition_hooks_declared": false
+    }
+  ]
+}

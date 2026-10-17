@@ -1,0 +1,12 @@
+{
+  "protocol_version": 1,
+  "types": {
+    "Recursive": {
+      "kind": "struct",
+      "fields": [
+        {"name": "next", "type": "Recursive"}
+      ]
+    }
+  },
+  "tasks": []
+}

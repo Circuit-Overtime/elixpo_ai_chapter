@@ -1,0 +1,1470 @@
+{
+  "failures": [],
+  "scenario_count": 11,
+  "scenarios": [
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 11265205.45,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "measured-end-to-end",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 11265205,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 11265205,
+                "rejection_reasons": [
+                  {
+                    "code": "higher_predicted_end_to_end",
+                    "delta_ns": 3217780,
+                    "selected_domain": "linux"
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "436afda8c6f713aeded6dad5e68fc6908b5f287a5592aca61edf930c47cc023a",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "higher_predicted_end_to_end"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "rt",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "rt-positive",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [
+                  {
+                    "code": "higher_predicted_end_to_end",
+                    "delta_ns": 4023713,
+                    "selected_domain": "rt"
+                  }
+                ],
+                "selected": false
+              },
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [],
+                "selected": true
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "rt",
+            "record_id": "b76450eb2ecb39fc07980cf63d1da213f132468ba80dc7ddd979f02d8efddcb9",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": null
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": null,
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 11265205.45,
+                "evidence_count": 999,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "insufficient-evidence",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": false
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 11265205,
+                "evidence_count": 999,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 11265205,
+                "rejection_reasons": [
+                  {
+                    "code": "insufficient_evidence",
+                    "observed": 999,
+                    "required": 1000
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": false,
+            "placement_changed": false,
+            "recommended_domain": null,
+            "record_id": "ab7d2a311b00a65dee8904a6c2deee32243c560f4da5a1c16700fd62a325182a",
+            "status": "withheld",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "insufficient_evidence"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": false,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "rt-inadmissible",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [
+                  {
+                    "code": "destination_not_admitted"
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "6ae2510aa194679371e1cb4a651816e6982e67912df60209d99f67eb37ee21fb",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "destination_not_admitted"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_STATEFUL",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "effect-ineligible",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [
+                  {
+                    "code": "semantic_ineligible",
+                    "effect": "Q_STATEFUL",
+                    "transition_hooks_declared": false
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "9ca30f5c56d9e08de53fcf016b7de347c1fb43c96ad641b9d8c9550d8a797370",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "semantic_ineligible"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 9000000,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8000000,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [
+              {
+                "boundary_cost_ns": 1000000,
+                "neighbor": "decode",
+                "neighbor_domain": "linux"
+              },
+              {
+                "boundary_cost_ns": 1000000,
+                "neighbor": "encode",
+                "neighbor_domain": "linux"
+              }
+            ],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "chain-ping-pong",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [
+                  {
+                    "boundary_cost_ns": 1000000,
+                    "charged": false,
+                    "neighbor": "decode",
+                    "neighbor_domain": "linux"
+                  },
+                  {
+                    "boundary_cost_ns": 1000000,
+                    "charged": false,
+                    "neighbor": "encode",
+                    "neighbor_domain": "linux"
+                  }
+                ],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 9000000,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 9000000,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 2000000,
+                "chain_edges": [
+                  {
+                    "boundary_cost_ns": 1000000,
+                    "charged": true,
+                    "neighbor": "decode",
+                    "neighbor_domain": "linux"
+                  },
+                  {
+                    "boundary_cost_ns": 1000000,
+                    "charged": true,
+                    "neighbor": "encode",
+                    "neighbor_domain": "linux"
+                  }
+                ],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 8000000,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 10000000,
+                "rejection_reasons": [
+                  {
+                    "code": "higher_predicted_end_to_end",
+                    "delta_ns": 1000000,
+                    "selected_domain": "linux"
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "a607ca391ed98ad06e959c4d419f7e1c079f2787cf9e0d29b16b7ed881b1b5c8",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "higher_predicted_end_to_end"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": true,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "cooldown",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [
+                  {
+                    "code": "cooldown_active"
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "3b24a7cf23bf8e5f76a068e1bc3a94eb09a32ed997aeac8c5e7a16f292f81e8a",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "cooldown_active"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 74.99
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 1000000000,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "mcu-headroom",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 74.99,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 74.99
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 33174.99,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 33100.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 74.99
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [
+                  {
+                    "code": "mcu_headroom_exceeded",
+                    "projected_utilization_pct": 33174.99,
+                    "usable_utilization_pct": 75.0
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "27fe349ac2c8c4aef1b5d9e5873f1758af5c4762b1588bce39e3a13a12a6c382",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "mcu_headroom_exceeded"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "AT_RISK",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "contract-at-risk",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "AT_RISK",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [
+                  {
+                    "code": "contract_not_satisfied",
+                    "state": "AT_RISK"
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "839cb820860ca1bd41b8047448229f847e7a86e34c80b13c84c0f58ec1824272",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "contract_not_satisfied"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 1.1
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "observed-miss-rate",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 4023712,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 1.1,
+                "predicted_end_to_end_ns": 4023712,
+                "rejection_reasons": [
+                  {
+                    "code": "observed_miss_rate_exceeds_contract",
+                    "maximum_pct": 1.0,
+                    "observed_pct": 1.1
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "06fc1f76301d8d05d959ef165f8308eb0a947f49c290fca36d22414f791eb316",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "observed_miss_rate_exceeds_contract"
+    },
+    {
+      "checks": {
+        "advisory_only": true,
+        "deterministic": true,
+        "expected_domain": true,
+        "required_rt_reason": true
+      },
+      "expected_domain": "linux",
+      "input": {
+        "mcu": {
+          "reserved_headroom_pct": 25.0,
+          "utilization_without_task_pct": 0.0
+        },
+        "policy": {
+          "cooldown_active": false,
+          "minimum_evidence": 1000
+        },
+        "provenance": {
+          "abi_schema": "config/qfabric-abi.json",
+          "contract_schema_version": 1,
+          "operations_basis": "single-managed-task-static-policy",
+          "profile_schema_version": 1,
+          "stage5_root": "data/processed/stage5/stage5-contracts-01"
+        },
+        "schema_version": 1,
+        "tasks": [
+          {
+            "candidates": {
+              "linux": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 8047425.35,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468.0,
+                "observed_miss_rate_pct": 0.0
+              },
+              "rt": {
+                "admission_allowed": true,
+                "contract_state": "SATISFIED",
+                "end_to_end_p95_ns": 20000001,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331.0,
+                "observed_miss_rate_pct": 0.0
+              }
+            },
+            "chain_edges": [],
+            "contract": {
+              "deadline_ns": 20000000,
+              "max_miss_rate_pct": 1.0
+            },
+            "current_domain": "linux",
+            "effect": "Q_PURE",
+            "name": "add",
+            "rate_hz": 100.0,
+            "transition_hooks_declared": false
+          }
+        ]
+      },
+      "name": "predicted-deadline-miss",
+      "passed": true,
+      "recommendation": {
+        "advisory_only": true,
+        "placement_changes": 0,
+        "policy": "gated-static-end-to-end-v1",
+        "records": [
+          {
+            "advisory_only": true,
+            "candidates": [
+              {
+                "admissible": true,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "linux",
+                "end_to_end_p95_ns": 8047425,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 468,
+                "mcu": {
+                  "projected_utilization_pct": 0.0,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.0,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 8047425,
+                "rejection_reasons": [],
+                "selected": true
+              },
+              {
+                "admissible": false,
+                "chain_boundary_cost_ns": 0,
+                "chain_edges": [],
+                "contract_state": "SATISFIED",
+                "domain": "rt",
+                "end_to_end_p95_ns": 20000001,
+                "evidence_count": 1000,
+                "local_execution_p95_ns": 331,
+                "mcu": {
+                  "projected_utilization_pct": 0.00331,
+                  "reserved_headroom_pct": 25.0,
+                  "task_utilization_pct": 0.00331,
+                  "usable_utilization_pct": 75.0,
+                  "utilization_without_task_pct": 0.0
+                },
+                "observed_miss_rate_pct": 0.0,
+                "predicted_end_to_end_ns": 20000001,
+                "rejection_reasons": [
+                  {
+                    "code": "predicted_deadline_miss",
+                    "deadline_ns": 20000000,
+                    "predicted_ns": 20000001
+                  }
+                ],
+                "selected": false
+              }
+            ],
+            "current_domain": "linux",
+            "evidence_gate_passed": true,
+            "placement_changed": false,
+            "recommended_domain": "linux",
+            "record_id": "7c212796233d0de2460df606b71b5e91ee8e72e22ce88f385a30a089ec1e3d59",
+            "status": "recommendation",
+            "task": "add"
+          }
+        ],
+        "schema_version": 1
+      },
+      "required_rt_reason": "predicted_deadline_miss"
+    }
+  ],
+  "schema_version": 1,
+  "status": "pass"
+}
