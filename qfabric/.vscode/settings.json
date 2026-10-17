@@ -1,6 +1,0 @@
-{
-  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/stage1-probe/compile_commands.json",
-  "files.associations": {
-    "*.ino": "cpp"
-  }
-}
