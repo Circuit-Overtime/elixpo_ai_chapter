@@ -1,0 +1,71 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 0.75rem 1.75rem;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all var(--animation-normal);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+/* Primary — gradient fill */
+.primary {
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  box-shadow: 0 0 20px rgba(141, 73, 253, 0.25);
+}
+
+.primary:hover {
+  box-shadow: 0 0 30px rgba(141, 73, 253, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Secondary — ghost/outline */
+.secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-hover);
+  backdrop-filter: blur(10px);
+}
+
+.secondary:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* Tertiary — text only */
+.tertiary {
+  background: transparent;
+  color: var(--color-text-secondary);
+  padding: 0.75rem 1rem;
+}
+
+.tertiary:hover {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: var(--font-size-sm);
+  }
+}

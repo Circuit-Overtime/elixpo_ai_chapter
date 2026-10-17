@@ -1,0 +1,70 @@
+# On PR merge: create gist digest, close linked issues, check for README update
+name: On Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+# Serialize merges so two PRs closing back-to-back don't race on the shared gist.
+concurrency:
+  group: on-merge-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  post-merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pull-requests: write
+      issues: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Gist digest + close issues
+        id: gist
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+          GIST_ID: ${{ vars.CI_GIST_ID }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Capture script output so we can detect first-time gist creation.
+          python .github/scripts/merge_gist.py 2>&1 | tee /tmp/gist.out
+          NEW_ID=$(grep -oE 'GIST_ID=[a-f0-9]+' /tmp/gist.out | head -1 | cut -d= -f2)
+          if [ -n "$NEW_ID" ]; then
+            echo "new_gist_id=$NEW_ID" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Persist new GIST_ID as repo variable
+        if: steps.gist.outputs.new_gist_id != ''
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          NEW_ID: ${{ steps.gist.outputs.new_gist_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Create or update the repo variable so future runs pick it up.
+          # POST creates, PATCH updates — try POST first, fall back to PATCH.
+          if ! gh api -X POST "repos/$REPO/actions/variables" \
+                 -f name=CI_GIST_ID -f value="$NEW_ID" 2>/dev/null; then
+            gh api -X PATCH "repos/$REPO/actions/variables/CI_GIST_ID" \
+                   -f name=CI_GIST_ID -f value="$NEW_ID"
+          fi
+          echo "Persisted CI_GIST_ID=$NEW_ID"
+
+      - name: Check for README update
+        continue-on-error: true
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          POLLINATIONS_KEY: ${{ secrets.CI_POLLINATIONS_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: python .github/scripts/update_readme.py

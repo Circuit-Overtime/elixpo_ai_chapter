@@ -1,0 +1,72 @@
+# Retry command: when an org member comments "@elixpoo retry" on an issue/PR,
+# find the most recent FAILED workflow run that touched this issue/PR
+# (pr-review-request, issue-auto-fix, or on-merge) and re-run its failed jobs.
+#
+# Uses the GitHub Actions API endpoint:
+#   POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs
+
+name: Elixpoo Retry
+
+on:
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: elixpoo-retry-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  retry:
+    if: |
+      github.actor != 'elixpoo' &&
+      github.event.comment.user.login != 'elixpoo' &&
+      contains(github.event.comment.body, '@elixpoo retry')
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      actions: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Authorize + rerun
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          COMMENTER: ${{ github.event.comment.user.login }}
+        run: |
+          set -e
+
+          # Whitelist: only org members can retry
+          WHITELIST=("Circuit-Overtime" "anwe-ch" "elixpoo" "ez-vivek")
+          authorized=0
+          for u in "${WHITELIST[@]}"; do
+            if [ "$u" = "$COMMENTER" ]; then authorized=1; break; fi
+          done
+          if [ "$authorized" = "0" ]; then
+            gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
+              --body "Sorry @$COMMENTER, only Elixpo org members can trigger retries."
+            exit 0
+          fi
+
+          # Find the most recent FAILED run of the agent workflows
+          # (elixpoo-pr, elixpo-auto-code, on-merge) in the last 24h.
+          RUN_ID=$(gh api "repos/$REPO/actions/runs?status=failure&per_page=30" \
+            --jq "[.workflow_runs[] | select(.name | test(\"Elixpo\";\"i\")) | .id] | first")
+
+          if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
+            gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
+              --body "> No recent failed Elixpo workflow runs found to retry."
+            exit 0
+          fi
+
+          RUN_URL="https://github.com/$REPO/actions/runs/$RUN_ID"
+          echo "Re-running failed jobs for run $RUN_ID"
+
+          if gh api -X POST "repos/$REPO/actions/runs/$RUN_ID/rerun-failed-jobs" 2>&1; then
+            gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
+              --body "🔄 Re-running: $RUN_URL"
+          else
+            gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
+              --body "> Failed to trigger retry for $RUN_URL — re-run manually from the Actions tab."
+          fi

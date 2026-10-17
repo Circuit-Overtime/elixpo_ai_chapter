@@ -1,0 +1,477 @@
+# Elixpo Pull Request Review — AI assistant via Pollinations
+# Model is read from .github/ci_config.py (LLM_MODEL_AGENT)
+# Trigger: mention "@elixpoo" in an issue or PR comment
+# Whitelist: Elixpo org members (Circuit-Overtime, anwe-ch, elixpoo, ez-vivek)
+#
+# The bot acts as @elixpoo (via CI_AGENT_TOKEN — a PAT on that account).
+# All comments, reviews, commits, and PRs are attributed to @elixpoo.
+
+name: Elixpo Pull Request Review
+
+# Serialize per-PR/issue so rapid @elixpoo mentions don't create duplicate
+# branches or PRs. cancel-in-progress=false because the bot might be mid-commit.
+concurrency:
+  group: elixpo-pr-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: false
+
+on:
+  # PR-side only. Issue events (including @elixpoo mentions in issue bodies
+  # or comments) are owned by issue-auto-fix.yml + issue-triage.yml — this
+  # workflow must never fire on a plain issue, or we get dual-fire.
+  issue_comment:                # only PR comments, filtered by the if: block
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  pull_request:                 # review_requested = @elixpoo assigned as reviewer
+    types: [review_requested]
+
+jobs:
+  elixpo:
+    # Skip if the triggering actor is elixpoo itself — loop prevention.
+    # PR-side work only. Issue comments go to issue-auto-fix.yml via the
+    # `!github.event.issue.pull_request` guard there; we use the inverse
+    # (`github.event.issue.pull_request` truthy) so the two workflows are
+    # disjoint and a single `@elixpoo` mention never fires both.
+    if: |
+      github.actor != 'elixpoo' && (
+        (github.event_name == 'issue_comment' && github.event.issue.pull_request && github.event.comment.user.login != 'elixpoo' && contains(github.event.comment.body, '@elixpoo')) ||
+        (github.event_name == 'pull_request_review_comment' && github.event.comment.user.login != 'elixpoo' && contains(github.event.comment.body, '@elixpoo')) ||
+        (github.event_name == 'pull_request_review' && github.event.review.user.login != 'elixpoo' && contains(github.event.review.body, '@elixpoo')) ||
+        (github.event_name == 'pull_request' && github.event.requested_reviewer.login == 'elixpoo')
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    env:
+      POLLINATIONS_TOKEN: ${{ secrets.CI_POLLINATIONS_KEY }}
+      POLLINATIONS_TOKEN_CODER: ${{ secrets.CI_POLLINATIONS_KEY_CODER }}
+      AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+    steps:
+      - name: Check Whitelist
+        id: whitelist
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CI_AGENT_TOKEN }}
+          script: |
+            // review_requested is a structured action (no free-text mention) —
+            // the job-level `if` already checked the requested reviewer is
+            // elixpoo. Skip the mention-regex check for this event.
+            if (context.eventName !== 'pull_request') {
+              let body = '';
+              if (context.eventName === 'issue_comment' || context.eventName === 'pull_request_review_comment') {
+                body = context.payload.comment?.body || '';
+              } else if (context.eventName === 'issues') {
+                body = (context.payload.issue?.body || '') + (context.payload.issue?.title || '');
+              } else if (context.eventName === 'pull_request_review') {
+                body = context.payload.review?.body || '';
+              }
+
+              if (!body.includes('@elixpoo')) {
+                console.log('Strict check failed: "@elixpoo" must be lowercase.');
+                core.setOutput('authorized', 'false');
+                return;
+              }
+
+              // Reject substring-only matches (e.g. @elixpoooo, @elixpoo-bot).
+              if (!/(^|[^A-Za-z0-9_.+-])@elixpoo([^A-Za-z0-9_.+-]|$)/.test(body)) {
+                console.log('@elixpoo substring only, not a real mention — skipping.');
+                core.setOutput('authorized', 'false');
+                return;
+              }
+            }
+
+            const whitelist = ['Circuit-Overtime', 'anwe-ch', 'elixpoo', 'ez-vivek'];
+            const actor = context.actor;
+            if (!whitelist.includes(actor)) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue?.number || context.payload.pull_request?.number,
+                body: `Sorry @${actor}, only Elixpo org members can invoke @elixpoo.`
+              });
+              core.setOutput('authorized', 'false');
+            } else {
+              core.setOutput('authorized', 'true');
+            }
+
+      - name: Setup Bun
+        if: steps.whitelist.outputs.authorized == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Checkout for config read
+        if: steps.whitelist.outputs.authorized == 'true'
+        uses: actions/checkout@v4
+        with:
+          path: config-src
+          sparse-checkout: .github
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        if: steps.whitelist.outputs.authorized == 'true'
+        with:
+          python-version: "3.11"
+
+      - name: Setup router + rocket reaction
+        if: steps.whitelist.outputs.authorized == 'true'
+        id: setup
+        run: |
+          # rocket reaction on the triggering comment / review / issue / PR
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f content=rocket || true
+          elif [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
+            gh api repos/${{ github.repository }}/pulls/comments/${{ github.event.comment.id }}/reactions -f content=rocket || true
+          elif [ "${{ github.event_name }}" = "issues" ]; then
+            gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions -f content=rocket || true
+          elif [ "${{ github.event_name }}" = "pull_request_review" ]; then
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/reactions -f content=rocket || true
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/reactions -f content=rocket || true
+          fi
+
+          cd config-src
+          AGENT_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_AGENT; print(LLM_MODEL_AGENT)")
+          CODE_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_CODE; print(LLM_MODEL_CODE)")
+          THINK_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_THINKING; print(LLM_MODEL_THINKING)")
+          SEARCH_MODEL=$(python3 -c "import sys; sys.path.insert(0,'.github'); from ci_config import LLM_MODEL_SEARCH; print(LLM_MODEL_SEARCH)")
+          cd ..
+
+          echo "Router models: default=$AGENT_MODEL, background=$CODE_MODEL, thinking=$THINK_MODEL, webSearch=$SEARCH_MODEL"
+
+          mkdir -p $HOME/.claude-code-router
+          cp config-src/.github/ccr-adapters/*.js $HOME/.claude-code-router/ 2>/dev/null || true
+          NORMALIZE_ADAPTER="$HOME/.claude-code-router/openai-normalize.js"
+          TOOL_PATCHER="$HOME/.claude-code-router/tool-schema-patcher.js"
+          # Two providers — main (cheap key, gemini) + coder (separate key for
+          # qwen-coder). Background subagent work (code-heavy) goes to coder
+          # to keep costs split from the main agentic thread.
+          #
+          # Transformer order for coder: openai → tool-schema-patcher → maxtoken.
+          # tool-schema-patcher backfills `parameters: {type:"object",...}` on any
+          # tool missing it — qwen-coder rejects tool lists without it with a 400,
+          # and WebSearch / some MCP tools ship without a parameters schema.
+          cat > $HOME/.claude-code-router/config.json <<EOF
+          {
+            "LOG": false,
+            "NON_INTERACTIVE_MODE": true,
+            "API_TIMEOUT_MS": 600000,
+            "transformers": [
+              {"path": "${NORMALIZE_ADAPTER}"},
+              {"path": "${TOOL_PATCHER}"}
+            ],
+            "Providers": [
+              {
+                "name": "pollinations-main",
+                "api_base_url": "https://gen.pollinations.ai/v1/chat/completions",
+                "api_key": "${POLLINATIONS_TOKEN}",
+                "models": ["${AGENT_MODEL}", "${THINK_MODEL}", "${SEARCH_MODEL}"],
+                "transformer": {
+                  "use": ["openai-normalize", "openai", ["maxtoken", {"max_tokens": 9000}]]
+                }
+              },
+              {
+                "name": "pollinations-coder",
+                "api_base_url": "https://gen.pollinations.ai/v1/chat/completions",
+                "api_key": "${POLLINATIONS_TOKEN_CODER}",
+                "models": ["${CODE_MODEL}"],
+                "transformer": {
+                  "use": ["openai", "tool-schema-patcher", ["maxtoken", {"max_tokens": 9000}]]
+                }
+              }
+            ],
+            "Router": {
+              "default": "pollinations-main,${AGENT_MODEL}",
+              "background": "pollinations-coder,${CODE_MODEL}",
+              "thinking": "pollinations-main,${THINK_MODEL}",
+              "webSearch": "pollinations-main,${SEARCH_MODEL}"
+            }
+          }
+          EOF
+
+          bunx @musistudio/claude-code-router start &
+          for i in $(seq 1 120); do
+            curl -s http://localhost:3456 >/dev/null && break
+            sleep 0.5
+            if [ "$i" = "120" ]; then
+              echo "::error::claude-code-router did not come up within 60s"
+              exit 1
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+
+      - uses: actions/checkout@v4
+        if: steps.whitelist.outputs.authorized == 'true'
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || (github.event.issue.pull_request && format('refs/pull/{0}/head', github.event.issue.number)) || github.sha }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.CI_AGENT_TOKEN }}
+
+      # When the checkout ref is refs/pull/N/head, `origin/main` may not be
+      # resolvable locally — `git diff origin/main...HEAD` then fails with
+      # "no merge base". Fetch main explicitly so the three-dot diff works.
+      - name: Fetch main for diffs
+        if: steps.whitelist.outputs.authorized == 'true'
+        run: git fetch origin main --depth=50 || true
+
+      # Polly-style: no claudeops agents wired in. Each subagent .md adds
+      # ~2KB to the Task tool schema per turn but we rarely invoke them
+      # (Task routes to qwen-coder via CCR anyway). Hooks were marginal.
+      # Keeps the flow lean and matches issue-auto-fix's shape.
+
+      # ─────────────────────────────────────────────────────────────────
+      # Pull the pre-built repo-context artifact (.elixpo-context/context.md)
+      # produced by artifact-update.yml on every push to main. The model
+      # reads this FIRST so it doesn't burn turns on `ls` / `gh issue view`
+      # / tree-walking to reconstruct context we already have on disk.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Download repo-context artifact
+        if: steps.whitelist.outputs.authorized == 'true'
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: repo-context
+          workflow: artifact-update.yml
+          path: .elixpo-context
+          if_no_artifact_found: warn
+          github_token: ${{ secrets.CI_AGENT_TOKEN }}
+
+      # Build the prompt by inlining the repo context snapshot. The model
+      # gets the cold repo context up front — same advantage a human using
+      # ccr in their terminal has — so it doesn't waste turns on discovery.
+      - name: Build prompt body
+        if: steps.whitelist.outputs.authorized == 'true'
+        id: build_prompt
+        run: |
+          CTX="(context artifact missing — fall back to Glob/Grep discovery)"
+          if [ -f .elixpo-context/context.md ]; then
+            CTX=$(cat .elixpo-context/context.md)
+          fi
+          {
+            echo 'prompt<<PROMPT_EOF'
+            echo "Event: ${{ github.event_name }}"
+            echo "Actor: @${{ github.actor }}"
+            echo "Repo: ${{ github.repository }}"
+            echo "Issue/PR: #${{ github.event.issue.number || github.event.pull_request.number }}"
+            echo ""
+            echo "## Cold repo context (pre-built snapshot)"
+            echo "$CTX"
+            echo ""
+            echo "## Your task"
+            echo ""
+            echo "This is a PR-side event. Read the trigger ONCE (gh pr view --comments) and pick ONE of four paths. Aim to finish in under 3 minutes — pick the tool that minimises CCR roundtrips."
+            echo ""
+            echo "1. **REVIEW** — user asked for a review, approval, LGTM, or 'look at this'."
+            echo "   - Submit ONE 'gh pr review --approve' or 'gh pr review --request-changes' with a short bullet body ending in 'Merge-readiness: READY' or 'Merge-readiness: NEEDS CHANGES'. Stop."
+            echo ""
+            echo "2. **SMALL CODE FIX (1-3 files, ~3 min)** — a targeted fix. Covers: user reports something broken, review spotted an issue, a small tweak requested in the thread, a nit to apply. Up to ~3 files, medium-easy."
+            echo "   - 1-3 file surgical edits → Read + Edit/MultiEdit."
+            echo "   - Bulk find/replace across several spots → python .github/scripts/apply_refactor.py with a JSON plan on stdin (one call, deterministic)."
+            echo "   - You are ALREADY on the PR's head branch — commit + push there directly, do NOT open a new PR."
+            echo "   - Do NOT run ./biome.sh — the CI biome workflow checks the PR separately."
+            echo "   - End with ONE 'gh pr comment' summarising the fix (what you changed, which files). Stop."
+            echo ""
+            echo "3. **DECLINE (too big / architectural)** — large feature work, cross-module refactor, security-sensitive logic, DB migration-heavy, anything you can't confidently ship in <3 min."
+            echo "   - Post ONE 'gh pr comment' politely saying the scope is beyond an auto-fix, with a 1-2 sentence reason suggesting how the author could split it. Stop."
+            echo ""
+            echo "4. **CONVERSE / CLARIFY** — the ask is a question, discussion, or requires editing the PR description itself."
+            echo "   - For a question / explanation → post ONE 'gh pr comment' with a helpful reply."
+            echo "   - To improve the PR DESCRIPTION (author asks you to rewrite, tighten, or enrich the PR body) → use 'gh pr edit ${{ github.event.issue.number || github.event.pull_request.number }} --body \"<new body>\"'. Preserve any intent the author explicitly expressed. Do NOT @-tag the author inside the body."
+            echo "   - For an ambiguous ask → post ONE 'gh pr comment' with the specific clarifying questions needed."
+            echo "   - After the single action, STOP."
+            echo ""
+            echo "Identity: you are elixpoo, a teammate — never mention Claude, Claude Code, AI, or LLMs. Bullets, not verbose prose. Never commit to main. The repo context above is cold but current — prefer it over re-exploring the tree."
+            echo 'PROMPT_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: anthropics/claude-code-action@v1
+        if: steps.whitelist.outputs.authorized == 'true'
+        env:
+          ANTHROPIC_BASE_URL: http://localhost:3456
+          GIT_AUTHOR_NAME: "elixpoo"
+          GIT_AUTHOR_EMAIL: "269200728+elixpoo@users.noreply.github.com"
+          GIT_COMMITTER_NAME: "elixpoo"
+          GIT_COMMITTER_EMAIL: "269200728+elixpoo@users.noreply.github.com"
+        with:
+          anthropic_api_key: "ccr-pollinations"
+          show_full_output: true
+          github_token: ${{ secrets.CI_AGENT_TOKEN }}
+          trigger_phrase: "@elixpoo"
+          branch_prefix: "elixpo/"
+          # No allowed_tools cap — every Claude Code tool is available.
+          # Task routes to CCR 'background' = qwen-coder for code-heavy work.
+          prompt: ${{ steps.build_prompt.outputs.prompt }}
+          # Required for CI — without this, claude-code's default permission
+          # mode prompts for approval on Bash/Edit/Write and the agent stalls
+          # with `"This command requires approval"`. Safe here: ephemeral
+          # sandbox, branch-protected main, every change lands through a PR.
+          claude_args: |
+            --permission-mode bypassPermissions
+          additional_permissions: |
+            actions: read
+
+      # ─────────────────────────────────────────────────────────────────
+      # Post-strip the "Claude finished …" / "Generated with Claude Code"
+      # footer the runtime appends. Cheaper to do here in bash than to
+      # make the model re-fetch + PATCH mid-flow (that was 2-3 wasted turns).
+      # ─────────────────────────────────────────────────────────────────
+      - name: Strip Claude branding from tracking comment
+        if: always() && steps.whitelist.outputs.authorized == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set +e
+          ISSUE_OR_PR="${{ github.event.issue.number || github.event.pull_request.number }}"
+          [ -z "$ISSUE_OR_PR" ] && exit 0
+
+          # Most recent elixpoo comment that still has Claude branding.
+          COMMENT_ID=$(gh api "repos/$REPO/issues/$ISSUE_OR_PR/comments" --paginate \
+            --jq '[.[] | select(.user.login=="elixpoo" and ((.body|contains("Claude finished")) or (.body|contains("Claude Code")) or (.body|contains("Generated with Claude"))))] | last | .id')
+          if [ -z "$COMMENT_ID" ] || [ "$COMMENT_ID" = "null" ]; then
+            echo "No Claude-branded comment found — nothing to strip."
+            exit 0
+          fi
+
+          BODY=$(gh api "repos/$REPO/issues/comments/$COMMENT_ID" --jq .body)
+          CLEANED=$(printf '%s' "$BODY" \
+            | sed -E '/Claude finished/d; /Generated with Claude/d; /Claude Code is working/d; /\[Create .* PR .*\]/d; /^---[[:space:]]*$/d' \
+            | sed -e 's/[[:space:]]*$//')
+
+          if [ "$BODY" != "$CLEANED" ]; then
+            gh api -X PATCH "/repos/$REPO/issues/comments/$COMMENT_ID" -f body="$CLEANED" >/dev/null
+            echo "Stripped Claude branding from comment $COMMENT_ID"
+          else
+            echo "Comment $COMMENT_ID already clean."
+          fi
+
+      # ─────────────────────────────────────────────────────────────────
+      # Post-guard: if the bot committed to a branch but didn't open a PR,
+      # open one here so the issue's Development tab is always populated.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Ensure PR exists for any new elixpo/* branch
+        if: steps.whitelist.outputs.authorized == 'true' && github.event_name == 'issue_comment' && !github.event.issue.pull_request
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          set -e
+
+          BRANCHES=$(gh api "repos/$REPO/branches?per_page=100" --paginate \
+            --jq ".[] | select(.name | startswith(\"elixpo/\") and contains(\"issue-$ISSUE_NUMBER\")) | .name")
+
+          BRANCH=""
+          for b in $BRANCHES; do
+            OPEN_PR=$(gh pr list --repo "$REPO" --head "$b" --state open --json number --jq 'length')
+            if [ "$OPEN_PR" = "0" ]; then
+              BRANCH="$b"
+              break
+            fi
+          done
+
+          if [ -z "$BRANCH" ]; then
+            echo "No elixpo/issue-$ISSUE_NUMBER-* branch without an open PR — nothing to do."
+            exit 0
+          fi
+          echo "Found branch: $BRANCH (no open PR)"
+
+          CHANGES=$(gh api "repos/$REPO/compare/main...$BRANCH" \
+            --jq '.commits | map("- " + (.commit.message | split("\n")[0])) | join("\n")')
+
+          ISSUE_AUTHOR=$(gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json author --jq '.author.login')
+
+          PR_BODY=$(cat <<EOF
+          Hey @$ISSUE_AUTHOR, opened this PR automatically from the branch I pushed.
+
+          ## 🛠️ Changes
+          $CHANGES
+
+          ## 🧪 How to verify
+          - Pull the branch and run \\\`npm run build\\\` / biome check.
+          - Review the diff against the issue's expected behavior.
+
+          ---
+          @$ISSUE_AUTHOR Fixes #$ISSUE_NUMBER
+          EOF
+          )
+          PR_BODY=$(printf '%s\n' "$PR_BODY" | sed 's/^          //')
+
+          PR_URL=$(gh pr create --repo "$REPO" \
+            --head "$BRANCH" --base main \
+            --title "[ELIXPO] $ISSUE_TITLE" \
+            --body "$PR_BODY")
+          echo "Opened PR: $PR_URL"
+
+          PR_NUM=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
+            --body "Opened #$PR_NUM with the changes."
+
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" --add-label ELIXPO || true
+
+      # ─────────────────────────────────────────────────────────────────
+      # Failure fallback: if anything errored, point to the failing run.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Post failure notice
+        if: failure() && steps.whitelist.outputs.authorized == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set +e
+
+          # Pull the tail of any failing-step logs so the comment actually says
+          # what broke (e.g. "qwen-coder 400 missing parameters") instead of a
+          # generic "something went wrong". gh run view --log-failed works
+          # mid-run for steps that have already errored.
+          ERROR_TAIL=$(gh run view "$RUN_ID" --repo "$REPO" --log-failed 2>/dev/null \
+            | sed -E 's/\x1b\[[0-9;]*m//g' \
+            | grep -iE "error|fail|400|401|403|404|429|500|502|503|bad_request|timeout|unauthorized" \
+            | grep -vE "^\s*$" \
+            | tail -8)
+          if [ -z "$ERROR_TAIL" ]; then
+            ERROR_TAIL="(no structured error captured — open the run logs)"
+          fi
+          # Strip any accidental token leakage and keep it under GitHub's
+          # comment size sanity limit.
+          ERROR_TAIL=$(printf '%s' "$ERROR_TAIL" | head -c 2000)
+
+          MSG=$(cat <<EOF
+          > ⚠️ Something went wrong on my end while handling this.
+
+          <details>
+          <summary><b>Error tail from the failing step</b></summary>
+
+          <pre>
+          $ERROR_TAIL
+          </pre>
+
+          </details>
+
+          **What you can do:**
+
+          <kbd>🔄 [**Re-run this workflow**]($RUN_URL)</kbd> &nbsp;·&nbsp; [View logs]($RUN_URL) &nbsp;·&nbsp; Or comment \`@elixpoo retry\` once the cause is fixed
+
+          <sub>Run ID: \`$RUN_ID\`</sub>
+          EOF
+          )
+
+          if [[ "${{ github.event_name }}" == "issue_comment" ]] || [[ "${{ github.event_name }}" == "issues" ]]; then
+            gh issue comment "${{ github.event.issue.number }}" --repo "$REPO" --body "$MSG"
+          elif [[ "${{ github.event_name }}" == "pull_request_review_comment" ]]; then
+            gh pr comment "${{ github.event.pull_request.number }}" --repo "$REPO" --body "$MSG"
+          elif [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
+            gh pr comment "${{ github.event.pull_request.number }}" --repo "$REPO" --body "$MSG"
+          fi

@@ -1,0 +1,77 @@
+{
+  "dailyCredits": {
+    "guest": 100,
+    "free": 250,
+    "atelier": 500,
+    "masterpiece": 1000
+  },
+  "costs": {
+    "image": {
+      "flux": 1,
+      "flux-2-dev": 1,
+      "dirtberry": 1,
+      "dirtberry-pro": 2,
+      "zimage": 2,
+      "imagen-4": 3,
+      "grok-imagine": 3,
+      "klein": 1,
+      "kontext": 4,
+      "gptimage": 8
+    },
+    "video": {
+      "grok-video": 15
+    },
+    "edit": 5,
+    "enhance": 1,
+    "describe": 2,
+    "blueprintExtra": 1
+  },
+  "plans": [
+    {
+      "id": "free",
+      "name": "Free",
+      "price": 0,
+      "yearlyPrice": 0,
+      "credits": 250,
+      "maxResolution": "1024x1024",
+      "features": [
+        "250 daily credits",
+        "All image models",
+        "Basic video generation",
+        "Community support"
+      ]
+    },
+    {
+      "id": "atelier",
+      "name": "Atelier",
+      "price": 12,
+      "yearlyPrice": 120,
+      "credits": 500,
+      "maxResolution": "2048x2048",
+      "popular": true,
+      "features": [
+        "500 daily credits",
+        "All image & video models",
+        "Priority generation queue",
+        "Blueprint templates",
+        "HD resolution up to 2048x2048"
+      ]
+    },
+    {
+      "id": "masterpiece",
+      "name": "Masterpiece",
+      "price": 49,
+      "yearlyPrice": 490,
+      "credits": 1000,
+      "maxResolution": "4096x4096",
+      "features": [
+        "1000 daily credits",
+        "All models at max quality",
+        "API access",
+        "4K resolution up to 4096x4096",
+        "Dedicated support",
+        "Early access to new models"
+      ]
+    }
+  ]
+}

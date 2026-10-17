@@ -1,0 +1,19 @@
+project:
+  name: art.elixpo
+  description: "AI Art Generator"
+  stack: nextjs
+  node_version: "20"
+
+ci:
+  lint_cmd: ""
+  test_cmd: ""
+  build_cmd: "npm run build"
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [frontend, nextjs, ui, cloudflare, d1]
+    lead: true
+
+gist:
+  id: ""
+  account: elixpoo

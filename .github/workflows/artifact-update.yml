@@ -1,0 +1,47 @@
+# Creates/updates the repo-context artifact used by AI-powered CI.
+# Triggers:
+#   - push to main      → updates after every commit (and PR merge)
+#   - workflow_dispatch → manual trigger for initial seed
+# The artifact is fetched by issue-triage, pr-review, etc. for LLM context.
+
+name: Update Repo Context Artifact
+
+# Only keep the latest run — older pushes don't need their artifacts rebuilt.
+concurrency:
+  group: artifact-update
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build context
+        env:
+          AGENT_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: python .github/scripts/build_artifact.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-context
+          path: .elixpo-context/
+          retention-days: 90
+          overwrite: true
+          include-hidden-files: true

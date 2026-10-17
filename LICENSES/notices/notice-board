@@ -1,0 +1,36 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository depends on third-party components, each distributed under its
+own license. The application code in this repository is licensed under the
+Elixpo standard (MIT for code, CC-BY-4.0 for assets); see ../../LICENSE.
+
+Primary runtime dependencies (see package.json for the authoritative list and
+versions):
+
+  * Next.js, React, React DOM            - MIT
+  * framer-motion                        - MIT
+  * axios, node-fetch                    - MIT
+  * express, express-rate-limit          - MIT
+  * cors, multer                         - MIT
+  * firebase, firebase-admin             - Apache-2.0
+  * discord.js                           - Apache-2.0
+  * groq-sdk                             - Apache-2.0
+  * @google/generative-ai                - Apache-2.0
+  * marked                               - MIT
+  * uuid                                 - MIT
+  * dotenv                               - BSD-2-Clause
+  * eventsource                          - MIT
+  * concurrently                         - MIT
+  * simple-git                           - MIT
+
+Brand fonts (loaded via Google Fonts):
+
+  * Playfair Display                     - SIL OFL 1.1
+  * Space Grotesk                        - SIL OFL 1.1
+  * Inter                                - SIL OFL 1.1
+  * Caveat                               - SIL OFL 1.1
+  * JetBrains Mono                       - SIL OFL 1.1
+
+If you believe a component is missing from this list, please open an issue or
+email hello@elixpo.com.

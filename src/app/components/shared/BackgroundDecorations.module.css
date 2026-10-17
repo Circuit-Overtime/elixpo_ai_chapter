@@ -1,0 +1,53 @@
+.decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  animation: float 20s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-primary);
+  top: -200px;
+  left: -200px;
+}
+
+.orb2 {
+  width: 300px;
+  height: 300px;
+  background: var(--gradient-secondary);
+  top: 50%;
+  right: -150px;
+  animation-delay: -10s;
+}
+
+.orb3 {
+  width: 500px;
+  height: 500px;
+  background: var(--gradient-accent);
+  bottom: -250px;
+  left: 30%;
+  animation-delay: -5s;
+}
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(141, 73, 253, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(86, 145, 243, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(244, 200, 1, 0.04) 0%, transparent 50%);
+}
