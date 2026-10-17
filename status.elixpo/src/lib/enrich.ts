@@ -15,7 +15,7 @@ export interface ProjectMeta {
     tables?: string[];
 }
 
-const GH = "https://github.com/Circuit-Overtime";
+const GH = "https://github.com/elixpo";
 
 /** Owning-project metadata keyed by the Cloudflare resource name (Pages/Worker/D1/KV). */
 const META: Record<string, ProjectMeta> = {
@@ -66,10 +66,44 @@ const META: Record<string, ProjectMeta> = {
         key: "mail",
         label: "Mail",
         domain: "mails.elixpo.com",
-        repo: `${GH}/mail.elixpo`,
+        repo: `${GH}/mails.elixpo`,
     },
-    lixsearch: { key: "search", label: "Search" },
-    oreo: { key: "oreo", label: "Oreo", domain: "oreo.elixpo.com" },
+    lixsearch: {
+        key: "search",
+        label: "Search",
+        domain: "search.elixpo.com",
+        repo: "https://github.com/pollinations/search.elixpo",
+    },
+    oreo: {
+        key: "oreo",
+        label: "Oreo",
+        domain: "oreo.elixpo.com",
+        repo: `${GH}/oreo`,
+    },
+    "research-elixpo": {
+        key: "research",
+        label: "Research",
+        domain: "research.elixpo.com",
+        repo: `${GH}/research.elixpo`,
+    },
+    "packages-elixpo": {
+        key: "packages",
+        label: "Packages",
+        domain: "packages.elixpo.com",
+        repo: `${GH}/packages.elixpo`,
+    },
+    status: {
+        key: "status",
+        label: "Status",
+        domain: "status.elixpo.com",
+        repo: `${GH}/status.elixpo`,
+    },
+    lixrl: {
+        key: "lixrl",
+        label: "Lixrl",
+        domain: "lixrl.com",
+        repo: `${GH}/lixrl.com`,
+    },
 
     // D1 databases (business tables filled in Phase 2 from each app's migrations)
     elixpo_auth: {

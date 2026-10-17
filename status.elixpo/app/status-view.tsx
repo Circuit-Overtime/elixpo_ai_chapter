@@ -6,11 +6,7 @@
  * sub-services (which only retain short-window edge analytics). */
 
 import type { DayPoint } from "@/lib/metrics";
-import type {
-    Health,
-    ProductStatus,
-    StatusPayload,
-} from "@/lib/status-data";
+import type { Health, ProductStatus, StatusPayload } from "@/lib/status-data";
 import { GitHub, OpenInNew, Refresh } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -25,15 +21,15 @@ const LS_TTL = 60 * 60 * 1000; // 1 hour
 const REFRESH_COOLDOWN = 5000; // 5 seconds
 
 const L = {
-    bg: "#faf9f7",
+    bg: "#f7f7f2",
     card: "#ffffff",
-    border: "#e7e5e4",
-    text: "#1c1917",
-    muted: "#78716c",
-    green: "#16a34a",
+    border: "#d9ddd8",
+    text: "#142018",
+    muted: "#667069",
+    green: "#0b6b43",
     amber: "#d97706",
     red: "#dc2626",
-    grey: "#d6d3d1",
+    grey: "#d9ddd8",
 };
 
 const theme = createTheme({
@@ -82,8 +78,14 @@ function UptimeBars({
     // Pad the left with "no data" cells so every strip is full width.
     const pad = Math.max(0, target - days.length);
     const cells = [
-        ...Array.from({ length: pad }, () => null),
-        ...days.slice(-target),
+        ...Array.from({ length: pad }, (_, index) => ({
+            key: `empty-${target}-${index}`,
+            point: null as DayPoint | null,
+        })),
+        ...days.slice(-target).map((point) => ({
+            key: point.date,
+            point,
+        })),
     ];
     return (
         <Box
@@ -94,16 +96,16 @@ function UptimeBars({
                 height: 34,
             }}
         >
-            {cells.map((d, i) => (
+            {cells.map(({ key, point }) => (
                 <Box
-                    key={i}
-                    title={fmtCell(d, window)}
+                    key={key}
+                    title={fmtCell(point, window)}
                     sx={{
                         flex: 1,
                         minWidth: 0,
                         borderRadius: "2px",
-                        bgcolor: d ? cellColor(d) : L.grey,
-                        opacity: d ? 1 : 0.4,
+                        bgcolor: point ? cellColor(point) : L.grey,
+                        opacity: point ? 1 : 0.4,
                         transition: "transform 0.1s",
                         "&:hover": { transform: "scaleY(1.12)" },
                     }}
@@ -126,14 +128,20 @@ function relTime(iso: string): string {
     return months === 1 ? "1 month ago" : `${months} months ago`;
 }
 
-function ServiceCard({ p, hero = false }: { p: ProductStatus; hero?: boolean }) {
+function ServiceCard({
+    p,
+    hero = false,
+}: { p: ProductStatus; hero?: boolean }) {
     const h = HEALTH[p.health];
+    const healthAvailable = p.healthAvailable !== false;
+    const healthColor = healthAvailable ? h.color : L.muted;
+    const healthLabel = healthAvailable ? h.label : "Monitoring unavailable";
     const is90 = p.window === "90d";
     return (
         <Box
             sx={{
                 bgcolor: hero ? "#fbfdfc" : L.card,
-                border: `1px solid ${hero ? h.color : L.border}`,
+                border: `1px solid ${hero ? healthColor : L.border}`,
                 borderRadius: hero ? "12px" : "10px",
                 p: hero ? { xs: 2.5, md: 3 } : 2.5,
                 boxShadow: hero ? "0 1px 2px rgba(28,25,23,0.04)" : "none",
@@ -163,7 +171,7 @@ function ServiceCard({ p, hero = false }: { p: ProductStatus; hero?: boolean }) 
                                 px: 1,
                                 py: 0.4,
                                 borderRadius: "6px",
-                                bgcolor: h.color,
+                                bgcolor: healthColor,
                                 color: "#fff",
                                 fontSize: "0.62rem",
                                 fontWeight: 800,
@@ -180,7 +188,7 @@ function ServiceCard({ p, hero = false }: { p: ProductStatus; hero?: boolean }) 
                                 width: 9,
                                 height: 9,
                                 borderRadius: "50%",
-                                bgcolor: h.color,
+                                bgcolor: healthColor,
                                 flexShrink: 0,
                             }}
                         />
@@ -211,17 +219,15 @@ function ServiceCard({ p, hero = false }: { p: ProductStatus; hero?: boolean }) 
                         </Box>
                     )}
                 </Box>
-                <Box
-                    sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
-                >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                     <Typography
                         sx={{
-                            color: h.color,
+                            color: healthColor,
                             fontWeight: 700,
                             fontSize: hero ? "0.98rem" : "0.88rem",
                         }}
                     >
-                        {h.label}
+                        {healthLabel}
                     </Typography>
                     <Box
                         component="a"
@@ -349,13 +355,20 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
     }, [refreshing, cooling]);
 
     const { products, changelogs, fetchedAt } = data;
+    const monitoringAvailable = data.monitoringAvailable !== false;
 
     const worst: Health = products.some((p) => p.health === "outage")
         ? "outage"
         : products.some((p) => p.health === "degraded")
           ? "degraded"
           : "operational";
-    const allOk = worst === "operational";
+    const allOk = monitoringAvailable && worst === "operational";
+    const counts = {
+        operational: products.filter((p) => p.health === "operational").length,
+        degraded: products.filter((p) => p.health === "degraded").length,
+        outage: products.filter((p) => p.health === "outage").length,
+        observed: products.filter((p) => p.total > 0).length,
+    };
 
     // The base platform (elixpo.com, 90-day history) renders as a distinct hero
     // card; everything else stacks below it.
@@ -367,21 +380,27 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
             <Box sx={{ minHeight: "100dvh", bgcolor: L.bg, color: L.text }}>
                 <Box
                     sx={{
-                        maxWidth: 880,
+                        maxWidth: 1180,
                         mx: "auto",
                         px: { xs: 2, md: 3 },
-                        py: { xs: 4, md: 7 },
+                        py: { xs: 2, md: 4 },
                     }}
                 >
-                    {/* header */}
                     <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "space-between",
-                            mb: 5,
+                            mb: { xs: 2.5, md: 3.5 },
                             flexWrap: "wrap",
                             gap: 2,
+                            minHeight: 68,
+                            px: { xs: 1.5, md: 2 },
+                            py: 1,
+                            border: `1px solid ${L.border}`,
+                            borderRadius: "999px",
+                            bgcolor: "rgba(255,255,255,.9)",
+                            boxShadow: "0 14px 40px rgba(20,32,24,.07)",
                         }}
                     >
                         <Box
@@ -404,7 +423,7 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                             <Typography
                                 sx={{
                                     fontWeight: 800,
-                                    fontSize: "1.5rem",
+                                    fontSize: "1.05rem",
                                     letterSpacing: "-0.02em",
                                 }}
                             >
@@ -412,73 +431,189 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                             </Typography>
                         </Box>
                         <Box
-                            title="Coming soon"
                             sx={{
-                                display: "inline-flex",
+                                display: { xs: "none", sm: "flex" },
                                 alignItems: "center",
-                                gap: 1,
-                                height: 40,
-                                px: 2,
-                                borderRadius: "8px",
-                                bgcolor: "#e7e5e4",
-                                color: L.muted,
-                                cursor: "not-allowed",
-                                fontSize: "0.8rem",
+                                gap: { sm: 1.5, md: 2.25 },
+                                fontSize: "0.76rem",
                                 fontWeight: 700,
-                                letterSpacing: "0.06em",
-                                textTransform: "uppercase",
                             }}
                         >
-                            Subscribe · coming soon
+                            <Box
+                                component="a"
+                                href="#services"
+                                sx={{ color: L.text, textDecoration: "none" }}
+                            >
+                                Services
+                            </Box>
+                            <Box
+                                component="a"
+                                href="#changes"
+                                sx={{ color: L.text, textDecoration: "none" }}
+                            >
+                                Changes
+                            </Box>
+                            <Box
+                                component="a"
+                                href={REPO}
+                                target="_blank"
+                                rel="noreferrer"
+                                sx={{ color: L.text, textDecoration: "none" }}
+                            >
+                                Source ↗
+                            </Box>
+                            <Box
+                                component="a"
+                                href="https://elixpo.com"
+                                sx={{
+                                    px: 2,
+                                    py: 1.15,
+                                    borderRadius: "999px",
+                                    bgcolor: L.text,
+                                    color: "#fff",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                Elixpo.com ↗
+                            </Box>
                         </Box>
                     </Box>
 
-                    {/* overall banner */}
                     <Box
                         sx={{
-                            mb: 5,
-                            borderRadius: "10px",
+                            position: "relative",
+                            minHeight: { xs: 390, md: 430 },
+                            mb: 2,
+                            borderRadius: { xs: "22px", md: "30px" },
                             overflow: "hidden",
-                            border: `1px solid ${allOk ? L.green : L.amber}`,
+                            bgcolor: allOk
+                                ? "#0d5039"
+                                : !monitoringAvailable
+                                  ? "#43524a"
+                                  : worst === "outage"
+                                    ? "#76291f"
+                                    : "#775017",
+                            color: "#fff",
+                            border: "1px solid rgba(20,32,24,.18)",
                         }}
                     >
                         <Box
                             sx={{
-                                px: 2.5,
-                                py: 2,
-                                bgcolor: allOk ? L.green : L.amber,
-                                color: "#fff",
+                                position: "absolute",
+                                width: { xs: 330, md: 520 },
+                                height: { xs: 330, md: 520 },
+                                right: { xs: -190, md: -80 },
+                                top: { xs: 20, md: -160 },
+                                border: "1px solid rgba(255,255,255,.24)",
+                                borderRadius: "50%",
+                                "&::before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    width: "42%",
+                                    height: "42%",
+                                    left: "13%",
+                                    bottom: "8%",
+                                    borderRadius: "41% 59% 62% 38%",
+                                    bgcolor: allOk ? "#6eb492" : "#edb24e",
+                                    transform: "rotate(24deg)",
+                                },
+                                "&::after": {
+                                    content: '""',
+                                    position: "absolute",
+                                    width: "18%",
+                                    height: "48%",
+                                    left: "-9%",
+                                    top: "38%",
+                                    border: "1px solid rgba(255,255,255,.35)",
+                                    borderRadius: "999px",
+                                    transform: "rotate(43deg)",
+                                },
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                position: "relative",
+                                zIndex: 2,
+                                minHeight: { xs: 315, md: 350 },
                                 display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                px: { xs: 2.5, md: 5 },
+                                py: { xs: 4, md: 5 },
                             }}
                         >
                             <Typography
-                                sx={{ fontWeight: 700, fontSize: "1.05rem" }}
+                                sx={{
+                                    mb: 2,
+                                    font: "700 .68rem/1.4 var(--font-geist-mono)",
+                                    letterSpacing: ".17em",
+                                    textTransform: "uppercase",
+                                    opacity: 0.72,
+                                }}
                             >
-                                {allOk
-                                    ? "All systems operational"
-                                    : worst === "outage"
-                                      ? "Active incident on some services"
-                                      : "Some services degraded"}
+                                Public service health / live
+                            </Typography>
+                            <Typography
+                                component="h1"
+                                sx={{
+                                    maxWidth: 760,
+                                    m: 0,
+                                    fontSize: {
+                                        xs: "3.4rem",
+                                        sm: "4.7rem",
+                                        md: "6.2rem",
+                                    },
+                                    fontWeight: 650,
+                                    lineHeight: 0.9,
+                                    letterSpacing: "-.065em",
+                                }}
+                            >
+                                {!monitoringAvailable
+                                    ? "Live monitoring is temporarily unavailable."
+                                    : allOk
+                                      ? "All systems are operational."
+                                      : worst === "outage"
+                                        ? "Some services are unavailable."
+                                        : "Some services are degraded."}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    maxWidth: 650,
+                                    mt: 2.5,
+                                    mb: 0,
+                                    color: "rgba(255,255,255,.76)",
+                                    fontSize: { xs: ".92rem", md: "1.03rem" },
+                                    lineHeight: 1.65,
+                                }}
+                            >
+                                {monitoringAvailable
+                                    ? "This page reports observed request health across Elixpo's public services using Cloudflare edge analytics. Current labels use the most recent hour; the bars preserve longer history. An idle service has no recent traffic and is not classified as an outage."
+                                    : "The service directory remains available while live analytics recover. No operational conclusion is shown when the monitoring source cannot be reached."}
                             </Typography>
                         </Box>
                         <Box
                             sx={{
-                                px: 2.5,
-                                py: 1.25,
-                                bgcolor: L.card,
+                                position: "relative",
+                                zIndex: 3,
+                                minHeight: 74,
+                                px: { xs: 2.5, md: 5 },
+                                py: 1.5,
+                                borderTop: "1px solid rgba(255,255,255,.18)",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
                                 gap: 2,
                                 flexWrap: "wrap",
+                                bgcolor: "rgba(0,0,0,.08)",
                             }}
                         >
                             <Typography
-                                sx={{ color: L.muted, fontSize: "0.8rem" }}
+                                sx={{
+                                    color: "rgba(255,255,255,.72)",
+                                    fontSize: ".78rem",
+                                }}
                             >
-                                Live from Cloudflare edge analytics · updated{" "}
+                                Last observed{" "}
                                 {new Date(fetchedAt).toLocaleString()}
                             </Typography>
                             <Box
@@ -497,9 +632,9 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                                     px: 1.5,
                                     py: 0.75,
                                     borderRadius: "8px",
-                                    border: `1px solid ${L.border}`,
-                                    bgcolor: L.bg,
-                                    color: L.text,
+                                    border: "1px solid rgba(255,255,255,.3)",
+                                    bgcolor: "rgba(255,255,255,.1)",
+                                    color: "#fff",
                                     font: "inherit",
                                     fontSize: "0.78rem",
                                     fontWeight: 600,
@@ -510,10 +645,7 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                                     opacity: refreshing || cooling ? 0.55 : 1,
                                     transition: "background 0.12s",
                                     "&:hover": {
-                                        bgcolor:
-                                            refreshing || cooling
-                                                ? L.bg
-                                                : "#f0eeec",
+                                        bgcolor: "rgba(255,255,255,.18)",
                                     },
                                 }}
                             >
@@ -534,6 +666,67 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                         </Box>
                     </Box>
 
+                    <Box
+                        sx={{
+                            display: "grid",
+                            gridTemplateColumns: {
+                                xs: "1fr 1fr",
+                                md: "repeat(4,1fr)",
+                            },
+                            mb: { xs: 4, md: 6 },
+                            border: `1px solid ${L.border}`,
+                            borderRadius: "18px",
+                            overflow: "hidden",
+                            bgcolor: L.card,
+                        }}
+                    >
+                        {[
+                            [String(products.length), "Tracked services"],
+                            [String(counts.operational), "Operational"],
+                            [String(counts.observed), "Reporting traffic"],
+                            [
+                                String(counts.degraded + counts.outage),
+                                "Need attention",
+                            ],
+                        ].map(([value, label], index) => (
+                            <Box
+                                key={label}
+                                sx={{
+                                    p: { xs: 2, md: 2.5 },
+                                    borderLeft: {
+                                        md: index ? `1px solid ${L.border}` : 0,
+                                    },
+                                    borderTop: {
+                                        xs:
+                                            index > 1
+                                                ? `1px solid ${L.border}`
+                                                : 0,
+                                        md: 0,
+                                    },
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        fontSize: "1.8rem",
+                                        fontWeight: 750,
+                                        letterSpacing: "-.04em",
+                                    }}
+                                >
+                                    {value}
+                                </Typography>
+                                <Typography
+                                    sx={{
+                                        mt: 0.35,
+                                        color: L.muted,
+                                        fontSize: ".74rem",
+                                    }}
+                                >
+                                    {label}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Box>
+
                     {/* base platform — distinct hero card */}
                     {base && (
                         <Box sx={{ mb: 4 }}>
@@ -543,14 +736,15 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
 
                     {/* per-service cards */}
                     <Typography
+                        id="services"
                         sx={{ fontWeight: 700, fontSize: "0.95rem", mb: 1.5 }}
                     >
                         Services
                     </Typography>
                     <Box
                         sx={{
-                            display: "flex",
-                            flexDirection: "column",
+                            display: "grid",
+                            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
                             gap: 1.5,
                         }}
                     >
@@ -563,6 +757,7 @@ export default function StatusView({ initial }: { initial: StatusPayload }) {
                     {changelogs.length > 0 && (
                         <>
                             <Box
+                                id="changes"
                                 sx={{
                                     display: "flex",
                                     alignItems: "center",
