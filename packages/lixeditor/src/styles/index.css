@@ -1,0 +1,16 @@
+/**
+ * @elixpo/lixeditor styles
+ * Import in your app: import '@elixpo/lixeditor/styles';
+ *
+ * KaTeX remains an automatic import (the package depends on it directly) so
+ * equations render without a second consumer import. The package build keeps
+ * this dependency import external to avoid duplicating KaTeX's font assets.
+ */
+
+@import 'katex/dist/katex.min.css';
+@import './variables.css';
+@import './editor.css';
+@import './blocks.css';
+@import './menus.css';
+@import './preview.css';
+@import './blog-image.css';

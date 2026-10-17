@@ -1,0 +1,54 @@
+name: Contest lifecycle cron
+
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contest-lifecycle-cron
+  cancel-in-progress: false
+
+jobs:
+  advance-contests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Advance contest lifecycle and send notifications
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          node --input-type=module <<'NODE'
+          const secret = (process.env.CRON_SECRET || '').trim();
+          if (!secret) throw new Error('CRON_SECRET is not configured');
+
+          const endpoint = 'https://blogs.elixpo.com/api/cron/contests';
+          let lastError;
+
+          for (let attempt = 1; attempt <= 4; attempt += 1) {
+            try {
+              const response = await fetch(endpoint, {
+                headers: { Authorization: `Bearer ${secret}` },
+                signal: AbortSignal.timeout(30_000),
+              });
+              const body = await response.text();
+
+              if (!response.ok) {
+                throw new Error(`Contest cron returned ${response.status}: ${body}`);
+              }
+
+              console.log(body);
+              process.exit(0);
+            } catch (error) {
+              lastError = error;
+              if (attempt < 4) {
+                await new Promise((resolve) => setTimeout(resolve, 1_000 * 2 ** (attempt - 1)));
+              }
+            }
+          }
+
+          throw lastError;
+          NODE
