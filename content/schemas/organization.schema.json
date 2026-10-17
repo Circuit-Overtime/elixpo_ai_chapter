@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/organization.schema.json",
+  "title": "Elixpo organization record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "lastVerified",
+    "name",
+    "oneLineDescription",
+    "fullDescription",
+    "northStar",
+    "publicLine",
+    "distinction",
+    "urls",
+    "programs"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date"
+    },
+    "name": {
+      "const": "Elixpo"
+    },
+    "oneLineDescription": {
+      "type": "string",
+      "minLength": 20
+    },
+    "fullDescription": {
+      "type": "string",
+      "minLength": 80
+    },
+    "northStar": {
+      "type": "string",
+      "minLength": 20
+    },
+    "publicLine": {
+      "type": "string",
+      "minLength": 10
+    },
+    "distinction": {
+      "type": "string",
+      "minLength": 20
+    },
+    "urls": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "url",
+          "status"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "planned",
+              "retired"
+            ]
+          }
+        }
+      }
+    },
+    "programs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "purpose"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 20
+          }
+        }
+      }
+    }
+  }
+}
