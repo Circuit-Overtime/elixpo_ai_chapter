@@ -1,0 +1,73 @@
+{
+  "hero": {
+    "focusTags": ["Frontend", "AI Integration", "Open Source"],
+    "name": "VIVEK",
+    "headline": "Frontend Developer & AI Integrator",
+    "subhead": "Frontend Developer @ Pollinations AI · Web Facilitator, GDG on Campus · Tech Ops Lead, OWASP JIS University",
+    "intro": "Third-year CSE student building modern, scalable, AI-powered web applications - React and Next.js front ends, LLM and RAG integrations via LangChain, and clean, usable design.",
+    "credentials": [
+      { "label": "Frontend Developer & AI Integrator", "org": "Pollinations AI" },
+      { "label": "Tech Operations Lead", "org": "OWASP JIS University" }
+    ],
+    "ctas": [
+      { "label": "View Work", "href": "projects" },
+      { "label": "Connect", "href": "connect" }
+    ],
+    "portrait": "/assets/vivek/punchlineSection/vr-pic1.webp"
+  },
+  "intro": {
+    "heroName": "VIVEK",
+    "tagline": "FRONTEND",
+    "taglineSuffix": "DEVELOPER",
+    "description": "I build modern, scalable, and AI-powered web applications with a focus on performance, usability, and clean design.",
+    "highlights": [
+      "React & Next.js",
+      "AI + LLM Integration",
+      "Full Stack Projects",
+      "Open Source Contributor"
+    ],
+    "images": {
+      "portrait": "/assets/vivek/punchlineSection/vr-pic1.webp",
+      "landscape": "/assets/vivek/punchlineSection/hz-pic1.webp"
+    }
+  },
+  "websiteSection": {
+    "designedBy": "This portfolio showcases my projects, technical skills, and experience in frontend development and AI integration.",
+    "futurePlans": "I aim to deepen my expertise in system design, scalable architectures, and AI-powered applications.",
+    "codeStory": "My journey in tech started with curiosity about how things work. Over time, it evolved into building real-world applications, contributing to communities, and exploring cutting-edge AI technologies.",
+    "images": {
+      "owl": "/assets/vivek/websiteSection/hz-owl1.webp",
+      "humanThink": "/assets/vivek/websiteSection/human-think1.webp",
+      "seal": "/assets/vivek/websiteSection/sq-seal1.webp"
+    }
+  },
+  "techSection": {
+    "heading": "TECH STACK",
+    "subheading": "DEV-S",
+    "description": "Technologies and tools I use to build efficient and scalable applications.",
+    "skills": [
+      { "type": "text", "label": "React" },
+      { "type": "text", "label": "Next.js" },
+      { "type": "text", "label": "Node.js" },
+      { "type": "text", "label": "PostgreSQL" },
+      { "type": "text", "label": "Python" },
+      { "type": "text", "label": "C / C++" },
+      { "type": "text", "label": "Tailwind CSS" },
+      { "type": "text", "label": "Docker" },
+      { "type": "text", "label": "Git" },
+      { "type": "text", "label": "Figma" },
+      { "type": "text", "label": "LangChain" },
+      { "type": "text", "label": "RAG Systems" }
+    ],
+    "explore": [
+      { "label": "Talks", "caption": "Speaking & sessions", "href": "talks" },
+      { "label": "Writing", "caption": "Notes & blog posts", "href": "blogs" },
+      { "label": "Papers", "caption": "Research & publications", "href": "publications" }
+    ],
+    "images": {
+      "wand": "/assets/vivek/techTracks/wand-1.webp",
+      "landscape": "/assets/vivek/techTracks/hz-image1.webp",
+      "banner": "/assets/vivek/hrz-image1.webp"
+    }
+  }
+}

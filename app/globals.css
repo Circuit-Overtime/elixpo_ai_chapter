@@ -1,0 +1,1136 @@
+@import url("https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Pathway+Gothic+One&display=swap");
+
+@import "tailwindcss";
+@source not "../ayushman";
+@source not "../anwesha";
+
+/* ===== FONTS ===== */
+
+@font-face {
+  font-family: "Canopee";
+  src: url("/assets/ayushman/FONT/Canopee Regular.otf") format("opentype");
+}
+
+/* ===== GLOBAL RESETS ===== */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+@media (max-width: 639px) {
+  .media-decode-enabled img:not(.media-decoded),
+  .media-decode-enabled [style*="background-image"]:not(.media-decoded) {
+    visibility: hidden;
+  }
+
+  .media-decode-enabled .media-decoded {
+    visibility: visible;
+    animation: media-decode-in 260ms ease-out;
+  }
+}
+
+@keyframes media-decode-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-decode-enabled .media-decoded {
+    animation: none;
+  }
+}
+
+/* ===== SCROLLBAR HIDING ===== */
+.appContainer::-webkit-scrollbar,
+.spotlight::-webkit-scrollbar,
+.recommendationSection::-webkit-scrollbar,
+.workExperience::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.appContainer,
+.spotlight,
+.recommendationSection,
+.workExperience,
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== DEV-S SCROLLBAR ===== */
+.descriptionRow2::-webkit-scrollbar {
+  width: 6px;
+}
+.descriptionRow2::-webkit-scrollbar-track {
+  background: transparent;
+}
+.descriptionRow2::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 3px;
+}
+.descriptionRow2::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+.descriptionRow2 {
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
+}
+
+/* ===== NAVBAR ===== */
+.name {
+  font-family: "Bitcount Grid Double", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Reusable navbar-grid font (CTAs, accents) */
+.fontNav {
+  font-family: "Bitcount Grid Double", system-ui;
+  font-optical-sizing: auto;
+}
+
+/* ===== LANDING REGISTRY ===== */
+.vintage-card {
+  clip-path: polygon(
+    0.6% 2.2%, 2.1% 0.5%, 8% 1%, 14% 0.2%, 23% 0.8%, 31% 0.1%,
+    42% 0.7%, 54% 0.2%, 66% 0.9%, 78% 0.1%, 89% 0.7%, 98% 0.3%,
+    99.5% 2%, 99% 12%, 99.7% 24%, 99.1% 38%, 99.8% 52%, 99% 67%,
+    99.6% 81%, 99% 94%, 97.8% 99.4%, 88% 99%, 77% 99.7%, 64% 99.1%,
+    52% 99.8%, 39% 99%, 27% 99.7%, 15% 99%, 2% 99.5%, 0.5% 97.8%,
+    1% 84%, 0.3% 70%, 0.9% 55%, 0.2% 40%, 0.8% 25%, 0.1% 12%
+  );
+}
+
+.vintage-card-small {
+  clip-path: polygon(
+    1% 3%, 4% 0.5%, 18% 1.5%, 34% 0.3%, 52% 1.2%, 70% 0.2%,
+    87% 1.4%, 98.8% 0.6%, 99% 18%, 99.6% 36%, 98.8% 56%, 99.5% 76%,
+    98% 98.8%, 82% 99.4%, 64% 98.7%, 45% 99.6%, 26% 98.8%, 2% 99.5%,
+    0.7% 82%, 1.4% 63%, 0.4% 43%, 1.2% 23%
+  );
+}
+
+/* ===== VINTAGE LANDING CAROUSEL ===== */
+.landing-archive {
+  isolation: isolate;
+  background: #1b1009;
+}
+
+.landing-kernel-canvas {
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  transform: scale(1.006);
+}
+
+.landing-kernel-grade {
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 43%, rgba(222, 190, 130, 0.06), rgba(39, 19, 9, 0.28) 78%),
+    repeating-radial-gradient(circle at 18% 27%, rgba(67, 38, 19, 0.13) 0 0.6px, transparent 0.9px 4px),
+    linear-gradient(118deg, rgba(122, 75, 37, 0.13), rgba(35, 17, 8, 0.18));
+  opacity: 0.86;
+}
+
+.archive-masthead::after {
+  content: "";
+  position: absolute;
+  right: 2.25rem;
+  bottom: 0;
+  left: 2.25rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(222, 197, 150, 0.42), rgba(222, 197, 150, 0.08));
+}
+
+.archive-masthead-copy {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  color: #f0ddb6;
+  font-family: "Bitcount Grid Double", system-ui;
+  font-size: clamp(0.48rem, 0.8vw, 0.68rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 12px rgba(14, 6, 2, 0.88);
+}
+
+.archive-masthead-copy span + span::before {
+  content: "◆";
+  margin-right: clamp(0.75rem, 2vw, 2rem);
+  color: #a66b42;
+  font-size: 0.48rem;
+}
+
+.member-ticket-shell {
+  width: clamp(19rem, 62vw, 45rem);
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1), opacity 260ms ease;
+}
+
+.member-ticket-shell:not([data-active]) {
+  cursor: pointer;
+  filter: blur(5px) sepia(0.46) brightness(0.62) saturate(0.72);
+}
+
+.member-ticket-shell[data-distance="2"] { filter: none; }
+.member-ticket-link { display: block; color: inherit; outline: none; }
+.member-ticket-link:focus-visible .archive-ticket { box-shadow: 0 0 0 3px #d8b674, 0 28px 80px rgba(15, 7, 2, 0.58); }
+
+.member-ticket-shell[data-active] .archive-ticket {
+  animation: archive-ticket-settle 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes archive-ticket-settle {
+  0% { transform: scale(0.975) rotateX(1deg); }
+  62% { transform: scale(1.006) rotateX(0deg); }
+  100% { transform: scale(1); }
+}
+
+.archive-ticket {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1.72 / 1;
+  grid-template-columns: minmax(0, 1fr) 34%;
+  overflow: hidden;
+  color: #352116;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255, 244, 205, 0.72), transparent 24%),
+    linear-gradient(118deg, #ddc593 0%, #c9aa74 54%, #b88c57 100%);
+  border: 1px solid rgba(82, 47, 24, 0.75);
+  box-shadow: 0 28px 80px rgba(15, 7, 2, 0.58), inset 0 0 42px rgba(83, 45, 20, 0.16);
+}
+
+.archive-ticket::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+  background-image:
+    repeating-radial-gradient(circle at 17% 31%, rgba(59, 34, 18, 0.2) 0 0.55px, transparent 0.8px 4px),
+    repeating-linear-gradient(91deg, rgba(255, 244, 213, 0.12) 0 1px, transparent 1px 7px);
+}
+
+.archive-ticket::after {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid rgba(75, 43, 25, 0.34);
+}
+
+.archive-ticket-index {
+  position: absolute;
+  left: 1.45rem;
+  top: 1.25rem;
+  z-index: 5;
+  font-family: "Bitcount Grid Double", system-ui;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #7b3524;
+}
+
+.archive-ticket-copy {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5rem 2.25rem 4.5rem;
+}
+
+.archive-ticket-kicker {
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #78543a;
+}
+
+.archive-ticket h2 {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  color: #3c2418;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(3.1rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 0.78;
+  letter-spacing: -0.045em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archive-ticket-mark {
+  margin: 0.8rem 0 0.5rem;
+  color: #8e3422;
+  font-size: 0.68rem;
+}
+
+.archive-ticket-copy > p {
+  max-width: 29rem;
+  color: #5e402c;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: clamp(1rem, 1.7vw, 1.24rem);
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.archive-ticket-meta {
+  position: absolute;
+  inset-inline: 2.25rem;
+  bottom: 3.15rem;
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(79, 47, 28, 0.34);
+  padding-top: 0.65rem;
+  color: #71513a;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+
+.archive-ticket-meta span:last-child {
+  overflow: hidden;
+  color: #4a2d20;
+  font-size: clamp(0.88rem, 1.25vw, 1rem);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archive-ticket-stub {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px dashed rgba(65, 36, 20, 0.48);
+  color: #603d29;
+  text-align: center;
+}
+
+.archive-ticket-stub::before,
+.archive-ticket-stub::after {
+  content: "";
+  position: absolute;
+  left: -0.65rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid rgba(82, 47, 24, 0.75);
+  border-radius: 999px;
+  background: #211109;
+}
+
+.archive-ticket-stub::before { top: -0.68rem; }
+.archive-ticket-stub::after { bottom: -0.68rem; }
+
+.archive-portrait {
+  position: relative;
+  width: min(72%, 10.5rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(58, 32, 19, 0.7);
+  border-radius: 999px;
+  background: #6c432c;
+  box-shadow: 0 0 0 0.38rem rgba(206, 174, 119, 0.52), 0 0 0 0.48rem rgba(63, 35, 20, 0.58);
+}
+
+.archive-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 31% 22%, rgba(255, 239, 197, 0.48), transparent 28%), linear-gradient(145deg, transparent 48%, rgba(55, 25, 12, 0.26));
+  mix-blend-mode: screen;
+}
+
+.archive-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(1) saturate(0.62) contrast(1.24) brightness(0.88) invert(0.08);
+  mix-blend-mode: multiply;
+}
+
+.archive-ticket-stub > span {
+  margin-top: 1.1rem;
+  font-family: "Bitcount Grid Double", system-ui;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.archive-ticket-stub > strong {
+  margin-top: 0.25rem;
+  color: #8a3423;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.5rem;
+}
+
+.archive-ticket-link {
+  position: absolute;
+  left: 2.25rem;
+  bottom: 1.25rem;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #702c20;
+  font-family: "Bitcount Grid Double", system-ui;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.archive-round-button {
+  display: grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(226, 204, 160, 0.52);
+  border-radius: 999px;
+  color: #f4e2bd;
+  background: rgba(32, 17, 9, 0.76);
+  backdrop-filter: blur(10px) sepia(0.35);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.archive-round-button:hover,
+.archive-round-button:focus-visible {
+  border-color: #d8b674;
+  background: rgba(103, 54, 28, 0.74);
+  transform: scale(1.06);
+  outline: none;
+}
+
+.archive-round-button svg { width: 1rem; height: 1rem; }
+
+.archive-search-field {
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: width 300ms ease, opacity 200ms ease;
+}
+
+.archive-search-field.is-open {
+  width: min(15rem, 62vw);
+  opacity: 1;
+}
+
+.archive-search-field input {
+  width: 100%;
+  border: 1px solid rgba(218, 193, 146, 0.42);
+  border-radius: 999px;
+  outline: none;
+  background: rgba(32, 17, 9, 0.78);
+  padding: 0.72rem 1rem;
+  color: #f6e6c5;
+  font-family: "Pathway Gothic One", sans-serif;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(12px) sepia(0.3);
+}
+
+.archive-search-field input::placeholder { color: #b59c73; }
+
+.archive-search-results {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.75rem);
+  width: min(20rem, 86vw);
+  overflow: hidden;
+  border: 1px solid rgba(214, 185, 133, 0.42);
+  background: rgba(42, 24, 13, 0.94);
+  box-shadow: 0 18px 45px rgba(13, 6, 2, 0.45);
+  backdrop-filter: blur(18px) sepia(0.25);
+}
+
+.archive-search-results button,
+.archive-search-results p {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  color: #ead7ae;
+  text-align: left;
+}
+
+.archive-search-results button + button { border-top: 1px solid rgba(214, 185, 133, 0.18); }
+.archive-search-results button:hover { background: rgba(126, 67, 35, 0.42); }
+.archive-search-results button[aria-selected="true"] { background: rgba(160, 99, 53, 0.36); }
+.archive-search-results span { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem; }
+.archive-search-results small { display: block; margin-top: 0.15rem; color: #bda47b; font-family: "Pathway Gothic One", sans-serif; letter-spacing: 0.06em; }
+
+.archive-carousel-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.archive-carousel-nav ol {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 0.2rem;
+}
+
+.archive-carousel-nav .archive-pagination-sm { display: none; }
+
+.archive-pagination-ellipsis {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 1.5rem;
+  height: 1.9rem;
+  place-items: center;
+  color: #d1b789;
+  background: #2a180e;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.archive-carousel-nav ol::before {
+  content: "";
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  top: 50%;
+  height: 1px;
+  background: rgba(222, 197, 150, 0.36);
+}
+
+.archive-carousel-nav li { position: relative; z-index: 1; }
+.archive-carousel-nav li button {
+  display: grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  border: 1px solid rgba(222, 197, 150, 0.46);
+  border-radius: 999px;
+  color: #c9af82;
+  background: #2a180e;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 0.58rem;
+  transition: transform 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.archive-carousel-nav li button.is-active {
+  color: #3b2316;
+  background: #d5b775;
+  transform: scale(1.15);
+}
+
+@media (max-width: 640px) {
+  .archive-masthead { gap: 0.65rem; }
+  .archive-masthead::after { right: 1.25rem; left: 1.25rem; }
+  .archive-masthead-copy {
+    max-width: none;
+    flex: 0 0 auto;
+    overflow: visible;
+    font-size: 0.5rem;
+    letter-spacing: 0.28em;
+  }
+  .archive-search-field.is-open { width: min(12.5rem, 50vw); }
+  .archive-search-field input {
+    padding: 0.64rem 0.88rem;
+    font-size: 0.96rem;
+  }
+  .member-ticket-shell { width: min(calc(100vw - 2rem), 24rem); }
+  .archive-ticket {
+    aspect-ratio: 1.12 / 1;
+    grid-template-columns: minmax(0, 1fr) 36%;
+  }
+  .archive-ticket::after { inset: 0.55rem; }
+  .archive-ticket-index {
+    left: 1.15rem;
+    top: 1.05rem;
+    font-size: 0.56rem;
+  }
+  .archive-ticket-copy {
+    justify-content: flex-start;
+    padding: 3.3rem 1.15rem 4.7rem;
+  }
+  .archive-ticket-kicker {
+    font-size: 0.68rem;
+    line-height: 1.35;
+    letter-spacing: 0.18em;
+  }
+  .archive-ticket h2 {
+    margin-top: 0.45rem;
+    overflow: visible;
+    font-size: clamp(2.15rem, 10.5vw, 2.85rem);
+    line-height: 0.86;
+    text-overflow: clip;
+  }
+  .archive-ticket-mark { margin: 0.65rem 0 0.4rem; }
+  .archive-ticket-copy > p {
+    font-size: clamp(0.78rem, 3.45vw, 0.92rem);
+    line-height: 1.12;
+    letter-spacing: 0.065em;
+  }
+  .archive-ticket-meta {
+    inset-inline: 1.15rem;
+    bottom: 2.25rem;
+    flex-direction: column;
+    gap: 0.08rem;
+    padding-top: 0.38rem;
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+  .archive-ticket-meta span:last-child { font-size: 0.69rem; }
+  .archive-ticket-link {
+    left: 1.15rem;
+    bottom: 0.72rem;
+    font-size: 0.52rem;
+  }
+  .archive-ticket-stub {
+    justify-content: flex-start;
+    padding: 5.4rem 0.4rem 2rem;
+  }
+  .archive-portrait { width: min(78%, 7rem); }
+  .archive-ticket-stub > span {
+    margin-top: 0.85rem;
+    font-size: 0.44rem;
+    line-height: 1.3;
+    letter-spacing: 0.09em;
+  }
+  .archive-ticket-stub > strong {
+    margin-top: 0.15rem;
+    font-size: 1.15rem;
+  }
+  .archive-carousel-nav { gap: 0.45rem; }
+  .archive-carousel-nav .archive-pagination-lg { display: none; }
+  .archive-carousel-nav .archive-pagination-sm { display: flex; }
+  .archive-carousel-nav ol { gap: 0.35rem; }
+  .archive-round-button { width: 2.55rem; height: 2.55rem; }
+}
+.location {
+  font-family: "Bitcount Grid Double", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.navBar ion-icon {
+  font-size: 1.5rem;
+}
+@media (min-width: 640px) {
+  .navBar ion-icon {
+    font-size: 1.75rem;
+  }
+}
+@media (min-width: 768px) {
+  .navBar ion-icon {
+    font-size: 2rem;
+  }
+}
+
+/* ===== MENU OVERLAY ===== */
+.menuItem {
+  text-transform: uppercase;
+  font-family: Canopee, sans-serif;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.menuWord {
+  font-size: 1.9rem;
+  letter-spacing: -0.04em;
+}
+@media (min-width: 640px) {
+  .menuWord {
+    font-size: 2.6rem;
+  }
+}
+@media (min-width: 768px) {
+  .menuWord {
+    font-size: 3.1rem;
+  }
+}
+@media (min-width: 1024px) {
+  .menuWord {
+    font-size: 3.6rem;
+  }
+}
+.menuItem.selected .menuWord {
+  color: #b63b12;
+}
+.menuItem.selected .menuIndex {
+  opacity: 1;
+}
+
+/* ===== CANVAS (curtain effect) ===== */
+#above-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 100;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* ===== HEADINGS & TEXT ===== */
+.headingText {
+  font-family: "Canopee", system-ui;
+}
+.descriptionText {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.nameContainer {
+  font-family: "Canopee";
+  font-optical-sizing: auto;
+  font-weight: 700;
+}
+.nameContainer p {
+  fill: none;
+  stroke: #96b59f;
+  stroke-miterlimit: 10;
+}
+.text1 {
+  font-family: "Canopee";
+}
+.description1 {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.col2text {
+  font-family: "Canopee";
+  font-weight: 500;
+}
+.col2text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 60%;
+  height: 3px;
+  background: #03280d4a;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== SPOTLIGHT ===== */
+.spotlight {
+  min-width: 0;
+  width: 100%;
+  padding: 40px;
+}
+.hoverScale {
+  background-size: 300px !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease;
+}
+.hoverScale:hover {
+  background-size: 320px !important;
+}
+@media (min-width: 640px) {
+  .hoverScale {
+    background-size: 350px !important;
+  }
+  .hoverScale:hover {
+    background-size: 380px !important;
+  }
+}
+@media (min-width: 768px) {
+  .hoverScale {
+    background-size: 400px !important;
+  }
+  .hoverScale:hover {
+    background-size: 450px !important;
+  }
+}
+.featuredDescription {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.featureName {
+  font-family: "Canopee";
+  font-optical-sizing: auto;
+}
+.newTag {
+  font-family: "Pathway Gothic One", sans-serif;
+  font-weight: 700;
+}
+.featuredTileSpecialText {
+  font-family: "Canopee";
+  position: relative;
+  padding-bottom: 10px;
+}
+.featuredTileSpecialDesc {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.spotlightSwipeCue {
+  color: #5e5548;
+  font-family: "Bitcount Grid Double", system-ui;
+  font-size: 1.35rem;
+  line-height: 1;
+  animation: spotlight-swipe-cue 1.5s ease-in-out infinite;
+}
+.spotlightSwipeCue:first-of-type {
+  animation-name: spotlight-swipe-cue-left;
+}
+.spotlightSwipeCue:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+@keyframes spotlight-swipe-cue-left {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(-5px);
+    opacity: 1;
+  }
+}
+@keyframes spotlight-swipe-cue {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(5px);
+    opacity: 1;
+  }
+}
+
+/* ===== WEBSITE SECTION ===== */
+.websiteTextContainer,
+.webCol1Row1Text1,
+.slide2text1 {
+  font-family: "Canopee";
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 10px;
+}
+.webDescription1,
+.webDescription2,
+.webDescription3 {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.webCol2text1 {
+  font-family: "Canopee";
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 10px;
+}
+.visitCircle {
+  font-family: "Bitcount Grid Double", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ===== RECOMMENDATIONS ===== */
+.quote {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.userName {
+  font-family: "Canopee";
+}
+.userDesig {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+
+/* ===== TECH SECTION ===== */
+.text1row1col1techTracks {
+  font-family: "Canopee";
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 10px;
+}
+.descriptionRow2 {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+
+/* ===== CONTACT BANNER (scrolling) ===== */
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-scroll {
+  animation: scroll-horizontal 10s linear infinite;
+}
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+.contactMeText {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.contactMeBox {
+  font-family: "Canopee";
+  font-weight: 500;
+  position: relative;
+}
+
+/* ===== FOOTER ===== */
+.footerName {
+  font-family: "Bitcount Grid Double", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ===== ABOUT PAGE ===== */
+.jobSpotlight {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.publicationText {
+  font-family: "Canopee", system-ui;
+}
+.aboutSectionText {
+  font-family: "Canopee", system-ui;
+}
+.aboutFancyDescription {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+
+/* ===== PROJECTS PAGE ===== */
+.projectsHeaderText {
+  font-family: "Canopee";
+  position: relative;
+  padding-bottom: 10px;
+}
+.projectName {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+
+/* ===== PUBLICATIONS PAGE ===== */
+.paperTitle {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.paperDate {
+  font-family: "Canopee", system-ui;
+}
+
+/* ===== CONNECT PAGE ===== */
+.emailText {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.emailProvoke {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+.submitButton {
+  font-family: "Pathway Gothic One", sans-serif;
+}
+#name:focus {
+  background-size: cover;
+  background-repeat: repeat;
+  animation: shine-brown 1.2s linear infinite;
+}
+#name::placeholder {
+  color: #888;
+}
+@keyframes shine-brown {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 200px;
+  }
+}
+textarea::-webkit-scrollbar {
+  width: 10px;
+  background: #f8f1de;
+  border-radius: 8px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #e2d9c8 60%, #ffc300 100%);
+  border-radius: 8px;
+  border: 2px solid #e6ddc6;
+  box-shadow: 0 2px 6px #c8c1ae33;
+}
+textarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ffc300 60%, #e2d9c8 100%);
+}
+textarea::-webkit-scrollbar-track {
+  background: #f8f1de;
+  border-radius: 8px;
+  box-shadow: inset 0 0 4px #e6ddc6;
+}
+
+/* ===== TOAST NOTIFICATION ===== */
+/* handled via tailwind classes in component */
+
+/* ===== RESPONSIVE OVERRIDES (from homePage.css) ===== */
+@media (max-width: 639px) {
+  .nameContainer {
+    font-size: 2rem !important;
+    height: 200px !important;
+    letter-spacing: 2px !important;
+  }
+  .nameContainer p {
+    font-size: 2rem !important;
+    word-break: break-word;
+  }
+  .text1 p {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .col2text {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .websiteTextContainer p {
+    font-size: 2rem !important;
+    word-break: break-word;
+  }
+  .webCol2text1 > div:first-child {
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
+  }
+  .webCol2text1 > div:last-child {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .webCol2text1 div {
+    font-size: 1.25rem !important;
+    line-height: 50px !important;
+  }
+  .text1row1col1techTracks {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+  }
+  .descriptionRow2 {
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+  }
+  .contactMeText {
+    font-size: 1rem !important;
+  }
+  .contactMeBox {
+    font-size: 1rem !important;
+  }
+  .contactMeBox p {
+    line-height: 1.3 !important;
+  }
+  .footerName {
+    font-size: 1.25rem !important;
+  }
+  .socialIcon {
+    font-size: 1.125rem !important;
+  }
+  .appContainer {
+    padding: 1rem !important;
+    max-width: 100% !important;
+  }
+  .punchlineSection {
+    padding: 1rem !important;
+    gap: 1.25rem !important;
+  }
+  .column1 {
+    padding: 1rem !important;
+    border-right: none !important;
+    border-bottom: 2px solid #888 !important;
+    margin-bottom: 1rem !important;
+  }
+  .websiteSection {
+    padding: 0.5rem !important;
+  }
+  .websiteContainer {
+    gap: 1.25rem !important;
+  }
+  .webCol1 {
+    padding: 0.5rem !important;
+    border-right: none !important;
+    border-bottom: 2px solid #888 !important;
+    margin-bottom: 1rem !important;
+  }
+  .webCol2 {
+    padding: 0.5rem !important;
+  }
+  .slide1 {
+    padding: 0.5rem !important;
+    border-right: none !important;
+    border-bottom: 2px solid #888 !important;
+    margin-bottom: 1rem !important;
+    margin-right: 0 !important;
+  }
+  .techTracks {
+    padding: 1rem !important;
+  }
+  .row1col1 {
+    gap: 1rem !important;
+  }
+  .image1row1col1techTracks {
+    width: 60px !important;
+    height: 200px !important;
+    margin: 0 auto !important;
+  }
+  .row2row1 {
+    gap: 1.25rem !important;
+  }
+  .text1row1col1techTracks {
+    gap: 1rem !important;
+    line-height: 40px !important;
+  }
+  .row2row2 {
+    gap: 1.25rem !important;
+  }
+  .visitCircle {
+    width: 100% !important;
+    margin: 0 auto !important;
+    margin-top: 2.5rem !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .nameContainer {
+    font-size: 3rem !important;
+    height: 250px !important;
+  }
+  .text1 p {
+    font-size: 2rem !important;
+  }
+  .col2text {
+    font-size: 1.25rem !important;
+  }
+  .websiteTextContainer p {
+    font-size: 3rem !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nameContainer {
+    font-size: 4rem !important;
+    height: 300px !important;
+  }
+  .text1 p {
+    font-size: 2.5rem !important;
+  }
+  .col2text {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* ===== HIDDEN UTILITY (for menu) ===== */
+.menuHidden {
+  opacity: 0;
+  pointer-events: none;
+}

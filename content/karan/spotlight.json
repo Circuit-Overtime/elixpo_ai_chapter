@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Frontend AI Developer Intern at FlyRank AI",
+    "date": "2026-01-01",
+    "description": "Started building frontend interfaces for AI-driven product features integrated with LLM-powered workflows at FlyRank AI.",
+    "image": "/assets/karan/spotlight/flyrank.png"
+  },
+  {
+    "title": "Founder of Kareixo",
+    "date": "2025-01-01",
+    "description": "Launched Kareixo, a free AI code reviewer for every pull request. Install the GitHub App once and get instant, intelligent code reviews powered by a resilient multi-model router.",
+    "image": "/assets/karan/spotlight/kareixo-logo.png",
+    "url": "https://kareixo.vercel.app/"
+  },
+  {
+    "title": "Built Nirmaan MUN Platform",
+    "date": "2025-05-01",
+    "description": "Developed the Indraja Foundation's MUN conference platform from architecture to deployment with real-time delegate support and AI assistant.",
+    "image": "/assets/karan/spotlight/nirmaan-logo.png",
+    "url": "https://nirmaan-jade.vercel.app/"
+  },
+  {
+    "title": "Google Gemini Student Ambassador",
+    "date": "2025-03-01",
+    "description": "Selected as a Google Gemini Student Ambassador for campus-level AI advocacy, driving awareness and adoption of Gemini AI tools through events and hands-on sessions.",
+    "image": "/assets/karan/spotlight/google-ambassador.png"
+  },
+  {
+    "title": "Core Contributor at Elixpo",
+    "date": "2025-02-01",
+    "description": "Contributing to multiple Elixpo products including chat.elixpo, sketch.elixpo, opensource.elixpo, and blogs.elixpo alongside the core team led by Ayushman.",
+    "image": "/assets/karan/spotlight/elixpo-home.png"
+  },
+  {
+    "title": "Open Source Contributor - Pollinations AI",
+    "date": "2025-04-01",
+    "description": "Enhanced openai.yml schemas for Scalet API integration and fixed CI/CD and backend stability issues for S3-compatible media API at Pollinations.",
+    "image": "/assets/karan/spotlight/pollinations-logo.png"
+  }
+]
