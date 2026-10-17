@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Audit ordinary workflows in canonical Elixpo repositories.
 
-Agent automation and the three deferred agent-stack repositories are excluded
-on purpose. Generated subtree copies are never treated as source repositories.
+The active Elixpoo runtime is assessed through its dedicated authorization and
+rollout audit. The two paused related repositories remain deferred. Generated
+subtree copies are never treated as source repositories.
 """
 
 from __future__ import annotations
@@ -16,7 +17,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 
-DEFERRED_REPOSITORIES = {"agent.elixpo", "crumb.elixpo", "oreoPI"}
+SPECIALIZED_AGENT_REPOSITORIES = {"agent.elixpo"}
+DEFERRED_REPOSITORIES = {"crumb.elixpo", "oreoPI"}
 LOCAL_DIRECTORY_ALIASES = {"mails.elixpo": "mail.elixpo"}
 AGENT_WORKFLOWS = {
     "artifact-update.yml",
@@ -138,7 +140,7 @@ def main() -> int:
 
     for record in registry["entries"]:
         name = record["name"]
-        if record["lifecycle"] == "archived" or name in DEFERRED_REPOSITORIES:
+        if record["lifecycle"] == "archived" or name in DEFERRED_REPOSITORIES | SPECIALIZED_AGENT_REPOSITORIES:
             continue
         url = record.get("repositoryUrl") or ""
         if not url or "github.com/elixpo/" not in url:
@@ -169,6 +171,7 @@ def main() -> int:
         "auditedWorkflows": audited,
         "auditedRepositories": sorted(audited_repositories),
         "deferredRepositories": sorted(DEFERRED_REPOSITORIES),
+        "specializedAgentRepositories": sorted(SPECIALIZED_AGENT_REPOSITORIES),
         "excludedAgentWorkflows": sorted(AGENT_WORKFLOWS),
         "reviewedForkSecretBoundaries": [
             {

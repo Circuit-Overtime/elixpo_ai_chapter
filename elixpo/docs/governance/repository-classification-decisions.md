@@ -29,8 +29,13 @@ Each `verified` inventory record has passed all applicable checks below:
 
 ## Current decision boundaries
 
-- `agent.elixpo`, `crumb.elixpo`, and `oreoPI` remain paused projects. Their
-  verified registry status does not approve or begin repository consolidation.
+- `agent.elixpo` is active as the specialized Elixpoo v2 project-management
+  runtime. It is not a coding agent: source edits, solution branches, code
+  commits, and code-solving pull requests remain outside its authority. Its
+  reusable privileged workflows are assessed through their dedicated rollout
+  and authorization contract rather than the ordinary workflow baseline.
+- `crumb.elixpo` and `oreoPI` remain paused projects. Elixpoo v2 does not imply
+  their consolidation, reactivation, or transfer into `agent.elixpo`.
 - `Kareixo` remains a transferred Member Project whose original maintainer
   retains project and administrative authority.
 - `cypher` is an incubating core application. The rename from `Cypher-3.0`

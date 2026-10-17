@@ -37,6 +37,10 @@
       "url": "https://packages.elixpo.com",
       "status": "active"
     },
+    "agent": {
+      "url": "https://agent.elixpo.com",
+      "status": "active"
+    },
     "contact": {
       "url": "mailto:hello@elixpo.com",
       "status": "active"
