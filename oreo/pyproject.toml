@@ -49,7 +49,6 @@ Homepage       = "https://elixpo.com"
 Repository     = "https://github.com/elixpo/oreo"
 Issues         = "https://github.com/elixpo/oreo/issues"
 Documentation  = "https://github.com/elixpo/oreo/blob/main/docs/HARDWARE.md"
-Sponsor        = "https://github.com/sponsors/Circuit-Overtime"
 
 
 # ── setuptools layout ─────────────────────────────────────────────────────────
