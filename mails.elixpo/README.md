@@ -13,8 +13,7 @@
   <a href="https://mails.elixpo.com">mails.elixpo.com</a> ·
   <a href="https://mails.elixpo.com/docs">Documentation</a> ·
   <a href="https://github.com/orgs/elixpo/discussions">Discussions</a> ·
-  <a href="https://github.com/elixpo/elixpo_chapter">Monorepo</a> ·
-  <a href="https://github.com/sponsors/Circuit-Overtime">Sponsor</a>
+  <a href="https://github.com/elixpo/elixpo_chapter">Monorepo</a>
 </p>
 
 ---
@@ -145,7 +144,6 @@ Elixpo has taken part in and been supported by **GSSOC**, **Hacktoberfest**,
 - 💬 **Join the conversation** in [GitHub Discussions](https://github.com/orgs/elixpo/discussions).
 - 🚀 **Submit your project** to be featured across the ecosystem.
 - 🛠️ **Contribute** - browse good first issues in the [monorepo](https://github.com/elixpo/elixpo_chapter).
-- ❤️ **Support us** via [GitHub Sponsors](https://github.com/sponsors/Circuit-Overtime).
 
 ## Brand assets
 
