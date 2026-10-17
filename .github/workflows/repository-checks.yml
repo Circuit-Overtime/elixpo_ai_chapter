@@ -1,0 +1,47 @@
+name: Repository checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: repository-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  artifacts:
+    name: Research and hardware artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Verify the public project record
+        shell: bash
+        run: |
+          required=(
+            "README.md"
+            "LICENSE"
+            "research-paper.pdf"
+            "8_Bit Computer Control Logic.ino"
+            "eeprom programmer.ino"
+          )
+          for artifact in "${required[@]}"; do
+            test -s "$artifact" || {
+              echo "Required artifact is missing or empty: $artifact" >&2
+              exit 1
+            }
+          done
+
+      - name: Reject unresolved merge markers
+        shell: bash
+        run: |
+          if git grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- '*.ino' '*.md'; then
+            echo "Unresolved merge markers found in public source or documentation." >&2
+            exit 1
+          fi
