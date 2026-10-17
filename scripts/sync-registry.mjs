@@ -3,6 +3,8 @@ import { dirname, resolve } from "node:path";
 
 const check = process.argv.includes("--check");
 const repository = "elixpo/elixpo";
+const branch = "main";
+const sourcePaths = ["content/packages.json", "content/schemas/packages.schema.json"];
 const headers = { Accept: "application/vnd.github+json", "User-Agent": "Elixpo-Packages-Registry-Sync/1.0" };
 
 async function fetchJson(url, requestHeaders = headers) {
@@ -11,7 +13,14 @@ async function fetchJson(url, requestHeaders = headers) {
   return response.json();
 }
 
-const commit = await fetchJson(`https://api.github.com/repos/${repository}/commits/main`);
+const pathCommits = await Promise.all(sourcePaths.map(async (path) => {
+  const commits = await fetchJson(`https://api.github.com/repos/${repository}/commits?sha=${branch}&path=${encodeURIComponent(path)}&per_page=1`);
+  if (!Array.isArray(commits) || !commits[0]) throw new Error(`No canonical commit found for ${path}.`);
+  return commits[0];
+}));
+const commit = pathCommits.sort((left, right) =>
+  Date.parse(right.commit.committer.date) - Date.parse(left.commit.committer.date)
+)[0];
 const rawBase = `https://raw.githubusercontent.com/${repository}/${commit.sha}/content`;
 const packages = await fetchJson(`${rawBase}/packages.json`, { "User-Agent": headers["User-Agent"] });
 const schema = await fetchJson(`${rawBase}/schemas/packages.schema.json`, { "User-Agent": headers["User-Agent"] });
@@ -24,7 +33,7 @@ if (schema?.$id !== "https://elixpo.com/schemas/packages.schema.json" || schema?
 
 const provenance = {
   sourceRepository: `https://github.com/${repository}`,
-  sourcePaths: ["content/packages.json", "content/schemas/packages.schema.json"],
+  sourcePaths,
   sourceCommit: commit.sha,
   sourceCommittedAt: commit.commit.committer.date,
 };
