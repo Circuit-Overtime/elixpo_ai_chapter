@@ -1,0 +1,138 @@
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.scrollGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--spacing-4xl);
+  position: relative;
+}
+
+.textColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.textSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 10vh 0;
+  opacity: 0.25;
+  transition: opacity 0.5s ease;
+}
+
+.textActive {
+  opacity: 1;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-full);
+  background: rgba(141, 73, 253, 0.12);
+  border: 1px solid rgba(141, 73, 253, 0.25);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  width: fit-content;
+  margin-bottom: var(--spacing-md);
+}
+
+.title {
+  font-family: var(--font-family-primary);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  max-width: 460px;
+}
+
+.stickyColumn {
+  position: sticky;
+  top: 15vh;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.01);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.imageFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(141, 73, 253, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.mobileImageFrame {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .scrollGrid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .textSection {
+    min-height: auto;
+    padding: var(--spacing-2xl) 0;
+    opacity: 1; /* Keep everything visible on mobile */
+  }
+
+  .stickyColumn {
+    display: none;
+  }
+
+  .mobileImageFrame {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: var(--spacing-lg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}

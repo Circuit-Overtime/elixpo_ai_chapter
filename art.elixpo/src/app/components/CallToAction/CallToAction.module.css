@@ -1,0 +1,127 @@
+.section {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #000000 0%, #050505 100%);
+  padding: var(--spacing-4xl) 0;
+}
+
+.orb1 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(141, 73, 253, 0.08) 0%, transparent 70%);
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%);
+  bottom: -150px;
+  right: 10%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.title {
+  font-family: var(--font-family-primary);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.accent {
+  background: linear-gradient(90deg, #8d49fd, #06d6a0, #22d3ee, #ec4899, #8d49fd);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: var(--spacing-2xl);
+  line-height: 1.5;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.ctaBtn,
+.docBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 2.2rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ctaBtn {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.docBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.docBtn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ctaBtn,
+  .docBtn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,32 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        Elixpo Art (art.elixpo.com)
+  What it is:  An AI image and video generation platform - part of the Elixpo
+               ecosystem (under development).
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. art.elixpo.com is an official
+  hosted service; the brand and the hosted deployment are reserved, but the
+  source is MIT.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ are provided under CC-BY-4.0 WITH
+  Oreo-trademarks. The Oreo mascot, the chest E-badge, and the Elixpo / Oreo
+  names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com

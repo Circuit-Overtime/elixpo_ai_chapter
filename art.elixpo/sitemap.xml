@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://elixpo.com/</loc>
+    <lastmod>2025-06-13</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <url>
+    <loc>https://elixpo.com/src/create</loc>
+    <lastmod>2025-06-13</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <url>
+    <loc>https://elixpo.com/src/feed</loc>
+    <lastmod>2025-06-13</lastmod>
+    <priority>0.8</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <url>
+    <loc>https://elixpo.com/blogs/elixpo_art</loc>
+    <lastmod>2025-06-13</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://elixpo.com/integrations</loc>
+    <lastmod>2025-06-13</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+
+</urlset>
