@@ -600,9 +600,9 @@ export default function OAuthAppSettingsPage() {
     const redirectCount = form.redirect_uris.filter((uri) => uri.trim()).length;
     const brandingConfigured = Boolean(
         form.logo_url.trim() ||
-        form.branding_display_name.trim() ||
-        form.branding_primary_color.trim() ||
-        form.branding_accent_color.trim(),
+            form.branding_display_name.trim() ||
+            form.branding_primary_color.trim() ||
+            form.branding_accent_color.trim(),
     );
     const sectionNavigation = [
         {
