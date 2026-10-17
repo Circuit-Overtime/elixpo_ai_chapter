@@ -1,70 +1,63 @@
-# The first, repeatable review of every contribution. This job deliberately
-# needs no secrets, so it is safe to run against pull requests from forks.
-name: PR review
+# Cloudflare compatibility and trusted previews are separate from the faster
+# unit-test workflow. The build is secretless and safe for fork pull requests.
+name: PR Cloudflare build
 
 on:
   pull_request:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: pr-build-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  quality:
-    name: PR quality gate
+  build:
+    name: Cloudflare build
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          # Keep the review runtime aligned with the production Pages job.
           node-version: "22"
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
-
-      # Use the production adapter here, not plain `next build`: Cloudflare
-      # rejects dynamic routes that omit the Edge Runtime even when Next's
-      # build succeeds. Keeping both workflows on the same command prevents a
-      # green PR from blocking the production deployment after merge.
+      # The production adapter catches Cloudflare edge-runtime incompatibilities
+      # that can pass a plain Next.js build.
       - name: Build for Cloudflare Pages
         run: npm run pages:build
         env:
           NEXT_TELEMETRY_DISABLED: "1"
 
-      - name: Summarize the review
+      - name: Summarize the build
         if: always()
         run: |
           {
-            echo "## PR quality gate"
+            echo "## Cloudflare build"
             echo
-            echo 'This check installs from the lockfile, runs `npm test`, and builds with the Cloudflare Pages adapter on Node 22.'
+            echo 'This check installs from the lockfile and runs `npm run pages:build` on Node 22.'
             echo
             echo "Run the same commands locally:"
             echo '```bash'
             echo "npm ci"
-            echo "npm test"
             echo "npm run pages:build"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
   preview:
     name: Deploy trusted preview
-    needs: quality
-    # Fork pull requests receive the secretless quality gate only. Never run
-    # contributor-controlled code from a fork with deployment credentials.
+    needs: build
+    # Contributor-controlled code from a fork must never receive deployment
+    # credentials. Draft pull requests also skip preview infrastructure.
     if: >-
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.draft == false
@@ -77,11 +70,11 @@ jobs:
       contents: read
       deployments: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: "22"
           cache: npm
@@ -96,8 +89,6 @@ jobs:
           NEXT_PUBLIC_URL: https://pr-${{ github.event.pull_request.number }}.lixblogs.pages.dev
           NEXT_PUBLIC_ELIXPO_CLIENT_ID: ${{ vars.NEXT_PUBLIC_ELIXPO_CLIENT_ID }}
 
-      # A preview publishes only the Pages output. In particular, it does not
-      # apply D1 migrations, deploy Workers, or publish packages.
       - name: Deploy preview to Cloudflare Pages
         run: >-
           npx wrangler pages deploy .vercel/output/static
@@ -115,5 +106,5 @@ jobs:
             echo
             echo "Review this commit at https://pr-${{ github.event.pull_request.number }}.lixblogs.pages.dev"
             echo
-            echo 'This is a preview deployment. Production is deployed only after a merge to `main`.'
+            echo 'This preview does not apply D1 migrations, deploy Workers, or publish packages.'
           } >> "$GITHUB_STEP_SUMMARY"
