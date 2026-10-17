@@ -1,0 +1,11 @@
+{
+  "class_js_divergence": 0.17876034659639772,
+  "coverage": 0.05000000074505806,
+  "dataset": "cifar10",
+  "density": 0.1353,
+  "feature_fid": 414.62572177651464,
+  "feature_kid": 3.3456732117117634,
+  "mean_classifier_confidence": 0.7340297698974609,
+  "seed": 0,
+  "variant": "fp"
+}
