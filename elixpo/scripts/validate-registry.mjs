@@ -14,7 +14,7 @@ async function readJson(relativePath) {
   }
 }
 
-const [organization, taxonomy, repositories, directory, packages, research, licensing, repositoryLicenses, sponsorship, contributors, people, history, brand, discussions, brandProvenance] = await Promise.all([
+const [organization, taxonomy, repositories, directory, packages, research, licensing, repositoryLicenses, sponsorship, contributors, people, history, brand, discussions, recognition, brandProvenance] = await Promise.all([
   readJson("content/organization.json"),
   readJson("content/taxonomy.json"),
   readJson("content/repositories.json"),
@@ -29,6 +29,7 @@ const [organization, taxonomy, repositories, directory, packages, research, lice
   readJson("content/history.json"),
   readJson("content/brand.json"),
   readJson("content/discussions.json"),
+  readJson("content/recognition.json"),
   readJson("brand/provenance.json"),
 ]);
 
@@ -53,6 +54,7 @@ const declaredSchemaRecords = [
   ["content/history.json", history],
   ["content/brand.json", brand],
   ["content/discussions.json", discussions],
+  ["content/recognition.json", recognition],
   ["brand/provenance.json", brandProvenance],
 ];
 const declaredSchemaPaths = new Set(declaredSchemaRecords.map(([recordPath]) => recordPath));
@@ -148,7 +150,7 @@ if (research.schemaVersion !== organization.schemaVersion) {
 if (sponsorship.schemaVersion !== organization.schemaVersion) {
   addError("schemaVersion", "sponsorship and organization versions must match");
 }
-for (const [name, record] of Object.entries({ contributors, people, history, brand, discussions })) {
+for (const [name, record] of Object.entries({ contributors, people, history, brand, discussions, recognition })) {
   if (record.schemaVersion !== organization.schemaVersion) {
     addError("schemaVersion", `${name} and organization versions must match`);
   }
@@ -184,6 +186,8 @@ for (const [index, group] of (brandProvenance.groups ?? []).entries()) {
 }
 if (provenanceFileCount !== brand.audit?.exactMasterDuplicates) addError("brandProvenance.groups", "verified group file count must match exactMasterDuplicates");
 if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(recognition.lastVerified)) addError("recognition.lastVerified", "expected YYYY-MM-DD");
+if (!isDate(recognition.issuedAt)) addError("recognition.issuedAt", "expected YYYY-MM-DD");
 
 for (const [location, value] of [
   ["organization.lastVerified", organization.lastVerified],
@@ -202,6 +206,8 @@ for (const [location, value] of [
   ["brand.audit.auditedAt", brand.audit?.auditedAt],
   ["brandProvenance.verifiedAt", brandProvenance.verifiedAt],
   ["discussions.lastVerified", discussions.lastVerified],
+  ["recognition.lastVerified", recognition.lastVerified],
+  ["recognition.issuedAt", recognition.issuedAt],
 ]) validateFreshness(location, value);
 
 validateUrl("discussions.sourceRepository", discussions.sourceRepository);
@@ -667,6 +673,19 @@ for (const [repositoryName, record] of Object.entries(research.entries ?? {})) {
 }
 for (const repositoryName of researchRepositoryNames) {
   if (!research.entries?.[repositoryName]) addError(`research.entries.${repositoryName}`, "missing research record");
+}
+
+const recognitionIds = new Set();
+const recognitionHandles = new Set();
+for (const [index, record] of (recognition.records ?? []).entries()) {
+  const location = `recognition.records[${index}]`;
+  if (recognitionIds.has(record.id)) addError(`${location}.id`, "duplicate recognition ID");
+  recognitionIds.add(record.id);
+  const normalizedHandle = record.handle.toLowerCase();
+  if (recognitionHandles.has(normalizedHandle)) addError(`${location}.handle`, "duplicate recognized GitHub identity");
+  recognitionHandles.add(normalizedHandle);
+  if (record.recordUrl.startsWith("http")) validateUrl(`${location}.recordUrl`, record.recordUrl);
+  else if (!record.recordUrl.startsWith("/")) addError(`${location}.recordUrl`, "expected an absolute URL or root-relative public record");
 }
 
 if (errors.length > 0) {

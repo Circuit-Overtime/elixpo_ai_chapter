@@ -26,12 +26,13 @@ const marks = [
 const socialAssets = [
   { name: "Elixpo social banner", file: "/brand/source/social/elixpo-banner.png" },
   { name: "Social banner background", file: "/brand/source/social/elixpo-banner.bg.png" },
-  { name: "Dotted social background", file: "/brand/source/social/elixpo-dotted-background.png" },
+  { name: "Dotted social background", file: "/brand/source/social/elixpo-dotted-background.png", previewClass: "asset-preview-dotted" },
 ];
 
 const diagrams = [
   { name: "Elixpo ecosystem infographic", file: "/brand/diagrams/elixpo-ecosystem.svg" },
   { name: "Verified Elixpo history strip", file: "/brand/diagrams/elixpo-history-strip.svg" },
+  { name: "Elixpo evidence chain", file: "/brand/diagrams/elixpo-evidence-chain.svg" },
 ];
 
 const stickers = [
@@ -43,9 +44,9 @@ const stickers = [
 const icons = ["accounts.elixpo", "admin.elixpo", "agent.elixpo", "art.elixpo", "blogs.elixpo", "chat.elixpo", "crumb.elixpo", "elixpo.com", "mail.elixpo", "me.elixpo", "oreo.elixpo", "payouts.elixpo", "search.elixpo", "sketch.elixpo", "url.elixpo"];
 const formatMegabytes = (bytes: number) => `${Math.round(bytes / 1_000_000)} MB`;
 
-function DownloadGrid({ items }: { items: Array<{ name: string; file: string }> }) {
+function DownloadGrid({ items }: { items: Array<{ name: string; file: string; previewClass?: string }> }) {
   return <div className="mark-grid">{items.map((item) => <article key={item.file}>
-    <div><Image src={item.file} alt={item.name} width={560} height={320} /></div>
+    <div className={item.previewClass}><Image src={item.file} alt={item.name} width={560} height={320} /></div>
     <h3>{item.name}</h3>
     <a href={item.file} download>Download source <Download size={14} /></a>
   </article>)}</div>;
@@ -71,7 +72,7 @@ export function BrandingContent({ canonicalPath = "/branding" }: { canonicalPath
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Primary marks</p><h2>Use the mark with room to breathe.</h2></div><DownloadGrid items={marks} /></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Project icon family</p><h2>One family, distinct tools.</h2></div><div className="icon-grid">{icons.map((name) => <a key={name} href={`/brand/source/icons/${name}.png`} download><Image src={`/brand/source/icons/${name}.png`} alt={`${name} project icon`} width={96} height={96} /><span>{name}</span><Download size={13} /></a>)}</div></section>
     <section className="asset-section"><div className="section-heading"><p className="eyebrow">Social templates</p><h2>Stable artwork for public announcements.</h2></div><DownloadGrid items={socialAssets} /></section>
-    <section className="asset-section"><div className="section-heading"><p className="eyebrow">README and history diagrams</p><h2>Evidence-led diagrams for the primary public READMEs.</h2></div><DownloadGrid items={diagrams} /></section>
+    <section className="asset-section"><div className="section-heading"><p className="eyebrow">README, evidence, and history diagrams</p><h2>Evidence-led diagrams for the primary public READMEs.</h2></div><DownloadGrid items={diagrams} /></section>
     <section className="asset-section sticker-preview-section" aria-labelledby="sticker-previews-title">
       <div className="section-heading split">
         <div><p className="eyebrow">Protected event material</p><h2 id="sticker-previews-title">Official stickers are available by approved request.</h2></div>
