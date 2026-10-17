@@ -1,24 +1,23 @@
 # Branding repository migration
 
-**Status:** Public migration complete; private archive gate pending
-**Source repository:** [`elixpo/branding`](https://github.com/elixpo/branding)  
+**Status:** Complete; private production boundary active
+**Source repository:** `elixpo/brand-production` (private)  
 **Audited source revision:** `7c274b1ca900eb8f21f4ded811779963ba8f0c21`  
 **Destination:** [`elixpo/elixpo`](https://github.com/elixpo/elixpo)
 
 The portal is the canonical public brand destination. Consumer discovery found
-no active repository outside the portal that depends on the standalone
-branding repository. The standalone history remains the production record, but
-it must become a private read-only archive because its history contains
-print-ready sticker masters that are not public downloads. Consolidation must
-not turn the portal into a 779 MB asset dump or erase the commits that explain
-how an artifact was produced.
+no active repository outside the portal that depends on the former public
+branding repository. Its complete history, print-ready masters, prompts, and
+generation tools remain available to maintainers in the renamed private
+`brand-production` workspace. It stays active rather than archived because it
+is the production environment for future stickers and brand assets.
 
 ## History strategy
 
-Preserve the original repository on GitHub as a private read-only archive after
-the migration. Its commit history remains the authoritative provenance for
-legacy assets and generation work without publishing restricted production
-material. Each imported artifact group records:
+Preserve the original repository history in the private production workspace.
+Its commits remain the authoritative provenance for legacy and future
+generation work without publishing restricted production material. Each
+artifact group promoted to the public portal records:
 
 - the source repository and full source commit SHA;
 - its original repository-relative path;
@@ -27,9 +26,9 @@ material. Each imported artifact group records:
 - its applicable copyright licence and separate trademark boundary;
 - whether it is a master, web derivative, prompt, tool, or generated output.
 
-This preserves history without merging hundreds of megabytes of old binary
-commits into the portal. The source repository is archived, not deleted, and
-receives a final README redirect only after consumer verification.
+This preserves history without merging hundreds of megabytes of restricted
+binary material into the public portal. The production workspace is private,
+active, and not a public download surface.
 
 ## Destination layout
 
@@ -67,7 +66,7 @@ derivative recorded in the provenance manifest.
 4. Build a manifest from tracked files and classify each item as `import`,
    `already-canonical`, `project-owned`, `historical-only`, or `excluded`.
 5. Import reviewed public documentation first. Keep sticker prompts, print
-   tooling, unwatermarked exports, and production sheets in the private archive.
+   tooling, unwatermarked exports, and production sheets in the private production workspace.
    Preserve the original path and source SHA in the manifest.
 6. Import only approved masters and exports. Skip the 21 masters already verified
    as byte-identical in the portal.
@@ -77,9 +76,9 @@ derivative recorded in the provenance manifest.
    and the watermark on every public sticker preview.
 9. Update every known consumer to the stable `https://elixpo.com/brand/...` or
    `https://elixpo.com/assets` destination as appropriate.
-10. Publish a redirect notice in the standalone README, verify consumers again,
-    tag the final state, change the repository to private, and only then archive
-    it as read-only.
+10. Publish a boundary notice in the production README, verify consumers again,
+    rename the repository, and make it private while retaining active generation
+    capability.
 
 ## Never import
 
@@ -101,10 +100,10 @@ transfers their canonical distribution here. Oreo's visual rules remain in
 `brand/MASCOT.md`, while the Open Field system determines where the mascot is
 appropriate across organization surfaces.
 
-## Archive gate
+## Private production gate
 
-The standalone repository can be archived only when all of the following are
-true:
+The production repository can remain the restricted source of truth when all of
+the following are true:
 
 - the provenance manifest validates;
 - no active repository or site depends on an old raw-content URL;
@@ -112,10 +111,11 @@ true:
 - project-owned assets have an explicit owner and canonical location;
 - the sticker-use policy is published;
 - secrets and historical credentials have been reviewed;
-- the redirect README has been live long enough to catch missed consumers.
+- its README directs public users to the portal and documents the promotion process.
 
-Private archival is reversible. Deletion and history rewriting are not part of
-this migration.
+Archival is intentionally not part of this migration. The private repository
+continues to generate reviewed material; deletion and history rewriting remain
+out of scope.
 
 ## Consumer verification
 

@@ -30,7 +30,7 @@ The human-readable sponsorship policy lives at
 The portal-hosted canonical brand masters live under
 [`public/brand/source/`](../public/brand/source/). Printable sticker masters,
 sticker prompts, and production tooling intentionally remain in a restricted
-historical archive; only watermarked sticker previews are public.
+private production workspace; only watermarked sticker previews are public.
 The approved organization-wide visual rules are documented in
 [`docs/brand-system.md`](../docs/brand-system.md).
 The staged, history-preserving consolidation procedure is documented in

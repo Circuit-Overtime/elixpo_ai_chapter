@@ -84,18 +84,18 @@
       "statusOwner": "elixpo"
     },
     {
-      "name": "branding",
-      "repositoryUrl": "https://github.com/elixpo/branding",
-      "disposition": "duplicate-or-redirect",
+      "name": "brand-production",
+      "repositoryUrl": null,
+      "disposition": "supporting-repository",
       "publicClass": null,
       "relationship": "core",
-      "lifecycle": "maintenance",
+      "lifecycle": "active",
       "custody": "elixpo-owned",
       "githubArchived": false,
-      "verificationState": "decision-recorded",
+      "verificationState": "verified",
       "statusVerifiedAt": "2026-10-17",
       "statusOwner": "elixpo",
-      "notes": "The portal is the canonical public brand library. The standalone repository will become a private read-only historical archive because it contains restricted print-production material."
+      "notes": "Private active production workspace for prompts, generators, print-ready masters, stickers, and other restricted brand material. The portal remains the canonical public brand library."
     },
     {
       "name": "chat.elixpo",

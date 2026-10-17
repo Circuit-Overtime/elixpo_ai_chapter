@@ -26,8 +26,9 @@ event material.
 
 Print-ready sticker artwork, sticker sheets, unwatermarked exports, sticker
 generation prompts, and production tooling are not part of the public brand
-library. They are retained in a private historical production archive so their
-provenance survives without exposing printable sponsor material.
+library. They are retained in the active private `brand-production` workspace
+so maintainers can create future material without exposing printable sponsor
+assets.
 
 Approved community partners may request physical sticker packs or scoped
 print-ready material through [`/partnerships`](https://elixpo.com/partnerships).

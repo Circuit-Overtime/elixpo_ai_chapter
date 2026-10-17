@@ -2,7 +2,7 @@
   "$schema": "./provenance.schema.json",
   "schemaVersion": 1,
   "verifiedAt": "2026-10-16",
-  "sourceRepository": "https://github.com/elixpo/branding",
+  "sourceRepository": "urn:github:repository:elixpo/brand-production",
   "sourceRevision": "7c274b1ca900eb8f21f4ded811779963ba8f0c21",
   "licenseNotice": "Copyright permissions are artifact-specific. The source repository records CC BY 4.0 for these files alongside separate Oreo and Elixpo trademark and false-endorsement restrictions.",
   "groups": [

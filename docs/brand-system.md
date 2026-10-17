@@ -11,9 +11,9 @@ clarity, warm institutional colour, lightweight geometry, and careful use of the
 Oreo mascot.
 
 This specification is approved as the organization-wide direction. The reviewed
-public asset migration is complete. Final private archival of the historical
-branding repository remains gated on its redirect, credential review, and a
-last consumer check.
+public asset migration is complete. Restricted masters, prompts, and generation
+tools remain in the private active `brand-production` workspace; the portal is
+the only canonical public distribution surface.
 
 ## Colour roles
 
