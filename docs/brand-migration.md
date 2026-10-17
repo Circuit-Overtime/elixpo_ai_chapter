@@ -1,20 +1,24 @@
 # Branding repository migration
 
-**Status:** Approved approach; execution is staged  
+**Status:** Public migration complete; private archive gate pending
 **Source repository:** [`elixpo/branding`](https://github.com/elixpo/branding)  
 **Audited source revision:** `7c274b1ca900eb8f21f4ded811779963ba8f0c21`  
 **Destination:** [`elixpo/elixpo`](https://github.com/elixpo/elixpo)
 
-The portal is the canonical public brand destination, but the standalone
-branding repository remains the historical production record until every
-consumer has migrated. Consolidation must not turn the portal into a 779 MB
-asset dump or erase the commits that explain how an artifact was produced.
+The portal is the canonical public brand destination. Consumer discovery found
+no active repository outside the portal that depends on the standalone
+branding repository. The standalone history remains the production record, but
+it must become a private read-only archive because its history contains
+print-ready sticker masters that are not public downloads. Consolidation must
+not turn the portal into a 779 MB asset dump or erase the commits that explain
+how an artifact was produced.
 
 ## History strategy
 
-Preserve the original repository on GitHub as a read-only archive after the
-migration. Its commit history remains the authoritative provenance for legacy
-assets and generation work. Each imported artifact group records:
+Preserve the original repository on GitHub as a private read-only archive after
+the migration. Its commit history remains the authoritative provenance for
+legacy assets and generation work without publishing restricted production
+material. Each imported artifact group records:
 
 - the source repository and full source commit SHA;
 - its original repository-relative path;
@@ -62,9 +66,9 @@ derivative recorded in the provenance manifest.
    repository, even when the checked-in form is SOPS-encrypted.
 4. Build a manifest from tracked files and classify each item as `import`,
    `already-canonical`, `project-owned`, `historical-only`, or `excluded`.
-5. Import reviewed text sources first: mascot references, prompts, documentation,
-   and generation tools. Preserve the original path and source SHA in the
-   manifest.
+5. Import reviewed public documentation first. Keep sticker prompts, print
+   tooling, unwatermarked exports, and production sheets in the private archive.
+   Preserve the original path and source SHA in the manifest.
 6. Import only approved masters and exports. Skip the 21 masters already verified
    as byte-identical in the portal.
 7. Keep product-specific OG images and LixBlogs badges with their owning project
@@ -74,7 +78,8 @@ derivative recorded in the provenance manifest.
 9. Update every known consumer to the stable `https://elixpo.com/brand/...` or
    `https://elixpo.com/assets` destination as appropriate.
 10. Publish a redirect notice in the standalone README, verify consumers again,
-    tag the final state, and only then archive the repository.
+    tag the final state, change the repository to private, and only then archive
+    it as read-only.
 
 ## Never import
 
@@ -109,7 +114,16 @@ true:
 - secrets and historical credentials have been reviewed;
 - the redirect README has been live long enough to catch missed consumers.
 
-Archiving is reversible. Deletion is not part of this migration.
+Private archival is reversible. Deletion and history rewriting are not part of
+this migration.
+
+## Consumer verification
+
+The 2026-10-17 workspace scan found no references to the standalone branding
+repository outside the canonical registry, provenance record, and this
+migration document. Public website consumers already use portal-hosted paths.
+Product-specific OG cards and LixBlogs badges remain with their owning projects;
+they are not organization-level public downloads.
 
 ## Current provenance checkpoint
 

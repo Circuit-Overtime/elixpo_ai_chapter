@@ -28,8 +28,9 @@ The human-readable licensing direction lives at
 The human-readable sponsorship policy lives at
 [`docs/policies/sponsorship.md`](../docs/policies/sponsorship.md).
 The portal-hosted canonical brand masters live under
-[`public/brand/source/`](../public/brand/source/); production pipelines,
-prompts, and the large sticker archive have not yet migrated.
+[`public/brand/source/`](../public/brand/source/). Printable sticker masters,
+sticker prompts, and production tooling intentionally remain in a restricted
+historical archive; only watermarked sticker previews are public.
 The approved organization-wide visual rules are documented in
 [`docs/brand-system.md`](../docs/brand-system.md).
 The staged, history-preserving consolidation procedure is documented in

@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/brand.schema.json",
   "schemaVersion": 1,
-  "lastVerified": "2026-10-16",
+  "lastVerified": "2026-10-17",
   "canonicalHome": "https://elixpo.com/assets",
   "sourceRepository": "https://github.com/elixpo/branding",
   "migrationStatus": "portal-canonical-assets-migrated",
@@ -92,14 +92,17 @@
     "excludedFromPublicMigration": [
       ".env and all encrypted or unencrypted credentials",
       ".sops.yaml and environment-specific secret-management configuration",
+      "print-ready sticker masters, production sheets, and unwatermarked exports",
+      "sticker prompts and production tooling retained in the private historical archive",
       "local caches, virtual environments, and generated temporary files"
     ],
     "migrationPrinciples": [
       "Preserve source history before archiving the standalone repository.",
       "Keep editable masters, optimized web derivatives, prompts, and generated outputs in separate directories.",
       "Do not copy exact duplicates or secrets into the portal.",
+      "Keep restricted sponsor material in a private history-preserving archive.",
       "Record provenance and artifact-specific licensing for every migrated group."
     ]
   },
-  "note": "The portal owns the reviewed public brand library and watermarked sticker previews. Print-ready sticker masters, generation pipelines, prompts, and their provenance remain restricted in the standalone archive until their controlled migration is complete."
+  "note": "The portal owns the reviewed public brand library and watermarked sticker previews. Print-ready sticker masters, sticker prompts, and production tooling remain restricted in a private history-preserving archive; they are not public downloads."
 }

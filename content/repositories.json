@@ -93,9 +93,9 @@
       "custody": "elixpo-owned",
       "githubArchived": false,
       "verificationState": "decision-recorded",
-      "statusVerifiedAt": "2026-10-16",
+      "statusVerifiedAt": "2026-10-17",
       "statusOwner": "elixpo",
-      "notes": "Canonical assets and tooling will migrate into elixpo before this repository is archived."
+      "notes": "The portal is the canonical public brand library. The standalone repository will become a private read-only historical archive because it contains restricted print-production material."
     },
     {
       "name": "chat.elixpo",

@@ -10,9 +10,10 @@ every project to look identical. It is an original system built around editorial
 clarity, warm institutional colour, lightweight geometry, and careful use of the
 Oreo mascot.
 
-This specification is approved as the organization-wide direction. Approval
-locks the shared visual grammar; it does not declare the asset migration complete
-or authorize archiving the standalone branding repository.
+This specification is approved as the organization-wide direction. The reviewed
+public asset migration is complete. Final private archival of the historical
+branding repository remains gated on its redirect, credential review, and a
+last consumer check.
 
 ## Colour roles
 
