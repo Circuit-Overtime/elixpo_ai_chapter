@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       # Use the repo's ./biome.sh wrapper — keeps one source of truth for
       # biome options (diagnostic-level, config path, etc.) between local
       # developer runs and CI.
