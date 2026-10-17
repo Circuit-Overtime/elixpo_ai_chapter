@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/organization.schema.json",
   "schemaVersion": 1,
-  "lastVerified": "2026-10-16",
+  "lastVerified": "2026-10-17",
   "name": "Elixpo",
   "oneLineDescription": "An open-source project foundry where people build in public and release meaningful projects together.",
   "fullDescription": "Elixpo works with active maintainers to build and release open software, reproducible research, and publicly operated services. Time-bounded Chapters give work a clear public story, prepared contribution pathways, accountable review, and a durable release record. Successful projects may continue as Elixpo Member Projects.",
@@ -31,7 +31,7 @@
     },
     "research": {
       "url": "https://research.elixpo.com",
-      "status": "planned"
+      "status": "active"
     },
     "packages": {
       "url": "https://packages.elixpo.com",

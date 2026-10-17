@@ -20,7 +20,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 classifications and custody decisions are published from the canonical registry
 maintained by `elixpo/elixpo`.
 
-<!-- BEGIN ELIXPO SHARED · sha256:92db6e56cfd88d8bc98d5804e73d04985dc62594d7d49d2ab3173cc46346ab77 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:bbe23d7298855563ca1adf1f7133f2eaca055a638227ae7b493425d6b48bd5bf · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -134,11 +134,12 @@ specialized repositories operate deeper publication surfaces:
 
 - [`packages.elixpo`](https://packages.elixpo.com) owns package building, signed APT
   distribution, release artifacts, installers, and the package catalogue.
-- `research.elixpo.com` is reserved for the planned standalone research
-  publisher. Until that surface launches, the live [Elixpo Research
-  index](https://elixpo.com/research) publishes papers, citations, datasets, models,
-  demonstrations, and reproducibility records. Research code and primary
-  evidence stay in their owning project repositories.
+- [Elixpo Research](https://research.elixpo.com) is the standalone publication
+  surface for papers, citations, datasets, models, demonstrations, and
+  reproducibility records. The [portal research directory](https://elixpo.com/research)
+  provides the organization-level classification and links each record to its
+  canonical publication. Research code and primary evidence stay in their
+  owning project repositories.
 
 The specialized sites must consume the shared schema or synchronize changes
 through reviewable pull requests. They do not maintain independent
@@ -160,10 +161,10 @@ owning repository as the source of technical evidence.
 - **Follow Chapter operations:** use the
   [Elixpo Chapter repository](https://github.com/elixpo/elixpo_chapter).
 - **Explore installable work:** visit [Elixpo Packages](https://packages.elixpo.com).
-- **Follow research:** use the live [Elixpo Research
-  index](https://elixpo.com/research). The separately maintained
-  `research.elixpo.com` publisher remains planned and is not presented as an
-  available service.
+- **Follow research:** browse the [organization research
+  directory](https://elixpo.com/research), then open the canonical paper,
+  experiment, model, or proposal record on
+  [research.elixpo.com](https://research.elixpo.com).
 
 ## Evidence, credit, and history
 
