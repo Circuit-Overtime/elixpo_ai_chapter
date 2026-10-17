@@ -1,0 +1,17 @@
+{
+  "name": "Elixpo Sketch",
+  "short_name": "Sketch",
+  "description": "Elixpo Sketch is an open source infinite canvas for sketching, diagrams, wireframes, and architecture drawings, paired with a Notion style block editor for living documentation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#120e1a",
+  "theme_color": "#8b6de0",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
