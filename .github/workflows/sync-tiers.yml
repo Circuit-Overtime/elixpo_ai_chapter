@@ -1,0 +1,70 @@
+# Pushes the canonical accounts.elixpo tier catalog (defined in
+# app/api/cron/sync-tiers/route.ts → TIER_CATALOG) into payouts.elixpo's
+# product/price catalog via the authenticated cron endpoint.
+#
+# Triggers:
+#   - push to main affecting the cron route file → keeps the upstream
+#     catalog in lockstep with what's deployed on accounts.elixpo.
+#   - daily at 03:00 UTC → idempotent safety net in case a deploy was
+#     applied without touching the route file.
+#   - manual via workflow_dispatch.
+#
+# Requires repo secret:
+#   ACCOUNTS_CRON_SECRET  — same value as the CRON_SECRET env var on the
+#                           accounts-elixpo Cloudflare Pages project.
+#
+# How it works:
+#   The cron endpoint authenticates via Bearer token; the actual sync
+#   forwarding happens server-side using PAYOUTS_APP_CLIENT_SECRET which
+#   is configured on CF Pages (not here). So this workflow holds ONLY the
+#   trigger secret, not the upstream billing secret.
+
+name: Sync tier catalog to payouts.elixpo
+
+concurrency:
+  group: sync-tiers
+  cancel-in-progress: false
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/api/cron/sync-tiers/route.ts"
+      - ".github/workflows/sync-tiers.yml"
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger /api/cron/sync-tiers
+        env:
+          CRON_SECRET: ${{ secrets.ELIXPO_ACCOUNTS_PAYOUT_CLIENT_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::ELIXPO_PAY_SESSION_SECRET is not set in repo secrets"
+            exit 1
+          fi
+
+          response=$(curl --silent --show-error --fail-with-body \
+            --max-time 60 \
+            -w "\nHTTP_STATUS:%{http_code}\n" \
+            -X POST \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "https://accounts.elixpo.com/api/cron/sync-tiers")
+
+          http_status=$(echo "$response" | grep "^HTTP_STATUS:" | cut -d: -f2)
+          body=$(echo "$response" | sed '/^HTTP_STATUS:/d')
+
+          echo "Status: $http_status"
+          echo "Body: $body"
+
+          if [ "$http_status" != "200" ]; then
+            echo "::error::Sync failed (HTTP $http_status)"
+            exit 1
+          fi
+
+          echo "Tier catalog synced successfully."
