@@ -1,0 +1,6 @@
+# One UTF-8 payload size in bytes per line.
+0
+1
+8
+32
+128

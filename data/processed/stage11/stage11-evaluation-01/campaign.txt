@@ -1,0 +1,11 @@
+campaign_id=stage11-evaluation-01
+iterations=1000
+warmup=100
+observations=1000
+seed=11012026
+load_workers=8
+kernel=6.16.7-g0dd6551ae96b
+architecture=aarch64
+python=Python 3.13.5
+git_commit=afb1b35af91321cb9d9db3c50512d87189a255a5
+command=sudo -E env PATH="$PATH" bash scripts/run-stage11-evaluation.sh stage11-evaluation-01

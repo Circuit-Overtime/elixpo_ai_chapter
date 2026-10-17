@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "seed": 11012026,
+  "applications": [
+    {
+      "name": "synthetic-chain",
+      "kind": "controlled-synthetic-chain",
+      "nodes": [
+        {"name": "source", "effect": "Q_PURE", "linux_only": false},
+        {"name": "filter", "effect": "Q_PURE", "linux_only": false},
+        {"name": "aggregate", "effect": "Q_PURE", "linux_only": false},
+        {"name": "sink", "effect": "Q_PURE", "linux_only": false}
+      ],
+      "manual_expert": ["linux", "rt", "rt", "linux"]
+    },
+    {
+      "name": "signal-pipeline",
+      "kind": "signal-processing-pipeline",
+      "nodes": [
+        {"name": "sample", "effect": "Q_PURE", "linux_only": false},
+        {"name": "smooth", "effect": "Q_PURE", "linux_only": false},
+        {"name": "feature", "effect": "Q_PURE", "linux_only": false}
+      ],
+      "manual_expert": ["rt", "rt", "rt"]
+    },
+    {
+      "name": "control-loop",
+      "kind": "closed-loop-control-simulation",
+      "nodes": [
+        {"name": "estimate", "effect": "Q_PURE", "linux_only": false},
+        {"name": "controller", "effect": "Q_STATEFUL", "linux_only": false, "transition_hooks_declared": true},
+        {"name": "plant", "effect": "Q_STATEFUL", "linux_only": false, "transition_hooks_declared": true}
+      ],
+      "manual_expert": ["rt", "rt", "linux"]
+    },
+    {
+      "name": "network-pipeline",
+      "kind": "network-connected-linux-edge-pipeline",
+      "nodes": [
+        {"name": "socket-receive", "effect": "Q_STATEFUL", "linux_only": true},
+        {"name": "transform", "effect": "Q_PURE", "linux_only": false},
+        {"name": "socket-publish", "effect": "Q_STATEFUL", "linux_only": true}
+      ],
+      "manual_expert": ["linux", "rt", "linux"]
+    }
+  ]
+}
