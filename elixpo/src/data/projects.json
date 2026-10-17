@@ -1,0 +1,105 @@
+{
+  "headline": "The Ecosystem",
+  "subheadline": "A growing collection of interconnected open-source projects spanning AI, web, and developer tools.",
+  "projects": [
+    {
+      "name": "Elixpo Art",
+      "tagline": "AI-Powered Art Generation",
+      "description": "Creative platform with 15+ art styles and 8+ AI models for generating stunning images and video. Features gallery, social sharing, and blog system.",
+      "tech": ["Next.js", "Firebase", "Pollinations API", "Node.js"],
+      "url": "https://elixpoart.pages.dev",
+      "icon": "palette",
+      "color": "#EC4899"
+    },
+    {
+      "name": "LixSearch",
+      "tagline": "RAG-Powered Intelligent Search",
+      "description": "Advanced search engine with real-time web research, semantic caching, multi-turn memory, and source attribution using Playwright agents.",
+      "tech": ["Python", "Flask", "Redis", "ChromaDB", "Playwright"],
+      "url": "https://search.elixpo.com",
+      "icon": "search",
+      "color": "#10B981"
+    },
+    {
+      "name": "Elixpo Chat",
+      "tagline": "AI Chat with News & Podcasts",
+      "description": "Chat application with integrated daily news, AI-powered podcast generation, weather dashboard, and search functionality.",
+      "tech": ["JavaScript", "Node.js", "Firebase", "Python"],
+      "url": "#",
+      "icon": "chat",
+      "color": "#F59E0B"
+    },
+    {
+      "name": "LixSketch",
+      "tagline": "Collaborative Infinite Canvas",
+      "description": "Open-source freemium platform for infinite canvas sketching with hand-drawn aesthetic. No login required, E2E encrypted sharing.",
+      "tech": ["Next.js", "RoughJS", "Cloudflare D1", "WebSocket"],
+      "url": "https://sketch.elixpo.com",
+      "icon": "pencil",
+      "color": "#8B5CF6"
+    },
+    {
+      "name": "Elixpo Blogs",
+      "tagline": "Blog Platform with Smart Caching",
+      "description": "Full-featured blog platform with user authentication, image processing, QR codes, email notifications, and Redis caching.",
+      "tech": ["Next.js", "Express", "Firebase", "Redis"],
+      "url": "#",
+      "icon": "document",
+      "color": "#6366F1"
+    },
+    {
+      "name": "Jackey Bot",
+      "tagline": "Discord AI Image Bot",
+      "description": "Discord bot for AI image generation with slash commands. Supports /generate, /remix with multiple models, aspect ratios, and themes.",
+      "tech": ["Node.js", "discord.js", "Pollinations API", "Sharp"],
+      "url": "https://jackey.elixpo.com",
+      "icon": "bot",
+      "color": "#5865F2"
+    },
+    {
+      "name": "Elixpo Accounts",
+      "tagline": "SSO Authentication System",
+      "description": "Enterprise SSO for the Elixpo ecosystem with WebAuthn passwordless auth, JWT, and Prometheus monitoring.",
+      "tech": ["Next.js", "Cloudflare D1", "WebAuthn", "Prometheus"],
+      "url": "#",
+      "icon": "shield",
+      "color": "#059669"
+    },
+    {
+      "name": "Elixpo URL",
+      "tagline": "Edge URL Shortener",
+      "description": "Fast URL shortener on Cloudflare edge. Instant redirects, click analytics, custom short codes, and expiring links.",
+      "tech": ["Next.js", "Cloudflare D1", "Cloudflare Workers"],
+      "url": "https://url.elixpo.com",
+      "icon": "link",
+      "color": "#0EA5E9"
+    },
+    {
+      "name": "Elixpo Me",
+      "tagline": "Collective Portfolio Platform",
+      "description": "Portfolio platform for Elixpo members. Each member gets a personalized route with homepage, projects, publications, and contact sections.",
+      "tech": ["Next.js", "Framer Motion", "Cloudflare Pages"],
+      "url": "https://me.elixpo.com",
+      "icon": "user",
+      "color": "#D946EF"
+    },
+    {
+      "name": "Elixpo Verse",
+      "tagline": "Interactive Time Visualization",
+      "description": "Animated circular clock display with multi-timezone support, 3D cube animations, and flip-clock odometer display.",
+      "tech": ["HTML5", "CSS3", "JavaScript", "GSAP"],
+      "url": "#",
+      "icon": "clock",
+      "color": "#14B8A6"
+    },
+    {
+      "name": "Resume.me",
+      "tagline": "Resume Portfolio Builder",
+      "description": "Personal resume and portfolio project for team members with individual customization.",
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "url": "#",
+      "icon": "file",
+      "color": "#F97316"
+    }
+  ]
+}
