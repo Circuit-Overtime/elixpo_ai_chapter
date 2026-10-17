@@ -1,0 +1,50 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository depends on third-party components, each distributed under its
+own license. The application code in this repository is licensed under the
+Elixpo standard (MIT for code, CC-BY-4.0 for assets); see ../../LICENSE.
+
+Primary runtime dependencies (see package.json for the authoritative list and
+versions):
+
+  * Next.js, React, React DOM        - MIT
+  * zustand                          - MIT
+  * framer-motion                    - MIT
+  * @blocknote/core, @blocknote/mantine, @blocknote/react
+                                     - MPL-2.0
+  * @mantine/core, @mantine/hooks    - MIT
+  * roughjs                          - MIT
+  * perfect-freehand                 - MIT
+  * lz-string                        - MIT
+  * highlight.js                     - BSD-3-Clause
+  * fuse.js                          - Apache-2.0
+  * boxicons                         - MIT (icons CC-BY-4.0 / OFL-1.1)
+  * @cloudflare/next-on-pages        - MIT
+
+Workspace packages (published from this monorepo, MIT - see ../NOTICE):
+
+  * @elixpo/lixsketch                - MIT (packages/lixsketch)
+  * lixsketch (VS Code extension)    - MIT (packages/vscode)
+
+Other Elixpo packages consumed here:
+
+  * @elixpo/lixeditor                - MIT
+
+Build / dev tooling:
+
+  * Tailwind CSS, @tailwindcss/postcss, postcss
+                                     - MIT
+  * wrangler, @cloudflare/workers-types
+                                     - MIT / Apache-2.0
+  * concurrently, raw-loader         - MIT
+
+Bundled brand fonts (LixSketch custom typefaces, under src/, public/, and the
+packages' fonts/ directories):
+
+  * lixDefault, lixFont, lixFancy,
+    lixCode, lixDocs                 - Elixpo brand fonts (CC-BY-4.0 WITH
+                                       Oreo-trademarks; see ../NOTICE)
+
+If you believe a component is missing from this list, please open an issue or
+email hello@elixpo.com.

@@ -1,0 +1,150 @@
+# Implementation TODO
+
+- [x] Move Draw to shape, Paint bucket, Frame, and Laser into a right-opening More tools flyout while preserving global shortcuts.
+- [x] Add a client-only draw-to-shape tool with live dotted rectangle, ellipse, line, and arrow prediction.
+- [x] Preserve unrecognized draw-to-shape gestures as normal editable freehand strokes.
+- [x] Keep gesture recognition O(N) over a capped sample buffer with one requestAnimationFrame preview.
+- [x] Add an undoable paint bucket with existing fill colors and styles for closed rectangle and circle shapes.
+- [x] Consolidate Canvas and Document shortcuts under `Ctrl + /`.
+- [x] Remove the standalone Help and Shortcuts modals.
+- [x] Replace the profile name with a save-status border on the avatar.
+- [x] Keep E2E, Test, and the existing profile dropdown in the compact profile pill.
+- [x] Add an edit affordance beside the workspace name.
+- [x] Route browser zoom shortcuts to canvas zoom.
+- [x] Consolidate file and search commands into an Actions flyout.
+- [x] Keep the command center trigger in the header and remove its menu duplicate.
+- [x] Remove the redundant Document layout control from the menu.
+- [x] Move Show Grid into Preferences and separate preference rows.
+- [x] Add horizontal separators between Actions flyout rows.
+- [x] Add a warned Danger Zone for canvas reset and workspace deletion.
+- [x] Show the pointer cursor on the Sign In button.
+- [x] Show the pointer cursor on the navbar account login controls.
+- [x] Show pointer cursors on all interactive navbar and header icons.
+- [x] Show pointer cursors on canvas footer controls and before workspace-name editing.
+- [x] Improve icon category filters and reduce the icon picker height.
+- [x] Show a success toast after a workspace-name edit is completed.
+- [x] Place the Danger Zone at the end of the menu after authentication.
+- [x] Persist and restore the Show Grid preference through localStorage.
+- [x] Apply the requested menu order and remove the standalone sync action.
+- [x] Show pointer cursors on every menu and menu-dialog button.
+- [x] Restore the last locally saved canvas from the landing route and add a New Canvas command.
+- [x] Return Start Drawing users to their canvas after sign-in.
+- [x] Limit workspace names to 20 characters across UI, state, and persistence.
+- [x] Add persistent top and left canvas rulers that track grid coordinates during pan and zoom, toggled with `Shift + R`.
+- [x] Focus a trailing document line when entering Docs and increase the default document font size.
+- [x] Keep the document add and drag controls side by side with reserved editor padding.
+- [x] Keep the document slash-command suggestion menu at a stable responsive width while filtering.
+- [x] Keep document text focused and position its formatting toolbar 4px below the selected line.
+- [x] Add a consistent left inset between document lines and their add/drag controls.
+- [x] Keep one document image embed control and position its URL field directly below the image placeholder.
+- [x] Validate remote document images before embedding and preserve the empty URL form on failure.
+- [x] Open a shared block context menu from both document side handles with Add and Delete actions.
+- [x] Make split-view divider resizing crop the canvas without changing its vector viewport.
+- [x] Apply the document line's 12px left inset to the add and move controls too.
+- [ ] Upstream reusable docs UX fixes to `@elixpo/lixeditor`, publish a release, then remove the matching Sketch overrides (GitHub write access required).
+- [x] Close the hamburger menu popup when the profile dropdown opens.
+- [x] Refine the profile dropdown hierarchy and remove its E2E documentation action.
+- [x] Keep profile workspace cards in sync with workspace-name edits.
+- [x] Add left-edge breathing room around the document add and move controls.
+- [x] Prevent the default and custom document side controls from overlapping.
+- [x] Suppress BlockNote's duplicate image embed panel below the document image placeholder.
+- [x] Open document block actions from right-click instead of left-clicking the side controls.
+- [x] Link canvas shapes and document blocks with persisted two-way navigation badges.
+- [x] Support many-to-many canvas/document connections with destination pickers and linked-item deletion warnings.
+- [x] Prevent the built-in BlockNote file panel from opening beneath the custom image placeholder.
+- [x] Position the text-tool editor at the clicked canvas point across pan, zoom, and split view.
+- [x] Place canvas rulers below the header and to the right of the left toolbar.
+- [x] Add live X/Y ruler guides and coordinate markers that follow the canvas pointer.
+- [x] Keep rotation handles at a constant screen-space size and offset while zooming.
+- [x] Ship an India-focused three-tier pricing page and keep the AI connector marked Coming soon.
+- [x] Make save/export previews honor dark, light, and transparent canvas modes and export lossless high-resolution images.
+- [x] Make placed graphs viewport-sized, selectable, movable, resizable, editable, and persistent.
+- [x] Let explicit logo clicks open the landing page without automatic canvas restoration.
+- [x] Make the E2E test verify the actual encrypted database save/load path and AES-GCM authentication.
+- [x] Focus icon search when the I shortcut opens the panel.
+- [x] Make icon search a single O(N) metadata pass with lower input latency.
+- [x] Make frame labels reliably editable by double-clicking their names.
+- [x] Keep framed SVG icons at a stable scale while their frame moves.
+- [x] Hide and guard Frame it when the selection contains a frame or framed object.
+- [x] Track frame creation and initial/fallback frame attachments in undo and redo.
+- [x] Limit image storage per workspace to 2 MB for Guest, 5 MB for Free, and 10 MB for Pro.
+- [x] Keep workspace access timestamps current on both cloud load and save.
+- [x] Gate PDF export behind Pro.
+- [x] Enforce 1 Guest, 2 Free, and 10 Pro workspaces.
+- [x] Enforce live-room occupancy of 1 Guest, 3 Free, and 5 Pro participants.
+- [x] Reframe pricing around explicit Guest, Free, and Pro value limits.
+- [x] Remove Roadmap from navigation and routing, promote Docs in the navbar, and trim Resources to onboarding, community, and security.
+- [x] Correct the Teams page around current encrypted live sessions and remove future-roadmap and self-hosting sections.
+- [x] Add signed-in personal Cloudinary OAuth storage for canvas and document media, with encrypted refresh tokens and platform-quota bypass.
+- [x] Show remaining account-wide managed storage and connected Cloudinary storage in profiles.
+- [x] Hide AI request allowances from profiles until the Pollinations integration ships.
+- [x] Organize profiles into Personal, Workspaces, Integrations, Usage, and Billing tabs with URL-addressable navigation.
+- [x] Handle Cloudinary OAuth grants that omit the selected product environment by validating a user-supplied public cloud name.
+- [x] Add persisted personal profile details, biography, location, website, and custom links to the Personal tab.
+- [x] Enrich every profile tab with section context, summary metrics, entitlement details, and clearer status information.
+- [x] Keep the standard site navbar visible on the profile route.
+- [x] Let Cloudinary OAuth identify the selected product environment without asking users for a cloud name.
+- [x] Fix encoded server-session parsing for Cloudinary routes and show accurate disconnected integration status.
+- [x] Treat an absent or unavailable Cloudinary connection as a normal managed-storage state on profiles.
+- [x] Send signed-out Cloudinary connections through sign-in and return users to the Integrations tab.
+- [x] Keep client and Edge-route auth sessions synchronized so Cloudinary connect does not re-authenticate signed-in users.
+- [x] Resolve Cloudinary beta OAuth product-environment identifiers across nested, namespaced, and resource-URL response variants.
+- [x] Add value-free nested OAuth response diagnostics for Cloudinary beta claim changes.
+- [x] Match Blogs with a verified cloud-name fallback only when Cloudinary beta OAuth omits the product environment.
+- [x] Bind Cloudinary OAuth callbacks to the already-verified LixSketch user without repeating remote session verification.
+- [x] Prevent React click events from becoming post-login routes such as `/[object Object]`.
+- [x] Resolve Cloudinary product environments from OAuth resource audiences without asking users for a cloud name.
+- [x] Support Cloudinary credit-based usage responses and improve profile typography legibility.
+- [x] Show storage usage ranges and limits for LixSketch-managed and personal Cloudinary storage.
+- [x] Replace hover-based Cloudinary disconnect confirmation with a persistent cancelable alert dialog.
+- [x] Increase typography across non-canvas routes while preserving the compact canvas workspace scale.
+- [x] Make the D1 migration runner read history correctly with Wrangler 4.87 command output.
+- [x] Configure the `/settings` compatibility redirect for the Cloudflare Edge runtime.
+- [x] Show signed-in identity in the landing navbar with workspace, account, integration, usage, billing, team, and documentation actions.
+- [x] Reduce the top gap between the landing navbar and `/profile` content.
+- [x] Add a Pollinations BYOP image connector with encrypted PKCE authorization restricted to Flux and Klein.
+- [x] Show personal Pollen balance, recent image token usage, spend, expiry, and live Flux/Klein health in Integrations.
+- [x] Expose AI image generation as the workspace's only AI feature and require an enabled personal Pollinations connector for Flux or Klein.
+- [x] Include connector-backed AI image generation in the Free plan while billing and entitlements remain adjustable.
+- [x] Keep AI-generated images fully interoperable with regular images while preserving a top-left AI provenance badge through transforms, restore, and copy/paste.
+- [x] Replace the generic Pollinations BYOP reference with deployed-domain Cloudinary and Pollinations documentation under `/docs/connectors`.
+- [x] Clarify Pollinations AI image support and keep a sign-in/profile account slot beside the landing navbar canvas action.
+- [x] Remove duplicated landing navbar account and canvas controls after merging the profile menu and signed-out action.
+- [x] Add authenticated workspace publishing with a public title, description, tags, cover, and immutable public snapshot.
+- [x] Add a public template gallery and template detail pages with publisher attribution and usage counts.
+- [x] Let signed-in users fork templates with lineage or clone them independently using fresh session IDs and encryption keys.
+- [x] Count every fork and clone against Guest/Free/Pro workspace limits before creating the destination workspace.
+- [x] Include paired canvas documents in published templates without exposing editable workspace keys, tokens, or session IDs.
+- [x] Add publisher controls to update, unpublish, and inspect public workspace templates.
+- [x] Warn publishers about public content and handle unavailable or private media before publishing.
+- [x] Organize workspace actions into Save, Export, Share, and Publish tabs with concise guidance for each workflow.
+- [x] Keep the grabbed text resize handle locked to the pointer across canvas zoom, pan, and rotation.
+- [x] Port the Blogs production CI deployment flow for the collaboration Worker and Cloudflare Pages.
+- [x] Cancel an active marquee before Ctrl/Cmd+A selects every canvas shape.
+- [x] Prioritize Space + primary-button dragging as temporary canvas panning.
+- [x] Inject the repository auth client ID secret into Actions Pages builds.
+- [x] Remove the redundant Integrations action from the Pollinations image-generation gate.
+- [x] Route the signed-in My Canvases navbar action directly to the profile Workspaces tab.
+- [x] Keep AI image generation running and preserve modal state while the generator is closed.
+- [x] Explain AI-generated canvas media when users hover its provenance badge.
+- [x] Scale AI provenance badges with images and collapse them to hoverable dots at small sizes.
+- [x] Clear successful AI image prompts and show live Flux and Klein costs in their model buttons.
+- [x] Clarify that Pollinations AI image generation has no extra LixSketch charge on the Free plan.
+- [x] Add a bounded freehand lasso for selecting shapes fully enclosed by a gesture.
+- [x] Add one-site web embed frames with HTTPS allowlisting and restore-time URL validation.
+- [x] Keep the last selected secondary tool visible on the More toolbar trigger.
+- [x] Add an unsupported-embed whitelist request action and structured GitHub issue form.
+- [x] Backlink the public template marketplace from canvas, view, and zen modes.
+- [x] Ship a structured MCP server, stdio CLI, atomic scene patches, previews, and marketplace imports in `@elixpo/lixsketch`.
+- [x] Publish the MCP setup, tools, safety workflow, templates, package API, and limits under `/docs/mcp`.
+- [x] Add scoped remote MCP workspace grants, encrypted live edits, revision conflicts, and LixScript batch application.
+- [x] Apply the persisted canvas theme and background before first paint.
+- [x] Grow rectangles to fit intentional multiline labels and use larger default shape text.
+- [x] Render toolbar option panels outside canvas overflow boundaries.
+- [x] Make the eraser cursor and trail contrast-aware in light and dark themes.
+- [x] Smooth eraser and laser trails with coalesced pointer input and frame-batched rendering.
+- [x] Enforce a five-person live-room ceiling with server-authorized editor and viewer access.
+- [x] Preserve each collaborator's local undo/redo history across remote scene materialization.
+- [x] Show low-latency multi-user cursors and stacked participant avatars in the workspace navbar.
+- [x] Let room admins pause sharing, change access, kick participants, and rotate invite links immediately.
+- [x] Mark Remote MCP workspace connections as Coming soon and disable grant access in production.

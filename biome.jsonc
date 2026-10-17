@@ -1,0 +1,86 @@
+{
+    "root": true,
+    "formatter": {
+        "indentStyle": "space",
+        "indentWidth": 4
+    },
+    "javascript": {
+        "formatter": {
+            "quoteProperties": "preserve",
+            "quoteStyle": "double"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "complexity": {
+                "useLiteralKeys": "off",
+                "noBannedTypes": "off"
+            },
+            "security": {
+                "noDangerouslySetInnerHtml": "off"
+            },
+            "suspicious": {
+                // `any` used at OAuth/auth boundaries where runtime validation
+                // handles the shape. Info-level — surfaces but doesn't block CI.
+                "noExplicitAny": "info",
+                "noShadowRestrictedNames": "info",
+                "noArrayIndexKey": "info"
+            },
+            "performance": {
+                // <img> is used for external avatars / provider icons.
+                "noImgElement": "info",
+                "noAccumulatingSpread": "info"
+            },
+            "a11y": {
+                // A11y cleanups tracked as tech-debt; don't block CI on them.
+                // Re-enable individually once backlog is addressed.
+                "useButtonType": "info",
+                "useAltText": "info",
+                "useValidAriaValues": "info",
+                "noSvgWithoutTitle": "info",
+                "useSemanticElements": "info"
+            },
+            "correctness": {
+                "useExhaustiveDependencies": "info",
+                "noInvalidUseBeforeDeclaration": "info"
+            }
+        }
+    },
+    "files": {
+        "includes": [
+            "**",
+            // exclude dependencies
+            ".github/**",
+            "!**/node_modules/**",
+            "!**/dist/**",
+            "!**/build/**",
+            "!**/.next/**",
+            "!**/.cache/**",
+            "!**/.vercel/**",
+            "!**/out/**",
+            "!**/worker-configuration.d.ts",
+            "!**/worker-runtime.d.ts",
+            "!**/worker-bindins.d.ts",
+            "!**/better-auth.ts",
+            "!**/routeTree.gen.ts",
+            "!**/*.css"
+        ]
+    },
+    "css": {
+        "formatter": {
+            "enabled": false
+        },
+        "linter": {
+            "enabled": false
+        }
+    },
+    "json": {
+        "formatter": {
+            "enabled": false
+        },
+        "linter": {
+            "enabled": false
+        }
+    }
+}
