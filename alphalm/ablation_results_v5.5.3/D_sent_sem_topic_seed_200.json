@@ -1,0 +1,26 @@
+{
+  "seed": 200,
+  "condition": "D_sent_sem_topic",
+  "generated_text": "In addition to testimonials and endorsements, you can also utilize case studies to showcase the real-world impact of your product or service. Case studies are an effective way to showcase how your solutions have benefited previous customers. Customers may have reservations about the reliability or authenticity of a product or service, making it crucial for sales professionals to effectively handle these objections. These objections may come in the form of skepticism, doubts, concerns, or outright disagreements from potential customers. Potential customers are often skeptical and require evidence to support your assertions. Share your expertise and knowledge about your product or service, providing valuable insights and advice to your customers. Customers appreciate tangible proof that your solutions have worked for others in similar situations. Therefore, sharing success stories of previous satisfied customers provides social proof and instills confidence in potential buyers.",
+  "path_indices": [
+    200,
+    1954,
+    2455,
+    2886,
+    2233,
+    400,
+    1799,
+    328
+  ],
+  "metrics": {
+    "total_score": 63.47844537049532,
+    "exact_matches": 4,
+    "avg_local": 0.767022933278765,
+    "avg_global": 0.7987735186304364,
+    "avg_makes_sense": 0.5062438036714282,
+    "avg_validity": 0.7031488418579102,
+    "diversity": 0.25417505843298777,
+    "avg_topic_progress": 0.17037043401173182,
+    "runtime": 1.4677660465240479
+  }
+}

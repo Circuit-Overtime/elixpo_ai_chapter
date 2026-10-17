@@ -1,0 +1,26 @@
+{
+  "seed": 40,
+  "condition": "C_sent_semantic",
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Showing genuine interest in your customers' needs and aspirations will go a long way in building rapport and trust. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Price or Budget Objections: One of the most frequent objections in sales is related to price or budget. These objections may come in the form of skepticism, doubts, concerns, or outright disagreements from potential customers. Potential customers are often skeptical and require evidence to support your assertions.",
+  "path_indices": [
+    40,
+    292,
+    2390,
+    2102,
+    332,
+    2085,
+    2886,
+    2233
+  ],
+  "metrics": {
+    "total_score": 54.15756728500128,
+    "exact_matches": 3,
+    "avg_local": 0.7398243461336408,
+    "avg_global": 0.7164624163082668,
+    "avg_makes_sense": 0.7244857166494642,
+    "avg_validity": 0.690684552703585,
+    "diversity": 0.40692167090518133,
+    "avg_topic_progress": 0.25877772910254343,
+    "runtime": 1.4382905960083008
+  }
+}

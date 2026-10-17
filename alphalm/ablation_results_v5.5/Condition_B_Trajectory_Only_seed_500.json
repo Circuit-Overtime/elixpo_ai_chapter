@@ -1,0 +1,30 @@
+{
+  "seed": 500,
+  "generated_text": "These cues not only demonstrate active listening but also signal to the customer that their thoughts and opinions are valued. They are not roadblocks but opportunities for growth and improvement. Articulation and pronunciation clear articulation and proper pronunciation are vital in verbal communication and active listening effective communication is crucial in building trust and credibility play a pivotal role in this subpoint will delve into the various aspects of maintaining a friendly and professional demeanor and provide valuable insights on how to effectively communicate with customers appreciate feeling valued and receiving additional benefits when making a purchase. Decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision.",
+  "path_indices": [
+    500,
+    2879,
+    522,
+    1665,
+    1415,
+    413,
+    3244,
+    2102
+  ],
+  "metrics": {
+    "total_score": 55.7860092446208,
+    "exact_boundary_matches": 4,
+    "avg_local_coherence": 0.6504839743886676,
+    "avg_global_coherence": 0.6205325765269143,
+    "avg_makes_sense_score": 0.5064331484692437,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 105109,
+    "search_runtime": 39.897194385528564,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.5171018977250371,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.3495160256113325
+  }
+}

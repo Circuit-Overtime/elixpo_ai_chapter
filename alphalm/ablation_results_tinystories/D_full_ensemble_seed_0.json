@@ -1,0 +1,30 @@
+{
+  "seed": 0,
+  "generated_text": "One day, a little girl named Lily found a needle in her room. Whenever Molly said the word \"yield\", ghosts appeared from the trees! The cable has a hook at the end. Eventually the envious elephant became the strongest elephant in the jungle. The lizard said, \"I'm moving around the garden.\". The garden became gloomy. Its feathers were soft, and its wings were strong. Leo laughed and laughed!",
+  "path_indices": [
+    0,
+    3957,
+    20221,
+    6615,
+    1719,
+    20049,
+    5648,
+    5205
+  ],
+  "metrics": {
+    "total_score": 35.63661742210388,
+    "avg_local": 0.42417766792433603,
+    "avg_global": 0.4380720577069691,
+    "avg_makes_sense": 0.7057837843894958,
+    "avg_policy": 0.28165785648993086,
+    "avg_validity": 0.8944997446877616,
+    "exact_matches": 1,
+    "diversity": 0.7111261863527554,
+    "repetition_rate": 0.0,
+    "topic_repetition": -0.26055712572165896,
+    "forward_progress": 0.575822332075664,
+    "runtime": 3.679532766342163,
+    "evaluations": 3100,
+    "narrative_consistency": 0.6666666666666666
+  }
+}

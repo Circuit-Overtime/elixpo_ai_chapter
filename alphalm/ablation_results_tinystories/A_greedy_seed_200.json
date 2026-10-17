@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "So, the bunny dug a hole in the ground and put the mushroom inside. The small flag flew high and far. It flew away and disappeared from sight. Every night the fire grew bigger and bigger until the people became very scared. So it kept flying until it was tired. Fred was so happy and grateful to have found this amazing planet. Soon, everyone was singing, clapping and dancing together. Working together makes chores much easier!",
+  "path_indices": [
+    200,
+    9270,
+    9169,
+    9295,
+    9275,
+    4699,
+    5214,
+    1053
+  ],
+  "metrics": {
+    "total_score": 26.294912151061,
+    "avg_local": 0.5210194417408535,
+    "avg_global": 0.5465639999934605,
+    "avg_makes_sense": 0.9723425337246486,
+    "avg_policy": 0.15907531644084624,
+    "avg_validity": 0.931343810898917,
+    "exact_matches": 0,
+    "diversity": 0.6434941360826737,
+    "repetition_rate": 0.0,
+    "topic_repetition": -0.20836184493133,
+    "forward_progress": 0.47898055825914654,
+    "runtime": 0.8370344638824463,
+    "evaluations": 700,
+    "narrative_consistency": 0.25
+  }
+}

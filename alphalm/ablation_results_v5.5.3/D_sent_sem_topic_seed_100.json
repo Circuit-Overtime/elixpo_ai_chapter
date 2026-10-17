@@ -1,0 +1,26 @@
+{
+  "seed": 100,
+  "condition": "D_sent_sem_topic",
+  "generated_text": "In conclusion, effective questioning techniques are vital for building rapport and capturing the attention of potential customers. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Exploring potential upselling or cross-selling opportunities: If a customer is hesitant about the price of a particular product or service, consider exploring potential upselling or cross-selling opportunities. These objections may come in the form of skepticism, doubts, concerns, or outright disagreements from potential customers. Customers may have reservations about the reliability or authenticity of a product or service, making it crucial for sales professionals to effectively handle these objections. These objections can come in various forms, and some may not be immediately apparent.",
+  "path_indices": [
+    100,
+    2390,
+    2102,
+    332,
+    2360,
+    2886,
+    2455,
+    2595
+  ],
+  "metrics": {
+    "total_score": 53.40411694531639,
+    "exact_matches": 3,
+    "avg_local": 0.7338734609740121,
+    "avg_global": 0.7178271753447396,
+    "avg_makes_sense": 0.6264995762280056,
+    "avg_validity": 0.6506183871201107,
+    "diversity": 0.37367282062768936,
+    "avg_topic_progress": 0.22884508541652135,
+    "runtime": 1.4979338645935059
+  }
+}

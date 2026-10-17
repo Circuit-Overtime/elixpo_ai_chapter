@@ -1,0 +1,556 @@
+% HDC-RWKV walkthrough — every notation, every flow, on a hand-verifiable toy.
+%
+% Compile:  pdflatex architecture_walkthrough.tex
+%
+% Companion to architecture_hdc_rwkv.tex (the block diagram). This document
+% takes a deliberately tiny instance — V=4, d=4, T=3, L=1 — and traces a
+% training step and an inference step through every tensor in the model.
+%
+% Faithful to wozformer/models/hdc_rwkv.py and wozformer/ste.py.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=22mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+
+\tcbuselibrary{breakable,skins}
+
+\definecolor{cBipolar}{HTML}{2C5282}
+\definecolor{cCont}{HTML}{B7791F}
+\definecolor{cSampler}{HTML}{6B46C1}
+\definecolor{cWarn}{HTML}{C53030}
+\definecolor{cBoxBg}{HTML}{F7FAFC}
+
+\newtcolorbox{notation}[1]{
+  enhanced, breakable, colback=cBoxBg, colframe=cBipolar!70,
+  fonttitle=\bfseries, title=#1, sharp corners=south,
+}
+\newtcolorbox{worked}[1]{
+  enhanced, breakable, colback=cCont!4, colframe=cCont!80!black,
+  fonttitle=\bfseries, title=#1, sharp corners=south,
+}
+
+% Matrices: row subscripts attach cleanly, so the "hv" tag is only added
+% in the formal definition tables, not in every use.
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\bVhv}{\mathbf{V}_{\!hv}}
+\newcommand{\bPhv}{\mathbf{P}_{\!hv}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bipset}{\{-1,+1\}}
+\newcommand{\sg}{\,\text{sign}\,}
+\newcommand{\stesign}{\,\widetilde{\text{sign}}\,}
+
+\title{HDC-RWKV (nb12c): Every Notation, Every Flow\\
+       \large A worked example for training and inference}
+\author{Wozformer paper appendix}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent This document accompanies the architecture diagram
+(\texttt{architecture\_hdc\_rwkv.tex}). It defines every tensor and operator,
+then traces a complete training step and a complete inference step through
+the shipping model on a deliberately tiny instance ($V{=}4$, $d{=}4$, $T{=}3$,
+$L{=}1$) so every number is verifiable by hand. The shipping configuration is
+$V{=}256$, $d{=}256$, $L{=}1$, identical in every operation; only the dimensions
+change.
+
+\tableofcontents
+
+\section{Conventions and symbols}
+
+\begin{notation}{Indices and shapes}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Symbol & Meaning & Range / shape \\
+\midrule
+$B$       & batch size (number of independent sequences) & $\mathbb{N}_{>0}$ \\
+$T$       & sequence length (block size) & $\mathbb{N}_{>0}$ \\
+$V$       & vocabulary size (number of BPE tokens) & $\mathbb{N}_{>0}$ \\
+$d$       & hypervector dimension & $\mathbb{N}_{>0}$ \\
+$L$       & number of recurrent layers ($L{=}1$ in nb12c) & $\mathbb{N}_{>0}$ \\
+$t$       & time step (token position) within a sequence & $0,1,\dots,T{-}1$ \\
+$b$       & batch index & $0,1,\dots,B{-}1$ \\
+$v$       & vocabulary index & $0,1,\dots,V{-}1$ \\
+$i$       & hypervector channel index & $0,1,\dots,d{-}1$ \\
+$x_t^{(b)}$ & input token id at position $t$ in sequence $b$ & $\{0,\dots,V{-}1\}$ \\
+$y_t^{(b)}$ & target token (the answer for position $t$) & $\{0,\dots,V{-}1\}$ \\
+\bottomrule
+\end{tabular}
+\end{notation}
+
+\begin{notation}{Sets and spaces}
+\begin{itemize}[leftmargin=18pt,itemsep=2pt]
+  \item $\bipset^{d}$ --- the bipolar hypercube. Vectors of length $d$ whose
+        entries are exactly $-1$ or $+1$. The natural state space of HDC.
+  \item $(-1,+1)^{d}$ --- the open hypercube, image of $\tanh$. The
+        \emph{continuous} state space we use for the recurrent activation.
+  \item $\mathbb{R}^{V\times d}$ --- the continuous training-time storage for
+        the bipolar tensors. At inference these tensors are reduced to a
+        single bit per entry; at training they hold real-valued scratch values
+        that get projected to $\bipset$ through STE on every forward pass.
+\end{itemize}
+\end{notation}
+
+\section{The four learnable tensors}
+
+The model has exactly four learnable objects. The first three are bipolar
+(at inference); the fourth is a single scalar.
+
+\begin{notation}{Learnable parameters}
+\begin{tabular}{@{}lccp{60mm}@{}}
+\toprule
+Name (code) & Symbol & Shape (training) & Role \\
+\midrule
+\verb|vocab_hv_c|       & $\bVhv \in \mathbb{R}^{V\times d}$
+   & $V \times d$ & Embedding table. Row $v$ is the \emph{token hypervector}
+                    of vocabulary item $v$. Used through STE so the embedding
+                    seen by the recurrence is $\sg(\bVhv) \in \bipset^{V\times d}$. \\
+\verb|prototype_hv_c|   & $\bPhv \in \mathbb{R}^{V\times d}$
+   & $V \times d$ & Output ``cleanup'' matrix. Row $v$ is the
+                    \emph{prototype hypervector} for token $v$; the logit for
+                    token $v$ is the inner product of the state with $\sg(\bPhv)_v$. \\
+\verb|decay_masks_c[0]| & $\bm \in \mathbb{R}^{d}$
+   & $d$ & Per-channel recurrence gate. After STE it lives in $\bipset^{d}$
+          and tells each channel whether to keep $(+1)$ or flip $(-1)$ its
+          previous state on each step. \\
+\verb|log_temp|         & $\log\tau \in \mathbb{R}$
+   & scalar & Output temperature, stored in log-space so $\tau > 0$ is
+              automatic. Initialised to $\log\sqrt{d}$. \\
+\bottomrule
+\end{tabular}
+\end{notation}
+
+\begin{notation}{Deployment storage cost}
+After training, only the \emph{sign} of each bipolar tensor matters. We pack
+8 bits per byte:
+\[
+\text{bytes}_{\text{deploy}} \;=\; \underbrace{\tfrac{V\cdot d}{8}}_{\bV}
+                           + \underbrace{\tfrac{V\cdot d}{8}}_{\bP}
+                           + \underbrace{\tfrac{L\cdot d}{8}}_{\text{decay}}
+                           + 2\;(\tau\text{ in fp16}).
+\]
+For nb12c ($V{=}256$, $d{=}256$, $L{=}1$): $8192 + 8192 + 32 + 2 \approx 16{,}418$ bytes;
+the on-disk file adds a small header, totalling $16{,}434$ bytes.
+\end{notation}
+
+\section{Auxiliary operators}
+
+Four operators appear in the forward pass; this section defines each.
+
+\subsection{Element-wise sign with straight-through estimator}
+
+\begin{notation}{$\stesign$ --- the operator that makes the model trainable}
+The function $\stesign: \mathbb{R}^{n} \to \bipset^{n}$ has the
+\emph{forward} value
+\[
+\stesign(x)_i \;=\; \begin{cases}
++1, & x_i \ge 0 \\
+-1, & x_i < 0
+\end{cases}
+\]
+and the \emph{backward} (subgradient) value
+\[
+\frac{\partial\,\stesign(x)_i}{\partial x_i} \;=\;
+\begin{cases}
+1, & |x_i| \le 1 \\
+0, & |x_i| > 1
+\end{cases}
+\qquad\text{(``clipped STE'')}.
+\]
+In code this is realised by the algebraic identity
+\[
+\stesign(x) \;=\;
+\underbrace{\sg(x).\text{detach}()}_{\text{forward value}} \;+\;
+\underbrace{\text{clamp}_{[-1,1]}(x) - \text{clamp}_{[-1,1]}(x).\text{detach}()}_{\text{zero forward, identity gradient on }[-1,1]}.
+\]
+The detached terms have value but no gradient; the non-detached
+$\text{clamp}_{[-1,1]}(x)$ supplies the gradient. See
+\href{run:../../wozformer/ste.py}{\texttt{wozformer/ste.py}}.
+\end{notation}
+
+\subsection{Cyclic right-rotation $\rho^{t}$ (HDC binding)}
+
+\begin{notation}{$\rho^{t}$ --- position binding via permutation}
+For a hypervector $\bh \in \mathbb{R}^{d}$ and shift $t\in\mathbb{Z}$,
+\[
+\rho^{t}(\bh)_i \;=\; \bh_{\,(i - t)\bmod d}.
+\]
+Equivalent to \texttt{torch.roll(h, shifts=t, dims=-1)}. Key properties:
+\begin{enumerate}[leftmargin=18pt,itemsep=2pt]
+  \item \emph{Preserves bipolarity}: $\rho^{t}(\bipset^{d}) = \bipset^{d}$.
+  \item \emph{Preserves quasi-orthogonality}: $\langle \rho^{a}(\bh),\rho^{b}(\bh)\rangle = d$ iff $a\equiv b\pmod d$,
+        and is small otherwise.
+  \item \emph{Composes additively}: $\rho^{a}\circ\rho^{b} = \rho^{a+b}$.
+\end{enumerate}
+Item (2) is why $\rho^{t}$ replaces a positional embedding table: positions
+$t_1\ne t_2$ produce vectors that look uncorrelated to the recurrence, but the
+operation is parameter-free.
+\end{notation}
+
+\subsection{Hyperbolic tangent}
+
+Bounded continuous activation $\tanh: \mathbb{R}^{d} \to (-1,+1)^{d}$,
+elementwise. Used to keep the recurrent state finite without binarising it
+(finding F10 in \texttt{findings.md} shows binarising the state destroys
+training).
+
+\subsection{Cross-entropy loss}
+
+For one position with logits $\bz \in \mathbb{R}^{V}$ and integer target
+$y \in \{0,\dots,V{-}1\}$,
+\[
+\mathrm{CE}(\bz, y) \;=\; -\,\log\!\left(\frac{e^{\,z_y}}{\sum_{v=0}^{V-1} e^{\,z_v}}\right)
+                       \;=\; \log\!\Bigl(\sum_v e^{z_v}\Bigr) - z_y.
+\]
+Averaged over all $B\cdot T$ positions.
+
+\section{The forward pass --- definitions}
+
+We give the forward pass first in symbolic form. \S\ref{sec:worked} then
+executes every line on the toy instance.
+
+\paragraph{Inputs.} A batch of token-id sequences
+$\bx \in \{0,\dots,V{-}1\}^{B\times T}$ and (for training) targets
+$\by \in \{0,\dots,V{-}1\}^{B\times T}$ where typically $y_t = x_{t+1}$.
+
+\paragraph{Step 1 --- Materialise bipolar tensors.}
+\begin{align}
+\widetilde{\bV} \;&=\; \stesign(\bVhv) \;\in\; \bipset^{V\times d}, \\
+\widetilde{\bP} \;&=\; \stesign(\bPhv) \;\in\; \bipset^{V\times d}, \\
+\widetilde{\bm} \;&=\; \stesign(\bm) \;\in\; \bipset^{d}.
+\end{align}
+
+\paragraph{Step 2 --- Token lookup and position binding.}
+For each position $t\in\{0,\dots,T-1\}$ and each batch element $b$,
+\[
+\bh_t^{(b)} \;=\; \rho^{\,t}\!\bigl(\,\widetilde{\bV}_{\,x_t^{(b)}}\,\bigr)
+\quad\in\;\bipset^{d}.
+\]
+This produces a $(B,T,d)$ position-tagged bipolar tensor.
+
+\paragraph{Step 3 --- Linear recurrence with continuous state.}
+For each batch element, initialise $\bs_{-1}^{(b)} = \mathbf{0}\in\mathbb{R}^{d}$
+and iterate
+\[
+\boxed{\;\;\bs_t^{(b)} \;=\; \tanh\!\Bigl(\,\widetilde{\bm}\odot \bs_{t-1}^{(b)} \;+\; \bh_t^{(b)}\,\Bigr)\;\;}
+\qquad t=0,1,\dots,T-1,
+\]
+where $\odot$ is element-wise multiplication. Note: $\widetilde\bm \in \bipset^d$,
+$\bs_{t-1} \in (-1,+1)^d$, $\bh_t \in \bipset^d$, so each channel of the
+$\tanh$-input lies in $[-2,+2]$ and the state stays in $(-1,+1)^{d}$ by
+construction.
+
+\paragraph{Step 4 --- Prototype-similarity logits.}
+With $\tau = e^{\log\tau}$,
+\[
+\bz_t^{(b)} \;=\; \frac{1}{\tau}\,\widetilde{\bP}\,\bs_t^{(b)} \;\in\;\mathbb{R}^{V}.
+\]
+Coordinate $v$ of $\bz_t^{(b)}$ is the inner product
+$\langle \widetilde{\bP}_v, \bs_t^{(b)}\rangle / \tau$ --- the alignment of
+the current state with prototype $v$.
+
+\paragraph{Step 5 --- Loss (training only).}
+\[
+\mathcal{L} \;=\; \frac{1}{B\,T}\sum_{b=0}^{B-1}\sum_{t=0}^{T-1}
+                  \mathrm{CE}\bigl(\bz_t^{(b)},\, y_t^{(b)}\bigr).
+\]
+
+\section{Worked training step on a toy instance}\label{sec:worked}
+
+\paragraph{Toy configuration.} $V{=}4$, $d{=}4$, $T{=}3$, $L{=}1$, $B{=}1$.
+Vocabulary: $\{\,\text{0:}\,\texttt{the},\;\text{1:}\,\texttt{cat},\;\text{2:}\,\texttt{sat},\;\text{3:}\,\texttt{mat}\,\}$.
+Sequence: $\bx = (\texttt{the},\,\texttt{cat},\,\texttt{sat}) = (0,1,2)$, targets
+$\by = (\texttt{cat},\,\texttt{sat},\,\texttt{mat}) = (1,2,3)$ (next-token).
+
+\begin{worked}{Initial parameter values}
+We hand-pick small integers so every step is checkable by mental arithmetic.
+\[
+\bV =
+\begin{pmatrix}
++0.4 & -0.2 & +0.7 & -0.1 \\
+-0.3 & +0.6 & -0.5 & +0.2 \\
++0.1 & +0.8 & -0.4 & -0.6 \\
++0.5 & -0.7 & +0.3 & +0.9
+\end{pmatrix}
+\;\;\Rightarrow\;\;
+\widetilde\bV = \stesign(\bV) =
+\begin{pmatrix}
++1 & -1 & +1 & -1 \\
+-1 & +1 & -1 & +1 \\
++1 & +1 & -1 & -1 \\
++1 & -1 & +1 & +1
+\end{pmatrix}.
+\]
+\[
+\bP \;\Rightarrow\;
+\widetilde\bP =
+\begin{pmatrix}
++1 & +1 & -1 & -1 \\
+-1 & +1 & +1 & -1 \\
++1 & -1 & +1 & -1 \\
+-1 & -1 & -1 & +1
+\end{pmatrix},\qquad
+\bm = \bigl(+0.5,\;+0.5,\;+0.5,\;+0.5\bigr) \;\Rightarrow\;
+\widetilde\bm = (+1,+1,+1,+1).
+\]
+\[
+\log\tau = \tfrac{1}{2}\log d = \tfrac{1}{2}\log 4 \approx 0.693,
+\qquad \tau = \sqrt{d} = 2.
+\]
+\end{worked}
+
+\subsection{Step 1 --- Token lookup and rotation}
+
+\begin{worked}{Position binding by $\rho^{t}$}
+\textbf{$t=0$, token \texttt{the} (id 0).}\quad
+$\widetilde\bV_0 = (+1,-1,+1,-1)$.\quad
+$\rho^{0}$ is the identity:
+$\bh_0 = (+1,-1,+1,-1).$
+
+\medskip
+\textbf{$t=1$, token \texttt{cat} (id 1).}\quad
+$\widetilde\bV_1 = (-1,+1,-1,+1)$. Right-rotate by 1:
+$(-1,+1,-1,+1)\!\overset{\rho^{1}}{\longrightarrow}\!(+1,-1,+1,-1)$.
+So $\bh_1 = (+1,-1,+1,-1).$\footnote{For $d{=}4$, rotation by $1$ takes
+$(a_0,a_1,a_2,a_3)\mapsto(a_3,a_0,a_1,a_2)$.}
+
+\medskip
+\textbf{$t=2$, token \texttt{sat} (id 2).}\quad
+$\widetilde\bV_2 = (+1,+1,-1,-1)$. Right-rotate by 2:
+$(+1,+1,-1,-1)\!\overset{\rho^{2}}{\longrightarrow}\!(-1,-1,+1,+1)$.
+So $\bh_2 = (-1,-1,+1,+1).$
+\end{worked}
+
+\subsection{Step 2 --- Recurrence}
+
+With $\widetilde\bm = (+1,+1,+1,+1)$ the recurrence simplifies to
+$\bs_t = \tanh(\bs_{t-1} + \bh_t)$.
+
+\begin{worked}{State evolution}
+$\bs_{-1} = (0,0,0,0).$
+
+\smallskip
+\textbf{$t=0$:} update $= \bh_0 = (+1,-1,+1,-1)$.\\
+$\bs_0 = \tanh(+1,-1,+1,-1) = (+0.7616,\,-0.7616,\,+0.7616,\,-0.7616).$
+
+\smallskip
+\textbf{$t=1$:} $\bh_1 = (+1,-1,+1,-1)$, so
+$\bs_0 + \bh_1 = (0.7616{+}1,\;-0.7616{-}1,\;0.7616{+}1,\;-0.7616{-}1)
+= (+1.7616,\,-1.7616,\,+1.7616,\,-1.7616).$\\
+$\bs_1 = \tanh(\cdot) = (+0.9434,\,-0.9434,\,+0.9434,\,-0.9434).$
+
+\smallskip
+\textbf{$t=2$:} update $= \bs_1 + \bh_2 = (0.9434{-}1,\,-0.9434{-}1,\,0.9434{+}1,\,-0.9434{+}1)
+= (-0.0566,\,-1.9434,\,+1.9434,\,+0.0566).$\\
+$\bs_2 = \tanh(\cdot) = (-0.0566,\,-0.9601,\,+0.9601,\,+0.0566).$\footnote{$\tanh(0.0566)\approx 0.0565$; $\tanh(1.9434)\approx 0.9601$.}
+\end{worked}
+
+\noindent Already we can see what the recurrence does: channels for which
+$\bh_t$ has the same sign across positions accumulate strongly; channels
+where $\bh_t$ flips sign cancel. With $\widetilde\bm=+1$ everywhere this is
+``always remember''; in a trained model some $m_i$ are $-1$, giving
+``flip every step''.
+
+\subsection{Step 3 --- Logits and loss at the final position}
+
+At $t=2$ the target token is $y_2 = 3$ (\texttt{mat}).
+We compute $\bz_2 = \widetilde\bP\,\bs_2 / \tau$ with $\tau = 2$.
+
+\begin{worked}{Per-token logits at t=2}
+$\bs_2 = (-0.0566,\,-0.9601,\,+0.9601,\,+0.0566).$
+\begin{align*}
+\langle\widetilde\bP_0,\bs_2\rangle &= (+1)(-0.0566)+(+1)(-0.9601)+(-1)(+0.9601)+(-1)(+0.0566) \\
+ &= -0.0566 - 0.9601 - 0.9601 - 0.0566 \;=\; -2.0334, \\
+\langle\widetilde\bP_1,\bs_2\rangle &= -(-0.0566)+(-0.9601)+(+0.9601)-(+0.0566) \;=\; 0.0000, \\
+\langle\widetilde\bP_2,\bs_2\rangle &= (-0.0566)-(-0.9601)+(+0.9601)-(+0.0566) \;=\; +1.8070, \\
+\langle\widetilde\bP_3,\bs_2\rangle &= -(-0.0566)-(-0.9601)-(+0.9601)+(+0.0566) \;=\; +0.1132.
+\end{align*}
+Dividing by $\tau = 2$:
+\[
+\bz_2 \;=\; (-1.0167,\;0.0000,\;+0.9035,\;+0.0566).
+\]
+\end{worked}
+
+\begin{worked}{Cross-entropy loss at t=2}
+Target is $y_2 = 3$. Apply softmax to $\bz_2$:
+\[
+e^{\bz_2} = (0.3617,\,1.0000,\,2.4683,\,1.0583),\qquad \sum = 4.8883.
+\]
+\[
+p_3 = \frac{e^{z_{2,3}}}{\sum} = \frac{1.0583}{4.8883} \approx 0.2165,
+\qquad \mathrm{CE} = -\log(0.2165) \approx 1.530.
+\]
+A correctly trained model would have made $p_3$ much larger than the other
+three; here all four logits are within $\approx 2$ of one another, so the
+loss is large.
+\end{worked}
+
+\subsection{Step 4 --- Backward pass through STE}
+
+The graph of dependencies for $\mathcal{L}$ on $\bV_0$ (the row of
+\verb|vocab_hv_c| corresponding to token $0$, \texttt{the}) is:
+\[
+\bV_0 \;\xrightarrow{\stesign}\; \widetilde\bV_0
+      \;\xrightarrow{\rho^{0}}\; \bh_0
+      \;\xrightarrow{\text{recurrence}}\; \bs_0 \to \bs_1 \to \bs_2
+      \;\xrightarrow{\widetilde\bP\,\cdot\,/\tau}\; \bz_2
+      \;\xrightarrow{\mathrm{CE}}\; \mathcal{L}.
+\]
+The only step that is not analytically differentiable is $\stesign$.
+By definition (clipped STE),
+\[
+\Bigl[\nabla_{\bV_0} \mathcal{L}\Bigr]_{i} \;=\;
+\Bigl[\nabla_{\widetilde\bV_0} \mathcal{L}\Bigr]_{i} \cdot \mathbf{1}\bigl[|\bV_{0,i}| \le 1\bigr].
+\]
+Concretely, $\bV_{0} = (+0.4,-0.2,+0.7,-0.1)$ all have $|\cdot|\le 1$, so the
+indicator is $1$ for every channel and the gradient is passed through
+unchanged. If at a later training step some $\bV_{0,i}$ drifts past $\pm 1$,
+the gradient for that channel is gated to $0$ --- preventing runaway away
+from the bipolar manifold.
+
+\begin{worked}{What the optimiser actually updates}
+Adam with $\eta = 3\!\cdot\!10^{-3}$ takes
+\[
+\bV \;\leftarrow\; \bV \;-\; \eta\,\widehat{\nabla_{\bV}\mathcal{L}},
+\]
+where the hat is Adam's bias-corrected step. The continuous storage $\bV$
+drifts slowly; its \emph{sign}, $\widetilde\bV$, is what the recurrence sees
+on the next forward and is what gets exported as the 1-bit-per-cell deployment
+artifact. Sign flips of $\bV_{v,i}$ are the only events that change behaviour.
+\end{worked}
+
+\subsection{Recap of the full training step}
+
+\begin{enumerate}[leftmargin=18pt,itemsep=2pt]
+  \item Forward materialises $\widetilde\bV, \widetilde\bP, \widetilde\bm$ via $\stesign$.
+  \item Tokens are looked up and rotated, producing $\bh_0,\bh_1,\bh_2$.
+  \item The recurrence produces continuous states $\bs_0,\bs_1,\bs_2$.
+  \item Each $\bs_t$ is dotted with $\widetilde\bP$ and divided by $\tau$ to get logits.
+  \item Cross-entropy against $\by$ is the loss.
+  \item Backward: gradients flow through $\tanh$, the inner product, and the
+        clipped STE; only continuous shadows ($\bV,\bP,\bm,\log\tau$) get
+        gradient updates.
+\end{enumerate}
+
+\section{Worked inference (autoregressive sampling)}
+
+Inference uses the same forward pass, with three differences:
+\begin{enumerate}[leftmargin=18pt,itemsep=2pt]
+  \item No targets, so no loss; we stop at logits.
+  \item The bipolar tensors come from \verb|.sign()|, not \verb|ste_sign|;
+        the gradient path does not exist. The values are identical.
+  \item Each new token is sampled and fed back as $x_{t+1}$; the loop continues
+        for \texttt{max\_new\_tokens} steps.
+\end{enumerate}
+
+\paragraph{Toy setting.} Same parameters as \S\ref{sec:worked}. Prompt: a single
+token, \texttt{the} (id 0). Generate one new token using
+\emph{argmax} (deterministic, equivalent to top-1).
+
+\begin{worked}{Forward on the single-token prompt}
+$\bs_{-1} = (0,0,0,0)$, $\bh_0 = (+1,-1,+1,-1)$.\\
+$\bs_0 = \tanh(\bh_0) = (+0.7616,\,-0.7616,\,+0.7616,\,-0.7616).$
+\end{worked}
+
+\begin{worked}{Logits at the first generation step}
+\begin{align*}
+\langle\widetilde\bP_0,\bs_0\rangle &= (+1)(+0.7616) + (+1)(-0.7616) + (-1)(+0.7616) + (-1)(-0.7616) = 0.0000, \\
+\langle\widetilde\bP_1,\bs_0\rangle &= -0.7616 - 0.7616 + 0.7616 + 0.7616 = 0.0000, \\
+\langle\widetilde\bP_2,\bs_0\rangle &= +0.7616 + 0.7616 + 0.7616 + 0.7616 = +3.0464, \\
+\langle\widetilde\bP_3,\bs_0\rangle &= -0.7616 + 0.7616 - 0.7616 - 0.7616 = -1.5232.
+\end{align*}
+$\bz_0 = (0,\,0,\,+1.5232,\,-0.7616)$ after $\tau = 2$.
+\end{worked}
+
+\begin{worked}{Sampling decision}
+Argmax over $\bz_0$ picks index $2 \Rightarrow$ token \texttt{sat}.
+
+\medskip
+Top-$k$ with $k{=}2$, temperature $T_{\!s}{=}0.7$ would instead form
+$p \propto \exp(\bz_0 / T_{\!s})$ restricted to the top-2 indices
+$\{0,2\}$ (the others' probabilities are set to $0$ before normalisation):
+\[
+\exp(0/0.7) = 1,\quad \exp(1.5232/0.7) \approx 8.846,
+\qquad p_0 \approx 0.102,\;\; p_2 \approx 0.898.
+\]
+With a random draw $u \sim \mathcal{U}[0,1]$ from a seeded RNG, we emit
+\texttt{sat} unless $u < 0.102$, in which case we emit \texttt{the}.
+\end{worked}
+
+\paragraph{Continuing the loop.} The sampled token is appended to the input
+and the forward repeats with $T'\!=\!2$ (positions $0$ and $1$). Because the
+recurrence is left-to-right and stateful, an efficient implementation caches
+$\bs_{T'-1}$ and runs the recurrence one step. The 6502 firmware does exactly
+this: it keeps a 256-byte state register and updates it once per emitted
+token.
+
+\section{What the 6502 actually computes}
+
+At deployment the math reduces to integer bit operations.
+
+\begin{notation}{Bipolar dot product as XOR + popcount}
+For $a, b \in \bipset^{d}$, encode $-1\mapsto 0$ and $+1\mapsto 1$, giving
+$\bar a,\bar b\in\{0,1\}^{d}$. Then
+\[
+\langle a, b\rangle \;=\; d - 2\cdot\mathrm{popcount}(\bar a \oplus \bar b),
+\]
+where $\oplus$ is bitwise XOR. The mapping is exact: agreements add $+1$
+each, disagreements add $-1$ each.
+\end{notation}
+
+\begin{notation}{Inference loop in bit-arithmetic terms}
+At each emitted token:
+\begin{enumerate}[leftmargin=18pt,itemsep=2pt]
+  \item \textbf{Token lookup:} fetch the $d/8$ bytes of $\widetilde\bV_{x_t}$ from EEPROM.
+  \item \textbf{Rotation:} cyclic shift those bytes by $t$ bits.
+  \item \textbf{Recurrence:} for each of $d$ channels, compute
+        $\widetilde m_i\cdot s_{i,t-1} + h_{i,t}$ in fixed-point and apply a
+        $\tanh$ LUT.
+  \item \textbf{Logits:} for each of $V$ rows of $\widetilde\bP$, XOR with the
+        thresholded state and popcount; convert to a fixed-point logit.
+  \item \textbf{Sample:} softmax + top-$k$ + seeded PRNG.
+\end{enumerate}
+The two storage-heavy tables ($\widetilde\bV, \widetilde\bP$) account for
+$16{,}384$ of the $16{,}434$ bytes; everything else is scratch.
+\end{notation}
+
+\section{Cross-reference to the source}
+
+Every equation above corresponds to a specific line range:
+
+\begin{tabular}{@{}lll@{}}
+\toprule
+Concept & File & Lines \\
+\midrule
+$\stesign$ definition           & \texttt{wozformer/ste.py}                   & 15--24 \\
+Parameter declarations          & \texttt{wozformer/models/hdc\_rwkv.py}      & 30--36 \\
+Forward (training, STE)         & \texttt{wozformer/models/hdc\_rwkv.py}      & 39--74 \\
+Forward (deployment, \verb|.sign()|) & \texttt{wozformer/models/hdc\_rwkv.py} & 78--111 \\
+Deployment byte counter         & \texttt{wozformer/models/hdc\_rwkv.py}      & 114--117 \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+\noindent
+The block diagram in \texttt{architecture\_hdc\_rwkv.tex} visualises the
+same flow at the shipping dimensions $V{=}256$, $d{=}256$. Only the magnitudes
+change; the math is identical.
+
+\end{document}

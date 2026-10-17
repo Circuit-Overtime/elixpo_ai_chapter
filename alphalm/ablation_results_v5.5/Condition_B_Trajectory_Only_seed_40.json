@@ -1,0 +1,30 @@
+{
+  "seed": 40,
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Address price concerns price objections are common in sales there will inevitably be instances where you need to negotiate terms or resolve conflicts. These signals can be explicit statements or questions such as how soon can i get this requires active listening and empathetic understanding and adapting to the customer 's preferences and communication style requires careful observation and active listening involves not only hearing what the customer says but also paying attention to their tone emotions and non verbal cues such as saying i understand or tell me more can encourage the customer to elaborate on their objections.",
+  "path_indices": [
+    40,
+    2006,
+    836,
+    2943,
+    2267,
+    1884,
+    92,
+    2769
+  ],
+  "metrics": {
+    "total_score": 69.34563326835632,
+    "exact_boundary_matches": 5,
+    "avg_local_coherence": 0.6393838099070958,
+    "avg_global_coherence": 0.5611837463719505,
+    "avg_makes_sense_score": 0.7583488736833844,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 105109,
+    "search_runtime": 37.43075776100159,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.4759666323661804,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.36061619009290424
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "When it was time to go home, Beep knew he needed more fuel. Be careful next time.\". Next time, blow less and share more. Friends have fun together.\". Together, they put away all the clothes in the closet. The chimney was now a lot more fun than before. Moral: Sharing brings people closer together and can make everyone happy. Soon, everyone was singing, clapping and dancing together.",
+  "path_indices": [
+    20,
+    19483,
+    19176,
+    16876,
+    14865,
+    21569,
+    1620,
+    5214
+  ],
+  "metrics": {
+    "total_score": 43.69889597594738,
+    "avg_local": 0.44418384560516905,
+    "avg_global": 0.5066557994910649,
+    "avg_makes_sense": 0.49668764216559275,
+    "avg_policy": 0.26455066353082657,
+    "avg_validity": 0.8681718025888715,
+    "exact_matches": 2,
+    "diversity": 0.6268488714870598,
+    "repetition_rate": 0.0,
+    "topic_repetition": -0.23581737279891968,
+    "forward_progress": 0.555816154394831,
+    "runtime": 0.8031494617462158,
+    "evaluations": 700,
+    "narrative_consistency": 0.25
+  }
+}
