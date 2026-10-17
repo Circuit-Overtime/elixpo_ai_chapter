@@ -1,0 +1,25 @@
+{
+  "encoder": {
+    "accuracy": 0.9803000092506409,
+    "epoch": 10,
+    "expected_calibration_error_10_bin": 0.014389911051590737,
+    "mean_confidence": 0.966517984867096,
+    "train_loss": 0.05376631627877553
+  },
+  "gaussian_noise": {
+    "class_js_divergence": 0.5326884590782393,
+    "coverage": 0.0,
+    "density": 0.0,
+    "feature_fid": 2278.23979415025,
+    "feature_kid": 9461.099549804776,
+    "mean_classifier_confidence": 1.0
+  },
+  "real_real": {
+    "class_js_divergence": 0.0009528597977841372,
+    "coverage": 0.9710000157356262,
+    "density": 0.969,
+    "feature_fid": 0.07604648709799906,
+    "feature_kid": -0.00014560898116933174,
+    "mean_classifier_confidence": 0.9601383209228516
+  }
+}

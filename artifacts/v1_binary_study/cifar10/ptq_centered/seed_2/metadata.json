@@ -1,0 +1,41 @@
+{
+  "checkpoint_sha256": "e5d5aa2fca6dc07a24062aa8f36898eb9765d13ccbb63b1b045ca2198b5d5988",
+  "dataset": "cifar10",
+  "initialization": {
+    "path": "/home/elixpo/monodiffuse/artifacts/v1_binary_study/cifar10/fp/seed_2/checkpoint.pt",
+    "sha256": "ae6f20da1fb60c3754ac4a01ea2574cf20b7031a0f1cca0c0084ad8c65fdf737",
+    "variant": "fp"
+  },
+  "model_config": {
+    "base_channels": 16,
+    "binary_activations": false,
+    "binary_weights": true,
+    "centered": true,
+    "image_channels": 3,
+    "preactivation": true,
+    "time_dim": 64
+  },
+  "model_statistics": {
+    "binary_parameter_fraction": 0.889589244481284,
+    "binary_weight_parameters": 195328,
+    "floating_point_parameters": 24243,
+    "fp32_checkpoint_bytes_theoretical": 878284,
+    "packed_inference_bytes_theoretical": 123628,
+    "parameters": 219571
+  },
+  "provenance": {
+    "cuda": "12.4",
+    "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "git_commit": "5b904a25be6858a4b7e9f2724c1ef08abf7efaa7",
+    "python": "3.11.15",
+    "pytorch": "2.5.1+cu124"
+  },
+  "quantization_diagnostics": {
+    "mean_angular_error_degrees": 32.97207021372659,
+    "mean_cosine_latent_to_quantized": 0.8378940602498395,
+    "mean_positive_sign_fraction": 0.5023148166281837
+  },
+  "seed": 2,
+  "training": null,
+  "variant": "ptq_centered"
+}
