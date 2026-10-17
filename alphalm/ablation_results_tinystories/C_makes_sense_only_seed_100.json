@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In the end, Tim won the race and Sarah came in second. In the end, Dependable won the race! The End. The end. The end. The end. The End. The End.",
+  "path_indices": [
+    100,
+    141,
+    1065,
+    1106,
+    1122,
+    1178,
+    1369,
+    1385
+  ],
+  "metrics": {
+    "total_score": 68.73006214946508,
+    "avg_local": 0.956947956766401,
+    "avg_global": 0.9136685047830854,
+    "avg_makes_sense": 0.3588128111192158,
+    "avg_policy": 0.0,
+    "avg_validity": 0.0,
+    "exact_matches": 5,
+    "diversity": 0.11605917130197797,
+    "repetition_rate": 0.75,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.04305204323359898,
+    "runtime": 4.068700551986694,
+    "evaluations": 678206,
+    "narrative_consistency": 0.3333333333333333
+  }
+}

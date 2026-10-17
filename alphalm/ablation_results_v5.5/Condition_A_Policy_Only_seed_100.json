@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In conclusion effective questioning techniques are vital for building rapport and capturing the attention of potential customers. Encouraging customer engagement to maximize the impact of your presentation it is crucial to encourage customer engagement and participation. Consistency and reliability consistency and reliability are vital in building trust and credibility trust and credibility are fundamental elements in any successful sales relationship. Trust and credibility are crucial factors in any purchasing decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks. Exploring potential upselling or cross selling opportunities if a customer is hesitant about the price of a particular product or service consider exploring potential upselling or cross selling opportunities.",
+  "path_indices": [
+    100,
+    1836,
+    702,
+    1728,
+    2390,
+    2102,
+    332,
+    2360
+  ],
+  "metrics": {
+    "total_score": 30.412759920582175,
+    "exact_boundary_matches": 2,
+    "avg_local_coherence": 0.7705254129001072,
+    "avg_global_coherence": 0.7454520634242466,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.1264439807938678,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 3100,
+    "search_runtime": 1.7180328369140625,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.3846163441027914,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.22947458709989274
+  }
+}

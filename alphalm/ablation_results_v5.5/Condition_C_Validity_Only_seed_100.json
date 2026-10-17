@@ -1,0 +1,30 @@
+{
+  "seed": 100,
+  "generated_text": "In conclusion effective questioning techniques are vital for building rapport and capturing the attention of potential customers are often skeptical and require evidence to support your assertions. Simplify your message without oversimplifying it ensuring that your customers grasp the essence of your offering limited time offers or exclusive deals can encourage potential customers to act swiftly to secure the best possible price or budget objections one of the most frequent objections in sales is related to price or budget. Timing or urgency objections prospects may raise concerns about the timing of a purchase or the urgency to make a decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Avoid making exaggerated claims or hiding any potential drawbacks.",
+  "path_indices": [
+    100,
+    2233,
+    553,
+    305,
+    2085,
+    2099,
+    2102,
+    332
+  ],
+  "metrics": {
+    "total_score": 53.908294916152954,
+    "exact_boundary_matches": 4,
+    "avg_local_coherence": 0.7269779443740845,
+    "avg_global_coherence": 0.7277800525937762,
+    "avg_makes_sense_score": 0.0,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.524216081414904,
+    "transitions_evaluated": 105109,
+    "search_runtime": 16.335258960723877,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.38023276520626886,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.2730220556259155
+  }
+}

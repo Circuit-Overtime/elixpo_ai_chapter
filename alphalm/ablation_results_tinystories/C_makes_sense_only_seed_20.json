@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "When it was time to go home, Beep knew he needed more fuel. Eventually, it was time for dinner and James had to go inside. Inside, there was a toy car that he had been wanting for a long time. One day, the little boy was having a wild adventure and his wagon rolled further away from him than it ever had before. James had an adventure one day. One day he noticed that a delivery truck was delayed. It was a magical day! One day, he found a wagon and he thought it was his.",
+  "path_indices": [
+    20,
+    8213,
+    9665,
+    21395,
+    8385,
+    8298,
+    21547,
+    3873
+  ],
+  "metrics": {
+    "total_score": 36.02990226447582,
+    "avg_local": 0.7136176994868687,
+    "avg_global": 0.721534081867763,
+    "avg_makes_sense": 0.7296379165990012,
+    "avg_policy": 0.0,
+    "avg_validity": 0.0,
+    "exact_matches": 2,
+    "diversity": 0.3975819264139448,
+    "repetition_rate": 0.0,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.2863823005131313,
+    "runtime": 3.8594155311584473,
+    "evaluations": 678206,
+    "narrative_consistency": 0.3333333333333333
+  }
+}

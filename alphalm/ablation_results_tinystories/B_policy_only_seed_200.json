@@ -1,0 +1,30 @@
+{
+  "seed": 200,
+  "generated_text": "So, the bunny dug a hole in the ground and put the mushroom inside. And so, the farmer and the diamond lived happily ever after. After a while, the giant struck the ground with his foot and said goodbye. Leo laughed. Leo laughed and laughed! And Beep lived happily ever after. After some time, Lila felt tired. Frank laughed.",
+  "path_indices": [
+    200,
+    3368,
+    4262,
+    5200,
+    5205,
+    23,
+    17642,
+    3385
+  ],
+  "metrics": {
+    "total_score": 40.37787625193596,
+    "avg_local": 0.48740302664893015,
+    "avg_global": 0.4804158647145544,
+    "avg_makes_sense": 0.0,
+    "avg_policy": 0.4225075308765684,
+    "avg_validity": 0.0,
+    "exact_matches": 3,
+    "diversity": 0.6216612651811114,
+    "repetition_rate": 0.25,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.5125969733510699,
+    "runtime": 3.4806909561157227,
+    "evaluations": 3100,
+    "narrative_consistency": 0.25
+  }
+}
