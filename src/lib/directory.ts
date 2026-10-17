@@ -12,6 +12,8 @@ export interface DirectoryEntry {
   family: PublicFamily;
   lifecycle: Lifecycle;
   relationship: "core" | "chapter" | "member" | "connected";
+  verificationState: "verified" | "decision-recorded" | "needs-decision";
+  statusVerifiedAt: string;
   repositoryUrl: string;
   website?: string;
   summary: string;
@@ -32,7 +34,7 @@ export interface DirectoryEntry {
 
 type RegistryEntry = (typeof registry.entries)[number];
 
-type DirectoryDetails = Omit<DirectoryEntry, "repository" | "repositoryUrl" | "family" | "lifecycle" | "relationship" | "licenseEvidence">;
+type DirectoryDetails = Omit<DirectoryEntry, "repository" | "repositoryUrl" | "family" | "lifecycle" | "relationship" | "verificationState" | "statusVerifiedAt" | "licenseEvidence">;
 const DETAILS = directory.entries as Record<string, DirectoryDetails>;
 const LICENSES = repositoryLicenses.entries as Record<string, DirectoryEntry["licenseEvidence"]>;
 
@@ -55,8 +57,24 @@ export const DIRECTORY_ENTRIES: DirectoryEntry[] = registry.entries
       family: entry.publicClass,
       lifecycle: entry.lifecycle as Lifecycle,
       relationship: entry.relationship as DirectoryEntry["relationship"],
+      verificationState: entry.verificationState as DirectoryEntry["verificationState"],
+      statusVerifiedAt: entry.statusVerifiedAt,
     };
   });
+
+export const RELATIONSHIP_LABELS: Record<DirectoryEntry["relationship"], string> = {
+  core: "Elixpo-originated",
+  chapter: "Chapter participant",
+  member: "Member-maintained",
+  connected: "Connected work",
+};
+
+export const RELATIONSHIP_DESCRIPTIONS: Record<DirectoryEntry["relationship"], string> = {
+  core: "Created or operated as part of Elixpo. Copyright and artifact licences still remain repository-specific.",
+  chapter: "Participates in a bounded Elixpo Chapter. A Chapter records collaboration; it does not transfer ownership.",
+  member: "Maintained by its original author within the Elixpo community. Membership does not silently transfer copyright or project authority.",
+  connected: "Listed because it has a documented technical or publication connection to Elixpo, without being represented as Elixpo-owned.",
+};
 
 export const CHAPTER_ENTRY = DIRECTORY_ENTRIES.find((entry) => entry.repository === "elixpo_chapter");
 

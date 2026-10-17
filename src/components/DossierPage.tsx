@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Github, MessageCircle } from "lucide-react";
 import type { DirectoryEntry } from "@/lib/directory";
-import { discussionUrl, familyPath } from "@/lib/directory";
+import { discussionUrl, familyPath, RELATIONSHIP_DESCRIPTIONS, RELATIONSHIP_LABELS } from "@/lib/directory";
 import { serializeJsonLd } from "@/lib/seo";
 import { ProjectMark } from "@/components/ProjectMark";
 
@@ -20,13 +20,14 @@ export function DossierPage({ entry }: { entry: DirectoryEntry }) {
         <header className="dossier-hero">
           <div>
             <ProjectMark seed={entry.slug} icon={entry.icon} size="large" />
-            <p className="eyebrow">{entry.family} dossier · {entry.relationship}</p>
+            <p className="eyebrow">{entry.family} dossier · {RELATIONSHIP_LABELS[entry.relationship]}</p>
             <h1>{entry.name}</h1>
             <p className="lede">{entry.summary}</p>
           </div>
           <dl className="dossier-facts">
             <div><dt>Lifecycle</dt><dd><span className={`status-pill status-${entry.lifecycle}`}>{entry.lifecycle}</span></dd></div>
-            <div><dt>Stewardship</dt><dd>{entry.relationship}</dd></div>
+            <div><dt>Relationship</dt><dd>{RELATIONSHIP_LABELS[entry.relationship]}</dd></div>
+            <div><dt>Registry state</dt><dd>{entry.verificationState.replaceAll("-", " ")}</dd></div>
             <div><dt>Repository</dt><dd>{entry.repository}</dd></div>
             <div><dt>Repository license</dt><dd>{entry.licenseEvidence.spdxId ?? entry.licenseEvidence.classification.replaceAll("-", " ")}</dd></div>
           </dl>
@@ -37,6 +38,7 @@ export function DossierPage({ entry }: { entry: DirectoryEntry }) {
             <p className="eyebrow">What it is</p>
             <h2>A public record, not a marketing placeholder.</h2>
             <p className="body-copy">{entry.description}</p>
+            <p className="body-copy"><strong>{RELATIONSHIP_LABELS[entry.relationship]}.</strong> {RELATIONSHIP_DESCRIPTIONS[entry.relationship]}</p>
           </div>
           <aside>
             <p className="eyebrow">Focus</p>
@@ -47,7 +49,7 @@ export function DossierPage({ entry }: { entry: DirectoryEntry }) {
               <a href={discussionUrl(entry)} target="_blank" rel="noreferrer"><MessageCircle size={16} /> Discuss this {entry.family}</a>
             </div>
             {entry.evidence && <div className="evidence-links"><p className="eyebrow">Research record</p>{entry.evidence.map((item) => <a key={item.url} href={item.url} target="_blank" rel="noreferrer">{item.label} <ArrowUpRight size={13} /></a>)}</div>}
-            <div className="evidence-links"><p className="eyebrow">License evidence</p><p>{entry.licenseEvidence.summary}</p>{entry.licenseEvidence.evidenceUrl && <a href={entry.licenseEvidence.evidenceUrl} target="_blank" rel="noreferrer">Open controlling license <ArrowUpRight size={13} /></a>}<small>Verified {entry.licenseEvidence.verifiedAt}</small></div>
+            <div className="evidence-links"><p className="eyebrow">License evidence</p><p>{entry.licenseEvidence.summary}</p>{entry.licenseEvidence.evidenceUrl && <a href={entry.licenseEvidence.evidenceUrl} target="_blank" rel="noreferrer">Open controlling license <ArrowUpRight size={13} /></a>}<small>License checked {entry.licenseEvidence.verifiedAt} · registry status checked {entry.statusVerifiedAt}</small><Link href="/resources">How registry evidence works <ArrowUpRight size={13} /></Link></div>
           </aside>
         </section>
 
