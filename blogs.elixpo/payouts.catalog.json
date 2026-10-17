@@ -1,0 +1,27 @@
+{
+  "$comment": "Elixpo Pay catalog for blogs.elixpo. Source of truth for the central catalog (payouts.elixpo.com). Edit here, then `npm run sync:tiers` to push. Representative tiers only: India (INR) + global headline (USD T1). PPP bands (T2/T3) stay blogs-side and apply at checkout via currency.",
+  "app": {
+    "homepage_url": "https://blogs.elixpo.com",
+    "pricing_url": "https://blogs.elixpo.com/pricing"
+  },
+  "products": [
+    {
+      "tier": "member",
+      "name": "Blogs Member",
+      "description": "Member-only reads, higher limits, and creator pool eligibility.",
+      "prices": [
+        { "nickname": "India", "currency": "INR", "unit_amount": 19900, "interval": "month", "region": "IN" },
+        { "nickname": "Global", "currency": "USD", "unit_amount": 600, "interval": "month" }
+      ]
+    },
+    {
+      "tier": "team",
+      "name": "Blogs Team",
+      "description": "Everything in Member for the whole org — unlimited seats, private orgs, team analytics.",
+      "prices": [
+        { "nickname": "India", "currency": "INR", "unit_amount": 14900, "interval": "month", "region": "IN" },
+        { "nickname": "Global", "currency": "USD", "unit_amount": 500, "interval": "month" }
+      ]
+    }
+  ]
+}

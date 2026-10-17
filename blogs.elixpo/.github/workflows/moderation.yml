@@ -1,0 +1,62 @@
+# Moderation actions for blog-report issues.
+# A maintainer adds a label to a report issue:
+#   takedown → permanently delete the blog (author emailed) via the app endpoint
+#   dismiss  → clear reports + restore visibility if it was auto-hidden
+# The blog id is parsed from the issue body ("**Blog ID:** `...`") that the
+# report endpoint wrote.
+
+name: Moderation Action
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  act:
+    if: github.event.label.name == 'takedown' || github.event.label.name == 'dismiss'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    env:
+      ACTION: ${{ github.event.label.name }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      ISSUE_BODY: ${{ github.event.issue.body }}
+      APP_URL: ${{ vars.APP_URL }}
+      MODERATION_SECRET: ${{ secrets.MODERATION_SECRET }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Extract blog id from issue body
+        id: extract
+        run: |
+          BLOG_ID=$(printf '%s' "$ISSUE_BODY" | grep -oP 'Blog ID:\*\*\s*`\K[^`]+' | head -1)
+          if [ -z "$BLOG_ID" ]; then
+            echo "::error::No 'Blog ID' found in issue body — not a report issue?"
+            exit 1
+          fi
+          echo "blog_id=$BLOG_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Call moderation endpoint
+        run: |
+          APP_URL="${APP_URL:-https://blogs.elixpo.com}"
+          RESP=$(curl -sS -w '\n%{http_code}' -X POST "$APP_URL/api/moderation/action" \
+            -H "Content-Type: application/json" \
+            -H "x-moderation-secret: $MODERATION_SECRET" \
+            -d "{\"action\":\"$ACTION\",\"blogId\":\"${{ steps.extract.outputs.blog_id }}\"}")
+          CODE=$(printf '%s' "$RESP" | tail -n1)
+          echo "$RESP"
+          if [ "$CODE" != "200" ]; then
+            echo "::error::Moderation endpoint returned HTTP $CODE"
+            exit 1
+          fi
+
+      - name: Comment and close
+        run: |
+          if [ "$ACTION" = "takedown" ]; then
+            gh issue comment "$ISSUE_NUMBER" --repo "$GH_REPO" --body "✅ Blog permanently removed and the author has been notified by email."
+            gh issue close   "$ISSUE_NUMBER" --repo "$GH_REPO" --reason completed
+          else
+            gh issue comment "$ISSUE_NUMBER" --repo "$GH_REPO" --body "Dismissed — reports cleared and visibility restored (if it had been auto-hidden)."
+            gh issue close   "$ISSUE_NUMBER" --repo "$GH_REPO" --reason "not planned"
+          fi

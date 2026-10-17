@@ -1,0 +1,7 @@
+interface:
+  display_name: "LixBlogs Editorial"
+  short_description: "Manage reviewers and collaborators safely"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $lixblogs-editorial to inspect or manage a LixBlogs collaboration workflow."
+policy:
+  allow_implicit_invocation: true
