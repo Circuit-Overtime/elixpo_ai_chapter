@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'lixCode';
+  src: url('./lixCode.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'lixDefault';
+  src: url('./lixDefault.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'lixDocs';
+  src: url('./lixDocs.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'lixFancy';
+  src: url('./lixFancy.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'lixFont';
+  src: url('./lixFont.woff2') format('woff2');
+  font-display: swap;
+}

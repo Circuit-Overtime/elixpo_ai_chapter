@@ -1,0 +1,21 @@
+name = "lixsketch-next-dev"
+compatibility_date = "2025-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Bindings used by Next route handlers during local development. Durable
+# Objects belong to the separately-run collaboration worker and must not be
+# loaded into the Next runtime.
+[[d1_databases]]
+binding = "DB"
+database_name = "lixsketch"
+database_id = "65fc6d04-d659-4cb6-b34c-750a763693e4"
+migrations_dir = "worker/migrations"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "aa3a1466b15e443a8f0858c3b9a776c8"
+
+[vars]
+ENVIRONMENT = "development"
+APP_ORIGIN = "http://localhost:3000"
+MCP_RELAY_URL = "http://localhost:8787"

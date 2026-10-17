@@ -1,0 +1,614 @@
+@font-face
+{
+    font-family: 'lixCode';
+    src: url(./fonts/lixCode.ttf);
+    font-weight: normal;
+    font-size: normal;
+}
+
+.container 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: top;
+    background-color: #121212;
+}
+.editor 
+{
+    position: absolute;
+    max-height: 90%;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    padding: 50px 120px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+.editor::-webkit-scrollbar
+{
+    display: none;
+}
+.editor section 
+{
+    position: relative;
+    padding: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 15px;
+    margin-bottom: 5px;
+    border: none;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+.editor section h1 
+{
+    font-size: 26px;
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 20px;
+    gap: 5px;
+    align-items: top; 
+}
+
+.editor section h1 .bold 
+{
+    font-weight: bold;
+    color: #ffffff;
+}
+.editor section h1 .italic
+{
+    font-style: italic;
+    color: #ffffff;
+}
+.editor section h1 .underline 
+{
+    text-decoration: underline;
+    color: #ffffff;
+}
+.editor section h1 .strikethrough 
+{
+    text-decoration: line-through;
+    color: #ffffff;
+}
+
+.editor section h1 .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 30px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+.editor section h1 .link 
+{
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.editor section h1 .highlight 
+{
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 30px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+/* H2 */
+.editor section h2 
+{
+    font-size: 22px;
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 20px;
+    gap: 5px;
+    align-items: top; 
+}
+.editor section h2 .bold { font-weight: bold; color: #ffffff; }
+.editor section h2 .italic { font-style: italic; color: #ffffff; }
+.editor section h2 .underline { text-decoration: underline; color: #ffffff; }
+.editor section h2 .strikethrough { text-decoration: line-through; color: #ffffff; }
+.editor section h2 .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 23px;
+    line-height: 1;
+    vertical-align: center;
+}
+.editor section h2 .link { color: #1e90ff; text-decoration: none; }
+.editor section h2 .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 23px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+/* H3 */
+.editor section h3 
+{
+    font-size: 18px;
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 20px;
+    gap: 5px;
+    align-items: top; 
+}
+.editor section h3 .bold { font-weight: bold; color: #ffffff; }
+.editor section h3 .italic { font-style: italic; color: #ffffff; }
+.editor section h3 .underline { text-decoration: underline; color: #ffffff; }
+.editor section h3 .strikethrough { text-decoration: line-through; color: #ffffff; }
+.editor section h3 .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 21px;
+    line-height: 1;
+    vertical-align: center;
+}
+.editor section h3 .link { color: #1e90ff; text-decoration: none; }
+.editor section h3 .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 21px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+/* H4 */
+.editor section h4 
+{
+    font-size: 16px;
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 20px;
+    gap: 5px;
+    align-items: top; 
+}
+.editor section h4 .bold { font-weight: bold; color: #ffffff; }
+.editor section h4 .italic { font-style: italic; color: #ffffff; }
+.editor section h4 .underline { text-decoration: underline; color: #ffffff; }
+.editor section h4 .strikethrough { text-decoration: line-through; color: #ffffff; }
+.editor section h4 .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 21px;
+    line-height: 1;
+    vertical-align: center;
+}
+.editor section h4 .link { color: #1e90ff; text-decoration: none; }
+.editor section h4 .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 21px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+/* H5 */
+.editor section h5 
+{
+    font-size: 14px;
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 20px;
+    gap: 5px;
+    align-items: top; 
+}
+.editor section h5 .bold { font-weight: bold; color: #ffffff; }
+.editor section h5 .italic { font-style: italic; color: #ffffff; }
+.editor section h5 .underline { text-decoration: underline; color: #ffffff; }
+.editor section h5 .strikethrough { text-decoration: line-through; color: #ffffff; }
+.editor section h5 .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 17px;
+    line-height: 1;
+    vertical-align: center;
+}
+.editor section h5 .link { color: #1e90ff; text-decoration: none; }
+.editor section h5 .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 17px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+/* H6 */
+.editor section h6 
+{
+    font-size: 12px;
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 20px;
+    gap: 5px;
+    align-items: top; 
+}
+.editor section h6 .bold { font-weight: bold; color: #ffffff; }
+.editor section h6 .italic { font-style: italic; color: #ffffff; }
+.editor section h6 .underline { text-decoration: underline; color: #ffffff; }
+.editor section h6 .strikethrough { text-decoration: line-through; color: #ffffff; }
+.editor section h6 .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 15px;
+    line-height: 1;
+    vertical-align: center;
+}
+.editor section h6 .link { color: #1e90ff; text-decoration: none; }
+.editor section h6 .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 15px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+
+.editor section p 
+{
+    font-size: 1em;
+    margin: 0;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    line-height: 26px;
+    gap: 5px;
+    align-items: top;
+}
+
+.editor section p .bold 
+{
+    font-weight: bold;
+}
+.editor section p .italic 
+{
+    font-style: italic;
+}
+.editor section p .underline 
+{
+    text-decoration: underline;
+}
+.editor section p .strikethrough 
+{
+    text-decoration: line-through;
+}
+.editor section p .inline_code 
+{
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 20px;
+    line-height: 1;
+    vertical-align: center;
+    margin-top: 3px;
+}
+.editor section p .link 
+{
+    color: #1e90ff;
+    text-decoration: none;
+}
+.editor section p .highlight 
+{
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    height: 30px;
+    line-height: 1;
+    vertical-align: center;
+}
+
+.editor section pre 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    padding: 5px 12px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #242424;
+    border: 1px solid #666;
+}
+.editor section pre i 
+{
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 5px;
+    margin-top: 10px;
+} 
+.editor section pre code 
+{
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background: transparent;
+    color: #ffffff;
+    border-radius: 8px;
+    display: block;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    outline: none;
+    border: none;
+
+}
+
+.editor section .horizontalSpacer 
+{
+    width: 100%;
+    left: 2.5%;
+    height: 1px;
+    background-color: #888;
+    margin: 10px 0;
+}
+.editor section .horizontalSpacer .spacer 
+{
+    width: 100%;
+    height: 5px;
+    background-color: transparent;
+    margin: 10px 0;
+}
+
+ul, ol {
+    margin: 0 0 0 30px;
+    padding-left: 20px;
+    color: #fff;
+    font-size: 1em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+  
+  li {
+    display: list-item;
+    font-size: 1em;
+    color: #ffffff;
+  }
+
+  li .textContainer {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    line-height: 1.5;
+  }
+  
+  
+  li .textContainer > span {
+    font-size: 1.2rem; 
+    font-family: inherit;
+    color: inherit;
+    line-height: inherit;
+  }
+  
+  /* --- Inline style spans --- */
+  li .bold {
+    font-weight: bold;
+  }
+  li .italic {
+    font-style: italic;
+  }
+  li .underline {
+    text-decoration: underline;
+  }
+  li .strikethrough {
+    text-decoration: line-through;
+  }
+  li .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 0.95em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 6px;
+    display: inline;
+    line-height: 1;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+  li .link {
+    color: #1e90ff;
+    text-decoration: none;
+  }
+  li .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 0.95em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 6px;
+    display: inline;
+    line-height: 1;
+    vertical-align: middle;
+  }
+  
+
+.editor section blockquote {
+    margin: 0 0 0 20px;
+    padding: 12px 18px;
+    border-left: 4px solid #e8d443;
+    background: #232323;
+    color: #f5f5f5;
+    border-radius: 8px;
+    font-size: 1.05em;
+    font-style: italic;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    line-height: 1.7;
+}
+
+.editor section blockquote .bold {
+    font-weight: bold;
+    color: #fff;
+}
+.editor section blockquote .italic {
+    font-style: italic;
+    color: #fff;
+}
+.editor section blockquote .underline {
+    text-decoration: underline;
+    color: #fff;
+}
+.editor section blockquote .strikethrough {
+    text-decoration: line-through;
+    color: #fff;
+}
+.editor section blockquote .inline_code {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #242424;
+    border: 1px solid #666;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    line-height: 1;
+    vertical-align: middle;
+    margin: 0 4px;
+}
+.editor section blockquote .link {
+    color: #1e90ff;
+    text-decoration: underline;
+}
+.editor section blockquote .highlight {
+    font-family: 'lixCode', monospace;
+    font-size: 1em;
+    background-color: #e8d4438c;
+    border: 1px solid #666;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline;
+    line-height: 1;
+    vertical-align: middle;
+    margin: 0 4px;
+}

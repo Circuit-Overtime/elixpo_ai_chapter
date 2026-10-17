@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'lixDefault';
+    src: url('./fonts/lixDefault.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'lixCode';
+    src: url('./fonts/lixCode.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'lixFancy';
+    src: url('./fonts/lixFancy.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'lixFont';
+    src: url('./fonts/lixFont.woff2') format('woff2');
+    font-display: swap;
+}

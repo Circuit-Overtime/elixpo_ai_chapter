@@ -1,0 +1,149 @@
+@font-face 
+{
+    font-family: "lixFont";
+    src: url(./fonts/lixFont.woff2);
+    font-weight: normal;
+    font-size: normal;
+}
+
+@font-face
+{
+    font-family: 'lixCode';
+    src: url(./fonts/lixCode.ttf);
+    font-weight: normal;
+    font-size: normal;
+}
+
+@font-face
+{
+    font-family: 'lixDefault';
+    src: url(./fonts/lixDefault.ttf);
+    font-weight: normal;
+    font-size: normal;
+}   
+
+@font-face
+{
+    font-family: 'lixFancy';
+    src: url(./fonts/lixFancy.ttf);
+    font-weight: normal;
+    font-size: normal;
+}
+
+#textElement
+{
+    height: 500px;
+    width: auto;
+    resize: none;
+    background: transparent;
+    color: #fff;
+    font-family: 'lixFont', sans-serif;
+    font-size: 30px;
+    border: none;
+    outline: none;
+    overflow: visible;
+    white-space: pre-wrap;  
+}
+#textElement::-webkit-scrollbar
+{
+    display: none;
+}
+
+#freehand-canvas > g
+{
+    user-select: none;
+}
+
+/* Prevent native browser text selection on SVG text elements during mouse drag */
+#freehand-canvas text,
+#freehand-canvas tspan {
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: painted;
+}
+
+/* Embedded shape labels */
+.shape-label {
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+}
+
+.syntax-highlight-overlay {
+    font-family: 'lixCode', 'Courier New', monospace !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+}
+
+.syntax-highlight-overlay pre {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+}
+
+.syntax-highlight-overlay code {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    display: inline !important;
+}
+
+/* Ensure all highlighting spans are inline and preserve spacing */
+.syntax-highlight-overlay .hljs-keyword,
+.syntax-highlight-overlay .hljs-string,
+.syntax-highlight-overlay .hljs-comment,
+.syntax-highlight-overlay .hljs-number,
+.syntax-highlight-overlay .hljs-function,
+.syntax-highlight-overlay .hljs-variable,
+.syntax-highlight-overlay .hljs-built_in,
+.syntax-highlight-overlay .hljs-type,
+.syntax-highlight-overlay .hljs-class,
+.syntax-highlight-overlay .hljs-tag,
+.syntax-highlight-overlay .hljs-attr,
+.syntax-highlight-overlay .hljs-literal,
+.syntax-highlight-overlay .hljs-operator,
+.syntax-highlight-overlay .hljs-punctuation,
+.syntax-highlight-overlay .hljs-title,
+.syntax-highlight-overlay .hljs-params,
+.syntax-highlight-overlay .hljs-property,
+.syntax-highlight-overlay .hljs-regexp {
+    display: inline !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+}
+
+/* Ensure text editor matches exactly */
+.svg-text-editor {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow: visible !important;
+    word-break: keep-all !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    font-family: inherit !important;
+    line-height: inherit !important;
+}
+
+.svg-text-editor::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
