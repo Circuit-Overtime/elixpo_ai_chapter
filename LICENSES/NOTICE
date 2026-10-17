@@ -1,0 +1,43 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        elixpo-pay / Elixpo Pay (payouts.elixpo.com)
+  What it is:  The source for Elixpo Pay - the multi-tenant payments & payouts
+               SaaS for the Elixpo ecosystem and any developer. A hosted,
+               branded checkout, a unified ledger, entitlement grants with
+               signed webhooks, per-app API credentials, code-managed pricing
+               catalogs, and creator payouts - built edge-native on Cloudflare
+               with Razorpay (INR) and Elixpo Accounts SSO.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  Hosted SaaS
+    payouts.elixpo.com is an official hosted service. The brand, the hosted
+    deployment, the operational and merchant data, and the per-app API
+    credentials and signing secrets are reserved; the source is MIT.
+
+  Paid / pro tier
+    Any paid tier, plan, entitlement grant, license key, or commercial billing
+    offering operated under the Elixpo / Elixpo Pay brand is reserved. The
+    MIT-licensed source may of course be reused, but forks must operate under a
+    different name and must not present themselves as the official Elixpo Pay
+    service.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ (logo, mark, icons, og-image) are provided
+  under CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest E-badge, and
+  the Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com
