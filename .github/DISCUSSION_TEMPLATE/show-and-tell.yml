@@ -1,0 +1,42 @@
+title: "[Show and tell] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share something concrete you built, released, reproduced, documented, or learned with Elixpo work. Show and Tell keeps its established name and remains distinct from a Chapter proposal or an application for organizational custody.
+  - type: input
+    id: work
+    attributes:
+      label: Public work
+      description: Link the repository, release, demo, paper, package, or other inspectable result.
+      placeholder: https://...
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What did you make or learn?
+      description: Describe the result in plain language and explain how another person can inspect or use it.
+    validations:
+      required: true
+  - type: textarea
+    id: attribution
+    attributes:
+      label: Contributors and attribution
+      description: Credit the people and upstream projects involved, with public links where available.
+    validations:
+      required: true
+  - type: textarea
+    id: next
+    attributes:
+      label: What happens next?
+      description: Say whether the work is complete, maintained, seeking feedback, or looking for contributors.
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License or reuse terms
+      description: Link the controlling license or state clearly when no reuse permission is offered.
+    validations:
+      required: true

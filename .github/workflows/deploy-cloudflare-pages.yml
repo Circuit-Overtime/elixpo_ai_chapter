@@ -1,0 +1,115 @@
+name: Deploy Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: elixpo-cloudflare-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Validate and deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: cloudflare-pages-production
+      url: https://elixpo.com
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate canonical registry
+        run: npm run registry:check
+
+      - name: Verify generated README state
+        run: npm run readme:check
+
+      - name: Lint portal source
+        run: npm run lint
+
+      - name: Build static portal
+        run: npm run build
+
+      - name: Stamp deployment evidence
+        run: |
+          mkdir -p out/.well-known
+          printf '{"repository":"%s","commit":"%s","run":"%s"}\n' \
+            "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_RUN_ID" \
+            > out/.well-known/elixpo-deployment.json
+
+      - name: Deploy production candidate
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy out --project-name=elixpo --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify candidate and production hostnames
+        run: |
+          fetch() {
+            curl --fail --silent --show-error --location \
+              --retry 18 --retry-all-errors --retry-delay 5 "$@"
+          }
+
+          wait_for_commit() {
+            local origin="$1"
+            local marker="$origin/.well-known/elixpo-deployment.json?run=$GITHUB_RUN_ID"
+            local body=""
+            local observed="unavailable"
+
+            for attempt in {1..30}
+            do
+              body=$(curl --fail --silent --show-error --location \
+                --connect-timeout 10 --max-time 20 \
+                --header 'Cache-Control: no-cache' "$marker" 2>/dev/null || true)
+
+              if grep -Fq "\"commit\":\"$GITHUB_SHA\"" <<< "$body"
+              then
+                echo "$origin is serving commit $GITHUB_SHA"
+                return 0
+              fi
+
+              observed=$(sed -n 's/.*"commit":"\([^"]*\)".*/\1/p' <<< "$body")
+              echo "Waiting for $origin to publish $GITHUB_SHA (attempt $attempt/30; observed ${observed:-invalid marker})"
+              sleep 5
+            done
+
+            echo "::error::$origin did not publish commit $GITHUB_SHA within the propagation window"
+            echo "Last deployment marker: ${body:-<empty>}"
+            return 1
+          }
+
+          wait_for_commit https://elixpo.pages.dev
+          wait_for_commit https://elixpo.com
+
+          for origin in https://elixpo.pages.dev https://elixpo.com
+          do
+            for route in / /projects/ /research/ /packages/ /robots.txt /sitemap.xml
+            do
+              fetch --output /dev/null "$origin$route"
+            done
+          done
+
+          fetch --output /tmp/elixpo-about.html https://elixpo.com/about
+          grep -q '<link rel="canonical" href="https://elixpo.com/about"' /tmp/elixpo-about.html
+          grep -q '<meta property="og:image"' /tmp/elixpo-about.html
+
+          fetch --output /tmp/elixpo-conduct.html https://elixpo.com/code-of-conduct
+          [[ "$(grep -o '<h1[ >]' /tmp/elixpo-conduct.html | wc -l)" -eq 1 ]]
