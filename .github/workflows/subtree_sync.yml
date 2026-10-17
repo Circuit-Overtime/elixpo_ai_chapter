@@ -29,10 +29,10 @@ jobs:
           git config user.name "elixpoo"
           git config user.email "elixpoo@gmail.com"
 
-      # Each subtree gets its own branch and squash-auto-merge PR. Sync state
-      # is persisted at .github/.sync-state/<name> so the next run can tell
-      # what upstream commits were pulled in without relying on merge parents.
-      - name: Sync each subtree via PR + auto-merge
+      # Every changed subtree is collected on one isolated branch and reviewed
+      # through one squash-auto-merge PR. Per-project sync state is persisted at
+      # .github/.sync-state/<name> without multiplying full-repository CI runs.
+      - name: Sync changed subtrees through one aggregate PR
         env:
           GH_TOKEN: ${{ secrets.CI_AGENT_TOKEN }}
           REPO_FULL: ${{ github.repository }}
@@ -76,187 +76,164 @@ jobs:
           )
 
           STATE_DIR=.github/.sync-state
-          mkdir -p "$STATE_DIR"
-
-          COAUTHOR_TRAILER="Co-authored-by: Circuit-Overtime <ayushbhatt633@gmail.com>
-          Co-authored-by: anwe-ch <misschakraborty2004@gmail.com>"
-
-          # Label applied to every sync PR so they're filterable in the PR list.
-          # Ensure it exists (idempotent — create fails quietly if already there).
           SYNC_LABEL="subtree-sync"
+          BRANCH="automation/subtree-sync-${GITHUB_RUN_ID}"
+          SUMMARY_FILE=$(mktemp)
+          UPDATED=0
+          FAILED=0
+
           gh label create "$SYNC_LABEL" \
             --color "1d76db" \
-            --description "Automated subtree sync PR — opened and auto-merged by subtree_sync workflow" \
+            --description "Automated aggregate subtree synchronization" \
             2>/dev/null || true
+
+          pending_pr=$(gh pr list --repo "$REPO_FULL" --state open --label "$SYNC_LABEL" \
+            --limit 1 --json url --jq '.[0].url // empty')
+          if [ -n "$pending_pr" ]; then
+            echo "A subtree synchronization PR is already open: $pending_pr"
+            echo "Refusing to create a duplicate wave."
+            exit 0
+          fi
+
+          git checkout -b "$BRANCH" origin/main
+          mkdir -p "$STATE_DIR"
 
           sync_one() {
             local name="$1" url="$2"
+            local remote_tip prev_tip before_tip op_label upstream_log files_changed short_tip
             echo "==> $name"
 
-            # Always start from a clean main before each subtree so state
-            # from a previous subtree's failure doesn't leak forward.
-            git checkout main
-            git reset --hard origin/main
-
-            # Add/refresh remote.
             if ! git remote get-url "$name" >/dev/null 2>&1; then
               git remote add "$name" "$url"
             fi
             if ! git fetch --quiet "$name"; then
               echo "    fetch failed — skipping"
+              FAILED=$((FAILED + 1))
               return 0
             fi
 
-            local remote_tip
             remote_tip=$(git rev-parse "${name}/main" 2>/dev/null || echo "")
             if [ -z "$remote_tip" ]; then
               echo "    remote has no main branch — skipping"
+              FAILED=$((FAILED + 1))
               return 0
             fi
 
-            local prev_tip=""
+            prev_tip=""
             [ -f "$STATE_DIR/${name}" ] && prev_tip=$(cat "$STATE_DIR/${name}")
-
             if [ "$prev_tip" = "$remote_tip" ]; then
               echo "    up to date ($remote_tip)"
               return 0
             fi
 
-            # New sync branch per run so concurrent runs don't collide.
-            local ts branch
-            ts=$(date +%Y%m%d-%H%M%S)
-            branch="sync/${name}-${ts}"
-            git checkout -b "$branch"
-
-            # First-time add vs. subsequent pull.
-            local op_label
+            before_tip=$(git rev-parse HEAD)
             if [ -d "$name" ] && git ls-tree --name-only HEAD | grep -qx "$name"; then
               op_label="pull"
               if ! git subtree pull --prefix="$name" "$name" main -m "Sync ${name} from upstream"; then
-                echo "    subtree pull failed (likely force-push upstream) — re-adding"
-                git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
+                echo "    subtree pull failed — retrying as a clean re-add"
+                git merge --abort 2>/dev/null || true
+                git reset --hard "$before_tip"
                 git rm -rf "$name/" 2>/dev/null || true
                 git commit -m "Reset ${name} subtree for re-sync" || true
-                git subtree add --prefix="$name" "$name" main -m "Re-add ${name} subtree" || {
-                  echo "    re-add also failed — aborting this subtree"
-                  git checkout main
-                  git branch -D "$branch" 2>/dev/null || true
+                if ! git subtree add --prefix="$name" "$name" main -m "Re-add ${name} subtree"; then
+                  echo "    re-add failed — restoring the aggregate branch"
+                  git reset --hard "$before_tip"
+                  FAILED=$((FAILED + 1))
                   return 0
-                }
+                fi
                 op_label="re-add"
               fi
             else
               op_label="add"
               if ! git subtree add --prefix="$name" "$name" main -m "Add ${name} subtree"; then
-                echo "    subtree add failed — skipping"
-                git checkout main
-                git branch -D "$branch" 2>/dev/null || true
+                echo "    add failed — restoring the aggregate branch"
+                git reset --hard "$before_tip"
+                FAILED=$((FAILED + 1))
                 return 0
               fi
             fi
 
-            # Did the pull/add actually change anything vs main?
-            if git diff --quiet main -- "$name"; then
-              echo "    no diff vs main — nothing to PR"
-              git checkout main
-              git branch -D "$branch" 2>/dev/null || true
-              return 0
+            files_changed=$(git diff --shortstat "$before_tip" HEAD -- "$name" | sed 's/^[[:space:]]*//')
+            if [ -z "$files_changed" ]; then
+              echo "    upstream tip changed without a content diff"
             fi
 
-            # Upstream commit log (since the last recorded sync tip, or the
-            # latest 20 if this is the first sync with state).
-            local upstream_log
             if [ -n "$prev_tip" ] && git rev-parse --quiet --verify "$prev_tip" >/dev/null; then
               upstream_log=$(git log "${prev_tip}..${remote_tip}" --format='- %s (%h) — %an' 2>/dev/null | head -40)
             else
-              upstream_log=$(git log "${remote_tip}" --format='- %s (%h) — %an' -20 2>/dev/null)
+              upstream_log=$(git log "$remote_tip" --format='- %s (%h) — %an' -20 2>/dev/null)
             fi
             [ -z "$upstream_log" ] && upstream_log="_(no upstream commit log available)_"
 
-            local files_changed n_commits
-            files_changed=$(git diff --shortstat main..HEAD -- "$name" | sed 's/^[[:space:]]*//')
-            n_commits=$(printf '%s\n' "$upstream_log" | grep -c '^- ' || true)
-            [ -z "$n_commits" ] && n_commits=0
-
-            # Record state so the next run can diff from here.
             echo "$remote_tip" > "$STATE_DIR/${name}"
             git add "$STATE_DIR/${name}"
             git commit -m "chore: record sync state for ${name}" || true
 
-            git push -u origin "$branch"
-
-            local title body pr_url short_tip
             short_tip="${remote_tip:0:12}"
-            title="Sync ${name}: ${n_commits} upstream commit(s) (${op_label})"
-
-            body=$(printf '%s\n' \
-              "Automated subtree sync for \`${name}\`." \
-              "" \
-              "- **Source:** ${url}" \
-              "- **Upstream tip:** \`${short_tip}\`" \
-              "- **Operation:** ${op_label}" \
-              "- **Diff:** ${files_changed:-no diff stats}" \
-              "" \
-              "## Upstream commits included" \
-              "${upstream_log}" \
-              "" \
-              "---" \
-              "_Opened and auto-merged by the hourly subtree sync workflow._" \
-              "" \
-              "${COAUTHOR_TRAILER}")
-
-            if ! pr_url=$(gh pr create --title "$title" --body "$body" --head "$branch" --base main --label "$SYNC_LABEL"); then
-              echo "    PR create failed — cleaning branch"
-              git push origin --delete "$branch" 2>/dev/null || true
-              git checkout main
-              git branch -D "$branch" 2>/dev/null || true
-              return 0
-            fi
-            echo "    opened $pr_url"
-
-            # The repository permits squash merges only. Queue the PR, then
-            # wait for the required README check and resulting merge before
-            # starting the next subtree. The ruleset requires each branch to
-            # be current with main, so parallel queued PRs would deadlock as
-            # soon as the first one advanced the base branch.
-            if ! gh pr merge "$pr_url" --auto --squash --delete-branch --subject "$title" --body "$body"; then
-              echo "    unable to queue squash auto-merge — leaving PR open for manual intervention"
-              git checkout main
-              return 0
-            fi
-            echo "    squash auto-merge queued; waiting for the merge"
-
-            local pr_state waited
-            waited=0
-            while true; do
-              pr_state=$(gh pr view "$pr_url" --json state --jq .state)
-              if [ "$pr_state" = "MERGED" ]; then
-                break
-              fi
-              if [ "$pr_state" = "CLOSED" ]; then
-                echo "    PR closed without merging — continuing without recording the subtree as synchronized"
-                git checkout main
-                return 0
-              fi
-              if [ "$waited" -ge 300 ]; then
-                echo "    merge did not complete within five minutes — leaving the queued PR open"
-                git checkout main
-                return 0
-              fi
-              sleep 5
-              waited=$((waited + 5))
-            done
-            echo "    squash merge completed"
-
-            git checkout main
-            git fetch --quiet origin main
-            git reset --hard origin/main
+            {
+              printf '## `%s`\n\n' "$name"
+              printf -- '- **Source:** %s\n' "$url"
+              printf -- '- **Upstream tip:** `%s`\n' "$short_tip"
+              printf -- '- **Operation:** %s\n' "$op_label"
+              printf -- '- **Diff:** %s\n\n' "${files_changed:-state-only update}"
+              printf '%s\n\n' "$upstream_log"
+            } >> "$SUMMARY_FILE"
+            UPDATED=$((UPDATED + 1))
           }
 
           for entry in "${repos[@]}"; do
             name=${entry%% *}
             url=${entry#* }
-            if ! sync_one "$name" "$url"; then
-              echo "!! unhandled error syncing $name — continuing to next"
+            sync_one "$name" "$url"
+          done
+
+          if [ "$UPDATED" -eq 0 ]; then
+            echo "All subtrees are synchronized."
+            exit 0
+          fi
+
+          if ! git push --set-upstream origin "$BRANCH"; then
+            echo "Unable to publish aggregate synchronization branch."
+            exit 1
+          fi
+
+          title="Sync ${UPDATED} subtree(s) from upstream"
+          body=$(printf '%s\n\n%s\n\n%s\n\n%s\n\n%s' \
+            "This aggregate PR synchronizes every changed project subtree detected in workflow run ${GITHUB_RUN_ID}." \
+            "One aggregate PR avoids duplicate branch races and runs the required checks once." \
+            "Updated: ${UPDATED} · Skipped after failure: ${FAILED}" \
+            "$(cat "$SUMMARY_FILE")" \
+            "Co-authored-by: Circuit-Overtime <ayushbhatt633@gmail.com>
+          Co-authored-by: anwe-ch <misschakraborty2004@gmail.com>")
+
+          if ! pr_url=$(gh pr create --repo "$REPO_FULL" --title "$title" --body "$body" \
+            --head "$BRANCH" --base main --label "$SYNC_LABEL"); then
+            echo "Unable to create aggregate subtree PR."
+            git push origin --delete "$BRANCH" 2>/dev/null || true
+            exit 1
+          fi
+          echo "Opened $pr_url"
+
+          if ! gh pr merge "$pr_url" --auto --squash --delete-branch --subject "$title" --body "$body"; then
+            echo "Unable to queue squash auto-merge; leaving $pr_url open for inspection."
+            exit 1
+          fi
+
+          waited=0
+          while true; do
+            pr_state=$(gh pr view "$pr_url" --repo "$REPO_FULL" --json state --jq .state)
+            if [ "$pr_state" = "MERGED" ]; then
+              echo "Aggregate subtree synchronization merged."
+              break
             fi
+            if [ "$pr_state" = "CLOSED" ]; then
+              echo "Aggregate subtree PR closed without merging."
+              exit 1
+            fi
+            if [ "$waited" -ge 900 ]; then
+              echo "Aggregate subtree PR remains queued after fifteen minutes: $pr_url"
+              exit 1
+            fi
+            sleep 10
+            waited=$((waited + 10))
           done
