@@ -1,0 +1,56 @@
+{
+  "name": "elixpourl",
+  "version": "3.1.4",
+  "description": "URL shortener and quick QR code generator with branded links, custom QR styles, and click or scan analytics.",
+  "author": "Elixpo <hello@elixpo.com> (https://elixpo.com)",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://lixrl.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elixpo/elixpourl"
+  },
+  "keywords": [
+    "url-shortener",
+    "qr-code-generator",
+    "url-to-qr-code",
+    "tracked-qr-code",
+    "cloudflare-pages",
+    "next.js",
+    "edge",
+    "analytics",
+    "elixpo"
+  ],
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "test": "npm run audit:edge",
+    "audit:edge": "node scripts/check-edge-routes.mjs",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:deploy": "npx @cloudflare/next-on-pages && npx wrangler pages deploy .vercel/output/static",
+    "db:migrate": "npx wrangler d1 migrations apply elixpourl",
+    "db:migrate:local": "npx wrangler d1 migrations apply elixpourl --local",
+    "db:migrate:remote": "npx wrangler d1 migrations apply elixpourl --remote"
+  },
+  "dependencies": {
+    "@cloudflare/next-on-pages": "^1.12.0",
+    "framer-motion": "^12.38.0",
+    "jose": "^5.9.6",
+    "next": "^15.0.0",
+    "qr-code-styling": "^1.9.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240620.0",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.0",
+    "wrangler": "^4.86.0"
+  }
+}
