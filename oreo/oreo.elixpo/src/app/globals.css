@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens ───────────────────────────────────────────────────
+ *
+ * Two parallel naming schemes coexist on the site:
+ *
+ *   • Brand tokens (`bg`, `card`, `primary` …) — declared in
+ *     theme.js, re-exported via tailwind.config.ts, used by everything
+ *     we wrote by hand.
+ *
+ *   • shadcn-style semantic tokens (`--background`, `--foreground`,
+ *     `--primary`, `--border` …) — needed by the canvas-wave hero
+ *     and any drop-in shadcn component we add later. They're populated
+ *     from the same brand palette so visually they always agree.
+ *
+ * Adding a new colour: update theme.js first, then mirror into the
+ * shadcn variable here if a third-party component needs it.
+ */
+:root {
+  color-scheme: dark;
+  --font-display: "Pixelify Sans", "JetBrains Mono", ui-sans-serif, system-ui,
+                  sans-serif;
+
+  /* shadcn-compatible semantic tokens (kept in oklch-adjacent hex
+     so we can paste in shadcn components without rewriting them) */
+  --background:           #0F0C1C;
+  --foreground:           #F5E6DC;
+  --card:                 #1C1A2E;
+  --card-foreground:      #F5E6DC;
+  --popover:              #1F1B33;
+  --popover-foreground:   #F5E6DC;
+  --primary:              #FF5D68;
+  --primary-foreground:   #0F0C1C;
+  --secondary:            #A29BFE;
+  --secondary-foreground: #0F0C1C;
+  --muted:                #1F1B33;
+  --muted-foreground:     #8A8294;
+  --accent:               #3DDC97;
+  --accent-foreground:    #0F0C1C;
+  --destructive:          #FF5D68;
+  --destructive-foreground:#0F0C1C;
+  --border:               #2A2640;
+  --input:                #2A2640;
+  --ring:                 #FF5D68;
+  --radius:               0.65rem;
+}
+
+html, body {
+  background: var(--background);
+  color:      var(--foreground);
+  font-family: theme("fontFamily.sans");
+  font-feature-settings: "ss01" 1, "ss02" 1, "cv11" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle ambient gradient layer — sits behind everything so the page
+   feels alive even before any component animates. Kept very faint so
+   it never fights real content. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 25% 15%, rgba(255, 93, 104, 0.10), transparent 60%),
+    radial-gradient(50% 45% at 80% 90%, rgba(162, 155, 254, 0.08), transparent 60%),
+    radial-gradient(40% 35% at 90% 10%, rgba(61, 220, 151, 0.06), transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+::selection {
+  background: theme("colors.primary");
+  color: theme("colors.bg");
+}
+
+/* ── Reusable components ─────────────────────────────────────────── */
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5
+           font-semibold text-bg transition-colors hover:bg-primary-dim;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-md border border-border
+           px-5 py-2.5 text-text transition-colors hover:bg-card;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-pill bg-card-sub px-2.5 py-1
+           text-xs uppercase tracking-wider text-text-dim;
+  }
+  .card-surface {
+    @apply rounded-lg border border-border bg-card transition-colors;
+  }
+  /* Conic-gradient border treatment used on hero CTAs and accent
+     cards — produces a thin animated luminous edge. Pairs with the
+     wave hero for visual continuity. */
+  .ring-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .ring-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--ring-angle, 0deg),
+      theme("colors.primary"),
+      theme("colors.lilac"),
+      theme("colors.teal"),
+      theme("colors.primary")
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.7;
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin {
+    to { --ring-angle: 360deg; transform: rotate(360deg); }
+  }
+}
+
+html { overscroll-behavior: none; }
