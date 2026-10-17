@@ -1,0 +1,30 @@
+{
+  "captured_at_utc": "2026-10-01T05:59:28.952135+00:00",
+  "repository_revision": "e21528720ac1a624ce9e05de3c89c97550f4ce38",
+  "host": {
+    "platform": "Linux-7.0.0-34-generic-x86_64-with-glibc2.43",
+    "python": "3.14.4"
+  },
+  "connection": {
+    "port": "/dev/ttyACM0",
+    "baud": 115200,
+    "usb": {
+      "ID_MODEL": "USB_Single_Serial",
+      "ID_MODEL_ID": "55d3",
+      "ID_VENDOR": "1a86",
+      "ID_VENDOR_ID": "1a86",
+      "ID_USB_DRIVER": "cdc_acm"
+    }
+  },
+  "identifiers_redacted": true,
+  "observations": {
+    "chip": "ESP32-S3 (QFN56) (revision v0.2)",
+    "features": "WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)",
+    "crystal": "40MHz",
+    "mac": "<redacted>",
+    "flash_manufacturer": "68",
+    "flash_device": "4018",
+    "flash_size": "16MB"
+  },
+  "probe_succeeded": true
+}

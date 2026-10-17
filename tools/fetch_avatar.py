@@ -1,0 +1,163 @@
+"""Download a GitHub user's avatar and bake it into apps/badge/assets/optimized/avatar.py.
+
+The badge app loads this module on entry (no WiFi needed at runtime) and
+blits it into a pink ring on its identity card. We:
+
+  1. Fetch https://api.github.com/users/<user> → grab avatar_url
+  2. Download the PNG
+  3. Crop centre-square, resize to 64×64
+  4. Apply a circular alpha mask so the corners blit as transparent
+     (chroma-key magenta, RGB565 0xF81F) — the pink ring then shows around
+     the edge instead of being squared off by the avatar tile.
+  5. Emit `apps/badge/assets/optimized/avatar.py` as a big-endian RGB565
+     bytes module: `DATA = b'...'`, `W = 64`, `H = 64`.
+
+Usage:
+    python tools/fetch_avatar.py                    # user from config.py
+    python tools/fetch_avatar.py --user octocat
+    python tools/fetch_avatar.py --user me --size 56
+"""
+
+import argparse
+import io
+import struct
+import sys
+from pathlib import Path
+from urllib.request import Request, urlopen
+
+from PIL import Image
+
+
+OUT_PATH       = Path("apps/badge/assets/optimized/avatar.py")
+DEFAULT_SIZE   = 64
+CHROMA_KEY_RGB = (248, 0, 248)
+CHROMA_KEY_565 = ((248 & 0xF8) << 8) | ((0 & 0xFC) << 3) | (248 >> 3)  # 0xF81F
+
+
+def _project_user():
+    """Read GITHUB_USER from the project's config.py."""
+    project_root = str(Path(__file__).resolve().parent.parent)
+    if project_root not in sys.path:
+        sys.path.insert(0, project_root)
+    for k in ("config", "oreoOS.config"):
+        if k in sys.modules:
+            del sys.modules[k]
+    from oreoOS import config
+    return getattr(config, "GITHUB_USER", "")
+
+
+def _fetch_profile(user):
+    req = Request("https://api.github.com/users/" + user,
+                  headers={"User-Agent": "OreoBadge"})
+    with urlopen(req, timeout=15) as r:
+        import json
+        return json.loads(r.read().decode("utf-8"))
+
+
+def _fetch_png(url):
+    req = Request(url, headers={"User-Agent": "OreoBadge"})
+    with urlopen(req, timeout=20) as r:
+        return r.read()
+
+
+def _circular_mask(size):
+    """Return a PIL 'L' image with a filled white circle on black."""
+    mask = Image.new("L", (size, size), 0)
+    cx = cy = size / 2.0
+    r2 = (size / 2.0 - 0.5) ** 2
+    px = mask.load()
+    for y in range(size):
+        for x in range(size):
+            dx = x - cx + 0.5
+            dy = y - cy + 0.5
+            if dx * dx + dy * dy <= r2:
+                px[x, y] = 255
+    return mask
+
+
+def _pack_rgb565(img):
+    """img is RGB; emit big-endian RGB565 bytes."""
+    w, h = img.size
+    px   = img.load()
+    out  = bytearray(w * h * 2)
+    i    = 0
+    for y in range(h):
+        for x in range(w):
+            r, g, b = px[x, y][:3]
+            v = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3)
+            out[i]     = v >> 8
+            out[i + 1] = v & 0xFF
+            i += 2
+    return bytes(out)
+
+
+def _format_bytes_compact(data, per_line=24):
+    lines = []
+    for i in range(0, len(data), per_line):
+        chunk = data[i:i + per_line]
+        lines.append("    b'" + "".join("\\x%02x" % b for b in chunk) + "'")
+    return "\n".join(lines)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--user", default=None,
+                    help="GitHub username (defaults to config.GITHUB_USER)")
+    ap.add_argument("--size", type=int, default=DEFAULT_SIZE,
+                    help="output square size in px (default 64)")
+    args = ap.parse_args()
+
+    user = args.user or _project_user()
+    if not user:
+        print("No GITHUB_USER configured and --user not supplied.")
+        sys.exit(1)
+
+    print("Fetching profile for @%s..." % user)
+    profile = _fetch_profile(user)
+    avatar_url = profile.get("avatar_url")
+    if not avatar_url:
+        print("Profile has no avatar_url.")
+        sys.exit(1)
+
+    print("  avatar_url:", avatar_url)
+    png_bytes = _fetch_png(avatar_url + "&s=%d" % (args.size * 2)
+                           if "?" in avatar_url else avatar_url + "?s=%d" % (args.size * 2))
+
+    img = Image.open(io.BytesIO(png_bytes)).convert("RGBA")
+    # Centre-crop to square then resize.
+    w, h = img.size
+    side = min(w, h)
+    img = img.crop(((w - side) // 2, (h - side) // 2,
+                    (w + side) // 2, (h + side) // 2))
+    img = img.resize((args.size, args.size), Image.LANCZOS)
+
+    # Composite onto chroma-key background so corners become transparent.
+    bg = Image.new("RGB", (args.size, args.size), CHROMA_KEY_RGB)
+    bg.paste(img.convert("RGB"), mask=img.split()[3])
+
+    # Circular alpha mask — pixels outside the circle become chroma-key.
+    mask = _circular_mask(args.size)
+    final = Image.composite(bg, Image.new("RGB", (args.size, args.size),
+                                          CHROMA_KEY_RGB), mask)
+
+    data = _pack_rgb565(final)
+
+    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    contents = (
+        '"""Auto-generated by tools/fetch_avatar.py — do not edit.\n'
+        '\n'
+        'GitHub avatar for @%s, %dx%d RGB565 big-endian. Circular alpha\n'
+        'mask: corners are chroma-key magenta (0xF81F → transparent on blit).\n'
+        '"""\n\n'
+        'W = %d\n'
+        'H = %d\n'
+        '\n'
+        'DATA = (\n%s\n)\n'
+    ) % (user, args.size, args.size, args.size, args.size,
+         _format_bytes_compact(data))
+    OUT_PATH.write_text(contents)
+    print("Wrote %s  (%.1f kB)" % (OUT_PATH, OUT_PATH.stat().st_size / 1024.0))
+
+
+if __name__ == "__main__":
+    main()
