@@ -68,6 +68,37 @@ jobs:
               --retry 18 --retry-all-errors --retry-delay 5 "$@"
           }
 
+          wait_for_commit() {
+            local origin="$1"
+            local marker="$origin/.well-known/elixpo-deployment.json?run=$GITHUB_RUN_ID"
+            local body=""
+            local observed="unavailable"
+
+            for attempt in {1..30}
+            do
+              body=$(curl --fail --silent --show-error --location \
+                --connect-timeout 10 --max-time 20 \
+                --header 'Cache-Control: no-cache' "$marker" 2>/dev/null || true)
+
+              if grep -Fq "\"commit\":\"$GITHUB_SHA\"" <<< "$body"
+              then
+                echo "$origin is serving commit $GITHUB_SHA"
+                return 0
+              fi
+
+              observed=$(sed -n 's/.*"commit":"\([^"]*\)".*/\1/p' <<< "$body")
+              echo "Waiting for $origin to publish $GITHUB_SHA (attempt $attempt/30; observed ${observed:-invalid marker})"
+              sleep 5
+            done
+
+            echo "::error::$origin did not publish commit $GITHUB_SHA within the propagation window"
+            echo "Last deployment marker: ${body:-<empty>}"
+            return 1
+          }
+
+          wait_for_commit https://elixpo.pages.dev
+          wait_for_commit https://elixpo.com
+
           for origin in https://elixpo.pages.dev https://elixpo.com
           do
             for route in / /projects/ /research/ /packages/ /robots.txt /sitemap.xml
@@ -82,7 +113,3 @@ jobs:
 
           fetch --output /tmp/elixpo-conduct.html https://elixpo.com/code-of-conduct
           [[ "$(grep -o '<h1[ >]' /tmp/elixpo-conduct.html | wc -l)" -eq 1 ]]
-
-          fetch --output /tmp/elixpo-deployment.json \
-            https://elixpo.com/.well-known/elixpo-deployment.json
-          grep -q "\"commit\":\"$GITHUB_SHA\"" /tmp/elixpo-deployment.json

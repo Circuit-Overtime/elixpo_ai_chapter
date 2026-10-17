@@ -9,7 +9,7 @@ const resources = [
   {title:"Elixpo Chapter",href:"https://github.com/elixpo/elixpo_chapter",text:"The master public build and release collection."},
   {title:"GitHub Discussions",href:"https://github.com/orgs/elixpo/discussions",text:"Proposals, decisions, questions, and community conversation."},
   {title:"Registry relationships",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/registry-relationships.md",text:"What Core, Chapter, Member, and Connected mean—and what they do not imply."},
-  {title:"Licensing policy",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/licensing.md",text:"Artifact-specific defaults and the no-silent-relicensing rule."},
+  {title:"Licensing policy",href:"/licensing",text:"Artifact-specific defaults and the no-silent-relicensing rule."},
   {title:"Trademark and brand use",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/trademark-and-brand-use.md",text:"Accurate referential use, protected official identity, and permission boundaries."},
   {title:"People and profile consent",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/people-and-profile-consent.md",text:"Public-evidence profiles, explicit opt-in material, corrections, and removal."},
   {title:"Contributor record policy",href:"https://github.com/elixpo/elixpo/blob/main/docs/policies/contributor-records.md",text:"Stable record IDs, canonical verification, correction, dispute, altered-copy, and withdrawal rules."},

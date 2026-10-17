@@ -1,11 +1,14 @@
 # Elixpo Community Code of Conduct
 
-Elixpo is an open, ethical, and accessible ecosystem built by a worldwide
-community. This Code of Conduct applies to **every Elixpo repository, product,
-and community space** - the websites and SaaS services (elixpo.com,
-blogs.elixpo.com, sketch.elixpo.com, accounts.elixpo.com, and the rest), our
-packages, GitHub repositories and Discussions, issue trackers, and any official
-chat or event.
+**Status:** Published community policy
+
+**Last reviewed:** 17 October 2026
+
+Elixpo is an open-source project foundry where people develop software, publish
+research, operate public services, and prepare releases together. This Code of
+Conduct applies to participation in every official Elixpo repository, Chapter,
+review, issue tracker, discussion, service, research activity, partnership, and
+online or in-person event.
 
 It is adapted from the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
 
@@ -19,8 +22,7 @@ status, nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
 We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community - the warm, celebratory spirit that
-Oreo, our mascot, stands for.
+diverse, inclusive, and healthy community.
 
 ## Our standards
 
@@ -34,6 +36,12 @@ Examples of behavior that contributes to a positive environment:
   learning from the experience.
 * Focusing on what is best for the whole community, not just for us as
   individuals.
+* Crediting work accurately, respecting authorship, and correcting the public
+  record when evidence changes.
+* Disagreeing with ideas and technical decisions without attacking the people
+  behind them.
+* Respecting project scope, maintainer boundaries, review decisions, and
+  security-reporting procedures.
 
 Examples of unacceptable behavior:
 
@@ -43,6 +51,12 @@ Examples of unacceptable behavior:
 * Public or private harassment.
 * Publishing others' private information, such as a physical or email address,
   without their explicit permission.
+* Intimidation, stalking, sustained disruption, retaliation, or unwanted
+  contact after a request to stop.
+* Plagiarism, knowingly false attribution, manipulation of contribution
+  records, or presenting another person's work as one's own.
+* Using project access, reviewer status, sponsorship, or organizational roles
+  to pressure someone for personal, academic, financial, or professional gain.
 * Misusing the Elixpo or Oreo brand to impersonate the project or deceive
   others.
 * Other conduct which could reasonably be considered inappropriate in a
@@ -51,11 +65,14 @@ Examples of unacceptable behavior:
 ## Enforcement responsibilities
 
 Community leaders and maintainers are responsible for clarifying and enforcing
-these standards and will take appropriate and fair corrective action in
-response to any behavior they deem inappropriate, threatening, offensive, or
-harmful. They have the right to remove, edit, or reject comments, commits, code,
-issues, and other contributions that are not aligned with this Code of Conduct,
-and will communicate reasons for moderation decisions when appropriate.
+these standards and will take proportionate corrective action in response to
+conduct that is inappropriate, threatening, offensive, or harmful. They may
+remove, edit, or reject comments, commits, code, issues, and other contributions
+that do not align with this policy. When it is safe and appropriate, the person
+affected by an enforcement decision will receive a concise explanation.
+
+Anyone handling a report must disclose a conflict of interest and step away
+from the decision. A different maintainer will review the available evidence.
 
 ## Scope
 
@@ -68,13 +85,21 @@ event.
 ## Reporting
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the maintainers responsible for enforcement at:
+reported privately to:
 
 **hello@elixpo.com**
 
-All complaints will be reviewed and investigated promptly and fairly. All
-community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+Use the subject **Code of Conduct report** and include only the information you
+are comfortable sharing: where the incident occurred, what happened, relevant
+links or screenshots, and any immediate safety concern. Do not place sensitive
+reports in a public issue or discussion.
+
+Reports will be acknowledged and reviewed as promptly and fairly as the
+available maintainers allow. Information will be shared only with people needed
+to assess the report, respond safely, or meet a legal obligation. Elixpo cannot
+promise absolute confidentiality, but will minimize disclosure and will not
+knowingly publish a reporter's identity without permission. Good-faith reports
+and participation in an investigation must not result in retaliation.
 
 ## Enforcement guidelines
 
@@ -90,6 +115,24 @@ the consequences for any action they deem in violation of this Code of Conduct:
    communication with the community for a specified period of time.
 4. **Permanent ban** - A permanent ban from any sort of public interaction
    within the community.
+
+The response may also include removal of content, reversal of access, a change
+in review responsibility, correction of attribution, or notification to the
+operator of a platform or event. The response will be based on context, impact,
+history, safety, and the needs of the people affected—not solely on whether the
+conduct happened in public.
+
+## Review and appeal
+
+A person subject to an enforcement action may request one review by emailing
+**hello@elixpo.com** with the original decision and the specific factual or
+procedural issue they believe should be reconsidered. Where possible, a
+maintainer who did not make the original decision will conduct the review. An
+appeal is not a venue to contact or challenge the reporter.
+
+Elixpo may retain a limited private record of reports and outcomes for safety,
+consistency, and accountability. Public transparency reports, if any, will not
+intentionally identify affected people.
 
 ## Attribution
 

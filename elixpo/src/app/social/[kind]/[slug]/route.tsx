@@ -2,6 +2,8 @@ import { ImageResponse } from "next/og";
 import { getDirectoryEntry, getDirectoryEntries } from "@/lib/directory";
 import { getPackageRecord, PACKAGE_RECORDS } from "@/lib/packages";
 import { getResearchRecord } from "@/lib/research";
+import contributors from "../../../../../content/contributors.json";
+import recognition from "../../../../../content/recognition.json";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -19,7 +21,13 @@ export function generateStaticParams() {
   const directory = (["project", "research", "service"] as const).flatMap((kind) =>
     getDirectoryEntries(kind).map(({ slug }) => ({ kind, slug })),
   );
-  return [{ kind: "research", slug: "index" }, ...directory, ...PACKAGE_RECORDS.map(({ slug }) => ({ kind: "package", slug }))];
+  return [
+    { kind: "research", slug: "index" },
+    ...directory,
+    ...PACKAGE_RECORDS.map(({ slug }) => ({ kind: "package", slug })),
+    ...contributors.featured.map(({ handle }) => ({ kind: "contributor", slug: handle })),
+    ...recognition.records.map(({ id }) => ({ kind: "recognition", slug: id.toLowerCase() })),
+  ];
 }
 
 function findRecord(kind: string, slug: string): SocialRecord | undefined {
@@ -30,6 +38,16 @@ function findRecord(kind: string, slug: string): SocialRecord | undefined {
     const record = getPackageRecord(slug);
     if (!record) return;
     return { eyebrow: `Elixpo Packages · ${record.kind}`, title: record.name, description: record.description, status: `${record.status} · v${record.version}`, accent: record.kind === "npm" ? "#cb3837" : "#0b623c", wash: record.kind === "npm" ? "#f4d7d4" : "#bde8ce" };
+  }
+  if (kind === "contributor") {
+    const person = contributors.featured.find(({ handle }) => handle === slug);
+    if (!person) return;
+    return { eyebrow: "Elixpo Public Contribution Record", title: person.name, description: person.story, status: `${person.recordId} · ${person.activeWindow}`, accent: "#0b623c", wash: "#dfeee5" };
+  }
+  if (kind === "recognition") {
+    const record = recognition.records.find(({ id }) => id.toLowerCase() === slug.toLowerCase());
+    if (!record) return;
+    return { eyebrow: "Elixpo Certificate of Contribution", title: record.name, description: `Issued in appreciation ${record.statement}. Verify the public record and its connected contribution evidence on Elixpo.`, status: `${record.id} · Issued ${recognition.issuedAt}`, accent: "#0b623c", wash: "#f0e6d3" };
   }
   if (kind !== "project" && kind !== "research" && kind !== "service") return;
   const entry = getDirectoryEntry(kind, slug);
