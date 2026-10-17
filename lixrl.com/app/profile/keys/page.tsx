@@ -91,7 +91,7 @@ export default function ApiKeysPage() {
     setRevoking(true);
     try {
       const response = await fetch(`/api/keys/${revokeTarget.id}`, { method: 'DELETE' });
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
       if (!response.ok) {
         setRevokeError(data?.error || 'The key could not be revoked. Refresh and try again.');
         return;
