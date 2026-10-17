@@ -1,0 +1,11 @@
+{
+  "class_js_divergence": 0.326488049323312,
+  "coverage": 0.009499999694526196,
+  "dataset": "mnist",
+  "density": 0.0052,
+  "feature_fid": 258.2102360216476,
+  "feature_kid": 63.87357383185426,
+  "mean_classifier_confidence": 0.9426920413970947,
+  "seed": 1,
+  "variant": "native_w1a1_core"
+}

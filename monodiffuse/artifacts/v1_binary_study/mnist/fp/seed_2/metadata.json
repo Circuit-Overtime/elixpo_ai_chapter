@@ -1,0 +1,42 @@
+{
+  "checkpoint_sha256": "2a82aa02ebbf2fe3e1082717d4db32fb38b6b0aa9bc1cccb374d84665fa9678a",
+  "dataset": "mnist",
+  "initialization": null,
+  "model_config": {
+    "base_channels": 16,
+    "binary_activations": false,
+    "binary_weights": false,
+    "centered": false,
+    "image_channels": 1,
+    "preactivation": true,
+    "time_dim": 64
+  },
+  "model_statistics": {
+    "binary_parameter_fraction": 0.0,
+    "binary_weight_parameters": 0,
+    "floating_point_parameters": 218993,
+    "fp32_checkpoint_bytes_theoretical": 875972,
+    "packed_inference_bytes_theoretical": 875972,
+    "parameters": 218993
+  },
+  "provenance": {
+    "cuda": "12.4",
+    "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "git_commit": "604a34d940983362bf64d3145e377b698a4ca6c6",
+    "python": "3.11.15",
+    "pytorch": "2.5.1+cu124"
+  },
+  "quantization_diagnostics": {},
+  "seed": 2,
+  "training": {
+    "amp": true,
+    "batch_size": 256,
+    "diffusion_steps": 1000,
+    "elapsed_seconds": 94.86768627166748,
+    "epochs": 12,
+    "learning_rate": 0.0002,
+    "max_batches_per_epoch": null,
+    "weight_decay": 0.0001
+  },
+  "variant": "fp"
+}
