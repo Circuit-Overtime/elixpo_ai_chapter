@@ -92,18 +92,26 @@ jobs:
             local destination="$4"
             local branch="automation/sync-elixpo-readme"
 
-            cp "$GITHUB_WORKSPACE/$generated_readme" "$GITHUB_WORKSPACE/$checkout_path/$destination"
             cd "$GITHUB_WORKSPACE/$checkout_path"
+            git config user.name "elixpo-readme-sync[bot]"
+            git config user.email "elixpo-readme-sync[bot]@users.noreply.github.com"
+            git fetch origin main
+            if git fetch origin "+refs/heads/$branch:refs/remotes/origin/$branch"; then
+              git checkout -B "$branch" "origin/$branch"
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                git checkout -B "$branch" origin/main
+              fi
+            else
+              git checkout -B "$branch" origin/main
+            fi
 
+            cp "$GITHUB_WORKSPACE/$generated_readme" "$destination"
             if git diff --quiet -- "$destination"; then
               echo "$repository is already synchronized."
               return
             fi
 
-            git config user.name "elixpo-readme-sync[bot]"
-            git config user.email "elixpo-readme-sync[bot]@users.noreply.github.com"
-            git fetch origin "$branch:refs/remotes/origin/$branch" || true
-            git checkout -B "$branch"
             git add "$destination"
             git commit -m "docs: synchronize Elixpo public brief"
             git push --force-with-lease --set-upstream origin "$branch"
