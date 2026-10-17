@@ -1,0 +1,29 @@
+{
+  "seed": 40,
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Each potential customer may have different considerations and factors influencing their decision making authority. Trust and credibility are crucial factors in any purchasing decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Some customers may express doubts or reservations that need to be addressed before they feel comfortable proceeding with the purchase. Take the time to familiarize yourself with any potential shortcomings or challenges that customers may perceive. Some may prefer visual aids while others may respond better to detailed verbal explanations. Avoid using jargon or technical terms that the customer may not understand.",
+  "path_indices": [
+    40,
+    2542,
+    2390,
+    2102,
+    3240,
+    2413,
+    1820,
+    693
+  ],
+  "metrics": {
+    "total_score": 30.595180932432413,
+    "exact_boundary_matches": 1,
+    "avg_local_coherence": 0.7421695249421256,
+    "avg_global_coherence": 0.7530337231499808,
+    "avg_makes_sense_score": 0.5929751481328692,
+    "avg_policy_score": 0.09044982333268438,
+    "avg_validity_score": 0.5265524727957589,
+    "search_runtime": 1.7368566989898682,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.36917789386851446,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.25783047505787443
+  }
+}

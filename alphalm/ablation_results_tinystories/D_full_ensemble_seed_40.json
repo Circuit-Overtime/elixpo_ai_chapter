@@ -1,0 +1,30 @@
+{
+  "seed": 40,
+  "generated_text": "And so, Fin and the crab played and became good friends. Leo laughed. Leo laughed and laughed! And Beep lived happily ever after. After some time, Lila felt tired. Anna felt sorry for Ben. Ben said, feeling bad. \". Ben felt better.",
+  "path_indices": [
+    40,
+    5200,
+    5205,
+    23,
+    17642,
+    17771,
+    18048,
+    12745
+  ],
+  "metrics": {
+    "total_score": 55.75976796150208,
+    "avg_local": 0.530294052192143,
+    "avg_global": 0.484262330191476,
+    "avg_makes_sense": 0.6135571386132922,
+    "avg_policy": 0.36215474775859285,
+    "avg_validity": 0.8523907661437988,
+    "exact_matches": 3,
+    "diversity": 0.6645047507647958,
+    "repetition_rate": 0.25,
+    "topic_repetition": -0.1688425749540329,
+    "forward_progress": 0.46970594780785696,
+    "runtime": 3.551532030105591,
+    "evaluations": 3100,
+    "narrative_consistency": 0.3333333333333333
+  }
+}

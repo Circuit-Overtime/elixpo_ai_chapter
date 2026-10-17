@@ -1,0 +1,30 @@
+{
+  "seed": 0,
+  "generated_text": "One day, a little girl named Lily found a needle in her room. One day, she took a picture of a sweet flower in the garden. The box has a picture of a yacht on it. It was thin and had a picture of a soccer ball on it. It was brown and had a red sign on it. It had a red mark on it. It had a golden ring on it. It had a lock on it.",
+  "path_indices": [
+    0,
+    14760,
+    17393,
+    9783,
+    10516,
+    11310,
+    7003,
+    18721
+  ],
+  "metrics": {
+    "total_score": 69.39765952527523,
+    "avg_local": 0.8805406263896397,
+    "avg_global": 0.8069151043891907,
+    "avg_makes_sense": 0.9890900594847543,
+    "avg_policy": 0.0,
+    "avg_validity": 0.0,
+    "exact_matches": 5,
+    "diversity": 0.3310197740793228,
+    "repetition_rate": 0.375,
+    "topic_repetition": 0.0,
+    "forward_progress": 0.11945937361036028,
+    "runtime": 3.7928669452667236,
+    "evaluations": 678206,
+    "narrative_consistency": 0.6666666666666666
+  }
+}

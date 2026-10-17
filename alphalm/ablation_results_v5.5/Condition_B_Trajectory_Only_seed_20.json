@@ -1,0 +1,30 @@
+{
+  "seed": 20,
+  "generated_text": "This helps to generate repeat business and foster long term customer loyalty. Every customer is different and what works for one may not work for another effective strategy is to provide evidence and testimonials from satisfied customers who have faced similar objections can arise due to various reasons such as concerns about the product or service budget constraints or simply a lack of understanding the impact of customers pain points by comprehending the impact of our customers pain points we can effectively communicate how our solutions can alleviate their concerns and improve their lives or businesses. Timing or urgency objections can be managed by effectively communicating the potential consequences of delaying a decision making authority objections in some cases prospects may claim that they lack the authority to make the final decision. Emotional buying signals sometimes buying decisions are driven by emotions rather than logic.",
+  "path_indices": [
+    20,
+    3107,
+    2535,
+    3038,
+    1302,
+    2436,
+    2102,
+    2956
+  ],
+  "metrics": {
+    "total_score": 52.14503512531519,
+    "exact_boundary_matches": 4,
+    "avg_local_coherence": 0.5743367906127658,
+    "avg_global_coherence": 0.5852557399443218,
+    "avg_makes_sense_score": 0.360903011901038,
+    "avg_policy_score": 0.0,
+    "avg_validity_score": 0.0,
+    "transitions_evaluated": 105109,
+    "search_runtime": 30.09873652458191,
+    "unique_sentences_ratio": 1.0,
+    "repetition_count": 0,
+    "trajectory_diversity_score": 0.5025695557040828,
+    "sentence_repetition_rate": 0.0,
+    "forward_progress_score": 0.4256632093872343
+  }
+}

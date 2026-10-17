@@ -1,0 +1,26 @@
+{
+  "seed": 40,
+  "condition": "A_no_repetition",
+  "generated_text": "Demonstrate genuine interest in what the customer has to say and show empathy towards their needs and concerns. Showing genuine interest in your customers' needs and aspirations will go a long way in building rapport and trust. Trust and credibility are crucial factors in any purchasing decision. Decision-Making Authority Objections: In some cases, prospects may claim that they lack the authority to make the final decision. Anticipating objections and proactively addressing them is another effective strategy when handling trust or credibility-related concerns. Addressing Concerns and Objections: During your presentation, it is likely that the customer may raise concerns or objections. Objections can arise due to various reasons such as concerns about the product or service, budget constraints, or simply a lack of understanding. Understanding the nature of objections: When dealing with objections in written communication or over the phone, it is crucial to recognize that objections usually stem from concerns, uncertainties, or misunderstandings.",
+  "path_indices": [
+    40,
+    292,
+    2390,
+    2102,
+    2466,
+    1829,
+    3038,
+    2858
+  ],
+  "metrics": {
+    "total_score": 63.30152887240466,
+    "exact_matches": 4,
+    "avg_local": 0.7843627078192574,
+    "avg_global": 0.7867651752063206,
+    "avg_makes_sense": 0.6424170093876975,
+    "avg_validity": 0.6597972895417895,
+    "diversity": 0.33874323112624033,
+    "avg_topic_progress": 0.1869824698993138,
+    "runtime": 1.1391713619232178
+  }
+}
