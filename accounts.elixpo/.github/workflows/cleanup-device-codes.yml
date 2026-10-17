@@ -1,0 +1,58 @@
+# Triggers bounded cleanup of expired pending device authorizations
+# (accounts.elixpo#79). Each call deletes at most one batch (default 500
+# rows) — the schedule below is frequent enough that the table never
+# accumulates more than a batch's worth of expired rows between runs.
+#
+# Triggers:
+#   - every 15 minutes.
+#   - manual via workflow_dispatch.
+#
+# Requires repo secret:
+#   DEVICE_CLEANUP_CRON_SECRET — same value as the DEVICE_CLEANUP_CRON_SECRET
+#                                env var on the accounts-elixpo Cloudflare
+#                                Pages project.
+
+name: Cleanup expired device codes
+
+concurrency:
+  group: cleanup-device-codes
+  cancel-in-progress: false
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger /api/cron/cleanup-device-codes
+        env:
+          CRON_SECRET: ${{ secrets.DEVICE_CLEANUP_CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::DEVICE_CLEANUP_CRON_SECRET is not set in repo secrets"
+            exit 1
+          fi
+
+          response=$(curl --silent --show-error --fail-with-body \
+            --max-time 60 \
+            -w "\nHTTP_STATUS:%{http_code}\n" \
+            -X POST \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "https://accounts.elixpo.com/api/cron/cleanup-device-codes")
+
+          http_status=$(echo "$response" | grep "^HTTP_STATUS:" | cut -d: -f2)
+          body=$(echo "$response" | sed '/^HTTP_STATUS:/d')
+
+          echo "Status: $http_status"
+          echo "Body: $body"
+
+          if [ "$http_status" != "200" ]; then
+            echo "::error::Cleanup failed (HTTP $http_status)"
+            exit 1
+          fi
+
+          echo "Device code cleanup ran successfully."

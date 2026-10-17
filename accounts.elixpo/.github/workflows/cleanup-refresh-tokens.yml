@@ -1,0 +1,16 @@
+name: Cleanup Expired Refresh Tokens
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Run every 30 minutes
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke Cleanup Cron
+        run: |
+          curl -X GET "https://accounts.elixpo.com/api/cron/cleanup-refresh-tokens" \
+            -H "Authorization: Bearer ${{ secrets.REFRESH_TOKEN_CLEANUP_CRON_SECRET }}" \
+            --fail

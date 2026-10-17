@@ -1,0 +1,12 @@
+-- accounts.elixpo#80: atomic single-use claim for the device_code polling
+-- grant. Purely additive (matches every prior migration in this repo —
+-- 0007, 0018, 0019 — none of which touch an existing CHECK constraint,
+-- which SQLite can only do via the 12-step recreate-and-copy dance).
+--
+-- `status` keeps its existing, unmodified meaning: the user's decision
+-- (pending/approved/denied), plus the lazily-applied `expired` transition
+-- from #79. `exchanged_at` is orthogonal — has the CLI collected the
+-- tokens for an *approved* request yet — so the token endpoint's replay
+-- guard is a single atomic UPDATE against this column, never touching the
+-- CHECK-constrained `status` column at all.
+ALTER TABLE device_authorizations ADD COLUMN exchanged_at DATETIME;
