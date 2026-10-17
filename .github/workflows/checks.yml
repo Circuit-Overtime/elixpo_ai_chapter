@@ -1,0 +1,82 @@
+name: Monorepo checks
+
+on:
+  workflow_call:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: monorepo-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  shared:
+    name: Package site checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Install test tools
+        run: python -m pip install 'pytest>=8' 'ruff>=0.6,<1'
+      - name: Lint and test
+        run: |
+          ruff check scripts tests
+          ruff format --check scripts tests
+          python -m pytest -q tests
+
+  win-dot-panel:
+    name: Win Dot Panel checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/win-dot-panel
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Install Qt runtime library
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1
+      - name: Install application and test dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Lint and test
+        run: |
+          ruff check src scripts tests
+          ruff format --check src scripts tests
+          python -m pytest -q
+
+  screenbridge:
+    name: ScreenBridge checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/screenbridge
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Compile and test
+        run: |
+          python -m compileall -q screenbridge tests
+          python -m unittest discover -s tests -v
+      - name: Build and inspect Debian package
+        run: |
+          ./packaging/build-deb.sh --revision 1
+          package=dist/screenbridge_1.0.0-1_all.deb
+          test "$(dpkg-deb --field "$package" Package)" = screenbridge
+          test "$(dpkg-deb --field "$package" Version)" = 1.0.0-1
