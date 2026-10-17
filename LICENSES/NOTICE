@@ -1,0 +1,34 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        admin.elixpo (admin.elixpo.com)
+  What it is:  Elixpo Admin - the internal admin control plane and Cloudflare
+               observability dashboard for the Elixpo account. Auto-discovers
+               every Pages project, Worker, D1, KV, Queue, Durable Object and
+               Workflow, surfaces full Cloudflare observability, and ships a
+               public status page. Gated to accounts.elixpo admins only.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. It is the source for an internal,
+  hosted admin dashboard.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ (logos, icons, og-image) are provided under
+  CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest E-badge, and the
+  Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com
