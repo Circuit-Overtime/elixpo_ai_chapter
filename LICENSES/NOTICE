@@ -1,0 +1,68 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        oreoOS ("Oreo Badge")
+  What it is:  A handheld, panda-themed conference badge that runs a real
+               MicroPython operating system on ESP32-S3 hardware - the OreoOS
+               firmware, the oreoWare drivers, the on-device apps, and the
+               host-side flashing/OTA tooling.
+
+REGISTERED COPYRIGHT
+--------------------
+
+  Copyright in the OreoOS firmware and operating-system source code is a
+  registered copyright held by Elixpo (Ayushman Bhattacharya), filed with the
+  Copyright Office under Registration No. LD-26455/2026-CO. The registration
+  records authorship of the OreoOS firmware / OS source and does not narrow the
+  MIT grant to those files - the source stays open under MIT WITH
+  Oreo-trademarks. It reinforces the "Oreo" / "OreoOS" / "Oreo Badge" brand and
+  royalty reservations below and in LICENSES/exceptions/Oreo-trademarks.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  This repository ships firmware and hardware, and reserves the following on
+  top of the MIT / CC-BY-4.0 grant:
+
+  Published package
+    The `oreoos` package (built from pyproject.toml and published to GitHub
+    Packages / PyPI on each release tag) is reserved to Elixpo. The package
+    name is reserved; forks must publish under a different name. The
+    MIT-licensed source may of course be reused.
+
+  Firmware / OTA release bundles
+    The official OreoOS firmware images and OTA bundles distributed from this
+    repository's GitHub Releases (the per-version `manifest.json`, `bundle.tar`,
+    and per-file assets the badge SHA-checks and pulls over the air) are the
+    official Elixpo builds. The release channel, the "Oreo" OTA identity, and
+    the GitHub Releases listing are reserved to Elixpo; the source is MIT.
+    These images also incorporate upstream MicroPython (MIT) and ESP-IDF
+    (Apache-2.0) components - see LICENSES/notices/notice-board.
+
+  Hardware design (brand-reserved)
+    The Oreo Badge industrial / mechanical design, the panda mascot, the chest
+    E-badge, and the physical product identity are brand-reserved. You may
+    build, modify, and redistribute boards from the open design and source
+    files, but NOT under the "Oreo", "Oreo Badge", or "Elixpo" names or using
+    the mascot as primary branding (see LICENSES/exceptions/Oreo-trademarks).
+
+BRAND ASSETS (protected under the Elixpo CC rules)
+--------------------------------------------------
+
+  All OreoOS visual assets in this repository - the Oreo mascot art, badge
+  sprites, app icons, banners, and splash art under assets/ and the per-app
+  assets/ trees - are protected under the Elixpo CC rules: CC-BY-4.0 WITH
+  Oreo-trademarks. You may reuse and adapt these asset files only with the
+  attribution CC-BY-4.0 requires, and the Oreo mascot, the chest E-badge, and
+  the Elixpo / Oreo names and palette remain reserved and may NOT be reused as
+  branding or to imply endorsement (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com

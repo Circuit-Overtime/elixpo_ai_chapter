@@ -1,0 +1,71 @@
+{
+  "captured_at_utc": "2026-10-01T06:03:38.852902+00:00",
+  "repository_revision": "e21528720ac1a624ce9e05de3c89c97550f4ce38",
+  "serial_port": "/dev/ttyACM0",
+  "runtime": {
+    "idf_version_error": "AttributeError(\"'module' object has no attribute 'get_idf_version'\",)",
+    "implementation_name": "micropython",
+    "platform": "esp32",
+    "uname": {
+      "nodename": "esp32",
+      "release": "1.28.0",
+      "version": "v1.28.0 on 2026-09-30",
+      "machine": "Generic ESP32S3 module with Octal-SPIRAM with ESP32S3",
+      "sysname": "esp32"
+    },
+    "filesystem": {
+      "blocks_total": 3584,
+      "fragment_size": 4096,
+      "blocks_free": 1483,
+      "blocks_available": 1483,
+      "block_size": 4096,
+      "bytes_total": 14680064,
+      "bytes_free": 6074368
+    },
+    "spiram_8bit_error": "IndexError('list index out of range',)",
+    "micropython_version": "3.4.0; MicroPython v1.28.0 on 2026-09-30",
+    "cpu_hz": 240000000,
+    "internal_8bit": {
+      "minimum_free_bytes": [
+        32768,
+        32032,
+        31744,
+        32032
+      ],
+      "capabilities": 2052,
+      "total_bytes": [
+        32767,
+        32031,
+        31744,
+        32031
+      ],
+      "free_bytes": [
+        8096,
+        7716,
+        7680,
+        7716
+      ],
+      "largest_free_block": [
+        22308,
+        4,
+        0,
+        4
+      ]
+    },
+    "gc": {
+      "allocated_bytes": 4016,
+      "free_bytes": 7268944
+    },
+    "implementation_version": [
+      1,
+      28,
+      0,
+      ""
+    ],
+    "reset_cause": 5
+  },
+  "configuration": {
+    "path": "/home/elixpo/esp/micropython-v1.28/ports/esp32/build-oreoos-s3-v55/sdkconfig",
+    "sha256": "af0c58e8bb26b96e19e980fb8fd245771ee44812c4b6342607e450e35a582708"
+  }
+}

@@ -1,0 +1,44 @@
+name: 🎮 App proposal
+description: You want to build (or have us build) a new app for the badge.
+title: "[app] "
+labels: ["app-proposal", "needs-triage"]
+body:
+  - type: input
+    id: app_name
+    attributes:
+      label: App name
+      placeholder: "e.g. Tic-Tac-Panda"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: One-paragraph summary
+    validations:
+      required: true
+
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who's building it?
+      options:
+        - I'll send a PR
+        - I want help
+        - Someone else, please
+    validations:
+      required: true
+
+  - type: textarea
+    id: assets
+    attributes:
+      label: Assets needed
+      description: Sprites? Sounds? Custom font? List them so we can drop the right prompts into `prompts/`.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow the project's [Code of Conduct](https://github.com/elixpo/oreo/blob/main/CODE_OF_CONDUCT.md).
+          required: true
