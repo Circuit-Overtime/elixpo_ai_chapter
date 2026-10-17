@@ -1,0 +1,7 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.env.local
+.env.production.local
+.wrangler/

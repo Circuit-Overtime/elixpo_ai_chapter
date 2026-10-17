@@ -1,0 +1,191 @@
+{
+  "aggregate_schema_version": 1,
+  "created_at_utc": "2026-10-01T06:33:08.188668+00:00",
+  "label": "native-dma-stripes",
+  "methodology": {
+    "independent_runs": 10,
+    "frames_per_run": 720,
+    "total_frames": 7200,
+    "warmup_frames_per_run": 48,
+    "latency_percentiles": "pooled empirical distribution over all frames",
+    "run_confidence_intervals": "two-sided 95% Student-t"
+  },
+  "inputs": [
+    "paper/measurements/video-benchmark-native-dma-stripes-20261001T062054Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r02-20261001T062537Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r03-20261001T062614Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r04-20261001T062651Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r05-20261001T062728Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r06-20261001T062805Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r07-20261001T062842Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r08-20261001T062919Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r09-20261001T062956Z.json",
+    "paper/measurements/video-benchmark-native-dma-stripes-r10-20261001T063033Z.json"
+  ],
+  "artifacts": {
+    "application": "f662e43049bd796ca41d7630d44d84051077bd6e2af3668c062d9451a4923404",
+    "media": "2bc5ea5be82e1b1c70862afd1eb6029da49a850179352b0230720ab72d3d9ce6",
+    "sdkconfig": "18a8142f7def70f3cfa4e9aa2132796dcd29ecd289e08ea6d199cd5bef328bfe"
+  },
+  "metadata": {
+    "project": "oreo_video_dma",
+    "idf": "v5.5.1",
+    "elf_sha256": "a1e8979f4a82aaa064fab12b8010a2b486c5d794d06aaf46faa51a0acb31ae4e",
+    "cpu_mhz": 240,
+    "spi_khz": 40000,
+    "source_width": 180,
+    "source_height": 135,
+    "source_fps": 24,
+    "source_frames": 240,
+    "container_version": 6,
+    "container_bytes": 4271634,
+    "warmup_frames": 48,
+    "sample_frames": 720
+  },
+  "container_size_mib": 4.073747634887695,
+  "fps": {
+    "count": 10,
+    "mean": 24.003691600000003,
+    "standard_deviation": 5.163977800251566e-07,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 24.00369123061695,
+    "upper": 24.003691969383055,
+    "minimum": 24.003691,
+    "maximum": 24.003692
+  },
+  "elapsed_us": {
+    "count": 10,
+    "mean": 29995386.4,
+    "standard_deviation": 0.5163977794943223,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 29995386.030616947,
+    "upper": 29995386.76938305,
+    "minimum": 29995386.0,
+    "maximum": 29995387.0
+  },
+  "run_mean_work_us": {
+    "count": 10,
+    "mean": 38410.65986111111,
+    "standard_deviation": 0.019138353573466427,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 38410.64617130887,
+    "upper": 38410.67355091335,
+    "minimum": 38410.634722222225,
+    "maximum": 38410.694444444445
+  },
+  "run_p99_work_us": {
+    "count": 10,
+    "mean": 40204.60799999999,
+    "standard_deviation": 0.26951808844629216,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 40204.41521176898,
+    "upper": 40204.800788231005,
+    "minimum": 40203.86,
+    "maximum": 40204.86
+  },
+  "drops": 0,
+  "deadline_misses": 0,
+  "timing_us": {
+    "inflate_us": {
+      "mean": 7096.83375,
+      "p50": 7237.0,
+      "p95": 8372.199999999983,
+      "p99": 8889.0,
+      "maximum": 9029.0
+    },
+    "scale_us": {
+      "mean": 2598.7391666666667,
+      "p50": 2600.0,
+      "p95": 2607.0,
+      "p99": 2608.0,
+      "maximum": 2609.0
+    },
+    "dma_wait_us": {
+      "mean": 28469.79763888889,
+      "p50": 28468.0,
+      "p95": 28477.0,
+      "p99": 28478.0,
+      "maximum": 28481.0
+    },
+    "lcd_us": {
+      "mean": 31311.99861111111,
+      "p50": 31310.0,
+      "p95": 31316.0,
+      "p99": 31321.0,
+      "maximum": 31322.0
+    },
+    "work_us": {
+      "mean": 38410.65986111111,
+      "p50": 38552.0,
+      "p95": 39689.849999999984,
+      "p99": 40206.0,
+      "maximum": 40346.0
+    }
+  },
+  "heap_deltas": [
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1292,
+      "minimum_free_bytes": 246996
+    }
+  ]
+}

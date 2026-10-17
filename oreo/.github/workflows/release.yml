@@ -1,0 +1,155 @@
+name: release
+
+
+on:
+  # Manual escape hatch — pin an explicit version (e.g. for a beta cut)
+  # or re-run the release workflow against the current tip.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Explicit version (e.g. v1.3.0). Overrides config.py."
+        required: false
+      channel:
+        description: "Channel name (stable | beta)"
+        required: false
+        default: "stable"
+  push:
+    branches: [main]
+    paths:
+      - 'oreoOS/**'
+      - 'oreoWare/**'
+
+permissions:
+  contents: write    
+                     
+  packages: write    
+                     
+
+concurrency:
+  group: oreo-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # Skip the bump-commit's own re-trigger.
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      !contains(github.event.head_commit.message, '[skip release]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # Need a PAT (not GITHUB_TOKEN) so the auto-bump push back to
+          # main can re-trigger downstream workflows that listen on
+          # push. CI_AGENT_TOKEN already exists in repo secrets.
+          token: ${{ secrets.CI_AGENT_TOKEN || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Resolve channel + version
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            CHANNEL="${{ github.event.inputs.channel }}"
+            VERSION="${{ github.event.inputs.version }}"
+            [ -z "$CHANNEL" ] && CHANNEL="stable"
+          else
+            CHANNEL="stable"
+            VERSION=""
+          fi
+          # Current version literal from config.py — single source of truth.
+          CURR=$(grep -oP 'VERSION\s*=\s*"\Kv\d+\.\d+\.\d+' oreoOS/config.py || echo "v0.0.0")
+          if [ -z "$VERSION" ]; then
+            # Auto-bump patch component for push-triggered releases.
+            # MAJ/MIN/PAT split via parameter expansion — no python here
+            # so we don't fight YAML's indentation rules around heredocs.
+            CORE=${CURR#v}
+            MAJ=${CORE%%.*}
+            REST=${CORE#*.}
+            MIN=${REST%%.*}
+            PAT=${REST#*.}
+            VERSION="v${MAJ}.${MIN}.$((PAT + 1))"
+            # Rewrite config.py with the bumped version literal, commit
+            # back to main with [skip release] so this push doesn't
+            # re-fire the workflow.
+            sed -i "s/VERSION\s*=\s*\"v[0-9]\+\.[0-9]\+\.[0-9]\+\"/VERSION           = \"$VERSION\"/" oreoOS/config.py
+            git config user.name  "elixpoo"
+            git config user.email "elixpoo@users.noreply.github.com"
+            git add oreoOS/config.py
+            git commit -m "chore(release): bump VERSION to $VERSION [skip release]"
+            git push origin HEAD:main
+          fi
+          TAG="$CHANNEL/$VERSION"
+          echo "tag=$TAG"         >> "$GITHUB_OUTPUT"
+          echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building $TAG (current was $CURR)"
+
+      - name: Build release artefacts
+        run: |
+          # The asset-base-url makes the manifest's per-file URLs point
+          # at the actual GitHub Release asset URLs once they're uploaded
+          # by the next step.
+          ASSET_BASE="https://github.com/${{ github.repository }}/releases/download/${{ steps.meta.outputs.tag }}/"
+          python tools/build_release.py \
+            --version "${{ steps.meta.outputs.version }}" \
+            --channel "${{ steps.meta.outputs.channel }}" \
+            --notes   "${{ github.event.head_commit.message || github.event.inputs.version }}" \
+            --asset-base-url "$ASSET_BASE" \
+            --out dist
+
+      - name: Flatten release files for upload
+        run: |
+          # Each shipping file becomes its own asset, named by replacing
+          # path separators with underscores (mirrors what
+          # build_release.py puts in the manifest's `url` field).
+          mkdir -p upload
+          cp dist/${{ steps.meta.outputs.version }}/manifest.json upload/manifest.json
+          cp dist/${{ steps.meta.outputs.version }}/bundle.tar    upload/bundle.tar
+          (cd dist/${{ steps.meta.outputs.version }}/files && \
+            find . -type f -print0 | \
+            while IFS= read -r -d '' f; do
+              flat="${f#./}"
+              flat="${flat//\//_}"
+              cp "$f" "../../../upload/$flat"
+            done)
+
+      - name: Create release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          # Use the elixpoo PAT so the release card on GitHub shows
+          # "elixpoo released..." rather than "github-actions[bot]".
+          # The PAT must have `contents:write` for the repo.
+          token: ${{ secrets.CI_AGENT_TOKEN }}
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: "OreoOS ${{ steps.meta.outputs.version }} (${{ steps.meta.outputs.channel }})"
+          prerelease: ${{ steps.meta.outputs.channel != 'stable' }}
+          body: |
+            Auto-built by `tools/build_release.py`.
+            Channel: `${{ steps.meta.outputs.channel }}`
+            Version: `${{ steps.meta.outputs.version }}`
+
+            The badge's OTA client (`oreoOS/ota.py`) consumes
+            `manifest.json` from this release and pulls each listed file.
+            See `CONTRIBUTING.md` for the release process.
+          files: |
+            upload/*
+
+
+      - name: Install build tools
+        run: pip install --upgrade build twine
+      - name: Build sdist + wheel
+        run: python -m build
+      - name: Publish to GitHub Packages (PyPI registry)
+        env:
+          TWINE_USERNAME: __token__
+          # Attribute the package upload to elixpoo too. The PAT needs
+          # `write:packages` (and `read:packages` for re-uploads).
+          TWINE_PASSWORD: ${{ secrets.CI_AGENT_TOKEN }}
+          TWINE_REPOSITORY_URL: https://${{ github.repository_owner }}.pkg.github.com/${{ github.repository_owner }}/
+        run: twine upload --skip-existing dist/oreoos-*.tar.gz dist/oreoos-*.whl
