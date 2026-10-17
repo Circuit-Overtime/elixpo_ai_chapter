@@ -48,8 +48,8 @@ post-training quantization; reproducible machine learning; edge AI; Arduino UNO 
 
 ## Related identifiers
 
-- `Is supplement to`: https://doi.org/10.31224/TO-BE-ASSIGNED
+- `Is supplement to`: https://doi.org/10.5281/zenodo.23424654
 - `Is identical to`: https://github.com/elixpo/monodiffuse/tree/v1.0.0
 
-Do not publish the placeholder. Wait for the engrXiv DOI or remove the first
-relationship and add it later when editing the Zenodo metadata.
+The paper DOI above identifies the deposited preprint version. Keep the software
+as a separate Zenodo record and use this relationship to connect the two.

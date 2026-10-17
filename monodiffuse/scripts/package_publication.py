@@ -73,10 +73,12 @@ def main() -> None:
 
     engrxiv = OUTPUT / "engrxiv"
     preprints = OUTPUT / "preprints"
+    zenodo_preprint = OUTPUT / "zenodo-preprint"
     zenodo = OUTPUT / "zenodo"
     shutil.rmtree(OUTPUT, ignore_errors=True)
     engrxiv.mkdir(parents=True)
     preprints.mkdir(parents=True)
+    zenodo_preprint.mkdir(parents=True)
     zenodo.mkdir(parents=True)
 
     manuscript = engrxiv / "monodiffuse-preprint.pdf"
@@ -91,6 +93,15 @@ def main() -> None:
     shutil.copy2(paper, preprints_pdf)
     write_manuscript_zip(paper.parent, preprints_source)
 
+    zenodo_preprint_pdf = zenodo_preprint / "monodiffuse-preprint.pdf"
+    zenodo_preprint_source = zenodo_preprint / "monodiffuse-manuscript-source.zip"
+    shutil.copy2(paper, zenodo_preprint_pdf)
+    shutil.copy2(preprints_source, zenodo_preprint_source)
+    shutil.copy2(
+        ROOT / "publication" / "zenodo-preprint-metadata.md",
+        zenodo_preprint / "metadata.md",
+    )
+
     shutil.copy2(ROOT / "CITATION.cff", zenodo / "CITATION.cff")
     shutil.copy2(ROOT / "publication" / "zenodo-software-metadata.md", zenodo / "metadata.md")
 
@@ -99,6 +110,9 @@ def main() -> None:
         source,
         preprints_pdf,
         preprints_source,
+        zenodo_preprint_pdf,
+        zenodo_preprint_source,
+        zenodo_preprint / "metadata.md",
         zenodo / "CITATION.cff",
         zenodo / "metadata.md",
     ]
