@@ -20,7 +20,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 classifications and custody decisions are published from the canonical registry
 maintained by `elixpo/elixpo`.
 
-<!-- BEGIN ELIXPO SHARED · sha256:a28f9092f071abdc191a69a59532e6ef600d7f9403dc3f81be52a1103140cd46 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:2eadee9a84daf2ac0ca524c423bd59b34829d56220f44cfdd015227aec0e61b6 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -134,10 +134,11 @@ specialized repositories operate deeper publication surfaces:
 
 - [`packages.elixpo`](https://packages.elixpo.com) owns package building, signed APT
   distribution, release artifacts, installers, and the package catalogue.
-- [`research.elixpo`](https://research.elixpo.com) is the planned research publisher for
-  papers, citations, datasets, models, demonstrations, and reproducibility
-  records. Research code and primary evidence stay in their owning project
-  repositories.
+- `research.elixpo.com` is reserved for the planned standalone research
+  publisher. Until that surface launches, the live [Elixpo Research
+  index](https://elixpo.com/research) publishes papers, citations, datasets, models,
+  demonstrations, and reproducibility records. Research code and primary
+  evidence stay in their owning project repositories.
 
 The specialized sites must consume the shared schema or synchronize changes
 through reviewable pull requests. They do not maintain independent
@@ -148,6 +149,10 @@ owning repository as the source of technical evidence.
 
 - **Contribute to a project:** use the owning repository's contribution guide,
   current issues, and maintainer review process.
+- **Follow current conversation:** use the moderated
+  [Elixpo community index](https://elixpo.com/community) or open the canonical forum on
+  GitHub. The website's latest feed is activity-ordered and is not an editorial
+  endorsement.
 - **Discuss a Chapter:** start with [Elixpo Discussions](https://github.com/orgs/elixpo/discussions) and
   describe the working artifact, accountable maintainer, next release objective,
   and availability to review contributions. A discussion is not automatic
@@ -155,17 +160,25 @@ owning repository as the source of technical evidence.
 - **Follow Chapter operations:** use the
   [Elixpo Chapter repository](https://github.com/elixpo/elixpo_chapter).
 - **Explore installable work:** visit [Elixpo Packages](https://packages.elixpo.com).
-- **Follow research:** the dedicated [Elixpo Research](https://research.elixpo.com) surface
-  is planned as a separately maintained publisher; research records remain
-  available through the portal and owning repositories until it launches.
+- **Follow research:** use the live [Elixpo Research
+  index](https://elixpo.com/research). The separately maintained
+  `research.elixpo.com` publisher remains planned and is not presented as an
+  available service.
 
 ## Evidence, credit, and history
 
 Credit should point to attributable work—merged changes, reviews, releases,
 research, design, documentation, or community operations. Repository history is
-the current evidence source. Elixpo will publish people and organization-history
-records only after roles, dates, consent, and evidence are verified; decorative
-contributor counts are intentionally omitted.
+the current evidence source. The [People record](https://elixpo.com/people) separates
+current organization responsibility from project maintenance, alumni, advisors,
+and community contribution. The [contributor records](https://elixpo.com/contributors)
+describe attributable public outcomes without presenting a commit total as a
+measure of human value. The [organization timeline](https://elixpo.com/history) states date
+precision and links the public evidence for every milestone.
+
+Unknown role dates and empty role categories remain explicit. Elixpo does not
+infer employment, certification, permanent affiliation, review, or consent for
+a private biography from a public contribution.
 
 ## Funding boundary
 
@@ -187,13 +200,17 @@ weights, and brand assets require artifact-specific review.
 
 Copyright permission does not grant permission to impersonate Elixpo or claim
 endorsement. The canonical brand destination is the
-[Elixpo asset library](https://elixpo.com/assets); its final standalone brand and sticker
+[Elixpo asset library](https://elixpo.com/assets). Colour tokens, typography guidance, and
+general usage guidance are public. Official sticker artwork is shown only as a
+watermarked preview; print-ready files or physical packs are released through
+an approved written event partnership. The final standalone brand and trademark
 permission policy is still being consolidated.
 
 ---
 
 [Website](https://elixpo.com) · [GitHub](https://github.com/elixpo) ·
 [Discussions](https://github.com/orgs/elixpo/discussions) · [Chapter](https://github.com/elixpo/elixpo_chapter) ·
-[Packages](https://packages.elixpo.com)
+[Research](https://elixpo.com/research) · [Packages](https://packages.elixpo.com) · [People](https://elixpo.com/people) ·
+[History](https://elixpo.com/history)
 
 <!-- END ELIXPO SHARED -->

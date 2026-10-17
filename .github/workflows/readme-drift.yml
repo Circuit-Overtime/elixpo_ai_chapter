@@ -1,0 +1,33 @@
+name: Verify Chapter README source
+
+on:
+  pull_request:
+    paths:
+      - "README.md"
+      - ".github/workflows/readme-drift.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify canonical Chapter README
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+
+      - name: Check out the canonical source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: elixpo/elixpo
+          ref: main
+          path: _canonical
+          persist-credentials: false
+
+      - name: Compare generated output
+        run: cmp _canonical/docs/readme/generated/chapter.md README.md
