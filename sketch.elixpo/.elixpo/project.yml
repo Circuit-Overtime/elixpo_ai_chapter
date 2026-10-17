@@ -1,0 +1,19 @@
+project:
+  name: sketch.elixpo
+  description: "LixSketch — Whiteboard/Canvas (monorepo)"
+  stack: nextjs
+  node_version: "20"
+
+ci:
+  lint_cmd: ""
+  test_cmd: "npm test"
+  build_cmd: "npx --no-install @cloudflare/next-on-pages"
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [frontend, nextjs, ui, cloudflare]
+    lead: true
+
+gist:
+  id: ""
+  account: elixpoo

@@ -1,0 +1,44 @@
+name = "lixsketch-collab"
+main = "worker/src/index.ts"
+compatibility_date = "2025-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[durable_objects]
+bindings = [
+  { name = "ROOM", class_name = "RoomDurableObject" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RoomDurableObject"]
+
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "lixsketch"
+database_id = "65fc6d04-d659-4cb6-b34c-750a763693e4"
+migrations_dir = "worker/migrations"
+
+# KV Namespace
+[[kv_namespaces]]
+binding = "KV"
+id = "aa3a1466b15e443a8f0858c3b9a776c8"
+
+[vars]
+ENVIRONMENT = "production"
+ROOM_TTL_HOURS = "3"
+IDLE_TIMEOUT_MINS = "40"
+ELIXPO_AUTH_URL = "https://accounts.elixpo.com"
+APP_ORIGIN = "https://sketch.elixpo.com"
+
+# Cron trigger: run workspace cleanup daily at 3:00 AM UTC
+[triggers]
+crons = ["0 3 * * *"]
+
+# Secrets (set via `wrangler secret put`):
+# ELIXPO_CLIENT_ID
+# ELIXPO_CLIENT_SECRET
+# CLOUDINARY_KEY
+# CLOUDINARY_SECRET
+# SESSION_SECRET
+# MCP_RELAY_SECRET

@@ -1,0 +1,44 @@
+name: Web embed whitelist request
+description: Request support for embedding a website inside a LixSketch frame.
+title: "[Web embed whitelist] "
+labels:
+  - enhancement
+body:
+  - type: input
+    id: url
+    attributes:
+      label: URL to embed
+      description: Provide the complete HTTPS URL that was rejected.
+      placeholder: https://example.com/page
+    validations:
+      required: true
+  - type: input
+    id: hostname
+    attributes:
+      label: Hostname
+      description: Provide only the hostname serving the embedded content.
+      placeholder: example.com
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for requesting access
+      description: Explain how this embed will be used in a LixSketch workspace.
+    validations:
+      required: true
+  - type: textarea
+    id: owner-contact
+    attributes:
+      label: Website owner contact details
+      description: Provide the website owner's name, role, and a verified email or public contact page.
+      placeholder: Owner name, role, email or public contact URL
+    validations:
+      required: true
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission confirmation
+      options:
+        - label: I confirm that the website owner permits this content to be embedded on other origins.
+          required: true

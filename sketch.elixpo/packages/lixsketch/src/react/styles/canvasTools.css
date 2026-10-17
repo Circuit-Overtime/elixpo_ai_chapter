@@ -1,0 +1,769 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+
+
+
+.toolbar {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: flex-start;
+    align-items: center;
+    background: #232329;
+    width: 42px;
+    padding: 6px 0;
+    box-sizing: border-box;
+    z-index: 1000;
+    max-height: calc(100vh - 48px - 10px - 70px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.toolbar::-webkit-scrollbar {
+    display: none;
+}
+
+.toolbar .spacer
+{
+    height: 1px;
+    position: relative;
+    width: 55%;
+    background: #555;
+}
+.toolbar i {
+    font-size: 18px;
+    color: #ffffffad;
+    margin: 0;
+    padding: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 6px;
+}
+
+.toolbar i:hover {
+    color: #f259efad;
+    background: #343448;
+    transition: 0.2s;
+}
+
+.toolbar ion-icon {
+    font-size: 18px;
+    color: #c873e4;
+    margin: 0;
+    padding: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 6px;
+}
+
+.toolbar i.selected
+{
+    background: #444480;
+    transition: 0.2s;
+}
+.iconsToolBar.hidden 
+{
+    filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s;
+}
+.iconsToolBar
+{
+    position: absolute;
+    height: 70%;
+    left: 66px;
+    top: 55%;
+    transform: translateY(-50%);
+    display: flex;
+    z-index: 10;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    border: 2px solid rgb(91, 84, 84);
+    border-radius: 10px;
+    padding: 10px 5px;
+    gap: 10px;
+    box-sizing: border-box;
+    opacity: 1;
+    pointer-events: all;
+    filter: blur(0px);
+    transition: 0.25s;
+}
+.iconsToolBar::-webkit-scrollbar
+{
+    display: none;
+}
+.choiceBoxes
+{
+    width: 90%;
+    height: 50px;
+    margin-bottom: 5px;
+    padding: 5px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #444448;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.choiceBoxes:hover
+{
+    background: #343448;
+    transition: 0.25s;
+}
+.choiceBoxes.selected
+{
+    background: #3a3a5c;
+    border: 1px solid #5B57D1;
+    transition: 0.25s;
+}
+.choiceBoxes.selected i,
+.choiceBoxes.selected p
+{
+    color: #b8a4f4;
+}
+.choiceBoxes .information 
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    margin-left: 10px;
+    gap: 10px;
+    width: 100%;
+}
+.choiceBoxes i 
+{
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.choiceBoxes p 
+{
+    font-size: 1.2em;
+    color: #fff;
+    font-family: "lixFont", serif;
+    font-weight: 300;
+    user-select: none;
+    margin-left: 10px;
+}
+
+.searchBar 
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 90%;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.searchBar i 
+{
+    font-size: 1.5em;
+    color: #fff;
+}
+.searchBar input[type="text"]
+{
+    height: 30px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1.3em;
+    font-family: "lixFont", serif;
+    font-weight: 300;
+    user-select: none;
+}
+.iconsContainer 
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 340px;
+    max-height: 90%;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5px 5px;
+    gap: 2px;
+    box-sizing: border-box;
+}
+.iconsContainer::-webkit-scrollbar
+{
+    display: none;
+}
+.icons 
+{
+    height: 50px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s;
+    border: 2px solid #444448;
+    margin: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.icons svg
+{
+    height: 35px !important;
+    width: 35px !important;
+    /* fill: #fff; */
+}
+.icons:hover 
+{
+    background: #343448;
+    border: 2px solid #5555a0;
+    transition: 0.25s;
+}
+
+#freehand-canvas 
+{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    transform-origin: center;
+    /* background: rgba(255, 255, 204, 0.304); */
+}
+
+
+.footerSection
+{
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    background: transparent;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: right;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.stackControls 
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background: #343448;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.stackControls i 
+{ 
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+}
+.stackControls i.disabled 
+{
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+
+.zoomControls 
+{
+    display: flex;
+    background: #343448;
+    height: 40px;
+    width: 150px;
+    border-radius: 10px;
+    padding: 0 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.zoomControls i 
+{
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+    transition: 0.15s;
+}
+.zoomControls i:active
+{
+    background: #444480;
+    border-radius: 8px;
+    transition: 0.15s;
+}
+.zoomControls span 
+{
+    color: #fff;
+    cursor: pointer;
+    font-family: "lixFont";
+    font-weight: 300;
+    user-select: none;
+}
+
+
+.headerSection
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    background: #1a1a20;
+    border-bottom: 1px solid #2c2c35;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-sizing: border-box;
+    z-index: 1001;
+}
+
+.appMenu
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+}
+
+.hamburgerBtn
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: #232329;
+    border: 1px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.hamburgerBtn:hover
+{
+    background: #343448;
+    border-color: #444480;
+}
+.hamburgerBtn i
+{
+    font-size: 20px;
+    color: #999;
+    transition: 0.2s;
+}
+.hamburgerBtn:hover i
+{
+    color: #fff;
+}
+
+.logo
+{
+    height: 26px;
+    width: 26px;
+    background: none no-repeat center center;
+    background-size: contain;
+}
+
+.headerDivider
+{
+    width: 1px;
+    height: 24px;
+    background: #3a3a45;
+}
+
+.workspaceName input
+{
+    height: 28px;
+    width: 180px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    outline: none;
+    color: #ddd;
+    font-size: 0.95em;
+    font-family: "lixFont", serif;
+    font-weight: 400;
+    padding: 0 8px;
+    transition: 0.2s;
+}
+.workspaceName input:hover
+{
+    border-color: #3a3a50;
+    background: #232329;
+}
+.workspaceName input:focus
+{
+    border-color: #5B57D1;
+    background: #232329;
+    color: #fff;
+}
+
+.outsource
+{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    height: 100%;
+}
+
+.outsource i
+{
+    font-size: 1.4em;
+    color: #888;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 4px;
+    border-radius: 6px;
+}
+.outsource i:hover
+{
+    color: #fff;
+    background: #343448;
+}
+
+.outsourceBtns {
+    padding: 5px 16px;
+    border: 1px solid #333;
+    background-color: #232329;
+    color: #ccc;
+    font-size: 0.85rem;
+    font-family: "lixFont";
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+}
+
+.outsourceBtns.shareBtn:first-child {
+    background-color: #5B57D1;
+    border-color: #4a46b8;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.outsourceBtns.shareBtn:first-child:hover {
+    background-color: #6c67f3;
+    border-color: #5B57D1;
+}
+
+.outsourceBtns.shareBtn:last-of-type {
+    background-color: #2a2a38;
+    border-color: #3a3a50;
+    color: #bbb;
+}
+
+.outsourceBtns.shareBtn:last-of-type:hover {
+    background-color: #343448;
+    border-color: #5555a0;
+    color: #fff;
+}
+
+.outsourceBtns::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    transform: scale(0);
+    transition: transform 0.5s ease;
+}
+
+.outsourceBtns:hover::after {
+    transform: scale(4);
+}
+
+.outsourceBtns:hover {
+    border-color: #555;
+}
+
+#menuIcon
+{
+    display: flex;
+}
+
+/* --- Keyboard Shortcuts Modal --- */
+.shortcuts-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    visibility: visible;
+}
+.shortcuts-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+.shortcuts-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+}
+.shortcuts-content {
+    position: relative;
+    background: #1e1e28;
+    border: 1px solid #3a3a50;
+    border-radius: 14px;
+    width: 620px;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.shortcuts-content::-webkit-scrollbar {
+    width: 6px;
+}
+.shortcuts-content::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+.shortcuts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #2c2c3a;
+}
+.shortcuts-header h2 {
+    margin: 0;
+    font-family: "lixFont", sans-serif;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #ddd;
+}
+.shortcuts-close {
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+.shortcuts-close:hover {
+    color: #fff;
+    background: #343448;
+}
+.shortcuts-body {
+    display: flex;
+    gap: 24px;
+    padding: 16px 20px 20px;
+}
+.shortcuts-column {
+    flex: 1;
+}
+.shortcuts-column h3 {
+    font-family: "lixFont", sans-serif;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #8a8aad;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 0 0 8px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #2c2c3a;
+}
+.shortcuts-column h3:not(:first-child) {
+    margin-top: 16px;
+}
+.shortcut-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-family: "lixFont", sans-serif;
+    font-size: 0.88em;
+    color: #bbb;
+}
+.shortcut-keys {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #999;
+    font-size: 0.85em;
+}
+.shortcut-keys kbd {
+    display: inline-block;
+    background: #2a2a38;
+    border: 1px solid #3a3a50;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: "lixFont", sans-serif;
+    font-size: 0.9em;
+    color: #ccc;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* --- Save As Modal --- */
+.save-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    visibility: visible;
+}
+.save-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+.save-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+}
+.save-modal-content {
+    position: relative;
+    background: #1e1e28;
+    border: 1px solid #3a3a50;
+    border-radius: 14px;
+    width: 380px;
+    max-width: 90vw;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.save-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid #2c2c3a;
+}
+.save-modal-header h2 {
+    margin: 0;
+    font-family: "lixFont", sans-serif;
+    font-size: 1.05em;
+    font-weight: 500;
+    color: #ddd;
+}
+.save-modal-close {
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+.save-modal-close:hover {
+    color: #fff;
+    background: #343448;
+}
+.save-modal-body {
+    padding: 10px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.save-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+.save-option:hover {
+    background: #2a2a3a;
+    border-color: #444480;
+}
+.save-option.disabled {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+    position: relative;
+}
+.save-option-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #2a2a38;
+    flex-shrink: 0;
+}
+.save-option-icon i {
+    font-size: 18px;
+    color: #c873e4;
+}
+.save-option-info {
+    flex: 1;
+}
+.save-option-title {
+    margin: 0;
+    font-family: "lixFont", sans-serif;
+    font-size: 0.92em;
+    font-weight: 500;
+    color: #ddd;
+}
+.save-option-desc {
+    margin: 2px 0 0;
+    font-family: "lixFont", sans-serif;
+    font-size: 0.78em;
+    color: #777;
+}
+.coming-soon-badge {
+    font-family: "lixFont", sans-serif;
+    font-size: 0.7em;
+    color: #c873e4;
+    background: #2a2038;
+    border: 1px solid #c873e444;
+    border-radius: 6px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    pointer-events: none;
+}

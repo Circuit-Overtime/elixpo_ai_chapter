@@ -1,0 +1,13 @@
+creation_rules:
+  - path_regex: '\.env$'
+    age: >-
+      age1zptpgxhs9chnkudu69qut2hn706pmyngasvaz4ppf452un2x7p2ss6j96f,
+      age15j0hsfgz0ru2ampfc7kt950gqzsfcgwejz2wctde0jeu8ky8k30qwmqwu0,
+      age1xrl5h3076kq470ce68s2h5cevqx2zf2j38acjmrmkq2c23ycduksu7qym4,
+      age1zvud50ya7ad3d6rsrhr00wrdy72yqpp3m8wj5y6z0rvzvc62uctqd3cl3z
+
+
+# 1. Ayushman
+# 2. Vivek
+# 3. Sandipan
+# 4. Souvik 
