@@ -20,18 +20,22 @@
   <a href="https://art.elixpo.com">Elixpo Art</a> ·
   <a href="https://elixpo.com">Elixpo</a> ·
   <a href="https://github.com/orgs/elixpo/discussions">Discussions</a> ·
-  <a href="https://github.com/elixpo/elixpo_chapter">Monorepo</a> ·
-  <a href="https://github.com/sponsors/Circuit-Overtime">Sponsor</a>
+  <a href="https://github.com/elixpo/elixpo_chapter">Monorepo</a>
 </p>
 
 ---
+
+> [!IMPORTANT]
+> This repository is archived and no longer maintained. It remains available as
+> a historical record; no fixes, releases, support, or service availability are
+> promised.
 
 ## About
 
 **Elixpo Art** is an AI-powered creative platform for generating stunning images
 and video. It offers 15+ art styles and 8+ models, advanced image generation,
 robust gallery management, and vibrant social features to foster a creative
-community. The platform is currently **under active development**.
+community. This description records the project as it existed before archival.
 
 > This repository is the source for the **art.elixpo.com** service.
 
@@ -109,7 +113,6 @@ Elixpo has taken part in and been supported by **GSSOC**, **Hacktoberfest**,
 - 💬 **Join the conversation** in [GitHub Discussions](https://github.com/orgs/elixpo/discussions).
 - 🚀 **Submit your project** to be featured across the ecosystem.
 - 🛠️ **Contribute** - browse good first issues in the [monorepo](https://github.com/elixpo/elixpo_chapter).
-- ❤️ **Support us** via [GitHub Sponsors](https://github.com/sponsors/Circuit-Overtime).
 
 ## Brand assets
 
