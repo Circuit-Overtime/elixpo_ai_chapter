@@ -1,7 +1,5 @@
 import { createPageMetadata } from "@/lib/seo";
-import { LegalHero } from "@/components/LegalHero";
 import { ELIXPO_LINKS } from "@/lib/elixpo-links";
-import { VIDEOS } from "@/lib/media";
 
 export const metadata = createPageMetadata({
   title: "Privacy Policy",
@@ -11,29 +9,21 @@ export const metadata = createPageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <>
-      <LegalHero
-        title="Privacy Policy"
-        subtitle="Privacy-first by design. Here's exactly what we do - and don't - collect across the Elixpo ecosystem."
-        video={VIDEOS.accounts}
-        updated="June 2026"
-        heightClass="h-[80vh] min-h-[560px]"
-      />
-
-      <article className="prose prose-invert max-w-3xl mx-auto px-6 py-16 prose-headings:font-serif prose-headings:text-white prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-white">
+    <main className="page-shell legal-page">
+      <header className="page-intro"><p className="eyebrow">Policy / last reviewed October 2026</p><h1>Privacy policy</h1><p className="lede">This portal-level notice describes Elixpo’s general approach. A hosted service may process different data and should publish a service-specific notice where its behavior differs.</p></header>
+      <article className="prose prose-lg max-w-3xl prose-headings:tracking-tight prose-a:text-[#0b623c] prose-a:no-underline hover:prose-a:underline">
         <h2>Our approach</h2>
         <p>
-          Elixpo operates under a <strong>privacy-first framework</strong>. Our
-          client-side tools and public generation integrations proxy requests
-          transparently, without storing prompt logs or building intrusive
-          tracking profiles.
+          Elixpo aims to collect only the information needed to operate each
+          service. The exact data flow depends on the service, its account
+          requirements, infrastructure, and any third-party integration.
         </p>
 
         <h2>What we don&rsquo;t collect</h2>
         <ul>
-          <li>We do not store your prompts or generation history.</li>
           <li>We do not sell or share personal data with advertisers.</li>
-          <li>We do not require sign-up to use our public, open tools.</li>
+          <li>This portal does not require an account for public browsing.</li>
+          <li>We do not describe every Elixpo project as having the same data practices.</li>
         </ul>
 
         <h2>What we may process</h2>
@@ -47,10 +37,10 @@ export default function PrivacyPage() {
 
         <h2>Third-party services</h2>
         <p>
-          Some features rely on infrastructure and compute partners - including{" "}
-          <strong>Pollinations</strong>, Vercel, Cloudflare, DigitalOcean, and
-          Firebase. When a request is routed to a provider to fulfil a feature,
-          that provider&rsquo;s own privacy terms apply to that request.
+          Individual services may rely on third-party infrastructure. When data
+          is routed to a provider to fulfil a feature, that provider&rsquo;s terms
+          may apply. The relevant service should identify material providers in
+          its own documentation or notice.
         </p>
 
         <h2>Cookies &amp; analytics</h2>
@@ -79,6 +69,6 @@ export default function PrivacyPage() {
           <a href={ELIXPO_LINKS.discussions}>GitHub Discussions</a>.
         </p>
       </article>
-    </>
+    </main>
   );
 }
