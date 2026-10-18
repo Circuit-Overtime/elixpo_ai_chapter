@@ -95,16 +95,21 @@ or editorial treatment.
   Discussion support, and bounded merged-change recording. Deterministic
   authorization keeps product-code implementation and governance decisions
   outside the agent's authority.
-- `crumb.elixpo` and `oreoPI` remain paused. No repository consolidation or
-  dependency migration is implied by the Elixpoo v2 launch.
+- `crumb.elixpo` is now active as Crumb, Elixpo's handmade self-hosted
+  autonomous Rust agent harness and natural language terminal. Crumb owns its
+  local execution loop, permissions, tools, memory, sessions, checkpoints, and
+  supervision; Pollinations provides its default model intelligence. It is a
+  separate product from Elixpoo, which remains a non-coding GitHub
+  project-management agent.
+- `oreoPI` remains paused. No repository consolidation or dependency migration
+  is implied by either active agent product.
 
 ## What remains outside this closure
 
-The remaining agent-stack decision concerns Crumb and OreoPI: their dependency
-direction, ownership, history, and possible relationship to Elixpoo remain a
-separate future programme. Elixpoo v2 itself has a published event model,
-authorization boundary, credential contract, rollout manifest, audit path, and
-human override rules.
+The remaining agent-stack decision concerns OreoPI alone: its device/runtime
+direction, ownership, history, and possible relationship to Crumb remain a
+separate future programme. Elixpoo v2 and Crumb now have distinct published
+purposes and trust boundaries; neither requires a repository merge.
 
 Normal maintenance continues: registry facts change, releases ship, people may
 correct or withdraw profile data, and workflows are reviewed when their trust

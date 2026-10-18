@@ -17,7 +17,7 @@
   <a href="https://packages.elixpo.com">Packages</a>
 </p>
 
-<!-- BEGIN ELIXPO SHARED · sha256:5a08107ff38b26bcf4ad478c98e35036b619ddc609ed9f600606e185abc01755 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:a225b2fe25bfe81f02feedb267da4763d48391e8026723aa256f81cb0d04ea82 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -82,13 +82,13 @@ Feature placement is editorial and does not change these records.
 | --- | --- | --- |
 | [`cypher`](https://github.com/elixpo/cypher) | Incubating | Core |
 | [`agent.elixpo`](https://github.com/elixpo/agent.elixpo) | Active | Core |
+| [`crumb.elixpo`](https://github.com/elixpo/crumb.elixpo) | Active | Core |
 | [`elixpo_chapter`](https://github.com/elixpo/elixpo_chapter) | Active | Core |
 | [`Kareixo`](https://github.com/elixpo/Kareixo) | Active | Member |
 | [`oreo`](https://github.com/elixpo/oreo) | Active | Core |
 | [`packages.elixpo`](https://github.com/elixpo/packages.elixpo) | Active | Core |
 | [`sketch.elixpo`](https://github.com/elixpo/sketch.elixpo) | Active | Core |
 | [`Nano28C64`](https://github.com/elixpo/Nano28C64) | Maintenance | Core |
-| [`crumb.elixpo`](https://github.com/elixpo/crumb.elixpo) | Paused | Core |
 | [`oreoPI`](https://github.com/elixpo/oreoPI) | Paused | Core |
 
 ### Open Research
@@ -115,7 +115,7 @@ Feature placement is editorial and does not change these records.
 | [`payouts.elixpo`](https://github.com/elixpo/payouts.elixpo) | Active | Core |
 | [`status.elixpo`](https://github.com/elixpo/status.elixpo) | Active | Core |
 
-Registry snapshot: **2026-10-17**. Archived work remains visible in the
+Registry snapshot: **2026-10-18**. Archived work remains visible in the
 [GitHub organization](https://github.com/orgs/elixpo/repositories?q=archived%3Atrue)
 as history, not as currently supported work.
 
