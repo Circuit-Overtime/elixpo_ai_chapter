@@ -1,0 +1,40 @@
+{
+  "name": "Vignette Bloom Archive",
+  "version": 1,
+  "renderMode": "mosaic",
+  "portrait": {
+    "aspectRatio": "1:1",
+    "cellSize": 7,
+    "vignette": 48,
+    "animation": "wave"
+  },
+  "background": {
+    "cellSize": 9,
+    "vignette": 70,
+    "animation": "wave",
+    "loopSeconds": 12
+  },
+  "palette": {
+    "background": "#151512",
+    "paper": "#E2D9C8",
+    "accent": "#B63B12"
+  },
+  "generation": {
+    "provider": "Pollinations",
+    "model": "gptimage",
+    "outputPath": "/assets/{slug}/about/card-cover.webp",
+    "width": 768,
+    "height": 768,
+    "format": "webp",
+    "compression": {
+      "quality": 72,
+      "effort": 6
+    }
+  },
+  "sourceStandard": {
+    "minimumSize": "768x768",
+    "crop": "centered head-and-shoulders",
+    "format": "webp",
+    "path": "/assets/{slug}/about/ptr-11.webp"
+  }
+}

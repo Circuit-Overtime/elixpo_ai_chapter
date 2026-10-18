@@ -1,0 +1,92 @@
+{
+  "hero": {
+    "focusTags": ["DevOps", "Developer Experience", "AI Memory Systems"],
+    "name": "AYUSHMAN",
+    "headline": "DevOps, Platform & Developer Experience",
+    "subhead": "Open-Source Maintainer at Pollinations.ai · Product Engineer at Myceli AI",
+    "intro": "I build the CI/CD, release, observability, contributor automation, and developer tooling that help open-source and AI systems remain understandable and operable.",
+    "credentials": [
+      { "label": "GitHub Maintainer Advisory", "org": "Pollinations.ai" },
+      { "label": "Product Engineering & DevRel", "org": "Myceli AI" }
+    ],
+    "ctas": [
+      { "label": "View Work", "href": "projects" },
+      { "label": "Read Research", "href": "publications" },
+      { "label": "Connect", "href": "connect" }
+    ],
+    "portrait": "/assets/ayushman/punchlineSection/vr-pic1.webp"
+  },
+  "directions": [
+    {
+      "index": "01",
+      "label": "Primary practice",
+      "title": "DevOps, platform and Developer Experience",
+      "description": "CI/CD, release engineering, service health, contributor automation, access boundaries, and the systems that let other developers ship and operate software safely.",
+      "href": "projects"
+    },
+    {
+      "index": "02",
+      "label": "Technical minor",
+      "title": "MLOps memory and inference systems",
+      "description": "Caching, context assembly, retrieval, invalidation, privacy, recomputation, and observability for open AI services—grounded in reproducible research and running systems.",
+      "href": "publications"
+    },
+    {
+      "index": "03",
+      "label": "Public practice",
+      "title": "Open-source DevRel and maintainership",
+      "description": "Contributor paths, documentation, technical talks, and community programmes derived from implementation rather than separated from it.",
+      "href": "talks"
+    }
+  ],
+  "intro": {
+    "heroName": "AYUSHMAN",
+    "tagline": "PLATFORM",
+    "taglineSuffix": "ENGINEER!",
+    "description": "I work across open-source maintainership, platform engineering, research, and developer communities. I care about systems that are understandable to contributors, dependable for users, and documented well enough for someone else to operate.",
+    "highlights": [
+      "Maintainer at Pollinations.ai",
+      "Co-author of arXiv:2609.05463",
+      "GitHub Open Source Friday speaker",
+      "21-event GDG campus season",
+      "Builder of OreoLook",
+      "Operating Elixpo's release, automation, and status systems"
+    ],
+    "images": {
+      "portrait": "/assets/ayushman/punchlineSection/vr-pic1.webp",
+      "landscape": "/assets/ayushman/punchlineSection/hz-pic1.webp"
+    }
+  },
+  "websiteSection": {
+    "designedBy": "This portfolio is part of the Elixpo project ecosystem and was built to keep my projects, talks, research, and community work in one public place. Its visual direction was inspired by Nicolo Miranda, with artwork from Elixpo Art.",
+    "futurePlans": "I am developing deeper evidence around DevOps, developer experience, and trustworthy AI infrastructure. Planned additions include reproducible incident notes, operational measurements, and clearer links between project source, research, talks, and the decisions behind them.",
+    "codeStory": "Elixpo began as a way for friends to build together during university. It has since grown into a collection of open-source services and experiments spanning search, identity, publishing, developer tooling, and creative applications. Vivek Yadav and Anwesha Chakraborty have contributed to that journey, along with the wider community that has tested, documented, and improved these projects.",
+    "images": {
+      "owl": "/assets/ayushman/websiteSection/hz-owl1.webp",
+      "humanThink": "/assets/ayushman/websiteSection/human-think1.webp",
+      "seal": "/assets/ayushman/websiteSection/sq-seal1.webp"
+    }
+  },
+
+  
+  "techSection": {
+    "heading": "THE TECHY SYNAPSE",
+    "subheading": "SYSTEMS",
+    "description": "My primary path is DevOps and platform engineering through developer experience: CI/CD, release systems, observability, cloud deployment, contributor automation, and safe self-service. My AI infrastructure specialization is memory management, including caching, context assembly, retrieval, invalidation, privacy, and recomputation. Developer Relations is how I document and teach work after it exists.",
+    "reading": [
+      { "title": "Microprocessors and Microcontrollers", "author": "Krishna Kant", "status": "Reading", "note": "Architechture Programming and System Design" },
+      { "title": "Site Reliability Engineering", "author": "Google SRE Team", "status": "Reading", "note": "How Google runs production systems." },
+      { "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "status": "Next Up", "note": "Craft, habits, and thinking like an engineer." }
+    ],
+    "explore": [
+      { "label": "Talks", "caption": "Speaking and sessions", "href": "talks" },
+      { "label": "Writing", "caption": "Engineering and community notes", "href": "blogs" },
+      { "label": "Papers", "caption": "Research and publications", "href": "publications" }
+    ],
+    "images": {
+      "wand": "/assets/ayushman/techTracks/wand-1.webp",
+      "landscape": "/assets/ayushman/techTracks/hz-image1.webp",
+      "banner": "/assets/ayushman/hrz-image1.webp"
+    }
+  }
+}
