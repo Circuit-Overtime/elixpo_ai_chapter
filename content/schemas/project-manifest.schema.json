@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/project-manifest.schema.json",
+  "title": "Elixpo repository project manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "publication",
+    "license",
+    "ci",
+    "maintainers",
+    "governance",
+    "support",
+    "security"
+  ],
+  "properties": {
+    "schema_version": {
+      "enum": ["0.1", "1.0"]
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "title",
+        "description",
+        "family",
+        "artifact_type",
+        "lifecycle",
+        "relationship",
+        "custody",
+        "repository",
+        "status_owner",
+        "status_verified_at"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "name": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 20, "maxLength": 240},
+        "family": {"enum": ["project", "research", "service"]},
+        "artifact_type": {
+          "enum": [
+            "application", "library", "cli", "package", "framework",
+            "hardware", "paper", "experiment", "dataset", "model",
+            "hosted-service", "api", "infrastructure", "website",
+            "community", "brand-resource", "organization-meta"
+          ]
+        },
+        "profile": {
+          "enum": ["software", "hosted-service", "research", "package", "hardware", "archive"]
+        },
+        "technologies": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "chapter_status": {
+          "type": ["string", "null"],
+          "enum": ["proposed", "selected", "active", "released", "closed", "withdrawn", null]
+        },
+        "lifecycle": {"enum": ["incubating", "active", "maintenance", "paused", "completed", "archived"]},
+        "relationship": {"enum": ["core", "chapter", "member", "connected"]},
+        "custody": {"enum": ["elixpo-owned", "transferred-to-elixpo", "externally-owned", "mirrored"]},
+        "stack": {"type": "string"},
+        "node_version": {"type": "string"},
+        "repository": {"type": "string", "format": "uri", "pattern": "^https://github\\.com/"},
+        "deployment": {"type": ["string", "null"], "format": "uri"},
+        "discussions": {"type": ["string", "null"], "format": "uri"},
+        "status_owner": {"type": "string", "minLength": 2},
+        "status_verified_at": {"type": "string", "format": "date"}
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public", "featured", "canonical_slug"],
+      "properties": {
+        "public": {"type": "boolean"},
+        "featured": {"type": "boolean"},
+        "canonical_slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "canonical_url": {"type": "string", "format": "uri"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification_decision", "license_evidence", "status_checked_at"],
+      "properties": {
+        "classification_decision": {"type": "string", "format": "uri"},
+        "license_evidence": {"type": "string", "format": "uri"},
+        "status_checked_at": {"type": "string", "format": "date"}
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_file", "migration_status"],
+      "properties": {
+        "current_file": {"type": "string", "minLength": 1},
+        "notice_file": {"type": ["string", "null"]},
+        "migration_status": {"enum": ["current", "review-required", "migrating", "compliant", "not-applicable"]},
+        "target_code_license": {"type": ["string", "null"]},
+        "trademark_policy": {"type": ["string", "null"]}
+      }
+    },
+    "ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lint_cmd", "test_cmd", "build_cmd"],
+      "properties": {
+        "lint_cmd": {"type": "string"},
+        "test_cmd": {"type": "string"},
+        "build_cmd": {"type": "string"}
+      }
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": {"type": ["string", "boolean", "null"]}
+    },
+    "maintainers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["github", "lead"],
+        "properties": {
+          "github": {"type": "string", "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$"},
+          "skills": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "lead": {"type": "boolean"}
+        }
+      }
+    },
+    "governance": {"$ref": "#/$defs/policyPointer"},
+    "support": {"$ref": "#/$defs/policyPointer"},
+    "security": {"$ref": "#/$defs/policyPointer"},
+    "conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["standard", "status", "assessed_at"],
+      "properties": {
+        "standard": {"enum": ["0.1", "1.0"]},
+        "status": {"enum": ["conformant", "conformant-with-exceptions", "migration-in-progress", "not-assessed"]},
+        "assessed_at": {"type": "string", "format": "date"},
+        "exceptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "reason", "owner", "review_at"],
+            "properties": {
+              "id": {"type": "string", "minLength": 2},
+              "reason": {"type": "string", "minLength": 10},
+              "owner": {"type": "string", "minLength": 2},
+              "review_at": {"type": "string", "format": "date"}
+            }
+          }
+        }
+      }
+    },
+    "gist": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "account": {"type": "string"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"schema_version": {"const": "1.0"}},
+        "required": ["schema_version"]
+      },
+      "then": {
+        "required": ["provenance", "conformance"],
+        "properties": {
+          "project": {
+            "required": ["profile", "technologies", "chapter_status"]
+          },
+          "publication": {
+            "required": ["canonical_url"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "policyPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document"],
+      "properties": {
+        "document": {"type": "string", "minLength": 1},
+        "model": {"type": "string"}
+      }
+    }
+  }
+}
