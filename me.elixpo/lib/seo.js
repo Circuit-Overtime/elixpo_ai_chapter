@@ -1,9 +1,9 @@
 import { getMemberSeo, getPersonContent } from "@/lib/content";
 
 export const SITE_URL = "https://me.elixpo.com";
-export const LANDING_TITLE = "Elixpo Members — Portfolios of Builders & Creators";
+export const LANDING_TITLE = "Elixpo Member Portfolios — Projects, Research and Public Work";
 export const LANDING_DESCRIPTION =
-  "Meet Ayushman Bhattacharya, Anwesha Chakraborty, Vivek Yadav, Karan Ray, and Bhumika Sudarshani—the people building Elixpo.";
+  "Explore the official portfolios of Elixpo members, connecting their open-source projects, research, talks, writing and verified public contributions.";
 
 export const MEMBER_SECTION_SLUGS = [
   "about",
@@ -90,6 +90,21 @@ export function getMemberImagePath(person) {
   return `/assets/${person}/about/landing-card.webp`;
 }
 
+export function getMemberSectionImagePath(person, section) {
+  const sectionImages = {
+    about: person === "bhumika"
+      ? "/assets/bhumika/bhumika-avatar.jpg"
+      : `/assets/${person}/about/sq-11.webp`,
+    projects: `/assets/${person}/projects/stamp-2.webp`,
+    publications: `/assets/${person}/publication/sq-2.webp`,
+    blogs: `/assets/${person}/websiteSection/human-think1.webp`,
+    talks: `/assets/${person}/punchlineSection/hz-pic1.webp`,
+    connect: `/assets/${person}/websiteSection/sq-seal1.webp`,
+  };
+
+  return sectionImages[section] || getMemberImagePath(person);
+}
+
 export function getAbsoluteUrl(pathname = "/") {
   return new URL(pathname, SITE_URL).toString();
 }
@@ -109,7 +124,9 @@ export function buildMemberMetadata({ person, section }) {
   const { profile, seo, name, role } = getMemberDetails(person);
   const sectionCopy = section ? SECTION_COPY[section] : null;
   const pathname = section ? `/${person}/${section}` : `/${person}`;
-  const image = getMemberImagePath(person);
+  const image = section
+    ? getMemberSectionImagePath(person, section)
+    : getMemberImagePath(person);
   const imageWidth = seo.imageWidth || 384;
   const imageHeight = seo.imageHeight || 384;
   const indexable = !section || isMemberSectionIndexable(person, section);
@@ -119,7 +136,9 @@ export function buildMemberMetadata({ person, section }) {
   const description = sectionCopy
     ? sectionCopy.description(name, seo)
     : seo.description || `Meet ${name}, ${role} and an Elixpo member. Explore their portfolio, projects and verified profiles.`;
-  const imageAlt = `Portrait of ${name}, ${role}`;
+  const imageAlt = sectionCopy
+    ? `${sectionCopy.label} portfolio artwork for ${name}`
+    : `Portrait of ${name}, ${role}`;
 
   return {
     title: { absolute: title },
@@ -163,7 +182,11 @@ export function buildMemberMetadata({ person, section }) {
         lastName: seo.familyName,
         username: person,
       }),
-      images: [{ url: image, width: imageWidth, height: imageHeight, alt: imageAlt }],
+      images: [{
+        url: image,
+        ...(!section && { width: imageWidth, height: imageHeight }),
+        alt: imageAlt,
+      }],
     },
     twitter: {
       card: "summary",
@@ -171,6 +194,71 @@ export function buildMemberMetadata({ person, section }) {
       description,
       images: [image],
     },
+  };
+}
+
+export function buildMemberSectionJsonLd(person, section) {
+  const sectionCopy = SECTION_COPY[section];
+  if (!sectionCopy || !isMemberSectionIndexable(person, section)) return null;
+
+  const { seo, name, role } = getMemberDetails(person);
+  const profileUrl = getAbsoluteUrl(`/${person}`);
+  const pageUrl = getAbsoluteUrl(`/${person}/${section}`);
+  const imageUrl = getAbsoluteUrl(getMemberSectionImagePath(person, section));
+  const title = `${sectionCopy.title(name)} | Elixpo`;
+  const description = sectionCopy.description(name, seo);
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: title,
+        description,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: {
+          "@type": "Person",
+          "@id": `${profileUrl}#person`,
+          name,
+          jobTitle: seo.jobTitle || role,
+          url: profileUrl,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: imageUrl,
+          contentUrl: imageUrl,
+          caption: `${sectionCopy.label} — ${name}`,
+        },
+        breadcrumb: { "@id": breadcrumbId },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Elixpo Member Portfolios",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name,
+            item: profileUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: sectionCopy.label,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
   };
 }
 
