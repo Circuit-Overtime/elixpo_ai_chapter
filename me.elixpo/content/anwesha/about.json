@@ -1,0 +1,29 @@
+{
+  "intro": {
+    "heading": "ANWESHA",
+    "subheading": "ABOUT!",
+    "description": "Welcome to Anwesha's corner of the internet!\n She's a Developer, dreamer and System Architect.I translate the complex rhythms of the natural world into high-performance digital systems, one expedition at a time. More about her as you scroll down!",
+    "portraitImage": "/assets/anwesha/about/ptr-11.webp"
+  },
+  "fancySection": {
+    "banner": "LET'S GO!!",
+    "subtitle": "Collabs & Meets!",
+    "content": "I've always believed the best work comes from building with others. From open-source sprints to hackathons, I love teaming up with people who care about writing good code and solving real problems. Some of my most rewarding experiences have come from collaborating across communities - whether it's contributing to GSSoC, working with GDG, or jamming on projects with the Elixpo team. If you're into open-source, ML, or just want to build something cool together - let's talk.",
+    "highlights": [
+      "open-source",
+      "hackathons",
+      "GSSoC",
+      "GDG",
+      "Elixpo",
+      "ML"
+    ],
+    "shoutouts": [],
+    "contactNote": "Feel free to reach out if you're interested in collaborating or just want to chat about code,system architect and,or anything in between for being the most amazing people in her journey."
+  },
+  "images": {
+    "gallery": [
+      "/assets/anwesha/about/sq-22.webp",
+      "/assets/anwesha/about/sq-11.webp"
+    ]
+  }
+}

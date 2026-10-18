@@ -1,0 +1,149 @@
+{
+  "hero": {
+    "focusTags": [
+      "Open Source",
+      "Full-Stack Dev",
+      "AI-ML"
+    ],
+    "name": "BHUMIKA",
+    "headline": "Open Source Contributor & Full-Stack Developer",
+    "subhead": "Core Contributor @ Elixpo \u00b7 GSSoC 2026 Contributor \u00b7 CSE Undergrad",
+    "intro": "Hi, I'm Bhumika Sudarshani \u2014\n\nI turn ideas into code, and code into impact. Equally at ease explaining a technical build to a non-technical room .Open source at heart, full-stack by craft, and endlessly curious about everything in between.",
+    "credentials": [
+      {
+        "label": "Core Contributor",
+        "org": "Elixpo"
+      },
+      {
+        "label": "Contributor",
+        "org": "GSSoC 2026"
+      }
+    ],
+    "ctas": [
+      {
+        "label": "View Work",
+        "href": "projects"
+      },
+      {
+        "label": "Connect",
+        "href": "connect"
+      }
+    ],
+    "portrait": "/assets/bhumika/bhumika-hero.jpg"
+  },
+  "intro": {
+    "heroName": "BHUMIKA",
+    "tagline": "PRODUCT",
+    "taglineSuffix": "BUILDER",
+    "description": "I turn real-world problems into working data-driven products \u2014 across frontend, backend, APIs, and applied AI.",
+    "highlights": [
+      "AI Tool Integration",
+      "Data Analytics & Visualization",
+      "Full-Stack Development",
+      "Database Design"
+    ],
+    "images": {
+      "portrait": "/assets/bhumika/bhumika-avatar.jpg",
+      "landscape": "/assets/bhumika/hrz-image1.webp"
+    }
+  },
+  "websiteSection": {
+    "designedBy": "Huge shoutout to the Elixpo core team and community \u2014 being part of building multiple Elixpo products alongside them has shaped how I think about shipping real, collaborative open-source work.",
+    "futurePlans": "Five-year plan?umm... What I do know is I'd like to keep collecting weird skills, questionable opinions about fonts, and the occasional existential crisis over semicolons, preferably while getting slightly better at all of it every day.",
+    "codeStory": "I run on chai, curiosity, and an unreasonable number of browser tabs. Ask me a question and I'll either give you a straight answer or accidentally start a TED talk! there's no in-between. Somewhere between debugging at 2 AM and pretending I understand memes before everyone else, I've decided that overthinking is just a personality trait now and I'm leaning into it.",
+    "images": {
+      "owl": "/assets/bhumika/websiteSection/hz-owl1.webp",
+      "humanThink": "/assets/bhumika/websiteSection/human-think1.webp",
+      "seal": "/assets/bhumika/websiteSection/sq-seal1.webp"
+    }
+  },
+  "techSection": {
+    "heading": "TECH STACK",
+    "subheading": "DEV-S",
+    "description": "Technologies and tools I use to build data-driven, AI-enabled products.",
+    "skills": [
+      {
+        "type": "text",
+        "label": "Python"
+      },
+      {
+        "type": "text",
+        "label": "JavaScript"
+      },
+      {
+        "type": "text",
+        "label": "C"
+      },
+      {
+        "type": "text",
+        "label": "C++"
+      },
+      {
+        "type": "text",
+        "label": "React.js"
+      },
+      {
+        "type": "text",
+        "label": "Node.js"
+      },
+      {
+        "type": "text",
+        "label": "Flask"
+      },
+      {
+        "type": "text",
+        "label": "RESTful APIs"
+      },
+      {
+        "type": "text",
+        "label": "SQL"
+      },
+      {
+        "type": "text",
+        "label": "SQLAlchemy"
+      },
+      {
+        "type": "text",
+        "label": "PyTorch"
+      },
+      {
+        "type": "text",
+        "label": "Computer Vision"
+      },
+      {
+        "type": "text",
+        "label": "Git & GitHub"
+      },
+      {
+        "type": "text",
+        "label": "Docker"
+      },
+      {
+        "type": "text",
+        "label": "Postman"
+      }
+    ],
+    "explore": [
+      {
+        "label": "Talks",
+        "caption": "Speaking & Sessions",
+        "href": "talks"
+      },
+      {
+        "label": "Writing",
+        "caption": "Notes & Blog Posts",
+        "href": "blogs"
+      },
+      {
+        "label": "Papers",
+        "caption": "Research & Publications",
+        "href": "publications"
+      }
+    ],
+    "images": {
+      "wand": "/assets/bhumika/techTracks/wand-1.webp",
+      "landscape": "/assets/bhumika/techTracks/lylia.jpg",
+      "banner": "/assets/bhumika/hrz-image1.webp"
+    }
+  }
+}

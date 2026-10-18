@@ -1,0 +1,13 @@
+{
+  "name": "Vivek Yadav",
+  "siteName": "Vivek",
+  "siteDescription": "Developer at Elixpo",
+  "location": "WB, IN",
+  "email": "vivek@elixpo.com",
+  "socials": [
+    { "platform": "GitHub", "url": "https://github.com/ez-vivek", "icon": "logo-github", "hoverColor": "#333" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/in/ezmkdir", "icon": "logo-linkedin", "hoverColor": "#0077b5" },
+    { "platform": "Instagram", "url": "https://www.instagram.com/ezmkdir", "icon": "logo-instagram", "hoverColor": "#0077b5" }
+  ],
+  "menuItems": ["Home", "About", "Projects", "Publications"]
+}

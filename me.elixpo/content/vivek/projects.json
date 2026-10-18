@@ -1,0 +1,16 @@
+{
+  "heading": "PROJECTS",
+  "description": "Welcome to Vivek's portfolio. This section highlights a collection of projects focused on software development, AI integration, and system design. Explore the repositories to see practical implementations, research-driven work, and contributions across multiple domains.",
+  "projects": [
+     {
+      "name": "Inkflow Canvas",
+      "description": "Browser-based collaborative whiteboard with real-time drawing capabilities using HTML5 Canvas API without external libraries.",
+      "stars": null,
+      "url": "https://github.com/ez-vivek",
+      "owner": "vivek",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/151813246?v=4",
+      "topics": ["canvas-api", "real-time", "collaboration", "javascript", "frontend"],
+      "language": "JavaScript"
+    }
+  ]
+}

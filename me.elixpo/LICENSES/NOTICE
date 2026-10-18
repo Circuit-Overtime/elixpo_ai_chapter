@@ -1,0 +1,32 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        me.elixpo (me.elixpo.com)
+  What it is:  The source for Portfolios - the personalized portfolio platform
+               for Elixpo members. Each member gets their own route at
+               me.elixpo.com, powered by simple static JSON content.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. me.elixpo.com is an official
+  hosted deployment; the source is MIT.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ (the og-image, logos, and favicons) are
+  provided under CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest
+  E-badge, and the Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com
