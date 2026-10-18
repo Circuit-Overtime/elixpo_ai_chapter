@@ -1,0 +1,39 @@
+# Refreshes the contributor roster artifact (src/data/contributors.json) as @elixpoo.
+# Fetches contributors from the source repo (elixpo_chapter) and commits the list
+# back to this repo on main, where it is served raw and read live by the site.
+#
+# Triggers:
+#   - schedule          → daily refresh
+#   - workflow_dispatch → manual run / initial seed
+
+name: Update Contributors Roster
+
+permissions:
+  contents: read
+
+concurrency:
+  group: update-contributors
+  cancel-in-progress: true
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Update contributors artifact
+        env:
+          AGENT_TOKEN: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+          TARGET_REPO: ${{ github.repository }}
+          CONTRIB_SOURCE_REPO: elixpo/elixpo_chapter
+        run: python .github/scripts/update_contributors.py
