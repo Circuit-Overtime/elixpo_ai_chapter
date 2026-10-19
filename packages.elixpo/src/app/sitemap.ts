@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: absoluteUrl("/"), lastModified: LAST_VERIFIED, changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/repository/"), lastModified: LAST_VERIFIED, changeFrequency: "monthly", priority: .85 },
-    ...PACKAGE_RECORDS.map((record) => ({ url: absoluteUrl(`/${record.slug}/`), lastModified: LAST_VERIFIED, changeFrequency: "monthly" as const, priority: record.kind === "linux" ? .9 : .75 })),
+    ...PACKAGE_RECORDS.map((record) => ({ url: absoluteUrl(`/${record.slug}/`), lastModified: LAST_VERIFIED, changeFrequency: "monthly" as const, priority: record.kind === "npm" ? .75 : .9 })),
     ...LINUX_PACKAGES.flatMap((record) => ["docs", "about"].map((section) => ({ url: absoluteUrl(`/${record.slug}/${section}/`), lastModified: LAST_VERIFIED, changeFrequency: "monthly" as const, priority: .7 }))),
   ];
 }

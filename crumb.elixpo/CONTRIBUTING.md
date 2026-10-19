@@ -33,10 +33,10 @@ only documentation or policy.
 ## Licensing and authorship
 
 The repository's [LICENSE](LICENSE) and [notice board](LICENSES/NOTICE) control
-contributions. Code is accepted under `MIT WITH Oreo-trademarks`, assets under
-`CC-BY-4.0 WITH Oreo-trademarks`, and the Developer Certificate of Origin
-applies to every commit. By contributing, you confirm that you have the right
-to submit the work under those terms.
+contributions. Code is accepted under `MIT`, assets under `CC-BY-4.0`, and the
+separate `TRADEMARKS.md` policy governs reserved names and identity. The
+Developer Certificate of Origin applies to every commit. By contributing, you
+confirm that you have the right to submit the work under those terms.
 
 See [GOVERNANCE.md](GOVERNANCE.md), [SUPPORT.md](SUPPORT.md), and
 [SECURITY.md](SECURITY.md) for decision, support, and private-reporting paths.

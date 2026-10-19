@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!record) return {};
   return createPageMetadata({
     title: `${record.name} ${record.version} — Elixpo Packages`,
-    description: `${record.name} ${record.version} is a ${record.status} ${record.kind === "npm" ? "npm package" : "Linux application"}. Review installation, source, license, supported environment, and release records.`,
+    description: `${record.name} ${record.version} is a ${record.status} ${record.kind === "npm" ? "npm package" : record.kind === "native" ? "cross-platform native tool" : "Linux application"}. Review installation, source, license, supported environment, and release records.`,
     path: `/packages/${record.slug}`,
     socialImage: `/social/package/${record.slug}`,
   });

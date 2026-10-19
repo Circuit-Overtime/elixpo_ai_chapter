@@ -96,6 +96,19 @@ pub enum PeerActivityState {
     Failed,
 }
 
+/// Semantic presentation for short terminal status messages.
+///
+/// Keeping meaning separate from ANSI colors lets future themes remap these
+/// tones without changing command or runtime code.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum StatusTone {
+    Info,
+    Action,
+    Waiting,
+    Success,
+    Warning,
+}
+
 impl PeerActivityState {
     const fn label(self) -> &'static str {
         match self {
@@ -237,7 +250,7 @@ impl Renderer {
                 "{}\n  {}\n  {}",
                 self.brand_art(terminal_width),
                 self.paint(punchline, "1"),
-                self.paint("Type naturally · : forces AI · /help opens commands", "2")
+                self.paint("Try: explain this workspace · /help shows commands", "2",)
             ),
             BrandingMode::Compact => {
                 format!(
@@ -266,10 +279,10 @@ impl Renderer {
         let state = if context.agent_configured {
             format!("Ready{instance} · pack {pack} · {}", context.mode)
         } else {
-            format!("Native shell ready{instance} · run /auth login for AI")
+            format!("Native shell ready{instance} · run /auth login to connect")
         };
         let copy = format!(
-            "{wordmark}\nCrumb CLI v{} · Native commands stay native.\n{} · effort {}\nTip: type naturally · : forces AI · / opens actions",
+            "{wordmark}\nCrumb CLI v{} · Native commands stay native.\n{} · effort {}\nTry: explain this workspace · /help shows commands",
             context.version,
             state,
             context.effort.unwrap_or("default"),
@@ -546,7 +559,7 @@ impl Renderer {
         let state = if context.agent_configured {
             "agent ready"
         } else {
-            "native shell ready · agent setup needed"
+            "native shell ready · AI disconnected · run /auth login to connect"
         };
         if self.settings.output == OutputMode::ScreenReader {
             return format!(
@@ -691,6 +704,33 @@ impl Renderer {
             }
         }
         output
+    }
+
+    /// Renders a compact semantic status line using the active UI settings.
+    #[must_use]
+    pub fn status_line(&self, tone: StatusTone, message: &str) -> String {
+        if self.settings.output == OutputMode::ScreenReader {
+            let label = match tone {
+                StatusTone::Info => "Info",
+                StatusTone::Action => "Action",
+                StatusTone::Waiting => "Waiting",
+                StatusTone::Success => "Success",
+                StatusTone::Warning => "Warning",
+            };
+            return format!("{label}: {message}");
+        }
+        let (marker, marker_style, message_style) = match tone {
+            StatusTone::Info => ("◆", "36;1", ""),
+            StatusTone::Action => ("›", "35;1", "36"),
+            StatusTone::Waiting => ("◌", "33;1", "2"),
+            StatusTone::Success => ("●", "32;1", "32"),
+            StatusTone::Warning => ("!", "33;1", "33"),
+        };
+        format!(
+            "  {} {}",
+            self.paint(marker, marker_style),
+            self.paint(message, message_style)
+        )
     }
 
     /// Renders the persistent handoff shown after leaving the alternate screen.
@@ -2005,7 +2045,7 @@ mod tests {
 
     use super::{
         BrandingMode, COOKIE_SPINNER, GitSegment, MotionMode, OutputMode, PUNCHLINES, PeerActivity,
-        PeerActivityState, PromptContext, Renderer, StartupContext, UiSettings,
+        PeerActivityState, PromptContext, Renderer, StartupContext, StatusTone, UiSettings,
     };
 
     #[test]
@@ -2129,6 +2169,35 @@ mod tests {
         assert_eq!(detail_column(lines[3], "Session"), runtime_column);
         assert_eq!(detail_column(lines[4], "Resume"), runtime_column);
         assert!(runtime_column <= 20);
+    }
+
+    #[test]
+    fn semantic_status_lines_are_theme_ready_and_accessible() {
+        let plain = Renderer::new(UiSettings {
+            color: false,
+            output: OutputMode::Plain,
+            motion: MotionMode::Reduced,
+            branding: BrandingMode::Disabled,
+        });
+        assert_eq!(
+            plain.status_line(StatusTone::Success, "Account connected"),
+            "  ● Account connected"
+        );
+        assert_eq!(
+            plain.status_line(StatusTone::Warning, "Login required"),
+            "  ! Login required"
+        );
+
+        let screen_reader = Renderer::new(UiSettings {
+            color: false,
+            output: OutputMode::ScreenReader,
+            motion: MotionMode::Reduced,
+            branding: BrandingMode::Disabled,
+        });
+        assert_eq!(
+            screen_reader.status_line(StatusTone::Action, "Open the account page"),
+            "Action: Open the account page"
+        );
     }
 
     #[test]
@@ -2593,6 +2662,21 @@ mod tests {
         assert!(!welcome.contains("Model context"));
         assert!(!welcome.contains("compact"));
         assert!(welcome.contains("╭▄█▄╮"));
+
+        let disconnected = renderer.startup_status(&StartupContext {
+            version: "1.0.2",
+            platform: Platform::Linux,
+            instance_name: Some("Oreo"),
+            model: Some("Balanced Crumb"),
+            mode: "auto",
+            effort: Some("medium"),
+            session_budget_tokens: 256_000,
+            context_tokens: 0,
+            auto_compaction: true,
+            agent_configured: false,
+        });
+        assert!(disconnected.contains("AI disconnected"));
+        assert!(disconnected.contains("run /auth login to connect"));
     }
 
     #[test]

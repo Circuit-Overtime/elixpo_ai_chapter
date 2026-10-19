@@ -5,6 +5,14 @@ release, behavior and interfaces may change without compatibility guarantees.
 
 ## Unreleased
 
+## 1.0.3 - 2026-10-19
+
+- Added `amd64` and `arm64` Debian packages to protected releases.
+- Added SHA-256 checksums, Sigstore bundles, and build-provenance attestations
+  for each Debian package.
+- Documented the separate paths for Elixpo APT distribution and official
+  Debian archive sponsorship.
+
 ## 1.0.2 - 2026-10-19
 
 - Added manually authorized cross-platform GitHub Releases with checksums,

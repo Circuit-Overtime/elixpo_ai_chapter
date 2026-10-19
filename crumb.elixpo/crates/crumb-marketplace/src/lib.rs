@@ -9,8 +9,11 @@ use chrono::{DateTime, Utc};
 use semver::Version;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
+#[cfg(feature = "sigstore-verification")]
 use sigstore_trust_root::{SIGSTORE_PRODUCTION_TRUSTED_ROOT, TrustedRoot};
+#[cfg(feature = "sigstore-verification")]
 use sigstore_types::Bundle;
+#[cfg(feature = "sigstore-verification")]
 use sigstore_verify::{VerificationPolicy, Verifier};
 use tempfile::{Builder, NamedTempFile};
 use url::{Host, Url};
@@ -936,6 +939,7 @@ pub fn bundled_catalog() -> Result<Catalog> {
 
 /// Offline verifier backed by the Sigstore public-good production trust root.
 pub struct SigstoreVerifier {
+    #[cfg(feature = "sigstore-verification")]
     verifier: Verifier,
 }
 
@@ -946,10 +950,17 @@ impl SigstoreVerifier {
     ///
     /// Returns an error if the embedded trust root cannot be parsed or prepared.
     pub fn production() -> Result<Self> {
-        let root = TrustedRoot::from_json(SIGSTORE_PRODUCTION_TRUSTED_ROOT)
-            .context("Sigstore production trust root is invalid")?;
-        let verifier = Verifier::new(&root).context("Sigstore verifier is unavailable")?;
-        Ok(Self { verifier })
+        #[cfg(feature = "sigstore-verification")]
+        {
+            let root = TrustedRoot::from_json(SIGSTORE_PRODUCTION_TRUSTED_ROOT)
+                .context("Sigstore production trust root is invalid")?;
+            let verifier = Verifier::new(&root).context("Sigstore verifier is unavailable")?;
+            Ok(Self { verifier })
+        }
+        #[cfg(not(feature = "sigstore-verification"))]
+        {
+            bail!("this build does not include Sigstore verification")
+        }
     }
 
     /// Verifies bytes against a standard Sigstore bundle and an exact signer identity.
@@ -964,25 +975,33 @@ impl SigstoreVerifier {
         bundle_bytes: &[u8],
         identity: &PublisherIdentity,
     ) -> Result<()> {
-        if bundle_bytes.is_empty() || bundle_bytes.len() > MAX_SIGSTORE_BUNDLE_BYTES {
-            bail!("Sigstore bundle exceeds the size limit");
-        }
-        let bundle_json =
-            std::str::from_utf8(bundle_bytes).context("Sigstore bundle is not UTF-8")?;
-        let bundle = Bundle::from_json(bundle_json).context("Sigstore bundle is invalid")?;
-        let policy = VerificationPolicy::new(&identity.subject, &identity.issuer);
-        let result = self
-            .verifier
-            .verify(artifact, &bundle, &policy)
-            .context("Sigstore verification failed")?;
-        if !result.certificate_verified()
-            || !result.sct_verified()
-            || !result.tlog_verified()
-            || !result.identity_policy_checked()
+        #[cfg(not(feature = "sigstore-verification"))]
         {
-            bail!("Sigstore bundle did not provide the required verification evidence");
+            let _ = (artifact, bundle_bytes, identity);
+            bail!("this build does not include Sigstore verification")
         }
-        Ok(())
+        #[cfg(feature = "sigstore-verification")]
+        {
+            if bundle_bytes.is_empty() || bundle_bytes.len() > MAX_SIGSTORE_BUNDLE_BYTES {
+                bail!("Sigstore bundle exceeds the size limit");
+            }
+            let bundle_json =
+                std::str::from_utf8(bundle_bytes).context("Sigstore bundle is not UTF-8")?;
+            let bundle = Bundle::from_json(bundle_json).context("Sigstore bundle is invalid")?;
+            let policy = VerificationPolicy::new(&identity.subject, &identity.issuer);
+            let result = self
+                .verifier
+                .verify(artifact, &bundle, &policy)
+                .context("Sigstore verification failed")?;
+            if !result.certificate_verified()
+                || !result.sct_verified()
+                || !result.tlog_verified()
+                || !result.identity_policy_checked()
+            {
+                bail!("Sigstore bundle did not provide the required verification evidence");
+            }
+            Ok(())
+        }
     }
 }
 

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Github, PackageCheck, ShieldCheck, Terminal } from "lucide-react";
-import { ELIXPO_PACKAGES, LINUX_APPLICATIONS, PACKAGE_DISTRIBUTION, PACKAGES_LAST_VERIFIED } from "@/lib/packages";
+import { ArrowRight, ArrowUpRight, Bot, Github, PackageCheck, ShieldCheck, Terminal } from "lucide-react";
+import { ELIXPO_PACKAGES, LINUX_APPLICATIONS, NATIVE_TOOLS, PACKAGE_DISTRIBUTION, PACKAGES_LAST_VERIFIED } from "@/lib/packages";
 import { createPageMetadata, serializeJsonLd } from "@/lib/seo";
 
 const pageMetadata = createPageMetadata({
-  title: "Elixpo Packages — Linux and npm releases",
-  description: "Install Win Dot Panel and ScreenBridge from Elixpo's signed Debian APT repository, review supported Linux systems, and browse maintained npm libraries and command-line tools.",
+  title: "Elixpo Packages — native tools, Linux and npm releases",
+  description: "Install Crumb from its verified cross-platform release, use Elixpo's signed Debian APT applications, and browse maintained npm libraries and command-line tools.",
   path: "/packages",
 });
 export const metadata = {
@@ -19,6 +19,7 @@ export const metadata = {
 
 export default function PackagesPage() {
   const maintainedLinux = LINUX_APPLICATIONS.filter((item) => item.status === "maintained").length;
+  const maintainedNative = NATIVE_TOOLS.filter((item) => item.status === "maintained").length;
   const maintainedNpm = ELIXPO_PACKAGES.filter((item) => item.status === "maintained").length;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -30,7 +31,7 @@ export default function PackagesPage() {
         url: "https://elixpo.com/packages",
         mainEntity: {
           "@type": "ItemList",
-          itemListElement: LINUX_APPLICATIONS.map((item, index) => ({ "@type": "ListItem", position: index + 1, name: item.name, url: item.page })),
+          itemListElement: [...NATIVE_TOOLS, ...LINUX_APPLICATIONS].map((item, index) => ({ "@type": "ListItem", position: index + 1, name: item.name, url: item.page })),
         },
       },
       ...LINUX_APPLICATIONS.map((item) => ({
@@ -44,6 +45,18 @@ export default function PackagesPage() {
         operatingSystem: "Linux",
         softwareVersion: item.version,
         license: item.license === "MIT" ? "https://opensource.org/license/mit" : item.license,
+        maintainer: { "@type": "Organization", name: item.maintainer },
+      })),
+      ...NATIVE_TOOLS.map((item) => ({
+        "@type": "SoftwareApplication",
+        name: item.name,
+        description: item.summary,
+        url: item.page,
+        downloadUrl: item.releases,
+        codeRepository: item.source,
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: item.support,
+        softwareVersion: item.version,
         maintainer: { "@type": "Organization", name: item.maintainer },
       })),
     ],
@@ -68,8 +81,27 @@ export default function PackagesPage() {
         <div className="package-box package-box-middle"><PackageCheck size={32}/><b>screenbridge</b><span>.deb</span></div>
         <div className="package-box package-box-front"><PackageCheck size={32}/><b>win-dot-panel</b><span>.deb</span></div>
       </div>
-      <div className="packages-hero-facts"><span><b>{maintainedLinux}</b> maintained applications</span><span><b>{maintainedNpm}</b> maintained npm packages</span><span><b>{PACKAGE_DISTRIBUTION.license}</b> distribution license</span></div>
+      <div className="packages-hero-facts"><span><b>{maintainedNative}</b> cross-platform native tool</span><span><b>{maintainedLinux}</b> maintained Linux applications</span><span><b>{maintainedNpm}</b> maintained npm packages</span></div>
     </header>
+
+    <section className="linux-catalog section-wrap" aria-labelledby="native-tools">
+      <div className="section-heading split">
+        <div><p className="eyebrow">Native tools</p><h2 id="native-tools">Install a verified tool from its owning project.</h2></div>
+        <p>Native tools keep source, versioning, signatures, SBOMs, and release authority in their product repository. Elixpo Packages provides one trusted discovery and installation record.</p>
+      </div>
+      <div className="package-feature-grid">
+        {NATIVE_TOOLS.map((item, index) => <article className="package-feature-card package-lifecycle-maintained" key={item.slug}>
+          <div className="package-feature-art"><span>N{String(index + 1).padStart(2, "0")}</span><Image src={item.images[0].src} alt={item.images[0].alt} width={1200} height={630}/></div>
+          <div className="package-feature-copy">
+            <div className="package-feature-title"><Image src={item.icon} alt="" width={58} height={58}/><div><p className="eyebrow">{item.category} · v{item.version}</p><h3>{item.name}</h3><span className="status-pill status-active">maintained</span></div></div>
+            <p>{item.summary}</p>
+            <ul>{item.capabilities.slice(0,3).map((capability) => <li key={capability}>{capability}</li>)}</ul>
+            <div className="package-feature-install"><span><Terminal size={14}/> Linux and macOS</span><code>{item.install}</code></div>
+            <div className="space-actions"><Link href={`/packages/${item.slug}`}>Release record <ArrowRight size={15}/></Link><a href={item.page} target="_blank" rel="noreferrer"><Bot size={15}/> Open {item.name} <ArrowUpRight size={15}/></a></div>
+          </div>
+        </article>)}
+      </div>
+    </section>
 
     <section className="linux-catalog section-wrap" aria-labelledby="linux-applications">
       <div className="section-heading split">

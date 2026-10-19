@@ -2,6 +2,7 @@ import packages from "../../content/packages.json";
 
 export const PACKAGE_DISTRIBUTION = packages.distribution;
 export const LINUX_APPLICATIONS = packages.linuxApplications;
+export const NATIVE_TOOLS = packages.nativeTools;
 export const ELIXPO_PACKAGES = packages.npmPackages;
 export const PACKAGES_LAST_VERIFIED = packages.lastVerified;
 
@@ -10,10 +11,11 @@ export type PackageRecord = {
   name: string;
   version: string;
   status: "maintained" | "deprecated" | "unsupported" | "archived";
-  kind: "linux" | "npm";
+  kind: "linux" | "native" | "npm";
   type: string;
   description: string;
   install: string;
+  secondaryInstall?: string;
   source: string;
   releaseUrl: string;
   externalPage: string;
@@ -34,6 +36,25 @@ export const PACKAGE_RECORDS: PackageRecord[] = [
     type: item.category,
     description: item.summary,
     install: item.install,
+    source: item.source,
+    releaseUrl: item.releases,
+    externalPage: item.page,
+    license: item.license,
+    maintainer: item.maintainer,
+    capabilities: [...item.capabilities],
+    platform: item.support,
+    related: item.related as PackageRecord["related"],
+  })),
+  ...NATIVE_TOOLS.map((item) => ({
+    slug: item.slug,
+    name: item.name,
+    version: item.version,
+    status: item.status as PackageRecord["status"],
+    kind: "native" as const,
+    type: item.category,
+    description: item.summary,
+    install: item.install,
+    secondaryInstall: item.windowsInstall,
     source: item.source,
     releaseUrl: item.releases,
     externalPage: item.page,

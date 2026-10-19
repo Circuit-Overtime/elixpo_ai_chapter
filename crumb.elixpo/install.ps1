@@ -52,8 +52,17 @@ try {
         Write-Host "Added $InstallDir to your user PATH."
     }
 
-    Write-Host "Crumb installed at $InstallDir\crumb.exe"
-    Write-Host "Open a new terminal and run: crumb"
+    Write-Host ""
+    Write-Host "  ◆ Crumb is installed and ready to crunch." -ForegroundColor Green
+    Write-Host "    $InstallDir\crumb.exe"
+    Write-Host ""
+    Write-Host "  Open a new terminal and run: crumb" -ForegroundColor Cyan
+    Write-Host "  Then try:"
+    Write-Host "    /auth login"
+    Write-Host "    explain this workspace and show me where to start"
+    Write-Host "    /help"
+    Write-Host ""
+    Write-Host "  Docs: https://crumb.elixpo.com/docs/getting-started"
 } finally {
     Remove-Item -Recurse -Force $Temporary -ErrorAction SilentlyContinue
 }

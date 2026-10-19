@@ -62,7 +62,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: absoluteUrl(`/recognition/${record.id.toLowerCase()}`),
     changeFrequency: "yearly" as const,
     priority: 0.62,
-    lastModified: recognition.issuedAt,
+    lastModified: record.issuedAt,
     images: [absoluteUrl(`/social/recognition/${record.id.toLowerCase()}`)],
   }));
 

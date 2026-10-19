@@ -1,4 +1,7 @@
 /target/
+/debian/Cargo.lock.upstream
+/debian/cargo_home/
+/debian/cargo_registry/
 **/*.rs.bk
 .DS_Store
 .idea/

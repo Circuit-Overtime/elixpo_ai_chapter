@@ -35,7 +35,7 @@ export async function GET(
     month: "long",
     year: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${recognition.issuedAt}T00:00:00Z`));
+  }).format(new Date(`${record.issuedAt}T00:00:00Z`));
   const verificationUrl = `elixpo.com/recognition/${record.id.toLowerCase()}`;
   const recipientSize = record.name.length > 22 ? 55 : 64;
 

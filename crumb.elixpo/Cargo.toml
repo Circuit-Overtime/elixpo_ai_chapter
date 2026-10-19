@@ -33,9 +33,12 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "1.0.2"
+version = "1.0.3"
 edition = "2024"
 rust-version = "1.95"
+license = "MIT"
+repository = "https://github.com/elixpo/crumb.elixpo"
+homepage = "https://crumb.elixpo.com"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
@@ -46,7 +49,7 @@ pedantic = "warn"
 
 [workspace.dependencies]
 anyhow = "1.0.100"
-arboard = { version = "3.7.0", features = ["wayland-data-control"] }
+arboard = { version = "3.6.1", features = ["wayland-data-control"] }
 base64 = "0.22.1"
 bytes = "1.11"
 chrono = "0.4.45"
@@ -61,14 +64,14 @@ crumb-instance = { path = "crates/crumb-instance" }
 ctrlc = "3.4.7"
 directories = "6.0.0"
 futures-util = "0.3.34"
-getrandom = "0.4.3"
+getrandom = "0.4.2"
 image = { version = "0.25.10", default-features = false, features = ["gif", "jpeg", "png", "webp"] }
 keyring = "4.1.6"
 nu-ansi-term = "0.50.3"
 portable-pty = "0.9.0"
 reqwest = { version = "0.13.4", features = ["blocking", "form", "json", "stream"] }
 reedline = { version = "0.52.1", default-features = false }
-rusqlite = { version = "0.40.2", features = ["bundled"] }
+rusqlite = "0.40.2"
 rustix = { version = "1.1.4", features = ["event", "process"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

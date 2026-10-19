@@ -1,8 +1,9 @@
 NOTICE — the Elixpo notice board
 ================================
 
-This repository is licensed under the Elixpo License (see ../LICENSE). Read
-this notice together with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+This repository uses standard MIT and CC-BY-4.0 copyright licences as
+documented in `../LICENSE`. Trademark rules are separate and documented in
+`../TRADEMARKS.md`.
 
 REPOSITORY
 ----------
@@ -16,12 +17,12 @@ RESERVED IDENTITY
 -----------------
 
 The official Elixpo and Crumb product names, hosted service, package names,
-distribution listings, panda/Oreo identity, E-badge, and visual identity remain
-reserved under the Oreo-trademarks exception.
+distribution listings, panda/Oreo identity, E-badge, and visual identity are
+reserved marks governed by `../TRADEMARKS.md`.
 
 The source code remains reusable under MIT. Forks must use their own product,
 service, package, and distribution names and must not imply Elixpo endorsement.
 
-No additional source-code restriction is imposed by this notice.
+No additional copyright restriction is imposed by this notice.
 
 Contact: hello@elixpo.com

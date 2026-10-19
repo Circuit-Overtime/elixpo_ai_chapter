@@ -1,0 +1,72 @@
+Source: crumb
+Section: utils
+Priority: optional
+Maintainer: Ayushman Bhattacharya <ayushbhatt633@gmail.com>
+Build-Depends:
+ cargo,
+ debhelper-compat (= 13),
+ dh-cargo,
+ libsqlite3-dev,
+ librust-anyhow-1+default-dev (>= 1.0.100),
+ librust-arboard-3+default-dev (>= 3.6.1),
+ librust-arboard-3+wayland-data-control-dev (>= 3.6.1),
+ librust-base64-0.22+default-dev,
+ librust-bytes-1+default-dev (>= 1.11),
+ librust-chrono-0.4+default-dev (>= 0.4.45),
+ librust-crossterm-0.29+default-dev,
+ librust-ctrlc-3+default-dev (>= 3.4.7),
+ librust-directories-6+default-dev,
+ librust-futures-util-0.3+default-dev (>= 0.3.34),
+ librust-getrandom-0.4+default-dev (>= 0.4.2),
+ librust-image-0.25+gif-dev (>= 0.25.10),
+ librust-image-0.25+jpeg-dev (>= 0.25.10),
+ librust-image-0.25+png-dev (>= 0.25.10),
+ librust-image-0.25+webp-dev (>= 0.25.10),
+ librust-nu-ansi-term-0.50+default-dev (>= 0.50.3),
+ librust-portable-pty-0.9+default-dev,
+ librust-reedline-0.52-dev (>= 0.52.1-1~),
+ librust-reqwest-0.13+blocking-dev (>= 0.13.4),
+ librust-reqwest-0.13+default-dev (>= 0.13.4),
+ librust-reqwest-0.13+form-dev (>= 0.13.4),
+ librust-reqwest-0.13+json-dev (>= 0.13.4),
+ librust-reqwest-0.13+stream-dev (>= 0.13.4),
+ librust-rusqlite-0.40+default-dev (>= 0.40.2),
+ librust-rustix-1+default-dev (>= 1.1.4),
+ librust-rustix-1+event-dev (>= 1.1.4),
+ librust-rustix-1+process-dev (>= 1.1.4),
+ librust-semver-1+default-dev,
+ librust-serde-1+default-dev,
+ librust-serde-1+derive-dev,
+ librust-serde-json-1+default-dev,
+ librust-sha2-0.10+default-dev (>= 0.10.9),
+ librust-tempfile-3+default-dev (>= 3.27.0),
+ librust-tokio-1+default-dev (>= 1.53.1),
+ librust-tokio-1+io-util-dev (>= 1.53.1),
+ librust-tokio-1+macros-dev (>= 1.53.1),
+ librust-tokio-1+net-dev (>= 1.53.1),
+ librust-tokio-1+rt-dev (>= 1.53.1),
+ librust-tokio-1+sync-dev (>= 1.53.1),
+ librust-tokio-1+time-dev (>= 1.53.1),
+ librust-url-2+default-dev (>= 2.5.8),
+ librust-zeroize-1+default-dev (>= 1.9),
+ pkgconf,
+ rustc (>= 1.95),
+Standards-Version: 4.7.3
+Homepage: https://crumb.elixpo.com
+Rules-Requires-Root: no
+
+Package: crumb
+Architecture: any
+Built-Using: ${cargo:Built-Using}
+Depends:
+ ca-certificates,
+ ${misc:Depends},
+ ${shlibs:Depends},
+Static-Built-Using: ${cargo:Static-Built-Using}
+Description: self-hosted agent harness and natural-language terminal
+ Crumb combines a normal interactive shell with an optional, supervised agent
+ runtime. It keeps execution, tool permissions, sessions, memory, and model
+ selection under the user's control.
+ .
+ The Debian build uses the system SQLite library and reads provider credentials
+ from the environment. Ordinary shell use does not require an AI provider.

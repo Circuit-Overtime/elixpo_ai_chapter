@@ -4,8 +4,12 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 
+[features]
+default = ["native-keyring"]
+native-keyring = ["dep:keyring"]
+
 [dependencies]
-keyring.workspace = true
+keyring = { workspace = true, optional = true }
 zeroize.workspace = true
 
 [lints]

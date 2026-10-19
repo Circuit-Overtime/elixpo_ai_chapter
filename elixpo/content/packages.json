@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/packages.schema.json",
   "schemaVersion": 1,
-  "lastVerified": "2026-10-16",
+  "lastVerified": "2026-10-19",
   "statusOwner": "elixpo",
   "distribution": {
     "name": "Elixpo Packages",
@@ -54,6 +54,30 @@
       "related": { "family": "project", "slug": "packages" },
       "images": [],
       "capabilities": ["Share computer audio through a virtual input", "Keep computer sound available locally", "Use the microphone separately or combine it", "Restore the previous audio configuration when stopped"]
+    }
+  ],
+  "nativeTools": [
+    {
+      "slug": "crumb",
+      "name": "Crumb",
+      "version": "1.0.2",
+      "status": "maintained",
+      "category": "Autonomous agent harness and natural-language terminal",
+      "summary": "A self-hosted Rust agent harness and natural-language terminal that keeps execution, permissions, tools, sessions, memory, and supervision under the user's control.",
+      "support": "Linux x86-64 and ARM64 · macOS Intel and Apple Silicon · Windows x86-64",
+      "install": "curl --proto '=https' --tlsv1.2 -LsSf https://raw.githubusercontent.com/elixpo/crumb.elixpo/main/install.sh | sh",
+      "windowsInstall": "irm https://raw.githubusercontent.com/elixpo/crumb.elixpo/main/install.ps1 | iex",
+      "page": "https://crumb.elixpo.com",
+      "source": "https://github.com/elixpo/crumb.elixpo",
+      "releases": "https://github.com/elixpo/crumb.elixpo/releases/tag/v1.0.2",
+      "icon": "https://crumb.elixpo.com/favicon.png",
+      "license": "MIT code · CC BY 4.0 assets · reserved Elixpo marks",
+      "maintainer": "Elixpo",
+      "related": { "family": "project", "slug": "crumb" },
+      "images": [
+        { "src": "https://crumb.elixpo.com/og-image.png", "alt": "Crumb self-hosted autonomous agent harness and natural-language terminal" }
+      ],
+      "capabilities": ["Native Rust agent loop", "Normal Bash, Zsh, and PowerShell commands", "Permission-bound tools and sessions", "Pollinations model intelligence", "Checksums, SBOMs, Sigstore bundles, and build provenance"]
     }
   ],
   "npmPackages": [

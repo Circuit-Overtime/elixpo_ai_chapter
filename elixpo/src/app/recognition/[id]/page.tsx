@@ -36,13 +36,13 @@ export default async function RecognitionPage({ params }: PageProps) {
   if (!record) notFound();
   const canonicalUrl = `https://elixpo.com/recognition/${record.id.toLowerCase()}`;
   const evidenceExternal = record.recordUrl.startsWith("http");
-  const issued = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${recognition.issuedAt}T00:00:00Z`));
+  const issued = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${record.issuedAt}T00:00:00Z`));
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     name: `Certificate of Contribution — ${record.name}`,
     identifier: record.id,
-    datePublished: recognition.issuedAt,
+    datePublished: record.issuedAt,
     url: canonicalUrl,
     author: { "@type": "Organization", name: recognition.issuer, url: "https://elixpo.com" },
     about: { "@type": "Person", name: record.name, sameAs: `https://github.com/${record.handle}` },

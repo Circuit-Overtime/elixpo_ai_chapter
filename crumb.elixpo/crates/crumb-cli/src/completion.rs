@@ -256,6 +256,7 @@ fn slash_suggestions(prefix: &str, pos: usize, workspace: &Path) -> Vec<Suggesti
         .iter()
         .filter(|command| {
             !is_setting_command(command.usage)
+                || command.usage.starts_with("/auth")
                 || command.usage.starts_with("/permissions")
                 || command.usage == "/skill"
                 || command.usage.starts_with("/skill ")
@@ -610,6 +611,22 @@ mod tests {
                 .iter()
                 .any(|candidate| candidate.value == "/help")
         );
+    }
+
+    #[test]
+    fn slash_completion_includes_auth_actions() {
+        let mut completer = CrumbCompleter::new(CompletionWorkspace::new(PathBuf::from(".")));
+        let result = completer.complete("/auth", 5);
+
+        for command in ["/auth login", "/auth status", "/auth logout"] {
+            assert!(
+                result
+                    .suggestions()
+                    .iter()
+                    .any(|candidate| candidate.value == command),
+                "missing auth suggestion for {command}"
+            );
+        }
     }
 
     #[test]

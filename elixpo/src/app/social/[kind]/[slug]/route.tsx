@@ -47,7 +47,7 @@ function findRecord(kind: string, slug: string): SocialRecord | undefined {
   if (kind === "recognition") {
     const record = recognition.records.find(({ id }) => id.toLowerCase() === slug.toLowerCase());
     if (!record) return;
-    return { eyebrow: "Elixpo Certificate of Contribution", title: record.name, description: `Issued in appreciation ${record.statement}. Verify the public record and its connected contribution evidence on Elixpo.`, status: `${record.id} · Issued ${recognition.issuedAt}`, accent: "#0b623c", wash: "#f0e6d3" };
+    return { eyebrow: "Elixpo Certificate of Contribution", title: record.name, description: `Issued in appreciation ${record.statement}. Verify the public record and its connected contribution evidence on Elixpo.`, status: `${record.id} · Issued ${record.issuedAt}`, accent: "#0b623c", wash: "#f0e6d3" };
   }
   if (kind !== "project" && kind !== "research" && kind !== "service") return;
   const entry = getDirectoryEntry(kind, slug);

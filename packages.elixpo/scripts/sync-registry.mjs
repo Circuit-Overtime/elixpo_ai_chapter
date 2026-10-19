@@ -25,7 +25,7 @@ const commit = pathCommits.sort((left, right) =>
 const rawBase = `https://raw.githubusercontent.com/${repository}/${commit.sha}/content`;
 const packages = await fetchJson(`${rawBase}/packages.json`, headers);
 const schema = await fetchJson(`${rawBase}/schemas/packages.schema.json`, headers);
-if (packages?.$schema !== "./schemas/packages.schema.json" || !Array.isArray(packages.linuxApplications) || !Array.isArray(packages.npmPackages)) {
+if (packages?.$schema !== "./schemas/packages.schema.json" || !Array.isArray(packages.linuxApplications) || !Array.isArray(packages.nativeTools) || !Array.isArray(packages.npmPackages)) {
   throw new Error("Canonical package registry does not satisfy the expected publication contract.");
 }
 if (schema?.$id !== "https://elixpo.com/schemas/packages.schema.json" || schema?.title !== "Elixpo distributed packages") {

@@ -81,7 +81,7 @@ use crumb_tools::{
 };
 use crumb_ui::{
     GitSegment, PeerActivity, PeerActivityState, PromptContext, Renderer, StartupContext,
-    UiSettings,
+    StatusTone, UiSettings,
 };
 use directories::BaseDirs;
 use nu_ansi_term::{Color, Style};
@@ -1072,23 +1072,8 @@ fn handle_repl_event(
             run_interactive_skill(&command, context)?;
             Ok(None)
         }
-        InputEvent::BuiltIn(command)
-            if matches!(&command, BuiltInCommand::Auth(AuthAction::Login)) =>
-        {
-            writeln!(
-                context.writer,
-                "{}",
-                terminal_agent_response(context.renderer, "")
-            )?;
-            handle_builtin(
-                command,
-                context.session,
-                context.agent_runtime,
-                context.history,
-                context.cwd,
-                context.platform,
-                context.writer,
-            )
+        InputEvent::BuiltIn(BuiltInCommand::Auth(action)) => {
+            handle_auth_repl_event(action, context)
         }
         InputEvent::BuiltIn(command) => {
             let mut output = Vec::new();
@@ -1114,6 +1099,41 @@ fn handle_repl_event(
         InputEvent::NativeInput(command) if command.trim().is_empty() => Ok(None),
         InputEvent::NativeInput(command) => handle_input(&command, context),
     }
+}
+
+fn handle_auth_repl_event(
+    action: AuthAction,
+    context: &mut InputContext<'_>,
+) -> Result<Option<ReplOutcome>> {
+    let _mouse_capture =
+        MouseCapturePause::new(context.fullscreen && matches!(action, AuthAction::Login))?;
+    if !context.fullscreen {
+        return handle_builtin(
+            BuiltInCommand::Auth(action),
+            context.session,
+            context.agent_runtime,
+            context.history,
+            context.cwd,
+            context.platform,
+            context.writer,
+        );
+    }
+    let mut writer = FullscreenStatusWriter::new(
+        context.renderer,
+        Arc::clone(context.transcript),
+        context.header_rows,
+    );
+    let outcome = handle_builtin(
+        BuiltInCommand::Auth(action),
+        context.session,
+        context.agent_runtime,
+        context.history,
+        context.cwd,
+        context.platform,
+        &mut writer,
+    )?;
+    writer.flush()?;
+    Ok(outcome)
 }
 
 fn run_interactive_skill(command: &str, context: &mut InputContext<'_>) -> Result<()> {
@@ -1538,6 +1558,80 @@ struct TranscriptCapture<W> {
     terminal_modes: TerminalModeTracker,
 }
 
+struct FullscreenStatusWriter {
+    renderer: Renderer,
+    transcript: Arc<Mutex<TranscriptState>>,
+    header_rows: u16,
+    pending: Vec<u8>,
+}
+
+impl FullscreenStatusWriter {
+    fn new(renderer: Renderer, transcript: Arc<Mutex<TranscriptState>>, header_rows: u16) -> Self {
+        Self {
+            renderer,
+            transcript,
+            header_rows,
+            pending: Vec::new(),
+        }
+    }
+
+    fn render_pending(&mut self) -> io::Result<()> {
+        if self.pending.is_empty() {
+            return Ok(());
+        }
+        let output = String::from_utf8_lossy(&self.pending);
+        let rendered = output
+            .lines()
+            .filter(|line| !line.trim().is_empty())
+            .map(|line| {
+                self.renderer
+                    .status_line(status_tone_for_output(line), line.trim())
+            })
+            .collect::<Vec<_>>()
+            .join("\n");
+        self.pending.clear();
+        if rendered.is_empty() {
+            return Ok(());
+        }
+        let mut state = self
+            .transcript
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        state.append(&rendered);
+        render_transcript_view(&state, self.renderer, self.header_rows)
+    }
+}
+
+impl Write for FullscreenStatusWriter {
+    fn write(&mut self, buffer: &[u8]) -> io::Result<usize> {
+        self.pending.extend_from_slice(buffer);
+        Ok(buffer.len())
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.render_pending()
+    }
+}
+
+fn status_tone_for_output(line: &str) -> StatusTone {
+    let line = line.trim();
+    if line.starts_with("http://")
+        || line.starts_with("https://")
+        || line.starts_with("Device code:")
+    {
+        StatusTone::Action
+    } else if line.starts_with("Waiting") {
+        StatusTone::Waiting
+    } else if line.contains("not connected") || line.starts_with("Open the URL") {
+        StatusTone::Warning
+    } else if line.contains(" connected") || line.contains("configured") || line.contains(" saved")
+    {
+        StatusTone::Success
+    } else {
+        StatusTone::Info
+    }
+}
+
 impl<W> TranscriptCapture<W> {
     const MAX_CAPTURE_BYTES: usize = 1_048_576;
 
@@ -1733,7 +1827,8 @@ fn render_startup(
             config.harness.as_ref(),
             Some(HarnessConfig::Native | HarnessConfig::Process { .. })
         ),
-        agent_configured: config.harness.is_some() && text_route.is_some(),
+        agent_configured: config.harness.is_some()
+            && selected_route_is_connected(&config, text_route),
     };
     let terminal_width = if interactive {
         size().map_or(100, |(columns, _)| columns)
@@ -1865,7 +1960,8 @@ fn context_footer_status(
             config.harness.as_ref(),
             Some(HarnessConfig::Native | HarnessConfig::Process { .. })
         ),
-        agent_configured: config.harness.is_some() && text_route.is_some(),
+        agent_configured: config.harness.is_some()
+            && selected_route_is_connected(&config, text_route),
     };
     renderer.context_footer(&startup, size().map_or(100, |(columns, _)| columns))
 }
@@ -2592,6 +2688,20 @@ fn handle_agent_boundary(
     )?;
     writer.flush()?;
     refresh_active_footer(renderer, terminal.fullscreen)?;
+    if route.is_some_and(|route| route.provider == "pollinations")
+        && !selected_route_is_connected(config, route)
+    {
+        writeln!(
+            writer,
+            "{}",
+            renderer.agent_error_for_width(
+                "Pollinations is not connected. Run `/auth login` to connect your crumb.elixpo account, then retry.",
+                false,
+                size().map_or(80, |(columns, _)| columns),
+            )
+        )?;
+        return Ok(());
+    }
     if runtime.is_none() {
         match AgentRuntime::new() {
             Ok(created) => *runtime = Some(created),
@@ -10955,6 +11065,7 @@ fn handle_auth(action: AuthAction, writer: &mut dyn Write) -> Result<()> {
             }
         }
     }
+    writer.flush()?;
     Ok(())
 }
 
@@ -12504,6 +12615,12 @@ fn selected_text_route(config: &AgentConfig) -> Option<&ModelRoute> {
         })
 }
 
+fn selected_route_is_connected(config: &AgentConfig, route: Option<&ModelRoute>) -> bool {
+    route.is_some_and(|route| {
+        route.provider != "pollinations" || configured_pollinations_runtime_key(config).is_some()
+    })
+}
+
 fn selected_profile_id(cwd: &Path) -> Option<String> {
     let (_, project_root) = agent_config_location(cwd);
     let selection = ProfileSelectionStore::for_project(&project_root)
@@ -13109,7 +13226,7 @@ mod tests {
         sanitize_completion_menu_body, sanitize_transcript_output, select_discovery_skill,
         set_skill_enabled, shell_blast_radius, shell_tool_config, should_auto_enable_rtk,
         show_graph, show_instance, show_marketplace, show_memory, show_profile_with_stores,
-        suggestion_width, transcript_activity_row, unregister_local_skill,
+        status_tone_for_output, suggestion_width, transcript_activity_row, unregister_local_skill,
         validate_marketplace_path, validate_marketplace_response, visible_tool_activity,
         workspace_read_host, write_bounded_response_delta_for_width,
     };
@@ -13158,6 +13275,26 @@ mod tests {
             parse_exec_request(&[OsString::from("auth"), OsString::from("status")])
                 .expect("non-exec arguments")
                 .is_none()
+        );
+    }
+
+    #[test]
+    fn account_output_uses_semantic_status_tones() {
+        assert_eq!(
+            status_tone_for_output("https://accounts.elixpo.com/device"),
+            crumb_ui::StatusTone::Action
+        );
+        assert_eq!(
+            status_tone_for_output("Waiting for crumb.elixpo account approval…"),
+            crumb_ui::StatusTone::Waiting
+        );
+        assert_eq!(
+            status_tone_for_output("crumb.elixpo account is not connected"),
+            crumb_ui::StatusTone::Warning
+        );
+        assert_eq!(
+            status_tone_for_output("crumb.elixpo account connected"),
+            crumb_ui::StatusTone::Success
         );
     }
 

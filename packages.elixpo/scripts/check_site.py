@@ -16,10 +16,11 @@ with open("content/packages.json", encoding="utf-8") as registry_file:
     registry = json.load(registry_file)
 
 LINUX_SLUGS = [record["slug"] for record in registry["linuxApplications"]]
+NATIVE_SLUGS = [record["slug"] for record in registry["nativeTools"]]
 NPM_SLUGS = [record["slug"] for record in registry["npmPackages"]]
 PUBLIC_ROUTES = [
     "repository/",
-    *(f"{slug}/" for slug in [*LINUX_SLUGS, *NPM_SLUGS]),
+    *(f"{slug}/" for slug in [*LINUX_SLUGS, *NATIVE_SLUGS, *NPM_SLUGS]),
     *(f"{slug}/{section}/" for slug in LINUX_SLUGS for section in ("docs", "about")),
 ]
 
@@ -105,7 +106,7 @@ def check_site(site: Path) -> None:
         )
         assert head.json_ld, f"Missing structured data in {path}"
 
-        if expected_url.rstrip("/").split("/")[-1] in {*LINUX_SLUGS, *NPM_SLUGS}:
+        if expected_url.rstrip("/").split("/")[-1] in {*LINUX_SLUGS, *NATIVE_SLUGS, *NPM_SLUGS}:
             nodes = [
                 node
                 for document in head.json_ld

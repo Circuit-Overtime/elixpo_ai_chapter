@@ -1,9 +1,9 @@
 # LICENSES - directory layout
 
-This directory holds the canonical license texts and exception clauses that
-make up the **Elixpo licensing standard**. The top-level [`LICENSE`](../LICENSE)
-file is the pointer; the real texts live here. The structure mirrors the Linux
-kernel's `LICENSES/` tree, so every Elixpo repository looks the same.
+This directory holds the canonical license texts and third-party notices used
+by Crumb. The top-level [`LICENSE`](../LICENSE) explains which standard license
+applies to each class of material. The structure mirrors the Linux kernel's
+`LICENSES/` tree so Elixpo repositories use a consistent layout.
 
 ## Subdirectories
 
@@ -11,9 +11,8 @@ kernel's `LICENSES/` tree, so every Elixpo repository looks the same.
 preferred/    Licenses that contributions should use.
               Code defaults to MIT; brand/visual assets to CC-BY-4.0.
 
-exceptions/   Project-specific clauses that modify or qualify a preferred
-              license. Reference them via `WITH` in the
-              SPDX-License-Identifier line of affected files.
+exceptions/   Historical compatibility notes. Crumb does not use a custom
+              SPDX exception.
 
 notices/      Third-party attributions (the upstream credit list).
 ```
@@ -23,8 +22,11 @@ notices/      Third-party attributions (the upstream credit list).
 | Path                            | SPDX ID            | Used for                                              |
 |---------------------------------|--------------------|------------------------------------------------------|
 | `preferred/MIT`                 | `MIT`              | All source code in the repository.                   |
-| `preferred/CC-BY-4.0`           | `CC-BY-4.0`        | Brand and visual assets (`brand/`, `public/brand/`). |
-| `exceptions/Oreo-trademarks`    | `Oreo-trademarks`  | Reserves Elixpo/Oreo names, mascot, and royalties.   |
+| `preferred/CC-BY-4.0`           | `CC-BY-4.0`        | Brand and visual assets.                             |
+
+Trademark and source-identity rules are maintained separately in the root
+`TRADEMARKS.md`; they are not SPDX licence exceptions and do not modify the
+copyright permissions above.
 
 ## The notice board
 

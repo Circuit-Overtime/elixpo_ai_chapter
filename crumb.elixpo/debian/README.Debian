@@ -1,0 +1,17 @@
+Crumb for Debian
+================
+
+The Debian build preserves Crumb's normal shell, supervised agent runtime,
+Pollinations integration, local sessions, and bundled marketplace catalogue.
+It is built entirely from Debian-provided Rust crates and links to the system
+SQLite library.
+
+Native desktop keyring support and remote Sigstore marketplace verification
+are not enabled in this build because their Rust dependency families are not
+yet present in Debian. Provider credentials can instead be supplied through
+the documented environment variables. A request that requires the unavailable
+native credential store or Sigstore verifier fails explicitly; it never falls
+back to unverified remote installation.
+
+The feature difference is tracked in the upstream Debian packaging document:
+https://github.com/elixpo/crumb.elixpo/blob/main/docs/development/debian-packaging.md

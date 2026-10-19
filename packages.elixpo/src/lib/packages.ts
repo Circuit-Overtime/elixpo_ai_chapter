@@ -2,6 +2,7 @@ import registry from "../../content/packages.json";
 
 export const DISTRIBUTION = registry.distribution;
 export const LINUX_PACKAGES = registry.linuxApplications;
+export const NATIVE_PACKAGES = registry.nativeTools;
 export const NPM_PACKAGES = registry.npmPackages;
 export const LAST_VERIFIED = registry.lastVerified;
 
@@ -10,11 +11,12 @@ export type PackageRecord = {
   name: string;
   version: string;
   status: string;
-  kind: "linux" | "npm";
+  kind: "linux" | "native" | "npm";
   category: string;
   summary: string;
   platform: string;
   install: string;
+  secondaryInstall?: string;
   source: string;
   releaseUrl: string;
   license: string;
@@ -22,6 +24,7 @@ export type PackageRecord = {
   capabilities: readonly string[];
   icon?: string;
   images: readonly { src: string; alt: string }[];
+  externalPage?: string;
 };
 
 export const PACKAGE_RECORDS: PackageRecord[] = [
@@ -42,6 +45,27 @@ export const PACKAGE_RECORDS: PackageRecord[] = [
     capabilities: item.capabilities,
     icon: item.icon,
     images: item.images,
+    externalPage: item.page,
+  })),
+  ...NATIVE_PACKAGES.map((item) => ({
+    slug: item.slug,
+    name: item.name,
+    version: item.version,
+    status: item.status,
+    kind: "native" as const,
+    category: item.category,
+    summary: item.summary,
+    platform: item.support,
+    install: item.install,
+    secondaryInstall: item.windowsInstall,
+    source: item.source,
+    releaseUrl: item.releases,
+    license: item.license,
+    maintainer: item.maintainer,
+    capabilities: item.capabilities,
+    icon: item.icon,
+    images: item.images,
+    externalPage: item.page,
   })),
   ...NPM_PACKAGES.map((item) => ({
     slug: item.slug,
@@ -59,6 +83,7 @@ export const PACKAGE_RECORDS: PackageRecord[] = [
     maintainer: item.maintainer,
     capabilities: item.capabilities,
     images: [],
+    externalPage: item.href,
   })),
 ];
 

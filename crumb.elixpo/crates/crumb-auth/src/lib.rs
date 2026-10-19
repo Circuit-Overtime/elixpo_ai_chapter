@@ -4,6 +4,7 @@ use std::error::Error;
 use std::fmt;
 use std::sync::Mutex;
 
+#[cfg(feature = "native-keyring")]
 use keyring::{Entry, Error as KeyringError};
 use zeroize::Zeroizing;
 
@@ -96,6 +97,7 @@ pub trait CredentialStore: Send + Sync {
 
 /// Platform credential store selected by the keyring backend.
 pub struct OsCredentialStore {
+    #[cfg(feature = "native-keyring")]
     entry: Entry,
 }
 
@@ -118,31 +120,64 @@ impl OsCredentialStore {
     ///
     /// Returns a redacted error if the platform has no usable secure store.
     pub fn named(service: &str, account: &str) -> AuthResult<Self> {
-        let entry = Entry::new(service, account).map_err(|error| map_keyring_error(&error))?;
-        Ok(Self { entry })
+        #[cfg(feature = "native-keyring")]
+        {
+            let entry = Entry::new(service, account).map_err(|error| map_keyring_error(&error))?;
+            Ok(Self { entry })
+        }
+        #[cfg(not(feature = "native-keyring"))]
+        {
+            let _ = (service, account);
+            Err(AuthError::new(
+                AuthErrorKind::StoreUnavailable,
+                "this build does not include native credential-store support; use an environment credential",
+            ))
+        }
     }
 }
 
 impl CredentialStore for OsCredentialStore {
     fn set(&self, secret: &SecretString) -> AuthResult<()> {
-        self.entry
-            .set_password(secret.expose())
-            .map_err(|error| map_keyring_error(&error))
+        #[cfg(feature = "native-keyring")]
+        {
+            self.entry
+                .set_password(secret.expose())
+                .map_err(|error| map_keyring_error(&error))
+        }
+        #[cfg(not(feature = "native-keyring"))]
+        {
+            let _ = secret;
+            Err(native_keyring_unavailable())
+        }
     }
 
     fn get(&self) -> AuthResult<Option<SecretString>> {
-        match self.entry.get_password() {
-            Ok(secret) => Ok(Some(SecretString::new(secret))),
-            Err(KeyringError::NoEntry) => Ok(None),
-            Err(error) => Err(map_keyring_error(&error)),
+        #[cfg(feature = "native-keyring")]
+        {
+            match self.entry.get_password() {
+                Ok(secret) => Ok(Some(SecretString::new(secret))),
+                Err(KeyringError::NoEntry) => Ok(None),
+                Err(error) => Err(map_keyring_error(&error)),
+            }
+        }
+        #[cfg(not(feature = "native-keyring"))]
+        {
+            Err(native_keyring_unavailable())
         }
     }
 
     fn delete(&self) -> AuthResult<bool> {
-        match self.entry.delete_credential() {
-            Ok(()) => Ok(true),
-            Err(KeyringError::NoEntry) => Ok(false),
-            Err(error) => Err(map_keyring_error(&error)),
+        #[cfg(feature = "native-keyring")]
+        {
+            match self.entry.delete_credential() {
+                Ok(()) => Ok(true),
+                Err(KeyringError::NoEntry) => Ok(false),
+                Err(error) => Err(map_keyring_error(&error)),
+            }
+        }
+        #[cfg(not(feature = "native-keyring"))]
+        {
+            Err(native_keyring_unavailable())
         }
     }
 }
@@ -236,6 +271,7 @@ impl MemoryCredentialStore {
     }
 }
 
+#[cfg(feature = "native-keyring")]
 fn map_keyring_error(error: &KeyringError) -> AuthError {
     match error {
         KeyringError::NoDefaultStore | KeyringError::NotSupportedByStore(_) => AuthError::new(
@@ -251,6 +287,14 @@ fn map_keyring_error(error: &KeyringError) -> AuthError {
             "secure credential store operation failed",
         ),
     }
+}
+
+#[cfg(not(feature = "native-keyring"))]
+fn native_keyring_unavailable() -> AuthError {
+    AuthError::new(
+        AuthErrorKind::StoreUnavailable,
+        "this build does not include native credential-store support; use an environment credential",
+    )
 }
 
 #[cfg(test)]

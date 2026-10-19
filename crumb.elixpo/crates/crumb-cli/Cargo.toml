@@ -3,10 +3,21 @@ name = "crumb-cli"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Self-hosted agent harness and natural-language terminal"
 
 [[bin]]
 name = "crumb"
 path = "src/main.rs"
+
+[features]
+default = ["bundled-sqlite", "native-keyring", "sigstore-verification"]
+bundled-sqlite = ["crumb-history/bundled-sqlite"]
+debian = []
+native-keyring = ["crumb-auth/native-keyring", "crumb-mcp/native-keyring"]
+sigstore-verification = ["crumb-marketplace/sigstore-verification"]
 
 [dependencies]
 anyhow.workspace = true
@@ -17,18 +28,18 @@ crumb-a2a.workspace = true
 crumb-a2a-exchanges.workspace = true
 crumb-a2a-inbound.workspace = true
 crumb-a2a-runtime.workspace = true
-crumb-auth = { path = "../crumb-auth" }
+crumb-auth = { path = "../crumb-auth", default-features = false }
 crumb-core = { path = "../crumb-core" }
 crumb-graph = { path = "../crumb-graph" }
 crumb-harness = { path = "../crumb-harness" }
-crumb-history = { path = "../crumb-history" }
+crumb-history = { path = "../crumb-history", default-features = false }
 crumb-instance.workspace = true
-crumb-marketplace = { path = "../crumb-marketplace" }
+crumb-marketplace = { path = "../crumb-marketplace", default-features = false }
 crumb-memory = { path = "../crumb-memory" }
 crumb-harness-cli = { path = "../crumb-harness-cli" }
 crumb-harness-dsh = { path = "../crumb-harness-dsh" }
 crumb-llm = { path = "../crumb-llm" }
-crumb-mcp = { path = "../crumb-mcp" }
+crumb-mcp = { path = "../crumb-mcp", default-features = false }
 crumb-native = { path = "../crumb-native" }
 crumb-optimize = { path = "../crumb-optimize" }
 crumb-platform = { path = "../crumb-platform" }

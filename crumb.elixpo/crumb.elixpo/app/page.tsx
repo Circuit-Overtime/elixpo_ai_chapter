@@ -2,19 +2,27 @@ import Link from 'next/link'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 import { DynamicCta } from './components/DynamicCta'
+import { InstallCommands } from './components/InstallCommands'
 
 export default function Home() {
   return <><SiteHeader /><main>
     <section className="hero">
       <div className="hero-glow" />
-      <p className="status-pill"><span /> Self-hosted harness · Pollinations intelligence</p>
-      <h1>An autonomous agent<br /><em>inside your terminal.</em></h1>
-      <p className="hero-copy">Run commands normally or give Crumb a complete goal. Its native Rust harness plans and carries out multi-step work with approved tools, while Pollinations supplies the model intelligence.</p>
-      <div className="hero-actions"><a className="button" href="https://github.com/elixpo/crumb.elixpo">Get Crumb <span>↗</span></a><Link className="button button-secondary" href="/profile/connectors">Check Connectors</Link></div>
-      <div className="trust-strip"><span>Local execution</span><i /><span>User-owned permissions</span><i /><span>Powered by Pollinations</span></div>
+      <div className="hero-intro"><div className="hero-message"><p className="status-pill"><span /> Open source · self-hosted · cross-platform</p><h1>A terminal for commands.<br /><em>An agent for outcomes.</em></h1><p className="hero-copy">Crumb is a native Rust terminal with an autonomous agent built in. Use Bash, Zsh, or PowerShell normally, or describe a larger goal and let Crumb plan and execute it through tools and permissions you control. Pollinations supplies the model intelligence.</p><div className="hero-actions"><Link className="button" href="/docs/getting-started">Read the quickstart <span>→</span></Link><a className="button button-secondary" href="https://github.com/elixpo/crumb.elixpo">View source <span>↗</span></a></div></div><InstallCommands /></div>
+      <dl className="hero-facts"><div><dt>Native Rust</dt><dd>Fast local harness and terminal</dd></div><div><dt>Real shell</dt><dd>Normal commands do not need AI</dd></div><div><dt>Your policy</dt><dd>Models cannot grant permissions</dd></div><div><dt>Pollinations</dt><dd>Connected model intelligence</dd></div></dl>
       <div className="terminal-window" aria-label="Crumb terminal preview">
         <div className="terminal-title"><div><i /><i /><i /></div><span>crumb — ~/projects/NLT</span><b>NLT</b></div>
         <pre><span className="dim">╭─[ crumb ]─[ ~/projects/NLT ]─[ linux ]─[ git:main ]</span>{'\n'}<span className="caret">╰─❯</span> <span className="ask">find why the API tests fail and fix the smallest issue</span>{'\n'}<span className="agent">◆ harness</span> qwen-coder · effort: high · skill: rust-maintainer{'\n'}<span className="tool">  ↳ read</span> Cargo.toml, crates/api/tests{'\n'}<span className="tool">  ↳ run </span><span className="command">cargo test -p crumb-api</span>{'\n'}<span className="red">    error[E0308]</span> mismatched status type at src/routes.rs:84{'\n'}<span className="tool">  ↳ patch</span> crates/api/src/routes.rs <span className="yes">approved</span>{'\n'}<span className="tool">  ↳ run </span><span className="command">cargo test -p crumb-api</span>{'\n'}<span className="green">    12 passed</span>; 0 failed{'\n\n'}<span className="agent">◆ done</span> Normalized the handler&apos;s status conversion; no API behavior changed.{'\n'}<span className="dim">  1 file changed · session saved · Ctrl+C cancels at any step</span></pre>
+      </div>
+    </section>
+
+    <section className="starter-section" id="quickstart">
+      <div className="starter-copy"><p className="kicker">Start in sixty seconds</p><h2>Open Crumb.<br />Try something real.</h2><p>Native commands work immediately. Connect Pollinations when you want the agent, then describe an outcome in ordinary language.</p><Link className="text-link" href="/docs/getting-started">Read the quickstart <span>→</span></Link></div>
+      <div className="starter-terminal" aria-label="Commands to try after installing Crumb">
+        <div><span>1</span><small>Launch</small><code>crumb</code></div>
+        <div><span>2</span><small>Connect the agent</small><code>/auth login</code></div>
+        <div><span>3</span><small>Learn a codebase</small><code>explain this workspace and show me where to start</code></div>
+        <div><span>4</span><small>Ship a safe fix</small><code>find why the tests fail, fix the smallest issue, and run the checks</code></div>
       </div>
     </section>
 

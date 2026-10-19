@@ -21,6 +21,14 @@ names let the repository installer resolve the newest stable release without
 calling the GitHub API. The separate `Release Staging` workflow remains useful
 for unsigned, unpublished candidate bundles.
 
+Linux releases also contain `amd64` and `arm64` Debian packages. These packages
+are signed and attested release artifacts intended for Elixpo's signed APT
+repository at `packages.elixpo.com`. They are not represented as packages from
+the official Debian archive. Official Debian inclusion is tracked separately
+because Debian must rebuild Crumb from source against archive-packaged Rust
+dependencies. See the [Debian packaging notes](debian-packaging.md) for the
+current dependency audit and archive-submission sequence.
+
 ## Install and uninstall
 
 Linux and macOS install into `$HOME/.local/bin` unless `CRUMB_INSTALL_DIR` is
@@ -36,7 +44,7 @@ Pin an exact release with `CRUMB_VERSION`, for example:
 ```bash
 curl --proto '=https' --tlsv1.2 -LsSf \
   https://raw.githubusercontent.com/elixpo/crumb.elixpo/main/install.sh |
-  CRUMB_VERSION=v1.0.2 sh
+  CRUMB_VERSION=v1.0.3 sh
 ```
 
 Windows installs into `%LOCALAPPDATA%\Programs\Crumb\bin` and adds that

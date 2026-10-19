@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Github, PackageCheck, Terminal } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Bot, Github, PackageCheck, Terminal } from "lucide-react";
 import type { DirectoryEntry } from "@/lib/directory";
 import { familyPath } from "@/lib/directory";
 import type { PackageRecord } from "@/lib/packages";
@@ -21,8 +21,8 @@ export function PackageRecordPage({ record, related }: { record: PackageRecord; 
         softwareVersion: record.version,
         license: record.license === "MIT" ? "https://opensource.org/license/mit" : record.license,
         maintainer: { "@type": "Organization", name: record.maintainer, url: "https://elixpo.com" },
-        operatingSystem: record.kind === "linux" ? "Linux" : undefined,
-        applicationCategory: record.kind === "linux" ? "UtilitiesApplication" : undefined,
+        operatingSystem: record.kind === "linux" ? "Linux" : record.kind === "native" ? record.platform : undefined,
+        applicationCategory: record.kind === "linux" ? "UtilitiesApplication" : record.kind === "native" ? "DeveloperApplication" : undefined,
         isPartOf: { "@type": "CreativeWork", name: related.name, url: `https://elixpo.com${relatedUrl}` },
       },
       {
@@ -42,10 +42,10 @@ export function PackageRecordPage({ record, related }: { record: PackageRecord; 
     <article>
       <header className="package-record-hero">
         <div className={`package-record-mark package-record-mark-${record.kind}`} aria-hidden="true">
-          {record.kind === "npm" ? <span>npm</span> : <PackageCheck size={46}/>} 
+          {record.kind === "npm" ? <span>npm</span> : record.kind === "native" ? <Bot size={46}/> : <PackageCheck size={46}/>}
         </div>
         <div className="package-record-heading">
-          <p className="eyebrow">{record.kind === "npm" ? "npm package" : "Linux application"} · {record.type}</p>
+          <p className="eyebrow">{record.kind === "npm" ? "npm package" : record.kind === "native" ? "Native tool" : "Linux application"} · {record.type}</p>
           <h1>{record.name}</h1>
           <p>{record.description}</p>
         </div>
@@ -65,7 +65,7 @@ export function PackageRecordPage({ record, related }: { record: PackageRecord; 
 
       <section className="package-install-section">
         <div><p className="eyebrow">Installation</p><h2>Install the published release.</h2><p>The command below comes from the verified Elixpo package registry. Review the linked package and source records before installing software in a sensitive environment.</p></div>
-        <div className="package-command"><span><Terminal size={16}/> Terminal</span><code>{record.install}</code></div>
+        <div className="package-command"><span><Terminal size={16}/> Linux and macOS</span><code>{record.install}</code>{record.secondaryInstall && <><span><Terminal size={16}/> Windows PowerShell</span><code>{record.secondaryInstall}</code></>}</div>
       </section>
 
       <section className="package-record-grid">

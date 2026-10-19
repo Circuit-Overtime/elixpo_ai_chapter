@@ -72,10 +72,22 @@ tar -xzf "$temporary/$asset" -C "$temporary"
 mkdir -p "$install_dir"
 install -m 0755 "$temporary/crumb" "$install_dir/crumb"
 
-echo "Crumb installed at $install_dir/crumb"
+echo
+echo "  ◆ Crumb is installed and ready to crunch."
+echo "    $install_dir/crumb"
 case ":${PATH}:" in
-  *":${install_dir}:"*) ;;
+  *":${install_dir}:"*) launch_command=crumb ;;
   *)
-    echo "Add $install_dir to PATH, then run: crumb"
+    launch_command="$install_dir/crumb"
+    echo
+    echo "  Add $install_dir to PATH when you are ready."
     ;;
 esac
+echo
+echo "  Start Crumb:  $launch_command"
+echo "  Then try:"
+echo "    /auth login"
+echo "    explain this workspace and show me where to start"
+echo "    /help"
+echo
+echo "  Docs: https://crumb.elixpo.com/docs/getting-started"

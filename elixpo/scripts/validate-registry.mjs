@@ -187,7 +187,6 @@ for (const [index, group] of (brandProvenance.groups ?? []).entries()) {
 if (provenanceFileCount !== brand.audit?.exactMasterDuplicates) addError("brandProvenance.groups", "verified group file count must match exactMasterDuplicates");
 if (!isDate(discussions.lastVerified)) addError("discussions.lastVerified", "expected YYYY-MM-DD");
 if (!isDate(recognition.lastVerified)) addError("recognition.lastVerified", "expected YYYY-MM-DD");
-if (!isDate(recognition.issuedAt)) addError("recognition.issuedAt", "expected YYYY-MM-DD");
 
 for (const [location, value] of [
   ["organization.lastVerified", organization.lastVerified],
@@ -207,7 +206,6 @@ for (const [location, value] of [
   ["brandProvenance.verifiedAt", brandProvenance.verifiedAt],
   ["discussions.lastVerified", discussions.lastVerified],
   ["recognition.lastVerified", recognition.lastVerified],
-  ["recognition.issuedAt", recognition.issuedAt],
 ]) validateFreshness(location, value);
 
 validateUrl("discussions.sourceRepository", discussions.sourceRepository);
@@ -630,6 +628,20 @@ for (const [index, item] of (packages.linuxApplications ?? []).entries()) {
     if (!image.alt) addError(`${location}.images[${imageIndex}].alt`, "is required");
   }
 }
+for (const [index, item] of (packages.nativeTools ?? []).entries()) {
+  const location = `packages.nativeTools[${index}]`;
+  if (!item.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.slug)) addError(`${location}.slug`, "expected a lowercase URL-safe slug");
+  else if (packageSlugs.has(item.slug)) addError(`${location}.slug`, "duplicate package slug");
+  packageSlugs.add(item.slug);
+  if (!item.version) addError(`${location}.version`, "is required");
+  if (!["maintained", "deprecated", "unsupported", "archived"].includes(item.status)) addError(`${location}.status`, "unknown value");
+  for (const key of ["page", "source", "releases", "icon"]) validateUrl(`${location}.${key}`, item[key]);
+  validateRelatedRecord(`${location}.related`, item.related);
+  for (const [imageIndex, image] of (item.images ?? []).entries()) {
+    validateUrl(`${location}.images[${imageIndex}].src`, image.src);
+    if (!image.alt) addError(`${location}.images[${imageIndex}].alt`, "is required");
+  }
+}
 const npmPackageNames = new Set();
 for (const [index, item] of (packages.npmPackages ?? []).entries()) {
   const location = `packages.npmPackages[${index}]`;
@@ -684,6 +696,8 @@ for (const [index, record] of (recognition.records ?? []).entries()) {
   const normalizedHandle = record.handle.toLowerCase();
   if (recognitionHandles.has(normalizedHandle)) addError(`${location}.handle`, "duplicate recognized GitHub identity");
   recognitionHandles.add(normalizedHandle);
+  if (!isDate(record.issuedAt)) addError(`${location}.issuedAt`, "expected YYYY-MM-DD");
+  else validateFreshness(`${location}.issuedAt`, record.issuedAt);
   if (record.recordUrl.startsWith("http")) validateUrl(`${location}.recordUrl`, record.recordUrl);
   else if (!record.recordUrl.startsWith("/")) addError(`${location}.recordUrl`, "expected an absolute URL or root-relative public record");
 }
@@ -699,7 +713,7 @@ if (errors.length > 0) {
   }, {});
   console.log(`Registry valid: ${repositories.entries.length} repository records.`);
   console.log(`Public directory complete: ${Object.keys(directory.entries).length} editorial records.`);
-  console.log(`Package registry valid: ${packages.linuxApplications.length} Linux applications and ${packages.npmPackages.length} npm packages.`);
+  console.log(`Package registry valid: ${packages.linuxApplications.length} Linux applications, ${packages.nativeTools.length} native tools, and ${packages.npmPackages.length} npm packages.`);
   console.log(`Research registry complete: ${Object.keys(research.entries).length} records.`);
   console.log(`JSON Schema validation complete: ${schemaValidatedRecords} canonical records.`);
   console.log(`Verification states: ${Object.entries(counts).map(([key, value]) => `${key}=${value}`).join(", ")}.`);
