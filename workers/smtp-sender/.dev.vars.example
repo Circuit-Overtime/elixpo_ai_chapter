@@ -1,0 +1,25 @@
+# Copy to .dev.vars (gitignored) for `wrangler dev`. Must match the Pages app's
+# SMTP_SENDER_SECRET in mail.elixpo/.env.local.
+SMTP_SENDER_SECRET=dev-shared-secret-change-me
+
+# ── DKIM signing (optional locally, REQUIRED for inbox deliverability
+# in production) ──────────────────────────────────────────────────────
+#
+# When all three are set, outbound mail is signed with d=<DKIM_DOMAIN>
+# before transmission to the SMTP relay. With the matching public key
+# published at <DKIM_SELECTOR>._domainkey.<DKIM_DOMAIN> as a TXT record,
+# DMARC alignment passes and Gmail/Outlook/Apple stop spam-foldering us.
+#
+# Generate a keypair + the exact DNS record with:
+#   bash scripts/generate-dkim-keypair.sh elixpo1 mails.elixpo.com
+#
+# In prod set these as Worker secrets:
+#   cat keys/elixpo1.key.pem | npx wrangler secret put DKIM_PRIVATE_KEY
+#   echo -n 'mails.elixpo.com' | npx wrangler secret put DKIM_DOMAIN
+#   echo -n 'elixpo1'          | npx wrangler secret put DKIM_SELECTOR
+#
+# For local dev, paste the PEM as one line with \n escapes — the signer
+# normalizes both forms.
+DKIM_PRIVATE_KEY=
+DKIM_DOMAIN=mails.elixpo.com
+DKIM_SELECTOR=elixpo1

@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Space+Mono&display=swap");
+
+@import "tailwindcss";
+
+:root {
+    /* Static brand palette (theme-independent) — the "oreo" / Cohere palette. */
+    --cohere-black: #000000;
+    --near-black: #17171c;
+    --deep-green: #003c33;
+    --deep-green-dark: #002520;
+    --dark-navy: #071829;
+    --action-blue: #1863dc;
+    --coral: #ff7759;
+    --soft-coral: #ffad9b;
+    --canvas-white: #ffffff;
+    --soft-stone: #eeece7;
+    --pale-green: #edfce9;
+    --pale-blue: #f1f5ff;
+    --card-border: #f2f2f2;
+    --ink: #212121;
+    --muted-slate: #93939f;
+    --slate: #75758a;
+    --hairline: #d9d9dd;
+    --border-light: #e5e7eb;
+
+    /* Accent (coral) — shared across both themes. */
+    --accent: #e76043;
+    --accent-2: #d84f34;
+    --accent-contrast: #ffffff;
+    --accent-gradient: linear-gradient(135deg, #e76043 0%, #d84f34 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #ed765c 0%, #e76043 100%);
+    --accent-shadow: rgba(231, 96, 67, 0.28);
+    --accent-tint: rgba(231, 96, 67, 0.09);
+    --accent-tint-strong: rgba(231, 96, 67, 0.15);
+    --accent-border: rgba(231, 96, 67, 0.28);
+
+    /* Status colors — read on both themes. */
+    --success: #1f9d57;
+    --success-fg: #15803d;
+    --danger: #e0533d;
+    --danger-fg: #c2410c;
+}
+
+/* ── Light theme (oreo, default) ─────────────────────────────────────────── */
+:root,
+[data-theme="light"] {
+    --background: #fbfbf8;
+    --foreground: #142018;
+
+    --bg: #fbfbf8;
+    --bg-soft: #eff1ed;
+    --surface: #ffffff;
+    --surface-2: #f3f4f0;
+    --surface-3: #eff1ed;
+    --menu-surface: #ffffff;
+    --fg: #142018;
+    --fg-muted: #5f6962;
+    --fg-faint: #7e8680;
+    --border: #d7dbd6;
+    --border-soft: #e8ebe7;
+    --field-bg: #ffffff;
+    --field-border: #d9d9dd;
+    --overlay: rgba(0, 0, 0, 0.04);
+    --overlay-strong: rgba(0, 0, 0, 0.06);
+    --aurora-opacity: 0;
+    --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --topbar-bg: rgba(251, 251, 248, 0.9);
+    --drawer-bg: #ffffff;
+    --action-fg: #3a65c7;
+    color-scheme: light;
+
+    /* Inline code & Callout specific variables */
+    --code-fg: var(--deep-green);
+    --callout-info-bg: #f1f5ff;
+    --callout-warn-bg: rgba(255, 119, 89, 0.05);
+}
+
+/* ── Dark theme ──────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+    --background: #0b0d12;
+    --foreground: #f5f5f4;
+
+    --bg: #0b0d12;
+    --bg-soft: #0d1016;
+    --surface: #17171c;
+    --surface-2: rgba(255, 255, 255, 0.03);
+    --surface-3: rgba(255, 255, 255, 0.06);
+    --menu-surface: #13161d;
+    --fg: #f5f5f4;
+    --fg-muted: rgba(245, 245, 244, 0.55);
+    --fg-faint: rgba(245, 245, 244, 0.4);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-soft: rgba(255, 255, 255, 0.06);
+    --field-bg: rgba(255, 255, 255, 0.02);
+    --field-border: rgba(255, 255, 255, 0.12);
+    --overlay: rgba(255, 255, 255, 0.04);
+    --overlay-strong: rgba(255, 255, 255, 0.07);
+    --aurora-opacity: 0.5;
+    --card-shadow: none;
+    --topbar-bg: rgba(11, 13, 18, 0.72);
+    --drawer-bg: #0d1016;
+    --action-fg: #5fb6ff;
+    color-scheme: dark;
+
+    /* Inline code & Callout specific variables */
+    --code-fg: var(--pale-green);
+    --callout-info-bg: rgba(24, 99, 220, 0.08);
+    --callout-warn-bg: rgba(255, 119, 89, 0.1);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: "Inter", var(--font-geist-sans), ui-sans-serif, system-ui;
+    --font-mono: "Space Mono", var(--font-geist-mono), ui-mono, monospace;
+    --font-display: "Space Grotesk", var(--font-geist-sans), ui-sans-serif, system-ui;
+}
+
+html,
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: "Inter", var(--font-geist-sans), Arial, Helvetica, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+    background: #dce7ff;
+    color: #142018;
+}
+
+/* Custom Cohere style scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-slate);
+}
+
+.cohere-headline {
+    font-family: "Space Grotesk", sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+}
