@@ -1,1 +1,0 @@
-"""Gist memory custodian squad."""

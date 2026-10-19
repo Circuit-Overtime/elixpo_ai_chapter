@@ -1,1 +1,0 @@
-"""GitHub Discussions orchestration squad."""

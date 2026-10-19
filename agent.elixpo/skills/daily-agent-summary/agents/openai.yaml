@@ -1,4 +1,0 @@
-interface:
-  display_name: "Daily Agent Summary"
-  short_description: "Summarize contracted OreoFlow operations"
-  default_prompt: "Use $daily-agent-summary to build the sanitized daily operations receipt."

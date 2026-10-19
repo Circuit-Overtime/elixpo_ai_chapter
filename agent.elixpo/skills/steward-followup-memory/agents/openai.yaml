@@ -1,4 +1,0 @@
-interface:
-  display_name: "Steward Follow-up Memory"
-  short_description: "Track and answer GitHub follow-ups safely"
-  default_prompt: "Use $steward-followup-memory to maintain shared PR memory and respond to eligible follow-up mentions."

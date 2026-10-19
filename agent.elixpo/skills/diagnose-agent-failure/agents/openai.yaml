@@ -1,4 +1,0 @@
-interface:
-  display_name: "Live Doctor Supervision"
-  short_description: "Supervise live runs and decide safe recovery"
-  default_prompt: "Use $diagnose-agent-failure to supervise a running Solve session and decide a bounded terminal recovery when needed."
