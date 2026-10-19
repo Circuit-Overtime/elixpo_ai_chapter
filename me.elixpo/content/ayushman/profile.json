@@ -1,7 +1,7 @@
 {
   "name": "Ayushman Bhattacharya",
   "siteName": "Ayushman",
-  "siteDescription": "Open-Source Maintainer & DevRel Engineer",
+  "siteDescription": "Open-Source Maintainer · DevOps, Platform & DevEx",
   "location": "WB,IN",
   "email": "ayushman@myceli.ai",
   "socials": [
@@ -10,6 +10,6 @@
     { "platform": "instagram", "url": "https://instagram.com/elixpo_", "icon": "logo-instagram" },
     { "platform": "youtube", "url": "https://youtube.com/@elixpo", "icon": "logo-youtube" }
   ],
-  "menuItems": ["Home", "About", "Projects", "Talks", "Publications", "Blogs"]
+  "menuItems": ["Home", "About", "Projects", "Publications", "Talks", "Blogs", "Connect"]
 }
   

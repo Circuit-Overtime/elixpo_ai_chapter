@@ -1,10 +1,10 @@
 {
   "$schema": "./schemas/repositories.schema.json",
   "schemaVersion": 1,
-  "snapshotDate": "2026-10-17",
+  "snapshotDate": "2026-10-18",
   "statusOwner": "elixpo",
   "verificationMethodology": {
-    "checkedAt": "2026-10-17",
+    "checkedAt": "2026-10-18",
     "classificationDecisionUrl": "https://github.com/elixpo/elixpo/blob/main/docs/governance/repository-classification-decisions.md",
     "organizationStateSource": "https://api.github.com/orgs/elixpo/repos?per_page=100&type=all",
     "externalStateSources": [
@@ -13,7 +13,7 @@
     "licenseEvidenceUrl": "https://github.com/elixpo/elixpo/blob/main/content/repository-licenses.json",
     "repositoryStandardAssessment": {
       "version": "1.0",
-      "assessedAt": "2026-10-17",
+      "assessedAt": "2026-10-18",
       "conformantRepositories": [
         "accounts.elixpo",
         "admin.elixpo",
@@ -38,8 +38,8 @@
         "status.elixpo",
         "wozformer"
       ],
-      "conformantWithExceptions": [],
-      "deferredAgentRepositories": ["agent.elixpo", "crumb.elixpo", "oreoPI"],
+      "conformantWithExceptions": ["agent.elixpo", "crumb.elixpo"],
+      "deferredAgentRepositories": ["oreoPI"],
       "outOfScopeRepositories": [".github", "brand-production", "search.elixpo"],
       "centrallyRecordedArchives": [
         "art.elixpo",
@@ -106,12 +106,13 @@
       "disposition": "public-entry",
       "publicClass": "project",
       "relationship": "core",
-      "lifecycle": "paused",
+      "lifecycle": "active",
       "custody": "elixpo-owned",
       "githubArchived": false,
       "verificationState": "verified",
       "statusVerifiedAt": "2026-10-17",
-      "statusOwner": "elixpo"
+      "statusOwner": "elixpo",
+      "notes": "Elixpoo v2 is the active, specialized organization-wide GitHub project-management runtime. It is assessed separately from the ordinary repository workflow baseline because it owns reusable privileged automation; it does not implement product code."
     },
     {
       "name": "art.elixpo",
@@ -205,12 +206,13 @@
       "disposition": "public-entry",
       "publicClass": "project",
       "relationship": "core",
-      "lifecycle": "paused",
+      "lifecycle": "active",
       "custody": "elixpo-owned",
       "githubArchived": false,
       "verificationState": "verified",
-      "statusVerifiedAt": "2026-10-17",
-      "statusOwner": "elixpo"
+      "statusVerifiedAt": "2026-10-18",
+      "statusOwner": "elixpo",
+      "notes": "Crumb is an active pre-release, self-hosted autonomous agent harness and natural language terminal written in Rust. Crumb owns the local execution, permission, memory, tool, and session boundary; Pollinations supplies its default connected model intelligence."
     },
     {
       "name": "cypher",

@@ -2,6 +2,7 @@ import { getPortfolioPersons } from "@/lib/content";
 import {
   getAbsoluteUrl,
   getMemberImagePath,
+  getMemberSectionImagePath,
   isMemberSectionIndexable,
   MEMBER_SECTION_SLUGS,
   SITE_URL,
@@ -26,13 +27,14 @@ export default function sitemap() {
         url: getAbsoluteUrl(`/${person}/${section}`),
         changeFrequency: "monthly",
         priority: 0.7,
+        images: [getAbsoluteUrl(getMemberSectionImagePath(person, section))],
       })),
     ];
   });
 
   return [
     {
-      url: SITE_URL,
+      url: `${SITE_URL}/`,
       changeFrequency: "weekly",
       priority: 1,
       images: [getAbsoluteUrl("/og-image.webp")],

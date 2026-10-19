@@ -1,0 +1,18 @@
+name: Elixpoo pull request review
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+permissions: {}
+concurrency:
+  group: elixpoo-review-${{ github.repository }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  review:
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: write
+    uses: elixpo/agent.elixpo/.github/workflows/elixpoo-review-reusable.yml@v1
+    secrets:
+      github_token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+      pollinations_key: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}

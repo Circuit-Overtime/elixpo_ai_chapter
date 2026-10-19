@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Audit ordinary workflows in canonical Elixpo repositories.
 
-Agent automation and the three deferred agent-stack repositories are excluded
-on purpose. Generated subtree copies are never treated as source repositories.
+The active Elixpoo and Crumb runtimes are assessed through their dedicated
+authorization and product audits. OreoPI remains deferred. Generated subtree
+copies are never treated as source repositories.
 """
 
 from __future__ import annotations
@@ -16,7 +17,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 
-DEFERRED_REPOSITORIES = {"agent.elixpo", "crumb.elixpo", "oreoPI"}
+SPECIALIZED_AGENT_REPOSITORIES = {"agent.elixpo", "crumb.elixpo"}
+DEFERRED_REPOSITORIES = {"oreoPI"}
 LOCAL_DIRECTORY_ALIASES = {"mails.elixpo": "mail.elixpo"}
 AGENT_WORKFLOWS = {
     "artifact-update.yml",
@@ -24,7 +26,11 @@ AGENT_WORKFLOWS = {
     "elixpo-ci.yml",
     "elixpo-triage.yml",
     "elixpoo-ack.yml",
+    "elixpoo-mentions.yml",
+    "elixpoo-merge-memory.yml",
+    "elixpoo-review.yml",
     "elixpoo-retry.yml",
+    "elixpoo-triage.yml",
     "issue-auto-fix.yml",
     "issue-triage.yml",
     "on-merge.yml",
@@ -138,7 +144,7 @@ def main() -> int:
 
     for record in registry["entries"]:
         name = record["name"]
-        if record["lifecycle"] == "archived" or name in DEFERRED_REPOSITORIES:
+        if record["lifecycle"] == "archived" or name in DEFERRED_REPOSITORIES | SPECIALIZED_AGENT_REPOSITORIES:
             continue
         url = record.get("repositoryUrl") or ""
         if not url or "github.com/elixpo/" not in url:
@@ -169,6 +175,7 @@ def main() -> int:
         "auditedWorkflows": audited,
         "auditedRepositories": sorted(audited_repositories),
         "deferredRepositories": sorted(DEFERRED_REPOSITORIES),
+        "specializedAgentRepositories": sorted(SPECIALIZED_AGENT_REPOSITORIES),
         "excludedAgentWorkflows": sorted(AGENT_WORKFLOWS),
         "reviewedForkSecretBoundaries": [
             {

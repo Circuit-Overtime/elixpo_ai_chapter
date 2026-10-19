@@ -20,7 +20,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and the
 classifications and custody decisions are published from the canonical registry
 maintained by `elixpo/elixpo`.
 
-<!-- BEGIN ELIXPO SHARED · sha256:4f2e02ad8de1f5396f533afa5b7309f226613a00be84058384c7313851adb034 · generated from elixpo/elixpo -->
+<!-- BEGIN ELIXPO SHARED · sha256:a225b2fe25bfe81f02feedb267da4763d48391e8026723aa256f81cb0d04ea82 · generated from elixpo/elixpo -->
 
 ## What Elixpo is
 
@@ -84,14 +84,14 @@ Feature placement is editorial and does not change these records.
 | Repository | Lifecycle | Relationship |
 | --- | --- | --- |
 | [`cypher`](https://github.com/elixpo/cypher) | Incubating | Core |
+| [`agent.elixpo`](https://github.com/elixpo/agent.elixpo) | Active | Core |
+| [`crumb.elixpo`](https://github.com/elixpo/crumb.elixpo) | Active | Core |
 | [`elixpo_chapter`](https://github.com/elixpo/elixpo_chapter) | Active | Core |
 | [`Kareixo`](https://github.com/elixpo/Kareixo) | Active | Member |
 | [`oreo`](https://github.com/elixpo/oreo) | Active | Core |
 | [`packages.elixpo`](https://github.com/elixpo/packages.elixpo) | Active | Core |
 | [`sketch.elixpo`](https://github.com/elixpo/sketch.elixpo) | Active | Core |
 | [`Nano28C64`](https://github.com/elixpo/Nano28C64) | Maintenance | Core |
-| [`agent.elixpo`](https://github.com/elixpo/agent.elixpo) | Paused | Core |
-| [`crumb.elixpo`](https://github.com/elixpo/crumb.elixpo) | Paused | Core |
 | [`oreoPI`](https://github.com/elixpo/oreoPI) | Paused | Core |
 
 ### Open Research
@@ -118,7 +118,7 @@ Feature placement is editorial and does not change these records.
 | [`payouts.elixpo`](https://github.com/elixpo/payouts.elixpo) | Active | Core |
 | [`status.elixpo`](https://github.com/elixpo/status.elixpo) | Active | Core |
 
-Registry snapshot: **2026-10-17**. Archived work remains visible in the
+Registry snapshot: **2026-10-18**. Archived work remains visible in the
 [GitHub organization](https://github.com/orgs/elixpo/repositories?q=archived%3Atrue)
 as history, not as currently supported work.
 

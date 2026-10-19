@@ -2,7 +2,7 @@
 
 **Direction fixed:** 2026-10-15  
 **Implementation review:** 2026-10-17  
-**Scope:** Human-operated Elixpo commons; agent infrastructure is deferred
+**Scope:** Human-accountable Elixpo commons with bounded project-management automation
 
 ## What Elixpo is now
 
@@ -89,16 +89,27 @@ or editorial treatment.
 - `wozformer` is an active open research project under the MIT License. Its
   notebooks, model exports, findings, hardware work, and manuscript draft are
   public; no paper is currently represented as released or peer reviewed.
-- `agent.elixpo`, `crumb.elixpo`, and `oreoPI` remain deferred until one shared
-  agent-infrastructure direction, ownership model, and migration boundary are
-  approved.
+- `agent.elixpo` now operates Elixpoo v2, the organization-wide GitHub
+  project-management agent. It performs allowlisted classification, Project
+  updates, exact-mention responses, comment-only pull-request review,
+  Discussion support, and bounded merged-change recording. Deterministic
+  authorization keeps product-code implementation and governance decisions
+  outside the agent's authority.
+- `crumb.elixpo` is now active as Crumb, Elixpo's handmade self-hosted
+  autonomous Rust agent harness and natural language terminal. Crumb owns its
+  local execution loop, permissions, tools, memory, sessions, checkpoints, and
+  supervision; Pollinations provides its default model intelligence. It is a
+  separate product from Elixpoo, which remains a non-coding GitHub
+  project-management agent.
+- `oreoPI` remains paused. No repository consolidation or dependency migration
+  is implied by either active agent product.
 
 ## What remains outside this closure
 
-The only intentionally separate strategic programme is the agent stack. Its
-event model, repository consolidation, trust boundary, data handling,
-credentials, and human override rules require a dedicated decision before code
-or workflows are merged.
+The remaining agent-stack decision concerns OreoPI alone: its device/runtime
+direction, ownership, history, and possible relationship to Crumb remain a
+separate future programme. Elixpoo v2 and Crumb now have distinct published
+purposes and trust boundaries; neither requires a repository merge.
 
 Normal maintenance continues: registry facts change, releases ship, people may
 correct or withdraw profile data, and workflows are reviewed when their trust
