@@ -1,0 +1,7 @@
+interface:
+  display_name: "LixBlogs Organizations"
+  short_description: "Resolve safe organization publication targets"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $lixblogs-organizations to verify an organization or collection publishing target."
+policy:
+  allow_implicit_invocation: true
