@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    user-select: none;
+    font-family: "Kanit", serif;
+}
+
+:root {
+    --fancy-button-gradient-0: #8d49fd;
+    --fancy-button-gradient-50: #7f56f3;
+    --fancy-button-gradient-100: #5691f3;
+    --fancy-button-inner-shadow-top: rgba(233, 209, 255, 0.2);
+    --fancy-button-inner-shadow-top-lg: rgba(9, 12, 60, 0.1);
+    --fancy-button-inner-shadow-bottom: rgba(137, 222, 246, 0.3);
+    --fancy-button-shine-top: #e9d1ff;
+    --fancy-button-shine-bottom: #adfff9;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #030712;
+    display: block;
+    box-sizing: border-box;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.getStartedBtn:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--fancy-button-shine-top);
+    width: 96px;
+    height: 6px;
+    top: -3px;
+    opacity: 0.6;
+    filter: blur(6px);
+    transition: opacity 0.25s;
+    border-radius: inherit;
+}
+
+.getStartedBtn:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    z-index: 2;
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.getStartedBtn span {
+    display: block;
+    padding: 12px 24px;
+    border-radius: inherit;
+    overflow: hidden;
+    position: relative;
+    background-image: linear-gradient(to bottom, var(--fancy-button-shine-top), transparent 8px);
+    background-position: 0 -6px;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+.getStartedBtn span:before,
+.getStartedBtn span:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background-color: var(--fancy-button-shine-bottom);
+    transition: opacity 0.25s, transform 0.25s;
+    will-change: transform;
+}
+
+.getStartedBtn span:before {
+    width: 92px;
+    height: 8px;
+    bottom: -4px;
+    opacity: 0.75;
+    filter: blur(6px);
+}
+
+.getStartedBtn span:after {
+    width: 112px;
+    height: 1px;
+    bottom: 0;
+    opacity: 0.9;
+    filter: blur(1px);
+}
+
+.getStartedBtn:hover span:before {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.25);
+}
+
+.getStartedBtn:hover span:after {
+    opacity: 1;
+}
+
+@media (max-width: 400px) {
+    .appName {
+        left: 10%;
+        font-size: 1.1rem;
+    }
+
+    .logo {
+        height: 30px;
+        width: 30px;
+    }
+
+    .writeIcon {
+        left: 32%;
+    }
+
+    .signin {
+        left: 75%;
+    }
+
+    .getStartedBtn {
+        left: 53%;
+    }
+
+    .githubLogo {
+        left: 91%;
+    }
+}
+

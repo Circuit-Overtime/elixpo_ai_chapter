@@ -1,0 +1,37 @@
+/* Minimal pseudo-element styling - Tailwind handles most layout */
+
+.firstSection::before,
+.secondSection::before,
+.thirdSection::before,
+.fourthSection::before,
+.fifthSection::before,
+.sixthSection::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3%;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg, 
+        #8888889c, #2e242471 2px,
+        transparent 1px, transparent 8px);
+    z-index: 1;
+}
+
+.firstSection::after,
+.secondSection::after,
+.thirdSection::after,
+.fourthSection::after,
+.fifthSection::after,
+.sixthSection::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 97%;
+    width: 3%;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg, 
+        #8888889c, #2e242471 2px,
+        transparent 1px, transparent 8px);
+    z-index: 1;
+}

@@ -1,0 +1,85 @@
+{
+  "name": "lixeditor",
+  "displayName": "LixEditor — Rich WYSIWYG Editor",
+  "description": "A rich block editor for .lixeditor files — LaTeX equations, Mermaid diagrams, syntax-highlighted code, and more.",
+  "version": "2.5.5",
+  "publisher": "elixpo",
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "rich-text",
+    "markdown",
+    "latex",
+    "mermaid",
+    "blocknote"
+  ],
+  "activationEvents": [
+    "onLanguage:lixeditor"
+  ],
+  "extensionKind": [
+    "workspace",
+    "ui"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "lixeditor.editor",
+        "displayName": "LixEditor",
+        "selector": [
+          {
+            "filenamePattern": "*.lixeditor"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "languages": [
+      {
+        "id": "lixeditor",
+        "extensions": [
+          ".lixeditor"
+        ],
+        "aliases": [
+          "LixEditor Document"
+        ],
+        "icon": {
+          "light": "media/icon.png",
+          "dark": "media/icon.png"
+        }
+      }
+    ],
+    "iconThemes": [],
+    "commands": [
+      {
+        "command": "lixeditor.newDocument",
+        "title": "LixEditor: New Document",
+        "icon": "media/icon.png"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "esbuild": "^0.24.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elixpo/lixblogs",
+    "directory": "packages/vscode-lixeditor"
+  },
+  "license": "MIT"
+}
