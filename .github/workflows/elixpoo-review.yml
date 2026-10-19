@@ -12,7 +12,7 @@ jobs:
       contents: read
       issues: read
       pull-requests: write
-    uses: elixpo/agent.elixpo/.github/workflows/elixpoo-review-reusable.yml@v1
+    uses: elixpo/agent.elixpo/.github/workflows/elixpoo-review-reusable.yml@v2
     secrets:
       github_token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
       pollinations_key: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
