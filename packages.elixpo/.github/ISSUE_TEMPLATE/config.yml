@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: Package questions and discussion
-    url: https://github.com/orgs/elixpo/discussions
-    about: Discuss proposals that are not defect or support reports.
-  - name: Private security report
-    url: https://github.com/elixpo/packages.elixpo/security/advisories/new
-    about: Report package, installer, signing, or supply-chain vulnerabilities privately.
