@@ -1,0 +1,12 @@
+[package]
+name = "crumb-auth"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+keyring.workspace = true
+zeroize.workspace = true
+
+[lints]
+workspace = true

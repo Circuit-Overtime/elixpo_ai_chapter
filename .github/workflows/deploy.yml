@@ -1,0 +1,245 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment target for a manual run
+        required: true
+        type: choice
+        default: all
+        options: [all, package, vscode, website, github]
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+
+jobs:
+  changes:
+    name: Detect deployment targets
+    runs-on: ubuntu-latest
+    outputs:
+      npm_packages: ${{ steps.detect.outputs.npm_packages }}
+      vscode_packages: ${{ steps.detect.outputs.vscode_packages }}
+      website: ${{ steps.detect.outputs.website }}
+      migrations: ${{ steps.detect.outputs.migrations }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - id: detect
+        name: Map changed paths
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          MANUAL_TARGET: ${{ inputs.target }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            all_npm=""
+            all_vscode=""
+            for manifest in packages/*/package.json; do
+              [ -f "$manifest" ] || continue
+              directory="$(basename "$(dirname "$manifest")")"
+              if node -e "const p=require('./$manifest'); process.exit(p.engines?.vscode ? 0 : 1)"; then
+                all_vscode="$all_vscode $directory"
+              else
+                all_npm="$all_npm $directory"
+              fi
+            done
+            all_npm="${all_npm# }"
+            all_vscode="${all_vscode# }"
+            case "$MANUAL_TARGET" in
+              all) npm_packages="$all_npm"; vscode_packages="$all_vscode"; website=true; migrations=true ;;
+              package) npm_packages="$all_npm"; vscode_packages=""; website=false; migrations=false ;;
+              vscode) npm_packages=""; vscode_packages="$all_vscode"; website=false; migrations=false ;;
+              github) npm_packages="github-only"; vscode_packages=""; website=false; migrations=false ;;
+              website) npm_packages=""; vscode_packages=""; website=true; migrations=true ;;
+            esac
+          else
+            git diff --name-only "$BEFORE" "$AFTER" > "$RUNNER_TEMP/changed-files"
+            npm_packages=""
+            vscode_packages=""
+            while IFS= read -r directory; do
+              [ -n "$directory" ] || continue
+              if [ -f "packages/$directory/package.json" ]; then
+                if node -e "const p=require('./packages/$directory/package.json'); process.exit(p.engines?.vscode ? 0 : 1)"; then
+                  vscode_packages="$vscode_packages $directory"
+                else
+                  npm_packages="$npm_packages $directory"
+                fi
+              fi
+            done < <(awk -F/ '/^packages\/[^/]+\// {print $2}' "$RUNNER_TEMP/changed-files" | sort -u)
+            npm_packages="${npm_packages# }"
+            vscode_packages="${vscode_packages# }"
+            if grep -Eq '^(crumb\.elixpo/|deploy\.sh$|\.env$|\.sops\.yaml$|\.github/workflows/deploy\.yml$)' "$RUNNER_TEMP/changed-files"; then website=true; else website=false; fi
+            if grep -Eq '^crumb\.elixpo/migrations/' "$RUNNER_TEMP/changed-files"; then migrations=true; else migrations=false; fi
+          fi
+          echo "npm_packages=$npm_packages" >> "$GITHUB_OUTPUT"
+          echo "vscode_packages=$vscode_packages" >> "$GITHUB_OUTPUT"
+          echo "website=$website" >> "$GITHUB_OUTPUT"
+          echo "migrations=$migrations" >> "$GITHUB_OUTPUT"
+
+  npm:
+    name: Publish npm packages
+    needs: changes
+    if: needs.changes.outputs.npm_packages != '' && needs.changes.outputs.npm_packages != 'github-only'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: Build and publish changed packages
+        env:
+          PACKAGE_NAMES: ${{ needs.changes.outputs.npm_packages }}
+        run: |
+          set -euo pipefail
+          if [ "$PACKAGE_NAMES" = "all" ]; then
+            ./deploy.sh --package build deploy
+          else
+            for package_name in $PACKAGE_NAMES; do
+              ./deploy.sh --package --name "$package_name" build deploy
+            done
+          fi
+
+  vscode:
+    name: Publish VS Code packages
+    needs: changes
+    if: needs.changes.outputs.vscode_packages != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      VSCE_PAT: ${{ secrets.VSCE_PAT }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Build and publish changed extensions
+        env:
+          PACKAGE_NAMES: ${{ needs.changes.outputs.vscode_packages }}
+        run: |
+          set -euo pipefail
+          if [ "$PACKAGE_NAMES" = "all" ]; then
+            ./deploy.sh --package --vs build deploy
+          else
+            for package_name in $PACKAGE_NAMES; do
+              ./deploy.sh --package --vs --name "$package_name" build deploy
+            done
+          fi
+
+  github:
+    name: Mirror packages to GitHub
+    needs: [changes, npm]
+    if: >-
+      always() && needs.changes.outputs.npm_packages != '' &&
+      (needs.npm.result == 'success' || needs.npm.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      NODE_AUTH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: '@elixpo'
+      - name: Build and mirror packages
+        env:
+          PACKAGE_NAMES: ${{ needs.changes.outputs.npm_packages }}
+        run: |
+          set -euo pipefail
+          if [ "$PACKAGE_NAMES" = "all" ] || [ "$PACKAGE_NAMES" = "github-only" ]; then
+            ./deploy.sh --github build deploy
+          else
+            for package_name in $PACKAGE_NAMES; do
+              ./deploy.sh --github --name "$package_name" build deploy
+            done
+          fi
+
+  website:
+    name: Deploy Crumb website
+    needs: changes
+    if: needs.changes.outputs.website == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      RUN_MIGRATIONS: ${{ needs.changes.outputs.migrations }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: crumb.elixpo/package-lock.json
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - name: Install SOPS
+        env:
+          SOPS_VERSION: v3.13.3
+          SOPS_SHA256: e5bec3346a873ae91d871550f3e698c1aad962aff462a080e40f25fde17fef6b
+        run: |
+          set -euo pipefail
+          binary="$RUNNER_TEMP/sops"
+          curl --fail --location --silent --show-error \
+            "https://github.com/getsops/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64" \
+            --output "$binary"
+          printf '%s  %s\n' "$SOPS_SHA256" "$binary" | sha256sum --check --strict
+          sudo install -m 0755 "$binary" /usr/local/bin/sops
+      - name: Check deployment credentials
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::Configure CLOUDFLARE_API_TOKEN in the production environment."
+            exit 1
+          fi
+          if [ -z "${SOPS_AGE_KEY:-}" ]; then
+            echo "::error::Configure SOPS_AGE_KEY so application secrets can be decrypted before deployment."
+            exit 1
+          fi
+      - name: Publish marketplace indexes and exact manifests
+        run: node .github/scripts/publish-marketplace.mjs
+      - name: Sign marketplace catalog, discovery, and artifacts
+        run: |
+          set -euo pipefail
+          cosign sign-blob --yes \
+            --bundle crumb.elixpo/public/marketplace/catalog.sigstore.json \
+            crumb.elixpo/public/marketplace/catalog.json
+          cosign sign-blob --yes \
+            --bundle crumb.elixpo/public/marketplace/discovery.sigstore.json \
+            crumb.elixpo/public/marketplace/discovery.json
+          while IFS= read -r -d '' artifact; do
+            cosign sign-blob --yes --bundle "${artifact}.sigstore.json" "$artifact"
+          done < <(find crumb.elixpo/public/marketplace/packages -type f ! -name '*.sigstore.json' -print0)
+      - name: Build website
+        run: ./deploy.sh --worker build
+      - name: Upload encrypted application secrets
+        run: ./deploy.sh --worker secrets
+      - name: Migrate and deploy website
+        run: |
+          set -euo pipefail
+          if [ "$RUN_MIGRATIONS" = "true" ]; then ./deploy.sh --worker migrate; fi
+          ./deploy.sh --worker deploy

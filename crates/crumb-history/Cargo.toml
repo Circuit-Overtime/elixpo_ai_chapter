@@ -1,0 +1,14 @@
+[package]
+name = "crumb-history"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+crumb-platform = { path = "../crumb-platform" }
+directories.workspace = true
+rusqlite.workspace = true
+
+[lints]
+workspace = true
