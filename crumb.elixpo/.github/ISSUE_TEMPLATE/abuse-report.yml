@@ -1,0 +1,56 @@
+name: Abuse report
+description: Report a Lixrl short link used for phishing, malware, spam, impersonation, or other harmful activity.
+title: "[Abuse report]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep Lixrl safe. Reports are reviewed by the maintainers.
+
+        GitHub issues are public. Do not include passwords, API keys, private messages, personal information, or other sensitive material. Treat the reported destination as unsafe and do not open it unless necessary.
+
+  - type: input
+    id: short-link
+    attributes:
+      label: Affected Lixrl short link
+      description: Paste the complete lixrl.com short link or its short code.
+      placeholder: https://lixrl.com/example
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Reason for the report
+      options:
+        - Phishing or credential theft
+        - Malware or unwanted software
+        - Spam or deceptive promotion
+        - Impersonation
+        - Illegal or harmful content
+        - Other abuse
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened?
+      description: Explain what makes the short link harmful and include non-sensitive evidence that helps reviewers verify it.
+      placeholder: Describe the behavior, where you found the link, and any safe evidence available.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Additional evidence
+      description: Optional screenshots, public references, or detection results. Remove personal information before attaching anything.
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I understand this report is public, contains no sensitive information, and is accurate to the best of my knowledge.
+          required: true
