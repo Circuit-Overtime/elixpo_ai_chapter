@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verify Repository Change"
+  short_description: "Run bounded repository checks safely"
+  default_prompt: "Use $verify-repository-change to validate the planned change with allowlisted commands."

@@ -1,0 +1,34 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        agent.elixpo (elixpoo)
+What it is:  Elixpo's policy-bound GitHub project-management agent (@elixpoo).
+               Python squads run as GitHub Actions that pick up community
+               issues, fork, solve, open PRs, and shepherd them to merge. No
+               server, no database - state lives in GitHub issues, a Project
+               board, and state/*.json.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  None. This repository does not publish an npm package, a marketplace
+  extension, or a separately-licensed binary. It is the agent source and runs
+  in CI.
+
+BRAND ASSETS
+------------
+
+  The brand assets under public/ (e.g. public/agent.elixpo.png) are provided
+  under CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest E-badge, and
+  the Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com

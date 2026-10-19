@@ -1,0 +1,1321 @@
+{
+  "issues": {
+    "0xNyk/council-of-high-intelligence#63": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-17T10:28:36Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "Your project is on StackMap \u2014 a curated map of the AI stack",
+      "url": "https://github.com/0xNyk/council-of-high-intelligence/issues/63"
+    },
+    "0xNyk/council-of-high-intelligence#70": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-01T10:55:51Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "Complementary approach: DAUDIT \u2014 decision-context engine with 5-dimension audit",
+      "url": "https://github.com/0xNyk/council-of-high-intelligence/issues/70"
+    },
+    "0xsline/OpenChatCut#11": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-29T17:33:26Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "\u975e\u5e38\u4e0d\u9519\uff0c  \u521a\u597d\u9700\u8981\u5f00\u53d1\u65c5\u6e38AI\u526a\u8f91\uff0c\u505a\u5e95\u5ea7",
+      "url": "https://github.com/0xsline/OpenChatCut/issues/11"
+    },
+    "0xsline/OpenChatCut#15": {
+      "confidence": 0.85,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-30T04:36:48Z",
+      "reasons": [
+        "complexity is medium",
+        "estimated file count 10 is outside 1-5",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "feat: \u7ba1\u7406\u5458\u7edf\u4e00 AI \u914d\u7f6e\u4e0e\u6309\u7528\u6237\u7528\u91cf\u8ba1\u91cf\uff08SaaS MVP\uff09",
+      "url": "https://github.com/0xsline/OpenChatCut/issues/15"
+    },
+    "Agions/story-fab#79": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T06:53:40Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "\u95ea\u9000\u2014\u2014\u6839\u672c\u6ca1\u5f39\u51fa\u6765\u754c\u9762",
+      "url": "https://github.com/Agions/story-fab/issues/79"
+    },
+    "Alexey-T/CudaText#6328": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-14T03:56:07Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[Feature request] replace polling loop with ReadDirectoryChangesW",
+      "url": "https://github.com/Alexey-T/CudaText/issues/6328"
+    },
+    "Alexey-T/CudaText#6329": {
+      "confidence": 0.6,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-25T21:22:31Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.60 is below 0.70",
+        "needs a maintainer decision"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "hover in LSP doesn't work correctly",
+      "url": "https://github.com/Alexey-T/CudaText/issues/6329"
+    },
+    "Alexey-T/CudaText#6330": {
+      "confidence": 0.8,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-29T13:10:40Z",
+      "reasons": [
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "Search needs some improvements.",
+      "url": "https://github.com/Alexey-T/CudaText/issues/6330"
+    },
+    "Alexey-T/CudaText#6355": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-22T03:52:47Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "Qt6/Wayland: CudaText crashes (SIGABRT) when copying large text (~5000 lines)",
+      "url": "https://github.com/Alexey-T/CudaText/issues/6355"
+    },
+    "BlackMixture/Mix-Studio#25": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-31T00:48:11Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "Prompt Enhancer",
+      "url": "https://github.com/BlackMixture/Mix-Studio/issues/25"
+    },
+    "ClickHouse/ClickBench#960": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-23T00:36:53Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Add SynnoDB",
+      "url": "https://github.com/ClickHouse/ClickBench/issues/960"
+    },
+    "MicroPythonOS/MicroPythonOS#172": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-24T13:35:19Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "Add support for  2.8inch ESP32-S3 Display (Cheap Black Display)",
+      "url": "https://github.com/MicroPythonOS/MicroPythonOS/issues/172"
+    },
+    "MicroPythonOS/MicroPythonOS#202": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-14T16:35:29Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "Add Screensaver to main app layout",
+      "url": "https://github.com/MicroPythonOS/MicroPythonOS/issues/202"
+    },
+    "MicroPythonOS/MicroPythonOS#207": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-02T16:45:35Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "Feature Request: Add uPyStore.io as an Optional Application Store Provider for MicroPythonOS",
+      "url": "https://github.com/MicroPythonOS/MicroPythonOS/issues/207"
+    },
+    "MicroPythonOS/MicroPythonOS#211": {
+      "confidence": 0.65,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-01T01:18:01Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.65 is below 0.70",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "Add Bluetooth Low Energy (BLE) framework",
+      "url": "https://github.com/MicroPythonOS/MicroPythonOS/issues/211"
+    },
+    "MicroPythonOS/MicroPythonOS#215": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-02T12:29:44Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "Add simple way to force DeviceInfo.hardware_id, skip board detection, and customize hardware board initialization",
+      "url": "https://github.com/MicroPythonOS/MicroPythonOS/issues/215"
+    },
+    "RICHQAQ/PasteMD#82": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-13T16:00:35Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "\u5bf9\u4e8echatgpt\u7f51\u9875\u7248\u590d\u5236\u65f6\u7684\u95ee\u9898",
+      "url": "https://github.com/RICHQAQ/PasteMD/issues/82"
+    },
+    "RICHQAQ/PasteMD#84": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-16T13:27:15Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "\u7c98\u8d34\u65f6\u5019\u5f02\u5e38\u7684\u65b9\u6846\u663e\u793a",
+      "url": "https://github.com/RICHQAQ/PasteMD/issues/84"
+    },
+    "RICHQAQ/PasteMD#85": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-22T06:35:50Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "MacOS\u4f7f\u7528\u70ed\u952e\u65e0\u53cd\u5e94",
+      "url": "https://github.com/RICHQAQ/PasteMD/issues/85"
+    },
+    "RICHQAQ/PasteMD#87": {
+      "confidence": 0.6,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-27T15:07:49Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.60 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "There are a large number of formatting errors when pasting mathematical formulas in WPS Word",
+      "url": "https://github.com/RICHQAQ/PasteMD/issues/87"
+    },
+    "Screenly/Anthias#3177": {
+      "confidence": 0.85,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-09T15:56:16Z",
+      "reasons": [
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "[FEATURE] Anthias Webpage - requesting highlighting the actual asset being played",
+      "url": "https://github.com/Screenly/Anthias/issues/3177"
+    },
+    "ThinkInAIXYZ/deepchat#2068": {
+      "confidence": 0.6,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-31T09:29:52Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.60 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "[BUG]",
+      "url": "https://github.com/ThinkInAIXYZ/deepchat/issues/2068"
+    },
+    "aipoch/open-science#340": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-29T09:25:13Z",
+      "reasons": [
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "RFC: Provenance as a derived view over existing stores (Roadmap Phase 2 \u2014 artifact lineage without a parallel capture log)",
+      "url": "https://github.com/aipoch/open-science/issues/340"
+    },
+    "aipoch/open-science#474": {
+      "confidence": 0.6,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T07:46:46Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.60 is below 0.70"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "[Bug]: Remote SSH connection fails in Open Science although direct SSH works",
+      "url": "https://github.com/aipoch/open-science/issues/474"
+    },
+    "aipoch/open-science#475": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T07:51:12Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "[Feature]: Add claim-level citation tracing and source preview",
+      "url": "https://github.com/aipoch/open-science/issues/475"
+    },
+    "atrocore/atrocore#1334": {
+      "confidence": 0.95,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-22T12:58:36Z",
+      "reasons": [
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Incorrect use of `ltrim()` in `LocalStorage::scanFiles()` corrupts file paths",
+      "url": "https://github.com/atrocore/atrocore/issues/1334"
+    },
+    "bramstroker/homeassistant-powercalc#4196": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-10T08:04:28Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "Support Signify white ceiling spot",
+      "url": "https://github.com/bramstroker/homeassistant-powercalc/issues/4196"
+    },
+    "bramstroker/homeassistant-powercalc#4394": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-26T18:32:39Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "Music is not available as a music provider",
+      "url": "https://github.com/bramstroker/homeassistant-powercalc/issues/4394"
+    },
+    "bramstroker/homeassistant-powercalc#4395": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-26T18:32:27Z",
+      "reasons": [
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "Vacuum Robots with battery_level sensors",
+      "url": "https://github.com/bramstroker/homeassistant-powercalc/issues/4395"
+    },
+    "bramstroker/homeassistant-powercalc#4398": {
+      "confidence": 0.9,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-03T17:28:54Z",
+      "reasons": [
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "conversation indicates the repository change is already resolved"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "Support password authentication for shelly integration",
+      "url": "https://github.com/bramstroker/homeassistant-powercalc/issues/4398"
+    },
+    "chthollyphile/folia-major#120": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-07T02:14:46Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "[FEATURE] \u8981\u662f\u80fd\u7528spotify\u5c31\u597d\u4e86",
+      "url": "https://github.com/chthollyphile/folia-major/issues/120"
+    },
+    "chthollyphile/folia-major#155": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-19T06:45:55Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "[FEATURE] \u5e0c\u671b\u53ef\u4ee5\u63a5\u5165\u843d\u96ea\u97f3\u4e50\uff0c\u53ef\u4ee5\u6dfb\u52a0\u97f3\u6e90",
+      "url": "https://github.com/chthollyphile/folia-major/issues/155"
+    },
+    "chthollyphile/folia-major#226": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T10:45:56Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "[FEATURE] \u589e\u52a0\u5bf9Apple Music\u7684\u652f\u6301",
+      "url": "https://github.com/chthollyphile/folia-major/issues/226"
+    },
+    "chthollyphile/folia-major#238": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-02T09:39:29Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "[FEATURE] \u5e0c\u671b\u9002\u914d\u7eaf\u97f3\u4e50\u6548\u679c",
+      "url": "https://github.com/chthollyphile/folia-major/issues/238"
+    },
+    "czl0325/coin11-tb#68": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-13T04:23:26Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "install AdbKeyboard ime failed",
+      "url": "https://github.com/czl0325/coin11-tb/issues/68"
+    },
+    "earthtojake/text-to-cad#149": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-10T16:54:48Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Add proper GLB video support",
+      "url": "https://github.com/earthtojake/text-to-cad/issues/149"
+    },
+    "felixmosh/bull-board#1276": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-23T12:08:07Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "feat(ui): support custom icon for miscLinks in setUIConfig",
+      "url": "https://github.com/felixmosh/bull-board/issues/1276"
+    },
+    "felixmosh/bull-board#1291": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T02:18:08Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "Feature: group failed jobs by error for easier triage",
+      "url": "https://github.com/felixmosh/bull-board/issues/1291"
+    },
+    "fivetran/great_expectations#11986": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-24T23:21:59Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Cloud Store Backend docs recipe",
+      "url": "https://github.com/fivetran/great_expectations/issues/11986"
+    },
+    "gentoo-zh/overlay#11556": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-05T08:39:34Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "Maintainer Needed \u5c0b\u627e\u7dad\u8b77\u8005  :sys-kernel/cachyos-sources",
+      "url": "https://github.com/gentoo-zh/overlay/issues/11556"
+    },
+    "gz-yami/mall4cloud#41": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-17T02:30:04Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "\u5728\u6dfb\u52a0\u5e73\u53f0\u5206\u7c7b\u70b9\u51fb\u786e\u8ba4\u9009\u62e9\uff0c\u6ca1\u6709\u53cd\u5e94",
+      "url": "https://github.com/gz-yami/mall4cloud/issues/41"
+    },
+    "gz-yami/mall4cloud#42": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-17T04:01:59Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "\u6dfb\u52a0\u5546\u54c1\u540e\u600e\u4e48\u540c\u6b65\u5546\u54c1\u4fe1\u606f\u5230es",
+      "url": "https://github.com/gz-yami/mall4cloud/issues/42"
+    },
+    "horsicq/Detect-It-Easy#365": {
+      "confidence": 1.0,
+      "issue_kind": "standalone",
+      "issue_updated_at": "2026-07-15T17:41:55Z",
+      "reasons": [
+        "conversation indicates the repository change is already resolved"
+      ],
+      "rejected_at": "2026-08-03T18:59:37.038880+00:00",
+      "title": "Windows Install via Chocolatey results in unusable Shortcut",
+      "url": "https://github.com/horsicq/Detect-It-Easy/issues/365"
+    },
+    "horsicq/Detect-It-Easy#367": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-15T17:41:40Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "Installation from Microsoft Store cannot switch off Spanish",
+      "url": "https://github.com/horsicq/Detect-It-Easy/issues/367"
+    },
+    "hykilpikonna/hyfetch#531": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-29T11:24:24Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "Hyfetch gets stuck for a few seconds",
+      "url": "https://github.com/hykilpikonna/hyfetch/issues/531"
+    },
+    "jnMetaCode/superpowers-zh#107": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-07T22:17:13Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "qoder-CN\u7684\u7248\u672c\u80fd\u5426\u652f\u6301",
+      "url": "https://github.com/jnMetaCode/superpowers-zh/issues/107"
+    },
+    "jnMetaCode/superpowers-zh#48": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-07T14:15:40Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "\u672a\u68c0\u6d4b\u5230\u4efb\u4f55\u5df2\u77e5\u7684 AI \u7f16\u7a0b\u5de5\u5177",
+      "url": "https://github.com/jnMetaCode/superpowers-zh/issues/48"
+    },
+    "jnMetaCode/superpowers-zh#95": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-07T22:17:12Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-08T06:54:22.905303+00:00",
+      "title": "\u5efa\u8bae\u652f\u6301 Zcode",
+      "url": "https://github.com/jnMetaCode/superpowers-zh/issues/95"
+    },
+    "juewuy/ShellCrash#1292": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-13T08:28:15Z",
+      "reasons": [
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[Bug] 1.9.4release mihomo\u5185\u6838\u4f7f\u7528\u751f\u6210\u914d\u7f6e\u6587\u4ef6(\u57fa\u4e8e\u5185\u6838providers)\u65e0\u6cd5\u6b63\u786e\u5408\u5e76\u81ea\u5b9a\u4e49\u89c4\u5219",
+      "url": "https://github.com/juewuy/ShellCrash/issues/1292"
+    },
+    "juewuy/ShellCrash#1308": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-19T11:37:38Z",
+      "reasons": [
+        "complexity is medium",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[Bug] \u534e\u7855\u56fa\u4ef6\u4e0b\u70ed\u66f4\u65b0\u8ba2\u9605\u4f7f\u7528 /tmp/mnt \u8def\u5f84\u5bfc\u81f4 Mihomo \u62d2\u7edd\u52a0\u8f7d\u4f46\u4efb\u52a1\u4ecd\u63d0\u793a\u6210\u529f",
+      "url": "https://github.com/juewuy/ShellCrash/issues/1308"
+    },
+    "juewuy/ShellCrash#1312": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-26T15:58:30Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[Feature] \u652f\u6301\u6307\u5b9a\u7f51\u6bb5DNS\u52ab\u6301",
+      "url": "https://github.com/juewuy/ShellCrash/issues/1312"
+    },
+    "juewuy/ShellCrash#1313": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T03:55:24Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[Bug] \u8ba2\u9605\u8282\u70b9\u53d8\u66f4IP\u540e\uff0c\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0\uff0c\u624b\u52a8\u91cd\u65b0\u751f\u6210\u914d\u7f6e\u6587\u4ef6\u540e\u4e5f\u4e0d\u751f\u6548",
+      "url": "https://github.com/juewuy/ShellCrash/issues/1313"
+    },
+    "juewuy/ShellCrash#1314": {
+      "confidence": 0.85,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-30T06:46:23Z",
+      "reasons": [
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[Bug] \u8f93\u5165\u6570\u5b57\u8d85\u8fc79\u5c31\u4f1a\u62a5\u9519\u201c\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u6570\u5b57\uff01\u201d",
+      "url": "https://github.com/juewuy/ShellCrash/issues/1314"
+    },
+    "juewuy/ShellCrash#1315": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-30T06:34:08Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "no acceptance criterion or reproducible bug",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "\u66f4\u65b0\u8ba2\u9605\u540e\uff0c\u8282\u70b9\u7ec4\u7684selector\u9009\u4e2d\u72b6\u6001\u4f1a\u4e22\u5931\u662f\u7279\u6027\u5417",
+      "url": "https://github.com/juewuy/ShellCrash/issues/1315"
+    },
+    "langgenius/dify-official-plugins#3428": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T03:35:22Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "conversation indicates the repository change is already resolved"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Outlook Trigger authentication expires after 2\u20133 days and requires manual reauthorization",
+      "url": "https://github.com/langgenius/dify-official-plugins/issues/3428"
+    },
+    "langgenius/dify-official-plugins#3473": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-21T03:52:19Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "InvokeError: [models] Error: 'type' (agent_run_id=01dfb40f-40c7-4026-a3bb-8dab201df32c)",
+      "url": "https://github.com/langgenius/dify-official-plugins/issues/3473"
+    },
+    "langgenius/dify-official-plugins#3518": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T03:09:20Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "[Modelsell] Add a named provider with dynamic model discovery",
+      "url": "https://github.com/langgenius/dify-official-plugins/issues/3518"
+    },
+    "luigi-project/luigi#5302": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-10T14:27:25Z",
+      "reasons": [
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "Expand auth-oidc-pkce test coverage (unit + e2e)",
+      "url": "https://github.com/luigi-project/luigi/issues/5302"
+    },
+    "luigi-project/luigi#5303": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-10T14:28:28Z",
+      "reasons": [
+        "complexity is medium",
+        "estimated file count 10 is outside 1-5"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "Migration guide: legacy auth-oidc \u2192 auth-oidc-pkce",
+      "url": "https://github.com/luigi-project/luigi/issues/5303"
+    },
+    "middleapi/orpc#1725": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-26T01:42:42Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "[v2] Native Angular support for client-side fetching using Angular resources",
+      "url": "https://github.com/middleapi/orpc/issues/1725"
+    },
+    "modoboa/modoboa#4114": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-31T06:29:21Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "rspamd training from and by Modoboa",
+      "url": "https://github.com/modoboa/modoboa/issues/4114"
+    },
+    "optuna/optuna#6777": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T15:05:16Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "TPESampler RSS grows unbounded with trial count in long-running studies (follow-up to #3050)",
+      "url": "https://github.com/optuna/optuna/issues/6777"
+    },
+    "optuna/optuna#6780": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-02T03:11:22Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-07T07:17:20.682229+00:00",
+      "title": "Add boolean column for `best_trials` in `optuna.Study.trials_dataframe`",
+      "url": "https://github.com/optuna/optuna/issues/6780"
+    },
+    "software-mansion/react-native-gesture-handler#4241": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-30T06:41:08Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-05T08:37:23.420231+00:00",
+      "title": "[v3] SIGABRT crash: Yoga layout assertion failure when dynamically adding ReanimatedSwipeable rows alongside BottomSheet (Fabric)",
+      "url": "https://github.com/software-mansion/react-native-gesture-handler/issues/4241"
+    },
+    "stella/stella#1334": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-04T01:10:37Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "epic: Roadmap Q3 2026",
+      "url": "https://github.com/stella/stella/issues/1334"
+    },
+    "stella/stella#1353": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-23T19:04:19Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "feat(scheduler): schedule case-law ingestion task",
+      "url": "https://github.com/stella/stella/issues/1353"
+    },
+    "stella/stella#1376": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-26T14:09:31Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "feat(artifacts): Living Matter Artifacts: Chronologies, Risk Registers & AI-Driven Diff Review",
+      "url": "https://github.com/stella/stella/issues/1376"
+    },
+    "stella/stella#1377": {
+      "confidence": 0.65,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-26T14:10:45Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.65 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "feat(workflows): saved multi-step workflows with run history",
+      "url": "https://github.com/stella/stella/issues/1377"
+    },
+    "stella/stella#1378": {
+      "confidence": 0.65,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-02T18:44:27Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.65 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-04T08:38:10.439912+00:00",
+      "title": "feat(workflows): routines - scheduled and event-driven triggers",
+      "url": "https://github.com/stella/stella/issues/1378"
+    },
+    "usekaneo/kaneo#1463": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-08T07:04:14Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "feat: Manual resource linking & commit/PR traceability for tickets",
+      "url": "https://github.com/usekaneo/kaneo/issues/1463"
+    },
+    "usekaneo/kaneo#1473": {
+      "confidence": 0.95,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-08T03:10:55Z",
+      "reasons": [
+        "needs external access or credentials",
+        "needs specialized hardware",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "[Bug]: File upload fails for files without a standard MIME type (.conf/.log/.md etc.) \u2014 contentType sent as empty string",
+      "url": "https://github.com/usekaneo/kaneo/issues/1473"
+    },
+    "usnistgov/macos_security#733": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-17T17:51:49Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "[Bug]: \"sh: sudo: not found\"",
+      "url": "https://github.com/usnistgov/macos_security/issues/733"
+    },
+    "usnistgov/macos_security#735": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-15T14:17:09Z",
+      "reasons": [
+        "complexity is medium",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "mSCP 2.0: literal $ODV ships in generated profiles when a rule lacks the baseline's odv key (_fill_in_odv has no fallback)",
+      "url": "https://github.com/usnistgov/macos_security/issues/735"
+    },
+    "usnistgov/macos_security#736": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-15T14:31:39Z",
+      "reasons": [
+        "complexity is medium",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "mSCP 2.0: version-scoped check ships with the generic expected result \u2014 affected rules can never pass",
+      "url": "https://github.com/usnistgov/macos_security/issues/736"
+    },
+    "usnistgov/macos_security#753": {
+      "confidence": 0.6,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-30T08:17:14Z",
+      "reasons": [
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.60 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "[Rule]: system_settings_time_machine_auto_backup_enable should pass with empty result value",
+      "url": "https://github.com/usnistgov/macos_security/issues/753"
+    },
+    "usnistgov/macos_security#755": {
+      "confidence": 0.75,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-04T15:07:06Z",
+      "reasons": [
+        "complexity is medium",
+        "needs external access or credentials",
+        "needs specialized hardware"
+      ],
+      "rejected_at": "2026-08-10T07:43:06.880747+00:00",
+      "title": "[Rule]: 2.3.3.7 (Disable Internet Sharing)",
+      "url": "https://github.com/usnistgov/macos_security/issues/755"
+    },
+    "vitali87/code-graph-rag#1022": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-08-02T13:58:35Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "[Question]:",
+      "url": "https://github.com/vitali87/code-graph-rag/issues/1022"
+    },
+    "wanshuiyin/Auto-claude-code-research-in-sleep#375": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-22T17:02:38Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "Bug! The workflow seems to have been disrupted by the updated Claude.",
+      "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/issues/375"
+    },
+    "wanshuiyin/Auto-claude-code-research-in-sleep#379": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-27T07:33:21Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "\u8fd9\u4e2a\u9879\u76ee\u5982\u4f55\u5728TRAE\u4e2d\u5177\u4f53\u5e94\u7528\u5462\uff1f\u5168\u7528\u56fd\u5185\u7684\u5927\u6a21\u578b\u3002\u53ef\u5426\u51fa\u4e2a\u793a\u8303\u6837\u4f8b\u554a",
+      "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/issues/379"
+    },
+    "wanshuiyin/Auto-claude-code-research-in-sleep#380": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-27T11:00:58Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "wanshuiyin/Auto-claude-code-research-in-sleep was independently reviewed on Hlido \u2014 scored 82/100, right of reply open",
+      "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/issues/380"
+    },
+    "webbrain-one/webbrain#432": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-31T18:50:49Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Discord Server to discuss everything WebBrain",
+      "url": "https://github.com/webbrain-one/webbrain/issues/432"
+    },
+    "webbrain-one/webbrain#466": {
+      "confidence": 0.7,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-28T03:38:02Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is medium",
+        "estimated file count 0 is outside 1-5",
+        "needs a maintainer decision",
+        "needs specialized hardware",
+        "no acceptance criterion or reproducible bug",
+        "issue is already assigned or claimed"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "Expand button at the top of the sidepanel",
+      "url": "https://github.com/webbrain-one/webbrain/issues/466"
+    },
+    "webbrain-one/webbrain#488": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-25T16:27:48Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "needs a maintainer decision",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-06T08:37:42.198956+00:00",
+      "title": "capsolver as a skill?",
+      "url": "https://github.com/webbrain-one/webbrain/issues/488"
+    },
+    "whoahaow/rjsxrd#12": {
+      "confidence": 0.5,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-11T10:06:05Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.50 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "\u0415\u0441\u0442\u044c \u043b\u0438 mtpoxy?",
+      "url": "https://github.com/whoahaow/rjsxrd/issues/12"
+    },
+    "whoahaow/rjsxrd#14": {
+      "confidence": 0.4,
+      "issue_kind": "unknown",
+      "issue_updated_at": "2026-07-30T14:50:41Z",
+      "reasons": [
+        "not confirmed tractable",
+        "complexity is unknown",
+        "estimated file count 0 is outside 1-5",
+        "solvability confidence 0.40 is below 0.70",
+        "no acceptance criterion or reproducible bug"
+      ],
+      "rejected_at": "2026-08-09T06:57:48.152520+00:00",
+      "title": "\u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c",
+      "url": "https://github.com/whoahaow/rjsxrd/issues/14"
+    }
+  }
+}

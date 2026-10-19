@@ -1,0 +1,4 @@
+interface:
+  display_name: Guard Public Action
+  short_description: Enforce deterministic permission, safety, and idempotency gates.
+  default_prompt: Validate this typed public action against permissions, allowlists, safety, and idempotency.

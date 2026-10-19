@@ -1,0 +1,7 @@
+schema_version: 1
+
+# External repositories where an untrusted @elixpoo mention may enter the
+# control-repository approval queue. Trusted maintainers are routed through Vet
+# in any external repository, so they do not need entries here.
+watched_repositories:
+  # - repository-owner/repository-name

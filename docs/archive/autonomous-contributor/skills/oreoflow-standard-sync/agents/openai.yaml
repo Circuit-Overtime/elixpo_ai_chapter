@@ -1,0 +1,4 @@
+interface:
+  display_name: "OreoFlow Standard Sync"
+  short_description: "Publish reviewable organization workflow updates"
+  default_prompt: "Use $oreoflow-standard-sync to compare or propagate the canonical Elixpo repository-agent standard."

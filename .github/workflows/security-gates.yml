@@ -1,0 +1,35 @@
+name: agent security gates
+
+on:
+  pull_request:
+    paths:
+      - agents/**
+      - lib/**
+      - rtk/**
+      - workers/**
+      - config/token_policy.yaml
+      - .github/workflows/**
+  push:
+    branches: [main]
+  schedule:
+    - cron: "41 3 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Audit token placement
+        run: python .github/scripts/audit_tokens.py
+      - name: Run injection and boundary fixtures
+        run: pytest -q tests/test_elixpoo_v2.py tests/test_security.py tests/test_state_contracts.py

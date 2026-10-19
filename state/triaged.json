@@ -1,0 +1,342 @@
+[
+  {
+    "activity_age_days": 6,
+    "blockers": [
+      "complexity is medium",
+      "needs external access or credentials",
+      "needs specialized hardware"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2,
+      "reproducible_bug": 3
+    },
+    "complexity": "medium",
+    "confidence": 0.75,
+    "easy": false,
+    "estimated_files": 2,
+    "issue_age_days": 7,
+    "issue_updated_at": "2026-08-04T15:07:06Z",
+    "number": 755,
+    "rationale": "The issue involves updating a check script to account for two different mechanisms to disable Internet Sharing, which requires understanding of both legacy and new system settings.",
+    "repo": "usnistgov/macos_security",
+    "score": 8,
+    "title": "[Rule]: 2.3.3.7 (Disable Internet Sharing)",
+    "tractable": true,
+    "url": "https://github.com/usnistgov/macos_security/issues/755"
+  },
+  {
+    "activity_age_days": 26,
+    "blockers": [
+      "complexity is medium",
+      "needs external access or credentials",
+      "needs specialized hardware"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2,
+      "reproducible_bug": 3
+    },
+    "complexity": "medium",
+    "confidence": 0.75,
+    "easy": false,
+    "estimated_files": 2,
+    "issue_age_days": 26,
+    "issue_updated_at": "2026-07-15T14:31:39Z",
+    "number": 736,
+    "rationale": "The issue describes a reproducible bug with a clear impact on rule enforcement and provides detailed steps to reproduce the problem.",
+    "repo": "usnistgov/macos_security",
+    "score": 8,
+    "title": "mSCP 2.0: version-scoped check ships with the generic expected result \u2014 affected rules can never pass",
+    "tractable": true,
+    "url": "https://github.com/usnistgov/macos_security/issues/736"
+  },
+  {
+    "activity_age_days": 26,
+    "blockers": [
+      "complexity is medium",
+      "needs external access or credentials",
+      "needs specialized hardware"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2,
+      "reproducible_bug": 3
+    },
+    "complexity": "medium",
+    "confidence": 0.75,
+    "easy": false,
+    "estimated_files": 3,
+    "issue_age_days": 26,
+    "issue_updated_at": "2026-07-15T14:17:09Z",
+    "number": 735,
+    "rationale": "The issue describes a reproducible bug with a clear expected outcome, but the scope is medium due to multiple rules and benchmarks involved.",
+    "repo": "usnistgov/macos_security",
+    "score": 8,
+    "title": "mSCP 2.0: literal $ODV ships in generated profiles when a rule lacks the baseline's odv key (_fill_in_odv has no fallback)",
+    "tractable": true,
+    "url": "https://github.com/usnistgov/macos_security/issues/735"
+  },
+  {
+    "activity_age_days": 11,
+    "blockers": [
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.60 is below 0.70",
+      "needs a maintainer decision",
+      "needs specialized hardware"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2,
+      "reproducible_bug": 3
+    },
+    "complexity": "unknown",
+    "confidence": 0.6,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 11,
+    "issue_updated_at": "2026-07-30T08:17:14Z",
+    "number": 753,
+    "rationale": "The issue lacks enough evidence to bound the work and does not specify the exact files or components involved.",
+    "repo": "usnistgov/macos_security",
+    "score": 8,
+    "title": "[Rule]: system_settings_time_machine_auto_backup_enable should pass with empty result value",
+    "tractable": true,
+    "url": "https://github.com/usnistgov/macos_security/issues/753"
+  },
+  {
+    "activity_age_days": 24,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.50 is below 0.70"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2,
+      "reproducible_bug": 3
+    },
+    "complexity": "unknown",
+    "confidence": 0.5,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 28,
+    "issue_updated_at": "2026-07-17T17:51:49Z",
+    "number": 733,
+    "rationale": "The issue lacks enough evidence to bound the work and the steps to reproduce do not provide a clear acceptance criterion.",
+    "repo": "usnistgov/macos_security",
+    "score": 8,
+    "title": "[Bug]: \"sh: sudo: not found\"",
+    "tractable": false,
+    "url": "https://github.com/usnistgov/macos_security/issues/733"
+  },
+  {
+    "activity_age_days": 2,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is medium",
+      "estimated file count 0 is outside 1-5",
+      "needs a maintainer decision"
+    ],
+    "breakdown": {
+      "acceptance_criterion": 2,
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2
+    },
+    "complexity": "medium",
+    "confidence": 0.7,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 9,
+    "issue_updated_at": "2026-08-08T07:04:14Z",
+    "number": 1463,
+    "rationale": "The issue involves multiple components and requires design decisions, making it more complex than a trivial or small change.",
+    "repo": "usekaneo/kaneo",
+    "score": 7,
+    "title": "feat: Manual resource linking & commit/PR traceability for tickets",
+    "tractable": false,
+    "url": "https://github.com/usekaneo/kaneo/issues/1463"
+  },
+  {
+    "activity_age_days": 13,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.50 is below 0.70",
+      "no acceptance criterion or reproducible bug"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2
+    },
+    "complexity": "unknown",
+    "confidence": 0.5,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 13,
+    "issue_updated_at": "2026-07-28T06:53:40Z",
+    "number": 79,
+    "rationale": "The issue description lacks sufficient details to determine the scope and completion of the work.",
+    "repo": "Agions/story-fab",
+    "score": 5,
+    "title": "\u95ea\u9000\u2014\u2014\u6839\u672c\u6ca1\u5f39\u51fa\u6765\u754c\u9762",
+    "tractable": false,
+    "url": "https://github.com/Agions/story-fab/issues/79"
+  },
+  {
+    "activity_age_days": 24,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.50 is below 0.70",
+      "no acceptance criterion or reproducible bug"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2
+    },
+    "complexity": "unknown",
+    "confidence": 0.5,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 24,
+    "issue_updated_at": "2026-07-17T04:01:59Z",
+    "number": 42,
+    "rationale": "The issue lacks enough evidence to determine the scope and completion of the work.",
+    "repo": "gz-yami/mall4cloud",
+    "score": 5,
+    "title": "\u6dfb\u52a0\u5546\u54c1\u540e\u600e\u4e48\u540c\u6b65\u5546\u54c1\u4fe1\u606f\u5230es",
+    "tractable": false,
+    "url": "https://github.com/gz-yami/mall4cloud/issues/42"
+  },
+  {
+    "activity_age_days": 24,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.50 is below 0.70",
+      "needs a maintainer decision",
+      "needs specialized hardware",
+      "no acceptance criterion or reproducible bug"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2
+    },
+    "complexity": "unknown",
+    "confidence": 0.5,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 24,
+    "issue_updated_at": "2026-07-17T02:30:04Z",
+    "number": 41,
+    "rationale": "The issue lacks enough evidence to bound the work and does not provide clear reproduction steps or acceptance criteria.",
+    "repo": "gz-yami/mall4cloud",
+    "score": 5,
+    "title": "\u5728\u6dfb\u52a0\u5e73\u53f0\u5206\u7c7b\u70b9\u51fb\u786e\u8ba4\u9009\u62e9\uff0c\u6ca1\u6709\u53cd\u5e94",
+    "tractable": false,
+    "url": "https://github.com/gz-yami/mall4cloud/issues/41"
+  },
+  {
+    "activity_age_days": 9,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.50 is below 0.70",
+      "needs a maintainer decision",
+      "needs specialized hardware",
+      "no acceptance criterion or reproducible bug"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2
+    },
+    "complexity": "unknown",
+    "confidence": 0.5,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 9,
+    "issue_updated_at": "2026-08-01T10:55:51Z",
+    "number": 70,
+    "rationale": "The issue lacks enough evidence to determine the scope and completion of the work.",
+    "repo": "0xNyk/council-of-high-intelligence",
+    "score": 5,
+    "title": "Complementary approach: DAUDIT \u2014 decision-context engine with 5-dimension audit",
+    "tractable": false,
+    "url": "https://github.com/0xNyk/council-of-high-intelligence/issues/70"
+  },
+  {
+    "activity_age_days": 24,
+    "blockers": [
+      "not confirmed tractable",
+      "complexity is unknown",
+      "estimated file count 0 is outside 1-5",
+      "solvability confidence 0.50 is below 0.70",
+      "needs a maintainer decision",
+      "needs specialized hardware",
+      "no acceptance criterion or reproducible bug"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2
+    },
+    "complexity": "unknown",
+    "confidence": 0.5,
+    "easy": false,
+    "estimated_files": 0,
+    "issue_age_days": 24,
+    "issue_updated_at": "2026-07-17T10:28:36Z",
+    "number": 63,
+    "rationale": "The issue lacks enough evidence to determine the scope and completion of the work.",
+    "repo": "0xNyk/council-of-high-intelligence",
+    "score": 5,
+    "title": "Your project is on StackMap \u2014 a curated map of the AI stack",
+    "tractable": false,
+    "url": "https://github.com/0xNyk/council-of-high-intelligence/issues/63"
+  },
+  {
+    "activity_age_days": 2,
+    "blockers": [
+      "needs external access or credentials",
+      "needs specialized hardware",
+      "issue is already assigned or claimed"
+    ],
+    "breakdown": {
+      "aged": 1,
+      "already_claimed": -10,
+      "no_assignee": 2,
+      "no_maintainer_claim": 2,
+      "reproducible_bug": 3
+    },
+    "complexity": "small",
+    "confidence": 0.95,
+    "easy": false,
+    "estimated_files": 1,
+    "issue_age_days": 7,
+    "issue_updated_at": "2026-08-08T03:10:55Z",
+    "number": 1473,
+    "rationale": "The issue is a clear bug with a defined fix and reproducible steps.",
+    "repo": "usekaneo/kaneo",
+    "score": -2,
+    "title": "[Bug]: File upload fails for files without a standard MIME type (.conf/.log/.md etc.) \u2014 contentType sent as empty string",
+    "tractable": true,
+    "url": "https://github.com/usekaneo/kaneo/issues/1473"
+  }
+]

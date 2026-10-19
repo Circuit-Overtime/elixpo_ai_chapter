@@ -1,0 +1,4 @@
+interface:
+  display_name: "Living Repo Persona"
+  short_description: "Shape Elixpo repository mood and voice"
+  default_prompt: "Use $living-repo-persona to express this deterministic repository mood as a clear community Discussion."

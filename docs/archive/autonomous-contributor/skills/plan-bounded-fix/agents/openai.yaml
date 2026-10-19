@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Bounded Fix"
+  short_description: "Plan a fifteen-minute repository fix"
+  default_prompt: "Use $plan-bounded-fix to produce a small structured implementation plan."

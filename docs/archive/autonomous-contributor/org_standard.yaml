@@ -1,0 +1,29 @@
+schema_version: 1
+name: oreoflow-repository-standard
+target_owner: elixpo
+exclude_repositories:
+  - agent.elixpo
+files:
+  - .github/ci_config.py
+  - .github/docs/agentic-planner.md
+  - .github/scripts/_common.py
+  - .github/scripts/build_artifact.py
+  - .github/scripts/issue_description.py
+  - .github/scripts/merge_gist.py
+  - .github/scripts/pr_assign.py
+  - .github/scripts/pr_fill_description.py
+  - .github/scripts/setup_ccr.sh
+  - .github/scripts/triage_issue.py
+  - .github/scripts/triage_pr.py
+  - .github/workflows/artifact-update.yml
+  - .github/workflows/elixpo-ci.yml
+  - .github/workflows/elixpo-agent.yml
+  - .github/workflows/elixpo-triage.yml
+  - .github/workflows/elixpoo-ack.yml
+  - .github/workflows/elixpoo-retry.yml
+  - .github/workflows/on-merge.yml
+  - .github/workflows/pr-assign.yml
+  - .github/workflows/pr-description-fill.yml
+  - .github/workflows/pr-management.yml
+  - .github/workflows/quality-gate.yml
+  - .github/workflows/stale-management.yml

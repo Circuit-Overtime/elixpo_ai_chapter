@@ -1,0 +1,4 @@
+interface:
+  display_name: "Comprehend Target Code"
+  short_description: "Load only files relevant to one issue"
+  default_prompt: "Use $comprehend-target-code to build a minimal context bundle for this issue."

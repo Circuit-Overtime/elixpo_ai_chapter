@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Exact Edit"
+  short_description: "Edit only plan-approved repository files"
+  default_prompt: "Use $implement-exact-edit to return exact atomic edits for this plan step."

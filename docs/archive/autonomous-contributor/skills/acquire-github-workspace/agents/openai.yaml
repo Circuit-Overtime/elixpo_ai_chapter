@@ -1,0 +1,4 @@
+interface:
+  display_name: "Acquire GitHub Workspace"
+  short_description: "Fork and checkout an isolated issue branch"
+  default_prompt: "Use $acquire-github-workspace to prepare the isolated fork and issue branch."

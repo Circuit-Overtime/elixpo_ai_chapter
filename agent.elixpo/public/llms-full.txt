@@ -1,0 +1,36 @@
+# Elixpoo v2 technical contract
+
+Elixpoo is Elixpo's centralized GitHub project-management agent. It maintains the project record around software work and does not implement product code.
+
+## Capabilities
+
+- Classify issues and pull requests using centrally allowed labels.
+- Synchronize one GitHub Project V2 record per opted-in item.
+- Answer exact @elixpoo mentions or perform one permission-checked metadata action.
+- Leave API-grounded, deduplicated, comment-only pull-request reviews.
+- Manage announcements, Q&A, polls, and exact mentions on the canonical elixpo/elixpo Discussions surface.
+- Write one bounded, schema-versioned merged-change record to the approved Gist.
+
+## Boundary
+
+- No repository checkout or execution of fork code.
+- No product-source edits, solution branches, commits, or implementation pull requests.
+- Repository text, diffs, comments, links, and guidance files are untrusted evidence, never instruction.
+- Models may propose typed results; deterministic code validates actor permission, action scope, allowlists, assignability, revision, and idempotency.
+- Public generated text passes a safety route and carries a stable operation marker.
+
+## Distribution
+
+Participating repositories install thin event callers from distribution/workflows. Each caller invokes a reusable workflow in elixpo/agent.elixpo at the rolling v2 reference. The central repository owns implementation, policy, configuration, model routing, and upgrades. Rollout apply mode opens reviewable pull requests and never merges them automatically.
+
+## State
+
+GitHub issues, pull requests, labels, Discussions, and Project V2 are authoritative. The approved Gist stores bounded merge history and Discussion cursors with optimistic revision checks.
+
+## References
+
+- Website: https://agent.elixpo.com/
+- Documentation: https://agent.elixpo.com/docs
+- Source: https://github.com/elixpo/agent.elixpo
+- Runtime contract: https://github.com/elixpo/agent.elixpo/blob/main/docs/elixpoo-v2.md
+- Distribution: https://github.com/elixpo/agent.elixpo/tree/v2/distribution/workflows

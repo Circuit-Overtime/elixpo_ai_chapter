@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solvable Issue Triage"
+  short_description: "Judge issue scope, clarity, and blockers"
+  default_prompt: "Use $triage-solvable-issues to assess whether a GitHub issue is a bounded and safe contribution target."

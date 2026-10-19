@@ -1,0 +1,19 @@
+project:
+  name: agent.elixpo
+  description: "Open Source Agentic CI System"
+  stack: python
+  node_version: "20"
+
+ci:
+  lint_cmd: "ruff check agents rtk lib tests"
+  test_cmd: "pytest -q"
+  build_cmd: ""
+
+maintainers:
+  - github: Circuit-Overtime
+    skills: [python, ci, devops, github-actions, llm, fastapi]
+    lead: true
+
+gist:
+  id: ""
+  account: elixpoo

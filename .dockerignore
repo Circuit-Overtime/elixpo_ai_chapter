@@ -1,0 +1,15 @@
+.git/
+.github/
+.env
+.env.local
+agent.elixpo/
+public/
+workers/
+state/
+tests/
+docs/
+__pycache__/
+*.pyc
+*.log
+node_modules/
+.next/

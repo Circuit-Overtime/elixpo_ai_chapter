@@ -1,0 +1,4 @@
+interface:
+  display_name: "Discussion Mention Responder"
+  short_description: "Answer @elixpoo discussion mentions safely"
+  default_prompt: "Use $discussion-mention-responder to answer this @elixpoo mention from the supplied GitHub Discussion context."

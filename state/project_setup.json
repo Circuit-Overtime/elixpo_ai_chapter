@@ -1,0 +1,73 @@
+{
+  "configured_at": "2026-08-09T18:56:15.214476+00:00",
+  "fields": [
+    "Agent Status",
+    "Assignees",
+    "Branch",
+    "Cleanup Status",
+    "Closed",
+    "Created",
+    "Current Squad",
+    "Doctor Warning",
+    "Issue Key",
+    "Labels",
+    "Linked pull requests",
+    "Milestone",
+    "PR URL",
+    "Parent issue",
+    "Repository",
+    "Reviewers",
+    "Run ID",
+    "Started At",
+    "Status",
+    "Sub-issues progress",
+    "Title",
+    "Token Spend",
+    "Token Target",
+    "Updated",
+    "Updated At"
+  ],
+  "owner": "elixpo",
+  "project_id": "PVT_kwDOCZpXlc4Bf3bX",
+  "project_number": 7,
+  "schema_version": 1,
+  "status": "configured",
+  "views": [
+    {
+      "created": true,
+      "filter": "\"Agent Status\":discovered,vetted,claimed,solving,ready",
+      "id": "PVTV_lADOCZpXlc4Bf3bXzgLP8Hw",
+      "name": "Active work"
+    },
+    {
+      "created": true,
+      "filter": "\"Agent Status\":submitted,open,\"changes requested\"",
+      "id": "PVTV_lADOCZpXlc4Bf3bXzgLP8H0",
+      "name": "Awaiting maintainers"
+    },
+    {
+      "created": true,
+      "filter": "\"Agent Status\":\"CI failed\",rejected,\"cleanup pending\"",
+      "id": "PVTV_lADOCZpXlc4Bf3bXzgLP8H4",
+      "name": "Failures"
+    },
+    {
+      "created": true,
+      "filter": "\"Agent Status\":merged,closed",
+      "id": "PVTV_lADOCZpXlc4Bf3bXzgLP8H8",
+      "name": "Merged contributions"
+    },
+    {
+      "created": true,
+      "filter": "\"Doctor Warning\":*",
+      "id": "PVTV_lADOCZpXlc4Bf3bXzgLP8IA",
+      "name": "Token anomalies"
+    },
+    {
+      "created": true,
+      "filter": "-\"Cleanup Status\":complete",
+      "id": "PVTV_lADOCZpXlc4Bf3bXzgLP8IE",
+      "name": "Cleanup debt"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+schema_version: 1
+restricted_secrets:
+  ELIXPOO_GITHUB_AGENTIC_TOKEN:
+    - elixpoo-mentions.yml
+    - elixpoo-merge-memory.yml
+    - elixpoo-review.yml
+    - elixpoo-triage.yml
+    - gist-custodian.yml
+  ELIXPO_POLLINATIONS_API_KEY:
+    - discussions.yml
+    - elixpo-ci.yml
+    - elixpoo-mentions.yml
+    - elixpoo-merge-memory.yml
+    - elixpoo-review.yml
+    - elixpoo-triage.yml
+    - rollout-prs.yml
+  ELIXPOO_GITHUB_DISCUSSIONS_TOKEN:
+    - discussions.yml
+  ELIXPOO_GITHUB_PROJECT_TOKEN:
+    - elixpoo-mentions.yml
+    - elixpoo-triage.yml
+  ELIXPOO_GIST_AGENTIC_TOKEN:
+    - discussions.yml
+    - elixpo-ci.yml
+    - elixpoo-merge-memory.yml
+    - gist-custodian.yml
+  ELIXPOO_GITHUB_ROLLOUT_TOKEN:
+    - rollout-prs.yml
+forbidden_literal_patterns:
+  - "ghp_[A-Za-z0-9]{20,}"
+  - "github_pat_[A-Za-z0-9_]{20,}"
+  - "sk-[A-Za-z0-9]{20,}"

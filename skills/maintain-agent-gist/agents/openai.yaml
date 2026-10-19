@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Agent Gist"
+  short_description: "Repair and compact shared Gist state safely"
+  default_prompt: "Use $maintain-agent-gist to inspect, migrate, prune, compact, or repair elixpoo shared Gist state without losing concurrent writes."

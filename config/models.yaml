@@ -1,0 +1,31 @@
+# Role -> Pollinations model. Squads request a ROLE; the rtk router resolves the
+# model. Swap models here without touching squad code. Names validated against
+# docs/model.txt (Pollinations /v1/models). Legacy role history is archived under docs/archive/.
+#
+# DEFAULTS ARE FREE-TIER (no paid_only models) so the system runs without pollen
+# balance. The stronger paid model for each role is noted inline — swap it in for
+# production quality once the account is funded.
+
+base_url: https://gen.pollinations.ai/v1
+
+defaults:
+  effort: medium          # low | medium | high  -> temperature in rtk.router
+
+roles:
+  # cheap classification
+  classify:      { model: nova-fast }
+
+  # project-management classification
+  triage:        { model: nova-fast }                  # cheapest explicitly priced tool-capable model
+
+  # merged-change summaries
+  summarize:     { model: nova }                       # free, 1M ctx; paid: gemini-flash-lite-3.1
+
+  # exact mentions and COMMENT-only reviews
+  repository_agent: { model: nova-fast }               # bounded issue/PR response and routing
+
+  # GitHub Discussions — lowest-priced general text model in the registry
+  discussions:   { model: nova-fast }
+
+  # safety gate before any public post — costs ~nothing
+  safety:        { model: qwen-safety, tools: false }

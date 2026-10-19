@@ -1,0 +1,4 @@
+interface:
+  display_name: "Merge Discussion Composer"
+  short_description: "Write heuristic-selected merge discussions"
+  default_prompt: "Use $merge-discussion-orchestrator to compose the Discussion genre selected by the deterministic repository mood."

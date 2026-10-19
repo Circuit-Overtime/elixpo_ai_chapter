@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub Discussion Publisher"
+  short_description: "Validate and publish safe bot discussions"
+  default_prompt: "Use $github-discussion-publisher to validate, deduplicate, safety-check, and publish this GitHub Discussion draft."

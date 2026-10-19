@@ -1,0 +1,4 @@
+interface:
+  display_name: "Safe Issue Picker"
+  short_description: "Select one eligible low-risk issue"
+  default_prompt: "Use $pick-safe-issue to select one justified issue from a triaged candidate queue."

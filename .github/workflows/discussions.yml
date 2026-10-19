@@ -1,0 +1,157 @@
+name: Elixpoo Discussions
+
+on:
+  repository_dispatch:
+    types: [discussion_reconcile]
+  discussion:
+    types: [created, edited]
+  discussion_comment:
+    types: [created, edited]
+  pull_request:
+    types: [closed]
+    branches: [main]
+  schedule:
+    - cron: "17 9 * * 3"
+    - cron: "*/10 * * * *"
+    - cron: "13,43 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Discussion task to run
+        required: true
+        default: qna
+        type: choice
+        options: [qna, poll-mentions, pulse, verify-config]
+      dry_run:
+        description: Generate and safety-check without publishing
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: elixpoo-discussions-elixpo-elixpo
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  discussions: write
+  issues: write
+  pull-requests: read
+
+jobs:
+  respond:
+    if: github.event_name == 'discussion' || github.event_name == 'discussion_comment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Reply to an exact @elixpoo mention
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELIXPOO_GITHUB_DISCUSSIONS_TOKEN }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+          ELIXPOO_GIST_AGENTIC_TOKEN: ${{ secrets.ELIXPOO_GIST_AGENTIC_TOKEN }}
+          ELIXPOO_FOLLOWUP_GIST_ID: ${{ vars.ELIXPOO_FOLLOWUP_GIST_ID }}
+          ELIXPO_DISCUSSIONS_REPOSITORY: elixpo/elixpo
+        run: python -m agents.discussions respond
+
+  merge:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Decide and publish merge discussion
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELIXPOO_GITHUB_DISCUSSIONS_TOKEN }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+          ELIXPO_DISCUSSIONS_REPOSITORY: elixpo/elixpo
+        run: python -m agents.discussions merge
+
+  qna:
+    if: (github.event_name == 'workflow_dispatch' && inputs.mode == 'qna') || (github.event_name == 'schedule' && github.event.schedule == '17 9 * * 3')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Publish weekly technical Q&A
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELIXPOO_GITHUB_DISCUSSIONS_TOKEN }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+          ELIXPO_DISCUSSIONS_REPOSITORY: elixpo/elixpo
+        run: |
+          args=()
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.dry_run }}" == "true" ]]; then args+=(--dry-run); fi
+          python -m agents.discussions qna "${args[@]}"
+
+  poll-mentions:
+    if: github.event_name == 'repository_dispatch' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'poll-mentions') || (github.event_name == 'schedule' && github.event.schedule == '*/10 * * * *')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Reply to recent unhandled @elixpoo mentions
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELIXPOO_GITHUB_DISCUSSIONS_TOKEN }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+          ELIXPOO_GIST_AGENTIC_TOKEN: ${{ secrets.ELIXPOO_GIST_AGENTIC_TOKEN }}
+          ELIXPOO_FOLLOWUP_GIST_ID: ${{ vars.ELIXPOO_FOLLOWUP_GIST_ID }}
+          ELIXPO_DISCUSSIONS_REPOSITORY: elixpo/elixpo
+        run: python -m agents.discussions poll-mentions
+
+  pulse:
+    if: (github.event_name == 'workflow_dispatch' && inputs.mode == 'pulse') || (github.event_name == 'schedule' && github.event.schedule == '13,43 * * * *')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Recompute repository mood and run a bounded activity
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELIXPOO_GITHUB_DISCUSSIONS_TOKEN }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+          ELIXPO_DISCUSSIONS_REPOSITORY: elixpo/elixpo
+        run: |
+          args=()
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.dry_run }}" == "true" ]]; then args+=(--dry-run); fi
+          python -m agents.discussions pulse "${args[@]}"
+
+  verify-config:
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'verify-config'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Verify production category aliases and inspect labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELIXPOO_GITHUB_DISCUSSIONS_TOKEN }}
+          ELIXPO_DISCUSSIONS_REPOSITORY: elixpo/elixpo
+        run: python -m agents.discussions verify-config

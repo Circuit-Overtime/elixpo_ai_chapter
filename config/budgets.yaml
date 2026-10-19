@@ -1,0 +1,7 @@
+default: 100000
+ceiling: 300000
+per_task:
+  triage: 80000
+  discussions: 12000
+  repository_agent: 16000
+  rollout_prs: 2000
