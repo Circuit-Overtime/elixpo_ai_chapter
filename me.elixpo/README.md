@@ -30,9 +30,9 @@
 [![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-E2D9C8?style=flat-square&labelColor=1B1B19)](LICENSE)
-[![GitHub repo size](https://img.shields.io/github/repo-size/elixpo/elixpome?style=flat-square&color=E2D9C8&labelColor=1B1B19)](https://github.com/elixpo/elixpome)
-[![GitHub last commit](https://img.shields.io/github/last-commit/elixpo/elixpome?style=flat-square&color=E2D9C8&labelColor=1B1B19)](https://github.com/elixpo/elixpome/commits/main)
-[![Stars](https://img.shields.io/github/stars/elixpo/elixpome?style=flat-square&color=ffc300&labelColor=1B1B19)](https://github.com/elixpo/elixpome/stargazers)
+[![GitHub repo size](https://img.shields.io/github/repo-size/elixpo/me.elixpo?style=flat-square&color=f6f5f0&labelColor=142018)](https://github.com/elixpo/me.elixpo)
+[![GitHub last commit](https://img.shields.io/github/last-commit/elixpo/me.elixpo?style=flat-square&color=f6f5f0&labelColor=142018)](https://github.com/elixpo/me.elixpo/commits/main)
+[![Stars](https://img.shields.io/github/stars/elixpo/me.elixpo?style=flat-square&color=18a466&labelColor=142018)](https://github.com/elixpo/me.elixpo/stargazers)
 
 </p>
 
@@ -40,11 +40,11 @@
 
 ## About
 
-**Elixpo Portfolios** (package `elixpome`) is the unified portfolio platform for
-the [Elixpo Organisation](https://elixpo.com). Each member gets a fully
-personalized route at **[me.elixpo.com](https://me.elixpo.com)** with their own
-homepage, about page, projects showcase, publications, and contact section — all
-powered by simple JSON content files.
+**Elixpo Portfolios** is the official personal-publication surface for the
+[Elixpo organization](https://elixpo.com). Each member route connects a person's
+projects, research, talks, writing, experience, and verified profiles. It keeps
+individual work attributable while linking it back to Elixpo's wider public
+record.
 
 No CMS. No database. Just clean, static content that deploys to the edge.
 
@@ -66,9 +66,10 @@ No CMS. No database. Just clean, static content that deploys to the edge.
 - **Dynamic routing** — each member gets `/{name}` with all sub-pages auto-generated
 - **JSON-driven content** — update your portfolio by editing simple JSON files
 - **Static export** — builds to pure static files, deployed on Cloudflare Pages
-- **Drag-scroll sections** — spotlight, recommendations, and work experience scroll with mouse drag
-- **Responsive design** — adapts from mobile to ultrawide displays
-- **Paper-grain aesthetic** — vintage-inspired design with sepia tones and textured backgrounds
+- **Evidence-led structure** — projects, research, talks, and experience retain their own context
+- **Shared Elixpo design system** — paper, ink, leaf green, restrained geometric fields, and accessible type
+- **Responsive, motion-conscious design** — normal document scrolling, mobile navigation, and reduced-motion support
+- **Search-rich public surfaces** — canonical metadata, structured profiles, robots rules, and generated sitemap records
 
 ## The ecosystem
 
@@ -88,65 +89,14 @@ Developers can drop our editors into their own projects with the
 **`@elixpo/lixsketch`** and **`@elixpo/lixeditor`** packages, on npm and as VS
 Code extensions.
 
-## Architecture
+## Place in Elixpo
 
-Everything runs on **Cloudflare**. Three shared platform services back the
-ecosystem, and products are either **SSO-backed SaaS**, **standalone**, or our
-**flagship**:
-
-- **`accounts.elixpo`** - single sign-on / identity
-- **`mails.elixpo`** - shared mailing infrastructure
-- **`payouts.elixpo`** - shared payments / payouts
-
-SaaS products (Blogs, Art, Chat, Sketch, Search) and the flagship **lixrl.com**
-all authenticate through Accounts (SSO) and share the Mail and Payouts infra.
-The public, login-free surfaces (**elixpo.com**, **oreo.elixpo**, **me.elixpo**)
-are standalone. **admin.elixpo** is the operations dashboard and
-**status.elixpo** is monitoring.
-
-```mermaid
-graph TB
-  classDef shared fill:#1d1d1d,stroke:#DEDBC8,color:#E1E0CC;
-  classDef saas fill:#141414,stroke:#9a9a9a,color:#E1E0CC;
-  classDef flag fill:#2a2410,stroke:#FFBE1E,color:#ffffff;
-  classDef solo fill:#141414,stroke:#00B4A5,color:#E1E0CC;
-  classDef ops fill:#141414,stroke:#FF5D68,color:#E1E0CC;
-
-  subgraph SHARED["Shared platform"]
-    ACC["accounts.elixpo<br/>SSO / Identity"]:::shared
-    MAIL["mails.elixpo<br/>Mail infra"]:::shared
-    PAY["payouts.elixpo<br/>Payments"]:::shared
-  end
-
-  subgraph PRODUCTS["SaaS products - require login"]
-    BLOGS["blogs.elixpo"]:::saas
-    ART["art.elixpo (under dev)"]:::saas
-    CHAT["chat.elixpo (under dev)"]:::saas
-    SKETCH["sketch.elixpo"]:::saas
-    SEARCH["search.elixpo"]:::saas
-  end
-
-  LIXRL["lixrl.com<br/>URL shortener · flagship"]:::flag
-
-  subgraph SOLO["Standalone - no login"]
-    HOME["elixpo.com"]:::solo
-    OREO["oreo.elixpo"]:::solo
-    ME["me.elixpo"]:::solo
-  end
-
-  subgraph OPS["Operations"]
-    ADMIN["admin.elixpo<br/>Dashboard"]:::ops
-    STATUS["status.elixpo<br/>Monitoring"]:::ops
-  end
-
-  BLOGS & ART & CHAT & SKETCH & SEARCH & LIXRL --> ACC
-  BLOGS & ART & CHAT & SKETCH & SEARCH & LIXRL --> MAIL
-  BLOGS & ART & CHAT & SKETCH & SEARCH & LIXRL --> PAY
-  ADMIN -.- ACC
-  STATUS -.- MAIL
-```
-
-A rendered, interactive version lives at **[elixpo.com/architecture](https://elixpo.com/architecture)**.
+Elixpo separates software projects, operated services, open research, package
+releases, and member portfolios into clear public surfaces. This repository owns
+the member-portfolio surface. Organization roles and contribution evidence
+remain canonical on [elixpo.com/people](https://elixpo.com/people), while each
+member controls the narrative and links on their portfolio route. The full
+system map lives at [elixpo.com/architecture](https://elixpo.com/architecture).
 
 ## Built by the community
 
@@ -200,15 +150,6 @@ notice board, [`NOTICE`](LICENSES/NOTICE).
 source is MIT.
 
 ---
-
-## Running this site locally
-
-```bash
-npm install
-npm run dev
-```
-
-Then open [http://localhost:3000](http://localhost:3000).
 
 ### Adding a new member
 
