@@ -1,0 +1,46 @@
+name: Stale Issue and PR Management
+
+on:
+  workflow_call:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Manage stale issues and PRs
+        uses: actions/stale@v9
+        with:
+          # Issue settings
+          days-before-issue-stale: 60
+          days-before-issue-close: 14
+          stale-issue-message: >-
+            This issue has been automatically marked as stale because it has not
+            had recent activity. It will be closed in 14 days if no further
+            activity occurs.
+          close-issue-message: >-
+            This issue was closed because it has been stale for too long. Feel
+            free to reopen if still relevant.
+
+          # PR settings
+          days-before-pr-stale: 30
+          days-before-pr-close: 7
+          stale-pr-message: >-
+            This PR has been automatically marked as stale because it has not
+            had recent activity. It will be closed in 7 days if no further
+            activity occurs.
+          close-pr-message: >-
+            This PR was closed because it has been stale for too long. Feel free
+            to reopen if still relevant.
+
+          # Labels
+          stale-issue-label: stale
+          stale-pr-label: stale
+          exempt-issue-labels: pinned,security,elixpo
+          exempt-pr-labels: pinned,security,elixpo
+
+          # Rate limiting
+          operations-per-run: 30

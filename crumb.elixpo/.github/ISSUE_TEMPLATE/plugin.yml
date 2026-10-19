@@ -1,0 +1,81 @@
+name: Plugin request
+description: Propose a typed capability or integration for Crumb.
+title: "plugin: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Plugins provide capabilities. External accounts should use scoped connectors, and every operation must retain Crumb's approval boundary.
+  - type: textarea
+    id: capability
+    attributes:
+      label: Capability
+      description: What new operation should the plugin expose?
+    validations:
+      required: true
+  - type: textarea
+    id: use_cases
+    attributes:
+      label: User scenarios
+      description: Give concrete requests and the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: interface
+    attributes:
+      label: Proposed interface
+      description: Describe inputs, bounded outputs, errors, and whether MCP or a native adapter is appropriate.
+    validations:
+      required: true
+  - type: checkboxes
+    id: risks
+    attributes:
+      label: Required risk classes
+      options:
+        - label: Read-only local access
+        - label: Local file modification
+        - label: Command execution
+        - label: Network access
+        - label: Credential-sensitive access
+        - label: Destructive operation
+  - type: textarea
+    id: authorization
+    attributes:
+      label: Authorization and scopes
+      description: For external services, list the minimum OAuth scopes and revocation behavior.
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Platforms
+      multiple: true
+      options:
+        - Linux / Bash
+        - macOS / Zsh
+        - Windows / PowerShell
+        - Platform independent
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: Failure and cancellation
+      description: How should timeouts, partial work, cancellation, and unavailable dependencies behave?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List observable behavior and tests required before the plugin is usable.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I have not included credentials, private logs, or sensitive data.
+          required: true
+        - label: The plugin keeps permissions and approvals outside the model.
+          required: true
