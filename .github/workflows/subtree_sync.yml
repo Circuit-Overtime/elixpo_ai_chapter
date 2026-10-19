@@ -40,8 +40,11 @@ jobs:
           set -u
 
           repos=(
-            # Agent, Crumb, and OreoPI remain outside ordinary subtree updates
-            # until their shared architecture and repository boundaries settle.
+            # Elixpoo and Crumb have distinct, published product boundaries and
+            # are active Chapter snapshots. OreoPI remains deferred until its
+            # own repository direction is settled.
+            "agent.elixpo https://github.com/elixpo/agent.elixpo.git"
+            "crumb.elixpo https://github.com/elixpo/crumb.elixpo.git"
             "payouts.elixpo https://github.com/elixpo/payouts.elixpo"
             "status.elixpo https://github.com/elixpo/status.elixpo"
             "mails.elixpo https://github.com/elixpo/mail.elixpo"
