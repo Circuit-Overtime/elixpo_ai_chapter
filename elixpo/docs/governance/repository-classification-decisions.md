@@ -34,8 +34,13 @@ Each `verified` inventory record has passed all applicable checks below:
   commits, and code-solving pull requests remain outside its authority. Its
   reusable privileged workflows are assessed through their dedicated rollout
   and authorization contract rather than the ordinary workflow baseline.
-- `crumb.elixpo` and `oreoPI` remain paused projects. Elixpoo v2 does not imply
-  their consolidation, reactivation, or transfer into `agent.elixpo`.
+- `crumb.elixpo` is active as Crumb, Elixpo's pre-release self-hosted autonomous
+  Rust agent harness and natural language terminal. Its execution and control
+  plane are locally operated; Pollinations is the default connected inference
+  provider. Crumb remains separate from Elixpoo and may implement workspace
+  tasks only through its own user-granted permission boundary.
+- `oreoPI` remains paused. Neither active agent product implies its
+  consolidation, reactivation, or transfer.
 - `Kareixo` remains a transferred Member Project whose original maintainer
   retains project and administrative authority.
 - `cypher` is an incubating core application. The rename from `Cypher-3.0`

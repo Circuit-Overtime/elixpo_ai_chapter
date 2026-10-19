@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Audit ordinary workflows in canonical Elixpo repositories.
 
-The active Elixpoo runtime is assessed through its dedicated authorization and
-rollout audit. The two paused related repositories remain deferred. Generated
-subtree copies are never treated as source repositories.
+The active Elixpoo and Crumb runtimes are assessed through their dedicated
+authorization and product audits. OreoPI remains deferred. Generated subtree
+copies are never treated as source repositories.
 """
 
 from __future__ import annotations
@@ -17,8 +17,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 
-SPECIALIZED_AGENT_REPOSITORIES = {"agent.elixpo"}
-DEFERRED_REPOSITORIES = {"crumb.elixpo", "oreoPI"}
+SPECIALIZED_AGENT_REPOSITORIES = {"agent.elixpo", "crumb.elixpo"}
+DEFERRED_REPOSITORIES = {"oreoPI"}
 LOCAL_DIRECTORY_ALIASES = {"mails.elixpo": "mail.elixpo"}
 AGENT_WORKFLOWS = {
     "artifact-update.yml",
@@ -26,7 +26,11 @@ AGENT_WORKFLOWS = {
     "elixpo-ci.yml",
     "elixpo-triage.yml",
     "elixpoo-ack.yml",
+    "elixpoo-mentions.yml",
+    "elixpoo-merge-memory.yml",
+    "elixpoo-review.yml",
     "elixpoo-retry.yml",
+    "elixpoo-triage.yml",
     "issue-auto-fix.yml",
     "issue-triage.yml",
     "on-merge.yml",

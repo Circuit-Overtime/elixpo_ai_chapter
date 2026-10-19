@@ -1,7 +1,7 @@
 {
   "name": "elixpome",
   "version": "4.0.2",
-  "description": "Personalized Portfolio for Elixpo Organization Members",
+  "description": "Official Elixpo member portfolios connecting projects, research, talks, writing, and public contribution records.",
   "private": true,
   "license": "MIT",
   "author": "Elixpo <ayushman@elixpo.com>",
@@ -18,16 +18,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elixpo/elixpome.git"
+    "url": "git+https://github.com/elixpo/me.elixpo.git"
   },
   "homepage": "https://elixpo.com",
   "bugs": {
-    "url": "https://github.com/elixpo/elixpome/issues"
+    "url": "https://github.com/elixpo/me.elixpo/issues"
   },
   "keywords": [
     "portfolio",
-    "miranda",
-    "elixpo"
+    "elixpo",
+    "open-source",
+    "member-portfolios"
   ],
   "engines": {
     "node": ">=20.0.0"
