@@ -1,13 +1,9 @@
 // DKIM-Signature generator for the SMTP sender Worker.
 //
-// Why this exists:
-//   smtp.gmail.com (or any SMTP relay that authenticates as a domain
-//   different from our From: header) signs outbound mail with d=relay-
-//   domain, not d=mails.elixpo.com. DMARC requires the d= domain to
-//   align with From:; without that, Gmail/Outlook/Apple spam-folder
-//   transactional mail. By signing OURSELVES with d=<our domain> BEFORE
-//   handing the bytes to the relay, the recipient's MTA finds an
-//   aligned signature, DMARC passes, and the mail lands in inbox.
+// The platform signature is valid only when DKIM_DOMAIN aligns with the
+// visible From domain. For bring-your-own SMTP, the upstream provider normally
+// supplies its own aligned DKIM signature. Never add an unrelated platform
+// signature and imply that it satisfies DMARC.
 //
 // RFC 6376, simple/relaxed canonicalization. relaxed-relaxed is the
 // industry standard for transactional mail — it tolerates the small
@@ -37,6 +33,25 @@ export function isDkimConfigured(env) {
     return !!(env?.DKIM_PRIVATE_KEY && env?.DKIM_DOMAIN && env?.DKIM_SELECTOR);
 }
 
+/** Conservative relaxed-alignment check without relying on a public suffix list. */
+export function isDkimAligned(fromAddress, dkimDomain) {
+    const fromDomain = String(fromAddress || "")
+        .split("@")
+        .pop()
+        ?.trim()
+        .toLowerCase();
+    const signingDomain = String(dkimDomain || "")
+        .trim()
+        .replace(/^\.+|\.+$/g, "")
+        .toLowerCase();
+    if (!fromDomain || !signingDomain) return false;
+    return (
+        fromDomain === signingDomain ||
+        fromDomain.endsWith(`.${signingDomain}`) ||
+        signingDomain.endsWith(`.${fromDomain}`)
+    );
+}
+
 /**
  * Sign `message` (the full RFC 5322 message bytes: headers \r\n\r\n body)
  * and return the same message with a `DKIM-Signature:` header prepended
@@ -62,8 +77,11 @@ export async function signMessage(message, env) {
         "To",
         "Subject",
         "Date",
+        "Message-ID",
         "MIME-Version",
         "Content-Type",
+        "Content-Transfer-Encoding",
+        "X-Mailer",
         "List-Unsubscribe",
         "List-Unsubscribe-Post",
     ];

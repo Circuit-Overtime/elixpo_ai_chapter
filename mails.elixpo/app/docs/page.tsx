@@ -77,6 +77,15 @@ export default function DocsOverview() {
                 webhook per template, then trigger sends from your code.
             </DocP>
 
+            <DocH2>Delivery responsibility</DocH2>
+            <DocP>
+                Elixpo Mails is an orchestration and rendering layer, not a shared email relay. Your
+                connected SMTP provider performs delivery and signs mail for your From domain. You
+                remain responsible for consent, DNS authentication, sending reputation, and provider
+                limits; Elixpo Mails handles standards-based message construction, suppression,
+                retries, and audit logs.
+            </DocP>
+
             <NextLink href="/docs/quickstart" label="Quickstart" />
         </Box>
     );

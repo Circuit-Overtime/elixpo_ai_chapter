@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from '../../../../lib/auth';
 import { getLimits } from '../../../../lib/tiers';
 import { MAX_MEDIA_PER_BLOG, MAX_BLOG_IMAGE_BYTES, requestTooLarge } from '../../../../lib/limits';
-import { getCloudinaryUrl, uploadToCloudinary } from '../../../../lib/cloudinary';
+import { getCloudinaryUrl, orgAvatarCdnUrl, uploadToCloudinary } from '../../../../lib/cloudinary';
 import {
   PLATFORM_CLOUDINARY,
   getMediaCloudinaryConfig,
@@ -287,7 +287,7 @@ export async function POST(request) {
 
     // Build Cloudinary folder and public_id
     // Avatars use deterministic slug-based paths so URLs are stable and human-readable
-    let folder, publicId;
+    let folder, publicId, orgAvatarSlug;
     switch (mediaType) {
       case 'avatar': {
         // Deterministic: lixblogs/avatars/users/{username}
@@ -313,6 +313,7 @@ export async function POST(request) {
         }
         folder = 'lixblogs/avatars/orgs';
         publicId = orgSlug;
+        orgAvatarSlug = orgSlug;
         break;
       }
       case 'org_banner':
@@ -363,6 +364,9 @@ export async function POST(request) {
 
     // Profile images: just update the DB pointer, no storage tracking
     if (isProfileImage) {
+      const profileImageUrl = mediaType === 'org_avatar'
+        ? orgAvatarCdnUrl(orgAvatarSlug || orgId, result.version)
+        : result.secure_url;
       if (db) {
         try {
           const profileUpdatedAt = Math.floor(Date.now() / 1000);
@@ -378,7 +382,7 @@ export async function POST(request) {
           } else if (mediaType === 'org_avatar') {
             // Org UI reads logo_url for display — set both so the new logo shows.
             await db.prepare('UPDATE orgs SET logo_r2_key = ?, logo_url = ?, updated_at = ? WHERE id = ?')
-              .bind(result.public_id, result.secure_url, profileUpdatedAt, orgId).run();
+              .bind(result.public_id, profileImageUrl, profileUpdatedAt, orgId).run();
           } else if (mediaType === 'org_banner') {
             await db.prepare('UPDATE orgs SET banner_r2_key = ?, banner_url = ?, updated_at = ? WHERE id = ?')
               .bind(result.public_id, result.secure_url, profileUpdatedAt, orgId).run();
@@ -398,7 +402,7 @@ export async function POST(request) {
 
       return NextResponse.json({
         publicId: result.public_id,
-        url: result.secure_url,
+        url: profileImageUrl,
       });
     }
 

@@ -183,10 +183,12 @@ export function userAvatarCdnUrl(username, version) {
   return `https://res.cloudinary.com/${config.cloudName}/image/upload/${AVATAR_TRANSFORMS}/${v}${userAvatarPublicId(username)}`;
 }
 
-/** Get the full Cloudinary URL for an org avatar at the deterministic path */
-export function orgAvatarCdnUrl(slug) {
+/** Get the full Cloudinary URL for an org avatar at the deterministic path.
+ * Pass the Cloudinary upload `version` to bust caches, like user avatars. */
+export function orgAvatarCdnUrl(slug, version) {
   const config = getPlatformCloudinaryConfig();
-  return `https://res.cloudinary.com/${config.cloudName}/image/upload/${AVATAR_TRANSFORMS}/${orgAvatarPublicId(slug)}`;
+  const v = version ? `v${version}/` : '';
+  return `https://res.cloudinary.com/${config.cloudName}/image/upload/${AVATAR_TRANSFORMS}/${v}${orgAvatarPublicId(slug)}`;
 }
 
 /**

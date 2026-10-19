@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     },
     description:
         "Developer documentation for Elixpo Mails. Read our guides, learn how to integrate transactional emails, design WYSIWYG templates, and trigger notifications via webhooks.",
+    alternates: { canonical: "/docs" },
     openGraph: {
         title: "Documentation — Elixpo Mails",
         description:

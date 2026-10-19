@@ -123,14 +123,16 @@ export async function recordSearch(db, userId, query, resultCount = 0) {
 export async function getSearchSuggestions(db, userId, prefix = '', limit = 8) {
   try {
     const results = [];
+    const escapeLike = (value) => String(value || '').toLowerCase().replace(/[\\%_]/g, (m) => `\\${m}`);
+    const likePrefix = `${escapeLike(prefix)}%`;
 
     // User's recent unique searches
     if (userId) {
       const recent = await db.prepare(`
         SELECT query, MAX(created_at) as last_used FROM search_history
-        WHERE user_id = ? AND query LIKE ?
+        WHERE user_id = ? AND query LIKE ? ESCAPE '\\'
         GROUP BY query ORDER BY last_used DESC LIMIT ?
-      `).bind(userId, `${prefix}%`, limit).all();
+      `).bind(userId, likePrefix, limit).all();
       for (const r of (recent?.results || [])) {
         results.push({ query: r.query, type: 'recent' });
       }
@@ -141,9 +143,9 @@ export async function getSearchSuggestions(db, userId, prefix = '', limit = 8) {
       const remaining = limit - results.length;
       const popular = await db.prepare(`
         SELECT tag, COUNT(*) as cnt FROM blog_tags
-        WHERE LOWER(tag) LIKE ?
+        WHERE LOWER(tag) LIKE ? ESCAPE '\\'
         GROUP BY tag ORDER BY cnt DESC LIMIT ?
-      `).bind(`${prefix.toLowerCase()}%`, remaining).all();
+      `).bind(likePrefix, remaining).all();
       const existing = new Set(results.map(r => r.query));
       for (const t of (popular?.results || [])) {
         if (!existing.has(t.tag)) results.push({ query: t.tag, type: 'topic' });

@@ -1,4 +1,4 @@
-// mail.elixpo SMTP sender Worker.
+// Elixpo Mails SMTP sender Worker.
 // The one component that opens raw TCP (Pages edge routes can't). The Pages app
 // calls POST /send server-to-server with a shared secret; this Worker relays the
 // message through the tenant's own SMTP credentials over cloudflare:sockets.
@@ -16,7 +16,7 @@ export default {
         const url = new URL(request.url);
 
         if (request.method === "GET" && url.pathname === "/") {
-            return json({ ok: true, service: "mail.elixpo smtp-sender" });
+            return json({ ok: true, service: "Elixpo Mails smtp-sender" });
         }
         if (request.method !== "POST" || url.pathname !== "/send") {
             return json({ ok: false, error: "not_found" }, 404);

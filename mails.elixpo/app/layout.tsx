@@ -1,10 +1,10 @@
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, jsonLd } from "@/lib/seo";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import BackgroundAurora from "./components/background-aurora";
 import { THEME_BOOT_SCRIPT, ThemeProvider } from "./components/theme-provider";
 import "./globals.css";
 
-const SITE_URL = "https://mails.elixpo.com";
 const TAGLINE = "Elixpo Mails — Event-Based Transactional Emails";
 const OG_IMAGE = {
     url: "/og-image.png",
@@ -15,8 +15,11 @@ const OG_IMAGE = {
 };
 
 export const viewport: Viewport = {
-    themeColor: "#0b0d12",
-    colorScheme: "dark",
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#fbfbf8" },
+        { media: "(prefers-color-scheme: dark)", color: "#0b0d12" },
+    ],
+    colorScheme: "light dark",
 };
 
 const geistSans = Geist({
@@ -36,8 +39,7 @@ export const metadata: Metadata = {
         default: TAGLINE,
         template: "%s · Elixpo Mails",
     },
-    description:
-        "Elixpo Mails — event-based transactional email for the Elixpo suite. Bring your own sender (SMTP / Gmail, encrypted), design on-brand emails with {{variables}} in a live WYSIWYG editor, and trigger sends from your service with HMAC-signed webhooks — attachments, one-click unsubscribe, and delivery logs, on Cloudflare's edge.",
+    description: SITE_DESCRIPTION,
     keywords: [
         "Elixpo Mails",
         "Elixpo",
@@ -60,14 +62,14 @@ export const metadata: Metadata = {
     applicationName: "Elixpo Mails",
     category: "technology",
     metadataBase: new URL(SITE_URL),
-    alternates: { canonical: "/" },
     manifest: "/manifest.webmanifest",
+    referrer: "strict-origin-when-cross-origin",
     formatDetection: { telephone: false, email: false, address: false },
     openGraph: {
         type: "website",
         locale: "en_US",
         url: SITE_URL,
-        siteName: "Elixpo Mails",
+        siteName: SITE_NAME,
         title: TAGLINE,
         description:
             "Event-based transactional email: bring your own sender, design templates with {{variables}}, and trigger sends with HMAC-signed webhooks — on Cloudflare's edge.",
@@ -80,6 +82,7 @@ export const metadata: Metadata = {
             "The transactional email layer for modern software — bring your own sender, design on-brand templates with live preview, and send via signed webhook.",
         images: [OG_IMAGE.url],
     },
+    appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "black-translucent" },
     icons: {
         // Served as static assets from public/. Kept out of app/ so
         // @cloudflare/next-on-pages doesn't turn each into an edge route.
@@ -114,22 +117,32 @@ const JSON_LD = {
             name: "Elixpo",
             url: "https://elixpo.com",
             logo: `${SITE_URL}/icon-512.png`,
+            sameAs: ["https://github.com/elixpo"],
         },
         {
             "@type": "WebSite",
             "@id": `${SITE_URL}/#website`,
             url: SITE_URL,
-            name: "mail.elixpo",
+            name: SITE_NAME,
+            alternateName: ["mails.elixpo", "Elixpo transactional email"],
+            inLanguage: "en",
             publisher: { "@id": `${SITE_URL}/#organization` },
         },
         {
             "@type": "SoftwareApplication",
-            name: "mail.elixpo",
+            "@id": `${SITE_URL}/#software`,
+            name: SITE_NAME,
             applicationCategory: "BusinessApplication",
             operatingSystem: "Web",
             url: SITE_URL,
-            description:
-                "Event-based transactional email for the Elixpo ecosystem — bring your own sender, design templates with {{variable}} placeholders in a WYSIWYG editor, and trigger sends via webhook on Cloudflare's edge.",
+            description: SITE_DESCRIPTION,
+            featureList: [
+                "Visual email template editor",
+                "HMAC-signed webhook delivery",
+                "Bring-your-own SMTP",
+                "Team workspaces and roles",
+                "Delivery logs and suppression management",
+            ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             publisher: { "@id": `${SITE_URL}/#organization` },
         },
@@ -150,7 +163,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <script
                     type="application/ld+json"
                     // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+                    dangerouslySetInnerHTML={{ __html: jsonLd(JSON_LD) }}
                 />
                 <ThemeProvider>
                     {/* Aurora behind every route — fades out in light theme via

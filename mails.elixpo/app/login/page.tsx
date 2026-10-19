@@ -113,7 +113,7 @@ function LoginInner() {
                 <Box
                     component="img"
                     src="/mark.png"
-                    alt="mail.elixpo"
+                    alt="Elixpo Mails"
                     sx={{
                         height: 52,
                         width: 52,

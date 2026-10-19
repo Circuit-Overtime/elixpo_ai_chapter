@@ -215,13 +215,36 @@ export default function BannerUploadModal({ onSave, onClose, currentBanner }) {
     }
   }, [dragging, handleTouchMove, handleMouseUp]);
 
-  const handleWheel = (e) => {
+  const handleWheel = useCallback((e) => {
     e.preventDefault();
     setCrop((prev) => ({
       ...prev,
       scale: Math.max(0.3, Math.min(4, prev.scale + (e.deltaY > 0 ? -0.05 : 0.05))),
     }));
-  };
+  }, []);
+
+  // Lock background page scroll while the modal is open.
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape' && !saving) onClose();
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [onClose, saving]);
+
+  // Wheel-to-zoom: attach a NON-passive listener so preventDefault actually stops
+  // the page (and the modal) from scrolling. React's onWheel is passive, so it can't.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !imageSrc) return;
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [imageSrc, handleWheel]);
 
   const handleSave = async () => {
     const canvas = canvasRef.current;
@@ -243,14 +266,14 @@ export default function BannerUploadModal({ onSave, onClose, currentBanner }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={onClose} role="dialog" aria-modal="true" aria-label="Edit Banner">
       <div
         className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl w-full max-w-[720px] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-default)]">
           <h3 className="text-[15px] font-semibold text-[var(--text-primary)]">Edit Banner</h3>
-          <button onClick={onClose} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors p-1">
+          <button onClick={onClose} aria-label="Close" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors p-1">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -375,7 +398,6 @@ export default function BannerUploadModal({ onSave, onClose, currentBanner }) {
                 style={{ width: '100%', aspectRatio: `${ASPECT_RATIO}` }}
                 onMouseDown={handleMouseDown}
                 onTouchStart={handleTouchStart}
-                onWheel={handleWheel}
               >
                 <canvas ref={canvasRef} className="w-full h-full block" />
                 <div className="absolute bottom-2 right-2 bg-black/50 rounded-md px-2 py-1 text-[10px] text-[#999] pointer-events-none">

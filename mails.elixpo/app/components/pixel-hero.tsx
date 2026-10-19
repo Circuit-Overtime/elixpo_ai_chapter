@@ -26,8 +26,9 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                 width: "100%",
                 background: "var(--background)",
                 color: "var(--fg)",
-                pt: { xs: 8, md: 12 },
-                pb: { xs: 6, md: 10 },
+                minHeight: { md: "calc(100svh - 94px)" },
+                pt: { xs: 10, md: 15 },
+                pb: { xs: 6, md: 8 },
                 overflow: "hidden",
             }}
         >
@@ -38,8 +39,67 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                 }
             `}</style>
 
-            {/* Centered Hero Header */}
-            <Box sx={{ maxWidth: 880, mx: "auto", px: 2.5, textAlign: "center" }}>
+            <Box aria-hidden sx={{ display: { xs: "none", lg: "block" } }}>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        width: 430,
+                        height: 430,
+                        border: "1px solid rgba(20,32,24,.2)",
+                        borderRadius: "50%",
+                        right: -120,
+                        top: 80,
+                    }}
+                />
+                <Box
+                    sx={{
+                        position: "absolute",
+                        width: 155,
+                        height: 155,
+                        borderRadius: "45% 55% 66% 34%",
+                        bgcolor: "#f0b526",
+                        right: "12%",
+                        top: "23%",
+                        transform: "rotate(13deg)",
+                        boxShadow: "0 28px 75px rgba(20,32,24,.14)",
+                    }}
+                />
+                <Box
+                    sx={{
+                        position: "absolute",
+                        width: 190,
+                        height: 112,
+                        border: "1px solid var(--border)",
+                        borderRadius: "18px",
+                        bgcolor: "rgba(255,255,255,.72)",
+                        right: "25%",
+                        bottom: "18%",
+                        transform: "rotate(7deg)",
+                        backdropFilter: "blur(12px)",
+                        display: "grid",
+                        placeItems: "center",
+                        color: "#3a65c7",
+                        fontFamily: "var(--font-mono)",
+                        fontWeight: 700,
+                        fontSize: ".72rem",
+                        letterSpacing: ".14em",
+                    }}
+                >
+                    EVENT → EMAIL
+                </Box>
+            </Box>
+
+            {/* Editorial hero header */}
+            <Box
+                sx={{
+                    maxWidth: 1450,
+                    mx: "auto",
+                    px: { xs: 2.5, md: 4 },
+                    textAlign: "left",
+                    position: "relative",
+                    zIndex: 1,
+                }}
+            >
                 {/* Taxonomy Chip */}
                 <Typography
                     sx={{
@@ -53,7 +113,7 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                         display: "inline-block",
                     }}
                 >
-                    Event-based transactional email
+                    Elixpo Mails / Delivery platform
                 </Typography>
 
                 {/* Monumental Display Headline */}
@@ -62,11 +122,12 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                     sx={{
                         fontFamily: "var(--font-display)",
                         fontWeight: 500,
-                        fontSize: { xs: "3.2rem", sm: "4.8rem", md: "5.5rem" },
-                        lineHeight: 0.95,
-                        letterSpacing: "-0.04em",
+                        fontSize: { xs: "3.35rem", sm: "5rem", md: "clamp(5rem,7.6vw,7.7rem)" },
+                        lineHeight: 0.9,
+                        letterSpacing: "-0.067em",
                         color: "var(--fg)",
                         mb: 3,
+                        maxWidth: 1120,
                         "& span": {
                             fontFamily: "Georgia, serif",
                             fontStyle: "italic",
@@ -75,8 +136,9 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                         },
                     }}
                 >
-                    Email <span>infrastructure</span> <br />
-                    built for developers.
+                    Transactional email,
+                    <br />
+                    under <span>your control.</span>
                 </Typography>
 
                 {/* Body paragraph */}
@@ -86,22 +148,21 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                         color: "var(--fg-muted)",
                         fontSize: { xs: "1.05rem", md: "1.18rem" },
                         lineHeight: 1.6,
-                        maxWidth: 620,
-                        mx: "auto",
+                        maxWidth: 720,
                         mb: 4.5,
                     }}
                 >
-                    Bring your own sender, design templates with a live preview, and send them
-                    one-time to anyone — no login — or trigger them from your app via a signed
-                    webhook. One branded workspace for your whole team.
+                    Elixpo Mails is the control plane between your product events and your own SMTP
+                    provider. Your team designs, approves, triggers, and audits expected email; your
+                    provider remains the sender of record.
                 </Typography>
 
                 {/* Actions: Pill CTA & Underlined Action Link */}
                 <Stack
                     direction={{ xs: "column", sm: "row" }}
                     spacing={3}
-                    justifyContent="center"
-                    alignItems="center"
+                    justifyContent="flex-start"
+                    alignItems={{ xs: "stretch", sm: "center" }}
                     sx={{ mb: 8 }}
                 >
                     <Button
@@ -152,11 +213,19 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
             </Box>
 
             {/* Centered monochrome quiet Trust Logo Strip */}
-            <Box sx={{ borderTop: "1px solid var(--border)", pt: 6, mt: 4 }}>
+            <Box
+                sx={{
+                    borderTop: "1px solid var(--border)",
+                    pt: 5,
+                    mt: { xs: 4, md: 6 },
+                    position: "relative",
+                    zIndex: 1,
+                }}
+            >
                 <Container maxWidth="lg">
                     <Typography
                         sx={{
-                            textAlign: "center",
+                            textAlign: { xs: "left", md: "center" },
                             fontSize: "12px",
                             fontWeight: 500,
                             letterSpacing: "0.08em",
@@ -172,7 +241,7 @@ export default function PixelHero({ authed }: { authed?: boolean | null }) {
                     <Stack
                         direction="row"
                         spacing={{ xs: 4, sm: 6, md: 8 }}
-                        justifyContent="center"
+                        justifyContent={{ xs: "flex-start", md: "center" }}
                         alignItems="center"
                         sx={{
                             flexWrap: "wrap",

@@ -114,12 +114,16 @@ const Navbar = () => {
 
     return (
         <AppBar
-            position="sticky"
+            position="relative"
             elevation={0}
             sx={{
                 background: navBg,
                 backdropFilter: "blur(20px)",
-                borderBottom: navBorder,
+                border: navBorder,
+                borderRadius: "999px",
+                width: "min(100%, 1510px)",
+                mx: "auto",
+                boxShadow: "0 18px 48px rgba(20,32,24,.09)",
                 zIndex: 1000,
                 color: textColor,
             }}
@@ -130,7 +134,7 @@ const Navbar = () => {
                     width: "100%",
                     mx: "auto",
                     px: { xs: 2, md: 4 },
-                    minHeight: { xs: 60, md: 68 },
+                    minHeight: { xs: 58, md: 66 },
                     gap: 1,
                 }}
             >
@@ -147,7 +151,7 @@ const Navbar = () => {
                     <Box
                         component="img"
                         src="/mark.png"
-                        alt="mail.elixpo"
+                        alt="Elixpo Mails"
                         sx={{ height: 32, width: 32, borderRadius: "8px", display: "block" }}
                     />
                     <Typography

@@ -24,15 +24,15 @@
     --border-light: #e5e7eb;
 
     /* Accent (coral) — shared across both themes. */
-    --accent: #ff7759;
-    --accent-2: #ff5a3c;
+    --accent: #e76043;
+    --accent-2: #d84f34;
     --accent-contrast: #ffffff;
-    --accent-gradient: linear-gradient(135deg, #ff7759 0%, #ff5a3c 100%);
-    --accent-gradient-hover: linear-gradient(135deg, #ff8a70 0%, #ff6a4d 100%);
-    --accent-shadow: rgba(255, 119, 89, 0.32);
-    --accent-tint: rgba(255, 119, 89, 0.1);
-    --accent-tint-strong: rgba(255, 119, 89, 0.16);
-    --accent-border: rgba(255, 119, 89, 0.3);
+    --accent-gradient: linear-gradient(135deg, #e76043 0%, #d84f34 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #ed765c 0%, #e76043 100%);
+    --accent-shadow: rgba(231, 96, 67, 0.28);
+    --accent-tint: rgba(231, 96, 67, 0.09);
+    --accent-tint-strong: rgba(231, 96, 67, 0.15);
+    --accent-border: rgba(231, 96, 67, 0.28);
 
     /* Status colors — read on both themes. */
     --success: #1f9d57;
@@ -44,29 +44,29 @@
 /* ── Light theme (oreo, default) ─────────────────────────────────────────── */
 :root,
 [data-theme="light"] {
-    --background: #ffffff;
-    --foreground: #212121;
+    --background: #fbfbf8;
+    --foreground: #142018;
 
-    --bg: #ffffff;
-    --bg-soft: #faf9f6;
+    --bg: #fbfbf8;
+    --bg-soft: #eff1ed;
     --surface: #ffffff;
-    --surface-2: #f7f6f3;
-    --surface-3: #eeece7;
+    --surface-2: #f3f4f0;
+    --surface-3: #eff1ed;
     --menu-surface: #ffffff;
-    --fg: #212121;
-    --fg-muted: #75758a;
-    --fg-faint: #93939f;
-    --border: #d9d9dd;
-    --border-soft: #f2f2f2;
+    --fg: #142018;
+    --fg-muted: #5f6962;
+    --fg-faint: #7e8680;
+    --border: #d7dbd6;
+    --border-soft: #e8ebe7;
     --field-bg: #ffffff;
     --field-border: #d9d9dd;
     --overlay: rgba(0, 0, 0, 0.04);
     --overlay-strong: rgba(0, 0, 0, 0.06);
     --aurora-opacity: 0;
     --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --topbar-bg: rgba(255, 255, 255, 0.82);
+    --topbar-bg: rgba(251, 251, 248, 0.9);
     --drawer-bg: #ffffff;
-    --action-fg: #1863dc;
+    --action-fg: #3a65c7;
     color-scheme: light;
 
     /* Inline code & Callout specific variables */
@@ -122,6 +122,11 @@ body {
     color: var(--foreground);
     font-family: "Inter", var(--font-geist-sans), Arial, Helvetica, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+    background: #dce7ff;
+    color: #142018;
 }
 
 /* Custom Cohere style scrollbar */

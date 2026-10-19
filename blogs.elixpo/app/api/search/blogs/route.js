@@ -12,7 +12,8 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const q = (searchParams.get('q') || '').trim();
   const fields = (searchParams.get('fields') || 'slugid,slug,title').split(',').map(f => f.trim());
-  const limit = Math.min(parseInt(searchParams.get('limit') || '10'), 20);
+  const rawLimit = Number.parseInt(searchParams.get('limit') || '10', 10);
+  const limit = Number.isFinite(rawLimit) ? Math.min(Math.max(rawLimit, 1), 20) : 10;
   const status = searchParams.get('status') || 'published,unlisted';
 
   const parsed = parseSearchQuery(q);

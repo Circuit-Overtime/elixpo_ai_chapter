@@ -234,7 +234,11 @@ function GmailHint() {
                     App Password
                     <OpenInNewIcon sx={{ fontSize: 13 }} />
                 </MuiLink>{" "}
-                — not your normal account password. The proven default is port 465 / Implicit TLS.
+                — not your normal account password. The proven default is port 465 / Implicit TLS.{" "}
+                <MuiLink href="/docs/deliverability" sx={{ color: "#5fb6ff", fontWeight: 600 }}>
+                    Review the production deliverability checklist
+                </MuiLink>
+                .
             </Typography>
         </Box>
     );

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: "mail.elixpo — Event-based transactional email",
-        short_name: "mail.elixpo",
+        name: "Elixpo Mails — Transactional email infrastructure",
+        short_name: "Elixpo Mails",
         description:
             "Bring your own sender, design templates with {{variables}}, and trigger transactional email via webhook on Cloudflare's edge.",
         start_url: "/",

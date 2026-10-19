@@ -98,7 +98,7 @@ export default async function SettingsPage() {
                             Workspace
                         </Typography>
                         <Typography sx={{ color: TEXT_55, fontSize: "0.88rem", mb: 2.5 }}>
-                            Your business name across mail.elixpo. The workspace ID is a fixed
+                            Your business name across Elixpo Mails. The workspace ID is a fixed
                             internal identifier and can&rsquo;t be changed.
                         </Typography>
 

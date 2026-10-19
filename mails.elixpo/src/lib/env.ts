@@ -27,7 +27,7 @@ export async function requireEnv(name: string): Promise<string> {
     return v;
 }
 
-/** Public app origin, e.g. https://mail.elixpo.com (no trailing slash). */
+/** Public app origin, e.g. https://mails.elixpo.com (no trailing slash). */
 export async function appUrl(): Promise<string> {
     const v = (await getEnv("NEXT_PUBLIC_APP_URL")) || "http://localhost:3000";
     return v.replace(/\/$/, "");

@@ -1,14 +1,39 @@
+import { absoluteUrl } from "@/lib/seo";
 import type { MetadataRoute } from "next";
+
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
     return {
-        rules: {
-            userAgent: "*",
-            allow: "/",
-            // Auth/transactional/API surfaces shouldn't be indexed.
-            disallow: ["/dashboard", "/api/", "/v1/"],
-        },
-        sitemap: "https://mail.elixpo.com/sitemap.xml",
-        host: "https://mail.elixpo.com",
+        rules: [
+            {
+                userAgent: "*",
+                allow: "/",
+                disallow: [
+                    "/api/",
+                    "/dashboard/",
+                    "/workspace/",
+                    "/join/",
+                    "/login",
+                    "/u/",
+                    "/v1/",
+                ],
+            },
+            {
+                userAgent: "Googlebot",
+                allow: "/",
+                disallow: [
+                    "/api/",
+                    "/dashboard/",
+                    "/workspace/",
+                    "/join/",
+                    "/login",
+                    "/u/",
+                    "/v1/",
+                ],
+            },
+        ],
+        sitemap: absoluteUrl("/sitemap.xml"),
+        host: absoluteUrl("/"),
     };
 }

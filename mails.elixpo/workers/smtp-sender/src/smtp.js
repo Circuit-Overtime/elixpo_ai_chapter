@@ -5,7 +5,7 @@
 // debugging (credentials redacted).
 
 import { connect } from "cloudflare:sockets";
-import { isDkimConfigured, signMessage } from "./dkim.js";
+import { isDkimAligned, isDkimConfigured, signMessage } from "./dkim.js";
 
 const enc = new TextEncoder();
 const dec = new TextDecoder();
@@ -73,7 +73,7 @@ export async function sendMail(opts) {
 
     try {
         expect(await read(), 220);
-        await send("EHLO mail.elixpo");
+        await send("EHLO mails.elixpo.com");
         expect(await read(), 250);
 
         if (starttls) {
@@ -84,7 +84,7 @@ export async function sendMail(opts) {
             writer = secureSocket.writable.getWriter();
             reader = secureSocket.readable.getReader();
             buf = "";
-            await send("EHLO mail.elixpo");
+            await send("EHLO mails.elixpo.com");
             expect(await read(), 250);
         }
 
@@ -121,7 +121,7 @@ export async function sendMail(opts) {
         // costs deliverability, but a hard fail at this point costs the
         // delivery entirely.
         let message = rawMessage;
-        if (opts.env && isDkimConfigured(opts.env)) {
+        if (opts.env && isDkimConfigured(opts.env) && isDkimAligned(from, opts.env.DKIM_DOMAIN)) {
             try {
                 message = await signMessage(rawMessage, opts.env);
                 transcript.push(
@@ -130,6 +130,10 @@ export async function sendMail(opts) {
             } catch (err) {
                 transcript.push(`! dkim signing skipped: ${err?.message || String(err)}`);
             }
+        } else if (opts.env && isDkimConfigured(opts.env)) {
+            transcript.push(
+                `! platform dkim skipped: d=${opts.env.DKIM_DOMAIN} does not align with From`,
+            );
         }
         await writer.write(enc.encode(`${message}\r\n.\r\n`));
         transcript.push("C: <message body> + .");
@@ -172,13 +176,21 @@ function completeReply(s) {
 
 function buildMessage({ from, fromName, to, subject, html, text, attachments, listUnsubscribe }) {
     const date = new Date().toUTCString();
-    const fromHeader = fromName ? `${encodeHeaderWord(fromName)} <${from}>` : `<${from}>`;
+    const safeFrom = sanitizeAddress(from, "from");
+    const safeTo = sanitizeAddress(to, "to");
+    const safeName = sanitizeHeaderText(fromName || "");
+    const safeSubject = sanitizeHeaderText(subject || "");
+    const messageDomain = safeFrom.split("@")[1];
+    const messageId = `<${crypto.randomUUID()}@${messageDomain}>`;
+    const fromHeader = safeName ? `${encodeHeaderWord(safeName)} <${safeFrom}>` : `<${safeFrom}>`;
     const headers = [
         `From: ${fromHeader}`,
-        `To: <${to}>`,
-        `Subject: ${encodeHeaderWord(subject)}`,
+        `To: <${safeTo}>`,
+        `Subject: ${encodeHeaderWord(safeSubject)}`,
         `Date: ${date}`,
+        `Message-ID: ${messageId}`,
         "MIME-Version: 1.0",
+        "X-Mailer: Elixpo Mails",
     ];
 
     // RFC 8058 one-click unsubscribe.
@@ -200,18 +212,27 @@ function buildMessage({ from, fromName, to, subject, html, text, attachments, li
                 body: [
                     `--${b}`,
                     "Content-Type: text/plain; charset=utf-8",
+                    "Content-Transfer-Encoding: quoted-printable",
                     "",
-                    dotStuff(text),
+                    dotStuff(quotedPrintable(text)),
                     `--${b}`,
                     "Content-Type: text/html; charset=utf-8",
+                    "Content-Transfer-Encoding: quoted-printable",
                     "",
-                    dotStuff(html),
+                    dotStuff(quotedPrintable(html)),
                     `--${b}--`,
                 ].join("\r\n"),
             };
         }
-        if (html) return { header: "Content-Type: text/html; charset=utf-8", body: dotStuff(html) };
-        return { header: "Content-Type: text/plain; charset=utf-8", body: dotStuff(text || "") };
+        if (html)
+            return {
+                header: "Content-Type: text/html; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable",
+                body: dotStuff(quotedPrintable(html)),
+            };
+        return {
+            header: "Content-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: quoted-printable",
+            body: dotStuff(quotedPrintable(text || "")),
+        };
     }
 
     if (files.length === 0) {
@@ -252,6 +273,47 @@ function dotStuff(s) {
         .replace(/\r?\n/g, "\r\n")
         .replace(/\r\n\./g, "\r\n..")
         .replace(/^\./, "..");
+}
+
+/** RFC 2045 quoted-printable UTF-8 body encoding with 76-character soft wraps. */
+function quotedPrintable(value) {
+    const normalized = String(value || "").replace(/\r?\n/g, "\n");
+    return normalized
+        .split("\n")
+        .map((sourceLine) => {
+            const bytes = new TextEncoder().encode(sourceLine);
+            let line = "";
+            let out = "";
+            for (const byte of bytes) {
+                const token =
+                    (byte >= 33 && byte <= 60) || (byte >= 62 && byte <= 126)
+                        ? String.fromCharCode(byte)
+                        : `=${byte.toString(16).toUpperCase().padStart(2, "0")}`;
+                if (line.length + token.length > 73) {
+                    out += `${line}=\r\n`;
+                    line = "";
+                }
+                line += token;
+            }
+            return out + line;
+        })
+        .join("\r\n");
+}
+
+function sanitizeHeaderText(value) {
+    return String(value || "")
+        .replace(/[\r\n]+/g, " ")
+        .trim();
+}
+
+function sanitizeAddress(value, field) {
+    const address = String(value || "")
+        .trim()
+        .toLowerCase();
+    if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(address)) {
+        throw new Error(`invalid ${field} address`);
+    }
+    return address;
 }
 
 // Encode a header value as RFC 2047 if it contains non-ASCII; else pass through.

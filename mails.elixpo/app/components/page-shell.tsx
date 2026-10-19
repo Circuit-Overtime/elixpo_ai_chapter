@@ -22,7 +22,7 @@ export default function PageShell({
 
     return (
         <Box sx={{ position: "relative", minHeight: "100vh", color: "var(--fg)" }}>
-            <Box sx={{ position: "sticky", top: 0, zIndex: 1000 }}>
+            <Box sx={{ position: "sticky", top: { xs: 8, md: 14 }, zIndex: 1000, px: 2 }}>
                 <Navbar />
             </Box>
             <Box component="main">{children}</Box>

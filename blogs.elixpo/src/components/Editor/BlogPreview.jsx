@@ -209,12 +209,25 @@ function renderBlocksToHTML(blocks) {
 
   // Collect ALL headings + subpages recursively for TOC
   const headings = [];
+  const seenHeadingIds = new Map();
+  const headingIds = new WeakMap();
+  const headingIdFor = (block, text) => {
+    const hit = headingIds.get(block);
+    if (hit) return hit;
+    const base = `h-${text.trim().toLowerCase().replace(/[^\w]+/g, '-').slice(0, 40)}`;
+    const count = (seenHeadingIds.get(base) || 0) + 1;
+    seenHeadingIds.set(base, count);
+    const id = count === 1 ? base : `${base}-${count}`;
+    headingIds.set(block, id);
+    return id;
+  };
+  const subpageIdFor = (t) => `subpage-${String(t.subpageId || t.title).replace(/[^a-z0-9_-]/gi, '-').slice(0, 20)}`;
   function collectHeadings(blockList) {
     for (const block of blockList) {
       if (block.type === 'heading') {
         const text = (Array.isArray(block.content) ? block.content : []).map(c => c.text || '').join('');
         if (text.trim()) {
-          const id = `h-${text.trim().toLowerCase().replace(/[^\w]+/g, '-').slice(0, 40)}`;
+          const id = headingIdFor(block, text);
           headings.push({ id, text: text.trim(), level: block.props?.level || 1 });
         }
       }
@@ -223,7 +236,7 @@ function renderBlocksToHTML(blocks) {
         try { subTabs = JSON.parse(block.props?.tabs || '[]'); } catch {}
         subTabs.forEach(t => {
           if (t.title) {
-            const id = `subpage-${(t.subpageId || t.title).slice(0, 20)}`;
+            const id = subpageIdFor(t);
             headings.push({ id, text: t.title, level: 2, isSubpage: true, subpageId: t.subpageId });
           }
         });
@@ -244,7 +257,7 @@ function renderBlocksToHTML(blocks) {
       case 'heading': {
         const level = Math.max(1, Math.min(6, Number(block.props?.level) || 1));
         const text = (Array.isArray(block.content) ? block.content : []).map(c => c.text || '').join('');
-        const id = `h-${text.trim().toLowerCase().replace(/[^\w]+/g, '-').slice(0, 40)}`;
+        const id = headingIdFor(block, text);
         // Headings always render in the default color — ignore stray inline text
         // colors (e.g. a pasted #e06c75) so headings stay visually consistent.
         const headingContent = inlineToHTML(
@@ -277,7 +290,7 @@ function renderBlocksToHTML(blocks) {
         if (subTabs.length === 0) return childrenHTML;
         const tabItems = subTabs.map(t => {
           const href = t.subpageId ? `/${encodeURIComponent(t.subpageId)}` : '#';
-          const id = `subpage-${String(t.subpageId || t.title).replace(/[^a-z0-9_-]/gi, '-').slice(0, 20)}`;
+          const id = subpageIdFor(t);
           return `<a id="${id}" href="${href}" class="subpage-item" target="_blank" rel="noopener"><div class="subpage-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div><span class="subpage-title">${escapeHtmlAttribute(t.title || 'Untitled')}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="subpage-arrow"><polyline points="9 18 15 12 9 6"/></svg></a>`;
         }).join('');
         return `<div class="subpage-block">${tabItems}</div>${childrenHTML}`;
@@ -328,6 +341,10 @@ function renderBlocksToHTML(blocks) {
         return childrenHTML;
       }
       case 'paragraph':
+        if (content) {
+          return `<p>${content}</p>${childrenHTML}`;
+        }
+        return `<p><br></p>${childrenHTML}`;
       default:
         if (content) {
           return `<p>${content}</p>${childrenHTML}`;

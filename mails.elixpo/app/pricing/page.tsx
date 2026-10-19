@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: "Pricing",
     description:
         "Flexible, developer-friendly pricing plans for Elixpo Mails. Start sending up to 1,000 transactional emails for free and upgrade as your volume scales.",
+    alternates: { canonical: "/pricing" },
     openGraph: {
         title: "Pricing Plans — Elixpo Mails",
         description:

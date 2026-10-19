@@ -70,9 +70,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         from: fromEmail,
         fromName,
         to,
-        subject: "Your mail.elixpo sender is working ✅",
+        subject: "Your Elixpo Mails sender is working ✅",
         html: testHtml(sender.email),
-        text: `This is a test from mail.elixpo. Your sender ${sender.email} is configured correctly and can deliver mail.`,
+        text: `This is a test from Elixpo Mails. Your sender ${sender.email} is configured correctly and can deliver mail.`,
     });
 
     if (result.ok) {
@@ -87,9 +87,9 @@ function testHtml(email: string): string {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
 <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="background:#13161d;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px">
 <tr><td>
-<div style="font-size:18px;font-weight:700;margin-bottom:8px">mail.elixpo — sender verified ✅</div>
+<div style="font-size:18px;font-weight:700;margin-bottom:8px">Elixpo Mails — sender verified ✅</div>
 <div style="font-size:14px;line-height:1.6;color:rgba(245,245,244,0.7)">
-Your sender <strong style="color:#c4b5fd">${email}</strong> is configured correctly and just delivered this test email through mail.elixpo. You're ready to design templates and trigger sends.
+Your sender <strong style="color:#c4b5fd">${email}</strong> is configured correctly and just delivered this test email through Elixpo Mails. You're ready to design templates and trigger sends.
 </div>
 </td></tr></table>
 </td></tr></table>

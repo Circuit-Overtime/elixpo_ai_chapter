@@ -79,7 +79,7 @@ function Brand() {
             <Box
                 component="img"
                 src="/mark.png"
-                alt="mail.elixpo"
+                alt="Elixpo Mails"
                 sx={{ height: 28, width: 28, borderRadius: "8px", display: "block" }}
             />
             <Typography

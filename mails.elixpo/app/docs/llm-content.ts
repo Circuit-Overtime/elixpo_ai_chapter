@@ -146,4 +146,25 @@ Each log records the recipient, template, webhook, error (if any), and the
 merged variables used for the send. Provide an idempotency_key in the trigger
 body — or an Idempotency-Key request header — to dedupe retries; the same key
 won't send twice (a duplicate returns the original result).
+
+## Gmail deliverability
+
+Elixpo Mails sends through your connected SMTP provider. Inbox placement is
+not guaranteed: the visible From domain and sending provider must be correctly
+authenticated and maintain a healthy reputation.
+
+- Publish SPF for the systems authorized to send for your domain.
+- Enable DKIM at your SMTP provider and align its d= domain with the visible
+  From domain.
+- Publish DMARC and monitor its reports before moving to enforcement.
+- Use TLS, valid provider DNS, consented recipients, gradual volume ramping,
+  and Google Postmaster Tools.
+- Bulk senders to personal Gmail accounts must meet Google's current sender
+  requirements, including one-click unsubscribe for promotional mail.
+
+Elixpo Mails creates standards-based MIME, a unique Message-ID, a text
+alternative, UTF-8 transfer encoding, and RFC 8058 unsubscribe headers where
+appropriate. It only applies the platform DKIM signature when that signing
+domain aligns with the visible From domain; otherwise your connected provider
+must supply aligned DKIM.
 `;

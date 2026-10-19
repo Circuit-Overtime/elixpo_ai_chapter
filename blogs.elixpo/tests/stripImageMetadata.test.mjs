@@ -193,3 +193,12 @@ test('truncated files do not throw', () => {
     assert.doesNotThrow(() => stripImageMetadata(ab(cut)));
   }
 });
+
+test('png: a corrupt chunk length preserves the remaining bytes', () => {
+  const badLen = Buffer.alloc(4);
+  badLen.writeUInt32BE(0xffffffff);
+  const bad = Buffer.concat([PNG_SIG, badLen, Buffer.from('IHDR'), Buffer.from([1, 2, 3, 4])]);
+  const out = buf(stripImageMetadata(ab(bad)));
+  assert.ok(out.length > PNG_SIG.length, 'tail must survive instead of truncating to the signature');
+  assert.ok(out.subarray(PNG_SIG.length).equals(bad.subarray(PNG_SIG.length)));
+});

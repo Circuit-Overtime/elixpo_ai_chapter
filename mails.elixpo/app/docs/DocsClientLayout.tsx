@@ -38,6 +38,7 @@ const DOCS_NAV = [
     { label: "Templates", href: "/docs/templates" },
     { label: "Attachments", href: "/docs/attachments" },
     { label: "Unsubscribe", href: "/docs/unsubscribe" },
+    { label: "Deliverability", href: "/docs/deliverability" },
     { label: "Delivery logs", href: "/docs/logs" },
 ];
 

@@ -94,6 +94,7 @@ function stripPng(b) {
     i += total;
     if (type === 'IEND') break;
   }
+  if (i < b.length) parts.push(b.subarray(i));
   return concat(parts);
 }
 

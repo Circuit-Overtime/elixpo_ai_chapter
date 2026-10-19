@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# generate-dkim-keypair.sh — mint a DKIM-2048 keypair for mail.elixpo.
+# generate-dkim-keypair.sh — mint a DKIM-2048 keypair for Elixpo Mails.
 #
 # Usage:
 #   bash workers/smtp-sender/scripts/generate-dkim-keypair.sh elixpo1 mails.elixpo.com
