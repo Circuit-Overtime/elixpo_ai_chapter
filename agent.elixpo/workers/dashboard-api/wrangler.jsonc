@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "agent-elixpo-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-08",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "routes": [
+    { "pattern": "agent.elixpo.com/api/*", "zone_name": "elixpo.com" }
+  ],
+  "vars": {
+    "ELIXPO_GITHUB_CONTROL_REPO": "elixpo/agent.elixpo"
+  }
+}

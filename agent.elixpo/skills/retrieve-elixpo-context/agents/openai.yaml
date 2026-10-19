@@ -1,0 +1,4 @@
+interface:
+  display_name: Retrieve Elixpo Context
+  short_description: Build a bounded canonical-first organization evidence bundle.
+  default_prompt: Retrieve canonical Elixpo context and identify any missing or stale evidence.

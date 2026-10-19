@@ -1,0 +1,4 @@
+interface:
+  display_name: "Orchestrate GitHub Project"
+  short_description: "Reconcile agent work into Project V2"
+  default_prompt: "Use $orchestrate-github-project to reconcile sanitized agent lifecycle receipts into the GitHub Project operations view."

@@ -1,0 +1,4 @@
+interface:
+  display_name: Classify GitHub Item
+  short_description: Apply the central Elixpo issue and PR taxonomy.
+  default_prompt: Classify this GitHub item using only allowed labels and Project values.

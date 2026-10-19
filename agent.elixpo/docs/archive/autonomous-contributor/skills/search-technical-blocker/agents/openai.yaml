@@ -1,0 +1,4 @@
+interface:
+  display_name: "Search Technical Blocker"
+  short_description: "Resolve one narrow external code question"
+  default_prompt: "Use $search-technical-blocker to answer one indispensable implementation question."

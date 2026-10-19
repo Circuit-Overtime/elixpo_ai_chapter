@@ -1,0 +1,14 @@
+name: Elixpo CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+
+jobs:
+  quality:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    uses: ./.github/workflows/quality-gate.yml
+    secrets: inherit

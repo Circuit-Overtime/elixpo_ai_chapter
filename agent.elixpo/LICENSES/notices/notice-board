@@ -1,0 +1,28 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository depends on third-party components, each distributed under its
+own license. The application code in this repository is licensed under the
+Elixpo standard (MIT for code, CC-BY-4.0 for assets); see ../../LICENSE.
+
+Primary runtime dependencies (see pyproject.toml for the authoritative list and
+versions):
+
+  * httpx                            - BSD-3-Clause
+  * pydantic, pydantic-settings      - MIT
+  * PyJWT                            - MIT
+  * cryptography                     - Apache-2.0 OR BSD-3-Clause
+  * structlog                        - MIT OR Apache-2.0
+  * python-dotenv                    - BSD-3-Clause
+  * PyYAML                           - MIT
+  * tiktoken                         - MIT
+  * mcp (Model Context Protocol SDK) - MIT
+
+Development dependencies:
+
+  * pytest                           - MIT
+  * pytest-asyncio                   - Apache-2.0
+  * ruff                             - MIT
+
+If you believe a component is missing from this list, please open an issue or
+email hello@elixpo.com.

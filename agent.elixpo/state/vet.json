@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-08-09T11:02:19.213058+00:00",
+  "confidence": 0.85,
+  "estimated_files": 2,
+  "estimated_minutes": 10,
+  "estimated_solve_tokens": 500,
+  "issue_kind": "standalone",
+  "issue_updated_at": "2026-08-09T09:34:59Z",
+  "key": "elixpo/lixrl.com#18",
+  "model_called": true,
+  "reasons": [],
+  "scope": "small",
+  "solve_token_budget": 240000,
+  "status": "approved",
+  "suitable": true,
+  "summary": "The graph of the tracker of clicks is discoloured on the page of a particular link settings",
+  "test_mode": true,
+  "title": "[BUG] The graph of the tracker of clicks is discoloured on the page of a particular link settings",
+  "url": "https://github.com/elixpo/lixrl.com/issues/18"
+}

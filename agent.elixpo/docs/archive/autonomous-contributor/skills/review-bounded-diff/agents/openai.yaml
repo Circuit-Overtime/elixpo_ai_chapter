@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Bounded Diff"
+  short_description: "Review one small issue implementation"
+  default_prompt: "Use $review-bounded-diff to check this diff against its issue and plan."

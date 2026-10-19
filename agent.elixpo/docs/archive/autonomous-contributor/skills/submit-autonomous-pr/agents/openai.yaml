@@ -1,0 +1,4 @@
+interface:
+  display_name: "Submit Autonomous PR"
+  short_description: "Safely push and disclose one agent PR"
+  default_prompt: "Use $submit-autonomous-pr to publish the reviewed branch as one disclosed pull request."

@@ -1,0 +1,4 @@
+interface:
+  display_name: Manage Project Record
+  short_description: Reconcile one allowlisted Project V2 item.
+  default_prompt: Reconcile this canonical GitHub item with the configured Project fields.

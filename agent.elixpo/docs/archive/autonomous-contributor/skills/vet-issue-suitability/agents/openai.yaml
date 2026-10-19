@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vet Issue Suitability"
+  short_description: "Verify one issue before implementation"
+  default_prompt: "Use $vet-issue-suitability to verify whether this GitHub issue is safe and bounded enough to implement."

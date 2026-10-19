@@ -1,0 +1,11 @@
+{
+  "branch": "patch/bug-the-graph-of-the-tracker-of-clicks-is-di-18-49a8",
+  "head_sha": "c54071f591505d0880dad412a514bd873738fe5a",
+  "issue_url": "https://github.com/elixpo/lixrl.com/issues/18",
+  "key": "elixpo/lixrl.com#18",
+  "pr_number": 19,
+  "pr_url": "https://github.com/elixpo/lixrl.com/pull/19",
+  "status": "submitted",
+  "submitted_at": "2026-08-09T10:42:10.667943+00:00",
+  "test_mode": true
+}

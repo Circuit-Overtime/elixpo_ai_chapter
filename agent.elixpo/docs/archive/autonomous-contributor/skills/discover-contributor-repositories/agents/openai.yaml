@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Scout"
+  short_description: "Find healthy repositories open to contributors"
+  default_prompt: "Use $discover-contributor-repositories to discover and rank repositories suitable for a bounded external contribution."

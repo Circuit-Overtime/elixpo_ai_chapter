@@ -1,0 +1,39 @@
+name: Elixpoo v2 reusable triage
+
+on:
+  workflow_call:
+    secrets:
+      github_token:
+        required: true
+      pollinations_key:
+        required: true
+      project_token:
+        required: true
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: elixpo/agent.elixpo
+          ref: ${{ vars.ELIXPOO_RUNTIME_REF || 'v2' }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Classify and update metadata
+        env:
+          ELIXPOO_GITHUB_AGENTIC_TOKEN: ${{ secrets.github_token }}
+          ELIXPOO_GITHUB_PROJECT_TOKEN: ${{ secrets.project_token }}
+          ELIXPO_GITHUB_PROJECT_OWNER: ${{ vars.ELIXPO_GITHUB_PROJECT_OWNER }}
+          ELIXPO_GITHUB_PROJECT_NUMBER: ${{ vars.ELIXPO_GITHUB_PROJECT_NUMBER }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.pollinations_key }}
+        run: python -m agents.elixpoo_v2 triage

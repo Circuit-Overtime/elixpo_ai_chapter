@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical Q&A Host"
+  short_description: "Create practitioner-grade technical questions"
+  default_prompt: "Use $technical-qna-host to draft a focused MLOps, GitOps, Docker, or Kubernetes Q&A discussion."

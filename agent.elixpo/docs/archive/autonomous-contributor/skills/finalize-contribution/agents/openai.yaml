@@ -1,0 +1,4 @@
+interface:
+  display_name: "Finalize Contribution"
+  short_description: "Reconcile merged and closed pull requests"
+  default_prompt: "Use $finalize-contribution to reconcile one tracked pull request after merge or closure."

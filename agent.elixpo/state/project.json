@@ -1,0 +1,79 @@
+{
+  "dry_run": false,
+  "failures": [],
+  "items": [
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13oj0",
+      "key": "Kohei-Wada/taskdog#971",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    },
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13okc",
+      "key": "PostHog/posthog#29916",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    },
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13olA",
+      "key": "goauthentik/authentik#16954",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    },
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13ols",
+      "key": "horsicq/Detect-It-Easy#365",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    },
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13omc",
+      "key": "mealie-recipes/mealie#5422",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    },
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13onM",
+      "key": "medusajs/medusa#15742",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    },
+    {
+      "created": false,
+      "item_id": "PVTI_lADOCZpXlc4Bf3bXzg13on4",
+      "key": "raullenchai/Rapid-MLX#337",
+      "status": "claimed",
+      "updated_fields": [
+        "Agent Status",
+        "Updated At"
+      ]
+    }
+  ],
+  "reconciled_at": "2026-08-11T09:41:18.937927+00:00",
+  "schema_version": 1,
+  "status": "complete"
+}

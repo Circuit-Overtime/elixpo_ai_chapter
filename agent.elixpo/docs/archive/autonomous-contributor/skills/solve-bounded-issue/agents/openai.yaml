@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solve Bounded Issue"
+  short_description: "Solve vetted issues through a bounded harness"
+  default_prompt: "Use $solve-bounded-issue to implement this vetted GitHub issue through the bounded CCR coding harness."

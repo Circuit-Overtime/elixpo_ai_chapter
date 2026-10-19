@@ -1,0 +1,56 @@
+{
+  "name": "@elixpo/agent.elixpo",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Elixpoo v2 live GitHub project-management operations and protocol documentation.",
+  "license": "MIT",
+  "author": {
+    "name": "Ayushman Bhattacharya",
+    "email": "ayushman@pollinations.ai",
+    "url": "https://github.com/Circuit-Overtime"
+  },
+  "homepage": "https://agent.elixpo.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elixpo/agent.elixpo.git",
+    "directory": "agent.elixpo"
+  },
+  "bugs": {
+    "url": "https://github.com/elixpo/agent.elixpo/issues"
+  },
+  "keywords": [
+    "elixpoo",
+    "agent",
+    "operations",
+    "dashboard",
+    "elixpo"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "preview": "next build && wrangler pages dev out",
+    "deploy": "next build && wrangler pages deploy out --project-name agent-elixpo-web",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "lucide-react": "^0.577.0",
+    "next": "^16.2.11",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^16.2.11",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "wrangler": "^4.120.0"
+  }
+}
