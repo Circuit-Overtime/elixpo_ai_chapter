@@ -1,6 +1,6 @@
 # Role -> Pollinations model. Squads request a ROLE; the rtk router resolves the
 # model. Swap models here without touching squad code. Names validated against
-# docs/model.txt (Pollinations /v1/models). See docs/refactor_plan.md section 5.
+# docs/model.txt (Pollinations /v1/models). Legacy role history is archived under docs/archive/.
 #
 # DEFAULTS ARE FREE-TIER (no paid_only models) so the system runs without pollen
 # balance. The stronger paid model for each role is noted inline — swap it in for
@@ -12,44 +12,20 @@ defaults:
   effort: medium          # low | medium | high  -> temperature in rtk.router
 
 roles:
-  # discovery / cheap classification
-  crawl:         { model: nova-fast }                  # cheapest tool-capable
+  # cheap classification
   classify:      { model: nova-fast }
 
-  # triage / scoring reasoning
+  # project-management classification
   triage:        { model: nova-fast }                  # cheapest explicitly priced tool-capable model
-  vet:           { model: nova-fast }                  # one bounded final suitability verdict
 
-  # repo mapping & summarization (large context fits small repos whole)
-  map:           { model: nova }                       # free, 1M ctx; paid: gemini-flash-lite-3.1
+  # merged-change summaries
   summarize:     { model: nova }                       # free, 1M ctx; paid: gemini-flash-lite-3.1
 
-  # planning — strong agentic reasoning
-  plan:          { model: qwen-coder }                 # same cheap coder; stable prefix reuse
-
-  # code generation — primary, always tried first
-  code:          { model: qwen-coder }                 # cheapest Qwen coder; bounded structured edits
-  # self-review of diffs — sharp critic
-  review:        { model: qwen-coder }                 # reuse coder context; one compact diff review
-
-  # bounded natural prose: short PR footer/persona lines
-  prose:         { model: nova-fast }                  # cheapest general text route
-
-  # steward replies — conversational follow-ups + tool use
-  steward:       { model: kimi }                       # free
+  # exact mentions and COMMENT-only reviews
   repository_agent: { model: nova-fast }               # bounded issue/PR response and routing
 
   # GitHub Discussions — lowest-priced general text model in the registry
   discussions:   { model: nova-fast }
 
-  # web search — built-in grounding (no tool calling)
-  search:        { model: perplexity-fast, tools: false }  # free sonar; paid: gemini-search
-
   # safety gate before any public post — costs ~nothing
   safety:        { model: qwen-safety, tools: false }
-
-  # embeddings for retrieval (rtk.retrieve)
-  embed:         { model: openai-3-small, kind: embedding }
-
-  # celebration / summary image
-  image:         { model: flux, kind: image }          # free; richer text: gptimage

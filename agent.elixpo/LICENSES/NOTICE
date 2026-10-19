@@ -10,7 +10,7 @@ REPOSITORY
 ----------
 
   Name:        agent.elixpo (elixpoo)
-  What it is:  The autonomous GitHub-contributor agent (@elixpoo). Independent
+What it is:  Elixpo's policy-bound GitHub project-management agent (@elixpoo).
                Python squads run as GitHub Actions that pick up community
                issues, fork, solve, open PRs, and shepherd them to merge. No
                server, no database - state lives in GitHub issues, a Project

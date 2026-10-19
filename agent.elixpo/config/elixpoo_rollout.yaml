@@ -1,0 +1,31 @@
+schema_version: 1
+owner: elixpo
+runtime_repository: elixpo/agent.elixpo
+runtime_ref: v2
+repositories:
+  agent.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true, discussions_host: true}
+  elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true, discussions_host: false}
+  lixrl.com: {triage: true, mentions: true, review: true, project: true, merge_memory: true, discussions_host: false}
+  .github: {deferred: true}
+  accounts.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  admin.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  blogs.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  crumb.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  cypher: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  elixpo_chapter: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  Kareixo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  mails.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  me.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  monodiffuse: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  Nano28C64: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  octabit: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  opensource.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  oreo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  oreoPI: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  packages.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  payouts.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  qfabric: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  research.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  sketch.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  status.elixpo: {triage: true, mentions: true, review: true, project: true, merge_memory: true}
+  wozformer: {triage: true, mentions: true, review: true, project: true, merge_memory: true}

@@ -1,4 +1,4 @@
-"""Community-issue scorer — docs/refactor_plan.md section 4.
+"""Legacy community-issue scorer — archived autonomous-contributor design.
 
 Pure and deterministic: it scores a struct of pre-extracted signals, so it's
 trivially unit-testable. The fuzzy extraction (does the body have repro steps? a

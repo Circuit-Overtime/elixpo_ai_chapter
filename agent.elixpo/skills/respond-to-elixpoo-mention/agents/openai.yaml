@@ -1,0 +1,4 @@
+interface:
+  display_name: Respond to Elixpoo Mention
+  short_description: Handle one authorized exact mention without coding.
+  default_prompt: Produce one bounded response or typed metadata action for this exact mention.

@@ -1,0 +1,4 @@
+interface:
+  display_name: Review Pull Request
+  short_description: Post one deduplicated evidence-grounded COMMENT review.
+  default_prompt: Review this PR for actionable findings supported by changed file and line evidence.

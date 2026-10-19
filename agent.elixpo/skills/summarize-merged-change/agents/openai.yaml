@@ -1,0 +1,4 @@
+interface:
+  display_name: Summarize Merged Change
+  short_description: Write one revision-checked compact merge record.
+  default_prompt: Summarize this merged PR factually for bounded organization memory.

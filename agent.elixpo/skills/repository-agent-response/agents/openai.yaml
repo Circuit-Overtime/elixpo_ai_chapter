@@ -1,4 +1,0 @@
-interface:
-  display_name: "Repository Agent Response"
-  short_description: "Answer, review, or route one authorized mention"
-  default_prompt: "Use $repository-agent-response to handle one authorized issue or pull-request request."

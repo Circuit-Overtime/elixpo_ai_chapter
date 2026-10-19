@@ -1,0 +1,11 @@
+[package]
+name = "crumb-ui"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+crumb-platform = { path = "../crumb-platform" }
+
+[lints]
+workspace = true

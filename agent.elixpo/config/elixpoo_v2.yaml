@@ -1,0 +1,17 @@
+schema_version: 2
+disclosure: "_Posted by @elixpoo, Elixpo's automated project-management agent._"
+labels:
+  type: [bug, feature, documentation, question, maintenance]
+  area: [area/frontend, area/backend, area/infrastructure, area/documentation, area/security]
+  lifecycle: [needs-triage, needs-information, ready-for-review, blocked]
+  priority: [priority/critical, priority/high, priority/medium, priority/low]
+  status: [status/accepted, status/in-progress, status/review, status/done]
+project_fields:
+  kind: [issue, pull-request]
+  status: [triage, needs-information, ready, review, done]
+  priority: [critical, high, medium, low]
+  area: [frontend, backend, infrastructure, documentation, security]
+limits:
+  public_body_chars: 4000
+  evidence_chars: 24000
+  comments: 12

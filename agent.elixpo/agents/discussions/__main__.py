@@ -18,6 +18,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import structlog
+from lib.elixpoo_policy import CODING_REFUSAL_TEXT, is_coding_request_text
 
 from agents.discussions.core import (
     UnsafeDraft,
@@ -132,10 +133,7 @@ async def _publish(
 
 def _cooldown_active(recent: list[dict], hours: int = 6) -> bool:
     cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
-    return any(
-        "<!-- elixpoo-discussions:" in item.get("body", "") and _created_at(item) >= cutoff
-        for item in recent
-    )
+    return any("<!-- elixpoo-discussions:" in item.get("body", "") and _created_at(item) >= cutoff for item in recent)
 
 
 def _recent_moods(recent: list[dict], limit: int = 5) -> tuple[str, ...]:
@@ -229,9 +227,7 @@ async def _handle_merge(api, discussions, router, event: dict, *, dry_run: bool 
     if decision.mood is not Mood.ALERT and _cooldown_active(recent):
         log.info("discussions.activity_deferred", reason="six-hour autonomous-post cooldown")
         return None
-    return await _publish_mood_activity(
-        discussions, router, [pull], changed_files, decision, marker, dry_run=dry_run
-    )
+    return await _publish_mood_activity(discussions, router, [pull], changed_files, decision, marker, dry_run=dry_run)
 
 
 async def _handle_qna(discussions, router, *, dry_run: bool = False) -> dict | None:
@@ -308,9 +304,7 @@ async def _handle_pulse(api, discussions, router, event: dict, *, dry_run: bool 
     )
 
 
-async def _handle_response(
-    discussions, router, event: dict, bot_username: str, *, memory=None
-) -> dict | None:
+async def _handle_response(discussions, router, event: dict, bot_username: str, *, memory=None) -> dict | None:
     discussion = event.get("discussion", {})
     comment = event.get("comment")
     source = comment or discussion
@@ -334,7 +328,11 @@ async def _handle_response(
         return None
 
     mention = comment or {"body": discussion.get("body", ""), "user": discussion.get("user", {})}
-    draft = await reply_draft(router, discussion, mention, comments)
+    draft = (
+        CODING_REFUSAL_TEXT
+        if is_coding_request_text(body)
+        else await reply_draft(router, discussion, mention, comments)
+    )
     reply = public_body(draft, marker)
     await safety_check(router, reply)
     reply_to = None
@@ -489,9 +487,7 @@ async def _run(mode: str, *, dry_run: bool = False) -> int:
                 log.warning("discussions.memory_unavailable", operation="load", error=str(exc))
                 memory = DiscussionMemory()
             memory_before = memory.model_dump(mode="json")
-            result = await _handle_response(
-                discussions, router, event, settings.github.bot_username, memory=memory
-            )
+            result = await _handle_response(discussions, router, event, settings.github.bot_username, memory=memory)
         elif mode == "poll-mentions":
             if not settings.followups.gist_token or not settings.followups.gist_id:
                 raise RuntimeError("poll-mentions requires ELIXPOO_GIST_AGENTIC_TOKEN and ELIXPOO_FOLLOWUP_GIST_ID")
@@ -548,9 +544,7 @@ async def _run(mode: str, *, dry_run: bool = False) -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Orchestrate elixpo GitHub Discussions")
-    parser.add_argument(
-        "mode", choices=("merge", "qna", "respond", "poll-mentions", "pulse", "verify-config")
-    )
+    parser.add_argument("mode", choices=("merge", "qna", "respond", "poll-mentions", "pulse", "verify-config"))
     parser.add_argument("--dry-run", action="store_true", help="generate and safety-check without publishing")
     args = parser.parse_args()
     if args.dry_run and args.mode not in {"merge", "qna", "pulse"}:

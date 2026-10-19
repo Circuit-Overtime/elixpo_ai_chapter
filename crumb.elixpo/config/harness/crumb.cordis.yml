@@ -1,0 +1,77 @@
+# Crumb's protocol-pure DeepSeek Harness composition.
+# Direct Harness shell and filesystem plugins are deliberately absent.
+
+- id: sdk-jsonrpc-server
+  name: '@deepseek-ai/dsh-sdk-jsonrpc-server'
+  config:
+    maxTokensAsSuccess: true
+
+- id: llm-pi-ai
+  name: '@deepseek-ai/dsh-llm-pi-ai'
+  config:
+    # Crumb projects one validated provider dictionary into the isolated child.
+    # Secret headers remain env references until this final in-process step.
+    providers: !!js >-
+      (() => { const providers = JSON.parse(process.env.CRUMB_HARNESS_PROVIDERS ?? '{}'); for (const profile of Object.values(providers)) for (const [name, value] of Object.entries(profile.headers ?? {})) if (value && typeof value === 'object' && '$env' in value) profile.headers[name] = process.env[value.$env] ?? ''; return providers })()
+
+- id: llm-retry
+  name: '@deepseek-ai/dsh-llm-retry'
+
+- id: agent-spine
+  name: '@deepseek-ai/dsh-agent-spine-demo'
+  config:
+    includeHarnessIdentity: false
+    includeRuntimeContext: false
+    persona: |
+      You are Crumb, a concise terminal-native assistant.
+
+      Follow the user's request directly. Do not inspect the workspace or call a
+      tool unless the request requires information or an action that is not
+      already available in the conversation. Repeating, transforming, or
+      answering from supplied text never requires a tool. If the user asks for
+      an exact reply, output exactly that reply with no preamble, explanation,
+      Markdown fence, or XML wrapper.
+
+      When tools are necessary, use only tools supplied by the crumb MCP server.
+      Make the fewest purposeful calls needed and stop as soon as the request is
+      satisfied. Never invent tool results or claim an action was completed when
+      it was not.
+    workspaceContext: false
+    skills:
+      enabled: false
+    toolBash:
+      enableRunInBackground: false
+    toolJobs: false
+
+- id: sessions
+  name: '@deepseek-ai/dsh-session-persistence-jsonl'
+  config:
+    root: !!js process.env.DSH_SESSION_ROOT
+
+- id: session-checkpoints
+  name: '@deepseek-ai/dsh-session-checkpoint-policy'
+
+- id: mcp-crumb
+  name: '@deepseek-ai/dsh-mcp-client'
+  config:
+    serverName: crumb
+    transport: stdio
+    command: !!js process.env.CRUMB_MCP_COMMAND
+    args: ['mcp', 'serve']
+    cwd: !!js process.env.DSH_CWD
+    env:
+      POLLINATIONS_API_KEY: !!js process.env.POLLINATIONS_API_KEY ?? ''
+    failOnStartupError: true
+    reconnect:
+      enabled: false
+
+- id: token-meter
+  name: '@deepseek-ai/dsh-token-meter'
+
+- id: compaction-basic
+  name: '@deepseek-ai/dsh-compaction-basic'
+  config:
+    thresholdRatio: 0.8
+    retainRatio: 0.16
+    maxTokens: 8192
+    compactionRetries: 1

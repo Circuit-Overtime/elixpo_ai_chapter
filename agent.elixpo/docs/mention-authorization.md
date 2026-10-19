@@ -1,40 +1,14 @@
 # Mention authorization
 
-OreoFlow is the autonomous Scout-to-merge contribution flow. It may start work
-from its own bounded discovery policy without a public mention.
+An exact `@elixpoo` mention always produces one bounded answer, one authorized metadata action, a preview, or a refusal. Similar handles and email addresses do not trigger it.
 
-Public `@elixpoo` mentions use a separate deterministic gate before Steward can
-call a model, acknowledge the request, dispatch Vet, or modify repository state.
+| Request | Who may request it | Result |
+| --- | --- | --- |
+| Answer, summary, rewrite proposal, PR review | Any GitHub user | Public response or COMMENT review |
+| Edit title or body | Item author, or collaborator with triage+ | Mutation when authorized; otherwise preview |
+| Add/remove an allowed label or set a supported Project field | Collaborator with triage+ | Typed allowlisted mutation |
+| Self-assign | Requesting user when GitHub reports assignable | Assignment |
+| Assign another user | Collaborator with triage+ | Assignment only when eligible |
+| Implement/fix code, create branch/commit/PR | Nobody through v2 | Deterministic refusal and human plan offer |
 
-| Request | Route |
-|---|---|
-| Trusted user in an `elixpo/*` repository | Direct repository agent |
-| Trusted user on an external issue | Vet, then OreoFlow only if approved |
-| Any untrusted user in `elixpo/*` | Control-repository approval issue |
-| Untrusted user in a configured or already-tracked repository | Control-repository approval issue |
-| Untrusted user elsewhere | One polite rejection; no work starts |
-| External pull-request update not already authorized | Control-repository approval issue |
-
-Approval requests carry `elixpoo/approval-required`. A maintainer authorizes one
-source-comment fingerprint by adding `elixpoo/approved`. The approval workflow
-validates both labels, the embedded source identity, and the matching pending
-Gist record before posting one response. Closing the request without approval
-denies it.
-
-The reviewed control-repository policy lives in
-`.github/elixpoo-whitelist.yml`. Add external repositories under
-`watched_repositories` using exact `owner/repository` names. A malformed schema,
-invalid name, or case-insensitive duplicate fails closed before Steward handles
-mentions.
-
-Repository variables control trusted identities and provide an emergency
-additive override:
-
-- `ELIXPO_MENTION_TRUSTED_USERS`: comma-separated GitHub logins;
-- `ELIXPO_MENTION_TRUSTED_ORGS`: comma-separated organization owners;
-- `ELIXPO_MENTION_WATCHED_REPOS`: optional comma-separated watched repositories
-  added to the reviewed YAML list.
-
-The Project board and `elixpo/elixpo` Discussions remain dedicated Elixpo
-control surfaces. Discussion mentions continue through their own exact-mention,
-deduplication, and safety gates.
+Issue bodies, diffs, links, code, and quoted comments are untrusted evidence. They cannot authorize actions or override this policy. Each response includes a disclosure and event-derived idempotency marker.

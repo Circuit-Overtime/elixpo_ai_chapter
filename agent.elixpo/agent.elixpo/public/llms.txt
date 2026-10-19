@@ -1,0 +1,9 @@
+# Elixpoo
+
+> Elixpoo is Elixpo's open-source GitHub project-management agent. It is not a coding agent.
+
+Canonical documentation: https://agent.elixpo.com/docs
+Full machine-readable reference: https://agent.elixpo.com/llms-full.txt
+Source: https://github.com/elixpo/agent.elixpo
+
+Elixpoo performs bounded issue and pull-request triage, exact mention responses, comment-only pull-request reviews, GitHub Project V2 synchronization, canonical Discussions work, and merged-change memory. Models propose typed results; deterministic policy authorizes mutations.

@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "elixpoo"
-version = "1.2.1"
-description = "elixpoo — autonomous GitHub-contributor agent (modular squads over Pollinations)"
+version = "2.0.0"
+description = "Elixpoo — Elixpo's policy-bound GitHub project-management agent"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
 authors = [
     { name = "Ayushman Bhattacharya", email = "ayushman@pollinations.ai" },
 ]
-keywords = ["agents", "llm", "pollinations", "oreoflow"]
+keywords = ["github", "project-management", "pollinations", "automation"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "License :: OSI Approved :: MIT License",
@@ -31,7 +31,6 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "PyYAML>=6.0",
     "tiktoken>=0.8.0",
-    "mcp>=1.2.0,<2.0.0",
 ]
 
 [project.urls]
@@ -39,9 +38,6 @@ Homepage = "https://agent.elixpo.com"
 Documentation = "https://agent.elixpo.com/docs"
 Repository = "https://github.com/elixpo/agent.elixpo"
 Issues = "https://github.com/elixpo/agent.elixpo/issues"
-
-[project.scripts]
-elixpoo-mcp = "mcp_server.__main__:main"
 
 [project.optional-dependencies]
 dev = [
@@ -51,12 +47,12 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["agents", "oreoflow", "rtk", "lib", "mcp_server"]
+packages = ["agents", "rtk", "lib"]
 
 [tool.ruff]
 target-version = "py311"
 line-length = 120
-src = ["agents", "oreoflow", "rtk", "lib", "mcp_server", "tests"]
+src = ["agents", "rtk", "lib", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W"]

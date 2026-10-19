@@ -13,7 +13,7 @@ from agents.discussions.mood import MOOD_EMOJI, Genre, MoodDecision
 
 PROMPTS = Path(__file__).resolve().parents[2] / "prompts"
 SKILLS = Path(__file__).resolve().parents[2] / "skills"
-DISCLOSURE = "---\n_Posted by @elixpoo, an autonomous contributor._"
+DISCLOSURE = "---\n_Posted by @elixpoo, Elixpo's automated project-management agent._"
 MENTION_RE = re.compile(r"(?<![A-Za-z0-9_.+-])@elixpoo(?![A-Za-z0-9_.+-])", re.IGNORECASE)
 
 

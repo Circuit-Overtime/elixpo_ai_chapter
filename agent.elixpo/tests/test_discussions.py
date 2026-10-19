@@ -65,7 +65,7 @@ def test_mention_requires_exact_username():
 
 def test_public_metadata_is_deterministic():
     posted = public_body("Useful discussion", "<!-- marker -->")
-    assert "autonomous contributor" in posted
+    assert "automated project-management agent" in posted
     assert posted.endswith("<!-- marker -->")
 
 

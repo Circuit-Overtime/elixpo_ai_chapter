@@ -1,26 +1,17 @@
 import type { MetadataRoute } from "next";
-import { floors } from "@/lib/dashboard-model";
 import { absoluteUrl, SOCIAL_IMAGE } from "@/lib/site-metadata";
 
 
 export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
-  const generatedAt = new Date();
   const routes = [
-    { path: "/", priority: 1 },
-    { path: "/floors", priority: 0.9 },
-    { path: "/runs", priority: 0.8 },
-    { path: "/work", priority: 0.8 },
-    { path: "/journal", priority: 0.7 },
-    { path: "/security", priority: 0.7 },
-    { path: "/docs", priority: 0.9 },
-    ...floors.map((floor) => ({ path: `/floors/${floor.slug}`, priority: 0.8 })),
+    { path: "/", priority: 1, changeFrequency: "weekly" as const },
+    { path: "/docs", priority: 0.9, changeFrequency: "weekly" as const },
   ];
 
-  return routes.map(({ path, priority }) => ({
+  return routes.map(({ path, priority, changeFrequency }) => ({
     url: absoluteUrl(path),
-    lastModified: generatedAt,
-    changeFrequency: "daily" as const,
+    changeFrequency,
     priority,
     ...(path === "/" ? { images: [absoluteUrl(SOCIAL_IMAGE.url)] } : {}),
   }));

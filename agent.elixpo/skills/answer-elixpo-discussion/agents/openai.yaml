@@ -1,0 +1,4 @@
+interface:
+  display_name: Answer Elixpo Discussion
+  short_description: Answer canonical Discussion mentions from verified context.
+  default_prompt: Answer this exact Discussion mention using canonical public evidence only.

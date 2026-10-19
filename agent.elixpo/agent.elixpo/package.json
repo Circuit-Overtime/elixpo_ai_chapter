@@ -1,8 +1,8 @@
 {
   "name": "@elixpo/agent.elixpo",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "private": true,
-  "description": "OreoFlow live agent operations dashboard and framework documentation.",
+  "description": "Elixpoo v2 live GitHub project-management operations and protocol documentation.",
   "license": "MIT",
   "author": {
     "name": "Ayushman Bhattacharya",
@@ -19,7 +19,7 @@
     "url": "https://github.com/elixpo/agent.elixpo/issues"
   },
   "keywords": [
-    "oreoflow",
+    "elixpoo",
     "agent",
     "operations",
     "dashboard",

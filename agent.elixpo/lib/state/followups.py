@@ -57,6 +57,7 @@ class FollowupRecord(BaseModel):
         branch: str = "",
         fork_repository: str = "",
         subject_kind: str = "pull_request",
+        status: str = "awaiting_review",
         ttl_days: int = FOLLOWUP_TTL_DEFAULT_DAYS,
         now: datetime | None = None,
     ) -> FollowupRecord:
@@ -72,6 +73,7 @@ class FollowupRecord(BaseModel):
             title=title[:300],
             branch=branch,
             fork_repository=fork_repository,
+            status=status,
             opened_at=stamp,
             updated_at=stamp,
             expires_at=(current + timedelta(days=bounded_ttl_days(ttl_days))).isoformat(),

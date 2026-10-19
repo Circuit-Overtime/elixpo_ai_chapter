@@ -1,0 +1,44 @@
+name: Elixpoo v2 rollout PRs
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: Optional repository name without owner
+        type: string
+        required: false
+      apply:
+        description: Open or reuse rollout pull requests
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: elixpoo-v2-rollout-prs
+  cancel-in-progress: false
+
+jobs:
+  rollout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Plan or publish caller pull requests
+        env:
+          ELIXPOO_GITHUB_ROLLOUT_TOKEN: ${{ secrets.ELIXPOO_GITHUB_ROLLOUT_TOKEN }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+          REPOSITORY: ${{ inputs.repository }}
+          APPLY: ${{ inputs.apply }}
+        run: |
+          args=(--concurrency 5)
+          if [[ -n "$REPOSITORY" ]]; then args+=(--repo "$REPOSITORY"); fi
+          if [[ "$APPLY" == "true" ]]; then args+=(--apply); fi
+          python -m agents.rollout_prs "${args[@]}"

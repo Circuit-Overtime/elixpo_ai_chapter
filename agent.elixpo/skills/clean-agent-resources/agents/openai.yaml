@@ -1,4 +1,0 @@
-interface:
-  display_name: "Janitor Resource Cleanup"
-  short_description: "Clean authorized terminal-run resources safely"
-  default_prompt: "Use $clean-agent-resources to clean only resources authorized by Doctor or a matching successful Submit receipt."

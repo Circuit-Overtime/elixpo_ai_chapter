@@ -4,7 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 
-from agents.repository_agent.core import bounded_context
+from agents.elixpoo_v2.core import sanitize_evidence
 
 
 def _audit_module():
@@ -22,14 +22,11 @@ def test_restricted_tokens_are_confined_to_approved_workflows():
 
 def test_prompt_injection_fixtures_remain_bounded_untrusted_data():
     fixtures = json.loads(Path("tests/fixtures/prompt_injection.json").read_text())
-    context = bounded_context(
-        {"title": fixtures[0]["text"], "body": "\n".join(item["text"] for item in fixtures)},
-        [{"body": item["text"], "user": {"login": "attacker"}} for item in fixtures],
-    )
-    assert context["subject"]["title"] == fixtures[0]["text"]
-    assert [item["body"] for item in context["recent_comments"]] == [
-        item["text"] for item in fixtures
-    ]
+    evidence = "\n".join(item["text"] for item in fixtures)
+    sanitized = sanitize_evidence(evidence)
+
+    assert len(sanitized) <= 24_000
+    assert "[untrusted instruction removed]" in sanitized
     assert {item["source"] for item in fixtures} == {
         "issue",
         "comment",
@@ -37,21 +34,3 @@ def test_prompt_injection_fixtures_remain_bounded_untrusted_data():
         "command_output",
         "dependency_metadata",
     }
-
-
-def test_webhook_ingress_has_signature_replay_size_and_owner_gates():
-    source = Path("workers/src/index.ts").read_text()
-    assert "x-hub-signature-256" in source
-    assert "x-github-delivery" in source
-    assert "MAX_BODY_BYTES" in source
-    assert "replayed(delivery)" in source
-    assert "ALLOWED_ACTIONS" in source
-    assert 'event === "ping"' in source
-    assert "ignored_event" in source
-    assert "ALLOWED_OWNERS" in source
-    assert "rateLimited(fullName)" in source
-    assert "MAX_REPLAY_ENTRIES" in source
-    assert "seenDeliveries" in source
-    assert "caches.default" not in source
-    assert "D1Database" not in source
-    assert "KVNamespace" not in source

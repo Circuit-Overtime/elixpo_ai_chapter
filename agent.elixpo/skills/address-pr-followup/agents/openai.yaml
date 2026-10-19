@@ -1,4 +1,0 @@
-interface:
-  display_name: "Address PR Follow-up"
-  short_description: "Apply bounded review and CI fixes"
-  default_prompt: "Use $address-pr-followup to apply one grounded requested change to an existing pull request."

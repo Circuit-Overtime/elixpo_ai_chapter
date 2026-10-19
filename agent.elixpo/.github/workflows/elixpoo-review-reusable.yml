@@ -1,0 +1,34 @@
+name: Elixpoo v2 reusable pull request review
+
+on:
+  workflow_call:
+    secrets:
+      github_token:
+        required: true
+      pollinations_key:
+        required: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: elixpo/agent.elixpo
+          ref: ${{ vars.ELIXPOO_RUNTIME_REF || 'v2' }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - name: Post one evidence-grounded COMMENT review
+        env:
+          ELIXPOO_GITHUB_AGENTIC_TOKEN: ${{ secrets.github_token }}
+          ELIXPO_POLLINATIONS_API_KEY: ${{ secrets.pollinations_key }}
+        run: python -m agents.elixpoo_v2 review

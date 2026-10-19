@@ -32,4 +32,4 @@ jobs:
       - name: Audit token placement
         run: python .github/scripts/audit_tokens.py
       - name: Run injection and boundary fixtures
-        run: pytest -q tests/test_repository_agent.py tests/test_security.py tests/test_state_contracts.py
+        run: pytest -q tests/test_elixpoo_v2.py tests/test_security.py tests/test_state_contracts.py

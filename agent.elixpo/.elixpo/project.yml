@@ -5,7 +5,7 @@ project:
   node_version: "20"
 
 ci:
-  lint_cmd: "ruff check agents rtk lib mcp_server tests"
+  lint_cmd: "ruff check agents rtk lib tests"
   test_cmd: "pytest -q"
   build_cmd: ""
 

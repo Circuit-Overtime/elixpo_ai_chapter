@@ -1,6 +1,6 @@
 """Typed view over state/ledger.json — the PR registry, blocklist, daily cap.
 
-Schema mirrors docs/refactor_plan.md section 7. Pure data + StateStore I/O, so
+Legacy schema is documented under docs/archive/autonomous-contributor/. Pure data + StateStore I/O, so
 it's testable without GitHub. The daily cap (4-5 PRs/day) and the permanent
 blocklist (opt-out) are enforced here.
 """
