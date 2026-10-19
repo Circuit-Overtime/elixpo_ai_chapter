@@ -1,0 +1,12 @@
+{
+  "headline": "Join the Ecosystem",
+  "subheadline": "Whether you want to contribute code, report bugs, or just explore - Elixpo is open to everyone.",
+  "primaryCta": {
+    "label": "Star on GitHub",
+    "href": "https://github.com/elixpo/elixpo_chapter"
+  },
+  "secondaryCta": {
+    "label": "Read Contributing Guide",
+    "href": "https://github.com/elixpo/elixpo_chapter/blob/main/CONTRIBUTING.md"
+  }
+}

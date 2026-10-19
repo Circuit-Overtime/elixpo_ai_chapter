@@ -1,0 +1,71 @@
+{
+  "$schema": "./schemas/recognition.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-19",
+  "issuer": "Elixpo Open-Source Project Foundry",
+  "records": [
+    {
+      "id": "ELX-APP-2026-001",
+      "name": "Karan Ray",
+      "handle": "karanray06",
+      "issuedAt": "2026-10-17",
+      "period": "March–September 2026",
+      "statement": "for sustained, attributable contributions across Elixpo projects and public services",
+      "recordUrl": "/contributors/karanray06"
+    },
+    {
+      "id": "ELX-APP-2026-002",
+      "name": "Divyanshu Jha",
+      "handle": "divyanshuj91",
+      "issuedAt": "2026-10-17",
+      "period": "June–September 2026",
+      "statement": "for sustained, attributable contributions across Elixpo services, documentation, and public releases",
+      "recordUrl": "/contributors/divyanshuj91"
+    },
+    {
+      "id": "ELX-APP-2026-003",
+      "name": "Bhumika Sudarshani",
+      "handle": "bhumikasudarshani-cmd",
+      "issuedAt": "2026-10-17",
+      "period": "April–September 2026",
+      "statement": "for sustained, attributable contributions to release automation and Elixpo project delivery",
+      "recordUrl": "/contributors/bhumikasudarshani-cmd"
+    },
+    {
+      "id": "ELX-APP-2026-004",
+      "name": "Krishnendu Dutta",
+      "handle": "dev-krish",
+      "issuedAt": "2026-10-17",
+      "period": "May–August 2026",
+      "statement": "for sustained, attributable contributions to Elixpo's collaborative software work",
+      "recordUrl": "/contributors/dev-krish"
+    },
+    {
+      "id": "ELX-APP-2026-005",
+      "name": "Sandipan Singh",
+      "handle": "sandipansingh",
+      "issuedAt": "2026-10-17",
+      "period": "2025–2026",
+      "statement": "for attributable contributions to Elixpo's public open-source work",
+      "recordUrl": "https://github.com/elixpo/elixpo_chapter/commits?author=sandipansingh"
+    },
+    {
+      "id": "ELX-APP-2026-006",
+      "name": "Nihal Gazi",
+      "handle": "nihal-gazi",
+      "issuedAt": "2026-10-17",
+      "period": "2025–2026",
+      "statement": "for attributable contributions to Elixpo's open research and public technical work",
+      "recordUrl": "https://github.com/elixpo/elixpo_chapter/commits?author=nihal-gazi"
+    },
+    {
+      "id": "ELX-APP-2026-007",
+      "name": "Souvik Das",
+      "handle": "dasouvik122005",
+      "issuedAt": "2026-10-19",
+      "period": "April–September 2026",
+      "statement": "for sustained, attributable contributions across Elixpo applications, documentation, and public releases",
+      "recordUrl": "https://github.com/elixpo/elixpo_chapter/commits?author=dasouvik122005"
+    }
+  ]
+}
