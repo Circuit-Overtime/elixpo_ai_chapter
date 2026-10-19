@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /usr/lib/screenbridge
+exec python3 -m screenbridge "$@"
