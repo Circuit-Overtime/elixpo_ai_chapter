@@ -1,0 +1,69 @@
+name: Skill request
+description: Propose a focused, reviewable skill for Crumb.
+title: "skill: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A skill describes how Crumb should approach a task. It does not bypass permissions or install a connector.
+  - type: textarea
+    id: outcome
+    attributes:
+      label: User outcome
+      description: What should a user be able to accomplish?
+      placeholder: "A Rust maintainer can isolate and fix a failing workspace test without rewriting unrelated code."
+    validations:
+      required: true
+  - type: textarea
+    id: prompts
+    attributes:
+      label: Example requests
+      description: Provide two or three natural-language requests that should activate this skill.
+      placeholder: |
+        - Find why this test fails and prepare the smallest fix.
+        - Explain this borrow-checker error in the context of the workspace.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Required context
+      description: Which files, folders, commands, or connector resources does the skill need?
+    validations:
+      required: true
+  - type: textarea
+    id: tools
+    attributes:
+      label: Tools and permissions
+      description: List required read, write, execution, network, or credential-sensitive capabilities.
+    validations:
+      required: true
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Platforms
+      multiple: true
+      options:
+        - Linux / Bash
+        - macOS / Zsh
+        - Windows / PowerShell
+        - Platform independent
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance examples
+      description: How can maintainers verify that the skill behaves safely and usefully?
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I have not included credentials, private logs, or sensitive data.
+          required: true
+        - label: The proposed skill does not require models to grant their own permissions.
+          required: true

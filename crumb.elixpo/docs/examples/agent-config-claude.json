@@ -1,0 +1,28 @@
+{
+  "mode": "plan",
+  "routing": {
+    "unknown_input": "agent",
+    "typo_distance": 1
+  },
+  "harness": {
+    "kind": "coding_cli",
+    "backend": "claude",
+    "command": "claude",
+    "capabilities": [
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "reasoning_efforts": ["medium"]
+      }
+    ]
+  },
+  "models": {
+    "text": [
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "effort": "medium"
+      }
+    ]
+  }
+}

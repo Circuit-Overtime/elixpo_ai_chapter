@@ -1,0 +1,38 @@
+name: Release Gate
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release-gate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Edge audit and Pages build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit edge routes
+        run: npm test
+
+      - name: Build Cloudflare Pages output
+        run: npm run pages:build
+
+      - name: Build wildcard subdomain Worker
+        run: npx wrangler deploy --config wrangler.subdomains.toml --dry-run

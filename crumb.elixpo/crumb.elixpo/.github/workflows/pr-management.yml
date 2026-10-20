@@ -1,0 +1,204 @@
+name: PR Management
+
+on:
+  workflow_call:
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  pr-management:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Auto-assign PR author
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              console.log('No pull request found in context, skipping.');
+              return;
+            }
+            const author = pr.user.login;
+            console.log(`Assigning PR #${pr.number} to author: ${author}`);
+            try {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                assignees: [author],
+              });
+              console.log(`Successfully assigned ${author}`);
+            } catch (error) {
+              console.log(`Could not assign ${author}: ${error.message}`);
+            }
+
+      - name: Auto-label based on changed files
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              console.log('No pull request found in context, skipping.');
+              return;
+            }
+
+            // Fetch changed files
+            const files = [];
+            let page = 1;
+            while (true) {
+              const response = await github.rest.pulls.listFiles({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                per_page: 100,
+                page: page,
+              });
+              files.push(...response.data);
+              if (response.data.length < 100) break;
+              page++;
+            }
+
+            const changedPaths = files.map(f => f.filename);
+            console.log(`Changed files (${changedPaths.length}):`);
+            changedPaths.forEach(p => console.log(`  ${p}`));
+
+            // Label rules: pattern list mapped to label name and color
+            const rules = [
+              {
+                label: 'frontend',
+                color: '1d76db',
+                test: (p) => p.startsWith('src/components/') || p.startsWith('src/app/') || p.startsWith('pages/'),
+              },
+              {
+                label: 'backend',
+                color: 'e99695',
+                test: (p) => p.startsWith('src/api/') || p.startsWith('api/') || p.startsWith('routes/') || p.startsWith('server/'),
+              },
+              {
+                label: 'infra',
+                color: 'd4c5f9',
+                test: (p) => p.startsWith('.github/') || p === 'Dockerfile' || p.includes('Dockerfile') || p === 'docker-compose.yml' || p === 'docker-compose.yaml' || p.startsWith('docker-compose') || p === 'wrangler.toml',
+              },
+              {
+                label: 'docs',
+                color: '0075ca',
+                test: (p) => p.endsWith('.md') || p.startsWith('docs/'),
+              },
+              {
+                label: 'tests',
+                color: 'bfd4f2',
+                test: (p) => /\.(test|spec)\./.test(p) || p.startsWith('tests/'),
+              },
+              {
+                label: 'dependencies',
+                color: 'ededed',
+                test: (p) => {
+                  const basename = p.split('/').pop();
+                  return basename === 'package.json' || basename === 'requirements.txt' || basename === 'pyproject.toml';
+                },
+              },
+            ];
+
+            // Determine which labels apply
+            const labelsToAdd = new Set();
+            for (const path of changedPaths) {
+              for (const rule of rules) {
+                if (rule.test(path)) {
+                  labelsToAdd.add(rule.label);
+                }
+              }
+            }
+
+            if (labelsToAdd.size === 0) {
+              console.log('No matching label rules for changed files.');
+              return;
+            }
+
+            console.log(`Labels to apply: ${[...labelsToAdd].join(', ')}`);
+
+            // Ensure each label exists, then apply
+            for (const labelName of labelsToAdd) {
+              const rule = rules.find(r => r.label === labelName);
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName,
+                });
+              } catch (error) {
+                if (error.status === 404) {
+                  console.log(`Creating label: ${labelName}`);
+                  try {
+                    await github.rest.issues.createLabel({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      name: labelName,
+                      color: rule.color,
+                    });
+                  } catch (createError) {
+                    console.log(`Failed to create label ${labelName}: ${createError.message}`);
+                  }
+                }
+              }
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              labels: [...labelsToAdd],
+            });
+            console.log('Labels applied successfully.');
+
+      - name: Link to issue from branch name
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              console.log('No pull request found in context, skipping.');
+              return;
+            }
+
+            const branch = pr.head.ref;
+            console.log(`Branch name: ${branch}`);
+
+            // Match patterns like fix/issue-123, feature/issue-456, elixpo/issue-789
+            const match = branch.match(/(?:^|\/)issue-(\d+)/i);
+            if (!match) {
+              console.log('Branch name does not reference an issue, skipping.');
+              return;
+            }
+
+            const issueNumber = match[1];
+            console.log(`Detected issue reference: #${issueNumber}`);
+
+            // Check if a closing comment already exists to avoid duplicates
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+            });
+
+            const closingComment = `Closes #${issueNumber}`;
+            const alreadyLinked = comments.some(c => c.body && c.body.includes(closingComment));
+            if (alreadyLinked) {
+              console.log(`Issue #${issueNumber} is already linked, skipping.`);
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: closingComment,
+            });
+            console.log(`Added comment: ${closingComment}`);

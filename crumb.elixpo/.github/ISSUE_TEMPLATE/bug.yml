@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible problem in crumb.
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the command, expected behavior, and actual behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [Linux, macOS, Windows]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: crumb version
+      placeholder: crumb --version
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Remove credentials and other secrets before posting logs.
