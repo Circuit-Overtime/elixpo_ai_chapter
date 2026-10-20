@@ -1,0 +1,150 @@
+{
+  "schema_version": 3,
+  "name": "crumb-public",
+  "publishers": [
+    {
+      "id": "crumb",
+      "display_name": "Crumb",
+      "source_url": "https://github.com/elixpo/crumb.elixpo",
+      "identity": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "subject": "repo:elixpo/crumb.elixpo:ref:refs/heads/main"
+      }
+    }
+  ],
+  "revocations": [],
+  "packages": [
+    {
+      "id": "crumb/code-review",
+      "publisher": "crumb",
+      "version": "1.0.0",
+      "kind": "skill",
+      "package_class": "instruction",
+      "display_name": "Code review",
+      "description": "Focused correctness, security, compatibility, and test review.",
+      "license": "MIT",
+      "source": "./packages/code-review",
+      "compatibility": {
+        "minimum_crumb_version": "0.1.0",
+        "maximum_crumb_version_exclusive": "2.0.0",
+        "platforms": ["linux", "macos", "windows"]
+      },
+      "provenance": {
+        "repository": "https://github.com/elixpo/crumb.elixpo",
+        "revision": "9823e401b457789cf5225d34c7ccc7a475e91ca0",
+        "released_at": "2026-10-17T14:39:35+05:30",
+        "trust": {"kind": "bundled"}
+      },
+      "disclosures": {
+        "security_url": "https://crumb.elixpo.com/docs/security",
+        "privacy_url": "https://crumb.elixpo.com/privacy",
+        "data_flow": "Reads explicitly approved workspace context locally; sends no data by itself."
+      },
+      "connector_requirements": [],
+      "dependencies": [],
+      "deprecation": null,
+      "capabilities": ["workspace_read"],
+      "artifacts": [
+        {
+          "path": "skills/code-review/SKILL.md",
+          "sha256": "1728255549947cec3b09df2d6e10f76fea3ef388ff2db4308eaf02dbfaaa2852",
+          "size_bytes": 380,
+          "url": null,
+          "bundle_url": null
+        }
+      ],
+      "skills": [{"id": "code-review", "path": "skills/code-review/SKILL.md"}]
+    },
+    {
+      "id": "crumb/rust-quality",
+      "publisher": "crumb",
+      "version": "1.0.0",
+      "kind": "skill",
+      "package_class": "instruction",
+      "display_name": "Rust quality",
+      "description": "Repository-aware Rust formatting, Clippy, tests, and review.",
+      "license": "MIT",
+      "source": "./packages/rust-quality",
+      "compatibility": {
+        "minimum_crumb_version": "0.1.0",
+        "maximum_crumb_version_exclusive": "2.0.0",
+        "platforms": ["linux", "macos", "windows"]
+      },
+      "provenance": {
+        "repository": "https://github.com/elixpo/crumb.elixpo",
+        "revision": "9823e401b457789cf5225d34c7ccc7a475e91ca0",
+        "released_at": "2026-10-17T14:39:35+05:30",
+        "trust": {"kind": "bundled"}
+      },
+      "disclosures": {
+        "security_url": "https://crumb.elixpo.com/docs/security",
+        "privacy_url": "https://crumb.elixpo.com/privacy",
+        "data_flow": "Reads approved Rust workspace files and may request user-approved native quality commands."
+      },
+      "connector_requirements": [],
+      "dependencies": [],
+      "deprecation": null,
+      "capabilities": ["workspace_read"],
+      "artifacts": [
+        {
+          "path": "skills/rust-quality/SKILL.md",
+          "sha256": "c3ebb5f20cc7d3c68460fe90fd28c198dcb4c6475d79f96549d9c439ffdaf7c2",
+          "size_bytes": 372,
+          "url": null,
+          "bundle_url": null
+        }
+      ],
+      "skills": [{"id": "rust-quality", "path": "skills/rust-quality/SKILL.md"}]
+    },
+    {
+      "id": "crumb/workspace-mcp",
+      "publisher": "crumb",
+      "version": "1.0.0",
+      "kind": "mcp",
+      "package_class": "mcp",
+      "display_name": "Workspace MCP",
+      "description": "Crumb's built-in policy-controlled workspace MCP server.",
+      "license": "MIT",
+      "source": "./packages/workspace-mcp",
+      "compatibility": {
+        "minimum_crumb_version": "0.1.0",
+        "maximum_crumb_version_exclusive": "2.0.0",
+        "platforms": ["linux", "macos", "windows"]
+      },
+      "provenance": {
+        "repository": "https://github.com/elixpo/crumb.elixpo",
+        "revision": "9823e401b457789cf5225d34c7ccc7a475e91ca0",
+        "released_at": "2026-10-17T14:39:35+05:30",
+        "trust": {"kind": "bundled"}
+      },
+      "disclosures": {
+        "security_url": "https://crumb.elixpo.com/docs/security",
+        "privacy_url": "https://crumb.elixpo.com/privacy",
+        "data_flow": "Runs locally and exposes only Crumb-owned, policy-controlled workspace tools."
+      },
+      "connector_requirements": [],
+      "dependencies": [],
+      "deprecation": null,
+      "capabilities": ["workspace_read", "process_execution"],
+      "artifacts": [
+        {
+          "path": "README.md",
+          "sha256": "8c6513c224cf24ffd839a70df680551fc3f76a5ba7df6f7aa35d942bec11f6af",
+          "size_bytes": 288,
+          "url": null,
+          "bundle_url": null
+        }
+      ],
+      "mcp_servers": [
+        {
+          "id": "crumb-workspace",
+          "transport": "stdio",
+          "command": "crumb",
+          "url": null,
+          "arguments": ["mcp", "serve"],
+          "environment": []
+        }
+      ]
+    }
+  ]
+}

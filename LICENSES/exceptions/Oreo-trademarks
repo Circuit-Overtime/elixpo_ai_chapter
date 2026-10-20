@@ -1,0 +1,7 @@
+Historical trademark notice
+===========================
+
+Earlier Crumb releases described the project's trademark policy as an SPDX
+license exception. Crumb no longer uses a custom SPDX exception. The current
+policy is maintained in the repository root at `TRADEMARKS.md` and does not
+modify the permissions granted by MIT or CC-BY-4.0.

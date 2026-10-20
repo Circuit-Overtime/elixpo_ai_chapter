@@ -1,0 +1,25 @@
+name = "crumb-elixpo"
+main = ".open-next/worker.js"
+compatibility_date = "2026-08-29"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "crumb-elixpo"
+database_id = "5aa328e7-1577-4a71-9281-5c25549258b4"
+migrations_dir = "migrations"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "8311e9c3a73d446d92e4dc50653e9ac9"
+
+[vars]
+ACCOUNTS_ORIGIN = "https://accounts.elixpo.com"
+ACCOUNTS_CLI_AUDIENCE = "crumb.elixpo.com"
