@@ -47,7 +47,7 @@ Version: $package_version
 Section: utils
 Priority: optional
 Architecture: $architecture
-Maintainer: Elixpo Maintainers <hello@elixpo.com>
+Maintainer: Ayushman Bhattacharya <ayushman.elixpo@gmail.com>
 Homepage: https://crumb.elixpo.com
 Depends: ca-certificates, libc6 (>= 2.39), libgcc-s1
 Description: self-hosted agent harness and natural-language terminal

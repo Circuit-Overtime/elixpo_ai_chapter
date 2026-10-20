@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Crumb
-Upstream-Contact: Ayushman Bhattacharya <ayushbhatt633@gmail.com>
+Upstream-Contact: Ayushman Bhattacharya <ayushman.elixpo@gmail.com>
 Source: https://github.com/elixpo/crumb.elixpo
 
 Files: *

@@ -1,7 +1,7 @@
 Subject: ITP: crumb -- self-hosted agent harness and natural-language terminal
 Package: wnpp
 Severity: wishlist
-Owner: Ayushman Bhattacharya <ayushbhatt633@gmail.com>
+Owner: Ayushman Bhattacharya <ayushman.elixpo@gmail.com>
 X-Debbugs-Cc: debian-devel@lists.debian.org, debian-rust@lists.debian.org
 
 * Package name    : crumb

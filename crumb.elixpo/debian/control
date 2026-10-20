@@ -1,7 +1,6 @@
 Source: crumb
 Section: utils
-Priority: optional
-Maintainer: Ayushman Bhattacharya <ayushbhatt633@gmail.com>
+Maintainer: Ayushman Bhattacharya <ayushman.elixpo@gmail.com>
 Build-Depends:
  cargo,
  debhelper-compat (= 13),
@@ -51,7 +50,7 @@ Build-Depends:
  librust-zeroize-1+default-dev (>= 1.9),
  pkgconf,
  rustc (>= 1.95),
-Standards-Version: 4.7.3
+Standards-Version: 4.7.4
 Homepage: https://crumb.elixpo.com
 Rules-Requires-Root: no
 
