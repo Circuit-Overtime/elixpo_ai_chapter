@@ -1,6 +1,0 @@
-overlay = "."
-uploaders = ["Ayushman Bhattacharya <ayushbhatt633@gmail.com>"]
-
-# Crumb uses reedline with default-features = false. Keep the ordinary
-# no-feature library package enabled; debcargo may generate the optional
-# feature packages for other reverse dependencies.

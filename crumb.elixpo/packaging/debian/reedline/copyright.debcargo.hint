@@ -1,8 +1,0 @@
-Files: *
-Copyright: 2021 Nushell Project
-License: MIT
-
-Files: debian/*
-Copyright: 2026 Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
-           2026 Ayushman Bhattacharya <ayushbhatt633@gmail.com>
-License: MIT
