@@ -1,0 +1,19 @@
+[package]
+name = "crumb-mcp"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[features]
+default = ["native-keyring"]
+native-keyring = ["crumb-auth/native-keyring"]
+
+[dependencies]
+anyhow.workspace = true
+crumb-agent = { path = "../crumb-agent" }
+crumb-auth = { path = "../crumb-auth", default-features = false }
+reqwest.workspace = true
+serde_json.workspace = true
+
+[lints]
+workspace = true

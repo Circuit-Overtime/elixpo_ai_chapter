@@ -1,0 +1,28 @@
+{
+  "mode": "plan",
+  "routing": {
+    "unknown_input": "agent",
+    "typo_distance": 1
+  },
+  "harness": {
+    "kind": "coding_cli",
+    "backend": "codex",
+    "command": "codex",
+    "capabilities": [
+      {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "reasoning_efforts": ["none", "low", "medium", "high", "xhigh", "max"]
+      }
+    ]
+  },
+  "models": {
+    "text": [
+      {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "effort": "medium"
+      }
+    ]
+  }
+}

@@ -1,0 +1,120 @@
+# Reusable quality-gate workflow for the Elixpo CI network.
+# Called from satellite repos via:
+#   uses: elixpo/agent.elixpo/.github/workflows/quality-gate.yml@main
+#
+# Reads .elixpo/project.yml from the calling repo to decide what to run.
+
+name: Quality Gate
+
+on:
+  workflow_call:
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout the calling repo ──────────────────────────────────
+      - name: Checkout calling repo
+        uses: actions/checkout@v4
+
+      # ── Install yq for YAML parsing ───────────────────────────────
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq \
+            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      # ── Read project manifest ──────────────────────────────────────
+      - name: Read .elixpo/project.yml
+        id: manifest
+        run: |
+          MANIFEST=".elixpo/project.yml"
+          if [ ! -f "$MANIFEST" ]; then
+            echo "::warning::.elixpo/project.yml not found — skipping quality gate"
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+
+          STACK=$(yq '.project.stack // "static"' "$MANIFEST")
+          NODE_VERSION=$(yq '.project.node_version // "20"' "$MANIFEST")
+          LINT_CMD=$(yq '.ci.lint_cmd // ""' "$MANIFEST")
+          TEST_CMD=$(yq '.ci.test_cmd // ""' "$MANIFEST")
+          BUILD_CMD=$(yq '.ci.build_cmd // ""' "$MANIFEST")
+
+          echo "stack=$STACK"               >> "$GITHUB_OUTPUT"
+          echo "node_version=$NODE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "lint_cmd=$LINT_CMD"         >> "$GITHUB_OUTPUT"
+          echo "test_cmd=$TEST_CMD"         >> "$GITHUB_OUTPUT"
+          echo "build_cmd=$BUILD_CMD"       >> "$GITHUB_OUTPUT"
+
+          echo "### Manifest values" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Key | Value |"     >> "$GITHUB_STEP_SUMMARY"
+          echo "|-----|-------|"      >> "$GITHUB_STEP_SUMMARY"
+          echo "| stack | \`$STACK\` |"             >> "$GITHUB_STEP_SUMMARY"
+          echo "| node_version | \`$NODE_VERSION\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| lint_cmd | \`$LINT_CMD\` |"       >> "$GITHUB_STEP_SUMMARY"
+          echo "| test_cmd | \`$TEST_CMD\` |"       >> "$GITHUB_STEP_SUMMARY"
+          echo "| build_cmd | \`$BUILD_CMD\` |"     >> "$GITHUB_STEP_SUMMARY"
+
+      # ── Static: nothing to do ──────────────────────────────────────
+      - name: Static project — no build needed
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'static'
+        run: echo "Static project — no build needed."
+
+      # ── Node.js setup (nextjs) ─────────────────────────────────────
+      - name: Setup Node.js
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'nextjs'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.manifest.outputs.node_version }}
+          cache: npm
+
+      - name: Install Node dependencies
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'nextjs'
+        run: npm ci
+
+      # ── Python setup ───────────────────────────────────────────────
+      - name: Setup Python
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'python'
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f setup.py ] || [ -f setup.cfg ] || [ -f pyproject.toml ]; then
+            pip install -e ".[dev]"
+          elif [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "::warning::No Python dependency manifest found"
+          fi
+
+      # ── Lint ───────────────────────────────────────────────────────
+      - name: Lint
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.lint_cmd != ''
+        run: ${{ steps.manifest.outputs.lint_cmd }}
+
+      # ── Test ───────────────────────────────────────────────────────
+      - name: Test
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.test_cmd != ''
+        run: ${{ steps.manifest.outputs.test_cmd }}
+
+      # ── Build ──────────────────────────────────────────────────────
+      - name: Build
+        if: >-
+          steps.manifest.outputs.exists == 'true'
+          && steps.manifest.outputs.stack != 'static'
+          && steps.manifest.outputs.stack != 'docker'
+          && steps.manifest.outputs.build_cmd != ''
+        run: ${{ steps.manifest.outputs.build_cmd }}
+
+      # ── Docker build ───────────────────────────────────────────────
+      - name: Docker build
+        if: steps.manifest.outputs.exists == 'true' && steps.manifest.outputs.stack == 'docker'
+        run: docker build .

@@ -1,0 +1,42 @@
+# Sync the code-defined Elixpo Pay catalog (lib/billing/catalog.ts) to the
+# payouts service. Runs:
+#   - daily        → reconcile drift / new regions on Pay's side
+#   - on push      → whenever pricing or the catalog builder changes on main
+#   - manually     → workflow_dispatch
+#
+# Requires repo secrets:
+#   ELIXPO_PAY_API_KEY   one key (catalog sync POST /v1/sync + checkout)
+#   ELIXPO_PAY_APP_ID    app id under your merchant
+# Optional repo variable:
+#   ELIXPO_PAY_BASE_URL  defaults to https://payouts.elixpo.com
+name: pay-catalog-sync
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily 06:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "lib/billing/catalog.ts"
+      - "lib/types.ts"
+      - "scripts/sync-catalog.ts"
+
+concurrency:
+  group: pay-catalog-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Push catalog to Elixpo Pay
+        env:
+          ELIXPO_PAY_API_KEY: ${{ secrets.ELIXPO_PAY_API_KEY }}
+          ELIXPO_PAY_APP_ID: ${{ secrets.ELIXPO_PAY_APP_ID }}
+          ELIXPO_PAY_BASE_URL: ${{ vars.ELIXPO_PAY_BASE_URL }}
+        run: npx -y tsx scripts/sync-catalog.ts

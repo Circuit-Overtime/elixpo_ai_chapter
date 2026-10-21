@@ -1,0 +1,32 @@
+# Crumb — Autonomous Agent Harness and Natural Language Terminal
+
+> Crumb is Elixpo's self-hosted autonomous Rust agent harness and native-first terminal, powered by Pollinations model intelligence.
+
+Canonical site: https://crumb.elixpo.com
+Source: https://github.com/elixpo/crumb.elixpo
+Complete usage guide: https://crumb.elixpo.com/llms-full.txt
+
+## Documentation
+
+- [Features](https://crumb.elixpo.com/features): Native execution, deterministic routing, Harness isolation, cancellation, sessions, and permissions.
+- [Skills](https://crumb.elixpo.com/skills): Clear instructions that teach Crumb how to approach repeatable work.
+- [Plugins](https://crumb.elixpo.com/plugins): Typed tools that add controlled capabilities to Crumb.
+- [Overview](https://crumb.elixpo.com/docs): Product boundaries, capabilities, and quick reference.
+- [Getting started](https://crumb.elixpo.com/docs/getting-started): Requirements, source installation, and first native session.
+- [CLI and native shell](https://crumb.elixpo.com/docs/cli): Native command behavior, built-ins, and the natural-language boundary.
+- [Authentication](https://crumb.elixpo.com/docs/authentication): Elixpo Accounts sign-in and CLI device authorization.
+- [Connect Pollinations](https://crumb.elixpo.com/docs/pollinations): Browser provider connection through Profiles.
+- [Security model](https://crumb.elixpo.com/docs/security): Shell ownership, agent isolation, permissions, secrets, and failure behavior.
+
+## Important constraints
+
+- Normal commands never require AI.
+- Crumb owns its primary harness, permissions, memory, sessions, and tools locally.
+- Shell and agent execution environments are separate.
+- Models cannot grant themselves permissions.
+- Secrets are not placed in logs or terminal history.
+- Provider failures cannot make the native terminal unusable.
+
+## Current status
+
+Crumb is active pre-release software. The native harness and its shell, Pollinations, session, memory, MCP, permission, checkpoint, background-work, and supervision foundations are implemented; packaging, signing, compatibility, and release-readiness work continue.

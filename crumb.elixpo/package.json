@@ -1,0 +1,36 @@
+{
+  "name": "@crumb/crumb.elixpo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "cloudflare:build": "opennextjs-cloudflare build",
+    "cloudflare:deploy": "opennextjs-cloudflare deploy",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "db:migrate:local": "wrangler d1 migrations apply crumb-elixpo --local",
+    "db:seed:local": "wrangler d1 execute crumb-elixpo --local --file dev/seed.sql",
+    "dev:seed": "npm run db:migrate:local && npm run db:seed:local"
+  },
+  "dependencies": {
+    "@opennextjs/cloudflare": "1.20.9",
+    "next": "16.3.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261016.1",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "esbuild": "0.28.2",
+    "typescript": "^5.5.0",
+    "wrangler": "4.151.1"
+  },
+  "overrides": {
+    "postcss": "8.5.26",
+    "sharp": "0.35.5"
+  }
+}

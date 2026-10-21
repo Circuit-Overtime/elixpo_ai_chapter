@@ -1,0 +1,97 @@
+name: Release Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version label for the unsigned staging bundle
+        required: true
+        type: string
+
+concurrency:
+  group: release-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  build:
+    name: Stage ${{ matrix.label }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: linux-x86_64
+            binary: crumb
+            archive: tar.gz
+          - os: macos-latest
+            label: macos-universal-pending
+            binary: crumb
+            archive: tar.gz
+          - os: windows-latest
+            label: windows-x86_64
+            binary: crumb.exe
+            archive: zip
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build locked release binary
+        run: cargo build --locked --release -p crumb-cli
+
+      - name: Assemble staging directory
+        shell: pwsh
+        run: |
+          $name = "crumb-${{ inputs.version }}-${{ matrix.label }}"
+          New-Item -ItemType Directory -Path "dist/$name" -Force | Out-Null
+          Copy-Item "target/release/${{ matrix.binary }}" "dist/$name/${{ matrix.binary }}"
+          Copy-Item README.md "dist/$name/README.md"
+          Copy-Item LICENSE "dist/$name/LICENSE"
+
+      - name: Generate software bill of materials
+        uses: anchore/sbom-action@v0
+        with:
+          path: dist/crumb-${{ inputs.version }}-${{ matrix.label }}
+          format: spdx-json
+          output-file: dist/crumb-${{ inputs.version }}-${{ matrix.label }}/sbom.spdx.json
+          upload-artifact: false
+
+      - name: Create archive and checksum
+        shell: pwsh
+        run: |
+          $name = "crumb-${{ inputs.version }}-${{ matrix.label }}"
+          if ("${{ matrix.archive }}" -eq "zip") {
+            Compress-Archive -Path "dist/$name" -DestinationPath "dist/$name.zip"
+            $archive = "dist/$name.zip"
+          } else {
+            tar -C dist -czf "dist/$name.tar.gz" $name
+            $archive = "dist/$name.tar.gz"
+          }
+          $digest = (Get-FileHash -Algorithm SHA256 $archive).Hash.ToLowerInvariant()
+          "$digest  $([System.IO.Path]::GetFileName($archive))" |
+            Set-Content -NoNewline "$archive.sha256"
+
+      - name: Attest staged archive provenance
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: dist/crumb-${{ inputs.version }}-${{ matrix.label }}.${{ matrix.archive }}
+
+      - name: Upload unsigned staging bundle
+        uses: actions/upload-artifact@v6
+        with:
+          name: crumb-${{ inputs.version }}-${{ matrix.label }}
+          path: |
+            dist/crumb-${{ inputs.version }}-${{ matrix.label }}.${{ matrix.archive }}
+            dist/crumb-${{ inputs.version }}-${{ matrix.label }}.${{ matrix.archive }}.sha256
+          if-no-files-found: error
+          retention-days: 14
+
