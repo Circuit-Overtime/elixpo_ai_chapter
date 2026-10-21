@@ -1,0 +1,248 @@
+{
+  "$schema": "./schemas/contributors.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-16",
+  "methodology": "The snapshot uses GitHub's contributor listing for elixpo/elixpo_chapter, the master repository that preserves Chapter contributions. Declared leads and automation accounts are excluded before calculating the coverage floor. Counts are evidence for transparent selection, not a measure of human value.",
+  "recordPolicy": {
+    "recordType": "public-evidence-record",
+    "verificationRule": "A contribution record is current only when its record ID, canonical elixpo.com URL, and evidence links agree with this registry. A printout or PDF is a portable view, not an independently issued credential.",
+    "correctionRule": "Corrections retain the stable record ID, update the reviewed date and public evidence, and remain reviewable through repository history. A disputed claim is narrowed or removed until it can be supported.",
+    "fraudRule": "Elixpo does not verify screenshots, edited PDFs, copied profile pages, or claims made without the canonical URL. Suspected impersonation or altered records should be reported through the correction route.",
+    "withdrawalRule": "A contributor may request removal. The canonical route then stops presenting the record; repository history remains subject to the repository's normal public-history and legal obligations."
+  },
+  "selectionPolicy": {
+    "basis": "At least 20 percent of the eligible human contributors in the Chapter snapshot are featured, ordered by observed contributions. Every entry also links a public outcome; raw totals are not presented as a measure of human value.",
+    "sourceRepository": "https://github.com/elixpo/elixpo_chapter",
+    "eligibleContributorCount": 49,
+    "minimumCoveragePercent": 20,
+    "minimumFeaturedCount": 10,
+    "minimumObservedContributions": 1,
+    "reviewCadence": "Review at each major portal release and whenever the repository inventory changes materially.",
+    "correctionUrl": "https://github.com/elixpo/elixpo/issues/new",
+    "optOutUrl": "https://github.com/elixpo/elixpo/issues/new"
+  },
+  "excludedLeadHandles": ["Circuit-Overtime", "ez-vivek", "anwe-ch"],
+  "excludedAutomationHandles": ["elixpoo", "github-actions[bot]", "dependabot[bot]", "Copilot", "actions-user"],
+  "featured": [
+    {
+      "recordId": "ECR-2026-001",
+      "handle": "IgYaHiko",
+      "name": "IgYaHiko",
+      "observedContributions": 282,
+      "activeWindow": "July–November 2025",
+      "story": "Led a concentrated chapter of work in the master repository, including the Infinite Castle contribution stream.",
+      "github": "https://github.com/IgYaHiko",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Infinite Castle contribution stream",
+        "projectIds": ["elixpo_chapter"],
+        "role": "Feature contributor",
+        "dateRange": "July–November 2025",
+        "outcome": "Contributed the initial implementation and the merged Infinite Castle work recorded in the Chapter repository.",
+        "demonstratedSkills": ["Next.js application development", "Collaborative pull-request delivery"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The cited repository records show the work and merge, but do not name an individual reviewer." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/b0585ce22d2ae7af5dc78464ab71fea08b015a88", "https://github.com/elixpo/elixpo_chapter/commit/b385748cde32f6413466474905277880433cfd0b"]
+    },
+    {
+      "recordId": "ECR-2026-002",
+      "handle": "karanray06",
+      "name": "Karan Ray",
+      "observedContributions": 68,
+      "activeWindow": "March–September 2026",
+      "story": "Contributed across the Chapter and multiple services, then continued as the independent maintainer of Member Project Kareixo.",
+      "github": "https://github.com/karanray06",
+      "portfolio": "https://me.elixpo.com/karan",
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "API documentation, delivery automation, and interface repair",
+        "projectIds": ["elixpo_chapter"],
+        "role": "Software contributor",
+        "dateRange": "March–September 2026",
+        "outcome": "Added Scalar API documentation and CI/CD automation, then repaired account interface behavior recorded in the Chapter repository.",
+        "demonstratedSkills": ["API documentation", "CI/CD automation", "Frontend engineering"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The cited commits identify merged outcomes but do not establish a named reviewer for this public record." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/719dcb484f0904f3c0b2349bd31de97e2dee573c", "https://github.com/elixpo/elixpo_chapter/commit/9878e7542748aeacb5756ae909c5a77fb0056845"]
+    },
+    {
+      "recordId": "ECR-2026-003",
+      "handle": "bhumikasudarshani-cmd",
+      "name": "Bhumika Sudarshani",
+      "observedContributions": 29,
+      "activeWindow": "April–September 2026",
+      "story": "Strengthened release automation and contributed across Accounts, LixBlogs, LixSketch, Open Source, Status, and the Chapter.",
+      "github": "https://github.com/bhumikasudarshani-cmd",
+      "portfolio": "https://me.elixpo.com/bhumika",
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Release automation and portfolio delivery",
+        "projectIds": ["elixpo_chapter", "sketch.elixpo", "me.elixpo"],
+        "role": "Release and product contributor",
+        "dateRange": "April–September 2026",
+        "outcome": "Added path-triggered publishing workflows for LixSketch and VS Code artifacts and delivered portfolio content and assets.",
+        "demonstratedSkills": ["Release automation", "GitHub Actions", "Content integration", "Asset delivery"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The public commit evidence supports the outcomes, but no individual reviewer is attributed here." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/4703c65eab526f4b015c59c1b2e1d02729dcf627", "https://github.com/elixpo/elixpo_chapter/commit/96e1e16ff538e6d3954e38de0b15198b32a21e71"]
+    },
+    {
+      "recordId": "ECR-2026-004",
+      "handle": "divyanshuj91",
+      "name": "Divyanshu Jha",
+      "observedContributions": 29,
+      "activeWindow": "June–September 2026",
+      "story": "Worked across service interfaces, documentation, publishing, mail infrastructure, payouts, and the Chapter record.",
+      "github": "https://github.com/divyanshuj91",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "LixEditor documentation consolidation",
+        "projectIds": ["elixpo_chapter", "blogs.elixpo"],
+        "role": "Documentation contributor",
+        "dateRange": "June–September 2026",
+        "outcome": "Consolidated the LixEditor developer guides into one canonical documentation route for a clearer contributor path.",
+        "demonstratedSkills": ["Technical writing", "Developer documentation", "Information architecture"],
+        "evidenceIndexes": [0],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The cited commit records the documentation outcome without naming an individual reviewer." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/d49b0c5cbd41b99814ac8979ba1ec36fbe78100f"]
+    },
+    {
+      "recordId": "ECR-2026-005",
+      "handle": "Senthil455",
+      "name": "Senthil Raja R",
+      "observedContributions": 24,
+      "activeWindow": "October 2026",
+      "story": "Strengthened public-service safety across collaboration, sessions, sitemap generation, content previews, and validation boundaries in the Chapter.",
+      "github": "https://github.com/Senthil455",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Public-service safety and indexing boundaries",
+        "projectIds": ["elixpo_chapter"],
+        "role": "Software contributor",
+        "dateRange": "October 2026",
+        "outcome": "Restricted collaboration-worker CORS origins and corrected URL-segment encoding in sitemap generation.",
+        "demonstratedSkills": ["Web security boundaries", "CORS configuration", "Sitemap generation", "Input encoding"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The public commits record both fixes; they do not identify a reviewer whose approval can be asserted." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/7ee82ef69d3dc00dfdc502feedae96fa6cf515fb", "https://github.com/elixpo/elixpo_chapter/commit/95329b0e8ffdc91a96b54431473f072c9d1cf367"]
+    },
+    {
+      "recordId": "ECR-2026-006",
+      "handle": "shresthashim",
+      "name": "AsHim Shrestha",
+      "observedContributions": 23,
+      "activeWindow": "October 2025",
+      "story": "Worked across interface infrastructure, including PDF viewing, chat UI and API structure, timezone selection, and reusable DOM construction.",
+      "github": "https://github.com/shresthashim",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Interface infrastructure",
+        "projectIds": ["elixpo_chapter"],
+        "role": "Frontend contributor",
+        "dateRange": "October 2025",
+        "outcome": "Added a PDF viewer and reduced repetitive DOM construction through a reusable node-structure refactor.",
+        "demonstratedSkills": ["Frontend engineering", "PDF interface integration", "DOM refactoring", "Reusable UI structure"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The cited commits support the implementation claims but contain no public named-reviewer attribution." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/746fe1684e55063cc7737b1149a48abe6a681c48", "https://github.com/elixpo/elixpo_chapter/commit/03cd63d27d3bef9fb8bf9302f6964586e032c813"]
+    },
+    {
+      "recordId": "ECR-2026-007",
+      "handle": "Itachi-1824",
+      "name": "Itachi",
+      "observedContributions": 22,
+      "activeWindow": "August–October 2025",
+      "story": "Built Discord integration for pull-request review and contributed the memory-core work used by the earlier Elixpo Chat experiment.",
+      "github": "https://github.com/Itachi-1824",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Review integration and conversational memory",
+        "projectIds": ["elixpo_chapter", "chat.elixpo"],
+        "role": "Integration contributor",
+        "dateRange": "August–October 2025",
+        "outcome": "Built a Discord integration for pull-request review and added the memory-core work used by the earlier Chat experiment.",
+        "demonstratedSkills": ["Discord integration", "Pull-request tooling", "Backend state design", "Conversational memory systems"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The commits identify the delivered integrations, while individual reviewer attribution is not recorded in this evidence set." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/be61f563284bfd503a072e91127d336a354e4ee9", "https://github.com/elixpo/elixpo_chapter/commit/245038e0918c8a9280be7403ca3570e2eaca7a9b"]
+    },
+    {
+      "recordId": "ECR-2026-008",
+      "handle": "dev-krish",
+      "name": "Krishnendu Dutta",
+      "observedContributions": 21,
+      "activeWindow": "May–August 2026",
+      "story": "Improved LixSketch Mermaid rendering so canvas output matches previews across themes, entity relationships, labels, arrows, and fills.",
+      "github": "https://github.com/dev-krish",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "LixSketch Mermaid rendering parity",
+        "projectIds": ["elixpo_chapter", "sketch.elixpo"],
+        "role": "Graphics and canvas contributor",
+        "dateRange": "May–August 2026",
+        "outcome": "Corrected Mermaid rendering differences between preview and canvas output across colours, arrows, labels, backgrounds, and themes.",
+        "demonstratedSkills": ["Canvas rendering", "Mermaid diagrams", "Theme compatibility", "Visual regression repair"],
+        "evidenceIndexes": [0],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The merged change is public, but its commit record does not identify a reviewer for this attribution field." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/36a1490d248db0cf153b8f97b85c699baa8bdcf2"]
+    },
+    {
+      "recordId": "ECR-2026-009",
+      "handle": "DeepSaha25",
+      "name": "Deep Saha",
+      "observedContributions": 17,
+      "activeWindow": "October 2025",
+      "story": "Reworked Chapter documentation for clearer setup, current runtime requirements, stronger structure, and a more reliable contributor entry point.",
+      "github": "https://github.com/DeepSaha25",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Chapter contributor documentation",
+        "projectIds": ["elixpo_chapter"],
+        "role": "Documentation contributor",
+        "dateRange": "October 2025",
+        "outcome": "Revised the Chapter README for clearer structure, setup instructions, and current runtime requirements.",
+        "demonstratedSkills": ["Technical writing", "Developer onboarding", "Documentation maintenance"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The two public commits verify the revisions but do not publicly attribute an individual reviewer." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/b4e8109c8603b52bc55608624368589864a1d0d8", "https://github.com/elixpo/elixpo_chapter/commit/93ee6b22d54d10d5fd84807023177014dde7e2b4"]
+    },
+    {
+      "recordId": "ECR-2026-010",
+      "handle": "redac1ed",
+      "name": "redac1ed",
+      "observedContributions": 15,
+      "activeWindow": "August 2025",
+      "story": "Developed and refined the search-agent interface and behavior during an early Chapter contribution stream.",
+      "github": "https://github.com/redac1ed",
+      "portfolio": null,
+      "profileSource": "public-evidence-only",
+      "workRecords": [{
+        "label": "Search-agent interface",
+        "projectIds": ["elixpo_chapter", "search.elixpo"],
+        "role": "Frontend contributor",
+        "dateRange": "August 2025",
+        "outcome": "Updated the search-agent JavaScript behavior and its accompanying interface styles during the earlier experiment.",
+        "demonstratedSkills": ["JavaScript interface behavior", "CSS styling", "Agent interface development"],
+        "evidenceIndexes": [0, 1],
+        "reviewAttribution": { "status": "not-publicly-attributed", "reviewer": null, "statement": "The cited commits show the interface work; no individual reviewer is named in the public record used here." }
+      }],
+      "evidence": ["https://github.com/elixpo/elixpo_chapter/commit/fb8005ee3a8b6582107880d181c04203ff63aeb7", "https://github.com/elixpo/elixpo_chapter/commit/e9729e713cb0571d6ea25ec3307aed52a9586f85"]
+    }
+  ]
+}
