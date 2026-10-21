@@ -1,0 +1,63 @@
+{
+  "$schema": "./schemas/organization.schema.json",
+  "schemaVersion": 1,
+  "lastVerified": "2026-10-18",
+  "name": "Elixpo",
+  "oneLineDescription": "An open-source project foundry where people build in public and release meaningful projects together.",
+  "fullDescription": "Elixpo works with active maintainers to build and release open software, reproducible research, and publicly operated services. Time-bounded Chapters give work a clear public story, prepared contribution pathways, accountable review, and a durable release record. Successful projects may continue as Elixpo Member Projects.",
+  "northStar": "Elixpo is an open-source project foundry.",
+  "publicLine": "Build in public. Release as a project.",
+  "distinction": "Projects come to Elixpo to ship their next chapter—not archive their last one.",
+  "urls": {
+    "website": {
+      "url": "https://elixpo.com",
+      "status": "active"
+    },
+    "github": {
+      "url": "https://github.com/elixpo",
+      "status": "active"
+    },
+    "discussions": {
+      "url": "https://github.com/orgs/elixpo/discussions",
+      "status": "active"
+    },
+    "chapterRepository": {
+      "url": "https://github.com/elixpo/elixpo_chapter",
+      "status": "active"
+    },
+    "assets": {
+      "url": "https://elixpo.com/assets",
+      "status": "active"
+    },
+    "research": {
+      "url": "https://research.elixpo.com",
+      "status": "active"
+    },
+    "packages": {
+      "url": "https://packages.elixpo.com",
+      "status": "active"
+    },
+    "agent": {
+      "url": "https://agent.elixpo.com",
+      "status": "active"
+    },
+    "crumb": {
+      "url": "https://crumb.elixpo.com",
+      "status": "active"
+    },
+    "contact": {
+      "url": "mailto:hello@elixpo.com",
+      "status": "active"
+    }
+  },
+  "programs": [
+    {
+      "name": "Elixpo Chapter",
+      "purpose": "A time-bounded public build and release programme for active work."
+    },
+    {
+      "name": "Elixpo Member Project",
+      "purpose": "An ongoing relationship for independently maintained projects aligned with Elixpo."
+    }
+  ]
+}
