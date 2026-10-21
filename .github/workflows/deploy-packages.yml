@@ -1,0 +1,165 @@
+name: Deploy packages.elixpo.com
+
+on:
+  workflow_call:
+    secrets:
+      APT_SIGNING_KEY:
+        required: true
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - package-released
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: packages-elixpo-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Check out package-site source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Synchronize canonical package snapshot
+        run: npm run registry:sync
+
+      - name: Verify canonical package snapshot
+        run: npm run registry:check
+
+      - name: Build static catalogue
+        run: npm run build
+
+      - name: Install repository tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends apt-utils dpkg-dev gnupg
+
+      - name: Download latest stable packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > releases.json
+          latest_tag() {
+            python3 - "$1" <<'PY'
+          import json
+          import sys
+
+          prefix = sys.argv[1]
+          with open("releases.json", encoding="utf-8") as releases_file:
+              releases = json.load(releases_file)
+          candidates = [
+              release for release in releases
+              if not release["draft"]
+              and not release["prerelease"]
+              and release["tag_name"].startswith(prefix)
+          ]
+          candidates.sort(key=lambda release: release.get("published_at") or "", reverse=True)
+          if candidates:
+              print(candidates[0]["tag_name"])
+          PY
+          }
+
+          clipboard_tag="$(latest_tag 'win-dot-panel/v')"
+          screenbridge_tag="$(latest_tag 'screenbridge/v')"
+          test -n "$clipboard_tag" || { echo 'No stable Win Dot Panel release found' >&2; exit 1; }
+          test -n "$screenbridge_tag" || { echo 'No stable ScreenBridge release found' >&2; exit 1; }
+
+          crumb_version=$(node -e "const r=require('./content/packages.json'); process.stdout.write(r.nativeTools.find(p=>p.slug==='crumb').version)")
+          test -n "$crumb_version" || { echo 'No canonical Crumb version found' >&2; exit 1; }
+
+          mkdir -p downloads/win-dot-panel downloads/screenbridge downloads/crumb
+          gh release download "$clipboard_tag" --repo "$GITHUB_REPOSITORY" \
+            --pattern 'win-dot-panel_*.deb' --pattern SHA256SUMS \
+            --dir downloads/win-dot-panel
+          gh release download "$screenbridge_tag" --repo "$GITHUB_REPOSITORY" \
+            --pattern 'screenbridge_[0-9]*_all.deb' --pattern SHA256SUMS \
+            --dir downloads/screenbridge
+          gh release download "v$crumb_version" --repo elixpo/crumb.elixpo \
+            --pattern 'crumb_*.deb' --pattern 'crumb_*.deb.sha256' \
+            --dir downloads/crumb
+
+      - name: Verify release assets
+        run: |
+          (cd downloads/win-dot-panel && sha256sum --check SHA256SUMS)
+          (cd downloads/screenbridge && sha256sum --check SHA256SUMS)
+          (cd downloads/crumb && for checksum in *.deb.sha256; do sha256sum --check "$checksum"; done)
+          clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
+          screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
+          [[ ${#clipboard[@]} -eq 1 && -f "${clipboard[0]}" ]]
+          [[ ${#screenbridge[@]} -eq 1 && -f "${screenbridge[0]}" ]]
+          [[ ${#crumb[@]} -eq 2 && -f "${crumb[0]}" && -f "${crumb[1]}" ]]
+          [[ "$(dpkg-deb --field "${clipboard[0]}" Package)" == "win-dot-panel" ]]
+          [[ "$(dpkg-deb --field "${screenbridge[0]}" Package)" == "screenbridge" ]]
+          for package in "${crumb[@]}"; do
+            [[ "$(dpkg-deb --field "$package" Package)" == "crumb" ]]
+          done
+          [[ "$(dpkg-deb --field "${crumb[0]}" Architecture)" != "$(dpkg-deb --field "${crumb[1]}" Architecture)" ]]
+
+      - name: Prepare product pages
+        run: |
+          python3 scripts/prepare_site.py site
+          python3 scripts/check_site.py site
+
+      - name: Import signing key
+        env:
+          APT_SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
+        run: |
+          test -n "$APT_SIGNING_KEY" || {
+            echo 'APT_SIGNING_KEY is required' >&2
+            exit 1
+          }
+          export GNUPGHOME="$RUNNER_TEMP/elixpo-packages-gnupg"
+          mkdir -m 700 "$GNUPGHOME"
+          printf '%s\n' "$APT_SIGNING_KEY" | gpg --batch --import
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+
+      - name: Build signed multi-package repository
+        run: |
+          clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
+          screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
+          bash scripts/build_apt_repo.sh site \
+            "${clipboard[0]}" "${screenbridge[0]}" "${crumb[@]}"
+
+      - name: Validate repository contents and signatures
+        run: |
+          gzip -dc site/apt/Packages.gz > /tmp/elixpo-packages-index
+          [[ "$(grep -c '^Package: win-dot-panel$' /tmp/elixpo-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: screenbridge$' /tmp/elixpo-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: crumb$' /tmp/elixpo-packages-index)" -eq 2 ]]
+          gpg --batch --verify site/apt/InRelease
+          test -f site/apt/pool/win-dot-panel/win-dot-panel_*.deb
+          test -f site/apt/pool/screenbridge/screenbridge_*.deb
+          [[ "$(find site/apt/pool/crumb -maxdepth 1 -name 'crumb_*.deb' -type f | wc -l)" -eq 2 ]]
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          name: github-pages-${{ github.run_attempt }}
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}

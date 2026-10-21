@@ -1,0 +1,273 @@
+name: Deploy Cloudflare Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      promote_domain:
+        description: Attach packages.elixpo.com after the candidate passes every smoke test
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: packages-elixpo-cloudflare-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Validate and deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    environment:
+      name: cloudflare-pages-candidate
+      url: https://packages-elixpo.pages.dev
+    steps:
+      - name: Check out package-site source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Synchronize canonical package snapshot
+        run: npm run registry:sync
+
+      - name: Verify canonical package snapshot
+        run: npm run registry:check
+
+      - name: Build static catalogue
+        run: npm run build
+
+      - name: Install repository tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends apt-utils dpkg-dev gnupg
+
+      - name: Download latest stable packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > releases.json
+          latest_tag() {
+            python3 - "$1" <<'PY'
+          import json
+          import sys
+
+          prefix = sys.argv[1]
+          with open("releases.json", encoding="utf-8") as releases_file:
+              releases = json.load(releases_file)
+          candidates = [
+              release for release in releases
+              if not release["draft"]
+              and not release["prerelease"]
+              and release["tag_name"].startswith(prefix)
+          ]
+          candidates.sort(key=lambda release: release.get("published_at") or "", reverse=True)
+          if candidates:
+              print(candidates[0]["tag_name"])
+          PY
+          }
+
+          clipboard_tag="$(latest_tag 'win-dot-panel/v')"
+          screenbridge_tag="$(latest_tag 'screenbridge/v')"
+          test -n "$clipboard_tag" || { echo 'No stable Win Dot Panel release found' >&2; exit 1; }
+          test -n "$screenbridge_tag" || { echo 'No stable ScreenBridge release found' >&2; exit 1; }
+
+          crumb_version=$(node -e "const r=require('./content/packages.json'); process.stdout.write(r.nativeTools.find(p=>p.slug==='crumb').version)")
+          test -n "$crumb_version" || { echo 'No canonical Crumb version found' >&2; exit 1; }
+
+          mkdir -p downloads/win-dot-panel downloads/screenbridge downloads/crumb
+          gh release download "$clipboard_tag" --repo "$GITHUB_REPOSITORY" \
+            --pattern 'win-dot-panel_*.deb' --pattern SHA256SUMS \
+            --dir downloads/win-dot-panel
+          gh release download "$screenbridge_tag" --repo "$GITHUB_REPOSITORY" \
+            --pattern 'screenbridge_[0-9]*_all.deb' --pattern SHA256SUMS \
+            --dir downloads/screenbridge
+          gh release download "v$crumb_version" --repo elixpo/crumb.elixpo \
+            --pattern 'crumb_*.deb' --pattern 'crumb_*.deb.sha256' \
+            --dir downloads/crumb
+
+      - name: Verify release assets
+        run: |
+          (cd downloads/win-dot-panel && sha256sum --check SHA256SUMS)
+          (cd downloads/screenbridge && sha256sum --check SHA256SUMS)
+          (cd downloads/crumb && for checksum in *.deb.sha256; do sha256sum --check "$checksum"; done)
+          clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
+          screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
+          [[ ${#clipboard[@]} -eq 1 && -f "${clipboard[0]}" ]]
+          [[ ${#screenbridge[@]} -eq 1 && -f "${screenbridge[0]}" ]]
+          [[ ${#crumb[@]} -eq 2 && -f "${crumb[0]}" && -f "${crumb[1]}" ]]
+          [[ "$(dpkg-deb --field "${clipboard[0]}" Package)" == "win-dot-panel" ]]
+          [[ "$(dpkg-deb --field "${screenbridge[0]}" Package)" == "screenbridge" ]]
+          for package in "${crumb[@]}"; do
+            [[ "$(dpkg-deb --field "$package" Package)" == "crumb" ]]
+          done
+          [[ "$(dpkg-deb --field "${crumb[0]}" Architecture)" != "$(dpkg-deb --field "${crumb[1]}" Architecture)" ]]
+
+      - name: Prepare product pages
+        run: |
+          python3 scripts/prepare_site.py site
+          python3 scripts/check_site.py site
+
+      - name: Import signing key
+        env:
+          APT_SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
+        run: |
+          test -n "$APT_SIGNING_KEY" || {
+            echo 'APT_SIGNING_KEY is required' >&2
+            exit 1
+          }
+          export GNUPGHOME="$RUNNER_TEMP/elixpo-packages-gnupg"
+          mkdir -m 700 "$GNUPGHOME"
+          printf '%s\n' "$APT_SIGNING_KEY" | gpg --batch --import
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+
+      - name: Build signed multi-package repository
+        run: |
+          clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
+          screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
+          bash scripts/build_apt_repo.sh site \
+            "${clipboard[0]}" "${screenbridge[0]}" "${crumb[@]}"
+
+      - name: Validate repository contents and signatures
+        run: |
+          gzip -dc site/apt/Packages.gz > /tmp/elixpo-packages-index
+          [[ "$(grep -c '^Package: win-dot-panel$' /tmp/elixpo-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: screenbridge$' /tmp/elixpo-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: crumb$' /tmp/elixpo-packages-index)" -eq 2 ]]
+          gpg --batch --verify site/apt/InRelease
+          test -f site/apt/pool/win-dot-panel/win-dot-panel_*.deb
+          test -f site/apt/pool/screenbridge/screenbridge_*.deb
+          [[ "$(find site/apt/pool/crumb -maxdepth 1 -name 'crumb_*.deb' -type f | wc -l)" -eq 2 ]]
+
+      - name: Ensure Cloudflare Pages project exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          endpoint="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/packages-elixpo"
+          status="$(curl --silent --show-error --output /tmp/cloudflare-project.json --write-out '%{http_code}' \
+            --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            --header 'Content-Type: application/json' \
+            "$endpoint")"
+
+          if [[ "$status" == 200 ]]; then
+            python3 -c 'import json; data=json.load(open("/tmp/cloudflare-project.json")); assert data.get("success"), data.get("errors")'
+          elif [[ "$status" == 404 ]]; then
+            curl --fail --silent --show-error \
+              --request POST \
+              --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              --header 'Content-Type: application/json' \
+              --data '{"name":"packages-elixpo","production_branch":"main"}' \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects" \
+              > /tmp/cloudflare-project-create.json
+            python3 -c 'import json; data=json.load(open("/tmp/cloudflare-project-create.json")); assert data.get("success"), data.get("errors")'
+          else
+            cat /tmp/cloudflare-project.json
+            exit 1
+          fi
+
+      - name: Deploy candidate to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site --project-name=packages-elixpo --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Smoke-test candidate catalogue and signed repository
+        env:
+          CANDIDATE_URL: https://packages-elixpo.pages.dev
+        run: |
+          fetch() {
+            curl --fail --silent --show-error --location \
+              --retry 12 --retry-all-errors --retry-delay 5 "$@"
+          }
+
+          for route in \
+            / \
+            /repository/ \
+            /win-dot-panel/ \
+            /screenbridge/ \
+            /crumb/ \
+            /win-dot-panel/docs/ \
+            /screenbridge/docs/ \
+            /robots.txt \
+            /sitemap.xml \
+            /feed.xml
+          do
+            fetch --output /dev/null "$CANDIDATE_URL$route"
+          done
+
+          fetch --output /tmp/win-dot-panel-install.sh "$CANDIDATE_URL/win-dot-panel/install.sh"
+          fetch --output /tmp/screenbridge-install.sh "$CANDIDATE_URL/screenbridge/install.sh"
+          fetch --output /tmp/crumb-install.sh "$CANDIDATE_URL/crumb/install.sh"
+          grep -q 'packages.elixpo.com' /tmp/win-dot-panel-install.sh
+          grep -q 'packages.elixpo.com' /tmp/screenbridge-install.sh
+          grep -q 'packages.elixpo.com' /tmp/crumb-install.sh
+
+          fetch --output /tmp/InRelease "$CANDIDATE_URL/apt/InRelease"
+          fetch --output /tmp/Packages.gz "$CANDIDATE_URL/apt/Packages.gz"
+          gpg --batch --verify /tmp/InRelease
+          gzip -dc /tmp/Packages.gz > /tmp/cloudflare-packages-index
+          [[ "$(grep -c '^Package: win-dot-panel$' /tmp/cloudflare-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: screenbridge$' /tmp/cloudflare-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: crumb$' /tmp/cloudflare-packages-index)" -eq 2 ]]
+
+          clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
+          screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
+          fetch --output /dev/null "$CANDIDATE_URL/apt/pool/win-dot-panel/$(basename "${clipboard[0]}")"
+          fetch --output /dev/null "$CANDIDATE_URL/apt/pool/screenbridge/$(basename "${screenbridge[0]}")"
+          for package in "${crumb[@]}"; do
+            fetch --output /dev/null "$CANDIDATE_URL/apt/pool/crumb/$(basename "$package")"
+          done
+
+      - name: Attach production custom domain
+        if: inputs.promote_domain
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          endpoint="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/packages-elixpo/domains"
+          curl --fail --silent --show-error \
+            --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            --header 'Content-Type: application/json' \
+            "$endpoint" > /tmp/cloudflare-domains.json
+
+          if python3 -c 'import json; data=json.load(open("/tmp/cloudflare-domains.json")); raise SystemExit(0 if any(item.get("name") == "packages.elixpo.com" for item in data.get("result", [])) else 1)'
+          then
+            echo 'packages.elixpo.com is already attached to the Pages project.'
+          else
+            curl --fail --silent --show-error \
+              --request POST \
+              --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              --header 'Content-Type: application/json' \
+              --data '{"name":"packages.elixpo.com"}' \
+              "$endpoint" > /tmp/cloudflare-domain-create.json
+            python3 -c 'import json; data=json.load(open("/tmp/cloudflare-domain-create.json")); assert data.get("success"), data.get("errors")'
+          fi
+
+      - name: Verify production hostname after promotion
+        if: inputs.promote_domain
+        run: |
+          for route in / /repository/ /win-dot-panel/install.sh /screenbridge/install.sh /apt/InRelease /apt/Packages.gz
+          do
+            curl --fail --silent --show-error --location \
+              --retry 30 --retry-all-errors --retry-delay 10 \
+              --output /dev/null "https://packages.elixpo.com$route"
+          done

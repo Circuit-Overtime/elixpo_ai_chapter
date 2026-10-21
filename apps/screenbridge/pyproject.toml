@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "screenbridge"
+version = "1.0.0"
+description = "Share computer audio on Linux in one click"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "ScreenBridge contributors" }]
+dependencies = []
+
+[project.scripts]
+screenbridge = "screenbridge.app:main"
+
+[tool.setuptools.packages.find]
+include = ["screenbridge*"]

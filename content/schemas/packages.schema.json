@@ -1,0 +1,404 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elixpo.com/schemas/packages.schema.json",
+  "title": "Elixpo distributed packages",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "lastVerified",
+    "statusOwner",
+    "distribution",
+    "linuxApplications",
+    "nativeTools",
+    "npmPackages"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date"
+    },
+    "statusOwner": {
+      "type": "string",
+      "minLength": 2
+    },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "website",
+        "repository",
+        "aptDocumentation",
+        "license",
+        "maintainer"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        },
+        "repository": {
+          "type": "string",
+          "format": "uri"
+        },
+        "aptDocumentation": {
+          "type": "string",
+          "format": "uri"
+        },
+        "license": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        }
+      }
+    },
+    "linuxApplications": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/linuxApplication"
+      }
+    },
+    "nativeTools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/nativeTool"
+      }
+    },
+    "npmPackages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/npmPackage"
+      }
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": [
+        "maintained",
+        "deprecated",
+        "unsupported",
+        "archived"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "linuxApplication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug",
+        "packageName",
+        "name",
+        "version",
+        "status",
+        "category",
+        "summary",
+        "support",
+        "install",
+        "page",
+        "source",
+        "releases",
+        "icon",
+        "license",
+        "maintainer",
+        "related",
+        "images",
+        "capabilities"
+      ],
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "packageName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "category": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 40
+        },
+        "support": {
+          "type": "string"
+        },
+        "install": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/url"
+        },
+        "source": {
+          "$ref": "#/$defs/url"
+        },
+        "releases": {
+          "$ref": "#/$defs/url"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "related": {
+          "$ref": "#/$defs/related"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "src",
+              "alt"
+            ],
+            "properties": {
+              "src": {
+                "$ref": "#/$defs/url"
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 10
+              }
+            }
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "nativeTool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug",
+        "name",
+        "version",
+        "status",
+        "category",
+        "summary",
+        "support",
+        "install",
+        "windowsInstall",
+        "page",
+        "source",
+        "releases",
+        "icon",
+        "license",
+        "maintainer",
+        "related",
+        "images",
+        "capabilities"
+      ],
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "category": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 40
+        },
+        "support": {
+          "type": "string"
+        },
+        "install": {
+          "type": "string"
+        },
+        "aptInstall": {
+          "type": "string"
+        },
+        "windowsInstall": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/url"
+        },
+        "source": {
+          "$ref": "#/$defs/url"
+        },
+        "releases": {
+          "$ref": "#/$defs/url"
+        },
+        "icon": {
+          "$ref": "#/$defs/url"
+        },
+        "license": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "related": {
+          "$ref": "#/$defs/related"
+        },
+        "images": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "src",
+              "alt"
+            ],
+            "properties": {
+              "src": {
+                "$ref": "#/$defs/url"
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 10
+              }
+            }
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "npmPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug",
+        "name",
+        "version",
+        "status",
+        "href",
+        "source",
+        "install",
+        "type",
+        "license",
+        "maintainer",
+        "related",
+        "description",
+        "capabilities"
+      ],
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^@elixpo/"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "href": {
+          "$ref": "#/$defs/url"
+        },
+        "source": {
+          "$ref": "#/$defs/url"
+        },
+        "install": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "related": {
+          "$ref": "#/$defs/related"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 40
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "related": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "slug"
+      ],
+      "properties": {
+        "family": {
+          "enum": [
+            "project",
+            "research",
+            "service"
+          ]
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        }
+      }
+    }
+  }
+}
