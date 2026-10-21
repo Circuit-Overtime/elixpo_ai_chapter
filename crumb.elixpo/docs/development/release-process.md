@@ -44,7 +44,7 @@ Pin an exact release with `CRUMB_VERSION`, for example:
 ```bash
 curl --proto '=https' --tlsv1.2 -LsSf \
   https://raw.githubusercontent.com/elixpo/crumb.elixpo/main/install.sh |
-  CRUMB_VERSION=v1.0.3 sh
+  CRUMB_VERSION=v1.0.4 sh
 ```
 
 Windows installs into `%LOCALAPPDATA%\Programs\Crumb\bin` and adds that

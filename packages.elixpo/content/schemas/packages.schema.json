@@ -253,6 +253,9 @@
         "install": {
           "type": "string"
         },
+        "aptInstall": {
+          "type": "string"
+        },
         "windowsInstall": {
           "type": "string"
         },

@@ -84,24 +84,37 @@ jobs:
           test -n "$clipboard_tag" || { echo 'No stable Win Dot Panel release found' >&2; exit 1; }
           test -n "$screenbridge_tag" || { echo 'No stable ScreenBridge release found' >&2; exit 1; }
 
-          mkdir -p downloads/win-dot-panel downloads/screenbridge
+          crumb_version=$(node -e "const r=require('./content/packages.json'); process.stdout.write(r.nativeTools.find(p=>p.slug==='crumb').version)")
+          test -n "$crumb_version" || { echo 'No canonical Crumb version found' >&2; exit 1; }
+
+          mkdir -p downloads/win-dot-panel downloads/screenbridge downloads/crumb
           gh release download "$clipboard_tag" --repo "$GITHUB_REPOSITORY" \
             --pattern 'win-dot-panel_*.deb' --pattern SHA256SUMS \
             --dir downloads/win-dot-panel
           gh release download "$screenbridge_tag" --repo "$GITHUB_REPOSITORY" \
             --pattern 'screenbridge_[0-9]*_all.deb' --pattern SHA256SUMS \
             --dir downloads/screenbridge
+          gh release download "v$crumb_version" --repo elixpo/crumb.elixpo \
+            --pattern 'crumb_*.deb' --pattern 'crumb_*.deb.sha256' \
+            --dir downloads/crumb
 
       - name: Verify release assets
         run: |
           (cd downloads/win-dot-panel && sha256sum --check SHA256SUMS)
           (cd downloads/screenbridge && sha256sum --check SHA256SUMS)
+          (cd downloads/crumb && for checksum in *.deb.sha256; do sha256sum --check "$checksum"; done)
           clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
           screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
           [[ ${#clipboard[@]} -eq 1 && -f "${clipboard[0]}" ]]
           [[ ${#screenbridge[@]} -eq 1 && -f "${screenbridge[0]}" ]]
+          [[ ${#crumb[@]} -eq 2 && -f "${crumb[0]}" && -f "${crumb[1]}" ]]
           [[ "$(dpkg-deb --field "${clipboard[0]}" Package)" == "win-dot-panel" ]]
           [[ "$(dpkg-deb --field "${screenbridge[0]}" Package)" == "screenbridge" ]]
+          for package in "${crumb[@]}"; do
+            [[ "$(dpkg-deb --field "$package" Package)" == "crumb" ]]
+          done
+          [[ "$(dpkg-deb --field "${crumb[0]}" Architecture)" != "$(dpkg-deb --field "${crumb[1]}" Architecture)" ]]
 
       - name: Prepare product pages
         run: |
@@ -125,16 +138,20 @@ jobs:
         run: |
           clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
           screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
-          bash scripts/build_apt_repo.sh site "${clipboard[0]}" "${screenbridge[0]}"
+          crumb=(downloads/crumb/crumb_*.deb)
+          bash scripts/build_apt_repo.sh site \
+            "${clipboard[0]}" "${screenbridge[0]}" "${crumb[@]}"
 
       - name: Validate repository contents and signatures
         run: |
           gzip -dc site/apt/Packages.gz > /tmp/elixpo-packages-index
           [[ "$(grep -c '^Package: win-dot-panel$' /tmp/elixpo-packages-index)" -eq 1 ]]
           [[ "$(grep -c '^Package: screenbridge$' /tmp/elixpo-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: crumb$' /tmp/elixpo-packages-index)" -eq 2 ]]
           gpg --batch --verify site/apt/InRelease
           test -f site/apt/pool/win-dot-panel/win-dot-panel_*.deb
           test -f site/apt/pool/screenbridge/screenbridge_*.deb
+          [[ "$(find site/apt/pool/crumb -maxdepth 1 -name 'crumb_*.deb' -type f | wc -l)" -eq 2 ]]
 
       - name: Ensure Cloudflare Pages project exists
         env:
@@ -186,6 +203,7 @@ jobs:
             /repository/ \
             /win-dot-panel/ \
             /screenbridge/ \
+            /crumb/ \
             /win-dot-panel/docs/ \
             /screenbridge/docs/ \
             /robots.txt \
@@ -197,8 +215,10 @@ jobs:
 
           fetch --output /tmp/win-dot-panel-install.sh "$CANDIDATE_URL/win-dot-panel/install.sh"
           fetch --output /tmp/screenbridge-install.sh "$CANDIDATE_URL/screenbridge/install.sh"
+          fetch --output /tmp/crumb-install.sh "$CANDIDATE_URL/crumb/install.sh"
           grep -q 'packages.elixpo.com' /tmp/win-dot-panel-install.sh
           grep -q 'packages.elixpo.com' /tmp/screenbridge-install.sh
+          grep -q 'packages.elixpo.com' /tmp/crumb-install.sh
 
           fetch --output /tmp/InRelease "$CANDIDATE_URL/apt/InRelease"
           fetch --output /tmp/Packages.gz "$CANDIDATE_URL/apt/Packages.gz"
@@ -206,11 +226,16 @@ jobs:
           gzip -dc /tmp/Packages.gz > /tmp/cloudflare-packages-index
           [[ "$(grep -c '^Package: win-dot-panel$' /tmp/cloudflare-packages-index)" -eq 1 ]]
           [[ "$(grep -c '^Package: screenbridge$' /tmp/cloudflare-packages-index)" -eq 1 ]]
+          [[ "$(grep -c '^Package: crumb$' /tmp/cloudflare-packages-index)" -eq 2 ]]
 
           clipboard=(downloads/win-dot-panel/win-dot-panel_*.deb)
           screenbridge=(downloads/screenbridge/screenbridge_[0-9]*_all.deb)
+          crumb=(downloads/crumb/crumb_*.deb)
           fetch --output /dev/null "$CANDIDATE_URL/apt/pool/win-dot-panel/$(basename "${clipboard[0]}")"
           fetch --output /dev/null "$CANDIDATE_URL/apt/pool/screenbridge/$(basename "${screenbridge[0]}")"
+          for package in "${crumb[@]}"; do
+            fetch --output /dev/null "$CANDIDATE_URL/apt/pool/crumb/$(basename "$package")"
+          done
 
       - name: Attach production custom domain
         if: inputs.promote_domain

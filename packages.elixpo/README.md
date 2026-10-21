@@ -12,9 +12,12 @@ and support records.
 | --- | --- | --- |
 | [Win Dot Panel](apps/win-dot-panel) | Emoji, symbols, kaomoji, and private clipboard history | [packages.elixpo.com/win-dot-panel](https://packages.elixpo.com/win-dot-panel/) |
 | [ScreenBridge](apps/screenbridge) | Share computer audio while retaining separate microphone control | [packages.elixpo.com/screenbridge](https://packages.elixpo.com/screenbridge/) |
+| [Crumb](https://github.com/elixpo/crumb.elixpo) | Self-hosted agent harness and natural-language terminal | [packages.elixpo.com/crumb](https://packages.elixpo.com/crumb/) |
 
-Both applications use independently versioned releases and one signed APT
-source. Their installers verify the repository key before configuring it.
+All packages use independently versioned releases and one signed APT source.
+Their installers verify the repository key before configuring it. Crumb keeps
+its source and cross-platform releases in its dedicated repository; this
+repository publishes the verified Debian artifacts through APT.
 
 ## Install
 
@@ -32,6 +35,14 @@ ScreenBridge:
 curl -fsSL -o /var/tmp/screenbridge-install.sh \
   https://packages.elixpo.com/screenbridge/install.sh && \
 bash /var/tmp/screenbridge-install.sh
+```
+
+Crumb:
+
+```bash
+curl -fsSL -o /var/tmp/crumb-install.sh \
+  https://packages.elixpo.com/crumb/install.sh && \
+bash /var/tmp/crumb-install.sh
 ```
 
 Review an installer and the relevant application source before running software

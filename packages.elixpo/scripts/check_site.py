@@ -135,6 +135,7 @@ def check_site(site: Path) -> None:
         "install.sh",
         "win-dot-panel/install.sh",
         "screenbridge/install.sh",
+        "crumb/install.sh",
         "screenbridge/icon.svg",
     ):
         assert (site / name).is_file(), f"Missing public file: {name}"

@@ -21,7 +21,9 @@ output_directory=$(realpath -m "$4")
     exit 1
 }
 
-package_version="${version}-1"
+# The ~elixpo suffix sorts below the official Debian revision of the same
+# upstream version, so the archive package wins when both are available.
+package_version="${version}-1~elixpo1"
 stage=$(mktemp -d -t crumb-deb.XXXXXXXX)
 cleanup() {
     if [[ "$stage" == /tmp/crumb-deb.* && -d "$stage" ]]; then
@@ -58,7 +60,9 @@ Description: self-hosted agent harness and natural-language terminal
 EOF
 
 install -d -m 755 "$output_directory"
-package="$output_directory/crumb_${package_version}_${architecture}.deb"
+# GitHub rewrites "~" in release asset names, so keep it out of the file name;
+# apt compares the Version field, not the file name.
+package="$output_directory/crumb_${package_version//\~/.}_${architecture}.deb"
 dpkg-deb --root-owner-group --build "$stage" "$package"
 dpkg-deb --info "$package"
 echo "$package"

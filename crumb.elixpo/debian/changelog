@@ -1,5 +1,0 @@
-crumb (1.0.3-1) UNRELEASED; urgency=medium
-
-  * Initial Debian packaging. (Closes: #1151280)
-
- -- Ayushman Bhattacharya <ayushman.elixpo@gmail.com>  Mon, 19 Oct 2026 14:57:09 +0530

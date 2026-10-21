@@ -82,6 +82,9 @@ if [[ "$package" == "win-dot-panel" ]]; then
     printf '%sSet Super + V to: /usr/bin/win-dot-panel toggle-clipboard%s\n' "$soft_green" "$reset"
     printf '%sOn Wayland, approve keyboard and clipboard access when prompted.%s\n' \
         "$soft_green" "$reset"
-else
+elif [[ "$package" == "screenbridge" ]]; then
     printf '%sOpen ScreenBridge from your applications menu.%s\n' "$soft_green" "$reset"
+else
+    printf '%sRun crumb to open the terminal, or crumb --help for commands.%s\n' \
+        "$soft_green" "$reset"
 fi

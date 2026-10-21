@@ -65,7 +65,11 @@ export function PackageRecordPage({ record, related }: { record: PackageRecord; 
 
       <section className="package-install-section">
         <div><p className="eyebrow">Installation</p><h2>Install the published release.</h2><p>The command below comes from the verified Elixpo package registry. Review the linked package and source records before installing software in a sensitive environment.</p></div>
-        <div className="package-command"><span><Terminal size={16}/> Linux and macOS</span><code>{record.install}</code>{record.secondaryInstall && <><span><Terminal size={16}/> Windows PowerShell</span><code>{record.secondaryInstall}</code></>}</div>
+        <div className="package-command">
+          {record.aptInstall && <><span><PackageCheck size={16}/> Debian and Ubuntu via Elixpo APT</span><code>{record.aptInstall}</code></>}
+          <span><Terminal size={16}/> {record.aptInstall ? "Direct install · Linux and macOS" : "Linux and macOS"}</span><code>{record.install}</code>
+          {record.secondaryInstall && <><span><Terminal size={16}/> Windows PowerShell</span><code>{record.secondaryInstall}</code></>}
+        </div>
       </section>
 
       <section className="package-record-grid">

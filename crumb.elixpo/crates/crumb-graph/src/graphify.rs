@@ -378,6 +378,38 @@ mod tests {
 
     use super::*;
 
+    /// Writes an executable fixture script and waits until it can be run.
+    ///
+    /// A child forked by a concurrent test may briefly inherit the write
+    /// handle, so the first exec can fail with ETXTBSY. Once one exec
+    /// succeeds no such handle remains.
+    #[cfg(unix)]
+    fn write_fixture_script(path: &Path, body: &str) {
+        use std::os::unix::fs::PermissionsExt;
+
+        fs::write(path, body).expect("script");
+        let mut permissions = fs::metadata(path).expect("metadata").permissions();
+        permissions.set_mode(0o755);
+        fs::set_permissions(path, permissions).expect("permissions");
+        for _ in 0..100 {
+            match Command::new(path)
+                .arg("--version")
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status()
+            {
+                Err(error) if error.kind() == io::ErrorKind::ExecutableFileBusy => {
+                    thread::sleep(Duration::from_millis(10));
+                }
+                result => {
+                    result.expect("fixture script runs");
+                    return;
+                }
+            }
+        }
+        panic!("fixture script stayed busy");
+    }
+
     #[test]
     fn settings_are_enabled_and_pinned_by_default() {
         let settings = GraphSettings::default();
@@ -400,8 +432,6 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn build_requires_exact_version_and_supports_cancellation() {
-        use std::os::unix::fs::PermissionsExt;
-
         let suffix = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .expect("clock")
@@ -409,14 +439,10 @@ mod tests {
         let workspace = std::env::temp_dir().join(format!("crumb-graphify-{suffix}"));
         fs::create_dir_all(&workspace).expect("workspace");
         let script = workspace.join("graphify-fixture");
-        fs::write(
+        write_fixture_script(
             &script,
             "#!/bin/sh\nif [ \"$1\" = \"--version\" ]; then echo 'graphify 0.9.92'; exit 0; fi\nsleep 5\n",
-        )
-        .expect("script");
-        let mut permissions = fs::metadata(&script).expect("metadata").permissions();
-        permissions.set_mode(0o755);
-        fs::set_permissions(&script, permissions).expect("permissions");
+        );
         let adapter = GraphifyAdapter::new(GraphSettings {
             command: script,
             ..GraphSettings::default()
@@ -436,18 +462,12 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn failed_builds_preserve_bounded_graphify_diagnostics() {
-        use std::os::unix::fs::PermissionsExt;
-
         let workspace = tempfile::tempdir().expect("workspace");
         let script = workspace.path().join("graphify-fixture");
-        fs::write(
+        write_fixture_script(
             &script,
             "#!/bin/sh\nif [ \"$1\" = \"--version\" ]; then echo 'graphify 0.9.92'; exit 0; fi\necho 'parser exploded' >&2\nexit 7\n",
-        )
-        .expect("script");
-        let mut permissions = fs::metadata(&script).expect("metadata").permissions();
-        permissions.set_mode(0o755);
-        fs::set_permissions(&script, permissions).expect("permissions");
+        );
         let adapter = GraphifyAdapter::new(GraphSettings {
             command: script,
             ..GraphSettings::default()

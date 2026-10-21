@@ -9,6 +9,7 @@ from pathlib import Path
 PRODUCTS = {
     "win-dot-panel": "Win Dot Panel",
     "screenbridge": "ScreenBridge",
+    "crumb": "Crumb",
 }
 
 

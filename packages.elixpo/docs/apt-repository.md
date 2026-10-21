@@ -1,6 +1,6 @@
 # Signed multi-package APT repository
 
-The package catalog is published at `https://packages.elixpo.com/`, with Win Dot Panel at `/win-dot-panel/`, ScreenBridge at `/screenbridge/`, and stable packages at `/apt/`. Both applications and their releases live in `elixpo/packages.elixpo`. The deployment workflow selects the latest stable namespaced release for each product, verifies both packages, builds one signed APT index, and deploys the catalogue and repository as one artifact. GitHub Pages remains the production host while an equivalent Cloudflare Pages candidate is verified.
+The package catalog is published at `https://packages.elixpo.com/`, with Win Dot Panel at `/win-dot-panel/`, ScreenBridge at `/screenbridge/`, Crumb at `/crumb/`, and stable packages at `/apt/`. The Linux application sources and releases live in `elixpo/packages.elixpo`; Crumb's cross-platform source and release authority remain in `elixpo/crumb.elixpo`. The deployment workflow selects the declared stable releases, verifies every package, builds one signed APT index, and deploys the catalogue and repository as one artifact. GitHub Pages remains the production host while an equivalent Cloudflare Pages candidate is verified.
 
 ## Quick install
 
@@ -30,11 +30,11 @@ sudo apt update
 sudo apt install win-dot-panel
 ```
 
-The same source can install `screenbridge`; do not register the repository a second time. Existing installations using `win-dot-panel.list` remain valid, and a new product installer migrates that source to the generic filename.
+The same source can install `screenbridge` and `crumb`; do not register the repository a second time. Existing installations using `win-dot-panel.list` remain valid, and a new product installer migrates that source to the generic filename.
 
 ## Publishing architecture
 
-- `elixpo/packages.elixpo` owns both application sources, GitHub Releases, the publication workflows, and the custom-domain deployment contract.
+- `elixpo/packages.elixpo` owns the Linux application sources, its namespaced releases, the signed APT index, publication workflows, and the custom-domain deployment contract. `elixpo/crumb.elixpo` owns Crumb's source and protected cross-platform release.
 - `APT_SIGNING_KEY` is organization-managed. Cloudflare credentials are repository-scoped during the current migration and exposed only to trusted workflows.
 - Stable package binaries use product-prefixed tags: `win-dot-panel/v...` and `screenbridge/v...`.
 - Changes on `main` run the complete validation and package build, then retain
@@ -42,7 +42,7 @@ The same source can install `screenbridge`; do not register the repository a sec
 - Public GitHub Releases are created only from explicit product version tags.
   Historical `main-*` prereleases remain available as an audit record of the
   earlier policy but are not selected by either publication workflow.
-- `.github/workflows/deploy-packages.yml` verifies both releases, builds the shared index, signs it, and deploys one Pages artifact.
+- `.github/workflows/deploy-packages.yml` verifies every declared release, builds the shared index, signs it, and deploys one Pages artifact.
 - Each stable product release invokes that shared deployment workflow directly.
 
 ## One-time maintainer setup
@@ -57,7 +57,7 @@ The same source can install `screenbridge`; do not register the repository a sec
 
 1. Publish application releases with tags matching `<product>/v<upstream-version>-<Debian-revision>`.
 2. Let the application workflow upload its versioned `.deb` and `SHA256SUMS`.
-3. The package-site workflow downloads the latest release for both products, verifies checksums and package identities, then signs and deploys the combined repository.
-4. Confirm `/win-dot-panel/`, `/screenbridge/`, both installers, `/apt/InRelease`, `/apt/Packages.gz`, and both files under `/apt/pool/`.
+3. The package-site workflow downloads the declared releases, verifies checksums, architectures, and package identities, then signs and deploys the combined repository.
+4. Confirm `/win-dot-panel/`, `/screenbridge/`, `/crumb/`, all installers, `/apt/InRelease`, `/apt/Packages.gz`, and the expected files under `/apt/pool/`.
 
 The GitHub updater remains available for Win Dot Panel development builds.

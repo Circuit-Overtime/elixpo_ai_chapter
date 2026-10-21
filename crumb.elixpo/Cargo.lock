@@ -578,7 +578,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-a2a"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "chrono",
  "serde",
@@ -588,7 +588,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-a2a-exchanges"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "serde",
@@ -599,7 +599,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-a2a-inbound"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-a2a",
@@ -615,7 +615,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-a2a-local"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-a2a",
@@ -629,7 +629,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-a2a-runtime"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-a2a",
@@ -644,7 +644,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-a2a-tasks"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "serde",
@@ -655,7 +655,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-agent"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "serde",
@@ -667,7 +667,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-auth"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "keyring",
  "zeroize",
@@ -675,7 +675,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-cli"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "arboard",
@@ -724,11 +724,11 @@ dependencies = [
 
 [[package]]
 name = "crumb-core"
-version = "1.0.3"
+version = "1.0.4"
 
 [[package]]
 name = "crumb-graph"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "serde",
@@ -738,7 +738,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-harness"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-agent",
@@ -750,7 +750,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-harness-cli"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-agent",
@@ -761,7 +761,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-harness-dsh"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-agent",
@@ -772,7 +772,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-history"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-platform",
@@ -782,7 +782,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-instance"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "getrandom 0.4.3",
@@ -793,14 +793,14 @@ dependencies = [
 
 [[package]]
 name = "crumb-llm"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "serde_json",
 ]
 
 [[package]]
 name = "crumb-marketplace"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "chrono",
@@ -817,7 +817,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-mcp"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-agent",
@@ -828,7 +828,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-memory"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "directories",
@@ -840,7 +840,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-native"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-platform",
@@ -849,7 +849,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-optimize"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "crumb-agent",
@@ -858,11 +858,11 @@ dependencies = [
 
 [[package]]
 name = "crumb-platform"
-version = "1.0.3"
+version = "1.0.4"
 
 [[package]]
 name = "crumb-pollinations"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -878,7 +878,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-profile"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "directories",
@@ -889,7 +889,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-pty"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "portable-pty",
@@ -897,7 +897,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-repl"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "crumb-core",
  "crumb-platform",
@@ -905,7 +905,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-tools"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "anyhow",
  "chrono",
@@ -928,7 +928,7 @@ dependencies = [
 
 [[package]]
 name = "crumb-ui"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "crumb-platform",
 ]

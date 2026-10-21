@@ -16,6 +16,7 @@ export type PackageRecord = {
   summary: string;
   platform: string;
   install: string;
+  aptInstall?: string;
   secondaryInstall?: string;
   source: string;
   releaseUrl: string;
@@ -57,6 +58,7 @@ export const PACKAGE_RECORDS: PackageRecord[] = [
     summary: item.summary,
     platform: item.support,
     install: item.install,
+    aptInstall: item.aptInstall,
     secondaryInstall: item.windowsInstall,
     source: item.source,
     releaseUrl: item.releases,
