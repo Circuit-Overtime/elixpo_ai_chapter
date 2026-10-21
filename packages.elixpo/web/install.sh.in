@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+package="@PACKAGE@"
+display_name="@DISPLAY_NAME@"
+repository_url="https://packages.elixpo.com/apt/"
+key_url="${repository_url}keyring.asc"
+expected_fingerprint="319DA9C9E089FAB1264F35F5F8ED950B52AE3CAB"
+keyring_path="/etc/apt/keyrings/elixpo-packages.gpg"
+source_path="/etc/apt/sources.list.d/elixpo-packages.list"
+legacy_source_path="/etc/apt/sources.list.d/win-dot-panel.list"
+
+if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
+    green=$'\033[1;32m'
+    soft_green=$'\033[0;32m'
+    reset=$'\033[0m'
+else
+    green=""
+    soft_green=""
+    reset=""
+fi
+
+if ! command -v apt-get >/dev/null 2>&1; then
+    printf '%s installation requires Debian or Ubuntu.\n' "$display_name" >&2
+    exit 1
+fi
+if ! command -v curl >/dev/null 2>&1; then
+    printf 'Install curl first with: sudo apt install curl\n' >&2
+    exit 1
+fi
+if (( EUID == 0 )); then
+    privileged=()
+elif command -v sudo >/dev/null 2>&1; then
+    privileged=(sudo)
+else
+    printf 'Run this script as root or install sudo first.\n' >&2
+    exit 1
+fi
+
+if ! command -v gpg >/dev/null 2>&1; then
+    # A stale repository key can make this first refresh return non-zero. The
+    # distribution indexes still refresh, allowing GnuPG to be installed so
+    # the verified replacement key can be written before the strict refresh.
+    "${privileged[@]}" apt-get update --allow-releaseinfo-change || true
+    "${privileged[@]}" apt-get install -y --no-install-recommends gnupg
+fi
+
+temporary_dir=$(mktemp -d -t elixpo-packages.XXXXXXXX)
+cleanup() {
+    if [[ "$temporary_dir" == /tmp/elixpo-packages.* && -d "$temporary_dir" ]]; then
+        rm -rf -- "$temporary_dir"
+    fi
+}
+trap cleanup EXIT
+
+curl -fsSL "$key_url" -o "$temporary_dir/keyring.asc"
+fingerprints=$(gpg --batch --show-keys --with-colons "$temporary_dir/keyring.asc" |
+    awk -F: '$1 == "fpr" { print $10 }')
+if [[ "$fingerprints" != "$expected_fingerprint" ]]; then
+    printf 'APT signing key fingerprint did not match the published key.\n' >&2
+    exit 1
+fi
+
+gpg --batch --dearmor -o "$temporary_dir/keyring.gpg" "$temporary_dir/keyring.asc"
+"${privileged[@]}" install -d -m 755 /etc/apt/keyrings
+"${privileged[@]}" install -m 644 "$temporary_dir/keyring.gpg" "$keyring_path"
+printf 'deb [signed-by=%s] %s ./\n' "$keyring_path" "$repository_url" |
+    "${privileged[@]}" tee "$source_path" >/dev/null
+"${privileged[@]}" chmod 644 "$source_path"
+
+if [[ -f "$legacy_source_path" ]] && grep -Fq "$repository_url" "$legacy_source_path"; then
+    "${privileged[@]}" rm -f "$legacy_source_path"
+fi
+
+"${privileged[@]}" apt-get update --allow-releaseinfo-change
+"${privileged[@]}" apt-get install -y "$package"
+version=$(dpkg-query -W -f='${Version}' "$package")
+printf '%s✓ %s %s installed.%s\n' "$green" "$display_name" "$version" "$reset"
+
+if [[ "$package" == "win-dot-panel" ]]; then
+    printf '%sSet Super + . to: /usr/bin/win-dot-panel toggle%s\n' "$soft_green" "$reset"
+    printf '%sSet Super + V to: /usr/bin/win-dot-panel toggle-clipboard%s\n' "$soft_green" "$reset"
+    printf '%sOn Wayland, approve keyboard and clipboard access when prompted.%s\n' \
+        "$soft_green" "$reset"
+elif [[ "$package" == "screenbridge" ]]; then
+    printf '%sOpen ScreenBridge from your applications menu.%s\n' "$soft_green" "$reset"
+else
+    printf '%sRun crumb to open the terminal, or crumb --help for commands.%s\n' \
+        "$soft_green" "$reset"
+fi
