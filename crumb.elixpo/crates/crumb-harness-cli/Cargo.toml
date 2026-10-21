@@ -1,0 +1,17 @@
+[package]
+name = "crumb-harness-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+crumb-agent = { path = "../crumb-agent" }
+crumb-harness-dsh = { path = "../crumb-harness-dsh" }
+serde_json.workspace = true
+
+[target.'cfg(unix)'.dependencies]
+rustix.workspace = true
+
+[lints]
+workspace = true

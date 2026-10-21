@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crumb.elixpo.com/marketplace/schema/catalog.schema.json",
+  "title": "Crumb marketplace catalog v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "name", "publishers", "revocations", "packages"],
+  "properties": {
+    "schema_version": {"const": 3},
+    "name": {"$ref": "#/$defs/slug"},
+    "publishers": {"type": "array", "items": {"$ref": "#/$defs/publisher"}},
+    "revocations": {"type": "array", "items": {"$ref": "#/$defs/revocation"}},
+    "packages": {"type": "array", "items": {"$ref": "#/$defs/package"}}
+  },
+  "$defs": {
+    "slug": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z0-9-]+$"},
+    "componentId": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[A-Za-z0-9_-]+$"},
+    "packageId": {"type": "string", "pattern": "^[a-z0-9-]+/[a-z0-9-]+$"},
+    "version": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[A-Za-z0-9.+-]+$"},
+    "httpsUrl": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "relativePath": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+    "publisher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "display_name", "source_url", "identity"],
+      "properties": {
+        "id": {"$ref": "#/$defs/slug"},
+        "display_name": {"type": "string", "minLength": 1},
+        "source_url": {"$ref": "#/$defs/httpsUrl"},
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["issuer", "subject"],
+          "properties": {
+            "issuer": {"$ref": "#/$defs/httpsUrl"},
+            "subject": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_crumb_version", "maximum_crumb_version_exclusive", "platforms"],
+      "properties": {
+        "minimum_crumb_version": {"type": "string"},
+        "maximum_crumb_version_exclusive": {"type": ["string", "null"]},
+        "platforms": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["linux", "macos", "windows"]}}
+      }
+    },
+    "releaseTrust": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"const": "bundled"}}},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {"kind": {"const": "sigstore_bundle"}}
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "revision", "released_at", "trust"],
+      "properties": {
+        "repository": {"$ref": "#/$defs/httpsUrl"},
+        "revision": {"type": "string", "pattern": "^(?:[A-Fa-f0-9]{40}|[A-Fa-f0-9]{64})$"},
+        "released_at": {"type": "string", "format": "date-time"},
+        "trust": {"$ref": "#/$defs/releaseTrust"}
+      }
+    },
+    "disclosures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["security_url", "privacy_url", "data_flow"],
+      "properties": {
+        "security_url": {"$ref": "#/$defs/httpsUrl"},
+        "privacy_url": {"oneOf": [{"$ref": "#/$defs/httpsUrl"}, {"type": "null"}]},
+        "data_flow": {"type": "string", "minLength": 1}
+      }
+    },
+    "connectorRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "scopes", "required"],
+      "properties": {
+        "id": {"$ref": "#/$defs/componentId"},
+        "scopes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[A-Za-z0-9._:/-]+$"}},
+        "required": {"type": "boolean"}
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"$ref": "#/$defs/packageId"},
+        "version": {"$ref": "#/$defs/version"}
+      }
+    },
+    "deprecation": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["message", "successor"],
+      "properties": {
+        "message": {"type": "string", "minLength": 1},
+        "successor": {"oneOf": [{"$ref": "#/$defs/packageId"}, {"type": "null"}]}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes", "url", "bundle_url"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+        "size_bytes": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "url": {"oneOf": [{"$ref": "#/$defs/httpsUrl"}, {"type": "null"}]},
+        "bundle_url": {"oneOf": [{"$ref": "#/$defs/httpsUrl"}, {"type": "null"}]}
+      }
+    },
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path"],
+      "properties": {"id": {"$ref": "#/$defs/componentId"}, "path": {"$ref": "#/$defs/relativePath"}}
+    },
+    "mcp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "transport", "command", "url", "arguments", "environment"],
+      "properties": {
+        "id": {"$ref": "#/$defs/componentId"},
+        "transport": {"enum": ["stdio", "streamable_http"]},
+        "command": {"type": ["string", "null"]},
+        "url": {"oneOf": [{"$ref": "#/$defs/httpsUrl"}, {"type": "null"}]},
+        "arguments": {"type": "array", "items": {"type": "string"}},
+        "environment": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"}}
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "publisher", "version", "kind", "package_class", "display_name", "description",
+        "license", "source", "compatibility", "provenance", "disclosures",
+        "connector_requirements", "dependencies", "deprecation"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/packageId"},
+        "publisher": {"$ref": "#/$defs/slug"},
+        "version": {"$ref": "#/$defs/version"},
+        "kind": {"enum": ["skill", "mcp", "bundle"]},
+        "package_class": {"enum": ["instruction", "template", "command", "mcp", "composite"]},
+        "display_name": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "compatibility": {"$ref": "#/$defs/compatibility"},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "disclosures": {"$ref": "#/$defs/disclosures"},
+        "connector_requirements": {"type": "array", "items": {"$ref": "#/$defs/connectorRequirement"}},
+        "dependencies": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/dependency"}},
+        "deprecation": {"$ref": "#/$defs/deprecation"},
+        "capabilities": {"type": "array", "uniqueItems": true, "items": {"enum": ["workspace_read", "workspace_write", "process_execution", "network_access"]}},
+        "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+        "skills": {"type": "array", "items": {"$ref": "#/$defs/skill"}},
+        "mcp_servers": {"type": "array", "items": {"$ref": "#/$defs/mcp"}}
+      },
+      "anyOf": [{"required": ["skills"]}, {"required": ["mcp_servers"]}]
+    },
+    "revocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "version", "reason", "revoked_at"],
+      "properties": {
+        "package": {"$ref": "#/$defs/packageId"},
+        "version": {"$ref": "#/$defs/version"},
+        "reason": {"type": "string", "minLength": 1},
+        "revoked_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}

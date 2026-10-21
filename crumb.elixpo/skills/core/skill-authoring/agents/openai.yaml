@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Authoring"
+  short_description: "Create or update focused Crumb skills"
+  default_prompt: "Create a focused reusable skill for this workflow."

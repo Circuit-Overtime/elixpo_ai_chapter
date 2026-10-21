@@ -1,0 +1,47 @@
+Crumb licensing
+===============
+
+Code
+----
+
+Unless a file states otherwise, all source code, scripts, configuration, and
+documentation in this repository are licensed under the MIT License. The
+canonical license text is in `LICENSES/preferred/MIT`.
+
+    SPDX-License-Identifier: MIT
+
+Visual assets
+-------------
+
+Visual and brand assets under `crumb.elixpo/public/`, including icons, mascot
+art, and social artwork, are licensed under Creative Commons Attribution 4.0
+International. The canonical license text is in
+`LICENSES/preferred/CC-BY-4.0`.
+
+    SPDX-License-Identifier: CC-BY-4.0
+
+Trademarks
+----------
+
+Copyright licences grant rights in the files. They do not grant trademark
+rights or permission to imply endorsement. The Elixpo and Oreo names, mascot,
+E-badge, domains, and related source identifiers are governed separately by
+`TRADEMARKS.md`. That policy does not limit the MIT or CC-BY-4.0 permissions
+in the files themselves.
+
+Third-party material
+--------------------
+
+Third-party components retain their respective licences. See
+`LICENSES/notices/notice-board` and the corresponding dependency metadata.
+
+Contributions
+-------------
+
+Contributions are accepted under the licence applying to the contributed
+area: MIT for code and documentation, or CC-BY-4.0 for visual assets. The
+Developer Certificate of Origin applies to every commit. No contributor
+licence agreement is required.
+
+Copyright (c) 2023-2026 Elixpo contributors.
+SPDX-License-Identifier: MIT
