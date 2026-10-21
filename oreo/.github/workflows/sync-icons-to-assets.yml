@@ -1,0 +1,79 @@
+name: Sync icons to elixpo/assets
+
+# Pushes prompts/icons/ to https://github.com/elixpo/assets whenever it
+# changes on main, so the assets repo always mirrors this upstream.
+#
+# Setup (one-time):
+#   1. Create a fine-grained PAT on the elixpo/assets repo with
+#      `contents: write` permission.
+#   2. Add it as a secret on THIS repo named ELIXPO_ASSETS_TOKEN.
+#
+# That's it — pushes to main that touch prompts/icons/ will land in
+# elixpo/assets within a minute.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "prompts/icons/**"
+  workflow_dispatch: {}  # allow manual re-sync from the Actions tab
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-icons-to-assets
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout upstream (badgr)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: upstream
+          sparse-checkout: |
+            prompts/icons
+          sparse-checkout-cone-mode: false
+
+      - name: Checkout downstream (elixpo/assets)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: elixpo/assets
+          token: ${{ secrets.ELIXPO_ASSETS_TOKEN }}
+          path: downstream
+          ref: main
+
+      - name: Mirror prompts/icons/ into downstream
+        run: |
+          set -euo pipefail
+          mkdir -p downstream/prompts/icons
+          # Wipe then re-copy so deletions upstream propagate too
+          find downstream/prompts/icons -mindepth 1 -delete
+          cp -r upstream/prompts/icons/. downstream/prompts/icons/
+          # Stamp the source commit for traceability
+          cat > downstream/prompts/icons/.SYNC_INFO <<EOF
+          Mirrored from Circuit-Overtime/badgr@${{ github.sha }} on $(date -u +%Y-%m-%dT%H:%M:%SZ).
+          Do not edit prompts/icons/ in this repo directly — your edits will be overwritten.
+          To change an icon prompt, open a PR upstream in Circuit-Overtime/badgr.
+          EOF
+
+      - name: Commit + push if changed
+        working-directory: downstream
+        run: |
+          set -euo pipefail
+          git config user.name  "elixpo-icon-sync-bot"
+          git config user.email "elixpo-icon-sync-bot@users.noreply.github.com"
+          git add prompts/icons
+          if git diff --cached --quiet; then
+            echo "No icon changes to mirror." >&2
+            exit 0
+          fi
+          short_sha=$(echo "${{ github.sha }}" | cut -c1-7)
+          git commit -m "icons: mirror from badgr@${short_sha}
+
+          Source: Circuit-Overtime/badgr@${{ github.sha }}
+          Triggered by: ${{ github.event_name }}"
+          git push

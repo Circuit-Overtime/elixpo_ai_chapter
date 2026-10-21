@@ -1,0 +1,44 @@
+name: ✨ Feature request
+description: An idea for a new app, OS feature, hardware change, or polish.
+title: "[feat] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: pitch
+    attributes:
+      label: Pitch
+      description: A sentence or two on what you want and why.
+      placeholder: |
+        It would be great if the Pet app could trade pandas over IR.
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: How would it work?
+      description: Sketch the UX, the controls, the data flow — whatever you've thought through.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - New app
+        - OS / launcher
+        - Hardware driver
+        - Asset / theme
+        - OTA / release
+        - Docs
+        - Build tooling
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow the project's [Code of Conduct](https://github.com/elixpo/oreo/blob/main/CODE_OF_CONDUCT.md).
+          required: true
