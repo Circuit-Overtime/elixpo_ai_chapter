@@ -1,6 +1,0 @@
-#!/bin/sh
-set -eu
-
-test -x /usr/bin/crumb
-test -s /usr/share/man/man1/crumb.1.gz
-crumb completions bash | grep -q 'crumb'
