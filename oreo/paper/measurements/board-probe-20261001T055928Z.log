@@ -1,0 +1,65 @@
+===== esptool version (exit=0) =====
+esptool.py v4.12.0
+4.12.0
+
+===== chip_id (exit=0) =====
+esptool.py v4.12.0
+Serial port /dev/ttyACM0
+Connecting....
+Chip is ESP32-S3 (QFN56) (revision v0.2)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+MAC: <redacted>
+Uploading stub...
+Running stub...
+Stub running...
+Warning: ESP32-S3 has no Chip ID. Reading MAC instead.
+MAC: <redacted>
+Hard resetting via RTS pin...
+
+===== flash_id (exit=0) =====
+esptool.py v4.12.0
+Serial port /dev/ttyACM0
+Connecting....
+Chip is ESP32-S3 (QFN56) (revision v0.2)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+MAC: <redacted>
+Uploading stub...
+Running stub...
+Stub running...
+Manufacturer: 68
+Device: 4018
+Detected flash size: 16MB
+Flash type set in eFuse: quad (4 data lines)
+Flash voltage set by eFuse to 3.3V
+Hard resetting via RTS pin...
+
+===== get_security_info (exit=0) =====
+esptool.py v4.12.0
+Serial port /dev/ttyACM0
+Connecting....
+Chip is ESP32-S3 (QFN56) (revision v0.2)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+MAC: <redacted>
+Uploading stub...
+Running stub...
+Stub running...
+
+Security Information:
+=====================
+Flags: 0x00000000 (0b0)
+Key Purposes: (0, 0, 0, 0, 0, 0, 12)
+  BLOCK_KEY0 - USER/EMPTY
+  BLOCK_KEY1 - USER/EMPTY
+  BLOCK_KEY2 - USER/EMPTY
+  BLOCK_KEY3 - USER/EMPTY
+  BLOCK_KEY4 - USER/EMPTY
+  BLOCK_KEY5 - USER/EMPTY
+Chip ID: 9
+API Version: 0
+Secure Boot: Disabled
+Flash Encryption: Disabled
+SPI Boot Crypt Count (SPI_BOOT_CRYPT_CNT): 0x0
+Hard resetting via RTS pin...

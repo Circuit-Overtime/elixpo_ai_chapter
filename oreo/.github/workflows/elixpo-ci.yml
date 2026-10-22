@@ -1,0 +1,42 @@
+# Elixpo CI — Drop-in workflow for all elixpo projects.
+# Copy this file to .github/workflows/elixpo-ci.yml in your project.
+# Configure your project in .elixpo/project.yml
+#
+# What this does:
+#   push/PR to main   → quality gate (lint, test, build)
+#   PR opened          → auto-label, auto-assign
+#   issue/PR agent work is owned by the separately gated OreoFlow workflows
+#   weekly cron        → stale issue/PR cleanup
+
+name: Elixpo CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * 1"  # Weekly Monday 9 AM UTC — stale cleanup
+
+jobs:
+  # ── Common CI (no LLM) ──────────────────────────────
+
+  quality:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed')
+    uses: ./.github/workflows/quality-gate.yml
+    secrets: inherit
+
+  pr-manage:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action != 'closed'
+    uses: ./.github/workflows/pr-management.yml
+    secrets: inherit
+
+  stale:
+    if: github.event_name == 'schedule'
+    uses: ./.github/workflows/stale-management.yml
+    secrets: inherit

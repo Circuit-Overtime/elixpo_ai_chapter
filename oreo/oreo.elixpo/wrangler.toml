@@ -1,0 +1,12 @@
+# Cloudflare Pages deployment for oreo.elixpo.com.
+#
+# Manual deploy:
+#     npm run build
+#     npx wrangler pages deploy out --project-name=oreo
+#
+# CI deploy: connect this repo to Pages → set the build command to
+# `cd oreo.elixpo && npm install && npm run build` and the output
+# directory to `oreo.elixpo/out`.
+name = "oreo"
+compatibility_date = "2024-09-01"
+pages_build_output_dir = "out"

@@ -1,0 +1,193 @@
+{
+  "aggregate_schema_version": 1,
+  "created_at_utc": "2026-10-21T17:03:45.761225+00:00",
+  "label": "bbb360-serial",
+  "methodology": {
+    "independent_runs": 10,
+    "frames_per_run": 720,
+    "total_frames": 7200,
+    "warmup_frames_per_run": 48,
+    "latency_percentiles": "pooled empirical distribution over all frames",
+    "run_confidence_intervals": "two-sided 95% Student-t"
+  },
+  "inputs": [
+    "paper/measurements/video-benchmark-bbb360-serial-r01-20261021T165802Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r02-20261021T165841Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r03-20261021T165919Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r04-20261021T165957Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r05-20261021T170035Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r06-20261021T170113Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r07-20261021T170151Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r08-20261021T170229Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r09-20261021T170307Z.json",
+    "paper/measurements/video-benchmark-bbb360-serial-r10-20261021T170345Z.json"
+  ],
+  "artifacts": {
+    "application": "2615e579902359cd63ee3c7d97daedb6953f5f068ae0b4f8b13e55d1fc68926d",
+    "media": "cb16d3dffe1b9b63f24b47c1870c99f1fb2a58eb266b8dc99034e81164fbe6c0",
+    "sdkconfig": "18a8142f7def70f3cfa4e9aa2132796dcd29ecd289e08ea6d199cd5bef328bfe"
+  },
+  "metadata": {
+    "project": "oreo_video_dma",
+    "idf": "v5.5.1",
+    "elf_sha256": "48238630a7ebde56f7d42f78fb327984816d60100b6971937948d32acc46b77c",
+    "cpu_mhz": 240,
+    "spi_khz": 40000,
+    "source_width": 180,
+    "source_height": 135,
+    "source_fps": 24,
+    "source_frames": 240,
+    "container_version": 6,
+    "container_bytes": 8959471,
+    "warmup_frames": 48,
+    "sample_frames": 720,
+    "overlap": 0,
+    "backlight_percent": 60
+  },
+  "container_size_mib": 8.544417381286621,
+  "fps": {
+    "count": 10,
+    "mean": 23.9052924,
+    "standard_deviation": 2.4739532018209023e-05,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 23.905274703634458,
+    "upper": 23.905310096365543,
+    "minimum": 23.905222,
+    "maximum": 23.905301
+  },
+  "elapsed_us": {
+    "count": 10,
+    "mean": 30118853.6,
+    "standard_deviation": 31.063376077518253,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 30118831.38014323,
+    "upper": 30118875.819856774,
+    "minimum": 30118843.0,
+    "maximum": 30118942.0
+  },
+  "run_mean_work_us": {
+    "count": 10,
+    "mean": 41829.70930555555,
+    "standard_deviation": 0.043587661778767085,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 41829.67812698696,
+    "upper": 41829.740484124144,
+    "minimum": 41829.694444444445,
+    "maximum": 41829.833333333336
+  },
+  "run_p99_work_us": {
+    "count": 10,
+    "mean": 41881.104999999996,
+    "standard_deviation": 0.4118859065314408,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 41880.8103750427,
+    "upper": 41881.39962495729,
+    "minimum": 41880.43,
+    "maximum": 41881.81
+  },
+  "drops": 20,
+  "deadline_misses": 7200,
+  "timing_us": {
+    "inflate_us": {
+      "mean": 10516.042222222222,
+      "p50": 10515.0,
+      "p95": 10556.0,
+      "p99": 10565.0,
+      "maximum": 10585.0
+    },
+    "scale_us": {
+      "mean": 2598.617361111111,
+      "p50": 2600.0,
+      "p95": 2606.0,
+      "p99": 2608.0,
+      "maximum": 2609.0
+    },
+    "dma_wait_us": {
+      "mean": 28469.559583333332,
+      "p50": 28468.0,
+      "p95": 28477.0,
+      "p99": 28478.0,
+      "maximum": 28481.0
+    },
+    "lcd_us": {
+      "mean": 31311.796388888888,
+      "p50": 31310.0,
+      "p95": 31316.0,
+      "p99": 31321.0,
+      "maximum": 31322.0
+    },
+    "work_us": {
+      "mean": 41829.70930555555,
+      "p50": 41828.0,
+      "p95": 41869.0,
+      "p99": 41881.0,
+      "maximum": 41901.0
+    }
+  },
+  "heap_deltas": [
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    },
+    {
+      "media_state_bytes": 51084,
+      "instrumentation_and_stripes_bytes": 53772,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 246216
+    }
+  ]
+}

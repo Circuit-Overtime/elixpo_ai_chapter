@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "oreo_badge")(type "KiCad")(uri "${KIPRJMOD}/oreo_badge.kicad_sym")(options "")(descr ""))
+)
