@@ -1,0 +1,46 @@
+NOTICE - the Elixpo notice board
+================================
+
+This repository is licensed under the Elixpo License (see ../LICENSE). This
+NOTICE file is the "notice board": it records reservations and product-specific
+terms that sit ON TOP of the base license for this repository. Read it together
+with LICENSE and LICENSES/exceptions/Oreo-trademarks.
+
+REPOSITORY
+----------
+
+  Name:        sketch.elixpo (sketch.elixpo.com)
+  What it is:  The source for LixSketch - an infinite-canvas, hand-drawn style
+               whiteboard with a Notion-like docs editor. A monorepo that also
+               builds the published npm engine and the VS Code extension.
+
+EXCLUSIVE ARTIFACTS IN THIS REPOSITORY
+--------------------------------------
+
+  npm package
+    @elixpo/lixsketch is published to the npm registry from packages/lixsketch/.
+    The published package name @elixpo/lixsketch on the npm registry is reserved
+    to Elixpo; forks must publish under a different name (the MIT-licensed source
+    may of course be reused).
+
+  VS Code extension
+    elixpo.lixsketch on the VS Code Marketplace is published from
+    packages/vscode/ (publisher "elixpo", extension "lixsketch", displayName
+    "LixSketch"). The Marketplace listing elixpo.lixsketch and the "elixpo"
+    publisher identity are reserved to Elixpo; the extension source is MIT, but
+    the listing and publisher identity are not transferred.
+
+  Hosted SaaS
+    sketch.elixpo.com is the official hosted LixSketch deployment. The brand,
+    the hosted deployment, and the operational data are reserved; the source is
+    MIT.
+
+BRAND ASSETS
+------------
+
+  The brand assets (logos, mascot, marks, and palette) are provided under
+  CC-BY-4.0 WITH Oreo-trademarks. The Oreo mascot, the chest E-badge, and the
+  Elixpo / Oreo names and palette remain reserved
+  (see LICENSES/exceptions/Oreo-trademarks).
+
+Contact: hello@elixpo.com

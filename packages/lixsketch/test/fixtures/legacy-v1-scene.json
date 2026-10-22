@@ -1,0 +1,19 @@
+{
+  "format": "lixsketch",
+  "version": 1,
+  "name": "Legacy fixture",
+  "viewport": { "x": -20, "y": 10, "width": 1200, "height": 800 },
+  "zoom": 1.25,
+  "shapes": [
+    {
+      "shapeID": "legacy-rectangle",
+      "type": "rectangle",
+      "x": 40,
+      "y": 60,
+      "width": 180,
+      "height": 90,
+      "rotation": 0,
+      "options": { "stroke": "#6f55b5", "fill": "#d9ccff", "strokeWidth": 2 }
+    }
+  ]
+}
