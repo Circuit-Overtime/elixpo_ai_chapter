@@ -1,0 +1,399 @@
+@font-face {
+    font-family: "lixFont";
+    src: url("./fonts/lixFont.woff2") format("woff2");
+}
+@font-face {
+    font-family: "lixCode";
+    src: url("./fonts/lixCode.ttf") format("truetype");
+}
+@font-face {
+    font-family: "lixDefault";
+    src: url("./fonts/lixDefault.ttf") format("truetype");
+}
+@font-face {
+    font-family: "lixFancy";
+    src: url("./fonts/lixFancy.ttf") format("truetype");
+}
+
+
+.textToolBar {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    height: 40px;
+    padding: 5px 20px;
+    background: #232323;
+    border-radius: 15px;
+    transition: 0.5s;
+    filter: blur(0px);
+    opacity: 1;
+    z-index: 100;
+}
+.textToolBar.hidden {
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(10px);
+    transition: 0.5s;
+}
+
+.textToolBar .textColor {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.textToolBar .textColor span {
+    width: 25px;
+    height: 25px;   
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: 0.25s;
+}
+
+
+.textColor span.selected 
+{
+    border: 2px solid #3c09d6;
+    transform: scale(1.3); 
+    transition: 0.25s;
+}
+
+.textColor span:nth-child(1) { background-color: #fff; }
+.textColor span:nth-child(2) { background: #FF8383; }
+.textColor span:nth-child(3) { background-color: #3A994C; }
+.textColor span:nth-child(4) { background-color: #56A2E8; }
+.textColor span:nth-child(5) { background: #FFD700; }
+
+.ToolSpacer 
+{
+    width: 5px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: default;
+}
+
+.textFontOptionsExpander 
+{
+    position: relative;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #12121d; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: 0.25s;
+    display: flex;
+    flex-direction: row;
+    padding: 0 5px;
+}
+.textFontOptionsExpander svg 
+{
+    height: 30px;
+    width: 30px;
+    fill: #fff;
+    stroke: rgb(23, 100, 172);
+}
+.textFontOptionsExpander ion-icon 
+{
+    color: #fff;
+}
+.textFontOptionsExpander:hover 
+{
+    background-color: #151425; 
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), 
+                inset -2px -2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.textFont 
+{
+    position: absolute;
+    top: 55%;
+    left: 45%;
+    transform: translateX(-50%);
+    width: 100px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 10px 5px;
+    box-sizing: border-box;
+    transition: 0.5s;
+}
+.textFont.hidden 
+{
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(10px);
+    transition: 0.5s;
+}
+.textFont span
+{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-around;
+    width: 100%;
+    height: 35px;
+    border-radius: 10px;
+    color: #fff;
+    background: #31303B;
+    align-items: center;
+    padding: 0 10px;
+    transition: 0.25s;
+
+}
+.textFont span svg 
+{
+    width: 20px;
+    height: 20px;
+    stroke: #fff;
+    fill: none;
+}
+.textFont > .textFontSpan:nth-child(1) p
+{
+    font-family: "lixFont";
+    color: #fff;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.textFont .textFontSpan:nth-child(2) p  
+{
+    font-family: "lixDefault";
+    color: #fff;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.textFont .textFontSpan:nth-child(3) p 
+{
+    font-family: "lixCode";
+    color: #fff;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.textFont .textFontSpan:nth-child(4) p 
+{
+    font-family: "lixFancy";
+    color: #fff;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.textFont .textFontSpan.selected {
+    border: 2px solid #3c09d6;
+    background: #444480;
+    transform: scale(1.1);
+    transition: 0.25s;
+}
+.textFont .textFontSpan:hover {
+    background: #444480;
+    transition: 0.25s;
+    
+}
+
+.textFont > .alignmentOptions 
+{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.textAlign 
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;    
+}
+.textAlign span {
+    width: 35px;
+    height: 35px;
+    left: 10%;
+    border-radius: 10px;
+    margin: 0; 
+    cursor: pointer;
+    color: #fff;
+    background: #31303B;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.25s;
+    border: 2px solid transparent;
+    flex-shrink: 0; 
+    margin-right: 10px;
+}
+
+.textAlign span svg 
+{
+    width: 25px;
+    height: 25px;
+    stroke: #fff;
+    transition: 0.25s;
+}
+.textAlign span.selected {
+    background: #444480;
+    border: 2px solid #3c09d6;
+    transition: 0.25s;
+    transform: scale(1.1); 
+}
+.textAlign span:hover 
+{
+    background: #444480;
+    transition: 0.25s;
+}
+
+.textSize 
+{
+     position: relative;
+    display: flex;
+    flex-direction: row;    
+}
+
+.textSize span {
+    width: 35px;
+    height: 35px;
+    left: 10%;
+    border-radius: 10px;
+    margin: 0;
+    cursor: pointer;
+    color: #fff;
+    background: #12121d;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.25s;
+    border: 2px solid transparent;
+    flex-shrink: 0; 
+    margin-right: 10px;
+}
+.textSize span svg 
+{
+    width: 25px;
+    height: 25px;
+    stroke: #fff;
+    transition: 0.25s;
+}
+.textSize span.selected 
+{
+    background: #444480;
+    border: 2px solid #3c09d6;
+    transition: 0.25s;
+    transform: scale(1.1); 
+}
+.textSize span:hover 
+{
+    background: #444480;
+    transition: 0.25s;
+}
+
+
+.textCode 
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;    
+}
+
+.textCode span {
+    width: 35px;
+    height: 35px;
+    left: 10%;
+    border-radius: 10px;
+    margin: 0;
+    cursor: pointer;
+    color: #fff;
+    background: #12121d;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.25s;
+    border: 2px solid transparent;
+    flex-shrink: 0; 
+    margin-right: 10px;
+}
+
+.textCode span svg 
+{
+    width: 25px;
+    height: 25px;
+    stroke: #fff;
+    transition: 0.25s;
+}
+
+.textCode span:hover 
+{
+    background: #444480;
+    transition: 0.25s;
+ 
+}
+.textCode span.selected 
+{
+    background: #444480;
+    border: 2px solid #3c09d6;
+    transition: 0.25s;
+    transform: scale(1.1); 
+}  
+
+pre::-webkit-scrollbar
+{
+    display: none;
+}
+textarea::-webkit-scrollbar
+{
+    display: none;
+}
+
+.textLanguageSelector {
+    display: flex;
+    align-items: center;
+}
+
+.textLanguageSelector.hidden {
+    display: none;
+}
+
+.textLanguageSelector select {
+    background: #12121d;
+    color: #fff;
+    border: 1px solid #444480;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23fff'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    padding-right: 22px;
+}
+
+.textLanguageSelector select:hover {
+    border-color: #3c09d6;
+}
+
+.textLanguageSelector select:focus {
+    border-color: #3c09d6;
+}

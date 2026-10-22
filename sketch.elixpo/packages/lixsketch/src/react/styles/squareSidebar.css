@@ -1,0 +1,206 @@
+.squareSideBar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    border-radius: 15px;
+    height: auto;
+    background-color: #232329;
+    overflow: visible;
+    padding: 5px 10px;
+    transition: 0.5s;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    filter: blur(0px);
+    opacity: 1;
+}
+
+.squareSideBar.hidden {
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(10px);
+    transform: translateX(-50%) translateY(20px);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+/*  Combined Labels  */
+.squareColorLabel,
+.squareBackgroundLabel,
+.squareThicknessLabel,
+.squareFillLabel,
+.squareStyleLabel {
+    display: none;
+}
+
+
+/* Combined containers for colors, backgrounds, thickness, and fill */
+.squareColorsSquare,
+.squareBackground,
+.squareThickness,
+.squareFill,
+.squareStyle {
+    position: static;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    height: 40px;
+    gap: 5px;
+    align-items: center;
+    padding: 0 8px;
+    box-sizing: border-box;
+    border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+.squareFill {
+    border-right: none;
+}
+
+.squareThickness, .squareStyle {
+    gap: 5px;
+}
+
+
+/* Combined styles for color, background and fill spans */
+.squareColorsSquare span,
+.squareBackground span,
+.squareFill span {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: 0.25s;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Combined selected styles for color background and fill spans */
+.squareColorsSquare span.selected,
+.squareBackground span.selected,
+.squareFill span.selected {
+    border: 2px solid #3c09d6;
+    transform: scale(1.3); /* Using transform instead of scale */
+    transition: 0.25s;
+}
+
+/* Color-specific styles */
+.squareColorsSquare span:nth-child(1) { background-color: #fff; }
+.squareColorsSquare span:nth-child(2) { background: #FF8383; }
+.squareColorsSquare span:nth-child(3) { background-color: #3A994C; }
+.squareColorsSquare span:nth-child(4) { background-color: #56A2E8; }
+.squareColorsSquare span:nth-child(5) { background: #FFD700; }
+
+/* Background-specific styles */
+.squareBackground span:nth-child(1) { background-color: #f0f0f0;  } 
+.squareBackground span:nth-child(2) { background-color: #ffcccb;  } 
+.squareBackground span:nth-child(3) { background-color: #90ee90;  } 
+.squareBackground span:nth-child(4) { background-color: #add8e6;  } 
+.squareBackground span:nth-child(5) { 
+    background-color: #ffffe000;  
+    background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), 
+                      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+    background-size: 12px 12px;
+    background-position: 0 0, 6px 6px;
+} 
+
+
+/* Thickness styles */
+.squareThickness span {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    left: 0;
+    border-radius: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    color: #fff;
+    background: #31303B;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 30px;
+    transition: 0.25s;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.squareThickness span.selected {
+    background: #444480;
+    transition: 0.25s;
+}
+
+.squareThickness span:nth-child(1) { font-weight: 100; }
+.squareThickness span:nth-child(2) { font-weight: 500; }
+.squareThickness span:nth-child(3) { font-weight: 700; }
+
+/* Fill styles */
+
+
+
+.squareFill span {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: 0.25s;
+    background: #31303B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.squareFill span.selected {
+    background: #444480;
+    transition: 0.25s;
+}
+
+/* Style styles */
+.squareStyle span {
+    width: 35px;
+    height: 35px;
+    left: 5%;
+    border-radius: 10px;
+    margin: 0; /* Remove left-right margins */
+    cursor: pointer;
+    color: #fff;
+    background: #31303B;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.25s;
+    border: 2px solid transparent;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.squareStyle span.selected {
+    background: #444480;
+    border: 2px solid #3c09d6;
+    transition: 0.25s;
+    transform: scale(1.1); /* Using transform instead of scale */
+}
+
+.squareStyle span svg {
+    width: 30px;
+    height: 30px;
+    stroke: #fff;
+    transition: 0.25s;
+}
+
+.squareStyle span.selected svg {
+    stroke: #FFD700;
+}
+
+.squareFill .squareFillStyleSpan svg {
+    pointer-events: none;
+  }
+  

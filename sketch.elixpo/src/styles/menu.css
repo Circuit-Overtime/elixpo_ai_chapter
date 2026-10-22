@@ -1,0 +1,213 @@
+.menu
+{
+    position: absolute;
+    top: 56px;
+    right: 16px;
+    height: calc(100vh - 40px);
+    width: 220px;
+    background: #232329bd;
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    max-height: 80%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: 0.25s;
+    transform-origin: top right;
+    z-index: 1000;
+    filter: blur(0px);
+}
+.menu::-webkit-scrollbar
+{
+    display: none;
+}
+
+.menu.hidden 
+{
+    opacity: 0;
+    filter: blur(20px);
+    pointer-events: none;
+    transition: 0.25s;
+}
+.menu span {
+    width: 83%;
+    padding-left: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    color: #888;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    top: 2%;
+    cursor: pointer;
+    font-weight: 300;
+    user-select: none;
+    transition: 0.15s;
+}
+
+.menu span.settings
+{
+    margin-left: 5px;
+    width: 90%;
+    left: -5%;
+    display: flex;
+}
+.menu span.settings:hover
+{
+    background: transparent;
+}
+
+
+.menu hr 
+{
+    position: relative;
+    width: 90%;
+    left: 5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    background: #666;
+    height: 2px;
+    outline: none;
+    border: none;
+}
+.menu span:hover 
+{
+    background: #31303B;
+}
+.menu span .content {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* space between icon and icon name */
+}
+
+.menu span i {
+    font-size: 0.9em;
+    color: #fff;
+}
+
+.menu span p {
+    font-size: 0.9em;
+    color: #fff;
+    font-family: "lixFont";
+    margin: 0; /* Remove default margin */
+}
+
+.menu span .shortcut {
+    font-size: 0.8em;
+    color: #666;
+    margin-right: 30px;
+    font-family: "lixFont";
+}
+
+.menu span .content.special p,
+.menu span .content.special i,
+.menu span .shortcut.special
+{
+    color: #c873e4;
+    font-weight: 500;
+}
+
+
+
+
+
+
+.menu span.settings .content .controlsIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 120px;
+    height: 30px;
+    border: 2px solid #c873e486;
+    border-radius: 10px;
+  }
+  
+  .menu span.settings .content .controlsIcon .themeControlIcons {
+    flex: 1;           
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    position: relative;
+    height: 80%;
+    margin: 0;         
+  }
+
+  .menu span.settings .content .controlsIcon .themeControlIcons.selected
+  {
+    background: #c873e4;
+    border-radius: 10px;
+    height: 90%;
+
+  }
+  .menu span.settings .content .controlsIcon .themeControlIcons.selected > .themeIcons
+  {
+    color: #fff;
+  }
+  .menu span.settings .content .controlsIcon .themeControlIcons > .themeIcons
+  {
+    color: #c873e4;
+  }
+
+  .menu span.settings .content.canvasColor
+  {
+    display: block;
+    cursor: default;
+  }
+  .menu span.settings .content > .backgroundColors
+  {
+    margin-top: 20px;
+    position: relative;
+    height: 40px;
+    width: 80%;
+    display: flex;
+    gap: 5px;
+    flex: 1;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas 
+  {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    border-radius: 8px;
+    background: #000;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas.selected 
+  {
+    border: 2px solid #c873e4;
+  }
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas:nth-child(1)
+  {
+    background: #000;
+  }
+
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas:nth-child(2)
+  {
+    background: #161718;
+  }
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas:nth-child(3)
+  {
+    background: #13171C;
+  }
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas:nth-child(4)
+  {
+    background: #181605;
+  }
+  .menu span.settings .content > .backgroundColors > .colorOptionsCanvas:nth-child(5)
+  {
+    background: #1B1615;
+  }
+
