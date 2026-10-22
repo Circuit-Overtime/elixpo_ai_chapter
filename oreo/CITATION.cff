@@ -22,6 +22,10 @@ authors:
     given-names: Ayushman
     email: ayushman.elixpo@gmail.com
     affiliation: Pollinations AI
+  - family-names: Chakraborty
+    given-names: Anwesha
+    email: anwesha.elixpo@gmail.com
+    affiliation: "Department of Computer Science and Engineering, JIS University"
 keywords:
   - conference-badge
   - micropython
@@ -36,6 +40,11 @@ keywords:
   - direct-memory-access
 license: MIT
 license-url: "https://github.com/elixpo/oreo/blob/main/LICENSE"
+doi: "10.5281/zenodo.23543367"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23543367"
+    description: "Archived RV565 paper artifact (rv565-arxiv-v1)"
 repository-code: "https://github.com/elixpo/oreo"
 url: "https://oreo.elixpo.com"
 contact:

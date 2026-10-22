@@ -1,5 +1,6 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
+import { parseLimit } from '../../../../lib/pagination';
 import { getSession } from '../../../../lib/auth';
 
 // Granular org search with selectable fields
@@ -11,7 +12,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const q = (searchParams.get('q') || '').trim().toLowerCase();
   const fields = (searchParams.get('fields') || 'id,slug,name,logo_url').split(',').map(f => f.trim());
-  const limit = Math.min(parseInt(searchParams.get('limit') || '10'), 20);
+  const limit = parseLimit(searchParams.get('limit'), 10, 20);
 
   if (!q || q.length < 2) {
     return NextResponse.json({ orgs: [] });

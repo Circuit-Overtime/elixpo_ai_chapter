@@ -1,13 +1,14 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
+import { parseLimit, parsePage } from '../../../../../lib/pagination';
 import { getSession } from '../../../../../lib/auth';
 
 // GET — list comments with replies
 export async function GET(request, { params }) {
   const { slugid } = await params;
   const { searchParams } = new URL(request.url);
-  const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-  const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50);
+  const page = parsePage(searchParams.get('page'));
+  const limit = parseLimit(searchParams.get('limit'), 20, 50);
   const offset = (page - 1) * limit;
 
   try {

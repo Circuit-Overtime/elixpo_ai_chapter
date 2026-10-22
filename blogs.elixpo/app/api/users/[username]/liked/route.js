@@ -1,12 +1,13 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
+import { parseLimit, parseOffset } from '../../../../../lib/pagination';
 
 // GET — public: blogs this user liked
 export async function GET(request, { params }) {
   const { username } = await params;
   const { searchParams } = new URL(request.url);
-  const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50);
-  const offset = parseInt(searchParams.get('offset') || '0', 10);
+  const limit = parseLimit(searchParams.get('limit'), 20, 50);
+  const offset = parseOffset(searchParams.get('offset'));
 
   try {
     const { getDB } = await import('../../../../../lib/cloudflare');

@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "driver/gpio.h"
+#include "driver/ledc.h"
 #include "driver/spi_master.h"
 #include "esp_app_desc.h"
 #include "esp_err.h"
@@ -13,7 +14,23 @@
 #include "esp_timer.h"
 #include "miniz.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
 #include "freertos/task.h"
+
+// RV565_OVERLAP=1 inflates frame k+1 on core 1 while core 0 scales and
+// DMA-transfers frame k. Select it at configure time with
+// `idf.py -DRV565_OVERLAP=1 build`; the default is the serial path.
+#ifndef RV565_OVERLAP
+#define RV565_OVERLAP 0
+#endif
+#ifndef RV565_BACKLIGHT
+#define RV565_BACKLIGHT 60
+#endif
+// RV565_SELFTEST=1 fills the panel red, green, blue and white at full
+// backlight before playback, to separate wiring faults from the video path.
+#ifndef RV565_SELFTEST
+#define RV565_SELFTEST 0
+#endif
 
 #define LCD_HOST       SPI2_HOST
 #define PIN_MOSI       11
@@ -30,6 +47,8 @@
 #define STRIPE_BYTES   (LCD_W * STRIPE_ROWS * 2)
 #define WARMUP_SECONDS 2
 #define SAMPLE_SECONDS 30
+#define DECODE_BUFFERS (RV565_OVERLAP ? 2 : 1)
+#define INFLATE_STACK  (24 * 1024)  // tinfl keeps its decompressor on the stack
 
 static const char *TAG = "video_dma";
 static spi_device_handle_t lcd;
@@ -49,8 +68,16 @@ typedef struct {
     const uint8_t *payload;
     const uint8_t **compressed_frames;
     uint32_t *compressed_sizes;
-    uint8_t *decoded_frame;
+    uint8_t *decoded_frame[DECODE_BUFFERS];
 } clip_t;
+
+typedef struct {
+    clip_t *clip;
+    uint8_t *stripes[2];
+    int current;            // decoded buffer that holds ready_frame
+    int32_t ready_frame;    // -1 when no decoded frame is ready
+    uint32_t ready_inflate_us;
+} player_t;
 
 typedef struct {
     uint32_t sequence;
@@ -147,6 +174,70 @@ static void lcd_init(void)
     vTaskDelay(pdMS_TO_TICKS(20));
 }
 
+// The backlight is driven by LEDC PWM rather than held fully on, which
+// lowers the badge's supply current. RV565_BACKLIGHT is a duty in percent.
+static void backlight_init(void)
+{
+    const ledc_timer_config_t timer = {
+        .speed_mode = LEDC_LOW_SPEED_MODE,
+        .duty_resolution = LEDC_TIMER_10_BIT,
+        .timer_num = LEDC_TIMER_0,
+        .freq_hz = 20000,
+        .clk_cfg = LEDC_AUTO_CLK,
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&timer));
+    const ledc_channel_config_t channel = {
+        .gpio_num = PIN_BL,
+        .speed_mode = LEDC_LOW_SPEED_MODE,
+        .channel = LEDC_CHANNEL_0,
+        .timer_sel = LEDC_TIMER_0,
+        .duty = 0,
+        .hpoint = 0,
+    };
+    ESP_ERROR_CHECK(ledc_channel_config(&channel));
+}
+
+static void backlight_set(int percent)
+{
+    const uint32_t duty = (1023u * (uint32_t)percent) / 100u;
+    ESP_ERROR_CHECK(ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0));
+}
+
+#if RV565_SELFTEST
+static void lcd_fill(uint16_t rgb565, uint8_t *stripe)
+{
+    for (int i = 0; i < LCD_W * STRIPE_ROWS; ++i) {
+        stripe[2 * i] = (uint8_t)(rgb565 >> 8);
+        stripe[2 * i + 1] = (uint8_t)(rgb565 & 0xff);
+    }
+    const uint8_t ramwr = 0x2c;
+    gpio_set_level(PIN_CS, 0);
+    gpio_set_level(PIN_DC, 0);
+    spi_poll(&ramwr, 1);
+    gpio_set_level(PIN_DC, 1);
+    for (int row = 0; row < LCD_H; row += STRIPE_ROWS) {
+        spi_poll(stripe, STRIPE_BYTES);
+    }
+    gpio_set_level(PIN_CS, 1);
+}
+
+static void lcd_self_test(uint8_t *stripe)
+{
+    static const uint16_t colours[] = {0xf800, 0x07e0, 0x001f, 0xffff};
+    static const char *const names[] = {"red", "green", "blue", "white"};
+    backlight_set(100);
+    for (size_t i = 0; i < sizeof(colours) / sizeof(colours[0]); ++i) {
+        lcd_fill(colours[i], stripe);
+        printf("RV565_SELFTEST,%s\n", names[i]);
+        fflush(stdout);
+        vTaskDelay(pdMS_TO_TICKS(1500));
+    }
+    lcd_fill(0x0000, stripe);
+    backlight_set(0);
+}
+#endif
+
 static void spi_init(void)
 {
     const spi_bus_config_t bus = {
@@ -208,12 +299,18 @@ static bool parse_clip(clip_t *clip)
         // One 180x135 RGB565 frame is only 48.6 KB. Keep it in internal RAM:
         // the standalone benchmark does not enable the external-PSRAM
         // allocator, and internal memory also gives the scaler lower latency.
-        clip->decoded_frame = heap_caps_malloc(
-            clip->frame_bytes, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
-        if (!clip->compressed_frames || !clip->compressed_sizes ||
-                !clip->decoded_frame) {
-            ESP_LOGE(TAG, "could not allocate RV565 v6 decode state");
+        // The overlapped path needs a second buffer for the next frame.
+        if (!clip->compressed_frames || !clip->compressed_sizes) {
+            ESP_LOGE(TAG, "could not allocate RV565 v6 frame tables");
             return false;
+        }
+        for (int i = 0; i < DECODE_BUFFERS; ++i) {
+            clip->decoded_frame[i] = heap_caps_malloc(
+                clip->frame_bytes, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
+            if (!clip->decoded_frame[i]) {
+                ESP_LOGE(TAG, "could not allocate RV565 v6 decode buffer");
+                return false;
+            }
         }
         const uint8_t *cursor = clip->payload;
         for (uint16_t i = 0; i < clip->frames; ++i) {
@@ -245,24 +342,30 @@ static bool parse_clip(clip_t *clip)
     return true;
 }
 
-static bool decode_frame(clip_t *clip, uint16_t frame_index)
+static bool decode_frame(const clip_t *clip, uint16_t frame_index,
+                         uint8_t *destination)
 {
     if (clip->version == 5) {
         return true;
     }
     const size_t written = tinfl_decompress_mem_to_mem(
-        clip->decoded_frame, clip->frame_bytes,
+        destination, clip->frame_bytes,
         clip->compressed_frames[frame_index], clip->compressed_sizes[frame_index],
         TINFL_FLAG_PARSE_ZLIB_HEADER);
     return written == clip->frame_bytes;
 }
 
-static void expand_stripe(const clip_t *clip, uint16_t frame_index,
+static const uint8_t *frame_pixels(const clip_t *clip, uint16_t frame_index,
+                                   int buffer)
+{
+    return clip->version == 5
+        ? clip->payload + (size_t)frame_index * clip->frame_bytes
+        : clip->decoded_frame[buffer];
+}
+
+static void expand_stripe(const clip_t *clip, const uint8_t *frame,
                           int first_row, int rows, uint8_t *destination)
 {
-    const uint8_t *frame = clip->version == 5
-        ? clip->payload + (size_t)frame_index * clip->frame_bytes
-        : clip->decoded_frame;
     for (int row = 0; row < rows; ++row) {
         const uint8_t *source = frame +
             ((size_t)ymap[first_row + row] * clip->width * 2);
@@ -275,8 +378,8 @@ static void expand_stripe(const clip_t *clip, uint16_t frame_index,
     }
 }
 
-static void send_frame(const clip_t *clip, uint16_t frame_index,
-                       uint8_t *buffers[2], lcd_metrics_t *metrics)
+static void send_frame(const clip_t *clip, const uint8_t *frame,
+                       uint8_t *const buffers[2], lcd_metrics_t *metrics)
 {
     memset(metrics, 0, sizeof(*metrics));
     const int64_t lcd_start = esp_timer_get_time();
@@ -290,7 +393,7 @@ static void send_frame(const clip_t *clip, uint16_t frame_index,
     int row = 0;
     int rows = STRIPE_ROWS;
     int64_t phase_start = esp_timer_get_time();
-    expand_stripe(clip, frame_index, row, rows, buffers[current]);
+    expand_stripe(clip, frame, row, rows, buffers[current]);
     metrics->scale_us += (uint32_t)(esp_timer_get_time() - phase_start);
 
     while (row < LCD_H) {
@@ -309,7 +412,7 @@ static void send_frame(const clip_t *clip, uint16_t frame_index,
         // the current stripe. Only the short wait below remains serialized.
         if (next_rows != 0) {
             phase_start = esp_timer_get_time();
-            expand_stripe(clip, frame_index, next_row, next_rows, buffers[next]);
+            expand_stripe(clip, frame, next_row, next_rows, buffers[next]);
             metrics->scale_us +=
                 (uint32_t)(esp_timer_get_time() - phase_start);
         }
@@ -360,18 +463,100 @@ static void print_firmware_metadata(void)
     printf("\n");
 }
 
-static bool present_frame(clip_t *clip, uint16_t frame,
-                          uint8_t *buffers[2], frame_sample_t *sample)
+#if RV565_OVERLAP
+typedef struct {
+    uint16_t frame;
+    uint8_t buffer;
+} inflate_request_t;
+
+typedef struct {
+    uint16_t frame;
+    uint8_t buffer;
+    bool ok;
+    uint32_t inflate_us;
+} inflate_result_t;
+
+static QueueHandle_t inflate_requests;
+static QueueHandle_t inflate_results;
+
+static void inflate_worker(void *argument)
 {
+    const clip_t *clip = argument;
+    inflate_request_t request;
+    while (true) {
+        xQueueReceive(inflate_requests, &request, portMAX_DELAY);
+        const int64_t start = esp_timer_get_time();
+        inflate_result_t result = {
+            .frame = request.frame,
+            .buffer = request.buffer,
+            .ok = decode_frame(clip, request.frame,
+                               clip->decoded_frame[request.buffer]),
+        };
+        result.inflate_us = (uint32_t)(esp_timer_get_time() - start);
+        xQueueSend(inflate_results, &result, portMAX_DELAY);
+    }
+}
+
+static bool start_inflate_worker(clip_t *clip)
+{
+    inflate_requests = xQueueCreate(1, sizeof(inflate_request_t));
+    inflate_results = xQueueCreate(1, sizeof(inflate_result_t));
+    return inflate_requests != NULL && inflate_results != NULL &&
+           xTaskCreatePinnedToCore(inflate_worker, "rv565_inflate",
+                                   INFLATE_STACK, clip,
+                                   configMAX_PRIORITIES - 2, NULL, 1) == pdPASS;
+}
+
+static bool inflate_on_core1(uint16_t frame, int buffer,
+                             inflate_result_t *result)
+{
+    const inflate_request_t request = {.frame = frame, .buffer = (uint8_t)buffer};
+    xQueueSend(inflate_requests, &request, portMAX_DELAY);
+    xQueueReceive(inflate_results, result, portMAX_DELAY);
+    return result->ok && result->frame == frame;
+}
+#endif
+
+static bool present_frame(player_t *player, uint16_t frame,
+                          frame_sample_t *sample)
+{
+    clip_t *clip = player->clip;
     const int64_t work_start = esp_timer_get_time();
-    const int64_t inflate_start = work_start;
-    if (!decode_frame(clip, frame)) {
+    lcd_metrics_t lcd_metrics;
+#if RV565_OVERLAP
+    // The frame is normally inflated already, during the previous transfer.
+    // After a skip the prefetched frame is stale and is inflated here, on the
+    // critical path.
+    inflate_result_t result;
+    if (player->ready_frame != frame) {
+        if (!inflate_on_core1(frame, player->current, &result)) {
+            return false;
+        }
+        player->ready_inflate_us = result.inflate_us;
+    }
+    sample->inflate_us = player->ready_inflate_us;
+
+    const uint16_t next = (uint16_t)((frame + 1) % clip->frames);
+    const int other = player->current ^ 1;
+    const inflate_request_t request = {.frame = next, .buffer = (uint8_t)other};
+    xQueueSend(inflate_requests, &request, portMAX_DELAY);
+    send_frame(clip, frame_pixels(clip, frame, player->current),
+               player->stripes, &lcd_metrics);
+    xQueueReceive(inflate_results, &result, portMAX_DELAY);
+    if (!result.ok || result.frame != next) {
         return false;
     }
-    sample->inflate_us = (uint32_t)(esp_timer_get_time() - inflate_start);
-
-    lcd_metrics_t lcd_metrics;
-    send_frame(clip, frame, buffers, &lcd_metrics);
+    player->current = other;
+    player->ready_frame = next;
+    player->ready_inflate_us = result.inflate_us;
+#else
+    if (!decode_frame(clip, frame, clip->decoded_frame[0])) {
+        return false;
+    }
+    sample->inflate_us = (uint32_t)(esp_timer_get_time() - work_start);
+    send_frame(clip, frame_pixels(clip, frame, 0), player->stripes,
+               &lcd_metrics);
+#endif
     sample->scale_us = lcd_metrics.scale_us;
     sample->dma_wait_us = lcd_metrics.dma_wait_us;
     sample->lcd_us = lcd_metrics.lcd_us;
@@ -403,10 +588,26 @@ void app_main(void)
         ESP_LOGE(TAG, "could not allocate measurement or DMA stripe buffers");
         return;
     }
+    player_t player = {
+        .clip = &clip,
+        .stripes = {buffers[0], buffers[1]},
+        .current = 0,
+        .ready_frame = -1,
+    };
+#if RV565_OVERLAP
+    if (!start_inflate_worker(&clip)) {
+        ESP_LOGE(TAG, "could not start the core-1 inflate worker");
+        return;
+    }
+#endif
     print_heap_state("ready");
 
     spi_init();
     lcd_init();
+    backlight_init();
+#if RV565_SELFTEST
+    lcd_self_test(buffers[0]);
+#endif
     int actual_spi_khz = 0;
     ESP_ERROR_CHECK(spi_device_get_actual_freq(lcd, &actual_spi_khz));
 
@@ -423,6 +624,8 @@ void app_main(void)
            (unsigned)(video_end - video_start));
     printf("RV565_META,warmup_frames=%u\n", (unsigned)warmup_frames);
     printf("RV565_META,sample_frames=%u\n", (unsigned)sample_count);
+    printf("RV565_META,overlap=%d\n", RV565_OVERLAP);
+    printf("RV565_META,backlight_percent=%d\n", RV565_BACKLIGHT);
     printf("RV565_READY\n");
     fflush(stdout);
 
@@ -433,12 +636,12 @@ void app_main(void)
     frame_sample_t scratch = {0};
 
     for (uint32_t i = 0; i < warmup_frames; ++i) {
-        if (!present_frame(&clip, frame, buffers, &scratch)) {
+        if (!present_frame(&player, frame, &scratch)) {
             ESP_LOGE(TAG, "warm-up frame %u failed to inflate", frame);
             return;
         }
         if (!backlight_on) {
-            gpio_set_level(PIN_BL, 1);
+            backlight_set(RV565_BACKLIGHT);
             backlight_on = true;
         }
         frame = (uint16_t)((frame + 1) % clip.frames);
@@ -465,7 +668,7 @@ void app_main(void)
         frame_sample_t *sample = &samples[i];
         sample->sequence = i;
         sample->source_frame = frame;
-        if (!present_frame(&clip, frame, buffers, sample)) {
+        if (!present_frame(&player, frame, sample)) {
             ESP_LOGE(TAG, "measured frame %u failed to inflate", frame);
             return;
         }

@@ -1,9 +1,10 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
+import { parseLimit } from '../../../../lib/pagination';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const limit = Math.min(parseInt(searchParams.get('limit') || '5', 10), 20);
+  const limit = parseLimit(searchParams.get('limit'), 5, 20);
 
   try {
     const { kvCache } = await import('../../../../lib/cache');

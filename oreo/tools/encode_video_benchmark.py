@@ -28,7 +28,8 @@ def _read_exact(stream, size):
     return data
 
 
-def encode(source, output, seconds, fps, width, height, compressed=True):
+def encode(source, output, seconds, fps, width, height, compressed=True,
+           start=0.0):
     if shutil.which("ffmpeg") is None:
         raise SystemExit("ffmpeg is required")
     if not source.is_file():
@@ -43,7 +44,8 @@ def encode(source, output, seconds, fps, width, height, compressed=True):
           "flags=lanczos,crop=%d:%d,format=rgb565be" %
           (fps, width, height, width, height))
     cmd = [
-        "ffmpeg", "-v", "error", "-i", str(source), "-t", str(seconds),
+        "ffmpeg", "-v", "error", "-ss", str(start), "-i", str(source),
+        "-t", str(seconds),
         "-an", "-vf", vf, "-pix_fmt", "rgb565be", "-f", "rawvideo", "-",
     ]
 
@@ -103,6 +105,8 @@ def main():
         "output", type=Path, nargs="?",
         default=Path("experiments/video_dma/main/video.rv565"),
     )
+    parser.add_argument("--start", type=float, default=0.0,
+                        help="offset into the source, in seconds")
     parser.add_argument("--seconds", type=float, default=10.0)
     parser.add_argument("--fps", type=int, default=24)
     parser.add_argument("--width", type=int, default=180)
@@ -111,7 +115,7 @@ def main():
                         help="emit uncompressed RV565 v5 baseline")
     args = parser.parse_args()
     encode(args.source, args.output, args.seconds, args.fps,
-           args.width, args.height, not args.raw)
+           args.width, args.height, not args.raw, args.start)
 
 
 if __name__ == "__main__":

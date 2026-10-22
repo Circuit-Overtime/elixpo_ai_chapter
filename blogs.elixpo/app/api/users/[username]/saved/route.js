@@ -1,5 +1,6 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
+import { parseLimit, parseOffset } from '../../../../../lib/pagination';
 import { getSession } from '../../../../../lib/auth';
 
 // GET — private: own saved/bookmarked blogs only
@@ -16,8 +17,8 @@ export async function GET(request, { params }) {
     if (!user || user.id !== session.userId) return NextResponse.json({ error: 'Private' }, { status: 403 });
 
     const { searchParams } = new URL(request.url);
-    const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50);
-    const offset = parseInt(searchParams.get('offset') || '0', 10);
+    const limit = parseLimit(searchParams.get('limit'), 20, 50);
+    const offset = parseOffset(searchParams.get('offset'));
 
     const result = await db.prepare(`
       SELECT bk.created_at as saved_at, bk.collection_id,

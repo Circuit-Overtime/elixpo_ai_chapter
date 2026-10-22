@@ -1,0 +1,171 @@
+{
+  "collector_schema_version": 1,
+  "captured_at_utc": "2026-10-21T17:03:07.578622+00:00",
+  "label": "bbb360-serial-r09",
+  "port": "/dev/ttyACM0",
+  "baud": 115200,
+  "repository": {
+    "revision": "8739e61a4844f9fc90ae7ccdaa50fdf744a93aab",
+    "dirty": true,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "artifacts": {
+    "application": {
+      "path": "experiments/video_dma/build/oreo_video_dma.bin",
+      "sha256": "2615e579902359cd63ee3c7d97daedb6953f5f068ae0b4f8b13e55d1fc68926d"
+    },
+    "media": {
+      "path": "experiments/video_dma/main/video.rv565",
+      "sha256": "cb16d3dffe1b9b63f24b47c1870c99f1fb2a58eb266b8dc99034e81164fbe6c0"
+    },
+    "sdkconfig": {
+      "path": "experiments/video_dma/sdkconfig",
+      "sha256": "18a8142f7def70f3cfa4e9aa2132796dcd29ecd289e08ea6d199cd5bef328bfe"
+    },
+    "benchmark_source": {
+      "path": "experiments/video_dma/main/main.c",
+      "sha256": "8700dd650e29670b174e6cd942f6b25b41475eadb5a453278baf84980f0a0b5c"
+    },
+    "sdkconfig_defaults": {
+      "path": "experiments/video_dma/sdkconfig.defaults",
+      "sha256": "65407822315021d4feb7eeed05acb7986a988b4ad7fb5b09b3c89dcad91f54f2"
+    },
+    "collector_source": {
+      "path": "tools/collect_video_benchmark.py",
+      "sha256": "3f91e456515cf83e7165cd6c9813f662c3e25f9423d792d9ba3ebbf616b6079f"
+    }
+  },
+  "metadata": {
+    "project": "oreo_video_dma",
+    "version": "stable/v1.4.126-16-g8739e61",
+    "build_date": "Oct 21 2026",
+    "build_time": "22:05:24",
+    "idf": "v5.5.1",
+    "elf_sha256": "48238630a7ebde56f7d42f78fb327984816d60100b6971937948d32acc46b77c",
+    "schema": 1,
+    "cpu_mhz": 240,
+    "spi_khz": 40000,
+    "source_width": 180,
+    "source_height": 135,
+    "source_fps": 24,
+    "source_frames": 240,
+    "container_version": 6,
+    "container_bytes": 8959471,
+    "warmup_frames": 48,
+    "sample_frames": 720,
+    "overlap": 0,
+    "backlight_percent": 60
+  },
+  "heap": [
+    {
+      "phase": "boot",
+      "kind": "internal",
+      "total": 399428,
+      "free": 352496,
+      "min_free": 352496,
+      "largest": 286720
+    },
+    {
+      "phase": "boot",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    },
+    {
+      "phase": "media_open",
+      "kind": "internal",
+      "total": 399428,
+      "free": 301412,
+      "min_free": 301412,
+      "largest": 241664
+    },
+    {
+      "phase": "media_open",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    },
+    {
+      "phase": "ready",
+      "kind": "internal",
+      "total": 399428,
+      "free": 247640,
+      "min_free": 247640,
+      "largest": 200704
+    },
+    {
+      "phase": "ready",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    },
+    {
+      "phase": "complete",
+      "kind": "internal",
+      "total": 399428,
+      "free": 246216,
+      "min_free": 246216,
+      "largest": 200704
+    },
+    {
+      "phase": "complete",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    }
+  ],
+  "summary": {
+    "frames": 720,
+    "elapsed_us": 30118844,
+    "fps": 23.9053,
+    "drops": 2,
+    "deadline_misses": 720
+  },
+  "timing_us": {
+    "inflate_us": {
+      "mean": 10516.0625,
+      "p50": 10515.0,
+      "p95": 10556.0,
+      "p99": 10565.0,
+      "maximum": 10584.0
+    },
+    "scale_us": {
+      "mean": 2598.5444444444443,
+      "p50": 2600.0,
+      "p95": 2606.0,
+      "p99": 2608.0,
+      "maximum": 2609.0
+    },
+    "dma_wait_us": {
+      "mean": 28469.522222222222,
+      "p50": 28468.0,
+      "p95": 28477.0,
+      "p99": 28478.0,
+      "maximum": 28480.0
+    },
+    "lcd_us": {
+      "mean": 31311.769444444446,
+      "p50": 31310.0,
+      "p95": 31316.0,
+      "p99": 31321.0,
+      "maximum": 31321.0
+    },
+    "work_us": {
+      "mean": 41829.69583333333,
+      "p50": 41828.0,
+      "p95": 41869.0,
+      "p99": 41881.0,
+      "maximum": 41900.0
+    }
+  },
+  "frame_csv": "video-benchmark-bbb360-serial-r09-20261021T170307Z.csv",
+  "raw_log": "video-benchmark-bbb360-serial-r09-20261021T170307Z.log"
+}

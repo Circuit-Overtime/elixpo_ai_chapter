@@ -9,3 +9,20 @@ idf_component_register(
     INCLUDE_DIRS "."
     EMBED_FILES "video.rv565"
 )
+
+# idf.py -DRV565_OVERLAP=1 selects the dual-core overlapped decode path;
+# -DRV565_BACKLIGHT=<percent> sets the PWM backlight duty. Both are cached,
+# so pass them explicitly every time the mode changes.
+if(NOT DEFINED RV565_OVERLAP)
+    set(RV565_OVERLAP 0)
+endif()
+if(NOT DEFINED RV565_BACKLIGHT)
+    set(RV565_BACKLIGHT 60)
+endif()
+if(NOT DEFINED RV565_SELFTEST)
+    set(RV565_SELFTEST 0)
+endif()
+target_compile_definitions(${COMPONENT_LIB} PRIVATE
+    RV565_OVERLAP=${RV565_OVERLAP}
+    RV565_BACKLIGHT=${RV565_BACKLIGHT}
+    RV565_SELFTEST=${RV565_SELFTEST})

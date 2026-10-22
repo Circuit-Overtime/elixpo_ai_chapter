@@ -168,6 +168,8 @@ def main() -> int:
         "container_bytes",
         "warmup_frames",
         "sample_frames",
+        "overlap",
+        "backlight_percent",
     )
 
     for path in paths:

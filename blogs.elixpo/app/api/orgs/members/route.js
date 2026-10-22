@@ -52,6 +52,11 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Not authorized' }, { status: 403 });
     }
 
+    // The upsert below would otherwise rewrite the owner's role, which PUT forbids.
+    if (userId === org.owner_id) {
+      return NextResponse.json({ error: "Cannot change owner's role" }, { status: 400 });
+    }
+
     // Check user exists
     const targetUser = await db.prepare('SELECT id, username FROM users WHERE id = ?').bind(userId).first();
     if (!targetUser) return NextResponse.json({ error: 'User not found' }, { status: 404 });
