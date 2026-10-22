@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+body 
+{
+    overflow: hidden;
+}
+.libraryControl
+{
+    font-family: "Funnel Display", serif;
+
+}
+.libraryNavItem.selected
+{
+    color: #7ba8f0;
+    text-underline-offset: 12px;
+}
