@@ -1,0 +1,69 @@
+{
+  "name": "@elixpo/lixeditor",
+  "version": "2.8.11",
+  "description": "A rich WYSIWYG block editor and renderer built on BlockNote — equations, mermaid diagrams, code highlighting, host-controlled uploads, email-safe button export, and more.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles": {
+      "style": "./dist/styles/index.css",
+      "default": "./dist/styles/index.css"
+    },
+    "./styles/*.css": "./dist/styles/*.css",
+    "./styles/*": "./dist/styles/*.css",
+    "./package.json": "./package.json"
+  },
+  "style": "dist/styles/index.css",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "@blocknote/core": ">=0.47.0",
+    "@blocknote/react": ">=0.47.0",
+    "@blocknote/mantine": ">=0.47.0",
+    "@mantine/core": ">=8.3.11",
+    "@mantine/hooks": ">=8.3.11"
+  },
+  "dependencies": {
+    "katex": "^0.16.0",
+    "mermaid": "^11.0.0",
+    "shiki": "^3.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "blocknote",
+    "rich-text",
+    "markdown",
+    "latex",
+    "mermaid",
+    "code-highlighting",
+    "react"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elixpo/blogs.elixpo",
+    "directory": "packages/lixeditor"
+  }
+}

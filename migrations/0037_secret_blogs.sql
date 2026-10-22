@@ -1,0 +1,13 @@
+-- Secret (anonymous) blogs.
+--
+-- A secret blog's content is public, but its author is never exposed: no byline,
+-- no avatar, no co-author identities, and it is unreachable at /@username/[slug]
+-- (that path would name the author). Secret blogs are served only via /[slugid].
+--
+-- The author_id is still stored so a reported blog can be traced internally —
+-- it is simply never returned to unauthenticated readers.
+--
+-- `secret` is chosen while the blog is a draft and LOCKS on first publish:
+-- flipping it afterwards would either retroactively expose an author, or falsely
+-- promise to hide a byline that crawlers, caches and archives already captured.
+ALTER TABLE blogs ADD COLUMN secret INTEGER NOT NULL DEFAULT 0;

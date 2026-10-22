@@ -1,0 +1,70 @@
+{
+  "name": "lixblogs",
+  "version": "4.9.62",
+  "description": "A modern blogging platform with a rich block editor, AI writing tools, real-time collaboration, and organizations — deployed on Cloudflare's edge.",
+  "author": "Elixpo <https://github.com/elixpo>",
+  "license": "MIT",
+  "homepage": "https://blogs.elixpo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elixpo/blogs.elixpo"
+  },
+  "bugs": {
+    "url": "https://github.com/elixpo/blogs.elixpo/issues"
+  },
+  "keywords": [
+    "blog",
+    "blogging",
+    "editor",
+    "ai",
+    "collaboration",
+    "nextjs",
+    "cloudflare",
+    "blocknote"
+  ],
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@blocknote/core": "^0.47.1",
+    "@blocknote/mantine": "^0.47.1",
+    "@blocknote/react": "^0.47.1",
+    "@cloudflare/next-on-pages": "^1.13.0",
+    "@elixpo/lixeditor": "file:./packages/lixeditor",
+    "@elixpo/lixsketch": "5.5.0",
+    "cropperjs": "^2.1.0",
+    "diff": "^4.0.4",
+    "framer-motion": "^12.38.0",
+    "katex": "^0.16.43",
+    "marked": "^16.4.2",
+    "mermaid": "^11.13.0",
+    "next": "^15.3.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "shiki": "^4.0.2",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.30"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "autoprefixer": "^10.4.16",
+    "dotenv": "^17.3.1",
+    "nodemailer": "^8.0.4",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "6.0.2",
+    "wrangler": "^4.0.0"
+  },
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "dev": "next dev -p 3000",
+    "dev:turbo": "next dev --turbopack -p 3000",
+    "build": "next build",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npx wrangler pages dev .vercel/output/static --compatibility-flags=nodejs_compat --env-file .env.local",
+    "deploy": "npm run pages:build && npx wrangler pages deploy .vercel/output/static",
+    "db:migrate": "wrangler d1 migrations apply lixblogs --remote",
+    "db:migrate:local": "wrangler d1 migrations apply lixblogs --local",
+    "badges:backfill": "node --env-file=.env.local scripts/backfill-creator-badges.mjs",
+    "sync:tiers": "node scripts/sync-payouts-tiers.mjs"
+  }
+}

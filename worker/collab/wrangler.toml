@@ -1,0 +1,29 @@
+name = "elixpoblogs-collab"
+main = "src/index.js"
+compatibility_date = "2025-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Custom domain: add blog-collab.elixpo.com to this worker via the Cloudflare
+# dashboard (Workers → elixpoblogs-collab → Settings → Domains & Routes). The
+# deploy token lacks zone "Workers Routes: Edit", so it can't be provisioned
+# here. Then set NEXT_PUBLIC_COLLAB_URL=wss://blog-collab.elixpo.com.
+
+# Yjs CRDT sync hub — one Durable Object per editing surface (blog / sub-page).
+[[durable_objects.bindings]]
+name = "COLLAB_DO"
+class_name = "CollabDurableObject"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["CollabDurableObject"]
+
+# Shared D1 (auth check, collab-state + version snapshots).
+[[d1_databases]]
+binding = "DB"
+database_name = "lixblogs"
+database_id = "86566b22-37bb-4a62-a79c-dd19889d8c60"
+
+# Secret (set separately, do NOT commit):
+#   cd worker/collab && npx wrangler secret put SESSION_SECRET
+# Must equal SESSION_SECRET in the main app's .env (same value that signs the
+# lixblogs_session cookie).

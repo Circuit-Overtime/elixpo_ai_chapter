@@ -1,0 +1,46 @@
+/* .app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.appHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.appHeader .appName {
+  margin: 0 auto 0 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.appHeader .writeIcon,
+.appHeader .signin,
+.appHeader .getStartedBtn {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.appHeader .writeIcon:hover,
+.appHeader .signin:hover,
+.appHeader .getStartedBtn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+main {
+  flex: 1;
+} */
