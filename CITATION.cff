@@ -1,0 +1,57 @@
+# GitHub renders this file on the repo's right-hand sidebar as a
+# "Cite this repository" widget. Citation format: CFF v1.2.0.
+#
+# Update this file when:
+#   * a new author / maintainer joins                 -> add to authors
+#   * a new public version is released                -> bump `version` + `date-released`
+#   * the project's identity / URL changes            -> update `repository-code`
+#
+# Validate locally with: pip install cffconvert && cffconvert -i CITATION.cff -f bibtex
+
+cff-version: 1.2.0
+message: "If you use OreoOS, the Oreo Badge, or the RV565 media pipeline, please cite this software."
+title: "OreoOS: The Oreo Badge Operating System and RV565 Media Pipeline"
+type: software
+abstract: >
+  OreoOS is a MicroPython-based application operating system for an
+  ESP32-S3 conference badge. The repository includes the operating system,
+  hardware drivers, host media-ingestion tools, and RV565, a frame-independent
+  compressed RGB565 playback pipeline with native scaling and DMA experiments.
+authors:
+  - family-names: Bhattacharya
+    given-names: Ayushman
+    email: ayushman.elixpo@gmail.com
+    affiliation: Pollinations AI
+  - family-names: Chakraborty
+    given-names: Anwesha
+    email: anwesha.elixpo@gmail.com
+    affiliation: "Department of Computer Science and Engineering, JIS University"
+keywords:
+  - conference-badge
+  - micropython
+  - esp32
+  - esp32-s3
+  - embedded
+  - ota
+  - hardware
+  - oreoos
+  - rgb565
+  - video-playback
+  - direct-memory-access
+license: MIT
+license-url: "https://github.com/elixpo/oreo/blob/main/LICENSE"
+doi: "10.5281/zenodo.23543367"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23543367"
+    description: "Archived RV565 paper artifact (rv565-arxiv-v1)"
+repository-code: "https://github.com/elixpo/oreo"
+url: "https://oreo.elixpo.com"
+contact:
+  - email: ayushman.elixpo@gmail.com
+    name: Ayushman Bhattacharya
+# `version` and `date-released` are auto-updated by tools/release.py
+# whenever a new release is cut. Don't hand-edit them unless you're
+# fixing a typo.
+version: "v1.4.119"
+date-released: "2026-09-30"

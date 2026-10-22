@@ -1,0 +1,169 @@
+{
+  "collector_schema_version": 1,
+  "captured_at_utc": "2026-10-01T06:25:37.321600+00:00",
+  "label": "native-dma-stripes-r02",
+  "port": "/dev/ttyACM0",
+  "baud": 115200,
+  "repository": {
+    "revision": "e21528720ac1a624ce9e05de3c89c97550f4ce38",
+    "dirty": true,
+    "tracked_diff_sha256": "a11e375018adeaa032f50fae57df007245d40dcf42ebf9fd1e7314f7d381c405"
+  },
+  "artifacts": {
+    "application": {
+      "path": "experiments/video_dma/build/oreo_video_dma.bin",
+      "sha256": "f662e43049bd796ca41d7630d44d84051077bd6e2af3668c062d9451a4923404"
+    },
+    "media": {
+      "path": "experiments/video_dma/main/video.rv565",
+      "sha256": "2bc5ea5be82e1b1c70862afd1eb6029da49a850179352b0230720ab72d3d9ce6"
+    },
+    "sdkconfig": {
+      "path": "experiments/video_dma/sdkconfig",
+      "sha256": "18a8142f7def70f3cfa4e9aa2132796dcd29ecd289e08ea6d199cd5bef328bfe"
+    },
+    "benchmark_source": {
+      "path": "experiments/video_dma/main/main.c",
+      "sha256": "04482a81aa2bbe98b239019e523ecc04807ebb9a26da7b7f9585e64c354c07f9"
+    },
+    "sdkconfig_defaults": {
+      "path": "experiments/video_dma/sdkconfig.defaults",
+      "sha256": "65407822315021d4feb7eeed05acb7986a988b4ad7fb5b09b3c89dcad91f54f2"
+    },
+    "collector_source": {
+      "path": "tools/collect_video_benchmark.py",
+      "sha256": "3f91e456515cf83e7165cd6c9813f662c3e25f9423d792d9ba3ebbf616b6079f"
+    }
+  },
+  "metadata": {
+    "project": "oreo_video_dma",
+    "version": "stable/v1.4.120-3-ge215287-dirt",
+    "build_date": "Oct  1 2026",
+    "build_time": "11:45:17",
+    "idf": "v5.5.1",
+    "elf_sha256": "a1e8979f4a82aaa064fab12b8010a2b486c5d794d06aaf46faa51a0acb31ae4e",
+    "schema": 1,
+    "cpu_mhz": 240,
+    "spi_khz": 40000,
+    "source_width": 180,
+    "source_height": 135,
+    "source_fps": 24,
+    "source_frames": 240,
+    "container_version": 6,
+    "container_bytes": 4271634,
+    "warmup_frames": 48,
+    "sample_frames": 720
+  },
+  "heap": [
+    {
+      "phase": "boot",
+      "kind": "internal",
+      "total": 400076,
+      "free": 353144,
+      "min_free": 353144,
+      "largest": 286720
+    },
+    {
+      "phase": "boot",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    },
+    {
+      "phase": "media_open",
+      "kind": "internal",
+      "total": 400076,
+      "free": 302060,
+      "min_free": 302060,
+      "largest": 241664
+    },
+    {
+      "phase": "media_open",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    },
+    {
+      "phase": "ready",
+      "kind": "internal",
+      "total": 400076,
+      "free": 248288,
+      "min_free": 248288,
+      "largest": 200704
+    },
+    {
+      "phase": "ready",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    },
+    {
+      "phase": "complete",
+      "kind": "internal",
+      "total": 400076,
+      "free": 246996,
+      "min_free": 246996,
+      "largest": 200704
+    },
+    {
+      "phase": "complete",
+      "kind": "spiram",
+      "total": 0,
+      "free": 0,
+      "min_free": 0,
+      "largest": 0
+    }
+  ],
+  "summary": {
+    "frames": 720,
+    "elapsed_us": 29995387,
+    "fps": 24.003691,
+    "drops": 0,
+    "deadline_misses": 0
+  },
+  "timing_us": {
+    "inflate_us": {
+      "mean": 7096.841666666666,
+      "p50": 7237.0,
+      "p95": 8372.199999999999,
+      "p99": 8887.859999999999,
+      "maximum": 9029.0
+    },
+    "scale_us": {
+      "mean": 2598.751388888889,
+      "p50": 2600.0,
+      "p95": 2607.0,
+      "p99": 2608.0,
+      "maximum": 2609.0
+    },
+    "dma_wait_us": {
+      "mean": 28469.781944444443,
+      "p50": 28468.0,
+      "p95": 28477.0,
+      "p99": 28478.0,
+      "maximum": 28481.0
+    },
+    "lcd_us": {
+      "mean": 31311.993055555555,
+      "p50": 31310.0,
+      "p95": 31316.05,
+      "p99": 31321.0,
+      "maximum": 31322.0
+    },
+    "work_us": {
+      "mean": 38410.65972222222,
+      "p50": 38551.0,
+      "p95": 39689.85,
+      "p99": 40204.86,
+      "maximum": 40346.0
+    }
+  },
+  "frame_csv": "video-benchmark-native-dma-stripes-r02-20261001T062537Z.csv",
+  "raw_log": "video-benchmark-native-dma-stripes-r02-20261001T062537Z.log"
+}

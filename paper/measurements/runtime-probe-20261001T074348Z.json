@@ -1,0 +1,109 @@
+{
+  "probe_schema_version": 2,
+  "captured_at_utc": "2026-10-01T07:43:47.997991+00:00",
+  "repository_revision": "de149c4202d0ebce107c640fd98862f320ff84e4",
+  "serial_port": "/dev/ttyACM0",
+  "runtime": {
+    "reset_cause": 5,
+    "implementation_name": "micropython",
+    "platform": "esp32",
+    "uname": {
+      "nodename": "esp32",
+      "release": "1.28.0",
+      "version": "v1.28.0 on 2026-10-01",
+      "machine": "Generic ESP32S3 module with Octal-SPIRAM with ESP32S3",
+      "sysname": "esp32"
+    },
+    "filesystem": {
+      "blocks_total": 3584,
+      "fragment_size": 4096,
+      "blocks_free": 2528,
+      "blocks_available": 2528,
+      "block_size": 4096,
+      "bytes_total": 14680064,
+      "bytes_free": 10354688
+    },
+    "spiram_8bit": {
+      "capabilities": 1028,
+      "total_bytes": 8388608,
+      "regions": [
+        [
+          8388608,
+          8320004,
+          7208960,
+          6030320
+        ]
+      ],
+      "region_count": 1,
+      "free_bytes": 8320004,
+      "largest_free_block": 7208960,
+      "minimum_free_bytes": 6030320
+    },
+    "micropython_version": "3.4.0; MicroPython v1.28.0 on 2026-10-01",
+    "cpu_hz": 240000000,
+    "internal_8bit": {
+      "capabilities": 2052,
+      "total_bytes": 345643,
+      "regions": [
+        [
+          32767,
+          32031,
+          31744,
+          32031
+        ],
+        [
+          8096,
+          7716,
+          7680,
+          7716
+        ],
+        [
+          22308,
+          4,
+          0,
+          4
+        ],
+        [
+          32768,
+          32032,
+          31744,
+          32032
+        ],
+        [
+          249704,
+          155708,
+          147456,
+          146144
+        ]
+      ],
+      "region_count": 5,
+      "free_bytes": 227491,
+      "largest_free_block": 147456,
+      "minimum_free_bytes": 217927
+    },
+    "gc": {
+      "allocated_bytes": 4528,
+      "free_bytes": 7268432
+    },
+    "implementation_version": [
+      1,
+      28,
+      0,
+      ""
+    ],
+    "native_modules": {
+      "_oreo_rv565": {
+        "available": true,
+        "inflate_frame": true
+      },
+      "_oreo_ir": {
+        "available": true,
+        "poll": true
+      }
+    }
+  },
+  "configuration": {
+    "path": "/home/elixpo/esp/micropython-v1.28/ports/esp32/build-oreoos-s3-v55/sdkconfig",
+    "sha256": "af0c58e8bb26b96e19e980fb8fd245771ee44812c4b6342607e450e35a582708"
+  }
+}

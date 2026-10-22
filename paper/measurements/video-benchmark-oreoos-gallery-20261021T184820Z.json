@@ -1,0 +1,68 @@
+{
+  "ready": {
+    "warmup": 48,
+    "sample_frames": 720,
+    "media": "bbb090.rv565"
+  },
+  "summary": {
+    "frames": 720,
+    "elapsed_us": 59161574,
+    "fps": 12.170061,
+    "drops": 0,
+    "deadline_misses": 720
+  },
+  "timing_us": {
+    "read_us": {
+      "mean": 27631.470833333333,
+      "p50": 27486.0,
+      "p95": 32748.249999999996,
+      "p99": 33546.43,
+      "maximum": 34383.0
+    },
+    "inflate_us": {
+      "mean": 9525.019444444444,
+      "p50": 9497.0,
+      "p95": 10019.35,
+      "p99": 10574.43,
+      "maximum": 10850.0
+    },
+    "scale_us": {
+      "mean": 7641.359722222222,
+      "p50": 7622.0,
+      "p95": 7678.05,
+      "p99": 8193.529999999999,
+      "maximum": 8743.0
+    },
+    "draw_us": {
+      "mean": 9100.011111111111,
+      "p50": 9050.0,
+      "p95": 9431.0,
+      "p99": 9916.30999999999,
+      "maximum": 14635.0
+    },
+    "present_us": {
+      "mean": 33316.86111111111,
+      "p50": 33237.0,
+      "p95": 33697.0,
+      "p99": 33917.96,
+      "maximum": 34344.0
+    },
+    "work_us": {
+      "mean": 80400.04166666667,
+      "p50": 80174.5,
+      "p95": 86067.2,
+      "p99": 87117.48999999999,
+      "maximum": 92102.0
+    }
+  },
+  "collector_schema_version": 1,
+  "captured_at_utc": "2026-10-21T18:48:20.900713+00:00",
+  "artifacts": {
+    "gallery": "47909496ec509882b1a3e9fd4ea7cd033fb08c294e2e956c76c203841d8892c4",
+    "launcher": "f36e3d718e164cbef6f7ccdd8dfb12fdd3be4033e3cc853414a640fc900471cc",
+    "firmware_module": "1ac54cbfc2492aeba051c54f3467b7b17db51880eb95929cb209be63a8614b88",
+    "media": "d62fc8a669eebcff68dfd2bcc9df0670fcfaa9ab2a4dec297173e0c694dce8e8"
+  },
+  "frame_csv": "video-benchmark-oreoos-gallery-20261021T184820Z.csv",
+  "raw_log": "video-benchmark-oreoos-gallery-20261021T184820Z.log"
+}

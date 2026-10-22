@@ -1,0 +1,193 @@
+{
+  "aggregate_schema_version": 1,
+  "created_at_utc": "2026-10-21T16:53:28.918760+00:00",
+  "label": "bbb090-overlap",
+  "methodology": {
+    "independent_runs": 10,
+    "frames_per_run": 720,
+    "total_frames": 7200,
+    "warmup_frames_per_run": 48,
+    "latency_percentiles": "pooled empirical distribution over all frames",
+    "run_confidence_intervals": "two-sided 95% Student-t"
+  },
+  "inputs": [
+    "paper/measurements/video-benchmark-bbb090-overlap-r01-20261021T164751Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r02-20261021T164829Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r03-20261021T164906Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r04-20261021T164944Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r05-20261021T165021Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r06-20261021T165059Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r07-20261021T165136Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r08-20261021T165213Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r09-20261021T165251Z.json",
+    "paper/measurements/video-benchmark-bbb090-overlap-r10-20261021T165328Z.json"
+  ],
+  "artifacts": {
+    "application": "2c558e1c57b432df140935dba89583ee1657af43432b3cb01ca5b54946144c3f",
+    "media": "d62fc8a669eebcff68dfd2bcc9df0670fcfaa9ab2a4dec297173e0c694dce8e8",
+    "sdkconfig": "18a8142f7def70f3cfa4e9aa2132796dcd29ecd289e08ea6d199cd5bef328bfe"
+  },
+  "metadata": {
+    "project": "oreo_video_dma",
+    "idf": "v5.5.1",
+    "elf_sha256": "87d60e0457d413f3756b131fc724044261474c8b598700c99ca49d817dc822da",
+    "cpu_mhz": 240,
+    "spi_khz": 40000,
+    "source_width": 180,
+    "source_height": 135,
+    "source_fps": 24,
+    "source_frames": 240,
+    "container_version": 6,
+    "container_bytes": 6421314,
+    "warmup_frames": 48,
+    "sample_frames": 720,
+    "overlap": 1,
+    "backlight_percent": 60
+  },
+  "container_size_mib": 6.123842239379883,
+  "fps": {
+    "count": 10,
+    "mean": 24.0086555,
+    "standard_deviation": 5.270462753640659e-07,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 24.008655123,
+    "upper": 24.008655877,
+    "minimum": 24.008655,
+    "maximum": 24.008656
+  },
+  "elapsed_us": {
+    "count": 10,
+    "mean": 29989184.5,
+    "standard_deviation": 0.5270462766947299,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 29989184.123,
+    "upper": 29989184.877,
+    "minimum": 29989184.0,
+    "maximum": 29989185.0
+  },
+  "run_mean_work_us": {
+    "count": 10,
+    "mean": 31323.988472222223,
+    "standard_deviation": 0.02954305929500523,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 31323.967339859002,
+    "upper": 31324.009604585444,
+    "minimum": 31323.944444444445,
+    "maximum": 31324.03888888889
+  },
+  "run_p99_work_us": {
+    "count": 10,
+    "mean": 31333.0,
+    "standard_deviation": 0.0,
+    "confidence": 0.95,
+    "method": "two-sided Student-t interval over run-level values",
+    "lower": 31333.0,
+    "upper": 31333.0,
+    "minimum": 31333.0,
+    "maximum": 31333.0
+  },
+  "drops": 0,
+  "deadline_misses": 0,
+  "timing_us": {
+    "inflate_us": {
+      "mean": 8901.808333333332,
+      "p50": 8885.0,
+      "p95": 9418.05,
+      "p99": 10022.0,
+      "maximum": 10027.0
+    },
+    "scale_us": {
+      "mean": 2600.1852777777776,
+      "p50": 2599.0,
+      "p95": 2608.0,
+      "p99": 2609.0,
+      "maximum": 2610.0
+    },
+    "dma_wait_us": {
+      "mean": 28472.360416666666,
+      "p50": 28472.0,
+      "p95": 28479.0,
+      "p99": 28481.0,
+      "maximum": 28483.0
+    },
+    "lcd_us": {
+      "mean": 31316.231527777778,
+      "p50": 31314.0,
+      "p95": 31323.0,
+      "p99": 31326.0,
+      "maximum": 31326.0
+    },
+    "work_us": {
+      "mean": 31323.988472222223,
+      "p50": 31322.0,
+      "p95": 31331.0,
+      "p99": 31333.0,
+      "maximum": 31334.0
+    }
+  },
+  "heap_deltas": [
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    },
+    {
+      "media_state_bytes": 100240,
+      "instrumentation_and_stripes_bytes": 78896,
+      "steady_state_drift_bytes": 1424,
+      "minimum_free_bytes": 171928
+    }
+  ]
+}

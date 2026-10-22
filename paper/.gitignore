@@ -1,0 +1,14 @@
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+!measurements/*.log
+*.out
+*.pdf
+!figures/*.pdf
+*.synctex.gz
+arxiv/
+rv565-arxiv.tar.gz
+rv565-arxiv.zip
