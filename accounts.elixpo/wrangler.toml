@@ -1,0 +1,46 @@
+name = "elixpo-accounts"
+compatibility_date = "2025-12-16"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Pages project
+pages_build_output_dir = ".vercel/output/static"
+
+# Cloudflare KV Cache — ELIXPO_ACCOUNTS_CACHE
+[[kv_namespaces]]
+binding = "KV"
+id = "9b64296ee6384191a20e3d1944ad21d3"
+
+# Cloudflare D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "elixpo_auth"
+database_id = "f7455042-ed14-466a-9461-5fd36f628746"
+migrations_dir = "src/workers/migrations"
+
+# Production environment
+[env.production]
+vars = { ENVIRONMENT = "production", JWT_EXPIRATION_MINUTES = "15", REFRESH_TOKEN_EXPIRATION_DAYS = "30" }
+
+  [[env.production.kv_namespaces]]
+  binding = "KV"
+  id = "9b64296ee6384191a20e3d1944ad21d3"
+
+  [[env.production.d1_databases]]
+  binding = "DB"
+  database_name = "elixpo_auth"
+  database_id = "f7455042-ed14-466a-9461-5fd36f628746"
+  migrations_dir = "src/workers/migrations"
+
+# Preview environment (replaces development for Pages)
+[env.preview]
+vars = { ENVIRONMENT = "preview", JWT_EXPIRATION_MINUTES = "15", REFRESH_TOKEN_EXPIRATION_DAYS = "30" }
+
+  [[env.preview.kv_namespaces]]
+  binding = "KV"
+  id = "9b64296ee6384191a20e3d1944ad21d3"
+
+  [[env.preview.d1_databases]]
+  binding = "DB"
+  database_name = "elixpo_auth"
+  database_id = "f7455042-ed14-466a-9461-5fd36f628746"
+  migrations_dir = "src/workers/migrations"

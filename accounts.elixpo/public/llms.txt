@@ -1,0 +1,22 @@
+# Elixpo Accounts
+
+Elixpo Accounts is the OAuth 2.0 and OpenID Connect identity provider for Elixpo and third-party applications. It runs on Cloudflare Pages and exposes an edge-safe TypeScript SDK as `@elixpo/accounts`.
+
+## Canonical documentation
+
+- [Developer documentation](https://accounts.elixpo.com/docs)
+- [OAuth flow](https://accounts.elixpo.com/docs/oauth)
+- [Quickstart](https://accounts.elixpo.com/docs/quickstart)
+- [Users API](https://accounts.elixpo.com/docs/users-api)
+- [Webhooks](https://accounts.elixpo.com/docs/webhooks)
+- [Errors](https://accounts.elixpo.com/docs/errors)
+- [OAuth discovery](https://accounts.elixpo.com/.well-known/oauth-authorization-server)
+- [OpenID discovery](https://accounts.elixpo.com/.well-known/openid-configuration)
+- [JWKS](https://accounts.elixpo.com/.well-known/jwks.json)
+
+## Integration rules
+
+- Use authorization code flow with S256 PKCE, state, and nonce.
+- Keep client secrets, refresh tokens, and authorization transactions server-side.
+- Rotate refresh tokens atomically and verify ID/access tokens against JWKS.
+- Use hosted Accounts pages for credentials, MFA, consent, and account selection.
