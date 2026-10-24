@@ -1,0 +1,92 @@
+{
+  "mode": "negotiate",
+  "mistakes": "prompt",
+  "routing": {
+    "unknown_input": "agent",
+    "typo_distance": 1
+  },
+  "structured_encoding": "auto",
+  "effort": null,
+  "limits": {
+    "max_steps": 60,
+    "max_tool_calls": 120,
+    "max_wall_time_seconds": 900,
+    "max_context_tokens": 64000,
+    "max_output_bytes": 1048576,
+    "max_directory_entries": 4096,
+    "max_harness_initialize_seconds": 30,
+    "max_harness_shutdown_seconds": 5,
+    "max_shell_command_seconds": 300,
+    "max_file_write_bytes": 1048576,
+    "max_steering_messages": 8,
+    "max_steering_bytes": 32768,
+    "max_activity_events": 128
+  },
+  "harness": {
+    "kind": "process",
+    "command": "dsh-jsonrpc-agent",
+    "arguments": [],
+    "cordis": "config/harness/crumb.cordis.yml"
+  },
+  "providers": {
+    "pollinations": {
+      "display_name": "Pollinations",
+      "protocol": "open_ai_completions",
+      "base_url": "https://gen.pollinations.ai/v1",
+      "credential": { "source": "keyring", "service": "crumb.elixpo", "account": "pollinations-api-key" },
+      "models": [
+        { "id": "nova-fast", "input": ["text"], "tool_calling": true, "context_window": 128000, "max_output_tokens": 8192 },
+        { "id": "nova", "input": ["text", "image"], "tool_calling": true, "context_window": 1048576, "max_output_tokens": 8192 },
+        { "id": "qwen-coder", "input": ["text"], "tool_calling": true, "context_window": 262144, "max_output_tokens": 8192 },
+        { "id": "Circuit-Overtime/OreoLook", "input": ["text", "image"], "tool_calling": true, "context_window": 256000, "max_output_tokens": 8192, "reasoning_efforts": { "low": "low", "medium": "medium", "high": "high" }, "compatibility": { "flags": { "reasoning_effort": true } } },
+        { "id": "perplexity", "input": ["text"], "context_window": 200000, "max_output_tokens": 8192 },
+        { "id": "flux", "input": ["image"] },
+        { "id": "klein", "input": ["image"] },
+        { "id": "wan-fast", "input": ["video"] },
+        { "id": "elevenflash", "input": ["audio"] },
+        { "id": "trellis-2", "input": ["three_d"] },
+        { "id": "whisper", "input": ["transcription"] },
+        { "id": "openai-3-small", "input": ["embeddings"] }
+      ]
+    }
+  },
+  "models": {
+    "text": [
+      { "provider": "pollinations", "model": "nova-fast", "effort": null },
+      { "provider": "pollinations", "model": "nova", "effort": null },
+      { "provider": "pollinations", "model": "qwen-coder", "effort": null },
+      { "provider": "pollinations", "model": "Circuit-Overtime/OreoLook", "effort": null }
+    ],
+    "web_search": [
+      { "provider": "pollinations", "model": "perplexity", "effort": null }
+    ],
+    "image": [
+      { "provider": "pollinations", "model": "flux", "effort": null },
+      { "provider": "pollinations", "model": "klein", "effort": null }
+    ],
+    "video": [{ "provider": "pollinations", "model": "wan-fast", "effort": null }],
+    "audio": [{ "provider": "pollinations", "model": "elevenflash", "effort": null }],
+    "three_d": [{ "provider": "pollinations", "model": "trellis-2", "effort": null }],
+    "transcription": [{ "provider": "pollinations", "model": "whisper", "effort": null }],
+    "embeddings": [{ "provider": "pollinations", "model": "openai-3-small", "effort": null }]
+  },
+  "skills": [],
+  "mcp_servers": [
+    {
+      "id": "example-remote",
+      "transport": "streamable_http",
+      "url": "https://mcp.example.com/api",
+      "credential": { "source": "environment", "name": "EXAMPLE_MCP_TOKEN" },
+      "enabled": false
+    }
+  ],
+  "permissions": {
+    "allow_network_tools": ["web_fetch", "web_search"],
+    "allow_workspace_tools": ["write_file"],
+    "allow_execution_tools": ["run_disposable", "run_shell"],
+    "allow_mcp_tools": []
+  },
+  "optimizers": [
+    { "id": "rtk", "command": "rtk", "arguments": [], "enabled": true }
+  ]
+}

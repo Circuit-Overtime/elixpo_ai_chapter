@@ -1,0 +1,20 @@
+THIRD-PARTY NOTICES
+===================
+
+The Crumb source code is licensed under the Elixpo standard. Third-party
+components retain their own licences.
+
+The authoritative Rust and web dependency versions are recorded in Cargo.lock
+and crumb.elixpo/package-lock.json. Harness composition packages retain their
+upstream licence terms.
+
+Downstream vendored copies must retain this licence tree, record the exact
+Crumb commit, and list local modifications.
+
+Bundled agent skills
+--------------------
+
+skills/community/polli/SKILL.md is copied from the Pollinations project,
+pollinations/pollinations packages/polli-cli/SKILL.md at commit 0740daa48,
+under the MIT licence. Local modifications: the `allowed-tools` field was
+removed and a Crumb usage preface was added.

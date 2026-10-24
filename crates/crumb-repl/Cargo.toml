@@ -1,0 +1,12 @@
+[package]
+name = "crumb-repl"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+crumb-core = { path = "../crumb-core" }
+crumb-platform = { path = "../crumb-platform" }
+
+[lints]
+workspace = true
