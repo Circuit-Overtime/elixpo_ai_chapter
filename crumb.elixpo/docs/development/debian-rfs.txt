@@ -1,0 +1,48 @@
+From: Ayushman Bhattacharya <ayushman.elixpo@gmail.com>
+To: submit@bugs.debian.org
+Subject: RFS: crumb/1.0.4-1 [ITP] -- self-hosted agent harness and natural-language terminal
+
+Package: sponsorship-requests
+Severity: wishlist
+
+Dear mentors,
+
+I am looking for a sponsor for my package "crumb":
+
+ * Package name     : crumb
+   Version          : 1.0.4-1
+   Upstream contact : Ayushman Bhattacharya <ayushman.elixpo@gmail.com>
+ * URL              : https://crumb.elixpo.com
+ * License          : MIT and CC-BY-4.0
+ * Vcs              : https://salsa.debian.org/elixpo/crumb
+   Section          : utils
+
+The source builds the following binary package:
+
+  crumb - self-hosted agent harness and natural-language terminal
+
+The package uses Debian-provided Rust crates and the system SQLite library.
+The sole Rust dependency that had to be introduced first was reedline 0.52.1.
+The build and tests run without network access.
+
+The ITP is Debian bug #1151280.
+
+Further information is available at:
+
+  https://mentors.debian.net/package/crumb/
+
+The package can be downloaded with:
+
+  dget -x <MENTORS_DSC_URL>
+
+Changes for the initial upload:
+
+  * Initial Debian release. (Closes: #1151280)
+
+Regards,
+--
+  Ayushman Bhattacharya
+
+This is a prepared draft. Replace the remaining angle-bracket placeholder
+with the actual mentors.debian.net value after the signed source
+package has been uploaded. Do not submit this RFS before those URLs work.

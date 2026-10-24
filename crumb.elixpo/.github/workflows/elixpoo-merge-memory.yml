@@ -1,0 +1,20 @@
+name: Elixpoo merge memory
+on:
+  pull_request:
+    types: [closed]
+permissions: {}
+concurrency:
+  group: elixpoo-merge-memory-${{ github.repository }}
+  cancel-in-progress: false
+jobs:
+  remember:
+    if: github.event.pull_request.merged == true
+    permissions:
+      contents: read
+      pull-requests: read
+    uses: elixpo/agent.elixpo/.github/workflows/elixpoo-merge-memory-reusable.yml@v1
+    secrets:
+      github_token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+      gist_token: ${{ secrets.ELIXPOO_GIST_AGENTIC_TOKEN }}
+      pollinations_key: ${{ secrets.ELIXPO_POLLINATIONS_API_KEY }}
+      gist_id: ${{ secrets.ELIXPOO_FOLLOWUP_GIST_ID }}
