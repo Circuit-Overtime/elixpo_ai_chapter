@@ -1,0 +1,36 @@
+{
+  "heading": "PROJECTS",
+  "description": "Welcome to Karan's portfolio. This section highlights a collection of projects focused on software development, AI integration, and SaaS product design. Explore the repositories to see practical implementations and contributions across multiple domains.",
+  "projects": [
+    {
+      "name": "Kareixo",
+      "description": "Free AI code reviewer for every pull request. Install the GitHub App once and get instant, intelligent code reviews powered by a resilient multi-model router.",
+      "stars": null,
+      "url": "https://kareixo.vercel.app",
+      "owner": "karanray06",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/161947265?v=4",
+      "topics": ["ai", "ide", "github", "agent", "frontend"],
+      "language": "TypeScript"
+    },
+    {
+      "name": "Nirmaan MUN",
+      "description": "Next.js + Supabase MUN conference site with AI assistant. Sole developer from architecture to deployment with real-time delegate support.",
+      "stars": null,
+      "url": "https://nirmaan-jade.vercel.app",
+      "owner": "karanray06",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/161947265?v=4",
+      "topics": ["nextjs", "supabase", "mun", "conference", "frontend"],
+      "language": "TypeScript"
+    },
+    {
+      "name": "EduMesh",
+      "description": "React/Vite/Supabase app with AI integration. Built an AI research-synthesis platform using OpenAI API with custom, depth-adjusted prompt engineering.",
+      "stars": null,
+      "url": "https://edu-mesh.vercel.app",
+      "owner": "karanray06",
+      "ownerLogo": "https://avatars.githubusercontent.com/u/161947265?v=4",
+      "topics": ["react", "vite", "supabase", "ai", "research"],
+      "language": "TypeScript"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "heading": "CONNECT",
+  "heroImage": "/assets/divyanshu/websiteSection/blackhole-seal.webp",
+  "description": "Let's connect for open-source collaborations, full-stack development, security architecture, or opportunities.",
+  "emails": [
+    "divjha.cloud@gmail.com"
+  ],
+  "contactImage": "/assets/divyanshu/connect-hero.jpg",
+  "socialLinks": [
+    { "platform": "GitHub", "url": "https://github.com/divyanshuj91", "icon": "logo-github", "hoverColor": "#333" },
+    { "platform": "LinkedIn", "url": "https://www.linkedin.com/in/divyanshu-jha-b2476b311/", "icon": "logo-linkedin", "hoverColor": "#0077b5" },
+    { "platform": "Twitter", "url": "https://x.com/Divyanshhuvro", "icon": "logo-twitter", "hoverColor": "#1DA1F2" }
+  ]
+}

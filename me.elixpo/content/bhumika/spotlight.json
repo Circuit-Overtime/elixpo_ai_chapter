@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Built VAANI — Sign Language to Speech",
+    "date": "2026-01-01",
+    "description": "Designed and built a real-time AI accessibility tool that translates hand gestures into spoken language, combining computer vision with natural-language sentence generation.",
+    "image": "/assets/bhumika/hrz-image1.webp"
+  },
+  {
+    "title": "Core Contributor at Elixpo",
+    "date": "2025-12-01",
+    "description": "Contributing to multiple Elixpo products including accounts.elixpo, blogs.elixpo, sketch.elixpo, opensource.elixpo, and payouts.elixpo alongside the core team.",
+    "image": "/assets/bhumika/spotlight/elixpo-home.png"
+  },
+  {
+    "title": "GSSoC 2026 Contributor",
+    "date": "2025-10-01",
+    "description": "Contributed to NexaSphere as part of GirlScript Summer of Code 2026.",
+    "image": "/assets/bhumika/spotlight/gssoc.png"
+  },
+  {
+    "title": "ISRO AI/ML for Geodata Analysis",
+    "date": "2026-01-01",
+    "description": "Participated in the IIRS Outreach Programme on \"AI/ML for Geodata Analytics\", organized by the Indian Institute of Remote Sensing (IIRS), ISRO, 2026 — exploring applied machine learning techniques for geospatial data analysis.",
+    "image": "/assets/bhumika/spotlight/isro-iirs.png"
+  }
+]

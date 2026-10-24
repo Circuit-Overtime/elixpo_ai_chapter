@@ -1,0 +1,13 @@
+{
+  "heading": "CONNECT",
+  "description": "Let's connect! Find me on your favorite platforms or drop me a message directly. I'm always open to new opportunities, collaborations, and conversations. Whether you want to discuss a project, share ideas, or just say hi, feel free to reach out. Looking forward to connecting with you!",
+  "emails": [
+    "anwesha@elixpo.com"
+  ],
+  "contactImage": "/assets/anwesha/publication/sq-1.webp",
+  "socialLinks": [
+    { "platform": "GitHub", "url": "https://github.com/anwe-ch", "icon": "logo-github", "hoverColor": "#333" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/in/anwe", "icon": "logo-linkedin", "hoverColor": "#0077b5" },
+    { "platform": "Instagram", "url": "https://instagram.com/itz_anwesha_", "icon": "logo-instagram", "hoverColor": "#E1306C" }
+  ]
+}

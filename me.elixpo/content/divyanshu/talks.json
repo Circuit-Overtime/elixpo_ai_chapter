@@ -1,0 +1,31 @@
+{
+  "heading": "Sessions & Talks",
+  "description": "Selected technical talks, chapter sessions, and community workshops on web security, zero-knowledge architecture, and developer tooling.",
+  "sessions": [
+    {
+      "title": "Understanding Prompt Injection Attacks in LLMs",
+      "venue": "OWASP JIS University × GDG on Campus",
+      "date": "June 2026",
+      "location": "Kolkata, India",
+      "status": "past",
+      "link": "https://github.com/divyanshuj91"
+    },
+    {
+      "title": "Zero-Knowledge Architecture & Client-Side Encryption",
+      "venue": "OWASP Student Chapter Technical Series",
+      "date": "August 2026",
+      "location": "JIS University, Kolkata",
+      "status": "past",
+      "link": "https://github.com/divyanshuj91/Vault-me"
+    },
+    {
+      "title": "Getting Started with Open-Source Systems & Developer Tooling",
+      "venue": "Campus Developer Workshop",
+      "date": "October 2026",
+      "location": "Kolkata, India",
+      "status": "past",
+      "link": "https://github.com/divyanshuj91"
+    }
+  ]
+}
+

@@ -1,0 +1,25 @@
+{
+  "intro": {
+    "heading": "DIVYANSHU",
+    "subheading": "ABOUT!",
+    "description": "I am an engineering student at JIS University (Kolkata), full-stack developer, and open-source contributor. I focus on building scalable web architectures, privacy-first tools, and secure systems while serving as Chapter Operations Lead at OWASP JIS University Chapter and actively contributing to Elixpo.",
+    "portraitImage": "/assets/divyanshu/divyanshu-avatar.jpg"
+  },
+  "fancySection": {
+    "banner": "PROFILE",
+    "subtitle": "Experience & Focus Areas",
+    "content": "My work bridges full-stack engineering, cybersecurity, and applied machine learning. As Chapter Operations Lead at OWASP JIS University, I focus on system integrity, client-side encryption, and privacy-respecting architectures. Whether building zero-knowledge password managers like Vault-me or browser-based deepfake detectors like Stober, I build software that solves real problems with uncompromising security.",
+    "highlights": [
+      "Full-Stack Web Architecture",
+      "Chapter Operations Lead @ OWASP JIS University",
+      "Secure Coding & Zero-Knowledge Systems",
+      "Open Source Contributor @ Elixpo"
+    ],
+    "contactNote": "Always open to collaborating on high-impact open-source systems, developer tooling, and engineering opportunities.",
+    "shoutouts": ["Elixpo Ecosystem", "OWASP JIS University Chapter"],
+    "shoutoutText": "for driving open-source collaboration and security culture."
+  },
+  "images": {
+    "gallery": []
+  }
+}

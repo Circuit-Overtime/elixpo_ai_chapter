@@ -1,0 +1,13 @@
+{
+  "name": "Elixpo",
+  "short_name": "Elixpo",
+  "description": "Official Elixpo member portfolios connecting projects, research, talks, writing, and public contribution records.",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#142018",
+  "background_color": "#f6f5f0",
+  "display": "standalone",
+  "start_url": "/"
+}
