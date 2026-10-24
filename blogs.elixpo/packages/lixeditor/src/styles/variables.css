@@ -1,0 +1,75 @@
+/* ===== LixEditor CSS Variables =====
+ * Override these to customize the editor's appearance.
+ * All variables fall back to sensible defaults. */
+
+:root {
+  /* Text colors */
+  --lix-text-primary: #1a1a2e;
+  --lix-text-secondary: #4a4a5a;
+  --lix-text-muted: #6b7280;
+  --lix-text-faint: #9ca3af;
+
+  /* Backgrounds */
+  --lix-bg-app: #ffffff;
+  --lix-bg-surface: #f7f7f9;
+  --lix-bg-elevated: #eeeef2;
+  --lix-bg-hover: rgba(0, 0, 0, 0.04);
+
+  /* Borders */
+  --lix-border: #dcdce4;
+  --lix-border-hover: #c4c4d0;
+  --lix-divider: #eeeef2;
+
+  /* Accent */
+  --lix-accent: #9b7bf7;
+  --lix-accent-hover: #8b6ae6;
+  --lix-accent-subtle: rgba(155, 123, 247, 0.08);
+
+  /* Code blocks */
+  --lix-code-bg: #f8f8fb;
+  --lix-code-text: #3d3d50;
+  --lix-code-lang-bg: #eeeef2;
+  --lix-code-lang-text: #6b7280;
+
+  /* Links */
+  --lix-link-color: #7ba8f0;
+  --lix-link-hover: #9dc0ff;
+
+  /* Inline code */
+  --lix-inline-code-color: #7c3aed;
+  --lix-inline-code-bg: rgba(124, 58, 237, 0.08);
+
+  /* Shadows */
+  --lix-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --lix-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+
+  /* Font families */
+  --lix-font-body: 'Source Serif 4', Georgia, serif;
+  --lix-font-code: 'SF Mono', 'Fira Code', monospace;
+}
+
+[data-theme="dark"] {
+  --lix-text-primary: #e4e4e7;
+  --lix-text-secondary: #b0b0c0;
+  --lix-text-muted: #8b8fa3;
+  --lix-text-faint: #555;
+
+  --lix-bg-app: #0e1219;
+  --lix-bg-surface: #141a26;
+  --lix-bg-elevated: #1e2638;
+  --lix-bg-hover: rgba(255, 255, 255, 0.05);
+
+  --lix-border: #232d3f;
+  --lix-border-hover: #333d50;
+  --lix-divider: #1e2638;
+
+  --lix-code-bg: #0e1219;
+  --lix-code-text: #c8d1e0;
+  --lix-code-lang-bg: #1a2030;
+  --lix-code-lang-text: #9ba8b9;
+
+  --lix-inline-code-color: #c4b5fd;
+  --lix-inline-code-bg: rgba(196, 181, 253, 0.1);
+
+  --lix-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
+}

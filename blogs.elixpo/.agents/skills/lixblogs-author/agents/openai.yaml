@@ -1,0 +1,7 @@
+interface:
+  display_name: "LixBlogs Author"
+  short_description: "Draft and revise LixBlogs posts safely"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $lixblogs-author to prepare or revise a LixBlogs draft through the CLI."
+policy:
+  allow_implicit_invocation: true
