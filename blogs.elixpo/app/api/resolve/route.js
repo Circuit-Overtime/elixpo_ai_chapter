@@ -287,6 +287,33 @@ export async function GET(request) {
             }
         }
 
+        // A user and an org can end up sharing one name: sign-up keeps the
+        // Accounts username even when an org already holds the namespace. The
+        // namespace row points at the org, which would 404 every personal post
+        // of the user. When the org has nothing at this slug, serve the user's.
+        if (ownerType === "org" && slug && !collection) {
+            const shadowed = await db
+                .prepare("SELECT id FROM users WHERE LOWER(username) = ?")
+                .bind(name)
+                .first();
+            if (shadowed) {
+                const orgHit = await db
+                    .prepare(`
+          SELECT 1 FROM blogs WHERE LOWER(slug) = ? AND published_as = ?
+            AND status IN ('published', 'unlisted') AND secret = 0
+          UNION ALL
+          SELECT 1 FROM collections WHERE org_id = ? AND LOWER(slug) = ?
+          LIMIT 1
+        `)
+                    .bind(slug, `org:${ownerId}`, ownerId, slug)
+                    .first();
+                if (!orgHit) {
+                    ownerType = "user";
+                    ownerId = shadowed.id;
+                }
+            }
+        }
+
         // Resolve profile
         if (ownerType === "user") {
             const user = await db

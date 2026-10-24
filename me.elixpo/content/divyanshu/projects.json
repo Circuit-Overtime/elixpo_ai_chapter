@@ -1,0 +1,110 @@
+{
+  "heading": "PROJECTS",
+  "layout": "bento",
+  "heroImage": "/assets/divyanshu/projects/blackhole-stamp.webp",
+  "description": "Selected software projects, zero-knowledge architectures, desktop utilities, and open-source contributions across the Elixpo ecosystem.",
+  "projects": [
+    {
+      "name": "elixpo-chapter",
+      "displayName": "Elixpo Chapter & Ecosystem",
+      "description": "Core multi-product platform architecture and collaborative repositories across the Elixpo ecosystem, contributing to developer tooling, community surfaces, and shared component primitives.",
+      "stars": null,
+      "url": "https://github.com/elixpo/elixpo_chapter",
+      "owner": "elixpo",
+      "ownerLogo": "https://github.com/elixpo.png",
+      "topics": ["elixpo", "open-source", "developer-tooling", "architecture", "monorepo"],
+      "language": "TypeScript",
+      "bentoSpan": 2
+    },
+    {
+      "name": "Vault-me",
+      "displayName": "Vault-me",
+      "description": "Local-first zero-knowledge password manager utilizing client-side AES-256-GCM encryption and Argon2id key derivation with cryptographic salt.",
+      "stars": 5,
+      "url": "https://github.com/divyanshuj91/Vault-me",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["cryptography", "zero-knowledge", "aes-256", "argon2id", "security"],
+      "language": "TypeScript"
+    },
+    {
+      "name": "Stober",
+      "displayName": "Stober",
+      "description": "On-device real-time deepfake detector for browser video calls utilizing facial landmark tracking, eye-blink frequency, lip-sync mismatch, and rPPG pulse verification.",
+      "stars": 1,
+      "url": "https://github.com/divyanshuj91/Stober",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["deepfake-detection", "computer-vision", "machine-learning", "webrtc"],
+      "language": "JavaScript"
+    },
+    {
+      "name": "Capsker",
+      "displayName": "Capsker",
+      "description": "High-performance developer utility tool for rapid visual capture, smart annotations, and asset pipelines designed for swift developer feedback cycles.",
+      "stars": 1,
+      "url": "https://github.com/divyanshuj91/Capsker",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["developer-tools", "productivity", "utilities", "frontend"],
+      "language": "TypeScript"
+    },
+    {
+      "name": "Paendeo",
+      "displayName": "Paendeo",
+      "description": "Lightweight Electron-based desktop companion featuring an interactive floating panda animated with real-time 2D physics and idle state behaviors.",
+      "stars": 5,
+      "url": "https://github.com/divyanshuj91/Paendeo",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["electron", "desktop-app", "physics", "javascript"],
+      "language": "JavaScript"
+    },
+    {
+      "name": "lixsketch",
+      "displayName": "LixSketch Whiteboard Suite",
+      "description": "Hand-drawn style infinite whiteboard platform and diagramming suite across the Elixpo ecosystem, powering embeddable visual ideation and canvas rendering.",
+      "stars": null,
+      "url": "https://sketch.elixpo.com",
+      "owner": "elixpo",
+      "ownerLogo": "https://github.com/elixpo.png",
+      "topics": ["whiteboard", "canvas", "diagramming", "collaboration", "elixpo"],
+      "language": "TypeScript",
+      "bentoSpan": 2
+    },
+    {
+      "name": "megzo-project",
+      "displayName": "Megzo E-Commerce",
+      "description": "Full-stack e-commerce platform application built with modern component architectures, state-driven cart persistence, and responsive product catalog flows.",
+      "stars": 1,
+      "url": "https://github.com/divyanshuj91/megzo-project",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["ecommerce", "fullstack", "react", "nodejs", "ui"],
+      "language": "JavaScript"
+    },
+    {
+      "name": "Remener",
+      "displayName": "Remener",
+      "description": "Discord management and operations bot built for developers to automate communications, server workflows, event alerts, and moderation.",
+      "stars": 1,
+      "url": "https://github.com/divyanshuj91/Remener",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["discord-bot", "automation", "devops", "bot"],
+      "language": "JavaScript"
+    },
+    {
+      "name": "El",
+      "displayName": "El — Asset-Aware VCS",
+      "description": "An elegant, asset-aware version control system designed from the ground up for indie studios, solo developers, and artists, pairing an intuitive workflow with deep game engine integration.",
+      "stars": null,
+      "url": "https://github.com/divyanshuj91/El",
+      "owner": "divyanshuj91",
+      "ownerLogo": "https://github.com/divyanshuj91.png",
+      "topics": ["version-control", "vcs", "game-dev", "assets", "godot"],
+      "language": "Systems",
+      "bentoSpan": 2
+    }
+  ]
+}

@@ -6,7 +6,7 @@
  * Fallback: checks `users.username` and `orgs.slug` directly.
  */
 
-import { containsProfanity } from './validate';
+import { containsProfanity } from './validate.js';
 
 // Reserved names that can't be used as usernames or org slugs
 const RESERVED_NAMES = new Set([
@@ -67,6 +67,32 @@ export async function checkNameAvailable(db, name) {
   return { available: true };
 }
 
+const ACCOUNTS_USERNAME_CHECK = 'https://accounts.elixpo.com/api/auth/username/check';
+
+// Usernames come from Elixpo Accounts and LixBlogs cannot refuse or rename them,
+// so an org handle must not collide with any Accounts username, including
+// people who have not signed in to LixBlogs yet. Otherwise their first sign-in
+// lands on a name the org already holds and their profile and posts 404.
+// Returns an error string when the org may not take the name, else null.
+export async function orgNameConflict(db, clean) {
+  // The namespace row for a user can be missing (sign-up seeds it best-effort).
+  const user = await db.prepare('SELECT 1 FROM users WHERE LOWER(username) = ?').bind(clean).first();
+  if (user) return 'Taken by a user';
+  try {
+    const res = await fetch(`${ACCOUNTS_USERNAME_CHECK}?u=${encodeURIComponent(clean)}`, {
+      signal: AbortSignal.timeout(4000),
+    });
+    const body = await res.json();
+    if (body?.available) return null;
+    const reason = String(body?.reason || '');
+    if (/taken|reserved/i.test(reason)) return 'Taken by an Elixpo account';
+    // Outside Accounts' username format (e.g. 2 characters), so no account can own it.
+    if (res.ok && !/could not/i.test(reason)) return null;
+  } catch {}
+  // Fail closed: a wrong "available" here is what caused the collision.
+  return 'Could not verify this handle right now. Please try again.';
+}
+
 /**
  * Reserve a name in the shared namespace.
  * Uses INSERT OR IGNORE to handle race conditions — if two requests
@@ -77,6 +103,10 @@ export async function reserveName(db, name, ownerType, ownerId) {
   const clean = String(name || '').toLowerCase().trim();
   const fmt = validateNameFormat(clean);
   if (!fmt.valid) return { success: false, error: fmt.error };
+  if (ownerType === 'org') {
+    const conflict = await orgNameConflict(db, clean);
+    if (conflict) return { success: false, error: conflict };
+  }
   const result = await db.prepare(
     'INSERT OR IGNORE INTO namespaces (name, owner_type, owner_id, created_at) VALUES (?, ?, ?, unixepoch())'
   ).bind(clean, ownerType, ownerId).run();
@@ -97,6 +127,10 @@ export async function tryReserveName(db, name, ownerType, ownerId) {
 
   const fmt = validateNameFormat(clean);
   if (!fmt.valid) return { success: false, error: fmt.error };
+  if (ownerType === 'org') {
+    const conflict = await orgNameConflict(db, clean);
+    if (conflict) return { success: false, error: conflict };
+  }
 
   // Try to insert — PRIMARY KEY constraint prevents duplicates
   try {

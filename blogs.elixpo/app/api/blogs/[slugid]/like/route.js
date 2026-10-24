@@ -34,6 +34,9 @@ export async function POST(request, { params }) {
     const { getDB } = await import('../../../../../lib/cloudflare');
     const db = getDB();
 
+    const blog = await db.prepare('SELECT 1 AS found FROM blogs WHERE id = ?').bind(slugid).first();
+    if (!blog) return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
+
     const existing = await db.prepare('SELECT 1 FROM likes WHERE blog_id = ? AND user_id = ?')
       .bind(slugid, session.userId).first();
 

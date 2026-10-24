@@ -1,3 +1,10 @@
+// BlockNote links keep their text one level down: { type: 'link', content: [{ text }] }.
+const inlineText = (c) => {
+  if (typeof c === 'string') return c;
+  if (c?.type === 'link') return (c.content || []).map(inlineText).join('');
+  return c?.text || '';
+};
+
 // Extract a short plain-text excerpt ("starting lines") from BlockNote blocks.
 export function excerptFromBlocks(blocks, max = 200) {
   if (!Array.isArray(blocks)) return '';
@@ -8,7 +15,7 @@ export function excerptFromBlocks(blocks, max = 200) {
       // Skip non-prose blocks.
       if (b?.type && ['image', 'video', 'audio', 'file', 'codeBlock', 'table', 'equation'].includes(b.type)) continue;
       const txt = (b?.content || [])
-        .map((c) => (typeof c === 'string' ? c : c?.text || ''))
+        .map(inlineText)
         .join('')
         .trim();
       if (txt) out.push(txt);

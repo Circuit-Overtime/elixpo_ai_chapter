@@ -44,7 +44,7 @@ export default {
     }
 
     // Check the user has edit access to this blog
-    const hasAccess = await checkEditAccess(env.DB, blogId, session.userId);
+    const hasAccess = await checkEditAccess(env.DB, blogId, session.userId, env);
     if (!hasAccess) {
       return new Response(JSON.stringify({ error: 'Not authorized' }), {
         status: 403,
@@ -143,8 +143,10 @@ async function validateSession(request, env, expectedBlogId) {
 }
 
 // Check if user can edit this blog (author or co-author with write access)
-async function checkEditAccess(db, blogId, userId) {
-  if (!db) return true; // Allow in dev without D1
+async function checkEditAccess(db, blogId, userId, env) {
+  // Fail closed without a database binding. Local dev can opt into the
+  // permissive path explicitly with ALLOW_NO_DB_DEV=1.
+  if (!db) return env?.ALLOW_NO_DB_DEV === '1';
   try {
     // Check if author
     const blog = await db.prepare(

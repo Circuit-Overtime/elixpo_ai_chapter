@@ -81,7 +81,7 @@ function parseDate(field, raw) {
  */
 export function parseSearchQuery(raw = '') {
   const out = {
-    text: [], phrases: [],
+    text: [], phrases: [], notText: [],
     tags: [], notTags: [],
     authors: [], notAuthors: [],
     orgs: [], notOrgs: [],
@@ -103,7 +103,10 @@ export function parseSearchQuery(raw = '') {
     if (!val) continue;
 
     if (!key) {
-      (quoted ? out.phrases : out.text).push(val);
+      // `-word` / `-"phrase"` exclude, like -tag:. Without this the minus was
+      // dropped and the query searched *for* the word it meant to exclude.
+      if (neg) out.notText.push(val);
+      else (quoted ? out.phrases : out.text).push(val);
       continue;
     }
 
@@ -138,8 +141,11 @@ export function parseSearchQuery(raw = '') {
       }
       case 'created':
       case 'published': {
-        const d = parseDate(key, val);
+        // Dates have no negated form; applying -created:X as created:X would
+        // return exactly the posts the user asked to leave out.
+        const d = neg ? null : parseDate(key, val);
         if (d) out.dates.push(d);
+        else if (neg) out.unknown.push(`-${key}:${val}`);
         else out.unknown.push(`${key}:${val}`);
         break;
       }
@@ -155,7 +161,7 @@ export function parseSearchQuery(raw = '') {
 
 /** True when the query asks for nothing at all (no text, no qualifiers). */
 export function isEmptyQuery(p) {
-  return !p.text.length && !p.phrases.length && !p.tags.length && !p.notTags.length &&
+  return !p.text.length && !p.phrases.length && !p.notText.length && !p.tags.length && !p.notTags.length &&
     !p.authors.length && !p.notAuthors.length && !p.orgs.length && !p.notOrgs.length &&
     !p.statuses.length && !p.notStatuses.length && !p.in.length && !p.dates.length && p.sort === null && p.secret === null;
 }
@@ -185,6 +191,13 @@ export function buildBlogSearch(parsed, { defaultStatus = ['published', 'unliste
   for (const term of [...parsed.text, ...parsed.phrases]) {
     const ors = fields.map((col) => `LOWER(${col}) LIKE ? ESCAPE '\\'`);
     where.push(`(${ors.join(' OR ')})`);
+    for (const _ of fields) binds.push(`%${escapeLike(term)}%`);
+  }
+  // Excluded terms must not appear in any searched field. COALESCE keeps a NULL
+  // subtitle from turning the whole NOT (...) into NULL and hiding the post.
+  for (const term of parsed.notText) {
+    const ors = fields.map((col) => `LOWER(COALESCE(${col}, '')) LIKE ? ESCAPE '\\'`);
+    where.push(`NOT (${ors.join(' OR ')})`);
     for (const _ of fields) binds.push(`%${escapeLike(term)}%`);
   }
 

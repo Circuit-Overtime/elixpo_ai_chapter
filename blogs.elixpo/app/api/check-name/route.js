@@ -17,6 +17,14 @@ export async function GET(request) {
     const { checkNameAvailable } = await import('../../../lib/namespace');
     const db = getDB();
     const result = await checkNameAvailable(db, name);
+    // The org form also asks Accounts (see orgNameConflict). Accounts calls this
+    // route without `for=org` to look up org names, so the plain form must stay
+    // DB-only or the two services would query each other in a loop.
+    if (result.available && searchParams.get('for') === 'org') {
+      const { orgNameConflict } = await import('../../../lib/namespace');
+      const conflict = await orgNameConflict(db, name);
+      if (conflict) return NextResponse.json({ available: false, takenBy: 'user', error: conflict });
+    }
     return NextResponse.json(result);
   } catch {
     return NextResponse.json({ available: false, error: 'Availability check unavailable' }, { status: 503 });

@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getDatabase } from "@/lib/d1-client";
 import { isUsernameTaken } from "@/lib/db";
 import { cacheGet, cacheSet } from "@/lib/kv-cache";
+import { isLixBlogsOrgHandle } from "@/lib/lixblogs-handles";
 import { validateUsername } from "@/lib/username";
 
 /**
@@ -33,7 +34,11 @@ export async function GET(request: NextRequest) {
         }
 
         const db = await getDatabase();
-        const taken = await isUsernameTaken(db, username);
+        // A LixBlogs org handle counts as taken: blogs.elixpo.com/<name> would
+        // show the org instead of this user.
+        const taken =
+            (await isUsernameTaken(db, username)) ||
+            (await isLixBlogsOrgHandle(username));
         await cacheSet(
             `username:taken:${username}`,
             { taken },

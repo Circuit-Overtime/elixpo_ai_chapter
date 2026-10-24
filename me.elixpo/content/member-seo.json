@@ -150,5 +150,34 @@
       "Python"
     ],
     "affiliations": ["Elixpo", "GSSoC"]
+  },
+  "divyanshu": {
+    "title": "Divyanshu Jha — Open Source & Full-Stack Developer | Elixpo",
+    "description": "Divyanshu Jha is an open-source contributor and full-stack developer engineering zero-knowledge architectures, security tools, and scalable web systems.",
+    "givenName": "Divyanshu",
+    "familyName": "Jha",
+    "jobTitle": "Open-Source Contributor and Full-Stack Developer",
+    "aliases": ["Divyanshu", "divyanshuj91"],
+    "keywords": [
+      "full-stack developer",
+      "open source contributor",
+      "zero-knowledge security",
+      "cryptography",
+      "deepfake detection",
+      "React",
+      "Next.js",
+      "Elixpo"
+    ],
+    "knowsAbout": [
+      "Full-Stack Development",
+      "Open Source",
+      "Zero-Knowledge Systems",
+      "Applied Machine Learning",
+      "Web Security",
+      "React",
+      "Next.js",
+      "Node.js"
+    ],
+    "affiliations": ["Elixpo", "OWASP JIS University"]
   }
 }

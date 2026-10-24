@@ -87,8 +87,14 @@ export async function PATCH(request) {
     const db = getDB();
     const sets = [], binds = [];
     if (typeof name === 'string' && name.trim()) {
-      const slug = collectionSlug(name);
+      let slug = collectionSlug(name);
       if (slug.length < 3) return NextResponse.json({ error: 'Collection name must be at least 3 characters' }, { status: 400 });
+      // Keep slugs unique within this user's lists, like POST does.
+      const base = slug;
+      let n = 1;
+      while (await db.prepare('SELECT 1 FROM bookmark_collections WHERE user_id = ? AND slug = ? AND id != ?').bind(session.userId, slug, id).first()) {
+        slug = `${base}-${++n}`;
+      }
       sets.push('name = ?', 'slug = ?'); binds.push(name.trim(), slug);
     }
     if (typeof description === 'string') { sets.push('description = ?'); binds.push(description.trim().slice(0, 500)); }
@@ -125,7 +131,10 @@ export async function DELETE(request) {
   try {
     const { getDB } = await import('../../../../lib/cloudflare');
     const db = getDB();
-    await db.prepare('DELETE FROM bookmark_collections WHERE id = ? AND user_id = ?').bind(id, session.userId).run();
+    await db.batch([
+      db.prepare('UPDATE bookmarks SET collection_id = NULL WHERE collection_id = ? AND user_id = ?').bind(id, session.userId),
+      db.prepare('DELETE FROM bookmark_collections WHERE id = ? AND user_id = ?').bind(id, session.userId),
+    ]);
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: 'Failed' }, { status: 500 });

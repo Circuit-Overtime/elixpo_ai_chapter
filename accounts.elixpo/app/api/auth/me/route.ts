@@ -13,6 +13,7 @@ import {
 } from "@/lib/db";
 import { createAccessToken, createRefreshToken, verifyJWT } from "@/lib/jwt";
 import { cacheDel, cacheSet } from "@/lib/kv-cache";
+import { isLixBlogsOrgHandle } from "@/lib/lixblogs-handles";
 import { validateUsername } from "@/lib/username";
 import { generateUUID, hashString } from "@/lib/webcrypto";
 
@@ -521,8 +522,12 @@ export async function PATCH(request: NextRequest) {
                     setClauses.push("username_change_count = 0");
                 }
 
-                // Friendly pre-check; the UNIQUE index is the real guard.
-                if (await isUsernameTaken(db, v.value)) {
+                // Friendly pre-check; the UNIQUE index is the real guard. LixBlogs
+                // org handles share the blogs.elixpo.com/<name> namespace.
+                if (
+                    (await isUsernameTaken(db, v.value)) ||
+                    (await isLixBlogsOrgHandle(v.value))
+                ) {
                     return NextResponse.json(
                         { error: "That username is taken." },
                         { status: 409 },

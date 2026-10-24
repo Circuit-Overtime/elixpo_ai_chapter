@@ -169,7 +169,7 @@ export async function PUT(request) {
       if (cur && check.slug !== cur.slug) {
         const { reserveName, releaseName } = await import('../../../lib/namespace');
         const res = await reserveName(db, check.slug, 'org', orgId);
-        if (!res.success) return NextResponse.json({ error: 'That handle is already taken' }, { status: 409 });
+        if (!res.success) return NextResponse.json({ error: res.error || 'That handle is already taken' }, { status: 409 });
         await releaseName(db, cur.slug);
         await db.prepare('UPDATE orgs SET slug = ? WHERE id = ?').bind(check.slug, orgId).run();
         finalSlug = check.slug;

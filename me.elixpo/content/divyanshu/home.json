@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "focusTags": ["Full-Stack", "Security & Zero-Knowledge", "Open Source"],
+    "name": "DIVYANSHU",
+    "headline": "Open Source Contributor & Full-Stack Developer",
+    "subhead": "Chapter Operations Lead @ OWASP JIS University · Contributor @ Elixpo",
+    "intro": "Engineering full-stack web architectures, secure zero-knowledge systems, and privacy-first tools. Active contributor to the Elixpo open-source ecosystem.",
+    "credentials": [
+      { "label": "Chapter Operations Lead", "org": "OWASP JIS University" },
+      { "label": "Contributor", "org": "Elixpo" }
+    ],
+    "ctas": [
+      { "label": "View Projects", "href": "projects" },
+      { "label": "Connect", "href": "connect" }
+    ],
+    "portrait": "/assets/divyanshu/divyanshu-avatar.jpg"
+  },
+  "intro": {
+    "heroName": "DIVYANSHU",
+    "tagline": "SYSTEMS &",
+    "taglineSuffix": "SECURITY",
+    "description": "I engineer performant, secure, and modern web applications with focus on zero-knowledge encryption, clean interfaces, and resilient backend systems.",
+    "highlights": [
+      "Full-Stack Web Architecture",
+      "Client-side AES-256 & Argon2id",
+      "On-device Vision & ML Detection",
+      "Open Source Contributor"
+    ],
+    "images": {
+      "portrait": "/assets/divyanshu/divyanshu-avatar.jpg",
+      "landscape": "/assets/divyanshu/hrz-image1.webp"
+    }
+  },
+  "websiteSection": {
+    "designedBy": "Built as part of the Elixpo Portfolios platform — connecting verified contributions, open projects, and personal research across the community.",
+    "futurePlans": "Deepening work in zero-knowledge cryptography, secure web runtimes, and privacy-preserving machine learning on the client. Continuing active contributions across the Elixpo open-source ecosystem.",
+    "codeStory": "From building zero-knowledge architectures in Vault-me to detecting synthesized video streams in real-time with Stober, my engineering mindset centers around verifiable security and practical utility. Building in public with Elixpo has reinforced the value of open source, code hygiene, and collaborative craftsmanship.",
+    "images": {
+      "owl": "/assets/divyanshu/websiteSection/hz-owl1.webp",
+      "humanThink": "/assets/divyanshu/websiteSection/human-think1.webp",
+      "seal": "/assets/divyanshu/websiteSection/sq-seal1.webp"
+    }
+  },
+  "techSection": {
+    "heading": "TECH STACK",
+    "subheading": "SKILLS",
+    "description": "Technologies and tools I use to build secure, scalable applications and systems.",
+    "skills": [
+      { "type": "text", "label": "JavaScript" },
+      { "type": "text", "label": "TypeScript" },
+      { "type": "text", "label": "React" },
+      { "type": "text", "label": "Next.js" },
+      { "type": "text", "label": "Node.js" },
+      { "type": "text", "label": "Python" },
+      { "type": "text", "label": "Tailwind CSS" },
+      { "type": "text", "label": "Cryptography (AES/Argon2)" },
+      { "type": "text", "label": "Git & GitHub" }
+    ],
+    "explore": [
+      { "label": "Projects", "caption": "Repositories & builds", "href": "projects" },
+      { "label": "About", "caption": "Background & direction", "href": "about" },
+      { "label": "Connect", "caption": "Direct channels", "href": "connect" }
+    ],
+    "images": {
+      "wand": "/assets/divyanshu/techTracks/wand-1.webp",
+      "landscape": "/assets/divyanshu/techTracks/karan-sepia.png",
+      "banner": "/assets/divyanshu/hrz-image1.webp"
+    }
+  }
+}

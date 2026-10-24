@@ -126,6 +126,17 @@ Prefix any of `tag:`, `author:`, `org:`, `is:` with `-` to exclude:
 -is:secret
 ```
 
+A bare word or quoted phrase can be excluded the same way. It must not appear in
+any of the searched fields:
+
+```
+-spam
+-"sponsored post"
+```
+
+`created:` and `published:` have no negated form. Flip the comparison instead
+(`created:<2025-10-01` rather than `-created:>=2025-10-01`).
+
 ---
 
 ## Secret posts

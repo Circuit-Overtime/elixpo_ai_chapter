@@ -14,6 +14,11 @@ export async function PUT(request, { params }) {
     const { getDB } = await import('../../../../../lib/cloudflare');
     const db = getDB();
 
+    if (collectionId) {
+      const collection = await db.prepare('SELECT 1 AS found FROM bookmark_collections WHERE id = ? AND user_id = ?').bind(collectionId, session.userId).first();
+      if (!collection) return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
+    }
+
     await db.prepare('UPDATE bookmarks SET collection_id = ? WHERE user_id = ? AND blog_id = ?')
       .bind(collectionId || null, session.userId, blogId).run();
 

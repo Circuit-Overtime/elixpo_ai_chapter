@@ -59,3 +59,17 @@ test('truncation keeps emoji pairs intact', () => {
   assert.ok(!/[\ud800-\udbff](?![\udc00-\udfff])/.test(out), 'no lone surrogate');
   assert.doesNotThrow(() => JSON.parse(JSON.stringify(out)));
 });
+
+test('keeps the text of inline links', () => {
+  const blocks = [
+    {
+      type: 'paragraph',
+      content: [
+        { type: 'text', text: 'Read the ' },
+        { type: 'link', href: 'https://example.com/docs', content: [{ type: 'text', text: 'setup guide' }] },
+        { type: 'text', text: ' first.' },
+      ],
+    },
+  ];
+  assert.equal(excerptFromBlocks(blocks), 'Read the setup guide first.');
+});

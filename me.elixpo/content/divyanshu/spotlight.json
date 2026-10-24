@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Built Vault-me Zero-Knowledge Password Manager",
+    "date": "2025-06-01",
+    "description": "Architected a local-first zero-knowledge password manager featuring client-side AES-256 encryption and Argon2id key derivation.",
+    "image": "/assets/divyanshu/spotlight/elixpo-home.png",
+    "url": "https://github.com/divyanshuj91/Vault-me"
+  },
+  {
+    "title": "Created Stober Real-Time Deepfake Detector",
+    "date": "2025-03-01",
+    "description": "Developed an on-device, privacy-preserving detector for video calls utilizing eye blink analysis and rPPG physiological signals.",
+    "image": "/assets/divyanshu/spotlight/elixpo-home.png",
+    "url": "https://github.com/divyanshuj91/Stober"
+  },
+  {
+    "title": "Contributor to Elixpo Ecosystem",
+    "date": "2025-01-01",
+    "description": "Joined Elixpo open-source community to collaborate on open developer platforms, modern portfolios, and shared tooling.",
+    "image": "/assets/divyanshu/spotlight/elixpo-home.png",
+    "url": "https://github.com/elixpo"
+  }
+]
+

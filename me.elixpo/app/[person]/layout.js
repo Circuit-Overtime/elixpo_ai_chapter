@@ -24,3 +24,4 @@ export default async function PersonLayout({ children, params }) {
     </div>
   );
 }
+

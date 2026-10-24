@@ -151,8 +151,11 @@ export async function POST(request, { params }) {
     const { getDB } = await import('../../../../../lib/cloudflare');
     const db = getDB();
 
-    // Check blog allows comments
-    const blog = await db.prepare('SELECT id, author_id, title, allow_comments, secret FROM blogs WHERE id = ?').bind(slugid).first();
+    // Only live posts take comments (same rule as POST /api/v1/blogs/[id]/comments):
+    // drafts and trashed posts answer 404 like a missing blog.
+    const blog = await db.prepare(
+      "SELECT id, author_id, title, allow_comments, secret FROM blogs WHERE id = ? AND status IN ('published', 'unlisted')"
+    ).bind(slugid).first();
     if (!blog) return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     if (!blog.allow_comments) return NextResponse.json({ error: 'Comments are disabled' }, { status: 403 });
 

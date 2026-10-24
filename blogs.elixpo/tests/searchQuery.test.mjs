@@ -190,3 +190,26 @@ test('placeholder count matches bind count', () => {
   const { where, binds } = buildBlogSearch(parseSearchQuery(q));
   assert.equal((where.match(/\?/g) || []).length, binds.length, 'a mismatch here is a runtime SQL error');
 });
+
+test('-word and -"phrase" exclude instead of matching', () => {
+  const p = parseSearchQuery('rookie -spam -"sponsored post"');
+  assert.deepEqual(p.text, ['rookie']);
+  assert.deepEqual(p.phrases, []);
+  assert.deepEqual(p.notText, ['spam', 'sponsored post']);
+
+  const { where, binds } = buildBlogSearch(p);
+  assert.match(where, /NOT \(LOWER\(COALESCE\(b\.title, ''\)\) LIKE \?/);
+  assert.ok(binds.includes('%spam%'));
+  assert.ok(binds.includes('%sponsored post%'));
+  assert.equal((where.match(/\?/g) || []).length, binds.length);
+});
+
+test('a negated word alone is a real query', () => {
+  assert.ok(!isEmptyQuery(parseSearchQuery('-spam')));
+});
+
+test('negated dates are reported, not applied as the positive filter', () => {
+  const p = parseSearchQuery('-created:2025-10-01');
+  assert.deepEqual(p.dates, []);
+  assert.deepEqual(p.unknown, ['-created:2025-10-01']);
+});

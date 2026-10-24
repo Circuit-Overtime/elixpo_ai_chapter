@@ -12,6 +12,9 @@ export async function POST(request, { params }) {
     const { getDB } = await import('../../../../../lib/cloudflare');
     const db = getDB();
 
+    const target = await db.prepare('SELECT 1 AS found FROM blogs WHERE id = ?').bind(slugid).first();
+    if (!target) return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
+
     const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
     const ipHash = await hashIP(ip);
     const now = Math.floor(Date.now() / 1000);

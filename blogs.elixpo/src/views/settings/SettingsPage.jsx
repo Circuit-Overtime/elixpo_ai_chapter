@@ -652,7 +652,7 @@ function CreateOrgModal({ onClose, onCreated }) {
   useEffect(() => {
     if (!slug || slug.length < 2) { setSlugAvailable(null); setSlugError(''); return; }
     const timer = setTimeout(() => {
-      fetch(`/api/check-name?name=${encodeURIComponent(slug)}`)
+      fetch(`/api/check-name?name=${encodeURIComponent(slug)}&for=org`)
         .then(r => r.json())
         .then(d => {
           setSlugAvailable(d.available);

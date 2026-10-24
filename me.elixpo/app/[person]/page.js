@@ -3,7 +3,8 @@ import { buildMemberProfileJsonLd } from "@/lib/seo";
 
 function safeGet(person, file, fallback = null) {
   try {
-    return getPersonContent(person, file);
+    const res = getPersonContent(person, file);
+    return res != null ? res : fallback;
   } catch {
     return fallback;
   }
@@ -140,13 +141,13 @@ export default async function HomePage({ params }) {
             <a className="portfolio-text-link" href={`/${person}/projects`}>View all projects <Arrow /></a>
           </div>
           <div className="portfolio-project-grid">
-            {projects.slice(0, 6).map((project, index) => (
-              <a href={project.url} target="_blank" rel="noreferrer" className="portfolio-project-card" key={project.name}>
+            {projects.slice(0, 10).map((project, index) => (
+              <a href={project.url} target="_blank" rel="noreferrer" className={`portfolio-project-card ${project.bentoSpan === 2 ? "portfolio-project-card-wide" : ""}`} key={project.name}>
                 <div className={`portfolio-project-mark portfolio-project-mark-${index % 4}`} aria-hidden="true"><i /><i /><i /></div>
                 <div className="portfolio-project-meta"><span>{project.language || "Open source"}</span>{Number.isInteger(project.stars) && <span>★ {project.stars.toLocaleString()}</span>}</div>
                 <h3>{project.displayName || project.name}</h3>
                 <p>{project.description}</p>
-                <div className="portfolio-tags">{project.topics?.slice(0, 3).map((topic) => <span key={topic}>{topic}</span>)}</div>
+                <div className="portfolio-tags">{project.topics?.slice(0, 4).map((topic) => <span key={topic}>{topic}</span>)}</div>
                 <b>Open repository <Arrow /></b>
               </a>
             ))}

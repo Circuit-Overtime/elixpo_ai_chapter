@@ -296,12 +296,25 @@ npm run dev
 
 Then open [http://localhost:3000](http://localhost:3000).
 
+Before opening a pull request, run the same checks CI runs:
+
 ```bash
-npm run build       # Build for Cloudflare Pages (@cloudflare/next-on-pages)
-npm run preview     # Local Cloudflare Pages preview (wrangler)
-npm run deploy      # Build + deploy to Cloudflare Pages
-npm run db:migrate  # Run D1 migrations (remote)
+npm test             # Unit tests (node --test)
+npm run pages:build  # Cloudflare Pages build (@cloudflare/next-on-pages)
 ```
+
+`npm run build` runs plain `next build` and does not check Cloudflare
+compatibility. To preview the Cloudflare build locally, run
+`npm run pages:build` first, then:
+
+```bash
+npm run db:migrate:local  # Apply D1 migrations to the local database
+npm run preview           # Serve .vercel/output/static with wrangler pages dev
+```
+
+`npm run deploy` and `npm run db:migrate` act on the production Cloudflare
+project and the remote D1 database. Production deploys run from CI after a
+pull request is merged, so contributors do not need either command.
 
 <br />
 

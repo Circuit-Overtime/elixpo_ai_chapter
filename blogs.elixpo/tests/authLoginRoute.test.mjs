@@ -33,3 +33,27 @@ test('OAuth login URL contains every required authorization parameter', () => {
   assert.equal(location.searchParams.get('redirect_uri'), 'https://blogs.elixpo.com/api/auth/callback');
   assert.equal(location.searchParams.get('state'), 'state-1');
 });
+
+test('OAuth login URL omits scope instead of sending undefined', () => {
+  const location = new URL(buildOAuthAuthorizeUrl({
+    origin: 'https://blogs.elixpo.com',
+    state: 'state-1',
+    config: {
+      authorizeUrl: 'https://accounts.elixpo.com/oauth/authorize',
+      clientId: CLIENT_ID,
+    },
+  }));
+  assert.equal(location.searchParams.has('scope'), false);
+  assert.doesNotMatch(location.search, /undefined/);
+
+  const scoped = new URL(buildOAuthAuthorizeUrl({
+    origin: 'https://blogs.elixpo.com',
+    state: 'state-1',
+    config: {
+      authorizeUrl: 'https://accounts.elixpo.com/oauth/authorize',
+      clientId: CLIENT_ID,
+      scope: 'openid profile email',
+    },
+  }));
+  assert.equal(scoped.searchParams.get('scope'), 'openid profile email');
+});

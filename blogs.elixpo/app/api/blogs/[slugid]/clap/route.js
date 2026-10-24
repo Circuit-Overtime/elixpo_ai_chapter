@@ -37,6 +37,9 @@ export async function POST(request, { params }) {
     const { getDB } = await import('../../../../../lib/cloudflare');
     const db = getDB();
 
+    const blog = await db.prepare('SELECT 1 AS found FROM blogs WHERE id = ?').bind(slugid).first();
+    if (!blog) return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
+
     await db.prepare(`
       INSERT INTO claps (user_id, blog_id, count, created_at, updated_at)
       VALUES (?, ?, ?, unixepoch(), unixepoch())

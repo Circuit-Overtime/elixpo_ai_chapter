@@ -1412,3 +1412,107 @@ textarea::-webkit-scrollbar-track {
   opacity: 0;
   pointer-events: none;
 }
+
+
+/* ===== BENTO GALLERY BOX STYLES ===== */
+.portfolio-project-card-wide {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #ffffff 65%, #f6f8f6);
+}
+
+.portfolio-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.portfolio-bento-card {
+  min-height: 290px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid var(--portfolio-line);
+  border-radius: 1.4rem;
+  background: white;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.portfolio-bento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(20, 32, 24, .08);
+  border-color: rgba(20, 32, 24, .35);
+}
+
+.portfolio-bento-card.bento-span-2 {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #ffffff 65%, #f4f8f5);
+}
+
+.portfolio-bento-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.portfolio-bento-top .portfolio-project-mark {
+  margin-bottom: 0;
+}
+
+.portfolio-bento-body h3 {
+  margin: 0 0 .6rem;
+  font-size: 1.85rem;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+}
+
+.portfolio-bento-card.bento-span-2 .portfolio-bento-body h3 {
+  font-size: 2.15rem;
+}
+
+.portfolio-bento-body p {
+  color: var(--portfolio-muted);
+  font-size: .96rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.portfolio-bento-footer {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+}
+
+.portfolio-bento-footer b {
+  color: var(--portfolio-leaf);
+  font-size: .84rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+@media (max-width: 980px) {
+  .portfolio-project-card-wide {
+    grid-column: span 1;
+  }
+  .portfolio-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .portfolio-bento-card.bento-span-2 {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 680px) {
+  .portfolio-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .portfolio-bento-card.bento-span-2 {
+    grid-column: span 1;
+  }
+}

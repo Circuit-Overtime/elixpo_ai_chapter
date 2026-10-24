@@ -5,7 +5,7 @@ export function buildOAuthAuthorizeUrl({ origin, state, config }) {
     client_id: config.clientId,
     redirect_uri: `${origin}/api/auth/callback`,
     state,
-    scope: config.scope,
   });
+  if (config.scope) params.set('scope', config.scope);
   return `${config.authorizeUrl}?${params}`;
 }
