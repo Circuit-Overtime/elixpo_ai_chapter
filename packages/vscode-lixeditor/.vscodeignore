@@ -1,0 +1,11 @@
+node_modules/
+src/
+webview/editor-src.jsx
+webview/styles.css
+build.mjs
+.gitignore
+.vscode/
+**/*.map
+**/*.lixeditor
+**/*.vsix
+package-lock.json

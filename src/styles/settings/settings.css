@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+body 
+{
+    overflow: hidden;
+}
+.settingsNavItem,
+.settingBox
+{
+    font-family: "Funnel Display", serif;
+    
+}
+
+.settingsNavItem.selected 
+{
+    color: #7ba8f0;
+    text-underline-offset: 12px;
+}
+.settingsControl::-webkit-scrollbar
+{
+    display: none;
+}
+.optionalSetting.selected > span
+{
+    color: #7ba8f0;
+    padding: 5px 5px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #1e3355;
+}

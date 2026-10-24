@@ -1,0 +1,29 @@
+# Elixpo CI — Drop-in workflow for all elixpo projects.
+# Copy this file to .github/workflows/elixpo-ci.yml in your project.
+# Configure your project in .elixpo/project.yml
+#
+# What this does:
+#   PR opened/updated  → auto-label, auto-assign
+#   issue/PR agent work is owned by the separately gated OreoFlow workflows
+#   weekly cron        → stale issue/PR cleanup
+#
+# Code validation belongs to pr-tests.yml and pr-build.yml. Each required check
+# has one responsibility and can fail or rerun independently.
+
+name: Repository automation
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * 1"  # Weekly Monday 9 AM UTC — stale cleanup
+
+jobs:
+  pr-manage:
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/pr-management.yml
+
+  stale:
+    if: github.event_name == 'schedule'
+    uses: ./.github/workflows/stale-management.yml
