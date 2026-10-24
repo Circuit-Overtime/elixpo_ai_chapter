@@ -8,8 +8,8 @@
   "structured_encoding": "auto",
   "effort": null,
   "limits": {
-    "max_steps": 24,
-    "max_tool_calls": 48,
+    "max_steps": 60,
+    "max_tool_calls": 120,
     "max_wall_time_seconds": 900,
     "max_context_tokens": 64000,
     "max_output_bytes": 1048576,

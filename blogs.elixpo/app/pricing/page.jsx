@@ -1,10 +1,11 @@
 import PricingPage from '../../src/views/PricingPage';
+import { staticPageMeta } from '../../lib/pageMeta';
 
-export const metadata = {
+export const metadata = staticPageMeta({
   title: 'Pricing',
   description: 'Compare LixBlogs publishing plans, storage, collaboration limits, and creator features.',
-  alternates: { canonical: 'https://blogs.elixpo.com/pricing' },
-};
+  path: '/pricing',
+});
 
 export default function Pricing() {
   return <PricingPage />;

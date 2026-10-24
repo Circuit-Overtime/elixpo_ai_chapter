@@ -168,7 +168,20 @@ fn run_team(
     }
     drop(activity_tx);
 
-    while workers.iter().any(|worker| !worker.is_finished()) {
+    let total = workers.len();
+    let mut reported_active = None;
+    loop {
+        let active = workers
+            .iter()
+            .filter(|worker| !worker.is_finished())
+            .count();
+        if reported_active != Some(active) {
+            progress(&team_progress_label(active, total));
+            reported_active = Some(active);
+        }
+        if active == 0 {
+            break;
+        }
         match activity_rx.recv_timeout(Duration::from_millis(40)) {
             Ok(label) => progress(&label),
             Err(mpsc::RecvTimeoutError::Timeout) => {}
@@ -497,19 +510,40 @@ impl EventSink for TeamEvents {
                 tool_activity_label(&name),
                 if success { "done" } else { "failed" }
             )),
-            HarnessEvent::ToolOutput { .. } | HarnessEvent::FileChanged { .. } => None,
             HarnessEvent::TextDelta(_) if !self.reporting => {
                 self.reporting = true;
                 Some("Reporting findings".to_owned())
             }
-            HarnessEvent::TextDelta(_) | HarnessEvent::Usage(_) | HarnessEvent::TurnFinished => {
-                None
-            }
+            HarnessEvent::ToolOutput { .. }
+            | HarnessEvent::FileChanged { .. }
+            | HarnessEvent::TextDelta(_)
+            | HarnessEvent::ReasoningDelta(_)
+            | HarnessEvent::ResponseRevised
+            | HarnessEvent::Correction(_)
+            | HarnessEvent::Usage(_)
+            | HarnessEvent::TurnFinished => None,
         };
         if let Some(label) = label {
             publish_activity(&self.activity, format!("{} · {label}", self.name));
         }
     }
+}
+
+const TEAM_PROGRESS_SUFFIX: &str = " parallel agents working";
+
+/// Progress label announcing how many team members are still running.
+#[must_use]
+pub fn team_progress_label(active: usize, total: usize) -> String {
+    format!("{active} of {total}{TEAM_PROGRESS_SUFFIX}")
+}
+
+/// Parses a [`team_progress_label`] into `(active, total)`.
+#[must_use]
+pub fn parse_team_progress(label: &str) -> Option<(usize, usize)> {
+    let (active, total) = label
+        .strip_suffix(TEAM_PROGRESS_SUFFIX)?
+        .split_once(" of ")?;
+    Some((active.parse().ok()?, total.parse().ok()?))
 }
 
 fn publish_activity(activity: &SyncSender<String>, label: String) {
@@ -569,6 +603,17 @@ mod tests {
     use crumb_agent::{AgentMode, CancellationToken, ConfiguredApprovals, ToolHost};
     use crumb_llm::{ChatEvent, EmbeddingResponse, FinishReason, MockProvider, TokenUsage};
     use serde_json::json;
+
+    #[test]
+    fn team_progress_labels_round_trip() {
+        let label = super::team_progress_label(3, 4);
+        assert_eq!(label, "3 of 4 parallel agents working");
+        assert_eq!(super::parse_team_progress(&label), Some((3, 4)));
+        assert_eq!(
+            super::parse_team_progress("Koi · Inspecting assignment"),
+            None
+        );
+    }
     use tempfile::TempDir;
 
     use super::{

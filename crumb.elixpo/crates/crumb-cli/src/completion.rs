@@ -52,27 +52,8 @@ impl Completer for CrumbCompleter {
         } else {
             native_path_suggestions(prefix, pos, &self.workspace.get())
         };
-        CompletionResult::fresh(fill_palette(suggestions))
+        CompletionResult::fresh(suggestions)
     }
-}
-
-fn fill_palette(mut suggestions: Vec<Suggestion>) -> Vec<Suggestion> {
-    if suggestions.is_empty() {
-        return suggestions;
-    }
-    let visible_rows = usize::from(COMPLETION_PALETTE_ROWS);
-    if suggestions.len() >= visible_rows {
-        return suggestions;
-    }
-    let cycle = suggestions.clone();
-    let target_len = visible_rows.div_ceil(cycle.len()) * cycle.len();
-    suggestions.extend(
-        cycle
-            .into_iter()
-            .cycle()
-            .take(target_len - suggestions.len()),
-    );
-    suggestions
 }
 
 fn help_suggestions(line: &str, pos: usize, workspace: &Path) -> Vec<Suggestion> {
@@ -575,29 +556,26 @@ mod tests {
     use std::path::PathBuf;
     use std::time::{SystemTime, UNIX_EPOCH};
 
-    use reedline::{Completer, Suggestion};
+    use reedline::Completer;
 
-    use super::{COMPLETION_PALETTE_ROWS, CompletionWorkspace, CrumbCompleter, fill_palette};
+    use super::{CompletionWorkspace, CrumbCompleter};
 
     #[test]
-    fn short_palettes_repeat_complete_cycles() {
-        let suggestions = ["one", "two", "three", "four"]
-            .into_iter()
-            .map(|value| Suggestion {
-                value: value.to_owned(),
-                ..Suggestion::default()
-            })
-            .collect();
+    fn short_palettes_list_each_suggestion_once() {
+        let mut completer = CrumbCompleter::new(CompletionWorkspace::new(PathBuf::from(".")));
+        let result = completer.complete("/help", 5);
+        let values = result
+            .suggestions()
+            .iter()
+            .map(|candidate| candidate.value.as_str())
+            .collect::<Vec<_>>();
 
-        let filled = fill_palette(suggestions);
-
-        assert!(filled.len() >= usize::from(COMPLETION_PALETTE_ROWS));
-        assert_eq!(filled.len() % 4, 0);
-        assert!(
-            filled
-                .iter()
-                .enumerate()
-                .all(|(index, item)| item.value == ["one", "two", "three", "four"][index % 4])
+        assert!(values.contains(&"/help"));
+        let unique = values.iter().collect::<std::collections::HashSet<_>>();
+        assert_eq!(
+            unique.len(),
+            values.len(),
+            "duplicate suggestions: {values:?}"
         );
     }
 

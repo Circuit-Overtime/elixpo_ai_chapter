@@ -344,6 +344,84 @@ impl Renderer {
         .join("\n")
     }
 
+    /// Renders a boxed list the user moves through with the arrow keys.
+    ///
+    /// Rows are windowed around `selected` when there are more than
+    /// `visible_rows`. A row with `checked: Some(_)` shows a checkbox.
+    #[must_use]
+    pub fn choice_dialog(&self, dialog: &ChoiceDialogView<'_>, terminal_width: u16) -> String {
+        let width = usize::from(terminal_width.clamp(56, 100));
+        let inner = width.saturating_sub(4);
+        let row = |text: &str| format!("│ {:<inner$} │", fit_terminal_text(text, inner));
+        let mut lines = vec![
+            self.paint(&format!("╭{}╮", "─".repeat(width - 2)), "2"),
+            self.paint(&row(dialog.title), "1"),
+        ];
+        for note in dialog.notes {
+            lines.push(self.paint(&row(note), "2"));
+        }
+        lines.push(self.paint(&row(""), "2"));
+        let visible = dialog.visible_rows.max(1);
+        let selected = dialog.selected.min(dialog.rows.len().saturating_sub(1));
+        let first = selected
+            .saturating_add(1)
+            .saturating_sub(visible)
+            .min(dialog.rows.len().saturating_sub(visible));
+        if first > 0 {
+            lines.push(self.paint(&row(&format!("  ↑ {first} more")), "2"));
+        }
+        for (index, choice) in dialog.rows.iter().enumerate().skip(first).take(visible) {
+            let cursor = if index == selected { "›" } else { " " };
+            let checkbox = match choice.checked {
+                Some(true) => "[x] ",
+                Some(false) => "[ ] ",
+                None => "",
+            };
+            let text = if choice.detail.is_empty() {
+                format!("{cursor} {checkbox}{}", choice.label)
+            } else {
+                format!("{cursor} {checkbox}{} · {}", choice.label, choice.detail)
+            };
+            lines.push(if index == selected {
+                self.paint(&row(&text), "30;44;1")
+            } else {
+                row(&text)
+            });
+        }
+        let below = dialog.rows.len().saturating_sub(first + visible);
+        if below > 0 {
+            lines.push(self.paint(&row(&format!("  ↓ {below} more")), "2"));
+        }
+        lines.push(self.paint(&row(""), "2"));
+        lines.push(self.paint(&row(dialog.hint), "2"));
+        lines.push(self.paint(&format!("╰{}╯", "─".repeat(width - 2)), "2"));
+        lines.join("\n")
+    }
+
+    /// Renders a boxed single-line text field.
+    #[must_use]
+    pub fn text_prompt_dialog(
+        &self,
+        title: &str,
+        value: &str,
+        hint: &str,
+        terminal_width: u16,
+    ) -> String {
+        let width = usize::from(terminal_width.clamp(56, 100));
+        let inner = width.saturating_sub(4);
+        let row = |text: &str| format!("│ {:<inner$} │", fit_terminal_text(text, inner));
+        [
+            self.paint(&format!("╭{}╮", "─".repeat(width - 2)), "2"),
+            self.paint(&row(title), "1"),
+            self.paint(&row(""), "2"),
+            self.paint(&row(&format!("› {value}▏")), "1"),
+            self.paint(&row(""), "2"),
+            self.paint(&row(hint), "2"),
+            self.paint(&format!("╰{}╯", "─".repeat(width - 2)), "2"),
+        ]
+        .join("\n")
+    }
+
     /// Renders the persistent keyboard guide below the full-screen composer.
     #[must_use]
     pub fn composer_hotkeys(&self, terminal_width: u16) -> String {
@@ -373,6 +451,16 @@ impl Renderer {
     /// Renders the fixed keyboard guide while an agent turn is active.
     #[must_use]
     pub fn composer_active_hotkeys(&self, terminal_width: u16) -> String {
+        self.composer_active_hotkeys_with_agents(terminal_width, 0)
+    }
+
+    /// Active-turn guide, led by how many agents are working when any are.
+    #[must_use]
+    pub fn composer_active_hotkeys_with_agents(
+        &self,
+        terminal_width: u16,
+        agents: usize,
+    ) -> String {
         let guide = if terminal_width < 52 {
             "↵ steer · ^↵ queue · ^C cancel"
         } else if terminal_width < 80 {
@@ -380,8 +468,20 @@ impl Renderer {
         } else {
             "Type a follow-up · Enter steer · Ctrl+Enter queue · PgUp/PgDn scroll · /pause · Ctrl+C cancel"
         };
-        let guide = fit_terminal_text(guide, usize::from(terminal_width.saturating_sub(2)));
-        self.paint(&format!("  {guide}"), "2")
+        let available = usize::from(terminal_width.saturating_sub(2));
+        if agents == 0 {
+            return self.paint(&format!("  {}", fit_terminal_text(guide, available)), "2");
+        }
+        let count = format!(
+            "◆ {agents} agent{} working",
+            if agents == 1 { "" } else { "s" }
+        );
+        let guide = fit_terminal_text(guide, available.saturating_sub(count.chars().count() + 3));
+        format!(
+            "  {} {}",
+            self.paint(&count, "35;1"),
+            self.paint(&format!("· {guide}"), "2")
+        )
     }
 
     /// Renders the persistent state row immediately below the composer.
@@ -1414,9 +1514,45 @@ fn startup_punchline() -> &'static str {
     PUNCHLINES[index]
 }
 
+/// Serializes whole terminal frames across threads.
+///
+/// The activity animation runs on its own thread and, like the transcript
+/// painter, saves and restores the cursor. Terminals keep a single saved
+/// position, so frames written concurrently would restore each other's
+/// cursor. Every frame writer holds this lock while it writes and flushes.
+static TERMINAL_OUTPUT: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+/// Holds the terminal frame lock; see [`TERMINAL_OUTPUT`].
+pub fn lock_terminal_output() -> std::sync::MutexGuard<'static, ()> {
+    TERMINAL_OUTPUT
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner)
+}
+
+/// One selectable row in a [`Renderer::choice_dialog`].
+pub struct ChoiceRow<'a> {
+    pub label: &'a str,
+    pub detail: &'a str,
+    /// `Some` renders a checkbox for multi-select lists.
+    pub checked: Option<bool>,
+}
+
+/// Everything a [`Renderer::choice_dialog`] draws.
+pub struct ChoiceDialogView<'a> {
+    pub title: &'a str,
+    pub notes: &'a [String],
+    pub rows: &'a [ChoiceRow<'a>],
+    pub selected: usize,
+    pub visible_rows: usize,
+    pub hint: &'a str,
+}
+
 /// A best-effort activity line that always clears itself before final output.
 pub struct ActivityIndicator {
     running: Arc<AtomicBool>,
+    /// Dropping the sender wakes the animation immediately instead of
+    /// waiting out its frame delay.
+    stop_signal: Option<std::sync::mpsc::Sender<()>>,
     thread: Option<JoinHandle<()>>,
     started: Instant,
     label: String,
@@ -1428,13 +1564,15 @@ pub struct ActivityIndicator {
 impl ActivityIndicator {
     fn start(label: &str, animated: bool, color: bool, row: Option<u16>) -> Self {
         let running = Arc::new(AtomicBool::new(animated));
+        let (stop_signal, stopped) = std::sync::mpsc::channel();
         let thread = animated.then(|| {
             let running = Arc::clone(&running);
             let label = label.to_owned();
-            thread::spawn(move || animate_activity(&label, color, &running, row))
+            thread::spawn(move || animate_activity(&label, color, &running, &stopped, row))
         });
         Self {
             running,
+            stop_signal: Some(stop_signal),
             thread,
             started: Instant::now(),
             label: label.to_owned(),
@@ -1488,6 +1626,7 @@ impl ActivityIndicator {
 
     fn stop(&mut self) {
         self.running.store(false, Ordering::Release);
+        self.stop_signal.take();
         if let Some(thread) = self.thread.take() {
             let _ = thread.join();
             clear_activity_line(self.row);
@@ -1501,7 +1640,13 @@ impl Drop for ActivityIndicator {
     }
 }
 
-fn animate_activity(label: &str, color: bool, running: &AtomicBool, row: Option<u16>) {
+fn animate_activity(
+    label: &str,
+    color: bool,
+    running: &AtomicBool,
+    stopped: &std::sync::mpsc::Receiver<()>,
+    row: Option<u16>,
+) {
     let mut frame = 0_usize;
     let started = Instant::now();
     while running.load(Ordering::Acquire) {
@@ -1513,9 +1658,12 @@ fn animate_activity(label: &str, color: bool, running: &AtomicBool, row: Option<
             format!("{cookie} {label} · {elapsed:.1}s")
         };
         write_activity_line(&line, row);
-        let _ = io::stderr().flush();
         frame = (frame + 1) % COOKIE_SPINNER.len();
-        thread::sleep(Duration::from_millis(140));
+        if stopped.recv_timeout(Duration::from_millis(140))
+            != Err(std::sync::mpsc::RecvTimeoutError::Timeout)
+        {
+            break;
+        }
     }
 }
 
@@ -1525,12 +1673,14 @@ fn write_activity_line(line: &str, row: Option<u16>) {
     } else {
         format!("\r\x1b[2K{line}")
     };
-    let _ = io::stderr().write_all(rendered.as_bytes());
+    let _frame = lock_terminal_output();
+    let mut terminal = io::stderr();
+    let _ = terminal.write_all(rendered.as_bytes());
+    let _ = terminal.flush();
 }
 
 fn clear_activity_line(row: Option<u16>) {
     write_activity_line("", row);
-    let _ = io::stderr().flush();
 }
 
 /// Removes provider reasoning wrappers from text intended for the terminal.
@@ -2326,6 +2476,16 @@ mod tests {
         let narrow = renderer.composer_active_hotkeys(60);
         assert!(narrow.contains("Enter steer"));
         assert!(narrow.contains("Ctrl+C cancel"));
+
+        let team = renderer.composer_active_hotkeys_with_agents(120, 4);
+        assert!(team.contains("◆ 4 agents working"));
+        assert!(team.contains("Enter steer"));
+        assert!(
+            renderer
+                .composer_active_hotkeys_with_agents(120, 1)
+                .contains("◆ 1 agent working")
+        );
+        assert!(team.chars().count() <= 120);
     }
 
     #[test]

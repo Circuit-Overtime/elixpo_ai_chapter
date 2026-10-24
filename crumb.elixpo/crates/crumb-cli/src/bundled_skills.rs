@@ -17,6 +17,8 @@ pub(crate) const DEFAULT_IDS: &[&str] = &[
     "karpathy-guidelines",
     "skill-authoring",
     "crumb-commands",
+    "crumb-support",
+    "polli",
 ];
 
 pub(crate) struct BundledSkill {
@@ -101,6 +103,14 @@ pub(crate) static ALL: &[BundledSkill] = &[
     skill!(
         "crumb-commands",
         "explain Crumb commands, shortcuts, model packs, sessions, memory, and permissions"
+    ),
+    skill!(
+        "crumb-support",
+        "explain what Crumb is and how to report bugs, request features, or get help"
+    ),
+    community_skill!(
+        "polli",
+        "generate images, audio, video, and text with the Pollinations polli CLI"
     ),
 ];
 

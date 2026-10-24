@@ -60,6 +60,35 @@ Provider IDs and exact models are selected explicitly. When a selected route
 names a configured provider, Crumb validates the model and effort locally
 before any Harness process or network request starts.
 
+The native Harness runs any provider whose `protocol` is
+`open_ai_completions`, streaming `/v1/chat/completions` with tool calling.
+Pollinations remains the default and falls back to the signed-in key. Any
+other provider needs a `credential`, except a server on `localhost`,
+`127.0.0.1`, or `::1`, which may run without one; no `Authorization` header is
+sent then. That covers local runtimes such as Ollama
+(`http://127.0.0.1:11434/v1`) and LM Studio (`http://localhost:1234/v1`), or
+any other local server that implements the OpenAI chat-completions API:
+
+```json
+{
+  "providers": {
+    "ollama": {
+      "display_name": "Ollama",
+      "protocol": "open_ai_completions",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "models": [{ "id": "qwen3:8b", "tool_calling": true }]
+    }
+  },
+  "models": {
+    "text": [{ "provider": "ollama", "model": "qwen3:8b" }]
+  }
+}
+```
+
+The agent loop depends on tool calling, so choose a local model that supports
+it. A local model's answers are generated on this machine; connected providers
+such as Pollinations remain remote services.
+
 For process Harnesses, Crumb projects only the selected provider dictionary.
 Credential and secret-header values are resolved at the child boundary, while
 the restart fingerprint contains only non-secret configuration. The generic

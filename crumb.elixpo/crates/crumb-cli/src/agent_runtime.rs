@@ -56,6 +56,8 @@ struct TurnResources {
 
 struct TurnInteraction {
     interactive: Option<InteractiveApprovalBroker>,
+    /// Present only when a user can answer `ask_user` questions.
+    questions: Option<crumb_agent::QuestionAsker>,
 }
 
 struct PreparedTurn<'a> {
@@ -125,6 +127,74 @@ fn turn_approvals(
         }),
         None => Arc::new(configured),
     }
+}
+
+/// Builds the native chat client for any `OpenAI` chat-completions provider,
+/// applying its configured request timeout, stream idle timeout, and retry
+/// policy. Pollinations falls back to the signed-in key; other providers need
+/// a configured credential unless they run on this machine.
+fn native_chat_provider(
+    name: &str,
+    provider_config: &crumb_agent::ProviderConfig,
+) -> Result<Arc<dyn crumb_llm::LlmProvider>> {
+    if provider_config.protocol != crumb_agent::ProviderProtocol::OpenAiCompletions {
+        bail!(
+            "native Harness supports OpenAI chat-completions providers; `{name}` uses {:?}",
+            provider_config.protocol
+        );
+    }
+    let configured = provider_config
+        .credential
+        .as_ref()
+        .map(crate::provider_projection::resolve_credential_secret)
+        .transpose()?
+        .map(|secret| secret.expose().to_owned());
+    let credential = if name == "pollinations" {
+        Some(
+            configured
+                .or_else(crate::pollinations_runtime_key)
+                .context("Pollinations credential is unavailable")?,
+        )
+    } else if configured.is_some() || is_loopback_endpoint(&provider_config.base_url) {
+        configured
+    } else {
+        bail!("provider `{name}` needs a credential unless it runs on localhost");
+    };
+    let base_url = provider_config
+        .base_url
+        .trim_end_matches('/')
+        .strip_suffix("/v1")
+        .unwrap_or(provider_config.base_url.trim_end_matches('/'));
+    let mut client = credential
+        .map_or_else(
+            || Ok(PollinationsConfig::without_key()),
+            PollinationsConfig::new,
+        )?
+        .with_base_url(base_url)?;
+    if let Some(timeout_ms) = provider_config.timeout_ms {
+        client.request_timeout = Duration::from_millis(timeout_ms);
+    }
+    if let Some(idle_ms) = provider_config.stream_idle_timeout_ms {
+        client.stream_idle_timeout = Duration::from_millis(idle_ms);
+    }
+    // An all-zero policy is the serde default and means "not configured".
+    let retry = provider_config.retry;
+    if retry.max_retries > 0 {
+        client.retry.max_attempts =
+            u8::try_from(retry.max_retries.saturating_add(1)).unwrap_or(u8::MAX);
+    }
+    if retry.base_delay_ms > 0 {
+        client.retry.base_delay = Duration::from_millis(retry.base_delay_ms);
+    }
+    Ok(Arc::new(PollinationsProvider::new(client)?))
+}
+
+fn is_loopback_endpoint(base_url: &str) -> bool {
+    url::Url::parse(base_url).is_ok_and(|endpoint| {
+        endpoint
+            .host_str()
+            .is_some_and(|host| matches!(host, "localhost" | "127.0.0.1" | "[::1]" | "::1"))
+    })
 }
 
 fn native_harness_limits(config: &AgentConfig) -> Result<HarnessLimits> {
@@ -206,6 +276,9 @@ impl EventSink for NativeEventBridge<'_> {
         let activity = match event {
             HarnessEvent::TurnStarted => Some(HarnessActivity::RequestAccepted),
             HarnessEvent::TextDelta(text) => Some(HarnessActivity::ResponseDelta { text }),
+            HarnessEvent::ReasoningDelta(text) => Some(HarnessActivity::ReasoningDelta { text }),
+            HarnessEvent::ResponseRevised => Some(HarnessActivity::ResponseRevised),
+            HarnessEvent::Correction(text) => Some(HarnessActivity::ResponseCorrected { text }),
             HarnessEvent::ToolRequested { name, detail, .. } => {
                 Some(HarnessActivity::ToolStarted { name, detail })
             }
@@ -257,6 +330,7 @@ fn project_notification(
 pub struct AgentTurnTask {
     activities: Receiver<HarnessActivity>,
     approvals: ApprovalInbox,
+    questions: crumb_agent::QuestionInbox,
     cancellation: CancellationToken,
     worker: JoinHandle<TurnThreadResult>,
 }
@@ -338,6 +412,14 @@ impl AgentTurnTask {
         timeout: Duration,
     ) -> std::result::Result<crumb_agent::PendingApproval, RecvTimeoutError> {
         self.approvals.recv_timeout(timeout)
+    }
+
+    /// Waits briefly for a question the agent is asking the user.
+    pub fn recv_question_timeout(
+        &self,
+        timeout: Duration,
+    ) -> std::result::Result<crumb_agent::PendingQuestion, RecvTimeoutError> {
+        self.questions.recv_timeout(timeout)
     }
 
     #[must_use]
@@ -1395,6 +1477,7 @@ impl AgentRuntime {
         let request = self.attach_review_notes(request);
         let (activity_sender, activities) = sync_channel(activity_capacity);
         let (interactive, approval_inbox) = approval_channel(NonZeroUsize::MIN);
+        let (questions, question_inbox) = crumb_agent::question_channel();
         let cancellation = CancellationToken::default();
         let worker_cancellation = cancellation.clone();
         let worker = thread::Builder::new()
@@ -1407,6 +1490,7 @@ impl AgentRuntime {
                     &workspace,
                     TurnInteraction {
                         interactive: Some(interactive),
+                        questions: Some(questions),
                     },
                     &worker_cancellation,
                     |activity| {
@@ -1422,6 +1506,7 @@ impl AgentRuntime {
         Ok(AgentTurnTask {
             activities,
             approvals: approval_inbox,
+            questions: question_inbox,
             cancellation,
             worker,
         })
@@ -1440,13 +1525,28 @@ impl AgentRuntime {
         workspace: &Path,
         cancellation: &CancellationToken,
     ) -> Result<RunResult> {
+        self.run_local_job_with_events(request, config, workspace, cancellation, |_| Ok(()))
+    }
+
+    /// Runs a non-interactive turn and reports its activity as it happens.
+    pub fn run_local_job_with_events(
+        &mut self,
+        request: &str,
+        config: &AgentConfig,
+        workspace: &Path,
+        cancellation: &CancellationToken,
+        on_activity: impl FnMut(HarnessActivity) -> Result<()>,
+    ) -> Result<RunResult> {
         self.run_with_events_using(
             request,
             config,
             workspace,
-            TurnInteraction { interactive: None },
+            TurnInteraction {
+                interactive: None,
+                questions: None,
+            },
             cancellation,
-            |_| Ok(()),
+            on_activity,
         )
     }
 
@@ -1455,6 +1555,25 @@ impl AgentRuntime {
     /// # Errors
     ///
     /// Returns an error when the workspace or session journal is unavailable.
+    /// Tools for one turn; `ask_user` is added only when a user can answer.
+    fn turn_tool_host(
+        &self,
+        workspace: &Path,
+        config: &AgentConfig,
+        questions: Option<crumb_agent::QuestionAsker>,
+    ) -> Result<ToolHost> {
+        let mut tools = crate::workspace_read_host(
+            workspace,
+            config,
+            crate::configured_pollinations_runtime_key(config),
+            self.peer_runtime_for_workspace(workspace),
+        )?;
+        if let Some(asker) = questions {
+            crumb_agent::register_ask_user_tool(&mut tools, asker)?;
+        }
+        Ok(tools)
+    }
+
     pub fn prepare_local_job(&mut self, mode: AgentMode, workspace: &Path) -> Result<SessionId> {
         let workspace = std::fs::canonicalize(workspace)
             .with_context(|| format!("failed to resolve workspace `{}`", workspace.display()))?;
@@ -1498,12 +1617,7 @@ impl AgentRuntime {
             .context("selected persona profile could not be applied")?;
         let config = &application.config;
         config.validate()?;
-        let tools = crate::workspace_read_host(
-            &workspace,
-            config,
-            crate::configured_pollinations_runtime_key(config),
-            self.peer_runtime_for_workspace(&workspace),
-        )?;
+        let tools = self.turn_tool_host(&workspace, config, interaction.questions)?;
         let approvals = turn_approvals(config, interaction.interactive);
         self.ensure_session(&workspace, config.mode)?;
         let route = select_request_route(config, request)
@@ -1761,33 +1875,11 @@ impl AgentRuntime {
         cancellation: &CancellationToken,
         on_activity: &mut dyn FnMut(HarnessActivity) -> Result<()>,
     ) -> Result<RunResult> {
-        if route.provider != "pollinations" {
-            bail!(
-                "native Harness currently supports the Pollinations provider; selected `{}`",
-                route.provider
-            );
-        }
         let provider_config = config
             .providers
             .get(&route.provider)
             .context("native Harness provider is not configured")?;
-        let credential = provider_config
-            .credential
-            .as_ref()
-            .map(crate::provider_projection::resolve_credential_secret)
-            .transpose()?
-            .map_or_else(crate::pollinations_runtime_key, |secret| {
-                Some(secret.expose().to_owned())
-            })
-            .context("Pollinations credential is unavailable")?;
-        let base_url = provider_config
-            .base_url
-            .trim_end_matches('/')
-            .strip_suffix("/v1")
-            .unwrap_or(provider_config.base_url.trim_end_matches('/'));
-        let provider: Arc<dyn crumb_llm::LlmProvider> = Arc::new(PollinationsProvider::new(
-            PollinationsConfig::new(credential)?.with_base_url(base_url)?,
-        )?);
+        let provider = native_chat_provider(&route.provider, provider_config)?;
         let max_output_tokens = configured_max_output_tokens(config, route);
         let team_limits = ParallelAgentLimits::default();
         let child_output_tokens = max_output_tokens.map(|tokens| {
@@ -1851,7 +1943,8 @@ impl AgentRuntime {
         Ok(RunResult {
             session_id: session_id.to_owned(),
             final_response: outcome.text,
-            finish_reason: Some("stop".to_owned()),
+            // A limit-stopped turn ends with a summary of partial work.
+            finish_reason: Some(outcome.limit.map_or("stop", |_| "limit").to_owned()),
             input_tokens: outcome.usage.input_tokens,
             cached_input_tokens: outcome.usage.cached_input_tokens,
             output_tokens: outcome.usage.output_tokens,
@@ -1959,6 +2052,7 @@ impl AgentRuntime {
                 workspace.to_path_buf(),
                 journal,
             )?);
+            crate::sessions_view::record_workspace(workspace);
         }
         Ok(())
     }
@@ -2001,6 +2095,9 @@ impl EventSink for PeerEventBridge {
             // labels, paths, edits, usage, and completion bodies stay inside
             // the isolated worker.
             HarnessEvent::TextDelta(_)
+            | HarnessEvent::ReasoningDelta(_)
+            | HarnessEvent::ResponseRevised
+            | HarnessEvent::Correction(_)
             | HarnessEvent::ToolProgress { .. }
             | HarnessEvent::ToolOutput { .. }
             | HarnessEvent::FileChanged { .. }
@@ -2071,30 +2168,11 @@ fn execute_isolated_peer_turn(
     let route = peer_router_route(config)
         .context("agent config has no peer router model")?
         .clone();
-    if route.provider != "pollinations" {
-        bail!("isolated peer turns require the Pollinations provider");
-    }
     let provider_config = config
         .providers
         .get(&route.provider)
         .context("native Harness provider is not configured")?;
-    let credential = provider_config
-        .credential
-        .as_ref()
-        .map(crate::provider_projection::resolve_credential_secret)
-        .transpose()?
-        .map_or_else(crate::pollinations_runtime_key, |secret| {
-            Some(secret.expose().to_owned())
-        })
-        .context("Pollinations credential is unavailable")?;
-    let base_url = provider_config
-        .base_url
-        .trim_end_matches('/')
-        .strip_suffix("/v1")
-        .unwrap_or(provider_config.base_url.trim_end_matches('/'));
-    let provider: Arc<dyn crumb_llm::LlmProvider> = Arc::new(PollinationsProvider::new(
-        PollinationsConfig::new(credential)?.with_base_url(base_url)?,
-    )?);
+    let provider = native_chat_provider(&route.provider, provider_config)?;
 
     let mut tools = ToolHost::default();
     register_current_time_tool(&mut tools)?;
@@ -2777,8 +2855,71 @@ fn skill_is_relevant(skill: &SkillConfig, request: &str) -> bool {
             "skill.md",
         ]),
         "crumb-commands" => crumb_command_skill_relevant(&request),
+        "crumb-support" => crumb_support_skill_relevant(&request, &contains_any),
+        "polli" => polli_skill_relevant(&contains_any),
         _ => true,
     }
+}
+
+/// Requests that need the Pollinations `polli` CLI.
+fn polli_skill_relevant(contains_any: &dyn Fn(&[&str]) -> bool) -> bool {
+    contains_any(&[
+        "polli",
+        "pollinations",
+        "pollen",
+        "generate an image",
+        "generate image",
+        "make an image",
+        "create an image",
+        "image generation",
+        "generate a video",
+        "generate video",
+        "generate audio",
+        "text to speech",
+        "tts",
+        "transcribe",
+        "voice over",
+        "voiceover",
+    ])
+}
+
+/// Requests about Crumb itself, or about reporting a problem in it.
+fn crumb_support_skill_relevant(request: &str, contains_any: &dyn Fn(&[&str]) -> bool) -> bool {
+    let reporting = contains_any(&[
+        "report a bug",
+        "report this bug",
+        "report the bug",
+        "file an issue",
+        "open an issue",
+        "feature request",
+        "vulnerability",
+    ]);
+    let about_crumb = (request.contains("crumb") || request.contains("elixpo"))
+        && contains_any(&[
+            "bug",
+            "issue",
+            "report",
+            "crash",
+            "broken",
+            "feedback",
+            "who made",
+            "who built",
+            "who maintains",
+            "maintainer",
+            "source code",
+            "repo",
+            "repository",
+            "license",
+            "licence",
+            "security",
+            "support",
+            "contact",
+            "docs",
+            "documentation",
+            "version",
+            "what is",
+        ]);
+    reporting || about_crumb
 }
 
 fn crumb_command_skill_relevant(request: &str) -> bool {
@@ -3743,6 +3884,113 @@ mod tests {
         assert_eq!(code_context.selected.len(), 1);
         assert!(code_context.instructions[0].contains("codebase-map"));
         assert!(!code_context.instructions[0].contains("web-research"));
+    }
+
+    #[test]
+    fn native_harness_accepts_local_openai_compatible_servers_without_a_key() {
+        use crumb_agent::{ProviderConfig, ProviderProtocol};
+
+        let local = ProviderConfig::new(
+            "Ollama",
+            ProviderProtocol::OpenAiCompletions,
+            "http://127.0.0.1:11434/v1",
+        );
+        assert!(super::native_chat_provider("ollama", &local).is_ok());
+
+        let remote = ProviderConfig::new(
+            "Remote",
+            ProviderProtocol::OpenAiCompletions,
+            "https://models.example.test/v1",
+        );
+        let error = super::native_chat_provider("remote", &remote)
+            .err()
+            .expect("a remote provider needs a credential");
+        assert!(error.to_string().contains("needs a credential"));
+
+        let responses = ProviderConfig::new(
+            "Responses",
+            ProviderProtocol::OpenAiResponses,
+            "http://localhost:8080/v1",
+        );
+        let error = super::native_chat_provider("responses", &responses)
+            .err()
+            .expect("only chat-completions providers run natively");
+        assert!(error.to_string().contains("chat-completions"));
+    }
+
+    #[test]
+    fn loopback_detection_covers_local_hosts_only() {
+        for local in [
+            "http://localhost:1976/v1",
+            "http://127.0.0.1:11434/v1",
+            "http://[::1]:1234/v1",
+        ] {
+            assert!(super::is_loopback_endpoint(local), "{local}");
+        }
+        for remote in [
+            "https://gen.pollinations.ai/v1",
+            "http://localhost.example.com/v1",
+        ] {
+            assert!(!super::is_loopback_endpoint(remote), "{remote}");
+        }
+    }
+
+    fn loaded_skill_ids(id: &str, request: &str) -> Vec<String> {
+        let skills = [SkillConfig {
+            id: id.to_owned(),
+            path: crate::bundled_skills::path(id),
+            enabled: true,
+        }];
+        load_enabled_skill_context(&skills, Path::new("."), request)
+            .expect("skill context loads")
+            .selected
+            .into_iter()
+            .map(|skill| skill.identity)
+            .collect()
+    }
+
+    #[test]
+    fn polli_skill_loads_only_for_pollinations_media_work() {
+        assert_eq!(
+            loaded_skill_ids("polli", "generate an image of a panda with polli"),
+            ["polli"]
+        );
+        assert_eq!(
+            loaded_skill_ids("polli", "check my pollen balance"),
+            ["polli"]
+        );
+        assert_eq!(
+            loaded_skill_ids("polli", "fix the failing Rust tests"),
+            Vec::<String>::new()
+        );
+        assert_eq!(
+            loaded_skill_ids("polli", "show the http settings"),
+            Vec::<String>::new()
+        );
+    }
+
+    #[test]
+    fn crumb_support_skill_loads_for_questions_about_crumb_and_bug_reports() {
+        for request in [
+            "I found a bug in crumb, how do I report it?",
+            "who maintains crumb?",
+            "where is the crumb source code",
+            "I want to file an issue",
+        ] {
+            assert_eq!(
+                loaded_skill_ids("crumb-support", request),
+                ["crumb-support"],
+                "{request}"
+            );
+        }
+        assert_eq!(
+            loaded_skill_ids("crumb-support", "fix the bug in my parser"),
+            Vec::<String>::new()
+        );
+        assert_eq!(
+            loaded_skill_ids("crumb-support", "list the files in this folder"),
+            Vec::<String>::new()
+        );
     }
 
     #[test]

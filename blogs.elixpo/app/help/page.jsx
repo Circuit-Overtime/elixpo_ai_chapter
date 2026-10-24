@@ -1,10 +1,11 @@
 import AppShell from '../../src/components/AppShell';
+import { staticPageMeta } from '../../lib/pageMeta';
 
-export const metadata = {
+export const metadata = staticPageMeta({
   title: 'Help',
   description: 'Get help with LixBlogs — contact support or report an issue.',
-  alternates: { canonical: 'https://blogs.elixpo.com/help' },
-};
+  path: '/help',
+});
 
 export default function HelpPage() {
   return (

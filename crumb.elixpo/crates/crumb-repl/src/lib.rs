@@ -144,6 +144,14 @@ pub const SLASH_COMMANDS: &[SlashCommand] = &[
         description: "set light, medium, high, extra high, or default",
     },
     SlashCommand {
+        usage: "/sessions",
+        description: "browse, resume, and rename sessions in this folder",
+    },
+    SlashCommand {
+        usage: "/sessions all",
+        description: "list sessions in every folder",
+    },
+    SlashCommand {
         usage: "/session",
         description: "manage agent sessions",
     },

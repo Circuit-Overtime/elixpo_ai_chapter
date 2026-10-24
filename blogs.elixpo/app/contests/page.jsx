@@ -6,16 +6,17 @@ import { getSession } from '../../lib/auth';
 import { serializeContest } from '../../lib/contests';
 import { loadRecommendationContext, rankContests } from '../../lib/recommendations';
 import { safeJsonLd } from '../../src/utils/seoContent';
+import { staticPageMeta } from '../../lib/pageMeta';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
+export const metadata = staticPageMeta({
   title: 'Writing contests',
   description: 'Join time-bound writing contests on LixBlogs, publish your response, and explore recognized entries.',
-  alternates: { canonical: 'https://blogs.elixpo.com/contests' },
+  path: '/contests',
   robots: { index: true, follow: true },
-};
+});
 
 const filters = [
   { value: 'all', label: 'All contests' },

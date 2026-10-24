@@ -160,6 +160,9 @@ pub enum FinishReason {
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ChatEvent {
     TextDelta(String),
+    /// Model reasoning streamed separately from the answer. It is display
+    /// material only and is never sent back to the model as history.
+    ReasoningDelta(String),
     ToolCall(ToolCall),
     Usage(TokenUsage),
     Finished(FinishReason),

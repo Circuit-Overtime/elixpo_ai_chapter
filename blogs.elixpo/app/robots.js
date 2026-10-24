@@ -2,12 +2,18 @@ export const runtime = 'edge';
 
 const SITE_URL = 'https://blogs.elixpo.com';
 
+// Single source for /robots.txt. A static public/robots.txt used to sit beside
+// this file with different rules; only this route was served, so its /api/
+// block never applied.
 export default function robots() {
   return {
     rules: {
       userAgent: '*',
-      allow: '/',
+      // OG cards live under /api/og. Social crawlers honor robots.txt, so the
+      // narrower allow must win over the /api/ block or link previews break.
+      allow: ['/', '/api/og'],
       disallow: [
+        '/api/',
         '/edit/',
         '/new-blog',
         '/settings',
@@ -17,6 +23,7 @@ export default function robots() {
         '/stories',
         '/stats',
         '/intro',
+        '/org/join/',
         '/sign-in',
         '/sign-up',
         '/login',

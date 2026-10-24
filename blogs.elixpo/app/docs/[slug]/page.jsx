@@ -6,6 +6,7 @@ import { docsNavFlat, getDocsSiblings } from '../../../src/config/docsNav';
 import { extractHeadings } from '../../../src/lib/extractHeadings';
 import { renderDocsMarkdown } from '../../../src/lib/docsMarked';
 import DocsToc from '../../../src/components/docs/DocsToc';
+import { staticPageMeta } from '../../../lib/pageMeta';
 
 const LEGACY_REDIRECTS = {
   'editor-overview': 'editor-overview',
@@ -26,11 +27,11 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const item = docsNavFlat.find((i) => i.slug === slug);
   if (!item) return {};
-  return {
+  return staticPageMeta({
     title: `${item.title} — Docs`,
     description: item.description,
-    alternates: { canonical: `https://blogs.elixpo.com/docs/${encodeURIComponent(slug)}` },
-  };
+    path: `/docs/${encodeURIComponent(slug)}`,
+  });
 }
 
 export default async function DocsPage({ params }) {

@@ -9,6 +9,7 @@ pub mod backend;
 pub mod config;
 pub mod harness;
 pub mod jobs;
+pub mod questions;
 pub mod routing;
 pub mod session;
 pub mod steering;
@@ -26,6 +27,10 @@ pub use config::{
 pub use harness::{HarnessTurnRequest, ModelCapabilities};
 pub use jobs::{
     JobDefinition, JobId, JobSchedule, JobState, JobStore, JobSummary, NewJob, ScheduledRun,
+};
+pub use questions::{
+    PendingQuestion, QuestionAnswer, QuestionAsker, QuestionInbox, QuestionKind, QuestionOption,
+    UserQuestion, question_channel, register_ask_user_tool,
 };
 pub use routing::{
     CommandCatalog, InputRoute, RouteDecision, RoutePolicy, RouteReason, UnknownInputPolicy,

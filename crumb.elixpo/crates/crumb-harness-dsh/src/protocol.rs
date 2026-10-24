@@ -72,6 +72,17 @@ pub enum HarnessActivity {
     ResponseDelta {
         text: String,
     },
+    /// Model reasoning, displayed separately from the answer.
+    ReasoningDelta {
+        text: String,
+    },
+    /// The text streamed since the last tool round was a draft; a revised
+    /// attempt follows.
+    ResponseRevised,
+    /// The streamed answer was corrected after checks; `text` replaces it.
+    ResponseCorrected {
+        text: String,
+    },
     Usage {
         input_tokens: u64,
         output_tokens: u64,

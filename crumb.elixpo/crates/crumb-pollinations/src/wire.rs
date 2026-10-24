@@ -253,6 +253,9 @@ struct ChatChoice {
 #[derive(Debug, Default, Deserialize)]
 struct ChatDelta {
     content: Option<String>,
+    /// Reasoning text; OpenAI-compatible servers use either field name.
+    #[serde(alias = "reasoning")]
+    reasoning_content: Option<String>,
     #[serde(default)]
     tool_calls: Vec<ToolCallDelta>,
 }
@@ -476,6 +479,11 @@ impl SseDecoder {
         let chunk: ChatCompletionChunk = serde_json::from_str(&data)
             .map_err(|_| protocol_error("stream contains malformed chat JSON"))?;
         for choice in chunk.choices {
+            if let Some(reasoning) = choice.delta.reasoning_content
+                && !reasoning.is_empty()
+            {
+                output.push(ChatEvent::ReasoningDelta(reasoning));
+            }
             if let Some(content) = choice.delta.content
                 && !content.is_empty()
             {
@@ -520,11 +528,14 @@ impl SseDecoder {
             if pending.name.is_empty() {
                 return Err(protocol_error("streamed tool call is missing a name"));
             }
+            // Malformed arguments are the model's mistake, not a broken
+            // stream: pass the raw text on so the tool rejects it and the
+            // model can retry, instead of failing the whole response.
             let arguments = if pending.arguments.trim().is_empty() {
                 serde_json::Value::Object(serde_json::Map::new())
             } else {
                 serde_json::from_str(&pending.arguments)
-                    .map_err(|_| protocol_error("streamed tool arguments are not valid JSON"))?
+                    .unwrap_or(serde_json::Value::String(pending.arguments))
             };
             output.push(ChatEvent::ToolCall(ToolCall {
                 id,
@@ -803,6 +814,53 @@ mod tests {
 
         assert_eq!(error.kind, ProviderErrorKind::Protocol);
         assert!(!error.retryable);
+    }
+
+    #[test]
+    fn decoder_emits_reasoning_separately_from_answer_text() {
+        let payload = concat!(
+            "data: {\"choices\":[{\"delta\":{\"reasoning_content\":\"think\"},\"finish_reason\":null}]}\n\n",
+            "data: {\"choices\":[{\"delta\":{\"reasoning\":\"ing\"},\"finish_reason\":null}]}\n\n",
+            "data: {\"choices\":[{\"delta\":{\"content\":\"answer\"},\"finish_reason\":\"stop\"}]}\n\n",
+            "data: [DONE]\n\n"
+        );
+        let mut decoder = SseDecoder::default();
+
+        let events = decoder.push(payload.as_bytes()).expect("valid stream");
+
+        assert_eq!(
+            events,
+            vec![
+                ChatEvent::ReasoningDelta("think".to_owned()),
+                ChatEvent::ReasoningDelta("ing".to_owned()),
+                ChatEvent::TextDelta("answer".to_owned()),
+                ChatEvent::Finished(FinishReason::Stop),
+            ]
+        );
+    }
+
+    #[test]
+    fn malformed_tool_arguments_reach_the_harness_as_raw_text() {
+        let payload = concat!(
+            r#"data: {"choices":[{"delta":{"tool_calls":[{"index":0,"id":"call_1","function":{"name":"read_file","arguments":"{\"path\": "}}]},"finish_reason":"tool_calls"}]}
+
+"#,
+            "data: [DONE]\n\n"
+        );
+        let mut decoder = SseDecoder::default();
+
+        let events = decoder
+            .push(payload.as_bytes())
+            .expect("a model's malformed arguments must not fail the stream");
+
+        assert_eq!(
+            events[0],
+            ChatEvent::ToolCall(crumb_llm::ToolCall {
+                id: "call_1".to_owned(),
+                name: "read_file".to_owned(),
+                arguments: serde_json::Value::String("{\"path\": ".to_owned()),
+            })
+        );
     }
 
     #[test]

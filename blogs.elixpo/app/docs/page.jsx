@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { docsNav } from '../../src/config/docsNav';
+import { staticPageMeta } from '../../lib/pageMeta';
 
-export const metadata = {
+export const metadata = staticPageMeta({
   title: 'Documentation',
   description: 'Guides for publishing, media, analytics, integrations, search, and the LixEditor API.',
-  alternates: { canonical: 'https://blogs.elixpo.com/docs' },
-};
+  path: '/docs',
+});
 
 export default function DocsIndex() {
   return (

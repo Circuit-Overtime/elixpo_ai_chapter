@@ -6,7 +6,7 @@ use std::fs::OpenOptions;
 use std::io::{self, IsTerminal, Read, Write};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
-use std::sync::atomic::{AtomicBool, AtomicU16, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU16, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
@@ -67,7 +67,10 @@ use crumb_native::session::{CommandOutcome, ShellSession};
 use crumb_native::shell_for;
 use crumb_optimize::{OptimizationPipeline, RtkOptimizer};
 use crumb_platform::Platform;
-use crumb_pollinations::{PollinationsSearchConfig, register_web_search_tool};
+use crumb_pollinations::{
+    JevDecisionConfig, PollinationsSearchConfig, register_jev_decision_tool,
+    register_web_search_tool,
+};
 use crumb_profile::{ProfileDocument, ProfileSelectionStore, ProfileStore};
 use crumb_pty::{PtyInput, PtyResizer, SystemPty, TerminalSize};
 use crumb_repl::{ReplOutcome, read_classified_line};
@@ -96,12 +99,14 @@ use sha2::{Digest, Sha256};
 
 mod agent_runtime;
 mod bundled_skills;
+mod choice_dialog;
 mod completion;
 mod composer_artifacts;
 mod context;
 mod device_auth;
 mod provider_discovery;
 mod provider_projection;
+mod sessions_view;
 mod shell_completion;
 
 use agent_runtime::{
@@ -296,8 +301,16 @@ fn run_agent_exec(cwd: &Path, request: &str, json: bool, writer: &mut dyn Write)
         let _ = runtime.initialize_peer_runtime(&workspace, &bus_root);
     }
     let cancellation = CancellationToken::default();
-    let result = runtime.run_local_job(request, &config, cwd, &cancellation)?;
+    let mut progress = ExecProgress::new(json);
+    let result =
+        runtime.run_local_job_with_events(request, &config, cwd, &cancellation, |event| {
+            progress.handle(&event, writer).map_err(Into::into)
+        })?;
     let response = crumb_ui::visible_agent_text(&result.final_response);
+    if progress.streamed {
+        progress.end_line(writer)?;
+        return Ok(());
+    }
     if json {
         serde_json::to_writer(
             &mut *writer,
@@ -318,6 +331,73 @@ fn run_agent_exec(cwd: &Path, request: &str, json: bool, writer: &mut dyn Write)
         writeln!(writer, "{response}")?;
     }
     Ok(())
+}
+
+/// Live progress for `crumb exec`. Model text streams to stdout only when it
+/// is a terminal, so piped stdout still receives just the final answer; tool
+/// steps go to stderr when it is a terminal. `--json` stays silent.
+struct ExecProgress {
+    targets: ExecTargets,
+    streamed: bool,
+    mid_line: bool,
+}
+
+/// Where `crumb exec` may show live output.
+struct ExecTargets {
+    stream_text: bool,
+    show_steps: bool,
+}
+
+impl ExecProgress {
+    fn new(json: bool) -> Self {
+        use std::io::IsTerminal as _;
+        Self {
+            targets: ExecTargets {
+                stream_text: !json && io::stdout().is_terminal(),
+                show_steps: !json && io::stderr().is_terminal(),
+            },
+            streamed: false,
+            mid_line: false,
+        }
+    }
+
+    fn handle(&mut self, event: &HarnessActivity, writer: &mut dyn Write) -> io::Result<()> {
+        match event {
+            HarnessActivity::ResponseDelta { text } if self.targets.stream_text => {
+                write!(writer, "{text}")?;
+                writer.flush()?;
+                self.streamed = true;
+                self.mid_line = !text.ends_with('\n');
+            }
+            HarnessActivity::ResponseCorrected { text } if self.targets.stream_text => {
+                self.end_line(writer)?;
+                writeln!(writer, "\nCorrected answer:\n{text}")?;
+            }
+            HarnessActivity::ToolStarted { name, detail } if self.targets.show_steps => {
+                self.end_line(writer)?;
+                eprintln!("  → {}", visible_tool_activity(name, detail.as_deref()));
+            }
+            HarnessActivity::ToolFinished { name, success } if self.targets.show_steps => {
+                eprintln!("  {} {name}", if *success { "✓" } else { "✗" });
+            }
+            HarnessActivity::ResponseRevised if self.targets.show_steps => {
+                self.end_line(writer)?;
+                eprintln!("  ↻ revising the draft against the tool results");
+            }
+            HarnessActivity::Progress { label } if self.targets.show_steps => {
+                eprintln!("  · {label}");
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn end_line(&mut self, writer: &mut dyn Write) -> io::Result<()> {
+        if std::mem::take(&mut self.mid_line) {
+            writeln!(writer)?;
+        }
+        writer.flush()
+    }
 }
 
 fn run_skill_job(cwd: &Path, selector: &str, request: &str, writer: &mut dyn Write) -> Result<()> {
@@ -828,6 +908,11 @@ fn workspace_read_host(
         .and_then(|routes| routes.first())
         .filter(|route| route.provider == "pollinations");
     if let Some(api_key) = search_api_key.filter(|key| !key.trim().is_empty()) {
+        // Jev decisions are on by default whenever Pollinations is connected.
+        register_jev_decision_tool(
+            &mut host,
+            JevDecisionConfig::new(api_key.clone(), max_output_bytes)?,
+        )?;
         let search = PollinationsSearchConfig::new(api_key, max_output_bytes)?;
         let search = search_route.map_or(search.clone(), |route| search.with_model(&route.model));
         register_web_search_tool(&mut host, search)?;
@@ -1072,6 +1157,12 @@ fn handle_repl_event(
             run_interactive_skill(&command, context)?;
             Ok(None)
         }
+        InputEvent::BuiltIn(BuiltInCommand::Reserved(command))
+            if command == "/sessions" || command == "/sessions all" =>
+        {
+            handle_sessions_command(&command, context)?;
+            Ok(None)
+        }
         InputEvent::BuiltIn(BuiltInCommand::Auth(action)) => {
             handle_auth_repl_event(action, context)
         }
@@ -1099,6 +1190,33 @@ fn handle_repl_event(
         InputEvent::NativeInput(command) if command.trim().is_empty() => Ok(None),
         InputEvent::NativeInput(command) => handle_input(&command, context),
     }
+}
+
+/// `/sessions` opens a picker for this folder's sessions; `/sessions all`
+/// lists every folder that has sessions.
+fn handle_sessions_command(command: &str, context: &mut InputContext<'_>) -> Result<()> {
+    if command == "/sessions all" {
+        return sessions_view::show_folder_groups(context.cwd, context.writer);
+    }
+    if !context.interactive {
+        return show_session_list(&sessions_view::session_root(context.cwd), context.writer);
+    }
+    sessions_view::browse_sessions(
+        context.cwd,
+        context.agent_runtime,
+        context.renderer,
+        context.fullscreen,
+        context.writer,
+    )?;
+    if context.fullscreen {
+        // The picker drew over the bottom of the screen.
+        let state = context
+            .transcript
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        render_transcript_view(&state, context.renderer, context.header_rows)?;
+    }
+    Ok(())
 }
 
 fn handle_auth_repl_event(
@@ -1408,6 +1526,8 @@ struct TranscriptState {
     scroll_offset: usize,
     unseen_lines: usize,
     footer_context: String,
+    /// Trailing lines that belong to the response block still streaming.
+    live_lines: usize,
 }
 
 struct TranscriptLine {
@@ -1470,6 +1590,40 @@ impl TranscriptState {
             text: collapsed_header,
             tool_output: Some(ToolOutputLine::Header(id)),
         }])
+    }
+
+    /// Replaces the streaming response block with its latest rendering.
+    fn set_live_block(&mut self, rendered: &str) {
+        let previous = self.live_lines.min(self.lines.len());
+        for _ in 0..previous {
+            self.lines.pop_back();
+        }
+        let lines = sanitize_transcript_output(rendered)
+            .split('\n')
+            .map(|line| TranscriptLine::plain(line.to_owned()))
+            .collect::<Vec<_>>();
+        let added = lines.len();
+        // A reader scrolled into history stays on the same rows; only the
+        // net growth of the block counts as new content below them.
+        if self.scroll_offset > 0 {
+            self.scroll_offset = (self.scroll_offset + added).saturating_sub(previous);
+            self.unseen_lines = self
+                .unseen_lines
+                .saturating_add(added.saturating_sub(previous));
+        } else {
+            self.unseen_lines = 0;
+        }
+        self.live_lines = added;
+        self.lines.extend(lines);
+        while self.lines.len() > Self::MAX_LINES {
+            self.lines.pop_front();
+        }
+        self.scroll_offset = self.scroll_offset.min(self.lines.len().saturating_sub(1));
+    }
+
+    /// Ends the streaming block so later output starts below it.
+    fn close_live_block(&mut self) {
+        self.live_lines = 0;
     }
 
     fn append_lines(&mut self, appended: Vec<TranscriptLine>) -> bool {
@@ -1539,12 +1693,13 @@ impl TranscriptState {
             bottom.saturating_sub(top) as usize + 1
         });
         let maximum = self.lines.len().saturating_sub(viewport_rows);
+        // The offset can exceed the scrollable range after lines are removed
+        // or the viewport grows; clamp first so scrolling up never moves the
+        // view down.
+        let current = self.scroll_offset.min(maximum);
         self.scroll_offset = match direction {
-            TranscriptScroll::Up => self
-                .scroll_offset
-                .saturating_add(Self::SCROLL_STEP)
-                .min(maximum),
-            TranscriptScroll::Down => self.scroll_offset.saturating_sub(Self::SCROLL_STEP),
+            TranscriptScroll::Up => current.saturating_add(Self::SCROLL_STEP).min(maximum),
+            TranscriptScroll::Down => current.saturating_sub(Self::SCROLL_STEP),
         };
         if self.scroll_offset == 0 {
             self.unseen_lines = 0;
@@ -2675,17 +2830,27 @@ fn handle_agent_boundary(
             .map_or("default", effort_display_name),
     );
     write!(writer, "\r\x1b[2K")?;
-    writeln!(
-        writer,
-        "{}",
-        renderer.agent_header_for_width(
-            pack,
-            effort,
-            agent_mode_name(config.mode),
-            None,
-            size().map_or(80, |(columns, _)| columns),
-        )
-    )?;
+    let header = renderer.agent_header_for_width(
+        pack,
+        effort,
+        agent_mode_name(config.mode),
+        None,
+        size().map_or(80, |(columns, _)| columns),
+    );
+    if terminal.fullscreen {
+        // The turn streams into the transcript as it runs; captured output is
+        // only appended when the turn ends, which would put the header below
+        // the answer.
+        let mut state = terminal
+            .transcript
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        state.append(&header);
+        render_transcript_view(&state, renderer, terminal.header_rows)?;
+        position_after_transcript(&state, terminal.header_rows)?;
+    } else {
+        writeln!(writer, "{header}")?;
+    }
     writer.flush()?;
     refresh_active_footer(renderer, terminal.fullscreen)?;
     if route.is_some_and(|route| route.provider == "pollinations")
@@ -2980,8 +3145,12 @@ fn finish_agent_turn(
             PausedTurnAction::Cancel => Ok(AgentSequenceStep::Stop),
         },
         TurnInterruption::None | TurnInterruption::Paused => {
-            if streamed_response && result.is_ok() && !ui.terminal.fullscreen {
-                writeln!(ui.writer)?;
+            // A streamed answer is already on screen (and, fullscreen, in the
+            // transcript); only close the inline line instead of reprinting.
+            if streamed_response && result.is_ok() {
+                if !ui.terminal.fullscreen {
+                    writeln!(ui.writer)?;
+                }
             } else {
                 render_agent_result(result, ui.renderer, ui.writer)?;
             }
@@ -3013,6 +3182,13 @@ struct ActiveTurnContext<'a> {
 #[derive(Default)]
 struct HarnessRenderState {
     streamed_response: bool,
+    /// Fullscreen text of the response block still streaming.
+    live_text: String,
+    /// The transcript changed and needs one repaint for the current batch.
+    transcript_dirty: bool,
+    /// An inline response block is being written; any other activity ends it
+    /// so narration, tool lines, and the answer each start on their own line.
+    response_open: bool,
     streamed_column: usize,
     active_tool: Option<(String, Option<String>)>,
     file_edits: BTreeMap<String, (u64, u64)>,
@@ -3071,6 +3247,43 @@ fn promote_agent_turn(
     Ok(id)
 }
 
+/// Longest batch of agent events rendered before the screen is repainted.
+const LIVE_FRAME: Duration = Duration::from_millis(16);
+
+/// Agents working in the current turn: Crumb itself plus running team
+/// members. Zero between turns. Read by the active footer.
+static ACTIVE_AGENTS: AtomicUsize = AtomicUsize::new(0);
+
+/// Counts Crumb as working for the life of an observed turn, on every exit.
+struct ActiveAgentsGuard;
+
+impl ActiveAgentsGuard {
+    fn start() -> Self {
+        ACTIVE_AGENTS.store(1, Ordering::Relaxed);
+        Self
+    }
+}
+
+impl Drop for ActiveAgentsGuard {
+    fn drop(&mut self) {
+        ACTIVE_AGENTS.store(0, Ordering::Relaxed);
+    }
+}
+
+fn record_agent_activity(event: &HarnessActivity) {
+    match event {
+        HarnessActivity::Progress { label } => {
+            if let Some((active, _)) = crumb_harness::parse_team_progress(label) {
+                ACTIVE_AGENTS.store(1 + active, Ordering::Relaxed);
+            }
+        }
+        HarnessActivity::ToolFinished { name, .. } if name == "spawn_agents" => {
+            ACTIVE_AGENTS.store(1, Ordering::Relaxed);
+        }
+        _ => {}
+    }
+}
+
 fn observe_agent_turn(
     task: agent_runtime::AgentTurnTask,
     steering: &mut SteeringQueue,
@@ -3081,6 +3294,7 @@ fn observe_agent_turn(
     context: &mut ActiveTurnContext<'_>,
 ) -> Result<TurnObservation> {
     let terminal = context.terminal;
+    let _agents = ActiveAgentsGuard::start();
     refresh_active_footer(renderer, terminal.fullscreen)?;
     let mut activity = Some(start_activity(
         renderer,
@@ -3094,58 +3308,42 @@ fn observe_agent_turn(
         input.redraw(writer)?;
     }
     while !task.is_finished() {
-        if let Ok(pending) = task.recv_approval_timeout(Duration::ZERO) {
-            input.clear_line(writer)?;
-            if let Some(indicator) = activity.take() {
-                indicator.finish();
-            }
-            resolve_tool_approval(
-                pending,
-                renderer,
-                writer,
-                terminal.interactive,
-                terminal.fullscreen,
-                context.workspace,
-            )?;
-            refresh_active_footer(renderer, terminal.fullscreen)?;
-            activity = Some(start_activity(renderer, "Thinking", terminal.fullscreen));
-            restore_steering_input(&mut input, &mut activity, writer)?;
+        handle_pending_prompts(
+            &task,
+            &mut input,
+            &mut activity,
+            renderer,
+            writer,
+            terminal,
+            context.workspace,
+        )?;
+        if render_pending_activity(
+            &task,
+            &mut input,
+            &mut activity,
+            &mut render_state,
+            renderer,
+            writer,
+            context,
+        )? {
+            break;
         }
-        match task.recv_timeout(Duration::from_millis(15)) {
-            Ok(event) => {
-                render_observed_activity(
-                    &event,
-                    &mut input,
-                    &mut activity,
-                    &mut render_state,
-                    renderer,
-                    writer,
-                    terminal,
-                    context.workspace,
-                    context.live_context_tokens,
-                )?;
-                preserve_active_scroll(context, renderer, &mut activity)?;
-            }
-            Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {}
-            Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => break,
-        }
-        if terminal.interactive && poll_terminal_event(Duration::from_millis(10))? {
-            let background = handle_active_terminal_event(
-                &read_terminal_event()?,
+        if terminal.interactive
+            && poll_terminal_event(Duration::from_millis(10))?
+            && handle_pending_terminal_events(
                 &mut input,
                 &mut activity,
                 &task,
                 steering,
                 writer,
                 terminal,
-            )?;
-            if background {
-                input.clear_line(writer)?;
-                drop(enhanced_keys);
-                drop(raw_mode);
-                task.detach_interrupt();
-                return Ok(TurnObservation::Backgrounded(task));
-            }
+            )?
+        {
+            input.clear_line(writer)?;
+            drop(enhanced_keys);
+            drop(raw_mode);
+            task.detach_interrupt();
+            return Ok(TurnObservation::Backgrounded(task));
         }
     }
     while let Ok(event) = task.recv_timeout(Duration::ZERO) {
@@ -3160,6 +3358,17 @@ fn observe_agent_turn(
             context.workspace,
             context.live_context_tokens,
         )?;
+    }
+    flush_live_transcript(
+        &mut render_state,
+        &mut input,
+        &mut activity,
+        renderer,
+        writer,
+        terminal,
+    )?;
+    if let Ok(mut transcript) = terminal.transcript.lock() {
+        transcript.close_live_block();
     }
     let interruption = input.interruption;
     input.clear_line(writer)?;
@@ -3176,6 +3385,259 @@ fn observe_agent_turn(
         interruption,
         render_state.streamed_response,
     ))
+}
+
+/// Renders agent events already queued, for up to one frame, then repaints
+/// once, so a fast stream never starves scrolling and typing. Returns whether
+/// the agent task has disconnected.
+/// Shows a pending tool approval or agent question, then resumes the turn's
+/// activity line and steering input.
+fn handle_pending_prompts(
+    task: &agent_runtime::AgentTurnTask,
+    input: &mut SteeringInput,
+    activity: &mut Option<crumb_ui::ActivityIndicator>,
+    renderer: Renderer,
+    writer: &mut dyn Write,
+    terminal: &AgentTerminal,
+    workspace: &Path,
+) -> Result<()> {
+    let approval = task.recv_approval_timeout(Duration::ZERO).ok();
+    let question = task.recv_question_timeout(Duration::ZERO).ok();
+    if approval.is_none() && question.is_none() {
+        return Ok(());
+    }
+    input.clear_line(writer)?;
+    if let Some(indicator) = activity.take() {
+        indicator.finish();
+    }
+    if let Some(pending) = approval {
+        resolve_tool_approval(
+            pending,
+            renderer,
+            writer,
+            terminal.interactive,
+            terminal.fullscreen,
+            workspace,
+        )?;
+    }
+    if let Some(pending) = question {
+        answer_agent_question(pending, renderer, writer, terminal)?;
+    }
+    refresh_active_footer(renderer, terminal.fullscreen)?;
+    *activity = Some(start_activity(renderer, "Thinking", terminal.fullscreen));
+    restore_steering_input(input, activity, writer)
+}
+
+/// Asks the user an agent's question with the choice dialog and sends the
+/// answer back. The question and answer are kept in the transcript.
+fn answer_agent_question(
+    pending: crumb_agent::PendingQuestion,
+    renderer: Renderer,
+    writer: &mut dyn Write,
+    terminal: &AgentTerminal,
+) -> Result<()> {
+    let question = pending.question.clone();
+    let asked = renderer.agent_activity(&format!("? {}", question.prompt));
+    record_turn_line(&asked, renderer, writer, terminal)?;
+    let answer = if terminal.interactive {
+        ask_question(&question, renderer, terminal.fullscreen)?
+    } else {
+        crumb_agent::QuestionAnswer::Dismissed
+    };
+    let summary = match &answer {
+        crumb_agent::QuestionAnswer::Selected(choices) => {
+            format!("You chose: {}", choices.join(", "))
+        }
+        crumb_agent::QuestionAnswer::Text(text) => format!("You answered: {text}"),
+        crumb_agent::QuestionAnswer::Dismissed => "You skipped this question".to_owned(),
+    };
+    let answered = renderer.agent_activity(&summary);
+    record_turn_line(&answered, renderer, writer, terminal)?;
+    pending.answer(answer);
+    Ok(())
+}
+
+fn ask_question(
+    question: &crumb_agent::UserQuestion,
+    renderer: Renderer,
+    fullscreen: bool,
+) -> Result<crumb_agent::QuestionAnswer> {
+    use crumb_agent::{QuestionAnswer, QuestionKind};
+    if question.kind == QuestionKind::Text {
+        return Ok(
+            choice_dialog::run_text_prompt(renderer, &question.prompt, "", fullscreen)?
+                .map_or(QuestionAnswer::Dismissed, QuestionAnswer::Text),
+        );
+    }
+    let multiple = question.kind == QuestionKind::Multiple;
+    let mut rows = question
+        .options
+        .iter()
+        .map(|option| choice_dialog::DialogRow {
+            label: option.label.clone(),
+            detail: option.description.clone().unwrap_or_default(),
+            checked: multiple.then_some(false),
+        })
+        .collect::<Vec<_>>();
+    if question.allow_other {
+        rows.push(choice_dialog::DialogRow {
+            label: "Other…".to_owned(),
+            detail: "type your own answer".to_owned(),
+            checked: multiple.then_some(false),
+        });
+    }
+    let dialog = choice_dialog::ChoiceDialog {
+        title: &question.prompt,
+        notes: &[],
+        hint: if multiple {
+            "↑/↓ move · Space toggle · Enter confirm · Esc skip"
+        } else {
+            "↑/↓ choose · Enter select · Esc skip"
+        },
+        actions: &[],
+    };
+    let choice_dialog::DialogOutcome::Chosen(highlighted) =
+        choice_dialog::run_choice_dialog(renderer, &dialog, &mut rows, fullscreen)?
+    else {
+        return Ok(QuestionAnswer::Dismissed);
+    };
+    let other = question.allow_other.then(|| rows.len() - 1);
+    let mut picked = if multiple {
+        let ticked = rows
+            .iter()
+            .enumerate()
+            .filter(|(_, row)| row.checked == Some(true))
+            .map(|(index, _)| index)
+            .collect::<Vec<_>>();
+        if ticked.is_empty() {
+            vec![highlighted]
+        } else {
+            ticked
+        }
+    } else {
+        vec![highlighted]
+    };
+    let mut choices = Vec::new();
+    if other.is_some_and(|other| picked.contains(&other)) {
+        picked.retain(|index| Some(*index) != other);
+        if let Some(text) =
+            choice_dialog::run_text_prompt(renderer, &question.prompt, "", fullscreen)?
+        {
+            if picked.is_empty() {
+                return Ok(QuestionAnswer::Text(text));
+            }
+            choices.push(text);
+        }
+    }
+    let mut selected = picked
+        .into_iter()
+        .map(|index| rows[index].label.clone())
+        .collect::<Vec<_>>();
+    selected.extend(choices);
+    Ok(if selected.is_empty() {
+        QuestionAnswer::Dismissed
+    } else {
+        QuestionAnswer::Selected(selected)
+    })
+}
+
+/// Adds a line to the turn's output: the transcript in fullscreen (repainted,
+/// since dialogs draw over it), the writer inline.
+fn record_turn_line(
+    line: &str,
+    renderer: Renderer,
+    writer: &mut dyn Write,
+    terminal: &AgentTerminal,
+) -> Result<()> {
+    if terminal.fullscreen {
+        let mut state = terminal
+            .transcript
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        state.close_live_block();
+        state.append(line);
+        render_transcript_view(&state, renderer, terminal.header_rows)?;
+        if state.scroll_offset == 0 {
+            position_after_transcript(&state, terminal.header_rows)?;
+        }
+    } else {
+        writeln!(writer, "{line}")?;
+        writer.flush()?;
+    }
+    Ok(())
+}
+
+fn render_pending_activity(
+    task: &agent_runtime::AgentTurnTask,
+    input: &mut SteeringInput,
+    activity: &mut Option<crumb_ui::ActivityIndicator>,
+    render_state: &mut HarnessRenderState,
+    renderer: Renderer,
+    writer: &mut dyn Write,
+    context: &mut ActiveTurnContext<'_>,
+) -> Result<bool> {
+    let mut next = task.recv_timeout(Duration::from_millis(15));
+    let batch_started = Instant::now();
+    let mut received_any = false;
+    while let Ok(event) = next {
+        render_observed_activity(
+            &event,
+            input,
+            activity,
+            render_state,
+            renderer,
+            writer,
+            context.terminal,
+            context.workspace,
+            context.live_context_tokens,
+        )?;
+        received_any = true;
+        next = if batch_started.elapsed() < LIVE_FRAME {
+            task.recv_timeout(Duration::ZERO)
+        } else {
+            Err(std::sync::mpsc::RecvTimeoutError::Timeout)
+        };
+    }
+    if received_any {
+        flush_live_transcript(
+            render_state,
+            input,
+            activity,
+            renderer,
+            writer,
+            context.terminal,
+        )?;
+        preserve_active_scroll(context, renderer, activity)?;
+    }
+    Ok(next == Err(std::sync::mpsc::RecvTimeoutError::Disconnected))
+}
+
+/// Handles every pending terminal event; wheel notches arrive in bursts.
+/// Returns whether the user moved the turn to the background.
+fn handle_pending_terminal_events(
+    input: &mut SteeringInput,
+    activity: &mut Option<crumb_ui::ActivityIndicator>,
+    task: &agent_runtime::AgentTurnTask,
+    steering: &mut SteeringQueue,
+    writer: &mut dyn Write,
+    terminal: &AgentTerminal,
+) -> Result<bool> {
+    loop {
+        if handle_active_terminal_event(
+            &read_terminal_event()?,
+            input,
+            activity,
+            task,
+            steering,
+            writer,
+            terminal,
+        )? {
+            return Ok(true);
+        }
+        if !poll_terminal_event(Duration::ZERO)? {
+            return Ok(false);
+        }
+    }
 }
 
 fn enable_active_terminal_input(
@@ -3200,6 +3662,14 @@ fn render_observed_activity(
     workspace: &Path,
     live_context_tokens: &mut u64,
 ) -> Result<()> {
+    record_agent_activity(event);
+    // Streamed text only updates the transcript model; the observer repaints
+    // once per batch so a fast stream cannot starve input handling.
+    if terminal.fullscreen
+        && render_fullscreen_response(event, activity, render_state, renderer, terminal)
+    {
+        return Ok(());
+    }
     input.clear_line(writer)?;
     if terminal.fullscreen
         && let HarnessActivity::ToolOutput {
@@ -3262,12 +3732,17 @@ fn render_observed_activity(
             &terminal.transcript,
             terminal.header_rows,
         )?;
-        *activity = Some(start_activity_at(
-            renderer,
-            "Thinking",
-            terminal.fullscreen,
-            activity_row,
-        ));
+        // Inline, the spinner shares the line an open response is using;
+        // fullscreen, streaming text already shows progress.
+        let streaming = render_state.response_open || !render_state.live_text.is_empty();
+        if !streaming {
+            *activity = Some(start_activity_at(
+                renderer,
+                "Thinking",
+                terminal.fullscreen,
+                activity_row,
+            ));
+        }
     } else {
         render_harness_activity(
             event,
@@ -3282,6 +3757,92 @@ fn render_observed_activity(
     // The guide owns the final terminal row. Paint it after every composer
     // redraw so wrapped steering input and resize recovery cannot cover it.
     refresh_active_footer(renderer, terminal.fullscreen)?;
+    Ok(())
+}
+
+/// Handles fullscreen response activity. Returns whether `event` was handled.
+///
+/// Text extends the transcript's live block; any other activity closes it so
+/// later output starts below. Nothing is painted here: the caller repaints
+/// once for the whole batch of pending events.
+fn render_fullscreen_response(
+    event: &HarnessActivity,
+    activity: &mut Option<crumb_ui::ActivityIndicator>,
+    state: &mut HarnessRenderState,
+    renderer: Renderer,
+    terminal: &AgentTerminal,
+) -> bool {
+    let continues = matches!(
+        event,
+        HarnessActivity::ResponseDelta { .. } | HarnessActivity::Usage { .. }
+    );
+    let mut transcript = terminal
+        .transcript
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
+    if !continues && !state.live_text.is_empty() {
+        state.live_text.clear();
+        transcript.close_live_block();
+    }
+    match event {
+        HarnessActivity::ResponseDelta { text } => {
+            if let Some(indicator) = activity.take() {
+                indicator.finish();
+            }
+            state.streamed_response = true;
+            state.live_text.push_str(text);
+            let visible = crumb_ui::visible_agent_text(&state.live_text);
+            transcript.set_live_block(&terminal_agent_response(renderer, &visible));
+        }
+        HarnessActivity::ResponseRevised => {
+            transcript
+                .append(&renderer.agent_activity("↻ revising the draft against the tool results"));
+        }
+        HarnessActivity::ResponseCorrected { text } => {
+            transcript.append(&renderer.agent_activity("Corrected answer"));
+            transcript.append(&terminal_agent_response(renderer, text));
+        }
+        HarnessActivity::ReasoningDelta { .. } => {
+            drop(transcript);
+            if activity
+                .as_ref()
+                .is_none_or(|indicator| indicator.label() != "Reasoning")
+            {
+                replace_activity(activity, renderer, "Reasoning", true);
+            }
+            return true;
+        }
+        _ => return false,
+    }
+    state.transcript_dirty = true;
+    true
+}
+
+/// Repaints the transcript once after a batch of streamed events.
+fn flush_live_transcript(
+    state: &mut HarnessRenderState,
+    input: &mut SteeringInput,
+    activity: &mut Option<crumb_ui::ActivityIndicator>,
+    renderer: Renderer,
+    writer: &mut dyn Write,
+    terminal: &AgentTerminal,
+) -> Result<()> {
+    if !std::mem::take(&mut state.transcript_dirty) {
+        return Ok(());
+    }
+    input.clear_line(writer)?;
+    {
+        let transcript = terminal
+            .transcript
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        render_transcript_view(&transcript, renderer, terminal.header_rows)?;
+        if transcript.scroll_offset == 0 {
+            position_after_transcript(&transcript, terminal.header_rows)?;
+        }
+    }
+    restore_steering_input(input, activity, writer)?;
+    refresh_active_footer(renderer, true)?;
     Ok(())
 }
 
@@ -3531,7 +4092,12 @@ fn refresh_active_footer(renderer: Renderer, fullscreen: bool) -> io::Result<()>
         return Ok(());
     }
     let (columns, rows) = size()?;
-    let frame = fixed_footer_frame(rows, &renderer.composer_active_hotkeys(columns));
+    let frame = fixed_footer_frame(
+        rows,
+        &renderer
+            .composer_active_hotkeys_with_agents(columns, ACTIVE_AGENTS.load(Ordering::Relaxed)),
+    );
+    let _frame = crumb_ui::lock_terminal_output();
     let mut terminal = io::stderr();
     terminal.write_all(frame.as_bytes())?;
     terminal.flush()
@@ -4293,6 +4859,9 @@ fn harness_activity_label(activity: &HarnessActivity) -> String {
     match activity {
         HarnessActivity::RequestAccepted => "request accepted".to_owned(),
         HarnessActivity::ResponseDelta { .. } => "responding".to_owned(),
+        HarnessActivity::ReasoningDelta { .. } => "reasoning".to_owned(),
+        HarnessActivity::ResponseRevised => "revising".to_owned(),
+        HarnessActivity::ResponseCorrected { .. } => "corrected answer".to_owned(),
         HarnessActivity::Usage { .. } => "updating context".to_owned(),
         HarnessActivity::Status { state } => format!("session {state}"),
         HarnessActivity::ToolStarted { name, .. } if name == "spawn_agents" => {
@@ -4333,22 +4902,10 @@ fn render_harness_activity(
     writer: &mut dyn Write,
     fullscreen: bool,
 ) -> Result<()> {
+    if render_response_activity(activity, indicator, state, renderer, writer, fullscreen)? {
+        return Ok(());
+    }
     match activity {
-        HarnessActivity::ResponseDelta { text } => {
-            if fullscreen {
-                state.streamed_response = true;
-                replace_activity(indicator, renderer, "Writing response", fullscreen);
-                return Ok(());
-            }
-            finish_activity_line(indicator, writer)?;
-            if !state.streamed_response {
-                write!(writer, "{} ", terminal_agent_response(renderer, ""))?;
-                state.streamed_response = true;
-                state.streamed_column = 8;
-            }
-            write_bounded_response_delta(writer, text, &mut state.streamed_column)?;
-            writer.flush()?;
-        }
         HarnessActivity::ToolStarted { name, detail } => render_tool_started(
             name,
             detail.as_deref(),
@@ -4422,9 +4979,79 @@ fn render_harness_activity(
         HarnessActivity::RequestAccepted => {
             replace_activity(indicator, renderer, "Request accepted", fullscreen);
         }
-        HarnessActivity::Usage { .. } => {}
+        HarnessActivity::Usage { .. }
+        | HarnessActivity::ResponseDelta { .. }
+        | HarnessActivity::ReasoningDelta { .. }
+        | HarnessActivity::ResponseRevised
+        | HarnessActivity::ResponseCorrected { .. } => {}
     }
     Ok(())
+}
+
+/// Renders model text activity. Returns whether `activity` was handled.
+fn render_response_activity(
+    activity: &HarnessActivity,
+    indicator: &mut Option<crumb_ui::ActivityIndicator>,
+    state: &mut HarnessRenderState,
+    renderer: Renderer,
+    writer: &mut dyn Write,
+    fullscreen: bool,
+) -> Result<bool> {
+    let continues_response = matches!(
+        activity,
+        HarnessActivity::ResponseDelta { .. } | HarnessActivity::Usage { .. }
+    );
+    if state.response_open && !continues_response {
+        writeln!(writer)?;
+        state.response_open = false;
+    }
+    match activity {
+        HarnessActivity::ResponseDelta { text } => {
+            if fullscreen {
+                state.streamed_response = true;
+                replace_activity(indicator, renderer, "Writing response", fullscreen);
+                return Ok(true);
+            }
+            // Clearing the line on every delta would erase the text streamed
+            // so far; only a new block takes over the activity line.
+            if !state.response_open {
+                finish_activity_line(indicator, writer)?;
+                write!(writer, "{} ", terminal_agent_response(renderer, ""))?;
+                state.streamed_response = true;
+                state.response_open = true;
+                state.streamed_column = 8;
+            }
+            write_bounded_response_delta(writer, text, &mut state.streamed_column)?;
+            writer.flush()?;
+        }
+        HarnessActivity::ReasoningDelta { .. } => {
+            replace_activity(indicator, renderer, "Reasoning", fullscreen);
+        }
+        HarnessActivity::ResponseRevised => {
+            if !fullscreen {
+                finish_activity_line(indicator, writer)?;
+                writeln!(
+                    writer,
+                    "{}",
+                    renderer.agent_activity("↻ revising the draft against the tool results")
+                )?;
+                writer.flush()?;
+            }
+            replace_activity(indicator, renderer, "Revising", fullscreen);
+        }
+        HarnessActivity::ResponseCorrected { text } => {
+            // Fullscreen renders the final, corrected answer when the turn
+            // settles; inline output already streamed and needs the fix shown.
+            if !fullscreen {
+                finish_activity_line(indicator, writer)?;
+                writeln!(writer, "{}", renderer.agent_activity("Corrected answer"))?;
+                writeln!(writer, "{}", terminal_agent_response(renderer, text))?;
+                writer.flush()?;
+            }
+        }
+        _ => return Ok(false),
+    }
+    Ok(true)
 }
 
 fn render_tool_started(
@@ -4540,6 +5167,7 @@ fn visible_tool_activity(name: &str, detail: Option<&str>) -> String {
         ("run_shell", Some(command)) => format!("Running command · $ {command}"),
         ("write_file", Some(path)) => format!("Editing file · {path}"),
         ("web_search", Some(query)) => format!("Searching web · {query}"),
+        ("jev_decide", _) => "Asking Jev to weigh the options".to_owned(),
         ("web_fetch", Some(url)) => format!("Fetching page · {url}"),
         ("github_issue", Some(target)) => format!("Fetching GitHub item · {target}"),
         ("list_peer_agents", _) => "Finding peer agents".to_owned(),
@@ -4563,6 +5191,8 @@ fn finished_tool_activity(
         ("run_shell", false) => "Command failed",
         ("web_search", true) => "Searched the web",
         ("web_search", false) => "Web search failed",
+        ("jev_decide", true) => "Jev weighed the options",
+        ("jev_decide", false) => "Jev decision failed",
         ("web_fetch", true) => "Fetched page",
         ("web_fetch", false) => "Page fetch failed",
         ("github_issue", true) => "Fetched GitHub item",
@@ -6511,10 +7141,16 @@ fn show_agent_tools(cwd: &Path, writer: &mut dyn Write) -> Result<()> {
                 .get(&Modality::WebSearch)
                 .is_some_and(|routes| !routes.is_empty()),
         ),
+        (
+            "jev_decide",
+            "network decisions",
+            configured_pollinations_runtime_key(&config).is_some(),
+        ),
+        ("ask_user", "asks you", true),
     ] {
         let explicitly_granted = matches!(
             name,
-            "current_time" | "read_file" | "list_directory" | "detect_stack"
+            "current_time" | "read_file" | "list_directory" | "detect_stack" | "ask_user"
         ) || config.permissions.allow_network_tools.contains(name)
             || config.permissions.allow_workspace_tools.contains(name)
             || config.permissions.allow_execution_tools.contains(name);
@@ -12542,13 +13178,25 @@ impl Prompt for CrumbPrompt {
             )
             .saturating_add(2)
         });
-        let mut prefix = self
+        let mut artifacts = self
             .paste_artifacts
             .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner)
-            .composer_prefix(std::env::var_os("NO_COLOR").is_none(), composer_input_row);
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        let mut prefix =
+            artifacts.composer_prefix(std::env::var_os("NO_COLOR").is_none(), composer_input_row);
         if !prefix.is_empty() {
             prefix.push(' ');
+        }
+        if self.anchor_to_composer {
+            // Reedline measures the prompt as if it were printed in one flow
+            // and parks the cursor in column 0 whenever that measurement ends
+            // on the right margin. The composer prompt is absolutely
+            // positioned, so reset the measurement with a carriage return and
+            // return to the input column; reedline then only counts the typed
+            // text and restores the real cursor position.
+            let width = artifacts.composer_prefix_width();
+            let column = 5 + width + usize::from(width > 0);
+            let _ = write!(prefix, "\r\x1b[{column}G");
         }
         Cow::Owned(prefix)
     }
@@ -12846,7 +13494,9 @@ fn render_transcript_view(
     let start = end.saturating_sub(height);
     let visible = state.lines.range(start..end);
     let mut frame = Vec::new();
-    write!(frame, "\x1b7\x1b[r")?;
+    // Synchronized output lets supporting terminals swap the whole frame at
+    // once instead of showing rows being cleared and redrawn.
+    write!(frame, "\x1b[?2026h\x1b7\x1b[r")?;
     for row in top..=bottom {
         crossterm::execute!(frame, MoveTo(0, row), Clear(ClearType::CurrentLine))?;
     }
@@ -12855,7 +13505,8 @@ fn render_transcript_view(
         write!(frame, "{}", line.text)?;
     }
     render_transcript_footer_with_writer(&mut frame, state, renderer, header_rows)?;
-    write!(frame, "\x1b8")?;
+    write!(frame, "\x1b8\x1b[?2026l")?;
+    let _frame = crumb_ui::lock_terminal_output();
     let mut writer = io::stdout();
     writer.write_all(&frame)?;
     writer.flush()
@@ -14199,6 +14850,66 @@ mod tests {
         assert!(output.lines().count() > 1);
     }
 
+    fn transcript_text(transcript: &TranscriptState) -> Vec<&str> {
+        transcript
+            .lines
+            .iter()
+            .map(|line| line.text.as_str())
+            .collect()
+    }
+
+    #[test]
+    fn live_block_is_replaced_in_place_until_closed() {
+        let mut transcript = TranscriptState::default();
+        transcript.append("prompt");
+
+        transcript.set_live_block("Let me");
+        transcript.set_live_block("Let me check\nthe clock");
+        assert_eq!(
+            transcript_text(&transcript),
+            ["prompt", "Let me check", "the clock"]
+        );
+
+        transcript.close_live_block();
+        transcript.append("tool line");
+        transcript.set_live_block("answer");
+        assert_eq!(
+            transcript_text(&transcript),
+            ["prompt", "Let me check", "the clock", "tool line", "answer"]
+        );
+    }
+
+    #[test]
+    fn live_block_growth_keeps_a_scrolled_reader_in_place() {
+        let mut transcript = TranscriptState::default();
+        transcript.append("one\ntwo\nthree");
+        transcript.set_live_block("a");
+        transcript.scroll_offset = 2;
+
+        transcript.set_live_block("a\nb\nc");
+
+        // Two new lines arrived below the reader, who stays on the same rows.
+        assert_eq!(transcript.scroll_offset, 4);
+        assert_eq!(transcript.unseen_lines, 2);
+    }
+
+    #[test]
+    fn scrolling_up_from_an_out_of_range_offset_never_moves_down() {
+        let mut transcript = TranscriptState::default();
+        transcript.append(&vec!["line"; 40].join("\n"));
+        // Viewport math uses the real terminal; force an offset far above
+        // any scrollable range, as collapsing a tool block can.
+        transcript.scroll_offset = 1_000;
+
+        transcript.scroll(TranscriptScroll::Up, 0);
+        let top = transcript.scroll_offset;
+        assert!(top < 40, "clamped into the scrollable range");
+        transcript.scroll(TranscriptScroll::Up, 0);
+        assert_eq!(transcript.scroll_offset, top, "already at the top");
+        transcript.scroll(TranscriptScroll::Down, 0);
+        assert_eq!(transcript.scroll_offset, top.saturating_sub(8));
+    }
+
     #[test]
     fn appended_transcript_lines_preserve_a_scrolled_viewport() {
         let mut transcript = TranscriptState::default();
@@ -14984,6 +15695,28 @@ mod tests {
         assert!(frame.contains("Enter send"));
         assert!(frame.contains("\x1b7"));
         assert!(frame.contains("\x1b8"));
+    }
+
+    #[test]
+    fn anchored_prompt_indicator_resets_reedline_column_measurement() {
+        let prompt = CrumbPrompt::new(
+            "workspace git:main\n╭─╮\n│ ".to_owned(),
+            "pack Balanced Crumb".to_owned(),
+            true,
+            None,
+            Arc::new(Mutex::new(PendingComposerArtifacts::default())),
+            Arc::new(std::sync::atomic::AtomicU16::new(1)),
+        );
+
+        let indicator = <CrumbPrompt as reedline::Prompt>::render_prompt_indicator(
+            &prompt,
+            reedline::PromptEditMode::Default,
+        );
+
+        // A carriage return restarts reedline's width count, so a long prompt
+        // can never be mistaken for one that ends on the right margin; the
+        // column move puts the cursor back at the input column.
+        assert!(indicator.ends_with("\r\x1b[5G"));
     }
 
     #[test]

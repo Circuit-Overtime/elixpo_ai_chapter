@@ -2,12 +2,13 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { marked } from 'marked';
 import MarkdownPage from '../../src/components/MarkdownPage';
+import { staticPageMeta } from '../../lib/pageMeta';
 
-export const metadata = {
+export const metadata = staticPageMeta({
   title: 'Privacy Policy',
   description: 'How LixBlogs collects, uses, and protects your data.',
-  alternates: { canonical: 'https://blogs.elixpo.com/privacy' },
-};
+  path: '/privacy',
+});
 
 export default function PrivacyPage() {
   const md = readFileSync(path.join(process.cwd(), 'content/privacy.md'), 'utf8');

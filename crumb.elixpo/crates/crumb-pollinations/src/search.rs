@@ -213,13 +213,13 @@ fn is_blanket_person_refusal(answer: &str) -> bool {
             || answer.contains("privacy and security policies"))
 }
 
-async fn wait_for_cancellation(cancellation: &CancellationToken) {
+pub(crate) async fn wait_for_cancellation(cancellation: &CancellationToken) {
     while !cancellation.is_cancelled() {
         tokio::time::sleep(Duration::from_millis(20)).await;
     }
 }
 
-fn truncate_utf8(value: &str, max_bytes: usize) -> &str {
+pub(crate) fn truncate_utf8(value: &str, max_bytes: usize) -> &str {
     if value.len() <= max_bytes {
         return value;
     }

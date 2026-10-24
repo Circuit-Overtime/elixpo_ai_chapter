@@ -337,8 +337,8 @@ pub struct AgentLimits {
 impl Default for AgentLimits {
     fn default() -> Self {
         Self {
-            max_steps: 24,
-            max_tool_calls: 48,
+            max_steps: 60,
+            max_tool_calls: 120,
             max_wall_time_seconds: 900,
             max_context_tokens: 256_000,
             max_output_bytes: 1_048_576,
