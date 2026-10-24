@@ -1,0 +1,370 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment target
+        type: choice
+        required: true
+        default: all
+        options: [all, pages, worker, packages, vscode, catalog]
+      bump:
+        description: Package version bump
+        type: choice
+        required: true
+        default: patch
+        options: [patch, minor, major]
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  attestations: write
+
+jobs:
+  changes:
+    name: Select deployment branches
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.ref == 'refs/heads/main' &&
+       !contains(github.event.head_commit.message, '[skip deploy]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      pages: ${{ steps.select.outputs.pages }}
+      worker: ${{ steps.select.outputs.worker }}
+      lixeditor: ${{ steps.select.outputs.lixeditor }}
+      cli: ${{ steps.select.outputs.cli }}
+      vscode: ${{ steps.select.outputs.vscode }}
+      catalog: ${{ steps.select.outputs.catalog }}
+      bump: ${{ steps.select.outputs.bump }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2
+      - name: Detect changed targets
+        id: select
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          MANUAL_TARGET: ${{ inputs.target }}
+          MANUAL_BUMP: ${{ inputs.bump }}
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: |
+          pages=false
+          worker=false
+          lixeditor=false
+          cli=false
+          vscode=false
+          catalog=false
+          bump="${MANUAL_BUMP:-patch}"
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            case "$MANUAL_TARGET" in
+              all) pages=true; worker=true; lixeditor=true; cli=true; vscode=true; catalog=true ;;
+              pages) pages=true ;;
+              worker) worker=true ;;
+              packages) lixeditor=true; cli=true ;;
+              vscode) vscode=true ;;
+              catalog) catalog=true ;;
+            esac
+          else
+            if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+              files=$(git diff --name-only "$BEFORE_SHA" "$CURRENT_SHA")
+            else
+              files=$(git show --pretty='' --name-only "$CURRENT_SHA")
+            fi
+
+            while IFS= read -r file; do
+              case "$file" in
+                packages/lixeditor/*) lixeditor=true ;;
+                packages/lixblogs-cli/*|.agents/skills/*) cli=true ;;
+                packages/vscode-lixeditor/*) vscode=true ;;
+                worker/*) worker=true ;;
+                payouts.catalog.json|scripts/sync-payouts-tiers.mjs) catalog=true ;;
+              esac
+              case "$file" in
+                app/*|src/*|lib/*|migrations/*|public/*|styles/*|middleware.*|next.config.*|postcss.config.*|tailwind.config.*|package.json|package-lock.json)
+                  pages=true
+                  ;;
+              esac
+            done <<< "$files"
+          fi
+
+          for output in pages worker lixeditor cli vscode catalog bump; do
+            printf '%s=%s\n' "$output" "${!output}" >> "$GITHUB_OUTPUT"
+          done
+
+  packages:
+    name: npm and GitHub Packages
+    needs: changes
+    if: needs.changes.outputs.lixeditor == 'true' || needs.changes.outputs.cli == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: npm
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN || github.token }}
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - name: Use a provenance-capable npm
+        run: npm install --global npm@latest
+      - name: Install package dependencies
+        env:
+          BUILD_LIXEDITOR: ${{ needs.changes.outputs.lixeditor }}
+          BUILD_CLI: ${{ needs.changes.outputs.cli }}
+        run: |
+          if [ "$BUILD_LIXEDITOR" = "true" ]; then npm ci; fi
+          if [ "$BUILD_CLI" = "true" ]; then npm ci --prefix packages/lixblogs-cli; fi
+      - name: Build the selected release artifacts
+        env:
+          BUILD_LIXEDITOR: ${{ needs.changes.outputs.lixeditor }}
+          BUILD_CLI: ${{ needs.changes.outputs.cli }}
+          BUMP: ${{ needs.changes.outputs.bump }}
+          FORCE_PACKAGE_BUMP: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+        run: |
+          args=(--package "--$BUMP")
+          if [ "$BUILD_LIXEDITOR" = "true" ] && [ "$BUILD_CLI" != "true" ]; then args+=(--lixeditor); fi
+          if [ "$BUILD_CLI" = "true" ] && [ "$BUILD_LIXEDITOR" != "true" ]; then args+=(--cli); fi
+          ./deploy.sh "${args[@]}" build
+      - name: Verify package contracts
+        env:
+          BUILD_LIXEDITOR: ${{ needs.changes.outputs.lixeditor }}
+          BUILD_CLI: ${{ needs.changes.outputs.cli }}
+        run: |
+          inspect_package() {
+            archive="$1"
+            root=$(mktemp -d)
+            tar -xzf "$archive" -C "$root"
+            bytes=$(find "$root/package" -type f -printf '%s\n' | awk '{ total += $1 } END { print total + 0 }')
+            PACKAGE_ROOT="$root/package"
+            echo "$(basename "$archive"): $bytes bytes unpacked"
+          }
+          if [ "$BUILD_LIXEDITOR" = "true" ]; then
+            archive=$(find .release/packages/lixeditor -name '*.tgz' -print -quit)
+            inspect_package "$archive"
+            test -f "$PACKAGE_ROOT/dist/index.js"
+            test -f "$PACKAGE_ROOT/dist/index.cjs"
+            test -f "$PACKAGE_ROOT/dist/styles/index.css"
+            test -f "$PACKAGE_ROOT/index.d.ts"
+            test ! -d "$PACKAGE_ROOT/src"
+            test -z "$(find "$PACKAGE_ROOT" -name '*.map' -print -quit)"
+            for symbol in LixEditor LixPreview LixThemeProvider MermaidBlock BlockEquation; do
+              grep -q "$symbol" "$PACKAGE_ROOT/dist/index.js"
+              grep -q "$symbol" "$PACKAGE_ROOT/dist/index.cjs"
+            done
+          fi
+          if [ "$BUILD_CLI" = "true" ]; then
+            archive=$(find .release/packages/lixblogs-cli -name '*.tgz' -print -quit)
+            inspect_package "$archive"
+            npm install --prefix "$RUNNER_TEMP/lixblogs-smoke" "$archive"
+            "$RUNNER_TEMP/lixblogs-smoke/node_modules/.bin/lixblogs" --help
+            "$RUNNER_TEMP/lixblogs-smoke/node_modules/.bin/lixblogs" skill list --json --no-input
+          fi
+      - name: Attest exact package artifacts
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: .release/packages/**/*.tgz
+      - name: Publish exact artifacts to npm
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NPM_TOKEN" ]; then
+            echo "::error::NPM_TOKEN is not available in the npm environment."
+            exit 1
+          fi
+          args=(--package --no-bump)
+          if [ "${{ needs.changes.outputs.lixeditor }}" = "true" ] && [ "${{ needs.changes.outputs.cli }}" != "true" ]; then args+=(--lixeditor); fi
+          if [ "${{ needs.changes.outputs.cli }}" = "true" ] && [ "${{ needs.changes.outputs.lixeditor }}" != "true" ]; then args+=(--cli); fi
+          ./deploy.sh "${args[@]}" deploy
+      - name: Publish the same artifacts to GitHub Packages
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN }}
+        run: |
+          if [ -z "$GITHUB_ACCESS_TOKEN" ]; then
+            echo "::error::ELIXPOO_GITHUB_AGENTIC_TOKEN is required with the write:packages scope."
+            exit 1
+          fi
+          args=(--github --no-bump)
+          if [ "${{ needs.changes.outputs.lixeditor }}" = "true" ] && [ "${{ needs.changes.outputs.cli }}" != "true" ]; then args+=(--lixeditor); fi
+          if [ "${{ needs.changes.outputs.cli }}" = "true" ] && [ "${{ needs.changes.outputs.lixeditor }}" != "true" ]; then args+=(--cli); fi
+          ./deploy.sh "${args[@]}" deploy
+      - name: Commit versions and publish GitHub releases
+        env:
+          GH_TOKEN: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN || github.token }}
+          RELEASE_LIXEDITOR: ${{ needs.changes.outputs.lixeditor }}
+          RELEASE_CLI: ${{ needs.changes.outputs.cli }}
+        run: |
+          git config user.name elixpoo
+          git config user.email 269200728+elixpoo@users.noreply.github.com
+          git add packages/lixeditor/package.json package-lock.json packages/lixblogs-cli/package.json packages/lixblogs-cli/package-lock.json
+          git commit -m "chore(release): bump published packages [skip deploy]" || true
+
+          publish_release() {
+            tag="$1"
+            artifact_dir="$2"
+            title="$3"
+            git rev-parse "refs/tags/$tag" >/dev/null 2>&1 || git tag "$tag"
+            if gh release view "$tag" >/dev/null 2>&1; then
+              gh release upload "$tag" "$artifact_dir"/*.tgz "$artifact_dir"/*.sha256 --clobber
+            else
+              gh release create "$tag" "$artifact_dir"/*.tgz "$artifact_dir"/*.sha256 --generate-notes --title "$title"
+            fi
+          }
+          if [ "$RELEASE_LIXEDITOR" = "true" ]; then
+            version=$(node -p "require('./packages/lixeditor/package.json').version")
+            git rev-parse "refs/tags/lixeditor-v$version" >/dev/null 2>&1 || git tag "lixeditor-v$version"
+          fi
+          if [ "$RELEASE_CLI" = "true" ]; then
+            version=$(node -p "require('./packages/lixblogs-cli/package.json').version")
+            git rev-parse "refs/tags/lixblogs-cli-v$version" >/dev/null 2>&1 || git tag "lixblogs-cli-v$version"
+          fi
+          git push origin HEAD:main --follow-tags
+          if [ "$RELEASE_LIXEDITOR" = "true" ]; then
+            version=$(node -p "require('./packages/lixeditor/package.json').version")
+            publish_release "lixeditor-v$version" .release/packages/lixeditor "@elixpo/lixeditor $version"
+          fi
+          if [ "$RELEASE_CLI" = "true" ]; then
+            version=$(node -p "require('./packages/lixblogs-cli/package.json').version")
+            publish_release "lixblogs-cli-v$version" .release/packages/lixblogs-cli "@elixpo/lixblogs-cli $version"
+          fi
+
+  vscode:
+    name: VS Code Marketplace
+    needs: [changes, packages]
+    if: >-
+      always() && needs.changes.result == 'success' &&
+      needs.changes.outputs.vscode == 'true' &&
+      (needs.packages.result == 'success' || needs.packages.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          token: ${{ secrets.ELIXPOO_GITHUB_AGENTIC_TOKEN || github.token }}
+          fetch-depth: 0
+          ref: main
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: npm ci
+        working-directory: packages/vscode-lixeditor
+      - name: Build VS Code package
+        run: ./deploy.sh --package --vs --${{ needs.changes.outputs.bump }} build
+      - name: Attest VS Code package
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: packages/vscode-lixeditor/*.vsix
+      - name: Publish VS Code package
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT || secrets.VSCODE_LIXSKETCH_EXT_PUBLISH_TOKEN }}
+        run: ./deploy.sh --package --vs --no-bump deploy
+      - name: Commit version
+        run: |
+          git config user.name elixpoo
+          git config user.email 269200728+elixpoo@users.noreply.github.com
+          git add packages/vscode-lixeditor/package.json packages/vscode-lixeditor/package-lock.json
+          git commit -m "chore(release): bump VS Code package [skip deploy]" || true
+          git push origin HEAD:main
+
+  worker:
+    name: Cloudflare Workers
+    needs: changes
+    if: needs.changes.outputs.worker == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm ci --prefix worker/collab
+      - name: Build and deploy Workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: ./deploy.sh --worker build deploy
+
+  pages:
+    name: Cloudflare Pages
+    needs: [changes, worker]
+    if: >-
+      always() && needs.changes.result == 'success' &&
+      needs.changes.outputs.pages == 'true' &&
+      (needs.worker.result == 'success' || needs.worker.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate Pages configuration
+        env:
+          NEXT_PUBLIC_ELIXPO_CLIENT_ID: ${{ vars.NEXT_PUBLIC_ELIXPO_CLIENT_ID }}
+        run: |
+          if [ -z "$NEXT_PUBLIC_ELIXPO_CLIENT_ID" ]; then
+            echo "::error::NEXT_PUBLIC_ELIXPO_CLIENT_ID is required for the production OAuth build"
+            exit 1
+          fi
+      - name: Build Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          NEXT_TELEMETRY_DISABLED: '1'
+          NEXT_PUBLIC_URL: https://blogs.elixpo.com
+          NEXT_PUBLIC_ELIXPO_CLIENT_ID: ${{ vars.NEXT_PUBLIC_ELIXPO_CLIENT_ID }}
+          NEXT_PUBLIC_COLLAB_URL: ${{ vars.NEXT_PUBLIC_COLLAB_URL }}
+          NEXT_PUBLIC_LIXSKETCH_EMBED_URL: ${{ vars.NEXT_PUBLIC_LIXSKETCH_EMBED_URL }}
+        run: ./deploy.sh --pages build
+      - name: Apply D1 migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler d1 migrations apply lixblogs --remote
+      - name: Deploy Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          NEXT_TELEMETRY_DISABLED: '1'
+          NEXT_PUBLIC_URL: https://blogs.elixpo.com
+          NEXT_PUBLIC_ELIXPO_CLIENT_ID: ${{ vars.NEXT_PUBLIC_ELIXPO_CLIENT_ID }}
+          NEXT_PUBLIC_COLLAB_URL: ${{ vars.NEXT_PUBLIC_COLLAB_URL }}
+          NEXT_PUBLIC_LIXSKETCH_EMBED_URL: ${{ vars.NEXT_PUBLIC_LIXSKETCH_EMBED_URL }}
+        run: ./deploy.sh --pages deploy
+
+  catalog:
+    name: Sync pricing catalog
+    needs: [changes, pages]
+    if: >-
+      always() && needs.changes.result == 'success' &&
+      (needs.changes.outputs.catalog == 'true' || needs.pages.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - name: Sync pricing catalog
+        env:
+          ELIXPO_PAY_API_KEY: ${{ secrets.ELIXPO_PAY_API_KEY }}
+        run: node scripts/sync-payouts-tiers.mjs
